@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>" Rank</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d600xv.htm">&gt;&gt;</a>&nbsp;
+<a href="d600n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Rank</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u&quot;n</font></td>
+<td align=right  width=33%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+The verb<tt> u&quot;n </tt>applies<tt> u </tt>to each cell as 
+specified by the rank<tt> n</tt> .<tt> </tt>The full form of the 
+rank used is<tt> 3$&amp;.|.n</tt> .<tt> </tt>For example, if<tt> n=:2</tt> ,<tt> </tt>
+the three ranks are<tt> 2&nbsp;2&nbsp;2</tt> ,<tt> </tt>and 
+if<tt> n=: 2&nbsp;3</tt>,<tt> </tt>they are<tt> 3&nbsp;2&nbsp;3</tt> .<tt> </tt>
+A negative rank is complementary:<tt> u&quot;(-r) y </tt>is equivalent 
+to<tt> u&quot;(0&gt;.(#$y)-r)&quot;_ y</tt> .<tt> </tt><br><br>
+
+See also <a href="dicta.htm">Section II.A Nouns</a> and <a href="dictb.htm">Section II.B Verbs</a>.
+<br>&nbsp;</td>
+</tr></table>
+
+<pre>
+   (] ; , ; ,&quot;2) y=: a. {~ (a.i.'A') + i. 2 3 4
++----+------------------------+------------+
+|ABCD|ABCDEFGHIJKLMNOPQRSTUVWX|ABCDEFGHIJKL|
+|EFGH|                        |MNOPQRSTUVWX|
+|IJKL|                        |            |
+|    |                        |            |
+|MNOP|                        |            |
+|QRST|                        |            |
+|UVWX|                        |            |
++----+------------------------+------------+
+
+   (&lt;&quot;0 ; &lt;&quot;1 ; &lt;&quot;2 ; &lt;&quot;3 ,&amp;&lt; &lt;&quot;_1) y     NB. Boxing of ranks 0 1 2 3 _1
++---------+----------------+-----------+------+-----------+
+|+-+-+-+-+|+----+----+----+|+----+----+|+----+|+----+----+|
+||A|B|C|D|||ABCD|EFGH|IJKL|||ABCD|MNOP|||ABCD|||ABCD|MNOP||
+|+-+-+-+-+|+----+----+----+||EFGH|QRST|||EFGH|||EFGH|QRST||
+||E|F|G|H|||MNOP|QRST|UVWX|||IJKL|UVWX|||IJKL|||IJKL|UVWX||
+|+-+-+-+-+|+----+----+----+|+----+----+||    ||+----+----+|
+||I|J|K|L||                |           ||MNOP||           |
+|+-+-+-+-+|                |           ||QRST||           |
+|         |                |           ||UVWX||           |
+|+-+-+-+-+|                |           |+----+|           |
+||M|N|O|P||                |           |      |           |
+|+-+-+-+-+|                |           |      |           |
+||Q|R|S|T||                |           |      |           |
+|+-+-+-+-+|                |           |      |           |
+||U|V|W|X||                |           |      |           |
+|+-+-+-+-+|                |           |      |           |
++---------+----------------+-----------+------+-----------+
+
+   ('*#' ,&quot;0 1 ' abcde') ; (+/&quot;2 i. 2 3 4) ; (+/&quot;_1 i. 2 3 4)
++-------+-----------+-----------+
+|* abcde|12 15 18 21|12 15 18 21|
+|# abcde|48 51 54 57|48 51 54 57|
++-------+-----------+-----------+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d600xv.htm">&gt;&gt;</a>&nbsp;
+<a href="d600n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

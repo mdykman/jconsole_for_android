@@ -1,0 +1,116 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>= Self-Classify  -  Equal</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d001.htm">&gt;&gt;</a>&nbsp;
+<a href="partsofspeech.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Self-Classify</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>= &nbsp;_ 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Equal</font></b></td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor="#eeeeee">
+<tt>=y </tt>classifies the items of the 
+nub of<tt> y </tt>
+(that is,<tt> <a href="d221.htm">~.y</a></tt>)<tt> </tt>according to equality with the items 
+of<tt> y</tt> ,<tt> </tt>producing a boolean table of 
+shape<tt> #~.y </tt>by<tt> #y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   y=: 3 3 $ 'abcdef'
+   y ; (~.y) ; (=y)
++---+---+-----+
+|abc|abc|1 0 1|
+|def|def|0 1 0|
+|abc|   |     |
++---+---+-----+
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor="#eeeeee">
+<tt>x=y </tt>is<tt> 1 </tt>if<tt> x </tt>is equal to<tt> y</tt> ,<tt> </tt>
+and is otherwise<tt> 0</tt> .<br><br>
+
+If<tt> x </tt>or<tt> y </tt>is a finite floating-point or complex number, 
+the comparison is made with a <i>tolerance</i><tt> t</tt> ,<tt> </tt>
+normally<tt> 2 </tt>to the power<tt> _44 </tt>but also controlled by the 
+fit conjunction<tt> !.</tt> ,<tt> </tt>as in<tt> x=!.0 y</tt> .<tt> </tt>  
+Formally,<tt> x=y </tt>is<tt> 1 </tt>if the magnitude 
+of<tt> x-y </tt>does not exceed<tt> t </tt>times the larger of the 
+magnitudes of<tt> x </tt>and<tt> y</tt> .<br><br>
+
+Tolerance applies similarly to other verbs as indicated for each, 
+notably to 
+<a href="d122.htm">Match (<tt>-:</tt>)</a>, to 
+<a href="d011.htm">Floor (<tt>&lt;.</tt>)</a>, and to 
+<a href="d110.htm">Signum (<tt>*</tt>)</a>, but not to 
+<a href="d422.htm">Grade (<tt>/:</tt>)</a>.
+<br>&nbsp;
+</td>
+</tr></table><br>
+
+Both the monadic and dyadic cases of the verb<tt> = </tt>
+apply to nouns of any rank, and to boxed as well as simple nouns.  
+For example:<br>
+
+<pre>
+   ]a=: ;: 'Try and try and try again.'
++---+---+---+---+---+------+
+|Try|and|try|and|try|again.|
++---+---+---+---+---+------+
+
+   ~. a
++---+---+---+------+
+|Try|and|try|again.|
++---+---+---+------+
+
+   =a
+1 0 0 0 0 0
+0 1 0 1 0 0
+0 0 1 0 1 0
+0 0 0 0 0 1
+
+   a = &lt;'and'
+0 1 0 1 0 0
+</pre>
+
+Because of the limited precision of the computer, 
+results which should agree (such as<tt> 144*(13%144) </tt>
+and<tt> 13</tt>) may not; the tolerant comparison allows 
+such a comparison to show agreement (a result<tt> 1</tt>).  
+More or less stringent comparisons may be made by using 
+the conjunction<tt> !. </tt>to specify a tolerance<tt> t</tt> ,<tt> </tt>
+as in the function<tt> eq=: =!.t</tt> .<br>
+
+<br><br>
+<!--bottom jump start--><hr><a href="d001.htm">&gt;&gt;</a>&nbsp;
+<a href="partsofspeech.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

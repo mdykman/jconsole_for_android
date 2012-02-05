@@ -1,0 +1,116 @@
+LABTITLE=: 'JOD (4) and the J Project Manager'
+LABAUTHOR=: 0 : 0
+John D. Baker
+bakerjd99@gmail.com
+)
+LABCOMMENTS=: 'This lab shows how JOD and the J Project Manager can be used together May 2008'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section JOD and the J Project Manager
+JOD and the J project manager are two complimentary software tools that can be easily combined so all the facilities of both systems can be applied to J programming. The JOD system itself was partly developed using such an approach.
+
+This lab assumes:
+
+(1) The jodsource addon has been installed.
+
+(2) A ~JODPROJECT folder pointing to (joddev)'s root directory has been configured.
+
+(3) A ~JODTEST folder pointing to a test directory has been configured.
+
+To install the jodsource addon use the J Package Manager and then run the lab "JOD Source Code Dump Scripts."  MAKE SURE YOU MOVE AND RENAME THE LOAD DICTIONARIES IN THE LAST STEP OF THIS LAB.
+
+Use J's configure tool to set ~JODPROJECT and ~JODTEST.
+)
+require 'general/jod'
+
+NB. =========================================================
+Lab Section Pre and Post Processor Scripts
+The J project manager allows users to define and execute arbitrary J pre and post processor scripts.  When a project is "built" the preprocessor script runs first, followed by the normal build process, followed by the post processor.  The pre and post processor scripts are the keys to using JOD within the J project manager.
+)
+NB. the pre and post processors are defined in a project's *.ijp file.
+
+NB. (jodproject.ijp) pre and post processors 
+
+NB. PREBUILDFILE=: '~JODPROJECT/script/jodprepprj.ijs'
+
+NB. POSTBUILDFILE=: '~JODPROJECT/script/jodpostprj.ijs'
+
+NB. =========================================================
+Lab Section Open JOD source dictionaries
+To illustrate JOD's use with the project manager we will use JOD's own source dictionaries. 
+
+This step assumes the jodsource addon has been dowloaded with the Package Manager and the JOD source dictionaries (joddev), (jod) and (utils) have been setup.  Run the lab "JOD Source Code Dump Scripts" if these dictionaries are not setup.
+)
+NB. open only JOD source dictionaries 
+od ;:'joddev jod utils' [ 3 od ''
+
+NB. you should have the three JOD source dictionaries on the path
+did~ 0
+
+NB. =========================================================
+Lab Section Check ~JODPROJECT path
+Before extracting the (jodproject.ijp) file from the JOD source dictionaries make sure (~JODPROJECT) points to (joddev)'s \script directory.
+)
+NB. If these paths do not match use J's configuration tool to set
+NB. ~JODPROJECT to joddev's \script directory
+
+NB.  project                              joddev \script 
+(tolower jpath '~JODPROJECT\script\') -: tolower ".'SCR_',(;{:{.DPATH__ST__JODobj),'_'
+
+NB. =========================================================
+Lab Section Generate Project Manager Files
+The J Project Manager stores all project related information in a *.ijp project file.  Project files are essentially J scripts with a different file extension.  The (jodproject.ijp) file is stored in the JOD source dictionaries.
+)
+NB. run a JOD tautology test script to extract necesary project files.
+
+rtt 'setup_jodproject'  NB. results should all 1's
+
+NB. =========================================================
+Lab Section Navigate to ~JODPROJECT\script directory
+Open the Project Manager, navigate to (~JODPROJECT\script) and open (jodproject.ijp)
+)
+NB. navigate to
+jpath '~JODPROJECT\script'
+
+NB. =========================================================
+Lab Section Build fully commented JOD
+JOD source is stored in dictionary databases.  Press the Project Manager "Build" button to generate source scripts.
+)
+NB. press the Project Manager "Build" button
+
+NB. =========================================================
+Lab Section Browse JOD source
+After building the project you can view JOD source on the project manager's "Source" tab.
+)
+
+NB. =========================================================
+Lab Section Load JOD source
+Pressing the Project Manager's "Load" button loads a fully commented source into active classes.  This is useful for debugging and exploring JOD code.
+)
+NB. press the Project Manager "Load"
+
+NB. =========================================================
+Lab Section Run Basic JOD tests
+An example test script has been generated from JOD and referenced.  Before running this script create some test dictionaries.  
+
+Test dictionary creation requires a configured ~JODTEST directory.
+)
+NB. create test dictionaries - many JOD test scripts refer to these dictionary names
+rtt 'createtestdictionaries'
+
+NB. =========================================================
+Lab Section
+This step runs the project test script.  There are many other test scripts stored in the JOD development dictionaries.  These scripts provide numerous examples of how to use and abuse JOD words.
+)
+NB. Press the Project Manager's "Test" button.
+
+NB. =========================================================
+Lab Section Conclusion
+This lab showed how to use JOD with the J Project Manager.
+
+John D. Baker
+November 2007
+bakerjd99@gmail.com
+)
+

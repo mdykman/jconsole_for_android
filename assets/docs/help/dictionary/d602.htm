@@ -1,0 +1,155 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&quot;: Default Format  -  Format</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d610.htm">&gt;&gt;</a>&nbsp;
+<a href="d601.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Default Format</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>&quot;: &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Format</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+Default output is identical to this monadic case, providing a 
+minimum of one space between columns.  For example:<br>
+
+<pre>
+   ]text=: &quot;: i. 2 5
+0 1 2 3 4
+5 6 7 8 9
+
+   $ text
+2 9
+
+   3 + text
+|domain error
+|   3  +text
+
+   '*#' ,. text
+*0 1 2 3 4
+#5 6 7 8 9
+
+   &quot;: 'abcd'
+abcd
+
+   $ &quot;: ''
+0
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x&quot;:y </tt>produces a literal representation of<tt> y </tt>
+in a format specified by<tt> x</tt> .<tt> </tt>Each element of<tt> x </tt>is a 
+complex number<tt> w j. d</tt> ,<tt> </tt>controlling the representation 
+of the corresponding column of<tt> y </tt>as follows:<br><br>
+
+<tt>|w </tt>specifies the width allocated; if this space is inadequate, 
+the entire space is filled with asterisks.  If<tt> w </tt>is zero, 
+enough space is allocated.<br><br>
+
+<tt>|d </tt>specifies the number of digits following the decimal point 
+(itself included only if<tt> d </tt>is not zero).<br><br>
+
+Any negative sign is placed just before the leading digit.  
+If<tt> w&gt;:0 </tt>and<tt> d&gt;:0</tt>,<tt> </tt>the result is right-justified 
+in the space.  Otherwise (if<tt> w&lt;0 </tt>or<tt> d&lt;0</tt>),<tt> </tt> 
+the result is put in exponential form (with one digit before the 
+decimal point) and is left-justified and aligned on the decimal point. <br><br>
+
+Only the real part of complex<tt> y </tt>is formatted.
+See below for boxed<tt> y</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   n ; 6j2 &quot;: n=: % i. 2 4
++--------------------------+------------------------+
+|   _   1      0.5 0.333333|     _  1.00  0.50  0.33|
+|0.25 0.2 0.166667 0.142857|  0.25  0.20  0.17  0.14|
++--------------------------+------------------------+
+
+   (7j2 &quot;: -n) ; (3j2 &quot;: n)
++----------------------------+------------+
+|     __  _1.00  _0.50  _0.33|  _*********|
+|  _0.25  _0.20  _0.17  _0.14|************|
++----------------------------+------------+
+
+   6j3 0j_6 &quot;: 1r2 ^ 1 1000 *&quot;1 i.5 2
+ 1.000  9.332636e_302 
+ 0.250  8.128549e_904 
+ 0.063  7.079811e_1506
+ 0.016  6.166381e_2108
+ 0.004  5.370801e_2710
+</pre>
+
+The fit conjunction<tt> </tt>(<tt>!.</tt>)<tt> </tt>
+and<tt> <a href="dx009.htm#10">9!:10</a> </tt>
+specify the number of digits 
+for floating-point numbers.  For example:<br>
+
+<pre>
+   (&quot;: ; &quot;:!.6 ; &quot;:!.4 ; &quot;:!.15) %7
++--------+--------+------+-----------------+
+|0.142857|0.142857|0.1429|0.142857142857143|
++--------+--------+------+-----------------+
+</pre>
+
+For a boxed right argument, a two-element left argument specifies 
+position in the display, using<tt> 0</tt>,<tt> 1</tt>,<tt> </tt>and
+<tt> 2 </tt>for top/center/bottom, and left/center/right.<tt> </tt>  
+<tt><a href="dx009.htm#16">9!:16</a> </tt>
+and<tt> <a href="dx009.htm#16">9!:17</a> </tt>
+specify the default positions.<tt> </tt>  
+<tt><a href="dx009.htm#6">9!:6</a> </tt>
+and<tt> <a href="dx009.htm#7">9!:7</a> </tt>specify the box drawing 
+characters used.<br>
+
+<pre>
+   x=: 2 3 $ (2 #&amp;.&gt; 1+i.6) $&amp;.&gt; 'abcdef'
+   (&quot;: x) ,. ' ' ,. (2 1 &quot;: x)
++----+-----+------+ +----+-----+------+
+|a   |bb   |ccc   | |    |     | ccc  |
+|    |bb   |ccc   | |    | bb  | ccc  |
+|    |     |ccc   | | a  | bb  | ccc  |
++----+-----+------+ +----+-----+------+
+|dddd|eeeee|ffffff| |    |     |ffffff|
+|dddd|eeeee|ffffff| |    |eeeee|ffffff|
+|dddd|eeeee|ffffff| |dddd|eeeee|ffffff|
+|dddd|eeeee|ffffff| |dddd|eeeee|ffffff|
+|    |eeeee|ffffff| |dddd|eeeee|ffffff|
+|    |     |ffffff| |dddd|eeeee|ffffff|
++----+-----+------+ +----+-----+------+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d610.htm">&gt;&gt;</a>&nbsp;
+<a href="d601.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

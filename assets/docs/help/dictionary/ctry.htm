@@ -1,0 +1,82 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>try.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="cwhile.htm">&gt;&gt;</a>&nbsp;
+<a href="cthrow.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font face="Courier New" size=+3>try.</font></b><br><br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+<pre>
+try. B0 catch. B1 catchd. B2 catcht. B3 end.
+</pre>
+
+The try/catch control structure may contain one or more
+distinct occurrences of<tt> catch. catchd. catcht.</tt> ,<tt> </tt>
+in any order.  For example:
+
+<pre>
+try. B0 catch. B1 end.
+try. B0 catcht. B1 catchd. B2 end.
+try. B0 catcht. B1 catch. B2 catchd. B3 end.
+</pre>
+
+The<tt> B0 </tt>block is executed and:<br>
+&#149;<tt> catch. </tt>&nbsp;
+catches an error in<tt> B0</tt> ,<tt> </tt>whatever the setting of the
+debug flag<tt> <a href="dx013.htm">13!:0</a> </tt><br>
+&#149;<tt> catchd. </tt>
+catches an error in<tt> B0</tt> ,<tt> </tt>but only if the debug flag is 0<br>
+&#149;<tt> catcht. </tt>
+catches a<tt> <a href="cthrow.htm">throw.</a> </tt>in an explicit definition 
+invoked in<tt> B0</tt><br>&nbsp;
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+f=: 4 : 0
+ try.
+  try. 3+y catch. *:x end.
+ catch.
+  'x and y are both bad'
+ end.
+)
+
+   13 f 7
+10
+
+   13 f 'primogeniture'
+169
+
+   'sui' f 'generis'
+x and y are both bad
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="cwhile.htm">&gt;&gt;</a>&nbsp;
+<a href="cthrow.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

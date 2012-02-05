@@ -1,0 +1,79 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>throw.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="ctry.htm">&gt;&gt;</a>&nbsp;
+<a href="csel.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font face="Courier New" size=+3>throw.</font></b><br><br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+<tt>throw. </tt>causes execution to resume in the<tt> <a href="ctry.htm">catcht.</a> </tt>
+section of an explicit definition that invoked the current code,
+returning to immediate execution if there is no such<tt> catcht.</tt> .  
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+main=: 3 : 0
+ try. 
+  sub y
+ catcht.
+  select. type_jthrow_
+   case. 'aaaa' do. 'throw aaaa'  
+   case. 'bbb'  do. 'throw bbb'   
+   case. 'cc'   do. 'throw cc' 
+   case.        do. throw.   NB. handled by a higher-level catcht. (if any)
+  end.
+ end.
+)
+
+sub=: 3 : 0
+ if. y&lt;0 do. type_jthrow_=: 'aaaa' throw. end.
+ if. y&lt;4 do. type_jthrow_=: 'bbb'  throw. end.
+ if. y&lt;8 do. type_jthrow_=: 'cc'   throw. end.
+ (&quot;:y),' not thrown'
+)
+
+   main _4
+throw aaaa
+   main 1
+throw bbb
+   main 5
+throw cc
+   main 88
+88 not thrown
+</pre>
+
+A<tt> throw. </tt>can communicate information back to 
+a<tt> catcht. </tt>through the use of a global name in a locale, 
+as illustrated in the examples above.<br>
+
+<br><br>
+<!--bottom jump start--><hr><a href="ctry.htm">&gt;&gt;</a>&nbsp;
+<a href="csel.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,128 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>(+/ % #)\ Improved <a </title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="compsc1.htm">&gt;&gt;</a>&nbsp;
+<a href="infixfin.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">(+/ % #)\ </font><font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2003-11-10<br>last updated: 2003-12-04
+</td></tr></table>
+<br>
+
+<p>The dyad<tt> (+/ % #)\ </tt>computes the moving average and is now
+implemented by special code for positive left arguments and 
+integer and floating point right arguments.  
+The following table illustrates the improvements in time and space.</p>
+<pre>
+x=: 0.01*?n$1000
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'm (+/ % #)\x'
+</pre>
+
+<table>
+<tr>
+<td align=center><b>m</b></td>  <td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center><b>n</b></td>  <td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center colspan=2><b>J 5.03</b></td><td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center colspan=2><b>J 5.02</b></td><td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+</tr>
+<tr><td align=right> 50</td><td>&nbsp;</td><td>1e5</td><td>&nbsp;</td>
+<td>0.010857</td><td align=right>&nbsp; 1.051264e6</td><td>&nbsp;</td>
+<td>0.428732</td><td align=right>&nbsp; 3.148352e6</td><td>&nbsp;</td>
+<td>39.49</td><td>&nbsp;</td><td>2.99</td>
+</tr>
+<tr><td align=right>  50</td><td>&nbsp;</td><td>2e5</td><td>&nbsp;</td>
+<td>0.021686</td><td align=right>2.099840e6</td><td>&nbsp;</td>
+<td>0.855940</td><td align=right>6.294080e6</td><td>&nbsp;</td>
+<td>39.47</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right>  50</td><td>&nbsp;</td><td>4e5</td><td>&nbsp;</td>
+<td>0.047796</td><td align=right>4.196992e6</td><td>&nbsp;</td>
+<td>1.693698</td><td align=right>1.258554e7</td><td>&nbsp;</td>
+<td>35.44</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right>  50</td><td>&nbsp;</td><td>8e5</td><td>&nbsp;</td>
+<td>0.097144</td><td align=right>8.391296e6</td><td>&nbsp;</td>
+<td>3.408151</td><td align=right>2.516845e7</td><td>&nbsp;</td>
+<td>35.08</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 100</td><td>&nbsp;</td><td>1e5</td><td>&nbsp;</td>
+<td>0.011251</td><td align=right>1.051264e6</td><td>&nbsp;</td>
+<td>0.467502</td><td align=right>3.148864e6</td><td>&nbsp;</td>
+<td>41.55</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 100</td><td>&nbsp;</td><td>2e5</td><td>&nbsp;</td>
+<td>0.022939</td><td align=right>2.099840e6</td><td>&nbsp;</td>
+<td>0.920847</td><td align=right>6.294592e6</td><td>&nbsp;</td>
+<td>40.14</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 100</td><td>&nbsp;</td><td>4e5</td><td>&nbsp;</td>
+<td>0.044595</td><td align=right>4.196992e6</td><td>&nbsp;</td>
+<td>1.843981</td><td align=right>1.258605e7</td><td>&nbsp;</td>
+<td>41.35</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 100</td><td>&nbsp;</td><td>8e5</td><td>&nbsp;</td>
+<td>0.092017</td><td align=right>8.391296e6</td><td>&nbsp;</td>
+<td>3.680761</td><td align=right>2.516896e7</td><td>&nbsp;</td>
+<td>40.00</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 200</td><td>&nbsp;</td><td>1e5</td><td>&nbsp;</td>
+<td>0.011448</td><td align=right>1.051264e6</td><td>&nbsp;</td>
+<td>0.625874</td><td align=right>3.149888e6</td><td>&nbsp;</td>
+<td>54.67</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 200</td><td>&nbsp;</td><td>2e5</td><td>&nbsp;</td>
+<td>0.022340</td><td align=right>2.099840e6</td><td>&nbsp;</td>
+<td>1.255497</td><td align=right>6.295616e6</td><td>&nbsp;</td>
+<td>56.20</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 200</td><td>&nbsp;</td><td>4e5</td><td>&nbsp;</td>
+<td>0.045064</td><td align=right>4.196992e6</td><td>&nbsp;</td>
+<td>2.504865</td><td align=right>1.258707e7</td><td>&nbsp;</td>
+<td>55.58</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 200</td><td>&nbsp;</td><td>8e5</td><td>&nbsp;</td>
+<td>0.089157</td><td align=right>8.391296e6</td><td>&nbsp;</td>
+<td>5.023058</td><td align=right>2.516998e7</td><td>&nbsp;</td>
+<td>56.34</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 400</td><td>&nbsp;</td><td>1e5</td><td>&nbsp;</td>
+<td>0.011027</td><td align=right>1.051264e6</td><td>&nbsp;</td>
+<td>0.776791</td><td align=right>3.151936e6</td><td>&nbsp;</td>
+<td>70.45</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 400</td><td>&nbsp;</td><td>2e5</td><td>&nbsp;</td>
+<td>0.022462</td><td align=right>2.099840e6</td><td>&nbsp;</td>
+<td>1.565228</td><td align=right>6.297664e6</td><td>&nbsp;</td>
+<td>69.68</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 400</td><td>&nbsp;</td><td>4e5</td><td>&nbsp;</td>
+<td>0.047861</td><td align=right>4.196992e6</td><td>&nbsp;</td>
+<td>3.124304</td><td align=right>1.258912e7</td><td>&nbsp;</td>
+<td>65.28</td><td>&nbsp;</td><td>3.00</td></tr>
+<tr><td align=right> 400</td><td>&nbsp;</td><td>8e5</td><td>&nbsp;</td>
+<td>0.091099</td><td align=right>8.391296e6</td><td>&nbsp;</td>
+<td>6.275170</td><td align=right>2.517203e7</td><td>&nbsp;</td>
+<td>68.88</td><td>&nbsp;</td><td>3.00</td></tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="compsc1.htm">&gt;&gt;</a>&nbsp;
+<a href="infixfin.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

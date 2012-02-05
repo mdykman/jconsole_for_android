@@ -1,0 +1,204 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>5!: Representation</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx006.htm">&gt;&gt;</a>&nbsp;
+<a href="dx004.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Representation</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>5!:</font></b></td>
+</tr></table>
+<br>
+
+<TABLE>
+<tr><td valign=top width=120><a name="0"></a><tt>x 5!:0</tt></td>
+<td>
+<b>Define</b>.<tt> 5!:0 </tt>is an adverb and provides a 
+complete inverse of<tt> 5!:1</tt>.<tt> </tt>
+That is,<tt> (5!:1 &lt;'f') 5!:0 </tt>equals<tt> f </tt>
+for all<tt> f</tt> .
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="1"></a><tt>5!:1 y</tt></td>
+<td>
+<b>Atomic</b>.  The atomic representation of the entity 
+named<tt> y </tt>and is used in gerunds.  The result is 
+a single box containing a character list of the symbol 
+(if primitive) or a two-element boxed list of the symbol 
+and atomic representation of the arguments (if not primitive).  
+Symbol-less entities are assigned the following encodings:<br><br>
+
+<tt> 0 &nbsp;</tt>Noun<br>
+<tt> 2 &nbsp;</tt>Hook<br>
+<tt> 3 &nbsp;</tt>Fork<br>
+<tt> 4 &nbsp;</tt>Bonded conjunction or train of adverbs<br>
+<br>
+
+For example:<br>
+
+<pre>
+   plus=: +
+   5!:1 &lt;'plus'
++-+
+|+|
++-+
+   noun=: 3 1 4 1 5 9
+   5!:1 &lt;'noun'
++---------------+
+|+-+-----------+|
+||0|3 1 4 1 5 9||
+|+-+-----------+|
++---------------+
+   increment=: 1&amp;+
+   5!:1 &lt;'increment'
++-------------+
+|+-+---------+|
+||&amp;|+-----+-+||
+|| ||+-+-+|+|||
+|| |||0|1|| |||
+|| ||+-+-+| |||
+|| |+-----+-+||
+|+-+---------+|
++-------------+
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="2"></a><tt>5!:2 y</tt></td>
+<td>
+<b>Boxed</b>.  <br>
+
+<pre>
+   nub=: (i.@# = i.~) # ]
+   5!:2 &lt;'nub'
++-------------------+-+-+
+|+--------+-+------+|#|]|
+||+--+-+-+|=|+--+-+|| | |
+|||i.|@|#|| ||i.|~||| | |
+||+--+-+-+| |+--+-+|| | |
+|+--------+-+------+| | |
++-------------------+-+-+
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="4"></a><tt>5!:4 y</tt></td>
+<td>
+<b>Tree</b>.  A literal matrix that represents the 
+named entity in tree form.  Thus:<br>
+
+<pre>
+   5!:4 &lt;'nub'
+            +- i.
+      +- @ -+- # 
+  +---+- =       
+  |   +- ~ --- i.
+--+- #           
+  +- ]
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="5"></a><tt>5!:5 y</tt></td>
+<td>
+<b>Linear</b>.  The linear representation is a string which, 
+when interpreted, produces the named object.  For example:<br>
+
+<pre>
+   5!:5 &lt;'nub'
+(i.@# = i.~) # ]
+
+   5!:5 &lt;'a' [ a=: o. i. 3 4
+3.14159265358979324*i.3 4
+
+   lr=: 3 : '5!:5 &lt;''y'''
+   lr 10000$'x'
+10000$'x'
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="6"></a><tt>5!:6 y</tt></td>
+<td>
+<b>Paren</b>.  Like the linear representation, but is fully parenthesized.<br>
+
+<pre>
+   5!:6 &lt;'nub'
+((i.@#) = (i.~)) # ]
+</pre>
+</td></tr>
+<tr><td valign=top><a name="7"></a><tt>x 5!:7 y</tt></td>
+<td>
+<b>Explicit</b>.  
+The left argument is 1 (monadic) or 2 (dyadic);
+the right argument is the boxed name of
+a verb, adverb, or conjunction.  For example:<br><br>
+<pre>
+   perm=: 3 : 0
+    z=. i.1 0
+    for. i.y do. z=.,/(0,.1+z){&quot;2 1\:&quot;1=i.&gt;:{:$z end.
+   )
+
+   1 (5!:7) &lt;'perm'
++-+----------+-------------------------------+
+|0|1 _1 0    |z=.i.1 0                       |
++-+----------+-------------------------------+
+|1|65536 2 1 |for.                           |
++-+----------+-------------------------------+
+|2|2 _1 1    |i.y                            |
++-+----------+-------------------------------+
+|3|131072 6 1|do.                            |
++-+----------+-------------------------------+
+|4|1 _1 1    |z=.,/(0,.1+z){&quot;2 1\:&quot;1=i.&gt;:{:$z|
++-+----------+-------------------------------+
+|5|32 3 1    |end.                           |
++-+----------+-------------------------------+
+</pre>
+The result of<tt> 5!:7 </tt>is a 3-column boxed matrix. 
+Column 0 are the boxed integers<tt> 0  1  2  ...  n-1</tt>.
+Column 1 are boxed 3-element integer vectors of 
+control information:
+control word code,
+goto line number, and
+source line number.
+Column 2 are boxed control words and sentences.<br><br>
+
+The result of<tt> 5!:7 </tt>is a<tt> 0 3 </tt>empty matrix
+if the named object is not an explicit definition, or
+is undefined for the specified valence.</td></tr>
+</table>
+<br>
+
+For all but the noun case, the default displays 
+established by<tt> <a href="dx009.htm#2">9!:3</a> </tt>provide 
+convenient experimentation 
+with all representations.  For example,<tt> 9!:3 (6 4 2) </tt>
+specifies that the paren, tree, and boxed representations 
+are all to be displayed.<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dx006.htm">&gt;&gt;</a>&nbsp;
+<a href="dx004.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

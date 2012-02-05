@@ -1,0 +1,136 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>C. Specimens</title>
+
+</head><body><!--top jump start--><a href="function_tables.htm">&gt;&gt;</a>&nbsp;
+<a href="locales_loading_sf.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>1C. Specimens</h1>
+
+<P>Although many aspects of a phrase may be illustrated by applying it 
+to scalar arguments or arrays of successive integers, 
+more thorough explorations require the use of several classes of arrays, 
+including negative, fractional, complex, alphabetic, and boxed. 
+Moreover, the use of only systematic arguments such as<tt> i. 6 </tt>
+and<tt> i. 2 3 4 </tt>might suggest that a phrase possesses properties 
+that it does not when applied to a random array such as<tt> ?. 2 3 4$10</tt> .</P>
+
+<P>The phrases of this section provide a variety of specimen arrays. 
+Because they will be used in illustrating the application of phrases 
+in many different sections, 
+they should perhaps be loaded into the special<I> z </I>locale, 
+so as to be generally available, either in the form<tt> d0_z_ </tt>or<tt> d0</tt></P>
+
+<TABLE BORDER=1 CELLSPACING=0 WIDTH="100%">
+<TR><TD width=40%><tt>d0=: QI=: ?.@$</tt></TD><TD width=60%>Shape x of integers from <tt>i. y</tt></TD></TR>
+<TR><td><tt>d1=: QD=: ?.@(,:~)@$</tt></TD><td>Shape <tt>2,x</tt> of integers from <tt>i. y</tt></TD></TR>
+<TR><td><tt>d2=: QN=: -/@QD</tt></TD><td>Random negative and positive integers</TD></TR>
+<TR><td><tt>d3=: QF=: %/@QD</tt></TD><td>Random fractions</TD></TR>
+<TR><td><tt>d4=: QC=: j./@QD</tt></TD><td>Random complex numbers</TD></TR>
+<TR><TD nowrap><tt>d5=: QA=: {&amp;a.@(a.&amp;i.@]+[QI 26&quot;_)</tt></TD><td>Random literal (26 beginning at <tt>y.</tt>)</TD></TR>
+<TR><td><tt>m6=: QI&amp;10</tt></TD><td>Array of random single-digit integers</TD></TR>
+<TR><td><tt>m7=: QZ=: QI&amp;1</tt></TD><td>Array of zeros</TD></TR>
+<TR><td><tt>m8=: QB=: QI&amp;2</tt></TD><td>Array of Booleans</TD></TR>
+</TABLE>
+
+
+<P>Random arrays can be produced by expressions of the form<tt> ? 2 3 4$10</tt> ,<tt> </tt>
+but for repeatable experiments it is necessary to use a specific random seed, 
+as provided by the function<tt> ?.</tt> ,<tt> </tt>and in any other phrase that uses it. 
+For example:</P>
+
+<pre>
+   (QA&amp;'A' ; QA&amp;'a' ; QA&amp;'+') 2 3 4
++----+----+----+
+|DTLN|dtln|.&gt;68|
+|FBRR|fbrr|0,&lt;&lt;|
+|YJNV|yjnv|C48@|
+|    |    |    |
+|ABNR|abnr|+,8&lt;|
+|AJBK|ajbk|+4,5|
+|RPYW|rpyw|&lt;:CA|
++----+----+----+
+</pre>
+
+<P>The following phrases may be applied  to box an argument, to scale and shift it to a specified range, or to normalize it to the range 0 to 1:</P>
+
+<TABLE BORDER=1 CELLSPACING=0 WIDTH="100%">
+<TR><TD width=40%><tt>a9=: B=: 1 : '&lt;&quot;x.'</tt></TD><TD width=60%> Adverb: <tt>k B</tt> is box of rank <tt>k</tt></TD></TR>
+
+  <TR><td><tt>m10=: B0=: 0 B</tt></TD><td>Box atoms
+</TD></TR>
+
+<TR><TD><tt>m11=: B1=: 1 B</tt></TD><td>Box vectors (lists)</TD></TR>
+
+<TR><td><tt>m12=: B2=: 2 B</tt></TD><td>Box matrices (tables)</TD></TR>
+
+<TR><td><tt>m13=: RG=: (1: + &gt;./ - &lt;./)@,</tt></TD><td>Range of values of <tt>y</tt></TD></TR>
+
+<TR><td><tt>d14=: SC=: * % RG@]</tt></TD><td>Scale range of <tt>y</tt> to scalar <tt>x</tt> </TD></TR>
+
+<TR><td><tt>m15=: NR=: 1&amp;SC</tt></TD><td>Normalize range to 1</TD></TR>
+
+<TR><td><tt>m16=: SZ=: - &lt;./@,</tt></TD><td>Shift to make smallest value zero</TD></TR>
+
+<TR><td><tt>m17=: NM=: SZ@NR</tt></TD><td>Normalize to range 1 and min value 0</TD></TR>
+</TABLE></TD></TR></TABLE>
+
+
+<pre>
+   B0 B1 2 3 4 QA 'A'
++--------------------+
+|+----+|+----+|+----+|
+||DTLN|||FBRR|||YJNV||
+|+----+|+----+|+----+|
++------+------+------|
+|+----+|+----+|+----+|
+||ABNR|||AJBK|||RPYW||
+|+----+|+----+|+----+|
++--------------------+
+
+   B2 3 4 5 QA 'a'
++-----+-----+-----+
+|dtlnf|rpywn|zstqb|
+|brryj|crksx|qxhlt|
+|nvabn|tgbti|mghje|
+|rajbk|qtzjg|mxxbx|
++-----+-----+-----+
+
+   (] ; NR ; SZ ; NM) 3 4 QN 10
++----------+---------------+-------+---------------+
+|_4  2 _1 0|1.6 0.4 0.1   0|1 7 4 5|0.1 0.7 0.4 0.5|
+|_3 _5  1 1|0.9 2.5 0.1 0.1|2 0 6 6|0.2   0 0.6 0.6|
+| 4 _2  0 3|1.6 0.4   0 0.9|9 3 5 8|0.9 0.3 0.5 0.8|
++----------+---------------+-------+---------------+
+	]	Scale range to 1	 Shift to 0 min	Norm pos and range
+</pre>
+
+ 
+<!--bottom jump start--><hr><a href="function_tables.htm">&gt;&gt;</a>&nbsp;
+<a href="locales_loading_sf.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

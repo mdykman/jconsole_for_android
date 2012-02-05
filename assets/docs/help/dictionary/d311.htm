@@ -1,0 +1,87 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>:. Obverse</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d312.htm">&gt;&gt;</a>&nbsp;
+<a href="d310v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Obverse</font></b></td>
+<td align=center width=50%><font face="Courier New" size=+3>u :. v &nbsp;mu lu ru</font></td>
+<td align=right  width=17%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+The result of<tt> u :. v </tt>is the verb<tt> u</tt>,<tt> </tt>but 
+with an assigned obverse<tt> v </tt>(used as the &ldquo;inverse&rdquo; 
+under the conjunctions<tt> &amp;. </tt>and<tt> ^:</tt>).
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   y=: _4 0 4 3j4
+   rp=: &lt;@(%: , -@%:)&quot;0        NB. Root pairs
+   rp y
++--------+---+----+---------+
+|0j2 0j_2|0 0|2 _2|2j1 _2j_1|
++--------+---+----+---------+
+
+   I=: ^: _1
+   rp I                        NB. No assigned obverse
+rp^:_1
+
+   rp I rp y
+|domain error
+|     rp I rp y
+
+   inv=: *:@{.@,@&gt;
+   inv rp y
+_4 0 4 3j4
+
+   RP=: rp :. inv              NB. Assigned obverse in RP
+   RP I RP y
+_4 0 4 3j4
+
+   rc=: &lt;@(,: +)@(, -)@%:&quot;0    NB. Root companions
+   rc y
++---------+---+----+----------+
+| 0j2 0j_2|0 0|2 _2| 2j1 _2j_1|
+|0j_2  0j2|0 0|2 _2|2j_1  _2j1|
++---------+---+----+----------+
+
+   RC=: rc :. inv
+   RC I RC y
+_4 0 4 3j4
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d312.htm">&gt;&gt;</a>&nbsp;
+<a href="d310v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

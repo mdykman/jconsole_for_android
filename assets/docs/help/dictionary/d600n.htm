@@ -1,0 +1,86 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&quot; Rank</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d600v.htm">&gt;&gt;</a>&nbsp;
+<a href="d532.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Rank</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>m&quot;n</font></td>
+<td align=right  width=33%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+The verb<tt> m&quot;n </tt>produces the constant result<tt> m </tt>
+for each cell to which it applies.  The rank used 
+is<tt> 3 $&amp;.|. n</tt> .<tt> </tt> 
+For example, if<tt> n=:2</tt>,<tt> </tt>the three ranks 
+are<tt> 2 2 2</tt>,<tt> </tt>and if<tt> n=: 2 3</tt>,<tt> </tt>
+they are<tt> 3 2 3</tt> .<tt> </tt>
+A negative rank is complementary:<tt> m&quot;(-r) y </tt>is equivalent 
+to<tt> m&quot;(0&gt;.(#$y)-r)&quot;_ y</tt> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+Thus:<br>
+
+<pre>
+   v=: 2 3 5 7
+   m=: i. 2 3
+   m ; (m&quot;0 v) ; (m&quot;1 v); (m&quot;1 m)
++-----+-----+-----+-----+
+|0 1 2|0 1 2|0 1 2|0 1 2|
+|3 4 5|3 4 5|3 4 5|3 4 5|
+|     |     |     |     |
+|     |0 1 2|     |0 1 2|
+|     |3 4 5|     |3 4 5|
+|     |     |     |     |
+|     |0 1 2|     |     |
+|     |3 4 5|     |     |
+|     |     |     |     |
+|     |0 1 2|     |     |
+|     |3 4 5|     |     |
++-----+-----+-----+-----+
+
+   v m&quot; 1 2 m
+0 1 2
+3 4 5
+</pre>
+
+The verbs<tt> _9: </tt>through<tt> 9: </tt>are <a href="dconsf.htm"><i>constant</i> verbs</a>, 
+equivalent to<tt> _9&quot;_ </tt>through<tt> 9&quot;_</tt> .  
+For example:<br>
+
+<pre>
+   odds=: 1: + 2: * i.
+   odds 5
+1 3 5 7 9
+</pre>
+
+<!--bottom jump start--><hr><a href="d600v.htm">&gt;&gt;</a>&nbsp;
+<a href="d532.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

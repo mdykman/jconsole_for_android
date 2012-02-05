@@ -1,0 +1,93 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Global</title>
+
+</head><body><!--top jump start--><a href="debug_global.htm">&gt;&gt;</a>&nbsp;
+<a href="local.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Global</h1>
+A name defined outside the execution of a verb is a global name.<br>
+<br>
+In the previous section, the <font face=courier size=-1>t1 </font>defined in the ijx window is a global name that is completely different from the <font face=courier size=-1>t1 </font>defined inside the verb centigrade.<br>
+<br>
+Let's try some experiments. Create a temporary script file with <b>File|New ijs </b>and type into it the definition:<br>
+
+<pre>fooa =: 3 : 0   NB. =: is important
+zzz + y
+)</pre>
+Run the script with <b>Run|Window</b>. In the ijx window:<br>
+
+<pre>   fooa 5
+¦value error
+¦       zzz+y</pre>
+Let's define the global <font face=courier size=-1>zzz </font>to see what happens. Defining it outside a verb means it is a global. In the ijx window:<br>
+
+<pre>   zzz =. 23	NB. define global zzz
+   fooa 5
+28</pre>
+The verb fooa uses the global <font face=courier size=-1>zzz</font>. So, a verb can use globals.<br>
+<br>
+Edit the script to add foob and then run the script.<br>
+
+<pre>foob =: 3 : 0
+zzz =. 7
+zzz + y
+)</pre>
+In the ijx window:<br>
+
+<pre>   foob 3
+10
+   zzz
+23</pre>
+The verb foob uses its local <font face=courier size=-1>zzz </font>and ignores the global. So, a verb can use locals and ignore globals of the same name.<br>
+<br>
+Inside a verb the copula <font face=courier size=-1>=.</font> defines a local name. Once a name is defined as a local, references to that name are to the local name.<br>
+<br>
+What if you wanted to define a global name? The global copula <font face=courier size=-1>=:</font> (<font face=courier size=-1>=</font> with a colon inflection) defines a global name. Edit the script to add fooc and then run the script.<br>
+
+<pre>fooc =: 3 : 0
+gw =: y
+lz =. y
+)</pre>
+In the ijx window:<br>
+
+<pre>   fooc 3
+3
+   gw
+3
+   lz
+¦value error
+   gw =. 24
+   fooc 5
+5
+   gw
+5</pre>
+Defining gw with <font face=courier size=-1>=:</font> defines the global name.<br>
+<br>
+In general, it is good practice to only define locals in a verb and to not define globals. This is an important part of what is sometimes called a functional style of programming. Verbs that define globals are said to have side effects and are more likely to cause bugs and make it harder to read the application to understand what is happening.<br>
+<br>
+It is possible to define a verb that uses both the global and local definitions of a name and this is VERY bad practice.<br>
+<!--bottom jump start--><hr><a href="debug_global.htm">&gt;&gt;</a>&nbsp;
+<a href="local.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,76 @@
+math/lapack - change history
+
+== 1.1.17 ==
+ * initial import to J701
+ * fix: lartg: permissions
+
+== 1.1.16 ==
+ * chg: gehrd: backward-compatible interface extension to match mt addon
+
+== 1.1.15 ==
+ * fix: geqrf, gerqf: some code clean-up
+ * add: gelqf, geqlf
+
+== 1.1.14 ==
+ * fix: gebal: tgebal verb: mistype
+
+== 1.1.13 ==
+ * fix: lapack.ijs: ipiv2scrp verb: non-proper output's length when stationary elements presented
+ * fix: gebal: tgebal verb: invalid bcut for dense matrices
+
+== 1.1.12 ==
+ * fix: doc/?lartg.lap: formatting
+ * add: interfaces: gebal, gehrd, heev (dsyev and zheev combined), lartg
+
+== 1.1.11 ==
+ * fix: gesvx: rmask instead x
+ * fix: reduce datatype via z2d to match iscomplex's result: gees geev gels gelss geqrf gerqf gesvd gesv gesvx getrf potrf trtrs
+ * fix: doc/?gehrd.lap, doc/?gehd2.lap: formatting
+ * chg: rank specified: gees geev gels gelss geqrf gerqf gesvd gesv getrf potrf trtrs
+ * add: lapack.ijs: verb z2d to fix type reduction
+
+== 1.1.10 ==
+ * chg: vecLib in place to avoid symlink
+
+== 1.1.9 ==
+ * add: gees: option to specify non-real Schur form
+
+== 1.1.8 ==
+ * fix: gees: always initialize w
+
+== 1.1.7 ==
+ * fix: zgeev: array 'work' datatype
+ * fix: dgesv, zgesv: array 'ipiv' datatype
+ * chg: lapack.ijs: 'call' verb: LASTIN preprocessing shifted out into the calling verbs
+ * chg: lapack.ijs: 'diagmat' verb: extended to rectangular case
+ * chg: interfaces merged: dgees and zgees into gees, dgeev and zgeev into geev, dgesv and zgesv into gesv, dgeqrf and zgeqrf into geqrf, dgerqf and zgerqf into gerqf, dpotrf and zpotrf into potrf, dtrtrs and ztrtrs into trtrs
+ * chg: doc.ijs, lapack.ijp, lapack.ijt, test0.ijs, util.ijs are changed appropriately
+ * add: lapack.ijs: verbs: invperm, makepermat, xtoken
+ * add: interfaces: gels, gelss, gesvd (new zgesvd merged with dgesvd), gesvx, getrf (new zgetrf merged with dgetrf)
+
+== 1.1.5 ==
+ * fix: verb "error" call
+ * fix: dgerqf.ijs/dgeqrfQ: datatype branching
+ * chg: lapack.ijs: verbs: idmat, ltmat, utmat, ltri, utri, sltri, sutri
+ * chg: dpotrf.ijs/dpotrf: early datatype check
+ * add: lapack.ijs: verbs: isvector, ismatrixorvector, vmatrixorvector
+ * add: interfaces: dtrtrs.ijs, ztrtrs.ijs, dgerqf.ijs, zgerqf.ijs, zpotrf.ijs, dgees.ijs, zgees.ijs, zgesv.ijs
+
+== 1.1.4 ==
+ * chg: vecLib in place to avoid symlink
+
+== 1.1.3 ==
+ * fix: FILESLINUX
+
+== 1.1.2 ==
+ * chg: build
+
+== 1.1.1 ==
+ * chg: fix
+ * add: LAPACK Lab
+
+== 1.0.0 ==
+ * chg: addon for j601
+
+== 1.0.0 ==
+ * chg: addon for j504

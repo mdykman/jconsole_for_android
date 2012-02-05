@@ -1,0 +1,4 @@
+convert/jiconv - change history
+
+== 1.0.0/1 ==
+ * addon for j701

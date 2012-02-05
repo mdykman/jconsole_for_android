@@ -1,0 +1,61 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Installing ODBC</title>
+
+</head><body><!--top jump start--><a href="connection_statement_handles.htm">&gt;&gt;</a>&nbsp;
+<a href="sql.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Installing ODBC</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+ODBC must be installed on your system. An easy way to check for this is to look for the 32bit ODBC icon in Control Panel. ODBC is installed automatically with many Microsoft applications.
+
+<P>
+If you do not have ODBC installed, you may be able to obtain ODBC drivers from the Microsoft web site www.microsoft.com. Search for the ODBC FAQ (at the time of writing this is at www.microsoft.com/data/odbc/faq_odbc.htm).
+
+<P>
+To follow the examples in this chapter, you should install the dBase driver, even if you do not intend to use it later. When you install this driver, or any other driver, you will be prompted to enter the <I>data sourc</I>e<I> name</I>. The data source indicates the DBMS driver and where the data files are stored. Note that it is <I>not</I> the name of a specific data file as may be imagined.
+
+<P>
+The examples here use the dBase driver, and files stored in J subdirectory examples\data, and the data source name used is <I>jdata</I>. To set this up, in Program Manager, select the ODBC icon in Control Panel. Use Add or Setup to create a panel as shown:
+
+<P>
+Note that you should at least have one data source name as shown above, but you can set up multiple data source names, using the same driver but typically with a different directory.
+
+<P>
+Although the data source name specifies a directory, this is in fact used by the dBase driver as the default directory. You can override this default either by specifying another directory when you connect to the dBase driver, or afterwards when you specify a file with its full pathname. However, note this capability is provided by extensions to ODBC in the dBase driver, which are not necessarily found in other ODBC drivers.
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="connection_statement_handles.htm">&gt;&gt;</a>&nbsp;
+<a href="sql.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

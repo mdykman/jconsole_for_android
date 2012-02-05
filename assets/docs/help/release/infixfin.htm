@@ -1,0 +1,153 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>u/\ Improved <a </title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="infixavg.htm">&gt;&gt;</a>&nbsp;
+<a href="key503.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">u/\ </font><font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2003-12-04<br>last updated: 2005-01-20
+</td></tr></table>
+<br>
+
+<p>The dyad<tt> m u/\ y </tt>is now
+implemented by special code for the cases where<tt> m </tt>is a positive integer 
+and:</p>
+
+<table>
+<tr><td><tt>+ /\</tt></td>   <td>&nbsp;</td><td>boolean, integer or floating point<tt> y</tt></td>
+<tr><td><tt>&gt;./\</tt></td><td>&nbsp;</td><td>boolean, integer or floating point<tt> y</tt></td>
+<tr><td><tt>&lt;./\</tt></td><td>&nbsp;</td><td>boolean, integer or floating point<tt> y</tt></td>
+<tr><td><tt>+./\</tt></td>   <td>&nbsp;</td><td>boolean<tt> y</tt></td>
+<tr><td><tt>*./\</tt></td>   <td>&nbsp;</td><td>boolean<tt> y</tt></td>
+<tr><td><tt>= /\</tt></td>   <td>&nbsp;</td><td>boolean<tt> y</tt></td>
+<tr><td><tt>~:/\</tt></td>   <td>&nbsp;</td><td>boolean<tt> y</tt></td>
+</table>
+<p>The following table illustrates the improvements
+in time and space.</p>
+<pre>
+b=: ?5e5$2
+i=: ?5e5$1e6
+d=: 0.01*?5e5$1e6
+ts=: 6!:2 , 7!:2@]
+ts 'Expression'
+</pre>
+
+<table>
+<tr><td align=center><b>Expression</b></td>  <td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center colspan=3><b>J 5.03</b></td><td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center colspan=3><b>J 5.02</b></td><td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+</tr>
+
+<tr><td align=right><tt>50 + /\ b</tt></td><td>&nbsp;</td><td>0.014285</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.140392</td><td>&nbsp;</td><td>6.817536e6</td><td>&nbsp;</td>
+<td align=right> 79.83</td><td>&nbsp;</td><td>3.25</td></tr>
+
+<tr><td align=right><tt>100 + /\ b</tt></td><td>&nbsp;</td><td>0.014728</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.211342</td><td>&nbsp;</td><td>6.817664e6</td><td>&nbsp;</td>
+<td align=right> 82.25</td><td>&nbsp;</td><td>3.25</td></tr>
+
+<tr><td align=right><tt>150 + /\ b</tt></td><td>&nbsp;</td><td>0.014975</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.294418</td><td>&nbsp;</td><td>6.817664e6</td><td>&nbsp;</td>
+<td align=right> 86.44</td><td>&nbsp;</td><td>3.25</td></tr>
+
+<tr><td align=right><tt>50 + /\ i</tt></td><td>&nbsp;</td><td>0.032687</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.468416</td><td>&nbsp;</td><td>8.390528e6</td><td>&nbsp;</td>
+<td align=right>44.92</td><td>&nbsp;</td><td>4.00</td></tr>
+
+<tr><td align=right><tt>100 + /\ i</tt></td><td>&nbsp;</td><td>0.035122</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.769516</td><td>&nbsp;</td><td>8.390784e6</td><td>&nbsp;</td>
+<td align=right>50.38</td><td>&nbsp;</td><td>4.00</td></tr>
+
+<tr><td align=right><tt>150 + /\ i</tt></td><td>&nbsp;</td><td>0.030545</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>2.108809</td><td>&nbsp;</td><td>8.391296e6</td><td>&nbsp;</td>
+<td align=right>69.04</td><td>&nbsp;</td><td>4.00</td></tr>
+
+<tr><td align=right><tt>50 + /\ d</tt></td><td>&nbsp;</td><td>0.035560</td><td>&nbsp;</td><td>4.195520e6</td><td>&nbsp;</td>
+<td>1.387645</td><td>&nbsp;</td><td>1.258509e7</td><td>&nbsp;</td>
+<td align=right> 39.02</td><td>&nbsp;</td><td>3.00</td></tr>
+
+<tr><td align=right><tt>100 + /\ d</tt></td><td>&nbsp;</td><td>0.035114</td><td>&nbsp;</td><td>4.195520e6</td><td>&nbsp;</td>
+<td>1.583527</td><td>&nbsp;</td><td>1.258560e7</td><td>&nbsp;</td>
+<td align=right> 45.10</td><td>&nbsp;</td><td>3.00</td></tr>
+
+<tr><td align=right><tt>150 + /\ d</tt></td><td>&nbsp;</td><td>0.034200</td><td>&nbsp;</td><td>4.195520e6</td><td>&nbsp;</td>
+<td>2.189876</td><td>&nbsp;</td><td>1.258662e7</td><td>&nbsp;</td>
+<td align=right> 64.03</td><td>&nbsp;</td><td>3.00</td></tr>
+
+<tr><td align=right><tt>50 &gt;./\ i</tt></td><td>&nbsp;</td><td>0.027954</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.381496</td><td>&nbsp;</td><td>8.390528e6</td><td>&nbsp;</td>
+<td align=right> 49.42</td><td>&nbsp;</td><td>4.00</td></tr>
+
+<tr><td align=right><tt>100 &gt;./\ i</tt></td><td>&nbsp;</td><td>0.027844</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.586821</td><td>&nbsp;</td><td>8.390784e6</td><td>&nbsp;</td>
+<td align=right> 56.99</td><td>&nbsp;</td><td>4.00</td></tr>
+
+<tr><td align=right><tt>150 &gt;./\ i</tt></td><td>&nbsp;</td><td>0.031460</td><td>&nbsp;</td><td>2.098368e6</td><td>&nbsp;</td>
+<td>1.818133</td><td>&nbsp;</td><td>8.391296e6</td><td>&nbsp;</td>
+<td align=right> 57.79</td><td>&nbsp;</td><td>4.00</td></tr>
+
+<tr><td align=right><tt>50 &gt;./\ d</tt></td><td>&nbsp;</td><td>0.058007</td><td>&nbsp;</td><td>4.195520e6</td><td>&nbsp;</td>
+<td>1.540447</td><td>&nbsp;</td><td>1.258509e7</td><td>&nbsp;</td>
+<td align=right> 26.56</td><td>&nbsp;</td><td>3.00</td></tr>
+
+<tr><td align=right><tt>100 &gt;./\ d</tt></td><td>&nbsp;</td><td>0.047901</td><td>&nbsp;</td><td>4.195520e6</td><td>&nbsp;</td>
+<td>1.855978</td><td>&nbsp;</td><td>1.258560e7</td><td>&nbsp;</td>
+<td align=right> 38.75</td><td>&nbsp;</td><td>3.00</td></tr>
+
+<tr><td align=right><tt>150 &gt;./\ d</tt></td><td>&nbsp;</td><td>0.057408</td><td>&nbsp;</td><td>4.195520e6</td><td>&nbsp;</td>
+<td>2.584069</td><td>&nbsp;</td><td>1.258662e7</td><td>&nbsp;</td>
+<td align=right> 45.01</td><td>&nbsp;</td><td>3.00</td></tr>
+
+<tr><td align=right><tt>50 +./\ b</tt></td><td>&nbsp;</td><td>0.023684</td><td>&nbsp;</td><td>5.255040e5</td><td>&nbsp;</td>
+<td>1.081159</td><td>&nbsp;</td><td>5.244672e6</td><td>&nbsp;</td>
+<td align=right> 45.65</td><td>&nbsp;</td><td>9.98</td></tr>
+
+<tr><td align=right><tt>50 *./\ b</tt></td><td>&nbsp;</td><td>0.022626</td><td>&nbsp;</td><td>5.255040e5</td><td>&nbsp;</td>
+<td>1.083555</td><td>&nbsp;</td><td>5.244672e6</td><td>&nbsp;</td>
+<td align=right> 47.89</td><td>&nbsp;</td><td>9.98</td></tr>
+
+<tr><td align=right><tt>50 = /\ b</tt></td><td>&nbsp;</td><td>0.022044</td><td>&nbsp;</td><td>5.255040e5</td><td>&nbsp;</td>
+<td>1.094156</td><td>&nbsp;</td><td>5.244672e6</td><td>&nbsp;</td>
+<td align=right> 49.64</td><td>&nbsp;</td><td>9.98</td></tr>
+
+<tr><td align=right><tt>50 ~:/\ b</tt></td><td>&nbsp;</td><td>0.013014</td><td>&nbsp;</td><td>5.255040e5</td><td>&nbsp;</td>
+<td>1.074636</td><td>&nbsp;</td><td>5.244672e6</td><td>&nbsp;</td>
+<td align=right> 82.58</td><td>&nbsp;</td><td>9.98</td></tr>
+
+</table>
+
+
+
+<br>
+<!--bottom jump start--><hr><a href="infixavg.htm">&gt;&gt;</a>&nbsp;
+<a href="key503.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

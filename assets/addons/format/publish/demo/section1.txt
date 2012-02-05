@@ -1,0 +1,29 @@
+NB. section 1
+
+<h1 name="Section 1">SECTION 1</h1>
+
+<h2>Subsection 1 - Plain Text</h2>
+
+Alice had never been in a court of justice before, but she had
+read about them in books, and she was quite pleased to find that
+she knew the name of nearly everything there. `That's the judge,'
+she said to herself, `because of his great wig.'
+
+<h3>Subsubsection 1 - two row header<br/>
+(example of table formatting)</h3>
+
+The table is read as:
+
+<pre>
+   <j>gettable 'tab11'</j>
+</pre>
+
+<j>gettable 'tab11'</j>
+
+<h3>Subsubsection 2</h3>
+Example of image, read as:
+
+<pre>
+   <image align=center,scale=0.2>map.jpg</image>
+</pre>
+<image align=center,scale=0.2>map.jpg</image>

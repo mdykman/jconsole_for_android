@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Creating a new file</title>
+
+</head><body><!--top jump start--><a href="sql_statements.htm">&gt;&gt;</a>&nbsp;
+<a href="update_records.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Creating a new file</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+To create a new file, use the SQL <I>create</I> command, with a list of the column names and attributes in the new data set. Here we create file <I>test</I>, with columns for name and salary.
+
+<P>
+First, drop test in case it already exists (the <code>_1</code> result means the table was not found):
+
+<pre>
+   'drop table test' ddsql ch
+_1
+</pre>
+
+<P>
+Now create the new file:
+
+<pre>
+   'create table test (name char(12),sal numeric)' ddsql ch
+0
+</pre>
+
+<P>
+Add a record:
+
+<pre>
+   t=. 'insert into test (name,sal) values (''Neumann,E'',40000)' 
+   t ddsql ch
+0
+</pre>
+
+<P>
+Add another record:
+
+<pre>
+   t=. 'insert into test (name,sal) values (''James, P'',42000)' 
+   t ddsql ch
+0
+</pre>
+
+<P>
+Now read the file:
+
+<pre>
+   ddfet _1,~ 'select * from test' ddsel ch
++------------+-----+
+|Neumann, E  |40000|
++------------+-----+
+|James, P    |42000|
++------------+-----
+</pre>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="sql_statements.htm">&gt;&gt;</a>&nbsp;
+<a href="update_records.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

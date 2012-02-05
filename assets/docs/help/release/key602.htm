@@ -1,0 +1,106 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>u//. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="meankey.htm">&gt;&gt;</a>&nbsp;
+<a href="oblique602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">u//. </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2007-07-31<br>last updated: 2007-08-01
+</td></tr></table>
+<br>
+
+<p>The dyad<tt> x u//. y </tt>has been improved 
+where<tt> u </tt>and<tt> y </tt>are one of the following combinations:
+
+<table>
+<tr><td>&nbsp;</td>
+<td>&nbsp; <b>verb<tt> u</tt></b></td><td>&nbsp; &nbsp;</td>
+<td><b><tt>&nbsp; y </tt>type</b></td></tr>
+
+<tr><td>&nbsp;</td>
+<td><tt>= &lt;. &gt;. + +. * *. ~:</tt></td><td>&nbsp;</td>
+<td>Boolean</td></tr>
+
+<tr><td>&nbsp;</td>
+<td><tt>&lt;. &gt;. + </tt></td><td>&nbsp;</td>
+<td>integer, floating-point</td></tr>
+
+<tr><td>&nbsp;</td>
+<td><tt>n b. </tt>for<tt> n</tt>= 17 22 23 25</td><td>&nbsp;</td>
+<td>integer</td></tr>
+</table>
+
+<p>There is a generalization of a similar improvement in <a href="key503.htm">J 5.03</a>
+which was restricted to vector right arguments.
+The following benchmarks demonstrate the improvement:</p>
+
+<pre>
+x1=: 2e5 ?@$ 1e1
+x2=: 2e5 ?@$ 1e2
+x3=: 2e5 ?@$ 1e3
+x4=: 2e5 ?@$ 1e4
+
+b=: 2e5 5 ?@$ 2
+i=: 2e5 5 ?@$ 1000
+d=: 0.1 * i
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'Expression'
+</pre>
+
+<table>
+<tr>
+<td><b>Expression</b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+<tr><td><tt>x1 ~://. b</tt></td><td>&nbsp;</td><td>0.00277323</td><td>&nbsp;</td><td align=right>    1536</td><td>&nbsp;</td><td>0.02164587</td><td>&nbsp;</td><td align=right>  4457984</td><td>&nbsp;</td><td align=right> 7.81</td><td>&nbsp;</td><td align=right> 2902.33</td></tr>
+<tr><td><tt>x2 ~://. b</tt></td><td>&nbsp;</td><td>0.00276233</td><td>&nbsp;</td><td align=right>    3520</td><td>&nbsp;</td><td>0.02522252</td><td>&nbsp;</td><td align=right>  4458880</td><td>&nbsp;</td><td align=right> 9.13</td><td>&nbsp;</td><td align=right> 1266.73</td></tr>
+<tr><td><tt>x3 ~://. b</tt></td><td>&nbsp;</td><td>0.00285285</td><td>&nbsp;</td><td align=right>   19648</td><td>&nbsp;</td><td>0.02643234</td><td>&nbsp;</td><td align=right>  4466048</td><td>&nbsp;</td><td align=right> 9.27</td><td>&nbsp;</td><td align=right>  227.30</td></tr>
+<tr><td><tt>x4 ~://. b</tt></td><td>&nbsp;</td><td>0.00375916</td><td>&nbsp;</td><td align=right>  148672</td><td>&nbsp;</td><td>0.03122265</td><td>&nbsp;</td><td align=right>  4523392</td><td>&nbsp;</td><td align=right> 8.31</td><td>&nbsp;</td><td align=right>   30.43</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><tt>x1 + //. i</tt></td><td>&nbsp;</td><td>0.00431878</td><td>&nbsp;</td><td align=right>    2560</td><td>&nbsp;</td><td>0.02990644</td><td>&nbsp;</td><td align=right>  7603840</td><td>&nbsp;</td><td align=right> 6.92</td><td>&nbsp;</td><td align=right> 2970.25</td></tr>
+<tr><td><tt>x2 + //. i</tt></td><td>&nbsp;</td><td>0.00435932</td><td>&nbsp;</td><td align=right>   11712</td><td>&nbsp;</td><td>0.03602225</td><td>&nbsp;</td><td align=right>  7605632</td><td>&nbsp;</td><td align=right> 8.26</td><td>&nbsp;</td><td align=right>  649.39</td></tr>
+<tr><td><tt>x3 + //. i</tt></td><td>&nbsp;</td><td>0.00529091</td><td>&nbsp;</td><td align=right>  167104</td><td>&nbsp;</td><td>0.03750901</td><td>&nbsp;</td><td align=right>  7636352</td><td>&nbsp;</td><td align=right> 7.09</td><td>&nbsp;</td><td align=right>   45.70</td></tr>
+<tr><td><tt>x4 + //. i</tt></td><td>&nbsp;</td><td>0.01718684</td><td>&nbsp;</td><td align=right> 1328320</td><td>&nbsp;</td><td>0.04396052</td><td>&nbsp;</td><td align=right>  7865728</td><td>&nbsp;</td><td align=right> 2.56</td><td>&nbsp;</td><td align=right>    5.92</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><tt>x1 + //. d</tt></td><td>&nbsp;</td><td>0.00455240</td><td>&nbsp;</td><td align=right>    2304</td><td>&nbsp;</td><td>0.03985561</td><td>&nbsp;</td><td align=right> 11798400</td><td>&nbsp;</td><td align=right> 8.75</td><td>&nbsp;</td><td align=right> 5120.83</td></tr>
+<tr><td><tt>x2 + //. d</tt></td><td>&nbsp;</td><td>0.00455401</td><td>&nbsp;</td><td align=right>    9664</td><td>&nbsp;</td><td>0.04259895</td><td>&nbsp;</td><td align=right> 11801984</td><td>&nbsp;</td><td align=right> 9.35</td><td>&nbsp;</td><td align=right> 1221.23</td></tr>
+<tr><td><tt>x3 + //. d</tt></td><td>&nbsp;</td><td>0.00481319</td><td>&nbsp;</td><td align=right>  134336</td><td>&nbsp;</td><td>0.04401794</td><td>&nbsp;</td><td align=right> 11863424</td><td>&nbsp;</td><td align=right> 9.15</td><td>&nbsp;</td><td align=right>   88.31</td></tr>
+<tr><td><tt>x4 + //. d</tt></td><td>&nbsp;</td><td>0.01125234</td><td>&nbsp;</td><td align=right> 1066176</td><td>&nbsp;</td><td>0.05060965</td><td>&nbsp;</td><td align=right> 12322176</td><td>&nbsp;</td><td align=right> 4.50</td><td>&nbsp;</td><td align=right>   11.56</td></tr>
+</tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="meankey.htm">&gt;&gt;</a>&nbsp;
+<a href="oblique602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

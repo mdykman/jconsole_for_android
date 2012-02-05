@@ -1,0 +1,746 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>$. Sparse</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d212.htm">&gt;&gt;</a>&nbsp;
+<a href="d210.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Sparse</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>$. &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Sparse</font></b></td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<b><tt>$.y </tt></b>converts a dense array to sparse, and
+conversely<b><tt> $.^:_1 y </tt></b>converts a sparse array to
+dense.<br><br>
+
+The identities<tt> f -: f&amp;.$. </tt>and<tt> f -:
+f&amp;.($.^:_1) </tt>hold for any function<tt> f</tt> ,<tt> </tt>with
+the possible exception of those (like overtake<tt> {.</tt>) which
+use the sparse element as the fill.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<b><tt>0$.y </tt></b>applies<tt> $. </tt>or<tt> $.^:_1 </tt>as
+appropriate; that is, converts a dense array to sparse and a
+sparse array to dense.<br><br>
+
+<b><tt>1$.sh;a;e </tt></b>produces a sparse array.<tt> sh </tt>specifies
+the shape.<tt> a </tt>specifies the sparse axes; negative
+indexing may be used.<tt> e </tt>specifies the &ldquo;zero&rdquo;
+element, and its type determines the type of the array. The
+argument may also be<tt> sh;a </tt>(<tt>e </tt>is assumed to be a
+floating point<tt> 0</tt>) or just<tt> sh </tt>(<tt>a </tt>is
+assumed to be<tt> i.#sh </tt>&mdash; all axes are sparse &mdash; and<tt> e </tt>a
+floating point<tt> 0</tt>).<br><br>
+
+<b><tt>2$.y </tt></b>gives the sparse axes (the<tt> a </tt>part);
+<br>
+<b><tt>(2;a)$.y </tt></b>(re-)specifies the sparse axes; <b><tt><br>
+(2 1;a)$.y </tt></b>gives the number of bytes required for <tt>(2;a)$.y</tt> ;
+<br>
+<b><tt>(2&nbsp;2;a)$.y </tt></b>gives the number of items in the<tt> i </tt>
+part for the specified sparse axes<tt> a </tt>
+(that is,<tt> #4$.(2;a)$.y</tt> ).<br><br>
+
+<b><tt>3$.y </tt></b>gives the sparse element (the<tt> e </tt>part);
+<b><tt>(3;e)$.y</tt></b><tt> </tt>respecifies the sparse element.<br><br>
+
+<b><tt>4$.y </tt></b>gives the index matrix (the<tt> i </tt>part).<br><br>
+
+<b><tt>5$.y </tt></b>gives the value array (the<tt> x </tt>part).<br><br>
+
+<b><tt>7$.y </tt></b>gives the number of non-sparse entries in
+array<tt> y</tt>;<tt> </tt>that is,<tt> #4$.y </tt>or<tt> #5$.y</tt>.<br><br>
+
+<b><tt>8$.y </tt></b>removes any completely &ldquo;zero&rdquo;
+value cells and the corresponding rows in the index matrix.<br><br>
+
+The inverse of<tt> n&amp;$. </tt>is<tt> (-n)&amp;$. </tt>.
+<br>&nbsp;</td>
+</tr></table><br>
+
+The remainder of this text is divided into the following sections:
+<a href="#introduction">Introduction</a>, 
+<a href="#representation">Representation</a>,
+<a href="#assertions">Assertions</a>,
+<a href="#further examples">Further Examples</a>,
+<a href="#sparse linear algebra">Sparse Linear Algebra</a>, and
+<a href="#implementation status">Implementation Status</a>.<br><br>
+
+<a name="introduction"></a><font size=+1><b>Introduction</b></font><br><br>
+
+We describe a sparse array extension to J using a
+representation that &ldquo;does not store zeros&rdquo;. One new
+verb<tt> $. </tt>is defined to
+create and manipulate sparse arrays, and existing primitives are
+extended to operate on such arrays. These ideas are illustrated
+in following examples:<br><br>
+
+<pre>
+   ] d=: (?. 3 4$2) * ?. 3 4$100
+0 55 79  0
+0 39  0 57
+0  0  0  0
+
+   ] s=: $. d                  <font face=Times>convert</font> d <font face=Times>to sparse and assign to</font> s
+0 1 | 55
+0 2 | 79                       <font face=Times>the display of</font> s <font face=Times>gives the indices of the</font>
+1 1 | 39                       <font face=Times>&ldquo;non-zero&rdquo; cells and the corresponding values</font>
+1 3 | 57
+
+   d -: s                      d <font face=Times>and</font> s <font face=Times>match</font>
+1
+
+   o. s                        <font face=Times>&pi; times</font> s
+0 1 | 172.788
+0 2 | 248.186
+1 1 | 122.522
+1 3 | 179.071
+
+   o. d                        <font face=Times>&pi; times</font> d
+0 172.788 248.186       0
+0 122.522       0 179.071
+0       0       0       0
+
+   (o. s) -: o. d              <font face=Times>function results independent of representation</font>
+1
+
+   0.5 + o. s
+0 1 | 173.288
+0 2 | 248.686
+1 1 | 123.022
+1 3 | 179.571
+
+   &lt;. 0.5 + o. s
+0 1 | 173
+0 2 | 248
+1 1 | 123
+1 3 | 179
+
+   (&lt;. 0.5 + o. s) -: &lt;. 0.5 + o. d
+1
+
+   d + s                       <font face=Times>function arguments can be dense or sparse</font>
+0 1 | 110
+0 2 | 158
+1 1 |  78
+1 3 | 114
+
+   (d + s) -: 2*s              <font face=Times>familiar algebraic properties are preserved</font>
+1
+
+   (d + s) -: 2*d
+1
+
+   +/ s
+1 | 94
+2 | 79
+3 | 57
+   
+   +/&quot;1 s
+0 | 134
+1 |  96
+
+   |. s                        <font face=Times>reverse</font>
+1 1 | 39
+1 3 | 57
+2 1 | 55
+2 2 | 79
+
+   |.&quot;1 s
+0 1 | 79
+0 2 | 55
+1 0 | 57
+1 2 | 39
+
+   |: s                        <font face=Times>transpose</font>
+1 0 | 55
+1 1 | 39
+2 0 | 79
+3 1 | 57
+
+   $ |: s
+4 3
+
+   $.^:_1 |: s                 $.^:_1 <font face=Times>converts a sparse array to dense</font>
+ 0  0 0
+55 39 0
+79  0 0
+ 0 57 0
+
+   (|:s) -: |:d
+1
+
+   , s                         <font face=Times>ravel; a sparse <i>vector</i></font>
+1 | 55
+2 | 79
+5 | 39
+7 | 57
+
+   $ , s
+12
+</pre>
+
+<a name="representation"></a>
+<font size=+1><b>Representation</b></font><br><br>
+
+A sparse array<tt> y </tt>may be boolean, integer, floating
+point, complex, literal, or boxed, and has the (internal) 
+parts<tt> sh;a;e;i;x </tt>where:<br><br>
+
+<table>
+<tr><td valign=top><tt>sh</tt></td><td>&nbsp;</td>
+<td>Shape, <tt>$y</tt> . Elements of
+the shape must be less than<tt> 2^31</tt> ,<tt> </tt>but the
+product over the shape may be larger than<tt> 2^31</tt> .</td></tr>
+
+<tr><td valign=top><tt>a</tt></td><td>&nbsp;</td>
+<td>Axe(s), a vector of the sorted sparse (indexed) axes.</td></tr>
+
+<tr><td valign=top><tt>e</tt></td><td>&nbsp;</td>
+<td>Sparse element (&ldquo;zero&rdquo;).<tt> e </tt>is 
+also used as the fill in any
+overtake of the array. </td></tr>
+
+<tr><td valign=top><tt>i</tt></td><td>&nbsp;</td>
+<td>Indices, an integer matrix of indices for the sparse axes. </td></tr>
+
+<tr><td valign=top><tt>x</tt></td><td>&nbsp;</td>
+<td>Values, a (dense) array of usually non-zero cells for the 
+non-sparse axes corresponding to the index matrix<tt> i</tt> .</td></tr>
+
+</table>
+<br>
+
+For the sparse matrix<tt> s </tt>used in the introduction,<br>
+
+<pre>
+   ] d=: (?. 3 4$2) * ?. 3 4$100
+0 55 79  0
+0 39  0 57
+0  0  0  0
+    
+   ] s=: $. d
+0 1 | 55
+0 2 | 79
+1 1 | 39
+1 3 | 57
+</pre>
+
+The shape is<tt> 3 4</tt> ;<tt> </tt>
+the sparse axes are<tt> 0 1</tt> ;<tt> </tt>
+the sparse element is<tt> 0</tt>;<tt> </tt>
+the indices are the first two columns of numbers 
+in the display of<tt> s</tt> ;<tt> </tt>and the values are 
+the last column.<br><br>
+
+Scalars continue to be represented as before (densely). All
+primitives accept sparse or dense arrays as arguments 
+(e.g.<tt> sparse+dense </tt>or<tt> sparse$sparse</tt>). 
+The display of a sparse array is a display of the index matrix 
+(the<tt> i </tt>part), a blank column, a column of
+vertical lines, another blank column, and 
+the corresponding value cells (the<tt> x </tt>part).<br><br>
+
+Letting the sparse element be variable rather than fixed at
+zero makes many more functions closed on sparse arrays 
+(e.g.<tt> ^y </tt>or<tt> 10+y</tt>),<tt> </tt> 
+and familiar results can be produced by familiar phrases 
+(e.g.<tt> &lt;.0.5+y </tt>for rounding to the nearest integer).<br><br>
+
+<a name="assertions"></a>
+<font size=+1><b>Assertions</b></font><br><br>
+
+The following assertions hold for a sparse array, and
+displaying a sparse array invokes these consistency checks on it.<br><br>
+
+<table>
+<tr><td><tt>imax =: _1+2^IF64{31 63</tt></td>
+<td>the largest internal integer</td></tr>
+
+<tr><td><tt>rank =: #@$</tt></td>
+<td>rank</td></tr>
+
+<tr><td><tt>type =: 3!:0</tt></td>
+<td>internal type</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>1 = rank sh</tt></td>
+<td>vector</td></tr>
+
+<tr><td><tt>sh -: &lt;. sh</tt></td>
+<td>integral</td></tr>
+
+<tr><td><tt>imax &gt;: #sh</tt></td>
+<td>at most<tt> imax </tt>elements</td></tr>
+
+<tr><td><tt>(0&lt;:sh) *. (sh&lt;:imax)</tt></td>
+<td>bounded by<tt> 0 </tt>and<tt> imax</tt></td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>1 = rank a</tt></td>
+<td>vector</td></tr>
+
+<tr><td><tt>a e. i.#sh</tt></td>
+<td>bounded by<tt> 0 </tt>and rank-1</td></tr>
+
+<tr><td><tt>a -: ~. a</tt></td>
+<td>elements are unique</td></tr>
+
+<tr><td><tt>a -: /:~ a</tt></td>
+<td>sorted</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>0 = rank e</tt></td>
+<td>atomic</td></tr>
+
+<tr><td><tt>(type e) = type x</tt></td>
+<td>has the same internal type as<tt> x</tt></td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>2 = rank i</tt></td>
+<td>matrix</td></tr>
+
+<tr><td><tt>4 = type i</tt></td>
+<td>integral</td></tr>
+
+<tr><td><tt>(#i) = #x</tt></td>
+<td>as many rows as the number of items in<tt> x</tt></td></tr>
+
+<tr><td><tt>({:$i) = #a</tt></td>
+<td>as many columns as there are sparse axes</td></tr>
+
+<tr><td><tt>(#i) &lt;: */a{sh</tt></td>
+<td># rows bounded by product over sparse axes lengths</td></tr>
+
+<tr><td valign=top><tt>imax &gt;: */$i</tt></td>
+<td># elements is bounded by<tt> imax</tt></td></tr>
+
+<tr><td valign=top><tt>(0&lt;:i) *. (i &lt;&quot;1 a{sh)</tt></td>
+<td><tt>i </tt>bounded by 0 and the lengths of the sparse axes</td></tr>
+
+<tr><td valign=top><tt>i -: ~.i</tt></td>
+<td>rows are unique</td></tr>
+
+<tr><td valign=top><tt>i -: /:~ i</tt></td>
+<td>rows are sorted</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><tt>(rank x) = 1+(#sh)-#a</tt></td>
+<td>rank equals 1 plus the number of dense axes</td></tr>
+
+<tr><td valign=top><tt>imax &gt;: */$x</tt></td>
+<td># elements is bounded by<tt> imax</tt></td></tr>
+
+<tr><td valign=top><tt>(}.$x)-:((i.#sh)-.a){s</tt></td>
+<td>item shape are elements of the shape corresponding to the dense axes</td></tr>
+
+<tr><td valign=top><tt>(type x) e. 1 2 4 8 16 32&nbsp;</tt></td>
+<td>internal type is boolean, character, integer, real, complex, 
+or boxed</td></tr>
+</table>
+<br>
+
+<a name="further examples"></a>
+<font size=+1><b>Further Examples</b></font><br><br>
+
+<pre>
+   ] d=: (0=?. 2 3 4$3) * ?. 2 3 4$100
+46  0  0  0
+ 0 39  0  0
+ 0  0 46  0
+
+ 0  0  0  0
+ 0 60  0 62
+ 0  0 60 64
+
+   ] s=: $. d                  <font face=Times size=+1>convert</font> d <font face=Times size=+1>to sparse and assign to</font> s
+0 0 0 | 46
+0 1 1 | 39
+0 2 2 | 46
+1 1 1 | 60
+1 1 3 | 62
+1 2 2 | 60
+1 2 3 | 64
+
+   d -: s                      <font face=Times size=+1>match is independent of representation</font>
+1
+
+   2 $. s                      <font face=Times size=+1>sparse axes</font>
+0 1 2
+
+   3 $. s                      <font face=Times size=+1>sparse element</font>
+0
+
+   4 $. s                      <font face=Times size=+1>index matrix; columns correspond to the sparse axes</font>
+0 0 0
+0 1 1
+0 2 2
+1 1 1
+1 1 3
+1 2 2
+1 2 3
+
+   5 $. s                      <font face=Times size=+1>corresponding values</font>
+46 39 46 60 62 60 64
+
+   ] u=: (2;2)$.s              <font face=Times size=+1>make</font> 2 <font face=Times size=+1>be the sparse axis</font>
+0 | 46  0  0
+  |  0  0  0
+  |         
+1 |  0 39  0
+  |  0 60  0
+  |         
+2 |  0  0 46
+  |  0  0 60
+  |         
+3 |  0  0  0
+  |  0 62 64
+
+   4 $. u                      <font face=Times size=+1>index matrix</font>
+0
+1
+2
+3
+
+   5 $. u                      <font face=Times size=+1>corresponding values</font>
+46  0  0
+ 0  0  0
+
+ 0 39  0
+ 0 60  0
+
+ 0  0 46
+ 0  0 60
+
+ 0  0  0
+ 0 62 64
+
+   ] t=: (2;0 1)$.s            <font face=Times size=+1>make</font> 0 1 <font face=Times size=+1>be the sparse axes</font>
+0 0 | 46  0  0  0
+0 1 |  0 39  0  0
+0 2 |  0  0 46  0
+1 1 |  0 60  0 62
+1 2 |  0  0 60 64
+
+   7 {. t                      <font face=Times size=+1>take</font>
+0 0 | 46  0  0  0
+0 1 |  0 39  0  0
+0 2 |  0  0 46  0
+1 1 |  0 60  0 62
+1 2 |  0  0 60 64
+
+   $ 7 {. t
+7 3 4
+
+   7{.&quot;1 t                     <font face=Times size=+1>take with rank</font>
+0 0 | 46  0  0  0 0 0 0
+0 1 |  0 39  0  0 0 0 0
+0 2 |  0  0 46  0 0 0 0
+1 1 |  0 60  0 62 0 0 0
+1 2 |  0  0 60 64 0 0 0
+
+   0 = t
+0 0 | 0 1 1 1
+0 1 | 1 0 1 1
+0 2 | 1 1 0 1
+1 1 | 1 0 1 0
+1 2 | 1 1 0 0
+
+   3 $. 0 = t                  <font face=Times size=+1>the sparse element of</font> 0=t <font face=Times size=+1>is</font> 1
+1
+
+   +/ , 0 = t
+17
+
+   +/ , 0 = d                  <font face=Times size=+1>answers are independent of representation</font>
+17
+
+   0 { t                       <font face=Times size=+1>from</font>
+0 | 46  0  0 0
+1 |  0 39  0 0
+2 |  0  0 46 0
+
+   _2 (&lt;1 2 3)}t               <font face=Times size=+1>amend</font>
+0 0 | 46  0  0  0
+0 1 |  0 39  0  0
+0 2 |  0  0 46  0
+1 1 |  0 60  0 62
+1 2 |  0  0 60 _2
+
+   s=: 1 $. 20 50 1000 75 366
+   $ s                         <font face=Times size=+1>20 countries, 50 regions, 1000 salespersons,</font>
+20 50 1000 75 366              <font face=Times size=+1>75 products, 366 days in a year</font>
+
+   */ $ s                      <font face=Times size=+1>the product over the shape can be greater than</font> 2^31
+2.745e10
+
+   r=: ?. 1e5 $ 1e6            <font face=Times size=+1>revenues</font>
+   i=: ?. 1e5 5 $ $ s          <font face=Times size=+1>corresponding locations</font>
+   s=: r (&lt;&quot;1 i)} s            <font face=Times size=+1>assign revenues to corresponding locations</font>
+
+   7 {. &quot;: s                   <font face=Times size=+1>the first 7 rows in the display of</font> s
+ 0  0  20 48 150 | 395543      <font face=Times size=+1>the first row says that for country 0, region 0,</font>
+ 0  0  39 40  67 | 316198      <font face=Times size=+1>salesperson 20, product 48, day 150,</font>
+ 0  0  47 37 172 | 650782      <font face=Times size=+1>the revenue was 395543</font>
+ 0  0  52 32 358 | 789844
+ 0  0  54 62  82 | 923413
+ 0  0  67 17 103 | 567367
+ 0  0  91 13 295 | 470919
+
+
+   +/ , s                      <font face=Times size=+1>total revenue</font>
+|limit error                   <font face=Times size=+1>the expression failed on</font> ,s <font face=Times size=+1>because it would</font>
+| +/    ,s                     <font face=Times size=+1>have required a vector of length 2.745e10</font>
+
+   +/@, s                      <font face=Times size=+1>total revenue</font>
+4.98338e10                     f/@, <font face=Times size=+1>is supported by special code</font>
+
+   +/+/+/+/+/ s                <font face=Times size=+1>total revenue</font>
+4.98338e10
+
+   +/^:5 s
+4.98338e10
+
+   +/^:_ s
+4.98338e10
+
+   +/ r
+4.98338e10
+
+   +/&quot;1^:4 s                   <font face=Times size=+1>total revenue by country</font>
+ 0 | 2.49298e9
+ 1 | 2.35118e9
+ 2 | 2.49324e9
+ 3 | 2.44974e9
+ 4 | 2.45138e9
+ 5 | 2.47689e9
+ 6 | 2.55936e9
+ 7 | 2.47153e9
+ 8 | 2.45907e9
+ 9 | 2.50249e9
+10 | 2.52785e9
+11 | 2.49482e9
+12 | 2.57532e9
+13 | 2.46509e9
+14 | 2.54962e9
+15 | 2.48942e9
+16 | 2.50503e9
+17 | 2.52147e9
+18 | 2.50127e9
+19 | 2.49603e9
+
+   t=: +/^:2 +/&quot;1^:2 s         <font face=Times size=+1>total revenue by salesperson</font>
+
+   $t
+1000
+
+   7{.t
+0 | 5.08254e7
+1 | 5.61577e7
+2 | 4.19914e7
+3 | 5.90514e7
+4 | 6.08208e7
+5 | 4.10632e7
+6 | 4.36616e7
+</pre>
+
+<a name="sparse linear algebra"></a>
+<font size=+1><b>Sparse Linear Algebra</b></font><br><br>
+
+Currently, only sparse matrix multiplication and the solutions
+of tri-diagonal linear system are implemented. For example:<br>
+
+<pre>
+   f=: }. @ }: @ (,/) @ (,.&quot;_1 +/&amp;_1 0 1) @ i.
+
+   f 5                         <font face=Times size=+1>indices for a 5 by 5 tri-diagonal matrix</font>
+0 0
+0 1
+1 0
+1 1
+1 2
+2 1
+2 2
+2 3
+3 2
+3 3
+3 4
+4 3
+4 4
+
+   s=: (?. 13$100) (&lt;&quot;1 f 5)} 1 $. 5 5;0 1
+   $s
+5 5
+</pre>
+
+The phrase<tt> 1$.5 5;0 1 </tt>makes
+a sparse array with shape<tt> 5 5 </tt>and
+sparse axes<tt> 0 1 </tt>;<tt> &lt;&quot;1 f 5 </tt>makes boxed indices; 
+and<tt> x (&lt;&quot;1 f 5)}y </tt>
+amends by<tt> x </tt>the locations in<tt> y </tt>indicated by the indices
+(scattered amendment).<br>
+
+<pre>
+   s
+0 0 | 46
+0 1 | 55
+1 0 | 79
+1 1 | 52
+1 2 | 54
+2 1 | 39
+2 2 | 60
+2 3 | 57
+3 2 | 60
+3 3 | 94
+3 4 | 46
+4 3 | 78
+4 4 | 13
+
+   ] d=: $.^:_1 s              <font face=Times size=+1>the dense representation of</font> s
+46 55  0  0  0
+79 52 54  0  0
+ 0 39 60 57  0
+ 0  0 60 94 46
+ 0  0  0 78 13
+
+   ] y=: ?. 5$80
+66 75 79 52 54
+
+   y %. s
+0.352267 0.905377 0.00169115 0.764716 _0.434452
+
+   y %. d                      <font face=Times size=+1>answers are independent of representation</font>
+0.352267 0.905377 0.00169115 0.764716 _0.434452
+
+   s=: (?. (_2+3*1e5)$1000) (&lt;&quot;1 f 1e5)} 1 $. 1e5 1e5;0 1
+
+   $ s                         s <font face=Times size=+1>is a 1e5 by 1e5 matrix</font>
+100000 100000
+
+   y=: ?. 1e5$1000
+
+   ts=: 6!:2 , 7!:2@]          <font face=Times size=+1>time and space for execution</font>
+
+   ts 'y %. s'
+0.0550291 5.24358e6            <font face=Times size=+1>0.056 seconds; 5.2 megabytes (Pentium III 500 Mhz)</font>
+</pre>
+
+<a name="implementation status"></a>
+<font size=+1><b>Implementation Status</b></font><br><br>
+
+As of 2005-12-17, the following facilities support sparse arrays:<br><br>
+
+<pre>
+=       =.      =: 
+&lt; d     &lt;.      &lt;: 
+&gt;       &gt;.      &gt;: 
+_       _.      _:
+
++       +.      +:
+*       *.      *:
+-       -.      -:
+%       %. d    %:
+
+^       ^.
+$       $.      $:
+~       ~.      ~:
+|       |.      |:
+
+        ..      .:
+:       :.      ::
+,       ,.      ,:
+        ;.
+
+#
+!       !.      !:
+/ m     /. d    /: m
+\ m     \. m    \: m
+
+[               [:
+]         
+{ d     {.      {:
+} d     }.      }:
+
+&quot;       &quot;.      &quot;: m
+`               `:
+@       @.      @:
+&amp;       &amp;.      &amp;:
+
+e. d
+i.
+i:
+j.
+o.
+r.
+_9: to 9:
+
+3!:0 
+3!:1
+3!:2
+3!:3
+4!:55
+</pre>
+
+<b>Notes:</b>
+
+<ul>
+<li>Sparse literal and boxed arrays not yet implemented.
+<li>The dyad<tt> %. </tt>only implements the case of triadiagonal
+matrices.
+<li>Boxed left arguments for<tt> |: </tt>(diagonal slices) not yet
+implemented.
+<li>The monads<tt> f/ </tt>and<tt> f/&quot;r </tt>are only
+implemented for<tt> + * &gt;. &lt;. +. *. = ~: , </tt>(and only
+boolean arguments for<tt> = </tt>and<tt> ~:</tt>); on an axis of
+length 2, the monads<tt> f/ </tt>and<tt> f/&quot;r </tt>are
+implemented for any function.
+<li>The monads<tt> f/@, </tt>(and<tt> f/@:, </tt>and<tt> f/&amp;, </tt>and<tt>
+f/&amp;:,</tt>)<tt> </tt>are supported by special code.<br>
+<li><tt>{ </tt>and<tt> } </tt>only accept the following index
+arguments: integer arrays,<tt> &lt;&quot;1</tt> on integer
+arrays, and scalar boxed indices (respectively, item indexing,
+scattered indexing, and index lists<tt> a0;a1;a2;...</tt>);
+and<tt> </tt>(<tt>{ </tt>only) sparse arrays.
+</ul>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d212.htm">&gt;&gt;</a>&nbsp;
+<a href="d210.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

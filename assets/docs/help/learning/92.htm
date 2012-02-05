@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+        <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1">
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)">
+	<META NAME="CREATED" CONTENT="20051014;16001218">
+	<META NAME="CHANGED" CONTENT="20051014;16020434">
+        <title>Ap 2: Collected Terminology</title>	
+          <STYLE TYPE="text/css">
+        <!--
+         TT  {font-size: 11pt; COLOR: BLUE}
+         PRE {font-size: 11pt; COLOR: BLUE}
+         -->
+         </STYLE>
+</HEAD>
+
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="kwic.htm">&gt;&gt;</a>&nbsp;
+<a href="91.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end-->
+<table border="0" cellpadding="5" cellspacing="0"  width="100%">
+ <tr> <td valign="top" width="17%"> <p> </td>
+      <td valign="top" width="83%"> 
+<H1>Appendix 2: Collected Terminology</H1>
+
+<p>
+
+In this book, the words "data", "function", "argument" and  "expression" 
+are used with the meanings usual in programming.
+<p>
+Certain other words are used in this book with meanings given below,
+in a sequence such that the explanation of each word depends only on words 
+previously explained.
+<p>
+<p>
+<TABLE CELLPADDING=10>
+
+<TR VALIGN=TOP><TD NOWRAP>VALUE  
+               <TD> Anything which can be produced by evaluating 
+an expression is
+        said to be a value. Every value is a data value or a function.
+
+<TR VALIGN=TOP><TD NOWRAP> NOUN  <TD>	a data value 
+
+<TR VALIGN=TOP> <TD NOWRAP> VERB <TD>	a function which computes nouns from nouns.
+
+<TR VALIGN=TOP> <TD NOWRAP> MONAD  <TD> a verb which takes a single argument.
+
+<TR VALIGN=TOP> <TD NOWRAP> DYAD  <TD>  a verb which takes two arguments. Every verb is a monad or a dyad.
+
+
+<TR VALIGN=TOP> <TD NOWRAP>AMBIVALENT <TD>An expression is said to be ambivalent when it denotes 
+         either a monad or a dyad (depending on 
+         whether one or two arguments are supplied).  
+	
+<TR VALIGN=TOP> <TD NOWRAP>OPERATOR <TD>a function which takes, as its argument(s), nouns or verbs,
+	and produces as its result, a noun or verb or operator. 
+	Every J function is a verb or an operator.
+
+<TR VALIGN=TOP> <TD NOWRAP>ADVERB<TD>an operator which takes a single argument.
+
+<TR VALIGN=TOP> <TD NOWRAP>CONJUNCTION<TD> an operator which takes two arguments. Every operator is an 
+	adverb or a conjunction.
+
+<TR VALIGN=TOP> <TD NOWRAP>BIDENT<TD>a sequence of two expressions for which the J grammar provides an 
+        interpretation as a single function.
+
+<TR VALIGN=TOP> <TD NOWRAP>TRIDENT <TD> a sequence of
+        three expressions for which the J grammar provides an interpretation as 
+        a single function.
+
+<TR VALIGN=TOP> <TD NOWRAP>TRAIN<TD>a sequence of two or more expressions
+        for which the J grammar provides an interpretation as 
+        a single function.
+
+<TR VALIGN=TOP> <TD NOWRAP>HOOK<TD>    a verb defined as a sequence of two verbs, that is, a bident.
+
+<TR VALIGN=TOP> <TD NOWRAP>FORK<TD>    a verb defined as a sequence of three verbs, that is, a trident.
+
+<TR VALIGN=TOP> <TD NOWRAP>EXPLICIT<TD>  a function is said to be explicitly defined,
+or just explicit, 
+when defined by an
+         expression containing argument variables for which values 
+         are to be substituted.
+
+<TR VALIGN=TOP> <TD NOWRAP>TACIT<TD> a function is said to be tacitly defined, 
+     or just tacit,  when defined without 
+         using argument variables. 
+         Every J function is either built-in or explicit or tacit.
+
+
+<TR VALIGN=TOP> <TD NOWRAP>ARRAY<TD> a noun, that is, a data value, consisting of a number of simpler values
+         arranged on rectangular coordinates, or axes. Every noun is an array,
+         with zero or more axes.
+
+<TR VALIGN=TOP> <TD NOWRAP>DIMENSION <TD> (of an array) the length of an axis 
+
+<TR VALIGN=TOP> <TD NOWRAP>SHAPE<TD> (of an array) the list of its dimensions
+
+<TR VALIGN=TOP> <TD NOWRAP>SCALAR<TD>   a noun with no dimensions. The shape of a scalar is an empty list.
+
+<TR VALIGN=TOP> <TD NOWRAP>RANK <TD> (of a noun) the number of its dimensions, that is, the length of its shape.
+
+  
+<TR VALIGN=TOP> <TD NOWRAP>BOX<TD> A scalar of a special type, such that its value
+can represent any array.
+
+<TR VALIGN=TOP> <TD NOWRAP>CELL<TD>The list of dimensions of any array can be 
+arbitrarily partitioned into leading dimensions followed by 
+trailing dimensions. The original array is thus described as an array of cells, 
+where each cell has only the trailing dimensions. The leading dimensions are called a 
+frame for those cells.
+<TR VALIGN=TOP> <TD NOWRAP>FRAME<TD> See Cell.
+
+<TR VALIGN=TOP> <TD NOWRAP>RANK<TD>  (of a verb) The natural, or intrinsic,  
+rank for its argument(s).
+      With an argument of any rank higher than its intrinsic rank, 
+      the verb is applied separately to each intrinsic-rank cell of the argument.
+A monad has one rank, a dyad has two (one each for left and right arguments)
+ and hence an ambivalent verb has three.
+    
+</TABLE>
+
+</TABLE>
+<HR> 
+<p ALIGN=LEFT>
+<A HREF="contents.htm#toc"> Table of Contents </A> <BR>
+<A HREF="kwic.htm"> Index </A>
+
+</p> 
+
+<HR>
+<p ALIGN=CENTER> <FONT SIZE=-2>Copyright &copy; Roger Stokes 2003. 
+This material may be freely reproduced,
+provided that this copyright notice is also reproduced.
+</FONT>
+</p>
+ 
+<p ALIGN=CENTER> last updated 1 July 2003</p>
+<!--bottom jump start--><hr><a href="kwic.htm">&gt;&gt;</a>&nbsp;
+<a href="91.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY>
+</HTML>
+

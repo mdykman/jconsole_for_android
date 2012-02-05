@@ -1,0 +1,488 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 11: Tacit Verbs Concluded</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="12.htm">&gt;&gt;</a>&nbsp;
+<a href="10.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <A NAME="01"></A>
+<H1>Chapter 11: Tacit Verbs Concluded</H1>
+In this chapter we consider
+some  general points in writing expressions for 
+tacit verbs.
+<p>
+Here is an example of a tacit verb. 
+It multiplies its argument by <TT>3</TT>:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>f =: * & 3</TT></TD>
+<TD><TT>f 4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>*&3</TT></TD>
+<TD><TT>12</TT></TD>
+</TABLE>
+<p>
+Recall from <A HREF="03.htm">Chapter 03</A> that the bonding operator <TT>&</TT>
+produces a monad from a dyad by fixing one of the arguments
+of the dyad.  The scheme is that if <TT>N</TT> is a noun and <TT>V</TT> 
+a dyadic verb, then:
+<PRE>
+            (N & V) y    means   N V y
+</PRE>
+<PRE>
+            (V & N) y    means   y V N
+</PRE>
+We take the bonding operator <TT>&</TT> as an example of a typical
+ operator, where arguments may be nouns or verbs. 
+In general, <TT>N</TT> can be an expression denoting an noun, 
+and <TT>V</TT> an expression denoting a verb.
+We look now at how these expressions 
+get evaluated.  The general rules are set out formally in
+<a href="91.htm"> Appendix 1 </a>
+but here we take an informal first look at a few of the main 
+points.
+<H2>11.1  If In Doubt, Parenthesize</H2>
+Here is another tacit verb. Its general form 
+is <TT>V&N</TT>. It multiplies
+its argument by <TT>5%4</TT>, that is, by <TT>1.25</TT> 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>scale =: * & (5 % 4)</TT></TD>
+<TD><TT>scale 8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>*&1.25</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+Are the parentheses around <TT>5 % 4</TT> necessary here? If we 
+omit them, we see:
+<PRE>
+   SCALE =: * & 5 % 4
+   SCALE
+1.25
+</PRE>
+so they evidently make a difference. <TT>SCALE</TT> is a number,
+not a verb.
+The result of <TT>1.25</TT> is produced by
+applying the verb <TT>*&5</TT> to the argument <TT>% 4</TT>
+(the reciprocal of <TT>4</TT>)
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>% 4</TT></TD>
+<TD><TT>(* & 5) (% 4)</TT></TD>
+<TD><TT>* & 5 % 4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.25</TT></TD>
+<TD><TT>1.25</TT></TD>
+<TD><TT>1.25</TT></TD>
+</TABLE>
+<p>
+We have a general rule: informally we can say that 
+conjunctions get applied before adjacent verbs.
+Thus in the expression <TT>* & 5 % 4</TT> the first
+step is to apply the <TT>&</TT> operator
+to its arguments <TT>*</TT> and <TT>5</TT>.
+<p>
+Why is the right argument of <TT>&</TT> just <TT>5</TT> and not <TT>5%4</TT>?
+Because of another general rule: the right
+argument of a conjunction is as short as possible. We say
+that a conjunction has a "short right scope". By contrast,
+we say that a verb has a "long right scope" to express
+what we earlier called the "rightmost first" rule for 
+ verbs.
+<p>
+What about the left argument of an operator? An adverb or 
+conjunction is said
+to have "long left scope", that is, as much as possible.
+For example, here is a verb <TT>z</TT> which 
+adds <TT>3</TT> to the square of its argument. 
+<TT>3</TT> plus the square of <TT>2</TT> is <TT>7</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>z =: 3 & +  @: *:</TT></TD>
+<TD><TT>z 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3&+@:*:</TT></TD>
+<TD><TT>7</TT></TD>
+</TABLE>
+<p>
+We see that the left argument of <TT>@:</TT> is the whole of <TT>3&+</TT>.
+<p>
+If we are in doubt in any
+particular case we can always make our intention
+clear. We can write parentheses around a part of an 
+expression, that is,
+around a function - verb
+or operator -  together with its intended argument(s). For 
+example, verb <TT>z</TT> can be 
+written with parentheses as:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>z =:  (3 & +)  @: *:</TT></TD>
+<TD><TT>z 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3&+@:*:</TT></TD>
+<TD><TT>7</TT></TD>
+</TABLE>
+<p>
+Sometimes parentheses are necessary 
+ and sometimes not, but, let me emphasize,
+if in doubt, parenthesize.
+<H2>11.2  Names of Nouns Are Evaluated</H2>
+In an expression of the general form <TT>N&V</TT> or <TT>V&N</TT>, the
+the names of any nouns occurring in <TT>N</TT> are evaluated right away. 
+Here is an example of a function <TT>f</TT> to multiply
+by five-fourths. 
+The numerical value is given as <TT>a%b</TT>
+where <TT>a</TT> and <TT>b</TT> are nouns.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a =: 5</TT></TD>
+<TD><TT>b =: 4</TT></TD>
+<TD><TT>f =: * & (a % b)</TT></TD>
+<TD><TT>f 8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>5</TT></TD>
+<TD><TT>4</TT></TD>
+<TD><TT>*&1.25</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+We see that function <TT>f</TT> contains the computed number
+<TT>1.25</TT> so that <TT>a%b</TT> has been evaluated.
+<H2>11.3  Names of Verb Are Not Evaluated</H2>
+In <TT>N&V</TT> the verb-expression <TT>V</TT> is
+not necessarily fully evaluated. 
+If expression <TT>V</TT> is the name of a verb, 
+then the name is enough:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>w =: *</TT></TD>
+<TD><TT>g =: w & (a % b)</TT></TD>
+<TD><TT>g 8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>*</TT></TD>
+<TD><TT>w&1.25</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+<H2>11.4  Unknowns are Verbs</H2>
+When a new name is encountered, 
+it is assumed to be a yet-to-be-defined verb if it 
+possibly can be.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>h =: ytbd & (a%b)</TT></TD>
+<TD><TT>ytbd =: *</TT></TD>
+<TD><TT>h 8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ytbd&1.25</TT></TD>
+<TD><TT>*</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+Any sequence of hitherto-unknown names is assumed to be a 
+train of verbs:
+<PRE>
+   Ralph Waldo Emerson
+Ralph Waldo Emerson
+</PRE>
+Consequently, a verb can be defined in "top-down" fashion, 
+that is, with detail presented later.  
+For example, here is a Celsius-to-Fahrenheit 
+converter presented top-down. 
+<PRE>
+   ctof =: shift @ scale
+           shift =: + & 32
+           scale =: * & (9 % 5)        
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>ctof</TT></TD>
+<TD><TT>ctof 0 100</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>shift@scale</TT></TD>
+<TD><TT>32 212</TT></TD>
+</TABLE>
+<p>
+We can see that <TT>ctof</TT> is defined solely in terms of
+(the names) <TT>scale</TT> and <TT>shift</TT>. Hence if we now change
+ <TT>scale</TT> or <TT>shift</TT>
+we will effectively change the definition of <TT>ctof</TT>.
+<PRE>
+   ctof 100
+212
+   scale =: * & 2
+   ctof 100
+232
+   scale =: * & (9 % 5)
+   ctof 100
+212
+</PRE>
+The possibility of changing the definition
+of a function simply by changing one of its
+subordinate functions, may or may not be regarded as 
+desirable. It is useful,
+in so far as we can correct a definition just by changing 
+a small
+part. However, it may be a source of error: we may introduce
+a new verb, <TT>scale</TT> say, forgetting that <TT>scale</TT> is already
+ defined as subordinate in <TT>ctof</TT>.
+<p>
+There are ways to protect <TT>ctof</TT> against
+accidental redefinition of its subordinate
+functions.
+Firstly, we can put a wrapper of 
+explicit definition around 
+it, making <TT>scale</TT> and <TT>shift</TT> local, thus:
+<PRE>
+   CTOF =: 3 : 0
+shift =. + & 32
+scale =. * & (9 % 5)
+shift @ scale y
+)
+   CTOF 100
+212
+</PRE>
+<A NAME="02"></A>
+A second method is to,  so to speak,
+"freezing" or "fixing" the definition of <TT>ctof</TT>, 
+with the "Fix" adverb <TT>f.</TT> (letter-f dot).
+Observe the difference between the values
+of the verbs <TT>ctof</TT> and <TT>(ctof f.)</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>ctof</TT></TD>
+<TD><TT>ctof f.</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>shift@scale</TT></TD>
+<TD><TT>+&32@(*&1.8)</TT></TD>
+</TABLE>
+<p>
+We see that adverb <TT>f.</TT> applied to a tacit verb
+replaces names by definitions, giving an
+equivalent verb defined only in terms of
+built-in functions. Here is yet another
+definition of <TT>ctof</TT>.
+<PRE>
+   scale =: * & (9 % 5)
+   shift =: + & 32
+   ctof  =: (shift @ scale) f.
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>ctof</TT></TD>
+<TD><TT>ctof 0 100</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+&32@(*&1.8)</TT></TD>
+<TD><TT>32 212</TT></TD>
+</TABLE>
+<p>
+After this definition,
+the names <TT>scale</TT> and <TT>shift</TT> are still defined,
+but are no longer important in the
+definition of <TT>ctof</TT>.
+<A NAME="03"></A>
+<H2>11.5  Parametric Functions</H2>
+The following example shows the consequences of 
+nouns being evaluated and verbs not
+in an expression for a tacit verb.
+<p>
+A curve may be specified by 
+an equation such as, for example:
+<PRE>
+                y  =  lambda * x * (1 - x)
+</PRE>
+This equation describes a family of similar 
+parabolic curves, and different members of the 
+family are 
+picked out by choosing different values for the number
+ <TT>lambda</TT>. 
+<p>
+A function to correspond to
+this equation might be written explicitly as verb <TT>P</TT>:
+<PRE>
+   P =: 3 : 'lambda * y * (1-y)'
+</PRE>
+Here <TT>lambda</TT> is not an argument to function <TT>P</TT>, 
+but a 
+variable, a number, 
+which makes a difference to the result. 
+We say that <TT>lambda</TT> is a parameter,
+or that function <TT>P</TT> is parametric. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>x=:0.6</TT></TD>
+<TD><TT>lambda=: 3.0</TT></TD>
+<TD><TT>P x</TT></TD>
+<TD><TT>lambda=: 3.5</TT></TD>
+<TD><TT>P x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.6</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>0.72</TT></TD>
+<TD><TT>3.5</TT></TD>
+<TD><TT>0.84</TT></TD>
+</TABLE>
+<p>
+Now, can we write a tacit version of <TT>P</TT>
+taking <TT>lambda</TT> as a parameter?
+<p>
+<TT>lambda</TT> is currently <TT>3.5</TT>. 
+If we now generate a tacit form of <TT>P</TT>
+<PRE>
+   tP =: 13 : 'lambda * y * (1-y)'
+   tP
+3.5 * ] * 1 - ]
+</PRE>
+then we see that <TT>lambda</TT> is treated as a constant,
+not a parameter. This is not what we want. 
+We try again,
+this time ensuring that lambda is not specified 
+beforehand, by erasing it:
+<PRE>
+   erase <'lambda'
+1
+   tP =: 13 : 'lambda * y * (1-y)'
+   tP
+[: lambda [: * ] * 1 - ]
+</PRE>
+Now we see that <TT>tP</TT> is a train of verbs,
+where <TT>lambda</TT> (being unknown) is assumed to be a verb.
+This assumption conflicts with the intended meaning
+of <TT>lambda</TT> as a number. Hence 
+with <TT>lambda</TT> as a number,
+we get an error:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>lambda=: 3.5</TT></TD>
+<TD><TT>tP x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3.5</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+Whether or not <TT>lambda</TT> is specified in
+advance, 
+it appears that a fully tacit exact equivalent to <TT>P</TT>
+is not possible. However we can come
+close.
+<p>
+One possibility is to compromise
+on "fully tacit". Here <TT>tP</TT> is a train of verbs,
+where the first is explicitly-defined to
+deliver the value of <TT>lambda</TT> regardless of its argument.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>tP =: (3 : 'lambda') * ] * (1: - ])</TT></TD>
+<TD><TT>tP x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 : 'lambda' * ] * 1: - ]</TT></TD>
+<TD><TT>0.84</TT></TD>
+</TABLE>
+<p>
+Another possibility is to compromise
+on "exact equivalent". Here we take parameter <TT>lambda</TT>
+to be, not a number, but a constant function
+(see <A HREF="09.htm">Chapter 09</A>) which delivers a number.  
+<p>
+For example, a value for the parameter
+could be written as 
+<PRE>
+   lambda =: 3.5 " 0
+</PRE>
+and <TT>tP</TT> could be defined as:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>tP =: lambda * ] * (1: - ])</TT></TD>
+<TD><TT>tP x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>lambda * ] * 1: - ]</TT></TD>
+<TD><TT>0.84</TT></TD>
+</TABLE>
+<p>
+Now we can vary the parameter without
+redefining the  function:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>lambda =: 3.75 " 0</TT></TD>
+<TD><TT>tP x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3.75"0</TT></TD>
+<TD><TT>0.9</TT></TD>
+</TABLE>
+<p>
+This is the end of Chapter 11
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="12.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="12.htm">&gt;&gt;</a>&nbsp;
+<a href="10.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

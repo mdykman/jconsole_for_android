@@ -1,0 +1,64 @@
+stats/r - change history
+
+== 1.0.18 ==
+ * j701
+
+== 1.0.17 ==
+ * rework rbase interface for working with R map structures.
+ * add framework for displaying formatted object depending on its R class.
+ * add framework for returning data from object depending on its R class.
+ * add utils for displaying data.frame, factor, matrix and other simple classes.
+ * add utils for returning data from data.frame, factor and matrix.
+
+== 1.0.16 ==
+ * change rserve to require usual profile
+
+== 1.0.15 ==
+ * fix test_rserve.ijs to match ` prefixed names
+
+== 1.0.14 ==
+ * rgetmap returns empty if key not present in R map format structure
+ * add optional left argument for Rget that specifies portion of result to return
+
+== 1.0.13 ==
+ * rbase utils for getting keys from R map format structures
+
+== 1.0.12 ==
+ * send of NULL supported
+ * rserve script loads rdsock and rbase
+
+== 1.0.10/11 ==
+ * send of NULL supported
+ * rserve script loads rdsock and rbase
+
+== 1.0.9 ==
+ * symbols replaced with ` prefixed names
+ * reworked to simpler socket interface
+ * rdsock renamed to rserve
+ * rbase added
+
+== 1.0.6/7/8 ==
+ * bugfixes
+ * Rgettree returns tree format
+
+== 1.0.5 ==
+ * improve names attribute result in Rget
+ * Rgetexp returns all attributes unchanged
+
+== 1.0.3/4 ==
+ * Rget now returns dictionary result
+ * Rgetexp returns old SEXP format
+ * 1-element lists now converted to scalars
+
+== 1.0.2 ==
+ * support read of complex, raw datatypes
+ * add script test_rdsock.ijs
+
+== 1.0.1 ==
+ * upgrade to Rserve 0.5
+
+== 1.0.0 ==
+ * initial release
+
+
+

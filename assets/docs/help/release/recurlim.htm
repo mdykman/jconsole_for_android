@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Recursion Limit Changed</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="j64.htm">&gt;&gt;</a>&nbsp;
+<a href="appende.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3>Recursion Limit Changed</font></b></td>
+<td align=right>
+initial writing: 2006-02-20<br>last updated: 2006-06-08
+</td></tr></table>
+<br>
+
+<p>When the recursion limit (function call depth limit) is exceeded,
+a<tt> stack error </tt>is signalled.  Previously a<tt> limit error </tt>
+is signalled.  Moreover, instances of J crashing due to a stack error
+has been greatly reduced.</p>
+
+<p>The recursion limit is exceeded when the total depth of the 
+called functions is larger than the limit,
+where the depth of a function is roughly the depth of its
+tree representation (<tt>5!:4</tt>). For example:</p>
+<pre>
+   g=: 3 : 'g c=:>:y'
+   g 0
+|stack error: g
+|       g c=:>:y
+   c
+9999
+
+   ".t=: '".t [ c=:>:c' [ c=: 0
+|stack error
+|       ".t[c=:>:c
+   c
+19999
+
+   (+/i.1+c) -: (0:`(+ $:@<:)@.*) c=: 4999
+1
+   (+/i.1+c) -: (0:`(+ $:@<:)@.*) c=: 5000
+|stack error
+|   (+/i.1+c)-:    (0:`(+$:@<:)@.*)c=:5000
+</pre>
+
+<p>The recursion limit is reduced when debug mode is on (<tt>13!:0 ]1</tt>), 
+to enable the debug facility itself to be run when a<tt> stack error </tt>
+is signalled.</p>
+
+<p>The recursion limit is constrained by the stack size available to the 
+J executable file.
+Crashes due to stack errors can be overcome by increasing the stack size.
+Under Windows, the stack size can be queried and set as follows:</p>
+
+<pre>
+   dumpbin /headers       c:\j601\j.exe
+   editbin /stack:6000000 c:\j601\j.exe
+</pre>
+
+<p>The stack size is called &ldquo;size of stack reserve&rdquo; 
+in the<tt> dumpbin </tt>output. 
+The stack space can also be interrogated in J as follows:</p>
+
+<pre>
+   ss=: 256 #. a. i. +&3 2 1 0@[ { 1!:1@]
+   368 ss <'c:\j601\j.exe'
+5000000
+   360 ss <'c:\j504\j.exe'
+5000000
+</pre>
+<p>The right argument to<tt> ss </tt>is the name of the J executable file;
+the left argument is the location in the file of the 4-byte
+word that specifies the stack size.  
+(The location varies with the file, and the word is in reverse byte 
+order for Windows.)</p>
+
+<br>
+<!--bottom jump start--><hr><a href="j64.htm">&gt;&gt;</a>&nbsp;
+<a href="appende.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

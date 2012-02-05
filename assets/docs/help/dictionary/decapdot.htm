@@ -1,0 +1,89 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>E.  -  Member of Interval</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dfdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dedot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%>&nbsp;</td>
+<td align=center width=34%><font face="Courier New" size=+3>E. &nbsp;_ _</font></td>
+<td align=right  width=33%><b><font size=+2>Member of Interval</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+&nbsp;
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+The <i>ones</i> in<tt> x E. y </tt> indicate the beginning 
+points of occurrences of the pattern<tt> x </tt>in<tt> y</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   'co' E. 'cocoa'
+1 0 1 0 0
+
+   s #~ -. '**' E. s=: 'Remove***multiple**stars.'
+Remove*multiple*stars.
+
+   ] x =: 0 1 2 ,: 2 3 4
+0 1 2
+2 3 4
+
+   ] y=: 5 | i. 5 7
+0 1 2 3 4 0 1
+2 3 4 0 1 2 3
+4 0 1 2 3 4 0
+1 2 3 4 0 1 2
+3 4 0 1 2 3 4
+
+   x E. y
+1 0 0 0 0 0 0
+0 0 0 1 0 0 0
+0 1 0 0 0 0 0
+0 0 0 0 1 0 0
+0 0 0 0 0 0 0
+
+   ($x) x&amp;-: ;. 3 y
+1 0 0 0 0 0 0
+0 0 0 1 0 0 0
+0 1 0 0 0 0 0
+0 0 0 0 1 0 0
+0 0 0 0 0 0 0
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dfdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dedot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

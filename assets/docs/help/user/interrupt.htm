@@ -1,0 +1,86 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Jbreak - Interrupt Execution</title>
+
+</head><body><!--top jump start--><a href="boxdraw.htm">&gt;&gt;</a>&nbsp;
+<a href="calling_jdll.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end--> 
+
+<h1>Jbreak - Interrupt Execution</h1>
+
+If J isn't responding you can signal it to interrupt execution. A J task can be signaled by another task called Jbreak. Jconsole is signaled by ctrl+c or Jbreak.<br>
+
+<br>
+
+One signal stops execution at the start of the next sentence with an <b>attention interrupt</b>. Two signals stops execution in the middle of a sentence with a <b>break</b>. A signal when a program requests keyboard input (1!:1[1) stops execution with an <b>input interrupt</b>. <br>
+
+<br>
+
+Windows install creates JBreak yellow J icon. To signal J, click the JBreak icon.<br>
+<br>
+
+
+Mac install creates Jbreak yellow J icon. To signal J, click the Jbreak icon.<br><br>
+
+
+
+Linux install creates jbreak, a shell script, in the J bin folder. Create a shortcut to run jbreak as appropriate for your desktop for easy use. To signal J, run the jbreak shell script.<br><br>
+
+
+It is better to use a single signal to get an attention interrupt as the state of execution at the start of a line is clear. In a break it is not clear what has been executed and there is some chance of crash as it is difficult to ensure a clean state in all cases. Wait several seconds before getting impatient and giving the second signal.<br>
+
+<br>
+
+Jbreak also signals Jconsole, although it is usually easier to use ctrl+c.<br>
+
+
+
+<h1>Tech Details</h1>
+
+The JE (J Engine) tests a byte in memory for a signal. This byte can be shared with another task with a mapped file. The other task signals J by writing to the mapped byte.<br>
+<br>
+
+
+9!:47 sets the name of the break file that is the shared mapping of the byte. 9!:46 returns the name of the break file.<br>
+<br>
+
+
+Profile uses break.ijs (open 'break') to set a default break file. JBreak runs Jconsole with sentence break'' to write to all default break files. If you are working with only 1 J task, or if only one task is running then this works fine. However, if you have a running production J task while you are using break with another J task you will break both tasks unless you take specific steps.<br>
+<br>
+
+If you want a task to not be affected by default break signals then it should use setbreak from break.ijs to give the task a break file with a different suffix. For example:<pre>   9!:46''
+C:\Users\John\j701-user\temp\jbreak\2748.default
+   setbreak_j_ 'production'
+C:\Users\John\j701-user\jbreak\2820.production
+   9!:46''
+C:\Users\John\j701-user\\jbreak\2820.production
+</pre>
+
+This task will not be affected by the default Jbreak. You can provide an argument to breaker.ijs to signal J tasks with a non default suffix.<br>
+
+<!--bottom jump start--><hr><a href="boxdraw.htm">&gt;&gt;</a>&nbsp;
+<a href="calling_jdll.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--><br>
+
+</body>
+</html>

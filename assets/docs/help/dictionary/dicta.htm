@@ -1,0 +1,165 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>A. Nouns</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dictb.htm">&gt;&gt;</a>&nbsp;
+<a href="dict2.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>A. Nouns</b></font><br><br>
+
+Nouns are classified in three independent ways: 
+numeric or literal or symbol; open or boxed; arrays of various ranks.  
+The atoms of any array must belong to a single class: 
+numeric, literal, symbol, or boxed.  Arrays of ranks 0, 1, and 2 are 
+also called <i>atom, list, </i>and <i>table, </i> or, in math, 
+<i>scalar, vector, </i>and <i>matrix</i>.  
+Numbers and literals are represented as stated in
+<a href="dict1.htm">Part I</a>;
+symbols are discussed under the verb<tt> <a href="dsco.htm">s:</a> </tt>.
+<br><br>
+
+<b>Arrays. </b> A single entity such as<tt> 2.3 </tt>
+or<tt> _2.3j5 </tt>or<tt> 'A' or '+' </tt>is called an atom.  
+The verb denoted by comma chains its arguments to form a list 
+whose <i>shape</i> (given by the verb<tt> $</tt>)<tt> </tt>
+is equal to the number of atoms combined.  For example:<br>
+
+<pre>
+   $ date=: 1,7,7,6               word=: 's','a','w'
+4
+   |. date                        |. word
+6 7 7 1                        was
+</pre>
+
+The verb<tt> |. </tt>used above is called <i>reverse</i>.  
+The phrase<tt> s$b </tt>produces an array of shape<tt> s </tt>from 
+the list<tt> b</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   (3,4) $ date,1,8,6,7,1,9,1,7
+1 7 7 6
+1 8 6 7
+1 9 1 7
+
+   table=: 2 3$ word,'bat'
+   table                         $table
+saw                           2 3
+bat
+</pre>
+
+The number of atoms in the shape of a noun is called its <i>rank</i>.  
+Each position of the shape is called an <i>axis</i> of the array, 
+and axes are referred to by indices 0, 1, 2, etc.  
+For example, axis 0 of<tt> table </tt>has length 2 and axis 
+1 has length 3. <br><br>
+
+The last <i>k</i> axes of an array<tt> b </tt>determine 
+<i>rank-k cells</i> or <i>k-cells</i> of<tt> b</tt>.  
+The rest of the shape vector is called the frame of<tt> b </tt>relative 
+to the cells of rank <i>k</i>; if<tt> $c </tt>is<tt> 2 3 4 5</tt>, 
+then<tt> c </tt>has the frame<tt> 2 3</tt> relative to cells of rank 2, 
+the frame<tt> 2 3 4 5 </tt>relative to<tt> 0</tt>-cells (atoms), 
+and an empty frame relative to<tt> 4</tt>-cells.  If:<br>
+
+<pre>
+   ] b=:2 3 4 $ 'abcdefghijklmnopqrstuvwx'
+abcd
+efgh
+ijkl
+
+mnop
+qrst
+uvwx
+</pre>
+
+then the list<tt> abcd </tt>is a 1-cell of<tt> b</tt>,<tt> </tt>
+and the letters are each 0-cells.<br><br>
+
+A cell of rank one less than the rank of<tt> b </tt>
+is called an <i>item</i> of<tt> b</tt>;<tt> </tt>an atom 
+has one item, itself.  For example, the verb <i>from</i> 
+(denoted by<tt> {</tt>)<tt> </tt>selects items from its right argument, 
+as in: <br>
+
+<pre>
+   0{b                 1{b                 0{0{b
+abcd                mnop                abcd
+efgh                qrst
+ijkl                uvwx
+            
+   2 1{0{b             1{2{0{b             0{3
+ijkl                j                   3
+efgh
+</pre>
+
+Moreover, the verb <i>grade</i> (denoted by<tt> /:</tt>)
+provides indices to<tt> { </tt>that bring items to &ldquo;lexical&rdquo; order.  
+Thus:<br>
+
+<pre>
+   g=: /: n=: 4 3$3 1 4 2 7 9 3 2 0
+   n                   g                   g{n
+3 1 4               1 0 3 2             2 7 9
+2 7 9                                   3 1 4
+3 2 0                                   3 1 4
+3 1 4                                   3 2 0
+</pre>
+
+Negative numbers, as in<tt> _2</tt>-cell and<tt> _1</tt>-cell (an item), 
+are also used to refer to cells whose <i>frames</i> are of the length 
+indicated by the magnitude of the number.  
+For example, the list<tt> abcd </tt>may be referred to either as a 
+<tt>_2</tt>-cell or as a<tt> 1</tt>-cell of<tt> b</tt> .<br><br>
+
+<b>Open and Boxed. </b>The nouns discussed thus far 
+are called <i>open</i>, to distinguish them from <i>boxed</i> nouns 
+produced by the verb <i>box</i> denoted by<tt> &lt;</tt> .  
+The result of box is an atom, and boxed nouns are displayed in boxes.  
+Box allows one to treat any array (such as the list of letters 
+that represent a word) as a single entity, or atom.  Thus:<br>
+
+<pre>
+   words=:(&lt;'I'),(&lt;'was'),(&lt;'it')
+   letters=: 'I was it'          
+   $words                        $letters
+3                             8
+
+   |. words                      |. letters
++--+---+-+                    ti saw I
+|it|was|I|
++--+---+-+
+   2 3$words,|.words
++--+---+--+
+|I |was|it|
++--+---+--+
+|it|was|I |
++--+---+--+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dictb.htm">&gt;&gt;</a>&nbsp;
+<a href="dict2.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

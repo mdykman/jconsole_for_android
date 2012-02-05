@@ -1,0 +1,9 @@
+This subroutine computes the I-th eigenvalue of a symmetric rank-one
+modification of a 2-by-2 diagonal matrix
+
+We also assume RHO > 0 and that the Euclidean norm of the vector Z is
+one.
+
+
+Arguments
+=========

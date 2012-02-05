@@ -1,0 +1,163 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>p. Roots  -  Polynomial</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dpdotdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dodot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Roots</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>p. &nbsp;1 1 0</font></td>
+<td align=right  width=33%><b><font size=+2>Polynomial</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<p>
+<tt> &nbsp; p. c &nbsp; </tt><font size=+1>&harr;</font><tt> (m;r)</tt><br>
+<tt> &nbsp; p.p. c </tt><font size=+1>&harr;</font><tt>  c</tt>
+</p>
+
+<p>If<tt> e </tt>is a vector whose elements are all 
+non-negative integers, then<tt> p.&lt;c,.e </tt>gives 
+the coefficients of the equivalent polynomial:</p>
+
+<p>
+<tt> &nbsp; (p. &lt;c,.e)&amp;p. </tt><font size=+1>&harr;</font><tt> (&lt;c,.e)&amp;p.</tt> 
+</p>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<p>There are three cases -- coefficients; multiplier and roots; 
+multinomial (boxed matrix of coefficients and exponents):</p>
+
+<table>
+<tr><td>&nbsp;</td><td align=right><tt>c p. x</tt></td>
+ <td><tt>&nbsp;</tt><font size=+1>&harr;</font><tt>&nbsp;</tt></td>
+ <td><tt>+/c*x^i.#c</tt></td></tr>
+<tr><td>&nbsp;</td><td align=right><tt>(m;r) p. x</tt></td>
+ <td><tt>&nbsp;</tt><font size=+1>&harr;</font><tt>&nbsp;</tt></td>
+ <td><tt>m * */x-r</tt></td></tr>
+<tr><td>&nbsp;</td><td align=right><tt>(&lt;r)&amp;p.</tt></td>
+ <td><tt>&nbsp;</tt><font size=+1>&harr;</font><tt>&nbsp;</tt></td>
+ <td><tt>(1;r)&amp;p.</tt></td></tr>
+<tr><td>&nbsp;</td><td align=right><tt>(&lt;c,.e)p.&lt;y</tt></td>
+ <td><tt>&nbsp;</tt><font size=+1>&harr;</font><tt>&nbsp;</tt></td>
+ <td><tt>c+/ .*e*/ .(^~)y</tt></td></tr>
+</table>
+
+<p>where<tt> m </tt>is a scalar;<tt> c </tt>and<tt> r </tt>are 
+scalars or vectors; and<tt> e </tt>is a vector or matrix such
+that<tt> ($e)-:(#c),(#y)</tt> .<tt> </tt>A scalar<tt> y </tt>is extended normally.
+<br>&nbsp;</p></td>                                                         
+</tr></table><br>
+
+<pre>
+   p. 1 0 0 1
++-+-----------------------------+
+|1|_1 0.5j0.866025 0.5j_0.866025|
++-+-----------------------------+
+
+   ]mr=: p. c=: 0 16 _12 2     NB. Multiplier/Roots from Coefficients
++-+-----+
+|2|4 2 0|
++-+-----+
+
+   x=: 0 1 2 3 4 5
+   (c p. x), ((&lt;c,.i.4)p. x), (mr p. x),: 2*(x-4)*(x-2)*(x-0)
+0 6 0 _6 0 30
+0 6 0 _6 0 30
+0 6 0 _6 0 30
+0 6 0 _6 0 30
+
+   c=: 1 3 3 1
+   c p. x
+1 8 27 64 125 216
+   (x+1)^3
+1 8 27 64 125 216
+
+   bc=: !~/~i.5                NB. Binomial coefficients
+   bc;(bc p./ x);((i.5) ^~/ x+1)
++---------+--------------------+--------------------+
+|1 0 0 0 0|1  1  1   1   1    1|1  1  1   1   1    1|
+|1 1 0 0 0|1  2  3   4   5    6|1  2  3   4   5    6|
+|1 2 1 0 0|1  4  9  16  25   36|1  4  9  16  25   36|
+|1 3 3 1 0|1  8 27  64 125  216|1  8 27  64 125  216|
+|1 4 6 4 1|1 16 81 256 625 1296|1 16 81 256 625 1296|
++---------+--------------------+--------------------+
+
+   c&amp;p. d. 1 x                 NB. First derivative of polynomial
+3 12 27 48 75 108
+
+   (&lt;1 _1 ,. 5 0) p. 3         NB. Coefficients / Exponents
+242
+              
+   _1 0 0 0 0 1 p. 3
+242
+              
+   p. &lt;1 _1 ,. 5 0             NB. Coefficients / Exponents to Coefficients
+_1 0 0 0 0 1
+
+   c=: _1 1 2 3 [ e=: 4 2$2 1 1 1 1 2 0 2
+   c,.e                        NB. Coefficients / Exponents
+_1 2 1
+ 1 1 1
+ 2 1 2
+ 3 0 2
+                  
+   (&lt;c,.e) p. &lt;y=:2.5 _1       NB. Multinomial
+11.75
+
+   c +/ .* e */ .(^~) y
+11.75
+</pre>
+
+Note that<tt> (&lt;c,.e)p.&lt;y </tt>is a &ldquo;proper&rdquo; multinomial 
+only if the elements of<tt> e </tt>are all non-negative integers.  
+In general the powers are not so limited, as in the weighted sum 
+of square root and 4-th root:<br>
+
+<pre>
+   ] t=: &lt;2 3,.1r2 1r4
++-----+
+|2 1r2|
+|3 1r4|
++-----+
+
+   (t p. 16), +/ 2 3 * 16 ^ 1r2 1r4
+14 14
+</pre>
+
+The variant<tt> p.!.s </tt>is a <i>stope</i> polynomial; 
+it differs from<tt> p. </tt>in that its definition is based 
+upon the stope<tt> ^!.s </tt>instead of on<tt> ^ </tt>(power).<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="dpdotdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dodot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

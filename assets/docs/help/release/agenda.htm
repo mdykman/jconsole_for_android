@@ -1,0 +1,89 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>m@.v&quot;0 Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="cdot.htm">&gt;&gt;</a>&nbsp;
+<a href="trace.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">m@.v&quot;0 </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2003-05-01<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+<p>If the verbs<tt> f0 </tt>, ... ,<tt> fn </tt>are atomic, 
+the monads<tt> f0`...`fn@.v&quot;0 </tt>(and<tt> f0`...`fn@.v </tt>if<tt> v </tt>is rank 0) 
+are now implemented by special code, resulting in time/space savings.</p>
+
+<p>A verb<tt> f </tt>is <i>atomic</i> if<tt> f = f&quot;0 </tt>,<tt> </tt>and the shape of the result 
+of<tt> f </tt>is the shape of one of its arguments or the result of<tt> f </tt>is an atom.
+Many primitive verbs are atomic:<tt> + - * % ^ ^. </tt>etc.  
+Constant verbs with rank 0 results are atomic.
+If<tt> f</tt> ,<tt> g</tt> , and<tt> h </tt>are atomic then so are their
+compositions<tt> f&amp;g f&amp;:g (f&nbsp;g) (f&nbsp;g&nbsp;h) ([: f g) </tt>etc; 
+and moreover if<tt> a </tt>
+is an atom then<tt> a&amp;f </tt>and<tt> f&amp;a </tt>are atomic.
+Finally,<tt> m&nbsp;H.&nbsp;n </tt>and<tt> x&amp;p. </tt>where<tt> x </tt>is an atom or a list,
+are atomic.</p>
+
+The following example of the normal N(0,1) cumulative distribution function is by J.E.H Shaw of
+the University of Warwick.
+<br><br>
+<pre>
+NB.* n01pdf v    probability density function for N(0,1)
+NB.* erf v       error function
+NB.* n01cdfh v   cumulative distribution function for N(0,1) using H.
+NB.* n01cdfr v   ratio used for CDF in tails of N(0,1)
+NB.* n01cdfn v   more accurate than n01cdfh in lower tail (say y. < _6)
+NB.* n01cdfp v   more accurate than n01cdfh in upper tail (say y. > 6)
+NB.* n01cdf v    N(0,1) cdf
+
+n01pdf =: ([: ^ _0.5&quot;_ * *:) % (%: 2p1)&quot;_ 
+erf    =: (*&amp;(%:4p_1) % ^@:*:) * [: 1 H. 1.5 *:
+n01cdfh=: [: -: 1: + [: erf %&amp;(%:2) 
+n01cdfr=: n01pdf % ] + 1: % ] + 2: % ] + 3: % ] + 4: % ] + 4.5&amp;%
+n01cdfn=: [: - n01cdfr
+n01cdfp=: 1: - n01cdfr
+n01cdf =: n01cdfn`n01cdfh`n01cdfp @. (&gt;&amp;_6 + &gt;&amp;6) &quot; 0
+
+   ts=: 6!:2 , 7!:2@]   NB. time and space
+
+   x=: _10 + 0.01 * ?. 10 10 100 $ 1000
+
+   ts 'n01cdf x'        NB. J 5.02
+0.0665599 1.46003e6
+
+   ts 'n01cdf x'        NB. J 5.01
+0.672347 1.2306e7
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="cdot.htm">&gt;&gt;</a>&nbsp;
+<a href="trace.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

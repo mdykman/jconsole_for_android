@@ -1,0 +1,146 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 1.  Mnemonics</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro02.htm">&gt;&gt;</a>&nbsp;
+<a href="intro.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>1. Mnemonics</b></font><br><br>
+
+The left side of the page shows an actual computer session with the 
+result of each sentence shown at the left margin.  
+First cover the comments at the right, 
+and then attempt to state in English the meaning of each primitive 
+so as to make clear the relations between related symbols.  
+For example, &ldquo;<tt>&lt; </tt>is <i>less than</i>&rdquo; 
+and<tt> </tt>&ldquo;<tt>&lt;. </tt>is <i>lesser of</i> (that is, minimum)&rdquo;.  
+Then uncover the comments and compare with your own.<br>
+
+<pre>
+   7&lt;5                        <font face=Times size=+1>Less than</font>
+0                             <font face=Times size=+1>A zero is interpreted as <i>false.</i></font>
+
+   7&lt;.5                       <font face=Times size=+1>Lesser of</font>
+5
+
+   7&gt;5                        <font face=Times size=+1>Greater than</font>
+1                             <font face=Times size=+1>A one is <i>true</i> (<i>&agrave; la</i> George Boole)</font>
+
+   7&gt;.5                       <font face=Times size=+1>Greater of</font>
+7
+
+   10^3                       <font face=Times size=+1>Power (<i>&agrave; la</i> Augustus De Morgan)</font>
+1000
+
+   10^.1000                   <font face=Times size=+1>Logarithm</font>
+3
+
+   7=5                        <font face=Times size=+1>Equals</font>
+0
+
+   b=: 5                      <font face=Times size=+1>Is (<i>assignment</i> or <i>copula</i>)</font>
+   7&lt;.b
+5
+
+   Min=: &lt;.                   <font face=Times size=+1>Min is</font> &lt;.
+   power=: ^                  <font face=Times size=+1>power is</font> ^
+   gt=: &gt;                     <font face=Times size=+1>gt is</font> &gt;
+
+   10 power (5 Min 3)
+1000
+</pre>
+
+<P ALIGN=CENTER><b>Exercises</font></b></p>
+
+<table>
+<tr><td valign=top>1.1 &nbsp;</td>
+<td>Enter the following sentences on the computer, 
+observe the results, give suitable names to any new primitives 
+(such as<tt> * </tt>and<tt> +. </tt>and<tt> *.</tt>), 
+and comment on their behaviour.<br><br>
+
+<pre>
+   a=:0 1 2 3
+   b=:3 2 1 0   
+   a+b
+   a*b
+   a-b
+   a%b
+   a^b 
+   a^.b
+   a&lt;b
+   a&gt;b 
+   (a&lt;b)+(a&gt;b)
+   (a&lt;b)+.(a&gt;b)
+</pre>
+
+Compare your comments with the following:<br><br>
+
+<table>
+<tr><td valign=top>a)&nbsp;</td>
+<td>Negative<tt> 3 </tt>is denoted by<tt> _3</tt>.<tt> </tt>
+The underbar<tt> <b>_</b> </tt>is part of the representation of 
+a negative number in the same sense that the decimal point is 
+part of the representation of one-half when written in the 
+form<tt> 0.5</tt>,<tt> </tt>and the negative 
+sign<tt> <b>_</b> </tt>must not be confused with the symbol used 
+to denote subtraction (i.e.,<tt> <b>-</b></tt>).<br>
+</td></tr>
+
+<tr><td valign=top>b)&nbsp;</td>
+<td>Division (<tt>%</tt>) by zero 
+yields infinity, denoted by the underbar alone.<br>
+</td></tr>
+
+<tr><td valign=top>c)&nbsp;</td>
+<td>Log of<tt> 2 </tt>to the base<tt> 1 </tt>is infinite, 
+and log of<tt> 0 </tt>to the base<tt> 3 </tt>is negative 
+infinity (<tt><b>__</b></tt>).<br>
+</td></tr>
+
+<tr><td valign=top>d)&nbsp;</td>
+<td>Since the relation<tt> 5&lt;7 </tt>is true, and the result 
+of<tt> 5&lt;7 </tt>is<tt> 1</tt>,<tt> </tt>it may be said that 
+true and false are represented by the ordinary 
+integers<tt> 1 </tt>and<tt> 0</tt>.<tt> </tt>
+George Boole used this same convention, together with the 
+symbol<tt> + </tt>to represent the <i>boolean</i> function <i>or</i>.  
+We use the distinct representation<tt> +. </tt>
+to avoid conflict with the analogous (but different) <i>addition</i> 
+(denoted by<tt> +</tt>).<br>
+</td></tr>
+</table>
+<br></td></tr>
+
+<tr><td valign=top>1.2 &nbsp;</td>
+<td valign=top>Following the example<tt> Min=: &lt;.</tt> ,<tt> </tt>invent, assign, 
+and use names for each of the primitives encountered thus far.
+</td></tr></table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro02.htm">&gt;&gt;</a>&nbsp;
+<a href="intro.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

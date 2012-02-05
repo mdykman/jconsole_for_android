@@ -1,0 +1,117 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Calling J.DLL</title>
+
+</head><body><!--top jump start--><a href="interrupt.htm">&gt;&gt;</a>&nbsp;
+<a href="memory_management.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Calling J.DLL</h1>
+<TR><TD colspan="2"> 
+
+
+<p>
+The J DLL can be called by any program that can call DLLs.
+
+<p>
+Since J.DLL is itself used by the J session, you need to make a copy of J.DLL first before calling it from J; for example, copy it to file JJ.DLL.
+
+<p>
+File system\examples\data\jdll.h. gives C prototypes for J procedures.
+
+<p>
+Script system\examples\dll\jdll.ijs. gives examples of calling the J DLL from J.
+
+<p>
+Use procedure JDo to execute a sentence. For example, the following writes text <code>abc</code> to file t1.txt:
+
+<pre>
+   load 'dll files'
+   cmd=: '''abc'' 1!:2 &lt;''t1.txt'''     NB. example sentence
+   'jj.dll JDo i *c' cd &lt;cmd            NB. send to J DLL
++-+--------------------+
+|0|'abc' 1!:2 &lt;'t1.txt'|
++-+--------------------+
+fread 't1.txt'                          NB. check file was written
+abc
+</pre>
+
+<p>
+Use procedure JGetM to retrieve a J variable. The <code>cd</code> right argument is a name, followed by 4 pointers, which will correspond to the result datatype, rank, pointer to shape, and pointer to values. For example:
+
+<pre>
+   'jj.dll JDo i *c' cd &lt;'ABC=: i.5'   NB. define ABC
++-+---------+
+|0|ABC=: i.5|
++-+---------+
+
+   'jj.dll JGetM i *c *i *i *i *i' cd 'ABC';4#&lt;,0
++-+---+-+-+--------+--------+
+|0|ABC|4|1|13496196|13496500|
++-+---+-+-+--------+--------+
+</pre>
+
+<p>
+The 6 items in the result are: error code (<code>0</code>=success), name, datatype (<code>4</code>=integer), rank(<code>1</code>), pointer to shape, and pointer to values. 
+
+<p>
+The pointers refer to memory addresses within the J DLL. You should reference their values before calling the J DLL again, as further calls may invalidate the memory addresses. Use function <code>memr</code> to read memory and and <code>ic</code> to convert to J integers. For example, the shape is:
+
+<pre>
+   _2 ic memr 13496196 0 4
+5
+</pre>
+
+<p>
+Once the result datatype and shape are known, you can read the values, again using <code>memr</code>, and convert to a J variable. 
+
+<p>
+File system\examples\dll\jdll.ijs defines functions that perform the necessary conversions. For example:
+
+<pre>
+   load 'system\examples\dll\jdll.ijs'
+   jdo 'ABC=: i.3 4'
++-+-----------+
+|0|ABC=: i.3 4|
++-+-----------+
+
+   jget 'ABC'
+0 1  2  3
+4 5  6  7
+8 9 10 11
+
+   jcmd 'q: 123456'
+2 2 2 2 2 2 3 643
+</pre>
+
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="interrupt.htm">&gt;&gt;</a>&nbsp;
+<a href="memory_management.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

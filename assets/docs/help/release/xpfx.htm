@@ -1,0 +1,70 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>f/\ Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="infixb.htm">&gt;&gt;</a>&nbsp;
+<a href="meankey.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">f/\ </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2007-12-10<br>last updated: 2007-12-19
+</td></tr></table>
+<br>
+
+<p>Several monads<tt> f/\ </tt>on extended precision arguments have been made more 
+efficient:<tt> &nbsp; +/\ &nbsp;  */\ &nbsp; -/\ &nbsp; &lt;./\ &nbsp; &gt;./\</tt>
+
+<p>The following benchmarks demonstrate the improvements.</p>
+
+<pre>
+x=: 1e4 ?@$ 123456x
+q=: %/ 0 1x + 2 1e4 ?@$ 123456
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'Expression'
+</pre>
+
+<table>
+<tr>
+<td align=center><b>Expression </b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+</tr>
+<tr><td><tt>+ /\ x   </tt></td><td>&nbsp;</td><td>0.004858</td><td>&nbsp;</td><td>7.47648e5</td><td>&nbsp;</td><td>43.976548</td><td>&nbsp;</td><td>1.66682e6</td><td>&nbsp;</td><td align=right> 9052.53</td><td>&nbsp;</td><td align=right> 2.23</td></tr>
+<tr><td><tt>&gt;./\ x</tt></td><td>&nbsp;</td><td>0.001026</td><td>&nbsp;</td><td>6.66880e4</td><td>&nbsp;</td><td>30.232657</td><td>&nbsp;</td><td>1.02662e6</td><td>&nbsp;</td><td align=right>29456.17</td><td>&nbsp;</td><td align=right>15.39</td></tr>
+<tr><td><tt>- /\ x   </tt></td><td>&nbsp;</td><td>0.004828</td><td>&nbsp;</td><td>7.47648e5</td><td>&nbsp;</td><td>43.737591</td><td>&nbsp;</td><td>1.66682e6</td><td>&nbsp;</td><td align=right> 9059.21</td><td>&nbsp;</td><td align=right> 2.23</td></tr>
+<tr><td><tt>&gt;./\ q</tt></td><td>&nbsp;</td><td>0.011577</td><td>&nbsp;</td><td>2.63891e6</td><td>&nbsp;</td><td>63.500041</td><td>&nbsp;</td><td>1.23987e6</td><td>&nbsp;</td><td align=right> 5485.08</td><td>&nbsp;</td><td align=right> 0.47</td></tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="infixb.htm">&gt;&gt;</a>&nbsp;
+<a href="meankey.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

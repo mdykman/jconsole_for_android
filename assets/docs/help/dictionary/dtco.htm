@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>t: Weighted Taylor</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dtcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dtdotm.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=45%><b><font size=+2>Weighted Taylor</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u t: &nbsp;0 0 0</font></td>
+<td align=right  width=21%>&nbsp;</td>
+</tr></table>
+<br>
+
+<table><tr><td width=100% bgcolor=#eeeeee>
+The result of<tt> u t: k </tt>is<tt> (!k)*u t. k</tt> .<tt> </tt>
+In other words, the coefficients produced by<tt> t: </tt>are the 
+Taylor coefficients <i>weighted</i> by the factorial. 
+As a consequence, the coefficients produced by it when applied to 
+functions of the exponential family show simple patterns.  
+For this reason it is sometimes called the <i>exponential 
+generating function</i>.
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   k=: i. 12
+   ^ t: k
+1 1 1 1 1 1 1 1 1 1 1 1
+
+   %@^t: k                    NB. Decaying exponential
+1 _1 1 _1 1 _1 1 _1 1 _1 1 _1
+
+   sin =: 1&amp;o.
+   cos =: 2&amp;o.
+   sinh=: 5&amp;o.
+   cosh=: 6&amp;o.
+   exp=: ^
+   dec=: %@^
+
+   (exp t:,dec t:,sinh t:,cosh t:,sin t:,:cos t:) k
+1  1  1  1 1  1  1  1 1  1  1  1
+1 _1  1 _1 1 _1  1 _1 1 _1  1 _1
+0  1  0  1 0  1  0  1 0  1  0  1
+1  0  1  0 1  0  1  0 1  0  1  0
+0  1  0 _1 0  1  0 _1 0  1  0 _1
+1  0 _1  0 1  0 _1  0 1  0 _1  0
+
+</pre>
+
+<!--bottom jump start--><hr><a href="dtcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dtdotm.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,346 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Mapped Boxed Arrays</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="status.htm">&gt;&gt;</a>&nbsp;
+<a href="idot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<font size=+3><b>Mapped Boxed Arrays</b></font>
+</td><td align=right>
+initial writing: 2000-03-31<br>last updated: 2004-10-21
+</td></tr></table>
+<br>
+
+<p>
+<a href="#introduction"       >Introduction</a><br>
+<a href="#amend in place"     >Amend in Place</a><br>
+<a href="#multiple references">Multiple References</a><br>
+<a href="#shared use"         >Shared Use</a><br>
+<a href="#diagnostics"        >Diagnostics</a><br>
+<a href="#function summary"   >Function Summary</a><br>
+
+<br>
+</p>
+
+<p><a name="introduction"></a><font size=5><b>Introduction</b></font></p>
+
+You are assumed to have studied the &ldquo;Mapped Files&rdquo; Lab as a pre-requisite.
+(The lab is found under the J menu item Studio|Labs...|Mapped Files.)
+Now then, a quick example illustrates mapped boxed arrays:<br>
+
+<pre>   corequire 'jmf'
+   createjmf_jmf_ 'q.jmf';3e5
+   map_jmf_ 'q';'q.jmf';'sh';0
+</pre>
+
+The first line defines the requisite mapped file utilities
+into the<tt> jmf </tt>locale.<br>
+<br>
+The second line creates a mapped file  
+named<tt> q.jmf </tt>of size 300,000 bytes.<br>
+<br>
+The third line maps the file, associating the 
+name<tt> q </tt> 
+(more precisely<tt> q_base_</tt>,<tt> </tt> 
+<tt> q </tt>in 
+the<tt> base </tt>locale) to the mapped
+file<tt> q.jmf</tt>,<tt> </tt>using the share 
+name<tt> sh</tt>,<tt> </tt> 
+in read-write mode.  Initially,<tt> q </tt>is the empty vector.<br>
+<br>
+The verb<tt> showmap_jmf_ </tt>provides 
+information on currently mapped arrays.  The result is a table 
+with a row of column headings and one row of information per
+mapped array:  name, file name, share name, file handle,
+mapping handle, address, header address, size, and number of references.
+For example:<br>
+
+<pre>   showmap_jmf_ ''
++-------+-----+--+---+---+--------+--------+------+----+
+|name   |fn   |sn|fh |mh |address |header  |msize |refs|
++-------+-----+--+---+---+--------+--------+------+----+
+|q_base_|q.jmf|sh|380|408|39714816|39714816|300000|2   |
++-------+-----+--+---+---+--------+--------+------+----+
+</pre>
+
+To create a mapped boxed array, simply assign a boxed array to a mapped name.  
+Thus:<br>
+
+<pre>   q=: 'abc';(i.2 3);'penultimate';_1
+   q
++---+-----+-----------+--+
+|abc|0 1 2|penultimate|_1|
+|   |3 4 5|           |  |
++---+-----+-----------+--+
+</pre>
+
+Any operation supported on a boxed array, is supported on a <i>mapped</i> boxed array.
+In particular, <a href="#amend in place">amend in place</a> is supported.<br>
+<br>
+A mapped boxed array is self-contained in the mapped file. 
+That is,<tt> q </tt>itself and the 
+subarrays<tt> 'abc'</tt>,<tt> </tt> 
+<tt> i.2 3</tt>,<tt> </tt>
+<tt> 'penultimate'</tt>,<tt> </tt> 
+and<tt> _1 </tt>
+are all contained in the mapped file.<br>
+<br>
+To unmap an array, use the 
+verb<tt> unmap_jmf_</tt>.  The argument is the 
+name of the mapped array.  Thus:<br>
+
+<pre>   unmap_jmf_ 'q'
+</pre>
+<br>
+
+<p><a name="amend in place"></a><font size=5><b>Amend in Place</b></font></p>
+
+Amend in place is supported for mapped boxed array.  In the 
+phrase<tt> a=:&nbsp;b&nbsp;ind}a </tt>
+the indexed elements of<tt> a </tt>are amended, 
+and in so doing no copy of<tt> a </tt>is created.
+Hence amend <i>in place</i>.<br>
+
+<pre>   q
++---+-----+-----------+--+
+|abc|0 1 2|penultimate|_1|
+|   |3 4 5|           |  |
++---+-----+-----------+--+
+   q=: (&lt;'alpha') 0}q
+   q
++-----+-----+-----------+--+
+|alpha|0 1 2|penultimate|_1|
+|     |3 4 5|           |  |
++-----+-----+-----------+--+
+</pre>
+
+In amending element 0 
+from<tt> 'abc' </tt>to<tt> 'alpha'</tt>,<tt> </tt>no copy 
+of<tt> q </tt>is made.  (Trust me.)<br><br>
+
+Amend in place for mapped boxed array is atomic, in that either all
+the specified elements are amended or none of them are amended.
+In the following example, neither element 0 nor 1 is amended.
+Element 0 would have succeeded, but the new data for element 1
+is<tt> i.1e6</tt>,<tt> </tt>which takes over 4 Mbytes, but the mapped file 
+for<tt> q </tt>is limited to 300 Kbytes.<br>
+
+<pre>   q=: ('abc';i.1e6) 0 1}q
+|allocation error
+|   q=:('abc';i.1000000)    0 1}q
+   q
++-----+-----+-----------+--+
+|alpha|0 1 2|penultimate|_1|
+|     |3 4 5|           |  |
++-----+-----+-----------+--+
+</pre>
+<br>
+
+<p><a name="multiple references"></a><font size=5><b>Multiple References</b></font></p>
+
+Assigning a name to a mapped array creates a reference
+to that array.  All names so assigned refer to the same array, 
+and a change to the array is reflected in all the names.  
+This property applies in particular to multiple references created 
+as a result of using a mapped array
+as an argument to an explicitly defined verb, adverb, or conjunction.  
+For example:<br>
+
+<pre>   q
++---+-----+-----------+--+
+|abc|0 1 2|penultimate|_1|
+|   |3 4 5|           |  |
++---+-----+-----------+--+
+   t=: q
+   t
++---+-----+-----------+--+
+|abc|0 1 2|penultimate|_1|
+|   |3 4 5|           |  |
++---+-----+-----------+--+
+   t=: (&lt;'boustrophedonic') _1}t
+   t
++---+-----+-----------+---------------+
+|abc|0 1 2|penultimate|boustrophedonic|
+|   |3 4 5|           |               |
++---+-----+-----------+---------------+
+   q
++---+-----+-----------+---------------+
+|abc|0 1 2|penultimate|boustrophedonic|
+|   |3 4 5|           |               |
++---+-----+-----------+---------------+
+
+   am=: 4 : 0
+y.=. x. 0}y.
+0
+)
+   (&lt;'alpha') am t
+0
+   t
++-----+-----+-----------+---------------+
+|alpha|0 1 2|penultimate|boustrophedonic|
+|     |3 4 5|           |               |
++-----+-----+-----------+---------------+
+    q -: t
+1
+</pre>
+<br>
+
+<p><a name="shared use"></a><font size=5><b>Shared Use</b></font></p>
+
+The verb<tt> share_jmf_ </tt>
+provides access to an array previously mapped
+in the current or another process.  The argument 
+is<tt> n;s </tt>
+where<tt> n </tt>is
+the new name 
+and<tt> s </tt>is the share name 
+supplied in the original call
+to<tt> map_jmf_</tt>. For example:<br>
+
+<pre>   share_jmf_ 'xy';'sh'
+   xy
++-----+-----+-----------+---------------+
+|alpha|0 1 2|penultimate|boustrophedonic|
+|     |3 4 5|           |               |
++-----+-----+-----------+---------------+
+</pre>
+
+The result is a new reference to the mapped array, with consequences
+as described in <a href="#multiple references">Multiple References</a>.<br>
+<br>
+<br>
+
+<p><a name="diagnostics"></a><font size=5><b>Diagnostics</b></font></p>
+
+The verb<tt> 15!:12 </tt>returns a 3-column
+sorted integer matrix of memory usage information on a mapped boxed array.  
+The columns are: address, block size, and usage code (0 overall; 1 used; 
+2 free).  For example:<br>
+
+<pre>   q=: 'abc';(i.2 3);'penultimate';_1
+   q
++---+-----+-----------+--+
+|abc|0 1 2|penultimate|_1|
+|   |3 4 5|           |  |
++---+-----+-----------+--+
+
+   15!:12 q
+32309552 299576 0
+32309552     64 1
+32309616     64 1
+32309680    128 1
+32309808     64 1
+32309872     64 2
+32309936    128 2
+32310064   4096 2
+32314160  32768 2
+32346928 262144 2
+
+   15!:12 'not a mapped boxed array'
+|domain error
+|       15!:12 'not a mapped boxed array'
+</pre>
+
+The verb<tt> mbxcheck_jmf_ </tt>performs 
+internal consistency checks on a mapped boxed array, based on the information
+produced by<tt> 15!:12</tt>.<tt> </tt>The result 
+is a boolean vector whose elements correspond to the following conditions:<br>
+<br>
+0  &nbsp;usage codes are 0, 1, or 2<br>
+1  &nbsp;block sizes are powers of 2<br>
+2  &nbsp;blocks are contiguous<br>
+3  &nbsp;first block begins at the base address<br>
+4  &nbsp;last block is within bounds<br>
+5  &nbsp;the total block size is a multiple of 64<br>
+6  &nbsp;the total block size matches the overall size rounded down to 64<br>
+7  &nbsp;addresses are double-word aligned<br>
+<br> 
+For example:<br>
+<tt>
+<br>
+&nbsp;&nbsp;&nbsp;mbxcheck_jmf_ q<br>
+1 1 1 1 1 1 1 1<br>
+<br>
+</tt>
+
+The verb<tt> 15!:13 </tt>reconstructs the free
+list of a mapped boxed array (not yet implemented).<br> 
+<br>
+<br>
+
+<p><a name="function summary"></a><font size=5><b>Function Summary</b></font></p>
+
+<dl>
+<dt><tt>createjmf_jmf_ f;m</tt></dt>
+<dd>Create map file<tt> f </tt>with size<tt> m </tt>bytes.
+<br>&nbsp;</dd>
+
+<dt><tt>map_jmf_ n;f;s;ro</tt></dt>
+<dd>Map name<tt> n </tt>to file<tt> f </tt>with share 
+name<tt> s</tt>,<tt> </tt> read-only or not<tt> </tt> 
+(<tt>ro=1 </tt>or<tt> 0</tt>).
+<br>&nbsp;</dd>
+
+<dt><tt>unmap_jmf_ n</tt></dt>
+<dd>Erase name<tt> n </tt>from the current 
+process and, if it is not still mapped
+(by the current or some other process), unmap the associated file.
+<br>&nbsp;</dd>
+
+<dt><tt>share_jmf_ n;s</tt></dt>
+<dd>Obtain access to a mapped array under 
+name<tt> n </tt>and share name<tt> s </tt>.
+<br>&nbsp;</dd>
+
+<dt><tt>showmap_jmf_ ''</tt></dt>
+<dd>A boxed table of column headings and one row of information for
+each mapped array:  name, file name, share name, file handle,
+mapping handle, address, header address, size, and number of references.
+<br>&nbsp;</dd>
+
+<dt><tt>mbxcheck_jmf_ y</tt></dt>
+<dd>Apply internal consistency checks on the mapped boxed
+array<tt> y </tt>(based on<tt> 15!:12</tt>).
+<br>&nbsp;</dd>
+
+<dt><tt>15!:12 y</tt></dt>
+<dd>A 3-column matrix of addresses, block sizes, and usage codes 
+for mapped boxed array<tt> y</tt>.
+<br>&nbsp;</dd>
+
+<dt><tt>15!:13 y</tt></dt>
+<dd>Reconstruct the free-list for mapped boxed 
+array<tt> y </tt>(not yet implemented).
+<br>&nbsp;</dd>
+</dl>
+
+<br>
+<!--bottom jump start--><hr><a href="status.htm">&gt;&gt;</a>&nbsp;
+<a href="idot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

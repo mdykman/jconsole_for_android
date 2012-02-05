@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>L: Level At</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dmcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dlcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Level At</font></b></td>
+<td align=center width=50%><font face="Courier New" size=+3>u L: n &nbsp;_ _ _</font></td>
+<td align=right  width=17%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table><tr>
+<td width=100% bgcolor=#eeeeee>
+The conjunction<tt> L: </tt>applies the verb<tt> u </tt>at 
+the levels specified by<tt> n</tt> .  The right argument<tt> n </tt>
+behaves like that of the rank conjunction in several respects:<br>
+
+<ul>
+<li>It may have three elements, specifying levels for the monadic, 
+left, and right cases
+<li>The full form of the levels used is<tt> 3$&amp;.|.n</tt> .<tt> </tt>
+For example, a 2-element list<tt> p,q </tt>is equivalent to<tt> q,p,q</tt> .
+<li>Negative values are complementary:<tt> u L:(-r) y </tt>
+<font size=+1>&harr;</font><tt> u L:(0&gt;.(L.y)-r) y</tt>
+</ul>
+</td>                                                         
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   ] y=: (&lt;&lt;2 3 4),&lt;(5 6 ; &lt;&lt;i. 2 3)
++-------+-------------+
+|+-----+|+---+-------+|
+||2 3 4|||5 6|+-----+||
+|+-----+||   ||0 1 2|||
+|       ||   ||3 4 5|||
+|       ||   |+-----+||
+|       |+---+-------+|
++-------+-------------+
+
+   +: L: 0 y                   <font face=Times size=+1>The adverb</font> L:0 <font face=Times size=+1>may be called <i>leaf</i></font>
++-------+----------------+
+|+-----+|+-----+--------+|
+||4 6 8|||10 12|+------+||
+|+-----+||     ||0 2  4|||
+|       ||     ||6 8 10|||
+|       ||     |+------+||
+|       |+-----+--------+|
++-------+----------------+
+
+   2 # L: 0 y
++-------------+-----------------+
+|+-----------+|+-------+-------+|
+||2 2 3 3 4 4|||5 5 6 6|+-----+||
+|+-----------+||       ||0 1 2|||
+|             ||       ||0 1 2|||
+|             ||       ||3 4 5|||
+|             ||       ||3 4 5|||
+|             ||       |+-----+||
+|             |+-------+-------+|
++-------------+-----------------+
+
+   2 # L: 1 y
++-------------+-----------------------+
+|+-----+-----+|+-------+-------------+|
+||2 3 4|2 3 4|||5 5 6 6|+-----+-----+||
+|+-----+-----+||       ||0 1 2|0 1 2|||
+|             ||       ||3 4 5|3 4 5|||
+|             ||       |+-----+-----+||
+|             |+-------+-------------+|
++-------------+-----------------------+
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dmcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dlcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

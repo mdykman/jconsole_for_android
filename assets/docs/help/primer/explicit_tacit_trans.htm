@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Explicit-to-tacit</title>
+
+</head><body><!--top jump start--><a href="checkpoint_f.htm">&gt;&gt;</a>&nbsp;
+<a href="tacit_definition.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Explicit-to-tacit translator</h1>
+There is a primitive which automatically converts one-line explicit definitions to an equivalent tacit definition. You can learn a lot about tacit programming by writing one line explicit definitions, converting them to tacit form, and studying the resulting tacit definition. <br>
+<br>
+Let's do this with an explicit fahrenheit definition. A left argument of <font face=courier size=-1>3</font> to <font face=courier size=-1>:</font> creates an explicit definition. A left argument of <font face=courier size=-1>13 </font>to <font face=courier size=-1>:</font> creates a tacit definition.<br>
+
+<pre>   fx =:  3 : '32 + y. * 9 % 5'	NB.  3 explicit
+   ft =: 13 : '32 + y. * 9 % 5'	NB. 13 tacit</pre>
+Use the Edit|Configure to select Linear Display.<br>
+
+<pre>   ft
+32 + 1.8 * ]</pre>
+At first glance this is confusing as it introduces several new things at once. The first thing to do is to look at the boxed display. <br>
+<br>
+Use the Edit|Configure to select the Box Display.<br>
+
+<pre>   ft
++--+-+---------+
+|32|+|+---+-+-+|
+|  | ||1.8|*|]||
+|  | |+---+-+-+|
++--+-+---------+</pre>
+At the top level of boxing there are 3 boxes. This is a train with three elements: noun verb verb. The train <b>noun verb verb</b> is treated as <b>noun"_ verb verb</b> and this is a fork.&nbsp;&nbsp;You can take this thing apart by giving names to the parts and looking at them separately.<br>
+<br>
+The first element of the fork is the phrase <font face=courier size=-1>32"_</font> . Give this a name and experiment with it a bit as a monadic verb.<br>
+
+<pre>   left =: 32"_
+   left 123
+32
+   left i.5
+32</pre>
+Whatever you give left as an argument, it just returns <font face=courier size=-1>32</font>. You've seen the <font face=courier size=-1>"</font> conjunction before, but not with a constant left argument. Let's look this up in the J Dictionary. When you turn to the definition for rank you will notice that there are three pages of definitions, each with its own header. The three headings are:<br>
+
+<pre>	Rank	m " n
+	Rank	u " n
+	Assign rank	m " v	u " v	mv lv rv</pre>
+The different definitions are for the rank conjunction used with different types of arguments. In the headings <font face=courier size=-1>m</font> and <font face=courier size=-1>n</font> indicate noun arguments and <font face=courier size=-1>u</font> and <font face=courier size=-1>v</font> indicate verb arguments. Your earlier use of <font face=courier size=-1>"</font> involved a verb left argument and a noun right argument and is covered by the second definition. Both <font face=courier size=-1>32 </font>and <font face=courier size=-1>_</font> (infinity) are nouns so it is the first definition that is relevant.<br>
+<br>
+Reading the definition for <font face=courier size=-1>m " n</font> makes it clear that the observations are correct. With a right rank of <font face=courier size=-1>_</font> , the derived verb applies to its entire right argument, and no matter what it is, it returns the left argument, which is <font face=courier size=-1>32</font>. <br>
+<br>
+Let's look at the right element of the fork.<br>
+
+<pre>   right =: ] * 1.8"_
+   right 23
+41.4
+   right 10
+18</pre>
+Let's not worry about the details of the definition, but again, by observation, what the verb right does is to multiply its argument by <font face=courier size=-1>1.8</font> (which is <font face=courier size=-1>9%5</font>).<br>
+<br>
+The final definition is a fork.<br>
+
+<pre>   ff =: left + right
+   ff 100
+212
+   ff 0
+32</pre>
+Compare your custom built tacit definition with the automatically translated one and note how different they are.<br>
+
+<pre>32&+@(1.8&*)
+32+]*1.8"_</pre>
+Tacit programming is very rich and varied and is tightly tied to adverbs and conjunctions such as bond, atop, and rank, and to trains such as hook and fork.<br>
+<!--bottom jump start--><hr><a href="checkpoint_f.htm">&gt;&gt;</a>&nbsp;
+<a href="tacit_definition.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

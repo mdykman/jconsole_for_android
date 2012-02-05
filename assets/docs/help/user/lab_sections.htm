@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Lab Sections</title>
+
+</head><body><!--top jump start--><a href="running_labs.htm">&gt;&gt;</a>&nbsp;
+<a href="lab_header.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Lab Sections</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+<B><I>Sections</I></B><br>
+Sections are in two parts, either of which may be empty. The first part is the text to be displayed, ended by a line starting with <code>)</code> . Lines after the <code>)</code> are J sentences that are executed. If no <code>)</code> line is given, the section is assumed to be text only. 
+
+<P>
+For example, the following is a lab section named &quot;Numbers&quot;:
+
+<pre>
+Lab Section Numbers
+The integer function (i.) generates numbers:
+)
+i.10           NB. first 10 numbers
+i.4 3          NB. first 12 numbers in a 4 by 3 table
+</pre>
+
+<P>
+The lab system responds advance by reading the next section, displaying the text, and executing the J sentences. All display is normal output to the active jx window, and the user has complete access to the J session. 
+
+<P>
+<B><I>Section Keywords</I></B><br>
+Lines in the second part of a Lab Section (the J sentences to be executed) may begin with one of the keywords <code>SCRIPT</code>, <code>PREPARE</code> or <code>SOUND</code>. 
+<br><br>
+<li><code>SCRIPT</code> allows you to enter a character string that will be stored in the global variable <code>SCRIPT</code>, in the <code>jlab</code> locale. For example, this can be used to build up an example script.
+<p><li><code>PREPARE</code> allows you to enter sentences that will be run silently before the rest of the section is run. 
+>.
+
+<P>
+The <code>SCRIPT</code> and <code>PREPARE</code> keywords are used to delimit text or sentences to be run before the rest of the section, and must occur at the beginning of the section. Any text on the same line as the keyword is ignored. For example, you can use these facilities to define the global <code>SCRIPT</code>, or load required code, and check whether it is OK to continue the lab.
+
+<P>
+To prevent further execution of the section, signal an error. The utility <code>assert_lab_</code> may be used for this purpose; the left argument is the message to display when a 0 occurs in the right argument. 
+
+<P>
+For example:
+
+<pre>
+Lab Section Printing
+The following prints the result:
+)
+PREPARE read in print fns ------------
+load 'print'
+load 'myutils'
+ERRORMSG=. 'Unable to load myutils',LF,LF,'Check they are installed'
+ERRORMSG assert_lab_ 3=nameclass &lt;'myprintfn'
+PREPARE ------------------------------
+myprint RES
+</pre>
+
+<b>Text Width</b><br>
+When using ijt (plain text) files, the recommended text width is 61 characters, which should display on all screens with typical screen fonts. You can create wider lines, but some users may have to scroll the screen in order to read them. 
+
+<P>
+If LABWRAP is set on, text beginning at the left margin is automatically wrapped to width LABWIDTH when it is written to the J execution window. To avoid this, for example when including J code, indent text by one or more spaces.
+
+<P>
+<b>Ignored Lines</b><br>
+The system ignores any lines beginning <code>NB. ==</code>. 
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="running_labs.htm">&gt;&gt;</a>&nbsp;
+<a href="lab_header.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

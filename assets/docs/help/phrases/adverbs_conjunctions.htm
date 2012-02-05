@@ -1,0 +1,211 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>D. Adverbs &amp; Conjunctions</title>
+
+</head><body><!--top jump start--><a href="explicit_def.htm">&gt;&gt;</a>&nbsp;
+<a href="ambivalent_functions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+<H1>2D. Adverbs &amp; Conjunctions</h1>
+<B><P>Adverbs from Conjunctions</P></B>
+<P>A conjunction together with one of its arguments produces an 
+adverb defined in an obvious way. 
+For example, if<tt> a1=: &amp;3 </tt>,then<tt> ^ a1 </tt>is equivalent 
+to<tt> ^&amp;3 3 </tt>(the cube function), 
+and if<tt> a2=: 3&amp; </tt>then<tt> ^ a2 </tt>is equivalent 
+to<tt> 3&amp;^</tt> 
+(the three-to-the-power function). 
+It is therefore easy to define useful families of adverbs from a conjunction, 
+so easy that it is fruitless to attempt an exhaustive catalogue. 
+The following list is intended to suggest the possibilities in 
+various classes:</P>
+
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>a0=: I=: ^:_1</tt></TD>	<TD width=60%>Inverse <tt>(^I</tt> is <tt>^.)</tt></TD>
+  </TR><TR><TD><tt>a1=:  L=: ^:_</tt></TD>	<TD>Limit <tt>(2&amp;o.L 1</tt> for soln of y=cos y)</TD>
+  </TR><TR><TD><tt>a2=: LI=: ^:__</tt></TD>	<TD>Limit of inverse</TD>
+  </TR><TR><TD><tt>a3=: SQ=: ^:2</tt></TD>	<TD>Square <tt>(1&amp;o.SQ</tt> for sine squared)</TD>
+  </TR><TR><TD><tt>a4=: C=: &amp;o.</tt></TD>	<TD>Family of circular <tt>fns (3 C </tt>is tangent)</TD>
+  </TR><TR><TD><tt>a5=: CO=: %@C</tt></TD>	<TD><tt>3 CO</tt> is cotangent</TD>
+  </TR><TR><TD><tt>m6=: rfd=: 1r180p1&amp;*</tt></TD> 	<TD>Radians from degrees</TD>
+  </TR><TR><TD><tt>m7=: dfr=: rfd I</tt></TD>	<TD>Use <tt>dfr=: dfr f.</tt> to fix definition</TD>
+  </TR><TR><TD><tt>a8=: D=: @rfd</tt></TD>	<TD>Try <tt>1 C D 0 30 45 60 90 180</tt></TD>
+  </TR><TR><TD><tt>m9=: SIN=: 1&amp;o. D</tt></TD>	<TD>Sine for degree arguments</TD>
+  </TR><TR><TD><tt>a10=: T=: &quot;2</tt></TD>	<TD>Try <tt>&lt;T I. 2 3 4 3</tt> (BOX TABLES)</TD>
+  </TR><TR><TD><tt>a11=: S=: ^!.</tt></TD>	<TD>Stope (rising or falling factorial fn etc)</TD>
+  </TR><TR><TD><tt>a12=: P=: p.!.</tt></TD>	<TD>Stope polynomial</TD>
+  </TR><TR><TD><tt>a13=: FILL=: |.!.</tt></TD>	<TD>Fill for shift (non-cyclic rotate)</TD>
+  </TR><TR><TD><tt>a14=: FILE=: 1!:</tt></TD>	<TD>File functions (<tt>1 FILE</tt> for read, etc.)</TD></TR>
+</TABLE>
+
+
+<B><P>Explicit Definitions</P></B>
+
+<p>An adverb or a conjunction can be defined in explicit form. 
+For example:</p></table>
+
+<pre>
+   split=: 2 : ',.@(x.@(y.&amp;{.) ; x.@(y.&amp;}.))'
+   ]x=: i. 5 3
+ 0  1  2
+ 3  4  5
+ 6  7  8
+ 9 10 11
+12 13 14
+
+   (+: split 2 ,. |. split 3 ,. +/ split 2) x
++--------+--------+--------+
+|0 2  4  |6 7 8   |3 5 7   |
+|6 8 10  |3 4 5   |        |
+|        |0 1 2   |        |
++--------+--------+--------+
+|12 14 16|12 13 14|27 30 33|
+|18 20 22| 9 10 11|        |
+|24 26 28|        |        |
++--------+--------+--------+
+</pre>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%" align="center">
+  <TR><TD><tt>c15=: split=: 2 : ',.@(x.@(y.&amp;{.) ; x.@(y.&amp;}.))'</tt></TD>	<TD>split as defined above</TD>
+  </TR>
+  <TR><TD width=40%><tt>d16=: by=: ' '&amp;;@,.@[,.]</tt></TD>	<TD width=60%>Verb for use in the<tt> table </tt>adverb below</TD>
+  </TR><TR><TD><tt>d17=: over=: ({.;}.)@&quot;:@,</tt></TD><TD>Verb for use in the<tt> table </tt>adverb below</TD>	
+  </TR><TR><TD><tt>a18=: table=: 1 :'[ by ]over x./'</tt></TD>	<TD>Try <tt>1 2 3 * table 4 5 6 7</tt></TD>
+  </TR>
+</TABLE>
+
+<B><P>Noun Arguments</P></B>
+
+<P>Adverbs that apply to a noun argument, and conjunctions that apply to one noun argument and one verb argument are commonplace. For example:</P></td></tr></table>
+
+<pre>
+   x=: 0 0 1 1 [ y=: 0 1 0 1
+   x *. y			NB. Boolean and
+0 0 0 1
+
+   x 1 b. y			NB. Boolean adverb
+0 0 0 1
+
+   x (i.16) b. y		NB. All sixteen Boolean functions
+0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1
+0 0 0 0 1 1 1 1 0 0 0 0 1 1 1 1
+0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+
+   C=: 1 : 'x.&amp;o.'              NB. Circle adverb
+   1 C 0 1r4p1 1r3p1 1r2p1 1p1	NB. Sine function
+0 0.7071068 0.8660254 1 0
+
+   ^&amp;3 x=: i. 6	 		NB. Cube
+0 1 8 27 64 125
+
+   2 |. !. 1 x			NB. Shift in ones
+2 3 4 5 1 1
+</pre>
+
+<P>Conjunctions that apply to two nouns are less familiar, 
+although the definitions of functions in terms 
+of nouns occur frequently in math. 
+For example, a <I>rational </I>function (the quotient of 
+a polynomial <tt>a&amp;p.</tt> divided by another <tt>b&amp;p.</tt>) 
+is defined by a pair of coefficients. Thus:
+
+<pre>
+   a=: 1 4 6 4 1 [ b=: 1 2 1
+   RAT=: 2 : 'x.&amp;p. % y.&amp;p.'
+   a RAT b
+1 4 6 4 1&amp;p. % 1 2 1&amp;p.
+
+   a RAT b y=: i.6
+1 4 9 16 25 36
+
+   b RAT a y
+1 0.25 0.111111 0.0625 0.04 0.0277778
+
+   (a RAT b * b RAT a) y
+1 1 1 1 1 1
+</pre>
+<P>We may also remark that expressions such as 2 x<SUP>3</SUP> and 2 x<SUP>3</SUP>  + 4 x<SUP>2</SUP> are commonly used in elementary math to define functions rather than to indicate explicit computation: the x in the foregoing can be construed (and defined) as a conjunction such that 2 x 3 is the function <tt>2:*]^3:</tt> . Thus:</P></TD></TR></TABLE>
+
+<pre>
+   x=: 2 : 'x.&amp;* @ (^&amp;y.) &quot; 0'
+   2 x 3
+2&amp;*@(^&amp;3)&quot;0
+
+   2 x 3 y=: 0 1 2 3 4 5
+0 2 16 54 128 250
+
+   2 * y ^ 3
+0 2 16 54 128 250
+
+   2 3 5 x 1 2 4 y
+ 0  0    0
+ 2  3    5
+ 4 12   80
+ 6 27  405
+ 8 48 1280
+10 75 3125
+</pre>
+
+<P>The last result above gave the values of the individual terms; 
+in order to obtain their sums (and yet retain the behaviour for a single term), 
+we redefine the conjunction x as follows:</P>
+
+<pre>
+   x=: 2 : '+/ @ (x.&amp;* @ (^&amp;y.)) &quot; 0'
+   2 3 5 x 1 2 4 y
+0 10 96 438 1336 3210
+
+   (2 x 1 + 3 x 2 + 5 x 4) y
+0 10 96 438 1336 3210
+
+   2 x 3 y
+0 2 16 54 128 250
+</pre>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+<TR><TD width=40%><tt>c19=: RAT=: 2 : 'x.&amp;p. % y.&amp;p.'</tt></TD><TD width=60%>Produces rational function</TD>
+</TR>  
+<TR><TD><tt>c20=: x=: 2 : '+/ @ (x.&amp;* @ (^&amp;y.)) &quot; 0'</tt></TD><TD>Mimics notation of elementary math</TD>
+</TR>
+
+<TR><TD><tt>c21=: bind=: 2 : 'x. @ (y.&quot;_)'</tt></TD>	<TD>Binds <tt>y</tt> to the monad <tt>x</tt></TD></TR>
+</TABLE>
+
+
+<P>It is often convenient to bind an argument to a monad, 
+producing a function that ignores its argument. 
+For example, using<tt> wdinfo </tt> ,<tt> </tt>a monad that displays 
+its argument in a message box, 
+the definition<tt> fini=: wdinfo bind 'Job Finished' </tt> 
+produces a function such that<tt> fini'' </tt>is equivalent 
+to<tt> wdinfo 'Job Finished' </tt> .</P>
+
+<br>
+
+<!--bottom jump start--><hr><a href="explicit_def.htm">&gt;&gt;</a>&nbsp;
+<a href="ambivalent_functions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

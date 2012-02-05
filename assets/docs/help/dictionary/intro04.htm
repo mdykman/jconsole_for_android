@@ -1,0 +1,122 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 4.  Punctuation</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro05.htm">&gt;&gt;</a>&nbsp;
+<a href="intro03.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>4. Punctuation</b></font><br><br>
+
+English employs various symbols to <i>punctuate</i> a sentence, 
+to indicate the order in which its phrases are to be interpreted.  
+Thus:<br><br>
+  
+&nbsp; &nbsp; The teacher said he was stupid.<br>
+&nbsp; &nbsp; The teacher, said he, was stupid.<br><br>
+
+Math also employs various devices (primarily parentheses) to specify 
+order of interpretation or, as it is usually called, <i>order of execution</i>.  
+It also employs a set of rules for an unparenthesized phrase, 
+including a hierarchy amongst functions.  For example, <i>power</i> 
+is executed before <i>times</i>, which is executed before <i>addition</i>.<br><br>
+
+<b>J</b> uses parentheses for punctuation, together with the 
+following rules for unparenthesized phrases:<br><br>
+
+&nbsp; &nbsp; The right argument of a verb is the value of 
+the entire phrase to its right. <br>
+
+&nbsp; &nbsp; Adverbs are applied first.  Thus, the phrase<tt> a */ b </tt>
+is equivalent to<tt> a (*/) b</tt>,<tt> </tt>not to<tt> a(*/b)</tt>.<br><br>
+
+For example:
+<pre>
+   a=:5
+   b=:3
+   (a*a)+(b*b)
+34
+
+   a*a+b*b
+70
+  
+   a*(a+(b*b))
+70
+  
+   (a+b)*(a-b)
+16
+
+   a (+*-) b
+16
+</pre>
+
+The last sentence above includes the <i>isolated</i> phrase<tt> +*- </tt>
+which has thus far not been assigned a meaning.  It is called a 
+<i>fork</i>, and is equivalent to the sentence that 
+precedes it. <br><br>
+
+A fork also has a monadic meaning, as illustrated for the 
+<i>mean</i> below:<br>
+
+<pre>
+   c=:2 3 4 5 6
+   (+/ % #) c                 <font face=Times size=+1>The verb</font> # <font face=Times size=+1>yields the number of items in its argument</font>
+4
+
+   (+/c)%(#c)
+4
+</pre>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>4.1 &nbsp;</td>
+<td>In math, the expression 3x<sup>4</sup>+4x<sup>3</sup>+5x<sup>2</sup> is called a <i>polynomial</i>.  
+Enter: <br>
+
+<pre>
+   x=: 2
+   (3*x^4)+(4*x^3)+(5*x^2)
+</pre>
+
+to evaluate the polynomial for the case where<tt> x </tt>is<tt> 2</tt>.<br><br>
+</td></tr>
+
+<tr><td valign=top>4.2 &nbsp;</td>
+<td>Note that the hierarchy among functions used in math 
+is such that no parentheses are necessary in writing a polynomial.  
+Write an equivalent sentence using no parentheses. <br><br>
+  
+Answer:<tt> +/3 4 5 * x ^ 4 3 2</tt><br><br>
+  
+or (first assigning names to the <i>coefficients</i><tt> 3 4 5 </tt>
+and the <i>exponents</i><tt> 4 3 2</tt>),<tt> </tt>as:<tt> +/c*x^e</tt><br>
+
+</td></tr>
+</table>
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro05.htm">&gt;&gt;</a>&nbsp;
+<a href="intro03.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

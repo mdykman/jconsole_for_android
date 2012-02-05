@@ -1,0 +1,102 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>% Reciprocal  -  Divide</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d131.htm">&gt;&gt;</a>&nbsp;
+<a href="d122.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Reciprocal</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>% &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Divided by</font></b></td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>% y </tt>is the reciprocal of<tt> y</tt> ,<tt> </tt>
+that is,<tt> 1%y</tt> .<tt> </tt>
+For example,<tt> %4 </tt><font size=+1>&harr;</font><tt> 0.25</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x % y </tt>is division of<tt> x </tt>by<tt> y </tt>as defined 
+in elementary math, except that<tt> 0%0 </tt>is<tt> 0</tt> .<tt> </tt>
+See <a href="ref.htm#11">McDonnell [11]</a>, and 
+the resulting pattern in the middle column and middle row of 
+the table below.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+We will illustrate the divide function by tables, using a function 
+to generate lists symmetric about zero:<br>
+
+<pre>
+   ] a=: i: 3
+_3 _2 _1 0 1 2 3
+
+   (] ; *) |. a%/a
++--------------------------------------+--------------------+
+|       _1 _1.5 _3  _  3  1.5         1|_1 _1 _1  1  1  1  1|
+|_0.666667   _1 _2  _  2    1  0.666667|_1 _1 _1  1  1  1  1|
+|_0.333333 _0.5 _1  _  1  0.5  0.333333|_1 _1 _1  1  1  1  1|
+|        0    0  0  0  0    0         0| 0  0  0  0  0  0  0|
+| 0.333333  0.5  1 __ _1 _0.5 _0.333333| 1  1  1 _1 _1 _1 _1|
+| 0.666667    1  2 __ _2   _1 _0.666667| 1  1  1 _1 _1 _1 _1|
+|        1  1.5  3 __ _3 _1.5        _1| 1  1  1 _1 _1 _1 _1|
++--------------------------------------+--------------------+
+
+   6j2 &quot;: |. a %/ a
+ _1.00 _1.50 _3.00     _  3.00  1.50  1.00
+ _0.67 _1.00 _2.00     _  2.00  1.00  0.67
+ _0.33 _0.50 _1.00     _  1.00  0.50  0.33
+  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+  0.33  0.50  1.00    __ _1.00 _0.50 _0.33
+  0.67  1.00  2.00    __ _2.00 _1.00 _0.67
+  1.00  1.50  3.00    __ _3.00 _1.50 _1.00
+</pre>
+
+The final use of the format function gives a more readable result, 
+with a width of six spaces per column and a uniform two digits after 
+the decimal point.<br>
+
+<pre>
+   |. a %/ x: a
+  _1 _3r2 _3  _  3  3r2    1
+_2r3   _1 _2  _  2    1  2r3
+_1r3 _1r2 _1  _  1  1r2  1r3
+   0    0  0  0  0    0    0
+ 1r3  1r2  1 __ _1 _1r2 _1r3
+ 2r3    1  2 __ _2   _1 _2r3
+   1  3r2  3 __ _3 _3r2   _1
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d131.htm">&gt;&gt;</a>&nbsp;
+<a href="d122.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

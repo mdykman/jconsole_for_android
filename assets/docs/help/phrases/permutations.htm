@@ -1,0 +1,170 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Permutations</title>
+
+</head><body><!--top jump start--><a href="rotate_reflect.htm">&gt;&gt;</a>&nbsp;
+<a href="grading.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+<H1>7A. Permutations</h1>
+
+
+<P>Any re-ordering or <I>permutation </I>of the integers <tt>i.n</tt> is called a 
+<I>permutation vector</I> of order <tt>n</tt>. If <tt>p</tt> is a permutation vector, 
+then <tt>p&amp;{</tt> is the corresponding permutation function. For example:</P>
+
+<pre>
+   p=: 4 5 2 1 0 3
+   text=: 'ABCDEF'
+   p { text
+EFCBAD
+
+   p&amp;{ text
+EFCBAD
+</pre>
+
+<P>The phrase <tt>k=: A. p</tt> gives the index of the permutation vector <tt>p</tt> 
+in the ordered list of <tt>!n</tt> permutation vectors of order <tt>n</tt>, 
+and the function <tt>k&amp;A.</tt> is the corresponding permutation function. 
+For example:</P>
+
+<pre>
+   ]k=: A. p
+590
+
+   k A. text
+EFCBAD
+
+   (i.!3) A. i. 3
+0 1 2
+0 2 1
+1 0 2
+1 2 0
+2 0 1
+2 1 0
+</pre>
+
+<P>The phrase <tt>c=: C. p</tt> gives the (boxed) cycle representation of <tt>p</tt>, 
+and either <tt>p&amp;C.</tt> or <tt>c&amp;C.</tt> provide the corresponding permutation function. 
+For example:</P>
+
+<pre>
+   ]c=: C. p
++-+---+-----+
+|2|4 0|5 3 1|
++-+---+-----+
+
+   c C. text
+EFCBAD
+</pre>
+
+<P>In the phrases <tt>p C. x</tt> and <tt>c C. x</tt>, the order of the permutation is determined by 
+the number of items in <tt>x</tt>, and <I>abbreviated </I>vectors <tt>p</tt> and <tt>c</tt> 
+may therefore be used unambiguously:</P>
+
+<pre>
+   3 1 C. text         NB. Move items to tail
+ACEFDB
+
+   (&lt;3 1) C. text      NB. Interchange items
+ADCBEF
+
+   (&lt;3 1 4) C. text    NB. Rotate items
+AECBDF
+</pre>
+
+<P>The application of<tt> C. </tt>to any abbreviated representation produces the standard form, 
+and two applications of <tt>C.</tt> therefore provide the standard form for any representation. 
+For example:</P>
+
+<pre>
+   C. 3 1
++-+-----+
+|0|3 1 2|
++-+-----+
+
+   C. C. 3 1
+0 2 3 1
+
+   C. C. &lt;3 1
++-+-+---+
+|0|2|3 1|
++-+-+---+
+
+   C. C. &lt;3 1 4
++-+-+-----+
+|0|2|4 3 1|
++-+-+-----+
+</pre>
+
+<TABLE ALIGN=center BORDER=1 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+  <TR><TD width=40%><tt>m0  =: /:</tt></TD> <TD width=60%>Inverse permutation vector</TD>
+  </TR><TR><TD><tt>m1  =: /:&amp;.C.</tt></TD> <TD>Inverse cycle</TD>
+  </TR><TR><TD><tt>m2  =: (-: &gt;) :: 0:</tt></TD> <TD>Not-a-box test</TD>
+  </TR><TR><TD><tt>m3  =: m1`m0 @. m2</tt></TD> <TD>Inverse permutation</TD>
+  </TR><TR><TD><tt>m4  =: C.^:2</tt></TD> <TD>Put permutation into standard form</TD>
+  </TR><TR><TD><tt>m5  =: (&lt;0 _1)&amp;C.</tt></TD> <TD>Interchange first and last items</TD></TR>
+  <TR><TD><tt>m6  =: _1&amp;A.</tt></TD> <TD>Reverse</TD>
+  </TR><TR><TD><tt>m7  =: 3&amp;A.</tt></TD> <TD>Rotate last three to the left</TD>
+  </TR><TR><TD><tt>m8  =: 4&amp;A.</tt></TD> <TD>Rotate last three right</TD>
+  </TR><TR><TD><tt>d9  =: ([: +/[:![:}.[:i.[) A. ]</tt></TD> <TD>Rotate last x to the left</TD></TR>
+  <TR><TD><tt>d10=: (!@[ - !@&lt;:@[) A. ]</tt></TD> <TD>Rotate last x to the right</TD>
+  </TR><TR><TD><tt>m11 =: /:~</tt></TD> <TD>Sort up</TD>
+  </TR><TR><TD><tt>m12 =: \:~</tt></TD> <TD>Sort down</TD>
+  </TR><TR><TD><tt>m13 =: ?~</tt></TD> <TD>Random permutation of order y</TD>
+  </TR><TR><TD><tt>m14=: /:@:?@$~</tt></TD> <TD>Random permutation of order y</TD>
+  </TR><TR><TD><tt>m15=: ?@! A. i.</tt></TD> <TD>Random permutation of order y</TD>
+  </TR><TR><TD><tt>d16=: A. i.</tt></TD> <TD>x-th permutation of order y</TD>
+  </TR><TR><TD><tt>m17=: all=: i.@! A. i.</tt></TD> <TD>All permutations of order y</TD>
+  </TR><TR><TD><tt>m18=: ,:@i.`([: ,/ 0&amp;,.@ ($:&amp;.&lt;:){&quot;2 1 \:&quot;1@=@i.)@.(1&amp;&lt;)</tt></TD> <TD>All permutations of order y (recursive definition)
+  </TD>
+  </TR><TR><TD><tt>m19=: pow=: {^:(]`(i.@#@[))</tt></TD> <TD>Permutation x to the power y</TD>
+  </TR><TR><TD><tt>m20=: [: {/ ] $ ,:@[</tt></TD> <TD>Permutation x to the power y</TD>
+  </TR><TR><TD><tt>m21=: i.@#@[C.~(#&amp;&gt;@C.@[| ])#C.@[</tt></TD> <TD>Permutation x to the power y</TD></TR>
+  <TR><TD><tt>m22=:  pow 2&amp;^</tt></TD> <TD>Permutation x to the power 2^y</TD>
+  </TR><TR><TD><tt>m23=: 3 : (':'; '{~^:y. x.')</tt></TD> <TD>Permutation x to the power 2^y</TD></TR>
+  <TR><TD><tt>m24=: {~@]^:(]`[)</tt></TD> <TD>Permutation x to the power 2^y</TD>
+  </TR><TR><TD><tt>m25=: ord=: *./@(#&amp;&gt;&quot;_)@C.</tt></TD> <TD>The order of a permutation</TD></TR>
+  <TR><TD><tt>m26=: sg=: pow i.@ord</tt></TD> <TD>Subgroup generated by permutation y</TD>
+  </TR><TR><TD><tt>m27=: [: {/\ ord $ ,:</tt></TD>  <TD ALIGN="center">&quot; </TD>
+  </TR><TR><TD><tt>m28=: ~.@(,/)@({&quot;1/~)^:_@(i.@{:@$ ,: ])</tt></TD>  <TD ALIGN="center">" &sect; 4.4 <a href="references.htm#4">Hui [4]</a></TD></TR>
+  <TR><TD><tt>d29=: \:@[{]</tt></TD> <TD>Move items located by x to front of y</TD>
+  </TR><TR><TD><tt>m30=: 1: |. ]</tt></TD> <TD>Rotate y by 1 to the left (or up)</TD>
+  </TR><TR><TD><tt>d31=: !@[ * !</tt></TD> <TD>Number of perms of y objects x at a time</TD>
+  </TR><TR><TD><tt>m32=: (] {~ [: /: ] = ' '&quot;_)&quot;1</tt></TD> <TD>Move all blanks to end of row</TD>
+  </TR><TR><TD><tt>d33=: /:@[ { ]</tt></TD> <TD>Move items located by x to end of y</TD>
+  </TR><TR><TD><tt>m34=: _1: |. ]</tt></TD> <TD>Rotate y by 1 to the right (or down)</TD>
+  </TR><TR><TD><tt>m35=: ~.@(,/)@({&quot;1/~)^:_@(i.@{:@$,])</tt></TD> <TD>Subgroup generated by a matrix of permutations</TD></TR>
+  <TR><TD><tt>m36=: {&quot;1/~</tt></TD> <TD>The group table of a matrix of permutations</TD>
+  </TR><TR><TD><tt>m37=: ugt=: ~.@(,/)@({&quot;1/~)</tt></TD> <TD>The unique elements of the permutation group</TD></TR>
+  <TR><TD><tt>m38=: pbi=: i.@{:@$ , ]</tt></TD> <TD>Preface a matrix of permutations by the identity</TD></TR>
+  <TR><TD><tt>m39=: ugt^:_ @ pbi</tt></TD> <TD>The subgroup generated by a matrix of permutations (same as m35)</TD></TR>
+  
+</TABLE>
+<br><br>
+
+<!--bottom jump start--><hr><a href="rotate_reflect.htm">&gt;&gt;</a>&nbsp;
+<a href="grading.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

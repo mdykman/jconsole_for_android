@@ -1,0 +1,100 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 21. Gerund and Agenda</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro22.htm">&gt;&gt;</a>&nbsp;
+<a href="intro20.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>21. Gerund and Agenda</b></font><br><br>
+
+In English, a <i>gerund</i> is a noun that carries the force 
+of a verb, as does the noun <i>cooking</i> in the phrase 
+<i>the art of cooking</i>; and <i>agenda</i> is a list 
+of items for action.  The <i>tie</i> conjunction<tt><b> ` </b></tt>
+applies to two verbs to form a gerund, from which elements 
+can be chosen for execution.  Thus, if the agenda conjunction<tt> @. </tt>
+is applied to a gerund, its verb right argument provides 
+the results that choose the elements.  For example:<br>
+
+<pre>
+   g=: +`^
+   a=:&lt;
+   2 a 3
+1
+  
+   2 g@.a 3
+8
+
+   3 g@.a 2
+5
+
+   +:`-:`*:`%: @. (4&amp;|@&lt;.)&quot;0 i. 10
+0 0.5 4 1.73205 8 2.5 36 2.64575 16 4.5
+</pre>
+
+The verb produced by<tt> g@.a </tt>is often called a <i>case</i> 
+or <i>case statement</i>, since it selects one of the &ldquo;cases&rdquo; 
+of the gerund for execution.<br><br>
+
+The <i>insert</i> adverb<tt> / </tt>applies to a gerund 
+in a manner analogous to its application to a verb.  For example:<br>
+
+<pre>
+   c=:3 [ x=: 4 [ power=: _1
+   g/ c,x,power
+3.25
+
+   3+x^_1
+3.25
+</pre>
+  
+The elements of the gerund are repeated as required.  For example:<br>
+
+<pre>
+   +`*/1,x,3,x,3,x,1
+125
+</pre>
+  
+The last sentence above corresponds to Horner&rsquo;s efficient 
+evaluation of the polynomial with coefficients<tt> 1 3 3 1 </tt>
+and argument<tt> x</tt> .<br><br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>21.1 &nbsp;</td>
+<td>Define a function<tt> f </tt>such that<tt> (x=: 4) f c=: 1 3 3 1 </tt>
+yields the result used as the argument to<tt> +`*/ </tt>
+in Horner's method.<br><br>
+
+Answer:<tt> f=: }.@,@,.</tt>
+</td></tr>
+</table>
+
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro22.htm">&gt;&gt;</a>&nbsp;
+<a href="intro20.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

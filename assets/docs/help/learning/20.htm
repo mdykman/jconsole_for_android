@@ -1,0 +1,838 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 20: Scalar Numerical Functions</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="21.htm">&gt;&gt;</a>&nbsp;
+<a href="19.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <A NAME="01"></A>
+<H1>Chapter 20: Scalar Numerical Functions</H1>
+In this chapter we look at built-in scalar functions 
+for computing numbers from numbers. 
+This chapter is a straight catalog
+of functions, with links to the sections 
+as follows:
+<p>
+<TABLE CELLPADDING=5>
+<TR>
+<TD> <A HREF="#ceil">  Ceiling </A>   </TD>
+<TD> <A HREF="#conj">  Conjugate </A> </TD>
+<TD> <A HREF="#cos">   cos </A>       </TD>
+<TD> <A HREF="#acos">  cos<sup>-1</sup></A> </TD>
+<TD> <A HREF="#cosh">  cosh </A>            </TD>
+<TD> <A HREF="#acosh"> cosh<sup>-1</sup> </A> </TD>
+</TR>
+<TR>
+<TD> <A HREF="#decr"> Decrement   </A> </TD>
+<TD> <A HREF="#divi"> divide      </A> </TD>
+<TD> <A HREF="#doub"> Double     </A> </TD>
+<TD> <A HREF="#expo"> Exponential</A> </TD>
+<TD> <A HREF="#fact"> Factorial  </A> </TD>
+<TD> <A HREF="#floo"> Floor      </A> </TD>
+</TR>
+<TR>
+<TD> <A HREF="#gcd">  GCD </A>   </TD>
+<TD> <A HREF="#halv"> Halve </A> </TD>
+<TD> <A HREF="#incr"> Increment </A> </TD>
+<TD> <A HREF="#lcm"> LCM </A> </TD>
+<TD> <A HREF="#loga"> Logarithm </A> </TD>
+<TD> <A HREF="#logn"> Log, Natural </A> </TD>
+</TR>
+<TR>
+<TD> <A HREF="#magn"> Magnitude </A> </TD>
+<TD> <A HREF="#minu"> Minus </A> </TD>
+<TD> <A HREF="#mult"> multiply </A> </TD>
+<TD> <A HREF="#nega"> Negate</A> </TD>
+<TD> <A HREF="#outo"> OutOf</A> </TD>
+<TD> <A HREF="#piti"> PiTimes </A> </TD>
+</TR>
+<TR>
+<TD> <A HREF="#addi"> Plus </A> </TD>
+<TD> <A HREF="#powe"> power </A> </TD>
+<TD> <A HREF="#pyth"> Pythagorean </A> </TD>
+<TD> <A HREF="#reci"> Reciprocal </A> </TD>
+<TD> <A HREF="#resi"> Residue </A> </TD>
+<TD> <A HREF="#root"> Root </A> </TD>
+</TR>
+<TR> 
+<TD> <A HREF="#mult"> Signum </A> </TD>
+<TD> <A HREF="#sin">  sin </A> </TD>
+<TD> <A HREF="#asin"> sin<sup>-1</sup></A> </TD>
+<TD> <A HREF="#sinh">  sinh </A> </TD>
+<TD> <A HREF="#asinh"> sinh<sup>-1</sup></A> </TD>
+<TD> <A HREF="#squa">  Square </A> </TD>
+</TR>
+<TR>
+<TD> <A HREF="#sroo"> SquareRoot </A> </TD>
+<TD> <A HREF="#tan">  tan </A> </TD>
+<TD> <A HREF="#atan"> tan<sup>-1</sup></A> </TD>
+<TD> <A HREF="#tanh"> tanh </A> </TD>
+<TD> <A HREF="#atanh"> tanh<sup>-1</sup> </A> </TD>
+<TD> &nbsp; </TD>
+</TR>
+</TABLE>
+<A NAME="02"></A>
+<A NAME="03"></A>
+<H2>20.1  Plus and Conjugate<A NAME="addi"></A><A NAME="conj"></A></H2>
+Dyadic <TT>+</TT> is arithmetic addition.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>2 + 2</TT></TD>
+<TD><TT>3j4 + 5j4</TT></TD>
+<TD><TT>2r3 + 1r6</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>4</TT></TD>
+<TD><TT>8j8</TT></TD>
+<TD><TT>5r6</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>+</TT> is "Conjugate".
+For a real number <TT>y</TT>, the conjugate is <TT>y</TT>.
+For a complex number <TT>xjy</TT> (that is, <TT>x + 0jy</TT>),
+the conjugate is <TT>x - 0jy</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>+ 2</TT></TD>
+<TD><TT>+ 3j4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>3j_4</TT></TD>
+</TABLE>
+<p>
+<A NAME="04"></A>
+<A NAME="05"></A>
+<H2>20.2  Minus and Negate<A NAME="minu"></A><A NAME="nega"></A></H2>
+Dyadic <TT>-</TT> is arithmetic subtraction.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>2 - 2</TT></TD>
+<TD><TT>3 - 0j4</TT></TD>
+<TD><TT>2r3 - 1r6</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0</TT></TD>
+<TD><TT>3j_4</TT></TD>
+<TD><TT>1r2</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>-</TT> is "Negate".
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>- 2</TT></TD>
+<TD><TT>- 3j4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_2</TT></TD>
+<TD><TT>_3j_4</TT></TD>
+</TABLE>
+<p>
+<A NAME="06"></A>
+<A NAME="07"></A>
+<H2>20.3  Increment and Decrement<A NAME="incr"></A><A NAME="decr"></A></H2>
+Monadic <TT>>:</TT> is called "Increment". It adds <TT>1</TT> to its argument.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>>: 2</TT></TD>
+<TD><TT>>: 2.5</TT></TD>
+<TD><TT>>: 2r3</TT></TD>
+<TD><TT>>: 2j3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>3.5</TT></TD>
+<TD><TT>5r3</TT></TD>
+<TD><TT>3j3</TT></TD>
+</TABLE>
+<p>
+Monadic <TT><:</TT> is called "Decrement". 
+It subtracts <TT>1</TT> from its argument.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT><: 3</TT></TD>
+<TD><TT><: 2.5</TT></TD>
+<TD><TT><: 2r3</TT></TD>
+<TD><TT><: 2j3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>1.5</TT></TD>
+<TD><TT>_1r3</TT></TD>
+<TD><TT>1j3</TT></TD>
+</TABLE>
+<p>
+<A NAME="08"></A>
+<A NAME="09"></A>
+<H2>20.4  Times and Signum<A NAME="mult"></A></H2>
+Dyadic <TT>*</TT> is multiplication.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>2 * 3</TT></TD>
+<TD><TT>3j1 * 2j2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>6</TT></TD>
+<TD><TT>4j8</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>*</TT> is called "Signum". For a real number <TT>y</TT>,
+the value of <TT>(* y)</TT> is <TT>_1</TT> or <TT>0</TT> or <TT>1</TT> 
+as <TT>y</TT> is negative, zero or positive.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>* _2</TT></TD>
+<TD><TT>* 0</TT></TD>
+<TD><TT>* 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+More generally, <TT>y</TT> may be real or complex, 
+and the signum is equivalent to <TT>y % | y</TT>.
+Hence the signum of a complex number has magnitude 1 
+and the same angle as the argument.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y =: 3j4</TT></TD>
+<TD><TT>| y</TT></TD>
+<TD><TT>y % | y</TT></TD>
+<TD><TT>* y</TT></TD>
+<TD><TT>| * y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3j4</TT></TD>
+<TD><TT>5</TT></TD>
+<TD><TT>0.6j0.8</TT></TD>
+<TD><TT>0.6j0.8</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+<A NAME="10"></A>
+<A NAME="11"></A>
+<H2>20.5  Division and Reciprocal<A NAME="divi"></A><A NAME="reci"></A></H2>
+Dyadic <TT>%</TT> is division.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>2 % 3</TT></TD>
+<TD><TT>3j4 % 2j1</TT></TD>
+<TD><TT>12x % 5x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.666667</TT></TD>
+<TD><TT>2j1</TT></TD>
+<TD><TT>12r5</TT></TD>
+</TABLE>
+<p>
+<TT>1 % 0</TT> is "infinity" but  <TT>0 % 0</TT> is <TT>0</TT>          
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>1 % 0</TT></TD>
+<TD><TT>0 % 0</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>%</TT> is the "reciprocal" function.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>% 2</TT></TD>
+<TD><TT>% 0j1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.5</TT></TD>
+<TD><TT>0j_1</TT></TD>
+</TABLE>
+<p>
+<A NAME="12"></A>
+<A NAME="13"></A>
+<H2>20.6  Double and Halve<A NAME="doub"></A><A NAME="halv"></A></H2>
+Monadic <TT>+:</TT> is the "double" verb.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>+: 2.5</TT></TD>
+<TD><TT>+: 3j4</TT></TD>
+<TD><TT>+: 3x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>5</TT></TD>
+<TD><TT>6j8</TT></TD>
+<TD><TT>6</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>-:</TT> is the  "halve" verb:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>-: 6</TT></TD>
+<TD><TT>-: 6.5</TT></TD>
+<TD><TT>-: 3j4</TT></TD>
+<TD><TT>-: 3x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>3.25</TT></TD>
+<TD><TT>1.5j2</TT></TD>
+<TD><TT>3r2</TT></TD>
+</TABLE>
+<p>
+<A NAME="14"></A>
+<A NAME="15"></A>
+<H2>20.7  Floor and Ceiling <A NAME="floo"> </A><A NAME="ceil"></A></H2>
+Monadic <TT><.</TT> (left-angle-bracket dot) is called "Floor".
+For real <TT>y</TT> the floor of <TT>y</TT> is <TT>y</TT>
+rounded downwards to an integer, that is, 
+the largest integer  not exceeding <TT>y</TT>.  
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT><. 2</TT></TD>
+<TD><TT><. 3.2</TT></TD>
+<TD><TT><.  _3.2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>_4</TT></TD>
+</TABLE>
+<p>
+For complex <TT>y</TT>, the floor lies within a unit circle
+center <TT>y</TT>, that is, the magnitude of (<TT>y - <. y</TT>)
+is less than <TT>1</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y =: 3.4j3.4</TT></TD>
+<TD><TT>z =: <. y</TT></TD>
+<TD><TT>y - z</TT></TD>
+<TD><TT>| y-z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3.4j3.4</TT></TD>
+<TD><TT>3j3</TT></TD>
+<TD><TT>0.4j0.4</TT></TD>
+<TD><TT>0.565685</TT></TD>
+</TABLE>
+<p>
+This condition (magnitude less than 1) means that
+the floor of say <TT>3.8j3.8</TT> is not <TT>3j3</TT> but <TT>4j3</TT>
+because <TT>3j3</TT> does not satisfy the condition.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y =: 3.8j3.8</TT></TD>
+<TD><TT>z =: <. y</TT></TD>
+<TD><TT>| y-z</TT></TD>
+<TD><TT>| y - 3j3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3.8j3.8</TT></TD>
+<TD><TT>4j3</TT></TD>
+<TD><TT>0.824621</TT></TD>
+<TD><TT>1.13137</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>>.</TT> is called "Ceiling". For real <TT>y</TT>
+the ceiling
+of <TT>y</TT> is <TT>y</TT> rounded upwards to an integer, 
+that is, the smallest integer greater than or
+equal to <TT>y</TT>. For example:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>>. 3.0</TT></TD>
+<TD><TT>>. 3.1</TT></TD>
+<TD><TT>>. _2.5</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>4</TT></TD>
+<TD><TT>_2</TT></TD>
+</TABLE>
+<p>
+Ceiling applies to complex <TT>y</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>>. 3.4j3.4</TT></TD>
+<TD><TT>>. 3.8j3.8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3j4</TT></TD>
+<TD><TT>4j4</TT></TD>
+</TABLE>
+<p>
+<A NAME="16"></A>
+<A NAME="17"></A>
+<H2>20.8  Power and Exponential<A NAME="powe"></A><A NAME="expo"></A></H2>
+Dyadic <TT>^</TT> is the "power" verb: <TT>(x^y)</TT>
+is <TT>x</TT> raised-to-the-power <TT>y</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>10 ^ 2</TT></TD>
+<TD><TT> 10 ^ _2</TT></TD>
+<TD><TT>100 ^ 1%2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>100</TT></TD>
+<TD><TT>0.01</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>^</TT> is exponentiation (or antilogarithm): <TT>^y</TT>
+means <TT>(e^y)</TT> where <TT>e</TT> is Euler's constant, <TT>2.71828...</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>^ 1</TT></TD>
+<TD><TT>^ 0j1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2.71828</TT></TD>
+<TD><TT>0.540302j0.841471</TT></TD>
+</TABLE>
+<p>
+Euler's equation, supposedly engraved
+on his tombstone is:
+ e <sup> i &pi;</sup> +1 = 0 
+<PRE>
+   (^ 0j1p1) + 1
+0j1.22465e_16
+</PRE>
+<A NAME="18"></A>
+<A NAME="19"></A>
+<H2>20.9  Square<A NAME="squa"></A></H2>
+Monadic <TT>*:</TT> is "Square".
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>*: 4</TT></TD>
+<TD><TT>*: 2j1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>16</TT></TD>
+<TD><TT>3j4</TT></TD>
+</TABLE>
+<p>
+<H2>20.10  Square Root<A NAME="sroo"></A></H2>
+Monadic <TT>%:</TT> is "Square Root".
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>%: 9</TT></TD>
+<TD><TT>%: 3j4</TT></TD>
+<TD><TT>2j1 * 2j1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>2j1</TT></TD>
+<TD><TT>3j4</TT></TD>
+</TABLE>
+<p>
+<A NAME="20"></A>
+<H2>20.11  Root<A NAME="root"></A></H2>
+If <TT>x</TT> is integral, then <TT>x %: y</TT> is the "x'th root" of <TT>y</TT>:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>3 %: 8</TT></TD>
+<TD><TT>_3 %: 8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>0.5</TT></TD>
+</TABLE>
+<p>
+More generally, <TT>(x %: y)</TT> is an abbreviation for
+ <TT>(y ^ % x)</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>x =: 3 3.1</TT></TD>
+<TD><TT>x %: 8</TT></TD>
+<TD><TT>8 ^  % x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 3.1</TT></TD>
+<TD><TT>2 1.95578</TT></TD>
+<TD><TT>2 1.95578</TT></TD>
+</TABLE>
+<p>
+<A NAME="21"></A>
+<A NAME="22"></A>
+<H2>20.12  Logarithm and Natural Logarithm<A NAME="loga"></A><A NAME="logn"></A></H2>
+Dyadic <TT>^.</TT> is the base-x logarithm function, that is,
+ <TT>(x ^. y)</TT> is the logarithm of <TT>y</TT> to base <TT>x</TT> :
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>10 ^. 1000</TT></TD>
+<TD><TT>2 ^. 8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>^.</TT> is the "natural logarithm" function.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>e =: ^ 1</TT></TD>
+<TD><TT>^. e</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2.71828</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+<A NAME="23"></A>
+<A NAME="24"></A>
+<H2>20.13  Factorial and OutOf<A NAME="fact"></A><A NAME="outo"></A></H2>
+The factorial function is monadic <TT>!</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>! 0 1 2 3 4</TT></TD>
+<TD><TT>! 5x 6x 7x 8x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 1 2 6 24</TT></TD>
+<TD><TT>120 720 5040 40320</TT></TD>
+</TABLE>
+<p>
+The number of combinations of <TT>x</TT> objects
+selected out of <TT>y</TT> objects
+is given by the expression <TT>x ! y</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT> 1 ! 4</TT></TD>
+<TD><TT>2 ! 4</TT></TD>
+<TD><TT>3 ! 4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>4</TT></TD>
+<TD><TT>6</TT></TD>
+<TD><TT>4</TT></TD>
+</TABLE>
+<p>
+<A NAME="25"></A>
+<A NAME="26"></A>
+<A NAME="27"></A>
+<H2>20.14  Magnitude and Residue<A NAME="magn"></A><A NAME="resi"></A></H2>
+Monadic <TT>|</TT> is called "Magnitude". For a real number <TT>y</TT>
+the magnitude of <TT>y</TT> is the absolute value:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>| 2</TT></TD>
+<TD><TT>| _2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>2</TT></TD>
+</TABLE>
+<p>
+More generally, <TT>y</TT> may be real or complex,
+and the magnitude is equivalent to <TT>(%: y * + y)</TT>. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y =: 3j4</TT></TD>
+<TD><TT>y * + y</TT></TD>
+<TD><TT>%: y * + y</TT></TD>
+<TD><TT>| y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3j4</TT></TD>
+<TD><TT>25</TT></TD>
+<TD><TT>5</TT></TD>
+<TD><TT>5</TT></TD>
+</TABLE>
+<p>
+The dyadic verb <TT>|</TT> is called "Residue". 
+the remainder when <TT>y</TT> is divided by <TT>x</TT>
+is given by <TT>(x | y)</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>10 | 12</TT></TD>
+<TD><TT> 3 | _2 _1 0 1 2 3 4 5</TT></TD>
+<TD><TT>1.5 | 3.7</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>1 2 0 1 2 0 1 2</TT></TD>
+<TD><TT>0.7</TT></TD>
+</TABLE>
+<p>
+If <TT>x | y</TT> is zero, then x is a divisor of y:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>4 | 12</TT></TD>
+<TD><TT>12 % 4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+The "Residue" function applies to complex numbers:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a =: 1j2</TT></TD>
+<TD><TT>b=: 2j3</TT></TD>
+<TD><TT>a | b</TT></TD>
+<TD><TT>a | (a*b)</TT></TD>
+<TD><TT>(b-1j1) % a</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1j2</TT></TD>
+<TD><TT>2j3</TT></TD>
+<TD><TT>0j_1</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+<A NAME="28"></A>
+<A NAME="29"></A>
+<H2>20.15  GCD and LCM<A NAME="gcd"></A></H2>
+The greatest common divisor (GCD) of <TT>x</TT> and <TT>y</TT>
+is given by <TT>(x +. y)</TT>.
+Reals and rationals are in the domain of <TT>+.</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>6 +. 15</TT></TD>
+<TD><TT>_6 +. _15</TT></TD>
+<TD><TT>2.5 +. 3.5</TT></TD>
+<TD><TT>6r7 +. 15r7</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>0.5</TT></TD>
+<TD><TT>3r7</TT></TD>
+</TABLE>
+<p>
+Complex numbers are also in the domain of <TT>+.</TT>. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a=: 1j2</TT></TD>
+<TD><TT>b=:2j3</TT></TD>
+<TD><TT>c=:3j5</TT></TD>
+<TD><TT> (a*b) +. (b*c)</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1j2</TT></TD>
+<TD><TT>2j3</TT></TD>
+<TD><TT>3j5</TT></TD>
+<TD><TT>2j3</TT></TD>
+</TABLE>
+<p>
+<A NAME="lcm"></A>
+The Least Common Multiple of <TT>x</TT> and <TT>y</TT> is given
+by <TT>(x *. y)</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>(2 * 3) *. (3 * 5)</TT></TD>
+<TD><TT>2*3*5</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>30</TT></TD>
+<TD><TT>30</TT></TD>
+</TABLE>
+<p>
+<H2>20.16  Pi Times<A NAME="piti"></A></H2>
+<A NAME="30"></A>
+There is a built-in verb <TT>o.</TT> (lower-case o dot).
+Monadic <TT>o.</TT> is called "Pi Times"; it multiplies its argument by
+3.14159...
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>o. 1</TT></TD>
+<TD><TT>o. 2</TT></TD>
+<TD><TT>o. 1r6</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3.14159</TT></TD>
+<TD><TT>6.28319</TT></TD>
+<TD><TT>0.523599</TT></TD>
+</TABLE>
+<p>
+<A NAME="31"></A>
+<A NAME="32"></A>
+<H2>20.17  Trigonometric and Other Functions</H2>
+If <TT>y</TT> is an angle in radians, 
+then the sine of <TT>y</TT> is given by the expression <TT>1 o. y</TT>.
+The sine of (&pi; over 6) is 0.5
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y =: o. 1r6</TT></TD>
+<TD><TT>1 o. y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.523599</TT></TD>
+<TD><TT>0.5</TT></TD>
+</TABLE>
+<p>
+The general scheme for dyadic <TT>o.</TT> is that <TT>(k o. y)</TT> means: 
+apply to <TT>y</TT> a function selected by <TT>k</TT>.
+Giving conventional names to the available 
+functions, we have:
+<PRE>
+   sin   =:  1 & o.  NB. <A name="sin"> sine</A>
+   cos   =:  2 & o.  NB. <A name="cos"> cosine </A>
+   tan   =:  3 & o.  NB. <A name="tan"> tangent</A>
+   
+   sinh  =:  5 & o.  NB. <A name="sinh"> hyperbolic sine</A> 
+   cosh  =:  6 & o.  NB. <A name="cosh"> hyperbolic cosine </A> 
+   tanh  =:  7 & o.  NB. <A name="tanh"> hyperbolic tangent </A>
+   
+   asin  =: _1 & o.  NB. <A name="asin"> inverse sine </A>
+   acos  =: _2 & o.  NB. <A name="acos"> inverse cosine </A>
+   atan  =: _3 & o.  NB. <A name="atan"> inverse tangent</A> 
+   
+   asinh =: _5 & o.  NB. <A name="asinh"> inverse hyperbolic sine</A>
+   acosh =: _6 & o.  NB. <A name="acosh"> inverse hyperbolic cosine </A>
+   atanh =: _7 & o.  NB. <A name="atanh"> inverse hyperbolic tangent</A>
+   
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y</TT></TD>
+<TD><TT>sin y</TT></TD>
+<TD><TT>asin sin  y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.523599</TT></TD>
+<TD><TT>0.5</TT></TD>
+<TD><TT>0.523599</TT></TD>
+</TABLE>
+<p>
+<A NAME="33"></A>
+<H2>20.18  Pythagorean Functions<A name="pyth"></A></H2>
+There are also the "pythagorean"functions:
+<PRE>
+          0 o. y  means   %:   1 - y^2
+</PRE>
+<PRE>
+          4 o. y  means   %:   1 + y^2
+</PRE>
+<PRE>
+          8 o. y  means   %: - 1 + y^2
+</PRE>
+<PRE>
+         _4 o. y  means   %:  _1 + y^2
+</PRE>
+<PRE>
+         _8 o. y  means - %: - 1 + y^2 
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT> y =: 0.6</TT></TD>
+<TD><TT>0 o. y</TT></TD>
+<TD><TT> %: 1 - y^2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.6</TT></TD>
+<TD><TT>0.8</TT></TD>
+<TD><TT>0.8</TT></TD>
+</TABLE>
+<p>
+and a further group of functions on complex numbers:
+<PRE>
+          9 o. xjy   means  x                (real part)
+</PRE>
+<PRE>
+         10 o. xjy   means  %: (x^2) + (y^2) (magnitude) 
+</PRE>
+<PRE>
+         11 o. xjy   means  y                (imag part)
+</PRE>
+<PRE>
+         12 o. xjy   means  atan (y % x)     (angle)
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>9 o. 3j4</TT></TD>
+<TD><TT>10 o. 3j4</TT></TD>
+<TD><TT>11 o. 3j4</TT></TD>
+<TD><TT>12 o. 3j4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>5</TT></TD>
+<TD><TT>4</TT></TD>
+<TD><TT>0.927295</TT></TD>
+</TABLE>
+<p>
+and finally
+<PRE>
+          _9 o. xjy   means xjy                 (identity)
+</PRE>
+<PRE>
+         _10 o. xjy   means x j -y              (conjugate)
+</PRE>
+<PRE>
+         _11 o. xjy   means 0j1 * xjy           (j. xjy)
+</PRE>
+<PRE>
+         _12 o. a     means (cos a)+(j. sin a)  (inverse angle)
+</PRE>
+For example:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a =: 12 o. 3j4</TT></TD>
+<TD><TT> _12 o. a</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.927295</TT></TD>
+<TD><TT>0.6j0.8</TT></TD>
+</TABLE>
+<p>
+This is the end of chapter 20
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="21.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="21.htm">&gt;&gt;</a>&nbsp;
+<a href="19.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

@@ -1,0 +1,96 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Ranking &amp; Classification </title>
+
+</head><body><!--top jump start--><a href="grading.htm">&gt;&gt;</a>&nbsp;
+<a href="sorting.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>6B. Ranking &amp; Classification</h1>
+
+<P>Ranking is the assignment of an ordinal number to each item of an array, 
+and equal values are given the same rank, with the next rank assigned displaced 
+by the number of ties. 
+Ranking may be exemplified by considering a list of scores in some game. 
+In golf or the card game of hearts a low score is better than a high score. 
+In bowling or gin rummy a high score is better. 
+In a contest where two or more players have equal scores they are ranked equally, 
+but players with the next score are separated in rank 
+by the number of players having equal rank.</P>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  
+  <TR><TD width=40%><tt>m0=: i.~/:~</tt></TD>	<TD width=60%>Rank y rising, 0-origin, ties equal</TD>
+  </TR><TR><TD><tt>m1=: &gt;:@m0</tt></TD>	<TD>Rank y rising, 1-origin, ties equal</TD>
+  </TR><TR><TD><tt>m2=: i.~\:~ </tt></TD>	<TD>Rank y falling, 0-origin, ties equal</TD>
+  </TR><TR><TD><tt>m3=: &gt;:@m2</tt></TD>	<TD>Rank y falling, 1-origin, ties equal</TD>
+  </TR><TR><TD><tt>m4=: /:@/:</tt></TD>	<TD>Rank y rising, 0-origin, distinct ranks</TD>
+  </TR><TR><TD><tt>m5=: /:@\:</tt></TD>	<TD>Rank y falling, 0-origin, distinct ranks</TD>
+  </TR><TR><TD><tt>m6=: - &lt;./</tt></TD>	<TD>Normalize y so that minimum atom is 0</TD>
+  </TR><TR><TD><tt>d7=: ] * [ % [: &gt;./ ]</tt></TD>	<TD>Scale y by x%max y</TD>
+  </TR><TR><TD><tt>d8=: &lt;:@[ &lt;.[ &lt;.@d7 m6@]</tt></TD>	<TD>Classify y into x equal intervals</TD></TR>
+  <TR><TD><tt>d9=: [:+/&quot;1 ([:i. [:{. ]) =/ ([:&lt;. ([ - 1: { ]) % ([:{: ]))</tt></TD>	<TD valign="top">Classify x into {.y classes, minimum 1{y, width {:y</TD></TR>
+  <TR><TD><tt>d10=: contour=: d12 d11 ]</tt></TD>	<TD>Classify altitudes x into contour levels y</TD></TR>
+  <TR><TD><tt>d11=: ([: &lt;: [: +/ ] &lt;:/ [) { ]</tt></TD>	<TD>&nbsp;</TD>
+  </TR><TR><TD><tt>d12=: [ &gt;. &lt;./@]</tt></TD>	<TD>&nbsp;</TD>
+  </TR>
+</TABLE></TD></TR></TABLE>
+
+<pre>
+   ]z=: (],m0,m1,m2,m3,m4,m5,:m6) y=: 4 2 1 1 2 0 2 5 5 0
+4 2 1 1 2 0 2 5 5 0	y
+7 4 2 2 4 0 4 8 8 0	m0
+8 5 3 3 5 1 5 9 9 1	m1
+2 3 6 6 3 8 3 0 0 8	m2
+3 4 7 7 4 9 4 1 1 9	m3
+7 4 2 3 5 0 6 8 9 1	m4
+2 3 6 7 4 8 5 0 1 9	m5
+4 2 1 1 2 0 2 5 5 0	m6
+
+   0.2 &quot;: 10 d7&quot;1 z        NB. Scale 
+8.00 4.00 2.00 2.00 4.00  0.00 4.00 10.00 10.00  0.00
+8.75 5.00 2.50 2.50 5.00  0.00 5.00 10.00 10.00  0.00
+8.89 5.56 3.33 3.33 5.56  1.11 5.56 10.00 10.00  1.11
+2.50 3.75 7.50 7.50 3.75 10.00 3.75  0.00  0.00 10.00
+3.33 4.44 7.78 7.78 4.44 10.00 4.44  1.11  1.11 10.00
+7.78 4.44 2.22 3.33 5.56  0.00 6.67  8.89 10.00  1.11
+2.22 3.33 6.67 7.78 4.44  8.89 5.56  0.00  1.11 10.00
+8.00 4.00 2.00 2.00 4.00  0.00 4.00 10.00 10.00  0.00
+   x=: 3 _3 10 22 _8
+   y=: _5 0 5 10 20 30
+   x ([ , d12 , d11 ,: contour) y
+3 _3 10 22 _8	   x
+3 _3 10 22 _5	   x <font face=Times size=+1>increased to not less than min contour level</font>
+0 _5 10 20 30	   _8 <font face=Times size=+1>mis-classified because less than lowest contour</font>
+0 _5 10 20 _5	   <font face=Times size=+1>Contour</font>
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="grading.htm">&gt;&gt;</a>&nbsp;
+<a href="sorting.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

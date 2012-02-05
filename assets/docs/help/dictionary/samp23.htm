@@ -1,0 +1,88 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 23. Polynomials</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp24.htm">&gt;&gt;</a>&nbsp;
+<a href="samp22.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>23. Polynomials</b></font><br><br>
+
+The monadic function<tt> M=: 3: * ] ^ 2: </tt>
+is a multiple of an integral power of its argument, 
+and is called a <i>monomial</i>; and a sum of monomials 
+such as<tt> SM=: (3:*]^2:)+(2.5&quot;_*]^4:)+(_5:*]^0:) </tt>
+is a <i>poly</i>nomial.<br><br>
+
+Any polynomial can be expressed in the <i>standard</i> 
+form<tt> c&amp;p</tt>,<tt> </tt>where<tt> c </tt>is a suitable list 
+of <i>coefficients</i>, and where<tt> p=: +/@([*]^i.@#@[)&quot;1 0</tt> .  
+For example:<br>
+
+<pre>
+   SM=: (3:*]^2:)+(2.5&quot;_*]^4:)+(_5:*]^0:)
+   p=: +/@([*]^i.@#@[)&quot;1 0
+   c=: _5 0 3 0 2.5
+   x=: _2 _1 0 1 2
+   (SM x),(c p x),:(c&amp;p x)
+47 0.5 _5 0.5 47
+47 0.5 _5 0.5 47
+47 0.5 _5 0.5 47
+</pre>
+
+The primitive<tt> p. </tt>is equivalent to the 
+function<tt> p </tt>defined above, and will be used hereafter.  
+The polynomial<tt> c&amp;p. </tt>is very important for a 
+number of reasons, including:<br><br>
+
+1. It applies to any numeric argument, real or complex 
+(and the parameter<tt> c </tt>may also be complex).<br><br>
+
+2. It can be used to approximate a wide range of functions.<br><br>
+
+3. It is <i>closed</i> under a number of operations; 
+that is, the sum, difference, product, the composition<tt> @</tt>,<tt> </tt>
+the derivative, and the integral of polynomials 
+are themselves polynomials.<br><br>
+
+4. The coefficients of the results of each case listed in 
+3 are easily expressed.  For example, if<tt> #c </tt>
+equals<tt> #d</tt>,<tt> </tt>then<tt> c&amp;p. + d&amp;p. </tt>
+is equal to<tt> (c+d)&amp;p.</tt> .  More generally, 
+it is equal to<tt> (+/c,:d)&amp;p.</tt> . Thus:<br>
+
+<pre>
+ps=: +/@,:                    <font face=Times size=+1>Polynomial sum</font>
+pd=: -/@,:                    <font face=Times size=+1>Polynomial difference</font>
+pp=: +//.@(*/)                <font face=Times size=+1>Polynomial product</font>
+D=: d.1                       <font face=Times size=+1>Scalar (rank 0) first derivative</font>
+pD=: 1: }. ] * i.@#           <font face=Times size=+1>Polynomial derivative</font>
+pI=: 0: , ] % 1: + i.@#       <font face=Times size=+1>Polynomial integral</font>
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp24.htm">&gt;&gt;</a>&nbsp;
+<a href="samp22.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

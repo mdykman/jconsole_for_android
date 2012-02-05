@@ -1,0 +1,88 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Locked Scripts</title>
+
+</head><body><!--top jump start--><a href="regex.htm">&gt;&gt;</a>&nbsp;
+<a href="unicode.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Locked Scripts (ijl files)</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+The J development system can load definitions from a locked script file. The names defined by running a locked file can be used normally, but their definitions are hidden from the user. A locked file normally has a file suffix of <tt>.ijl</tt>. This allows you to use proprietary or protected definitions within the framework of an open J development system.
+
+Source is locked with verb <tt>3!:6<tt>, for example:
+
+<pre>   dat=. fread 'user\projects\util\myapp.ijs' NB. read source
+   dat=. 3!:6 dat                             NB. lock source
+   dat fwrite 'user\projects\util\myapp.ijl'  NB. create ijl file</pre>
+
+<P>
+The text for <tt>abc.ijl</tt> is encoded and running it defines its verbs,adverbs, and conjunctions as locked. Locked definitions will not be disclosed by the J interpreter. For example, create <tt>foo.ijs</tt> and <tt>foo.ijl</tt> with the following definitions:
+<pre>
+   plus =: 4 : 'x.+y.'         
+   mean =: 3 : '(plus/y.)%#y.' 
+   plust=: +                   
+   meant=: plust/ % #</pre>
+Load and test as:
+
+<pre>   0!:1 &lt;'foo.ijs'             |    0!:1 &lt;'foo.ijl'
+   3 plus 'abc'                |    3 plus 'abc'
+|domain error: plus            | |domain error: plus
+|   x.    +y.                  | |   3     plus'abc'
+   mean 'abc'                  |    mean 'abc'
+|domain error: plus            | |domain error: plus
+|   x.    +y.                  | |   mean    'abc'
+   13!:0 [1                    |    13!:0 [1
+   mean 'abc'                  |    mean 'abc'
+|domain error: plus            | |domain error: plus
+|   x.    +y.                  | |   mean    'abc'
+|plus[:0]                      |
+      13!:1 ''                 |    13!:1 ''
+|domain error                  |
+|   x.    +y.                  |
+|plus[:0]                      |
+|   (    plus/y.)%#y.          |
+|mean[0]                       |
+|       mean'abc'              |
+                               |
+
+      13!:0 [1                 |    13!:0 [1
+   plus                        |    plus
+4 : 'x.+y.'                    | plus
+   meant f.                    |    meant f.
++/ % #                         | meant
+</PRE>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="regex.htm">&gt;&gt;</a>&nbsp;
+<a href="unicode.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

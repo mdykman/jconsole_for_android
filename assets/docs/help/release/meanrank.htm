@@ -1,0 +1,75 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>(+/%#)&quot;r Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="6x0.htm">&gt;&gt;</a>&nbsp;
+<a href="raze602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">(+/%#)&quot;r </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2007-07-25<br>last updated: 2007-07-27
+</td></tr></table>
+<br>
+
+<p>The monad<tt> (+/%#)&quot;r </tt>has been made more efficient.
+The following benchmarks demonstrate the improvement.</p>
+
+<pre>
+dwide=: 5 2e5 ?@$ 0
+dtall=: 2e5 5 ?@$ 0
+dsq  =: 990 1100 ?@$ 0
+
+swide=: (1e5 ?@$ 0) (<"1 ]1e5 2?@$ 5 2e9  )} 1$.5 2e9
+stall=: (1e5 ?@$ 0) (<"1 ]1e5 2?@$ 2e9 5  )} 1$.2e9 5
+ssq  =: (1e5 ?@$ 0) (<"1 ]1e5 2?@$ 2e8 3e8)} 1$.2e8 3e8
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'Expression'
+</pre>
+
+<table>
+<tr>
+<td align=center><b>Expression </b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+</tr>
+<tr><td><tt>(+/%#)&quot;1 dwide</tt></td><td>&nbsp;</td><td>0.00276342</td><td>&nbsp;</td><td align=right>    1792</td><td>&nbsp;</td><td>0.01219391</td><td>&nbsp;</td><td align=right>  2099200</td><td>&nbsp;</td><td align=right>  4.41</td><td>&nbsp;</td><td align=right> 1171.43</td></tr>
+<tr><td><tt>(+/%#)&quot;1 dtall</tt></td><td>&nbsp;</td><td>0.00493687</td><td>&nbsp;</td><td align=right> 2098816</td><td>&nbsp;</td><td>0.12038998</td><td>&nbsp;</td><td align=right>  2099200</td><td>&nbsp;</td><td align=right> 24.39</td><td>&nbsp;</td><td align=right>    1.00</td></tr>
+<tr><td><tt>(+/%#)&quot;1 dsq  </tt></td><td>&nbsp;</td><td>0.00305743</td><td>&nbsp;</td><td align=right>    9792</td><td>&nbsp;</td><td>0.00628113</td><td>&nbsp;</td><td align=right>    26432</td><td>&nbsp;</td><td align=right>  2.05</td><td>&nbsp;</td><td align=right>    2.70</td></tr>
+<tr><td><tt>(+/%#)&quot;1 swide</tt></td><td>&nbsp;</td><td>0.00129642</td><td>&nbsp;</td><td align=right>  134656</td><td>&nbsp;</td><td>0.00675263</td><td>&nbsp;</td><td align=right>  4590912</td><td>&nbsp;</td><td align=right>  5.21</td><td>&nbsp;</td><td align=right>   34.09</td></tr>
+<tr><td><tt>(+/%#)&quot;1 stall</tt></td><td>&nbsp;</td><td>0.00962258</td><td>&nbsp;</td><td align=right> 3279872</td><td>&nbsp;</td><td>0.24598901</td><td>&nbsp;</td><td align=right> 43612480</td><td>&nbsp;</td><td align=right> 25.56</td><td>&nbsp;</td><td align=right>   13.30</td></tr>
+<tr><td><tt>(+/%#)&quot;1 ssq  </tt></td><td>&nbsp;</td><td>0.00798939</td><td>&nbsp;</td><td align=right> 3279808</td><td>&nbsp;</td><td>0.24640704</td><td>&nbsp;</td><td align=right> 43604352</td><td>&nbsp;</td><td align=right> 30.84</td><td>&nbsp;</td><td align=right>   13.29</td></tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="6x0.htm">&gt;&gt;</a>&nbsp;
+<a href="raze602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

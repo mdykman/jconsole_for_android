@@ -1,0 +1,210 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Tacit Programs</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="introduction_to_forks.htm">&gt;&gt;</a>&nbsp;
+<a href="tacit_programming.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734582"></a><a name="_Toc5414674"></a><a name="_Toc1896295"><span
+style='mso-bookmark:_Toc5414674'><span style='mso-bookmark:_Toc191734582'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>36. </span></span><![endif]>Tacit Program</span></span></a><span
+style='mso-bookmark:_Toc191734582'>s</span></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:introduction&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->There is another language
+within J, a microcode for J as it were.&nbsp;
+Like Moliere's M. Jourdain, who was astonished to find he had been
+speaking prose for forty years without knowing it, you have been using a small
+subset of this language unwittingly throughout our investigations.<span
+style='mso-spacerun:yes'>&nbsp; </span>The hidden language describes a way of coding
+called <span class=Definition>tacit programming</span>, and it is time for you
+to learn it in full.&nbsp; J's tacit language
+is the irreducible essence of a programming language.<span
+style='mso-spacerun:yes'>&nbsp; </span>It describes your algorithm using only the <i>ordering</i>
+of the J primitives you have already learned.&nbsp;
+It has a grammar without words, which you use to write programs without
+visible operands; yet its renouncing these seemingly essential components is
+self-denial rather than self-mutilation, for it retains the vigor to express
+any algorithm.&nbsp; It is as evanescent as
+the breeze and as powerful as the hurricane.&nbsp;
+It is a sublime creation.</p>
+
+<p class=MsoBodyText>We begin our exploration with this simple program:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; -</p>
+
+<p class=BodyTextnoleader>The first step toward enlightenment is to realize
+that something so simple <i>is</i> a program.&nbsp;
+You may object: But it can't be a program.<span
+style='mso-spacerun:yes'>&nbsp; </span>It has no parameters.<span
+style='mso-spacerun:yes'>&nbsp; </span>It has no name.<span
+style='mso-spacerun:yes'>&nbsp; </span>How would I invoke it?<span
+style='mso-spacerun:yes'>&nbsp; </span>It's a primitive, maybe.<span
+style='mso-spacerun:yes'>&nbsp; </span>Or a verb.&nbsp;
+Or a typographical error.&nbsp; But not
+a program.</p>
+
+<p class=MsoBodyText>Let me make the case that it is indeed a program.<span
+style='mso-spacerun:yes'>&nbsp; </span>I say that a bit of text deserves the title
+of 'program' if it produces a systematic result when executed with suitable
+arguments.&nbsp; And I say that the program <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'-'</span></span>
+satisfies this definition.&nbsp; Certainly I
+can supply it with arguments</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 7 - 2</p>
+
+<p class=Jcodemultiline>3 5</p>
+
+<p class=BodyTextnoleader>and get the expected result.<span
+style='mso-spacerun:yes'>&nbsp; </span>The program does not refer to its operands
+explicitly, but as long as we make the agreement that the arguments to a
+program appear as nouns to its left and right, the program has no doubt about
+how to find its arguments.&nbsp; Of course, we
+have been using this convention for verbs all along.</p>
+
+<p class=MsoBodyText>I can give this program a name:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; minus =: -</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 7 minus 2</p>
+
+<p class=Jcodemultiline>3 5</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>minus</span></span> can be used in place of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-</span></span>
+anywhere.&nbsp; When we look at the value of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>minus</span></span>,
+we see what it contains:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 9!:3 (5)<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. Do this once to select simplified display</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; minus</p>
+
+<p class=Jcodemultiline>-</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>minus</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In J we call it a verb, but it has all the
+essential features of a program.&nbsp; In
+fact, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>minus</span></span>
+is <i>two</i> programs, because it can be executed monadically as well:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; minus 6 8</p>
+
+<p class=Jcodemultiline>_6 _8</p>
+
+<p class=MsoBodyText>The point is that every J verb, even the primitives and
+the compound verbs, is a program in the usual sense.<span
+style='mso-spacerun:yes'>&nbsp; </span>Verbs like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>minus</span></span>, that do not
+mention their operands by name but instead apply them according to J's parsing
+rules, are called <span class=Definition>tacit verbs</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Verbs created by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;:n</span></span>, like <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>dyad&nbsp;:&nbsp;'+/&nbsp;y'</span></span>,
+that mention their operands by name are called <span class=Definition>explicit
+verbs</span>.&nbsp; The compound verbs we have
+learned already are examples of tacit verbs.&nbsp;
+Some of the verbs that we have had occasion to define so far can be
+written in tacit form:</p>
+
+<p class=Jcodemultiline>addrow =: monad : '+/ y'&quot;1</p>
+
+<p class=BodyTextnoleader>could be rewritten as</p>
+
+<p class=Jcodemultiline>addrow =: +/&quot;1</p>
+
+<p class=BodyTextnoleader>and</p>
+
+<p class=Jcodemultiline>v =: dyad : '1.04 * x + y'</p>
+
+<p class=BodyTextnoleader>is equivalent to</p>
+
+<p class=Jcodemultiline>v =: 1.04&amp;*@:+</p>
+
+<p class=BodyTextnoleader>as we have seen.&nbsp;
+We have already encountered tacit definitions without noticing:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; dotprod =:
++/@:*&quot;1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3 dotprod
+1 2 3</p>
+
+<p class=Jcodemultiline>14</p>
+
+<p class=BodyTextnoleader>and we can certainly define more.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; sortup =: /:~</p>
+
+<p class=BodyTextnoleader>defines a verb that sorts its operand into ascending
+order:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; sortup 31 41
+59 26 53</p>
+
+<p class=Jcodemultiline>26 31 41 53 59</p>
+
+<p class=MsoBodyText>Some of the verbs we have encountered seem too complex for
+a compound verb.&nbsp; For example, in</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; mean =: monad
+: '(+/ y) % #y'</p>
+
+<p class=BodyTextnoleader>we need to perform two operations on <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and combine their results, something that is beyond the capabilities of the
+compound verbs we have encountered so far.&nbsp;
+We will next learn how to produce a tacit equivalent for <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mean</span></span>
+and a great many other verbs.</p>
+
+</div><!--bottom jump start--><hr><a href="introduction_to_forks.htm">&gt;&gt;</a>&nbsp;
+<a href="tacit_programming.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

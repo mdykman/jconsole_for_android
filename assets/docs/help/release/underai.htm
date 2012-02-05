@@ -1,0 +1,82 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>u&amp;.(a.&amp;i.) Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="roll602.htm">&gt;&gt;</a>&nbsp;
+<a href="imend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">u&amp;.(a.&amp;i.) </font><font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2007-10-17<br>last updated: 2007-11-28
+</td></tr></table>
+<br>
+
+<p>The phrase<tt> u&amp;.(a.&amp;i.) </tt>(also<tt> u&amp;.(a.i.])</tt>)<tt> </tt>
+have been made more efficient in the following cases:</p>
+
+<table>
+<tr><td><b>Case</b></td><td>&nbsp; &nbsp;</td><td colspan=2><tt>&nbsp; &nbsp; &nbsp;</tt><b>Requirements</b></td></tr>
+<tr><td>monad</td><td>&nbsp;</td><td colspan=2><tt>(u-:u&quot;0) y </tt></td></tr>
+<tr><td>monad</td><td>&nbsp;</td><td><tt>u </tt>is<tt> &nbsp;m b./&nbsp;</tt></td><td>where<tt> m e. 16+i.16</tt></td></tr>
+<tr><td>dyad</td> <td>&nbsp;</td><td><tt>u </tt>is<tt> &nbsp;m b.</tt></td><td>where<tt> m e. 16+i.16</tt></td></tr>
+</table>
+
+<p>The<tt> m b. </tt>cases provide bitwise functions on character arguments.
+Note that the requirement<tt> u-:u&quot;0 </tt>does not imply that the 
+rank of<tt> u </tt>must be 0.</p>
+
+<p>The following benchmarks demonstrate the improvement.</p>
+
+<pre>
+x=: a. {~ 1e6 ?@$ 256
+y=: a. {~ 1e6 ?@$ 256
+c=: a. {~ ?256
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'Expression'
+</pre>
+
+<table>
+<tr>
+<td align=center><b>Expression </b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+<tr><td><tt>(256|>:)&amp;.(a.&amp;i.) y       </tt></td><td>&nbsp;</td><td>0.004724</td><td>&nbsp;</td><td>1.06458e6</td><td>&nbsp;</td><td>0.050507</td><td>&nbsp;</td><td>1.25868e7</td><td>&nbsp;</td><td align=right>10.69</td><td>&nbsp;</td><td align=right>  11.82</td></tr>
+<tr><td><tt>123&amp;(22 b.)&amp;.(a.&amp;i.) y</tt></td><td>&nbsp;</td><td>0.001583</td><td>&nbsp;</td><td>1.06470e6</td><td>&nbsp;</td><td>0.030874</td><td>&nbsp;</td><td>9.44115e6</td><td>&nbsp;</td><td align=right>19.51</td><td>&nbsp;</td><td align=right>   8.87</td></tr>
+<tr><td><tt>x 22 b.&amp;.(a.&amp;i.) y        </tt></td><td>&nbsp;</td><td>0.002221</td><td>&nbsp;</td><td>1.05197e6</td><td>&nbsp;</td><td>0.043039</td><td>&nbsp;</td><td>1.25867e7</td><td>&nbsp;</td><td align=right>19.38</td><td>&nbsp;</td><td align=right>  11.96</td></tr>
+<tr><td><tt>c 22 b.&amp;.(a.&amp;i.) y        </tt></td><td>&nbsp;</td><td>0.001419</td><td>&nbsp;</td><td>1.05216e6</td><td>&nbsp;</td><td>0.030395</td><td>&nbsp;</td><td>9.44102e6</td><td>&nbsp;</td><td align=right>21.43</td><td>&nbsp;</td><td align=right>   8.97</td></tr>
+<tr><td><tt>25 b./&amp;.(a.i.]) y             </tt></td><td>&nbsp;</td><td>0.000529</td><td>&nbsp;</td><td>1.66400e3</td><td>&nbsp;</td><td>0.007741</td><td>&nbsp;</td><td>4.20090e6</td><td>&nbsp;</td><td align=right>14.63</td><td>&nbsp;</td><td align=right>2524.58</td></tr>
+</tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="roll602.htm">&gt;&gt;</a>&nbsp;
+<a href="imend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

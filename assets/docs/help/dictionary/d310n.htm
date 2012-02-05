@@ -1,0 +1,189 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>: Explicit /</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d310v.htm">&gt;&gt;</a>&nbsp;
+<a href="d301.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=40%><b><font size=+2>Explicit Definition</font></b></td>
+<td align=center width=40%><font face="Courier New" size=+3>m : n &nbsp;_ _ _</font></td>
+<td align=right  width=20%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<p><tt>m </tt>is an integer producing the following cases:
+<table><tr><td>&nbsp;</td><td><table>
+<tr><td align=right><tt>0 : n</tt></td><td><tt>&nbsp; &nbsp;</tt></td><td>noun</td></tr>
+<tr><td align=right><tt>1 : n</tt></td><td>&nbsp;</td><td>adverb</td></tr>
+<tr><td align=right><tt>2 : n</tt></td><td>&nbsp;</td><td>conjunction</td></tr>
+<tr><td align=right><tt>3 : n</tt></td><td>&nbsp;</td><td>verb</td></tr>
+<tr><td align=right><tt>4 : n</tt></td><td>&nbsp;</td><td>dyad-only verb</td></tr>
+<tr><td align=right><tt>13 : n</tt></td><td>&nbsp;</td><td>tacit verb if possible, otherwise equivalent to<tt> 3 : n</tt></td></tr>
+</table></td></tr></table>
+
+<tt>n </tt>is usually 0, indicating a script (<a href="dicth.htm">Section II H</a>) 
+taken from the keyboard, or a script represented as a literal list<tt> s</tt> ,<tt> </tt>
+a boxed list<tt> b=: <;._2 s</tt> ,<tt> </tt>or a literal 
+table<tt> t=: ];._2 s</tt> .<tt> </tt>Thus:</p>
+
+<pre>
+f=: 3 : 0
+a=: 2+b=. y ^ 2
+a+a*b
+:
+x*x+y
+)
+
+   a=: b=: 19
+   f 3
+110
+
+   a,b           NB. Only the globally assigned name is changed.
+11 19
+</pre>
+
+As illustrated by the foregoing:<br><br>
+
+<table>
+<tr><td valign=top><b>1</b>. &nbsp;&nbsp;</td>
+<td>The definitions of the monadic and dyadic cases 
+produced by<tt> 3 : 0 </tt>are separated by a colon 
+on a line by itself; if none occurs, the domain of 
+the dyadic case is empty.</td><tr>
+
+<tr><td valign=top><b>2</b>.</td>
+<td>The explicit result is the result of the last 
+non-test block sentence executed; that result must be a noun 
+in the<tt> 3 : </tt>and<tt> 4 : </tt>cases.  
+See <a href="ctrl.htm">Control Structures</a> for the definition of a block.</td></tr>
+
+<tr><td valign=top><b>3</b>.</td>
+<td>A name assigned by the copula<tt> <b>=.</b> </tt>is 
+made <i>local</i>; values assigned to it have no effect on the 
+use of the same name <i>without</i> the entity defined or 
+<i>within</i> other entities invoked by it.  
+A name assigned by<tt> <b>=:</b> </tt>is global, except that global assignment
+to a local name is not permitted.
+Locative assignment (using either<tt> =: </tt>or<tt> =.</tt>) is always global.
+</td></tr>
+
+<tr><td valign=top><b>4</b>.</td>
+<td>The arguments to a definition are initialized by<tt> =. </tt>.  The effects
+for a dyadic verb are as follows:<br>
+<tt>&nbsp; f=: 4 : 0</tt><br>
+<tt>&nbsp; &nbsp;x=. </tt>(left &nbsp; argument)<br>
+<tt>&nbsp; &nbsp;y=. </tt>(right argument)<br>
+<tt>&nbsp; &nbsp;</tt>(rest of verb)<br>
+<tt>&nbsp; )</tt>
+</td></tr>
+
+<tr><td valign=top><b>5</b>.</td>
+<td>The names<tt> x </tt>and<tt> y </tt>denote the left 
+and right arguments.  In defining a conjunction it may 
+be necessary to refer to <i>its</i> left and right arguments 
+(using<tt> u </tt>and<tt> v</tt>)<tt> </tt>as well as to the arguments 
+of the resulting verb<tt> </tt>(<tt>x </tt>and<tt> y</tt>);<tt> </tt>
+likewise, an adverb may refer to its left argument 
+(using<tt> u</tt>)<tt> </tt>as well as to the arguments 
+of the resulting verb<tt> </tt>(<tt>x </tt>and<tt> y</tt>).
+The use of<tt> m </tt>instead of<tt> u </tt>restricts the 
+corresponding argument to being a noun, as does the use of<tt> n </tt>
+instead of<tt> v</tt> .<tt> </tt>For example:</td></tr>
+</table>
+
+<pre>
+   conj=: 2 : '(u y)+ (v y)'
+   mc=: 2 : 0
+(u y)+(v y)
+)
+
+   dc=: 2 : 0                 <font face=Times size=+1>Dyadic case</font>
+:
+(u y)+(v x)
+)
+
+   (!conj% 2 4 5);(!mc% 2 4 5);(1 2 3 !dc% 2 4 5)
++---------------+---------------+--------------+
+|2.5 24.25 120.2|2.5 24.25 120.2|3 24.5 120.333|
++---------------+---------------+--------------+
+</pre>
+
+<b>Control Structures.</b> The sequence of execution of an 
+explicit definition may be determined by <i>control words</i> 
+such as<tt> if. do. else. end. </tt>and<tt> while.</tt> .<tt> </tt>  
+For example, a function to find the root of a function<tt> f </tt>
+from a two-element list that brackets the root may be written 
+and executed as follows:<br>
+
+<pre>
+   root=: 3 : 'm=.+/%#while.~:/y do.if.~:/*f b=.(m,{.)y do.y=.b else.y=.(m,{:)y end.end.m y'
+
+   f=: 2 - *:
+   b=: 1 10
+   root b
+1.41421
+</pre>
+
+Such a definition may also be written on multiple lines 
+and made more readable as follows:<br>
+
+<pre>
+root=: 3 : 0
+ m=. +/ % #
+ while. ~:/y do. 
+  if. ~:/*f b=. (m,{.) y do. 
+   y=. b 
+  else. 
+   y=. (m,{:) y
+  end.
+ end. 
+ m y
+)
+</pre>
+
+<p>As illustrated by the foregoing, the word<tt> if. </tt>
+and a matching<tt> end. </tt>mark the beginning and end of 
+a <i>control structure</i>, as do<tt> while. </tt>and a 
+matching<tt> end.</tt>;<tt> </tt>such structures may be 
+<i>nested</i> as is the<tt> if. </tt>structure within 
+the<tt> while. </tt>structure.
+The words<tt> do. </tt>and<tt> else. </tt>break 
+the<tt> if. </tt>structure into three simple blocks, 
+each comprising a sentence, whereas the<tt> do. </tt>in the<tt> while. </tt>
+structure breaks it into two blocks, the first 
+being a simple sentence, and the second being itself an<tt> if. </tt>
+control structure.
+Therefore, control words provide a form of punctuation.  
+</p>
+
+<p>Additional explanations and examples can be found in the 
+<a href="ctrl.htm">Control Structures</a> section.</p>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d310v.htm">&gt;&gt;</a>&nbsp;
+<a href="d301.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

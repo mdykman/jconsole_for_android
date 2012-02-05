@@ -1,0 +1,127 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Table adverb</title>
+
+</head><body><!--top jump start--><a href="conjunction.htm">&gt;&gt;</a>&nbsp;
+<a href="insert_adverb.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Table adverb</h1>
+The dyad <font face=courier size=-1>v/</font> computes a table for the verb <font face=courier size=-1>v</font> (a function table).<br>
+
+<pre>   a =. i. 5
+   a +/ a	NB. addition table
+0 1 2 3 4
+1 2 3 4 5
+2 3 4 5 6
+3 4 5 6 7
+4 5 6 7 8
+   a */ a	NB. times table
+0 0 0  0  0
+0 1 2  3  4
+0 2 4  6  8
+0 3 6  9 12
+0 4 8 12 16
+  0 1 +/ 0 1	NB. + table on booleans   
+0 1
+1 2
+  0 1 +./ 0 1	NB. or
+0 1
+1 1
+   0 1 +:/ 0 1	NB. not-or
+1 0
+0 0
+   0 1 */ 0 1	NB. times
+0 0
+0 1
+   0 1 *./ 0 1	NB. and
+0 0
+0 1
+    0 1 *:/ 0 1	NB. not-and
+1 1
+1 0</pre>
+The derived verb <font face=courier size=-1>v/</font> has a left rank that is the left rank of <font face=courier size=-1>v</font> and a right rank of <font face=courier size=-1>_ </font>; it applies <font face=courier size=-1>v</font> between each cell of the left argument and the entire right argument.<br>
+
+<pre>   additiontable =. +/</pre>
+The verb additiontable is defined as the result of the <font face=courier size=-1>/</font> adverb applied to <font face=courier size=-1>+</font> as an argument. The definition is the same as the definition for sumover that you used in the previous section. The name additiontable makes sense when the dyad is used, and sumover makes sense when the monad is used. Nothing prevents using either name in a misleading way.<br>
+
+<pre>   a additiontable a
+0 1 2 3 4
+1 2 3 4 5
+2 3 4 5 6
+3 4 5 6 7
+4 5 6 7 8</pre>
+The left rank of <font face=courier size=-1>+ </font>is 0, so the rank of the derived verb is 0 and its cell arguments are atoms. The right rank of the derived verb is <font face=courier size=-1>_</font> and its cell arguments are the entire right argument. Visually the above works as follows:<br>
+
+<pre>0 (first atom from left) + entire right   gives  0 1 2 3 4
+1 (next atom from left)  + entire right   gives  1 2 3 4 5
+2 (next atom from left)  + entire right   gives  2 3 4 5 6
+3 (next atom from left)  + entire right   gives  3 4 5 6 7
+4 (next atom from left)  + entire right   gives  4 5 6 7 9</pre>
+The following is an interesting use of table together with the plotting from an earlier section. The plot facility plots each row in a table argument as a separate series of data.<br>
+
+<pre>   load 'plot'
+   plot 1 2 o. / 0.2 * i.60   </pre>
+ <img src="plot2.gif" border="0" alt="">
+<pre>	'surface' plot 1 2 o. / 0.2 * i.60
+</pre>
+<img src="plot3.gif" border="0" alt=""><br>
+<br>
+The <font face=courier size=-1>1</font> from the left argument used as the left argument of <font face=courier size=-1>o.</font> gives sine values in the first row. The <font face=courier size=-1>2</font> from the left argument for <font face=courier size=-1>o.</font> gives cosine values in the second row.<br>
+<br>
+In the examples above the left rank of the original verb is always 0 and so the cells of the left argument of the derived verb are simply the atoms of the left argument. Let's look at an example where the left rank of the original verb is not 0.<br>
+
+<pre>   f =. ,"1</pre>
+The verb <font face=courier size=-1>f</font> is append with a left and right rank of 1.<br>
+
+<pre>   p=. 2 2 $'abcd'
+   p
+ab
+cd
+   q=.3 3$'ABCD'
+   q
+ABC
+DAB
+CDA
+
+   p f/ q
+abABC
+abDAB
+abCDA
+
+cdABC
+cdDAB
+cdCDA</pre>
+Visually:<br>
+
+<pre>ab (1st list from left) , entire right   gives	abABC
+			                        abDAB
+			                        abCDA
+
+cd (next list)    	, entire right   gives	cdABC
+		                                cdDAB
+		                                cdCDA
+</pre>
+<!--bottom jump start--><hr><a href="conjunction.htm">&gt;&gt;</a>&nbsp;
+<a href="insert_adverb.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></img></img></body>
+</html>

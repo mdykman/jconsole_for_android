@@ -1,0 +1,85 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>%: Square Root  -  Root</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d200.htm">&gt;&gt;</a>&nbsp;
+<a href="d131.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Square Root</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>%: &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Root</font></b></td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>%: y </tt>is the square root of<tt> y</tt> .<tt> </tt>
+If<tt> y </tt>is negative, the result is an imaginary number.  
+For example,<tt> %:-4 </tt><font size=+1>&harr;</font><tt> 0j2</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x %: y </tt>is the<tt> x </tt>root of<tt> y</tt> .<tt> </tt>
+Thus,<tt> 3%:8 </tt>is<tt> 2</tt>,<tt> </tt>and<tt> 2%:y </tt>
+is<tt> %:y</tt> .<tt> </tt>In general,<tt> x %: y </tt><font size=+1>&harr;</font><tt> y^%x</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+For example: <br>
+
+<pre>
+   y=: i. 7
+   y
+0 1 2 3 4 5 6
+
+   2 %: y
+0 1 1.41421 1.73205 2 2.23607 2.44949
+
+   %: y
+0 1 1.41421 1.73205 2 2.23607 2.44949
+
+   r=: 1 2 3 4
+   z=: r %:/ y
+   z
+0 1       2       3       4       5       6
+0 1 1.41421 1.73205       2 2.23607 2.44949
+0 1 1.25992 1.44225  1.5874 1.70998 1.81712
+0 1 1.18921 1.31607 1.41421 1.49535 1.56508
+          
+   r ^~ z                     <font face=Times size=+1>See <i>agreement</i> in <a href="dictb.htm">Section II B</a>, and note use of</font> <a href="d220v.htm">~</a>
+0 1 2 3 4 5 6
+0 1 2 3 4 5 6
+0 1 2 3 4 5 6
+0 1 2 3 4 5 6
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d200.htm">&gt;&gt;</a>&nbsp;
+<a href="d131.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

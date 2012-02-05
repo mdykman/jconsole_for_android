@@ -1,0 +1,45 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Called program - stdin/stdout</title>
+
+</head><body><!--top jump start--><a href="previous602.htm">&gt;&gt;</a>&nbsp;
+<a href="hashbang.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end--> 
+<h1>Called program - stdin/stdout</h1>
+In Unix the verb defined below calls a program, writes to its standard input, and reads its output.
+<pre>
+run=: 4 : 0
+'p o i'=. 2!:2 x    NB. Run command, save Process, Output, Input
+y fwrite i          NB. Write to its input
+fclose i            NB. Close its input
+2!:3 p              NB. Wait for process to terminate
+z=.fread o          NB. Read its output
+fclose o            NB. Close its output
+z                   NB. Result
+)</pre>
+<br>
+<!--bottom jump start--><hr><a href="previous602.htm">&gt;&gt;</a>&nbsp;
+<a href="hashbang.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--><br>
+</body>
+</html>

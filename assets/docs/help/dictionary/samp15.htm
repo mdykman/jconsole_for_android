@@ -1,0 +1,85 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 15. Junctions</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp16.htm">&gt;&gt;</a>&nbsp;
+<a href="samp14.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>15. Junctions</b></font><br><br>
+
+Four functions are commonly used to join arguments:<tt> ; ,  ,. </tt>
+and<tt> ,:</tt> . We will illustrate them for the cases of 
+vector and matrix arguments:<br>
+
+<pre>
+   a=: 'pqr' [ b=: 'PQR'
+   m=: 3 3$ 'abcdefghi' [ n=: 3 3$ 'ABCDEFGHI'
+  
+   a (; ; , ; ,. ; ,:) b
++---------+------+--+---+
+|+---+---+|pqrPQR|pP|pqr|
+||pqr|PQR||      |qQ|PQR|
+|+---+---+|      |rR|   |
++---------+------+--+---+
+  
+   m (; ; , ; ,. ; ,:) n
++---------+---+------+---+
+|+---+---+|abc|abcABC|abc|
+||abc|ABC||def|defDEF|def|
+||def|DEF||ghi|ghiGHI|ghi|
+||ghi|GHI||ABC|      |   |
+|+---+---+|DEF|      |ABC|
+|         |GHI|      |DEF|
+|         |   |      |GHI|
++---------+---+------+---+
+
+   a (; ; , ; ,. ; ,:) n
++---------+---+----+---+
+|+---+---+|pqr|pABC|pqr|
+||pqr|ABC||ABC|qDEF|   |
+||   |DEF||DEF|rGHI|   |
+||   |GHI||GHI|    |   |
+|+---+---+|   |    |ABC|
+|         |   |    |DEF|
+|         |   |    |GHI|
++---------+---+----+---+
+  
+   m (; ; , ; ,. ; ,:) b
++---------+---+----+---+
+|+---+---+|abc|abcP|abc|
+||abc|PQR||def|defQ|def|
+||def|   ||ghi|ghiR|ghi|
+||ghi|   ||PQR|    |   |
+|+---+---+|   |    |PQR|
+|         |   |    |   |
+|         |   |    |   |
++---------+---+----+---+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp16.htm">&gt;&gt;</a>&nbsp;
+<a href="samp14.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

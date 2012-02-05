@@ -1,0 +1,838 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Loopless Code IV: Irregular Operations</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="more_verbs_for_boxes.htm">&gt;&gt;</a>&nbsp;
+<a href="verbs_for_arithmetic.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734384"></a><a name="_Toc5414587"></a><a name="_Toc1896217"><span
+style='mso-bookmark:_Toc5414587'><span style='mso-bookmark:_Toc191734384'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>16. </span></span><![endif]>Loopless Code IV</span></span></a><span
+style='mso-bookmark:_Toc191734384'>: Irregular Operations</span></h1>
+
+<p class=MsoBodyText>In our quest to write loopless code, we first learned
+about J's implicit looping, which we can use to replace loops in which the same
+function is performed on each cell; then we learned monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/</span></span> which lets us
+accumulate an operation across all the items of a noun, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>\</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>\.</span></span>
+which apply verbs to certain regular subsets of a noun.<span
+style='mso-spacerun:yes'>&nbsp; </span>We now examine cases in which the operations
+on the cells are different, but where there is no sharing of information
+between cells.</p>
+
+<p class=Section><a name="_Toc191734385">A Few J Tricks</a></p>
+
+<p class=MsoBodyText>In these irregular cases, the J solution is to create an
+array that contains control information describing the difference between the
+cells, and then create a dyadic operation that produces the desired result when
+given a cell of control information and a cell of data.<span
+style='mso-spacerun:yes'>&nbsp; </span>Writing code this way can seem ingeniously
+clever or awkwardly roundabout, depending on your point of view; we will simply
+accept it as a necessary part of coding in J, and we will learn to be effective
+with it.&nbsp; What follows is a hodgepodge of
+tricks to treat cells individually.&nbsp; If
+we were writing in C, we would use <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>if</span></span> statements, but since <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>if</span></span> by necessity
+involves a scalar comparison we will avoid it in J.</p>
+
+<p class=MsoBodyText>To add one to the elements of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> whose values are
+even:</p>
+
+<p class=Jcodemultiline>y + 0 = 2 | y</p>
+
+<p class=MsoBodyText>To double all the elements of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> whose values are
+even:</p>
+
+<p class=Jcodemultiline>y * 1 + 0 = 2 | y</p>
+
+<p class=MsoBodyText>To create an array whose even-numbered elements come from <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and whose odd-numbered elements come from <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>(x * -.sv) + y * sv =. (#y) $ 1 0</p>
+
+<p class=BodyTextnoleader>which, homely as it is, is a standard idiom in
+J.&nbsp; This expression works only for
+numeric operands; for general operands we can select using a selection vector <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sv</span></span>
+with</p>
+
+<p class=Jcodemultiline>sv {&quot;_1 x ,. y</p>
+
+<p class=MsoBodyText>To replace lowercase 'a' through 'f' with uppercase 'A'
+through 'F' in a string that contains only 'a' through 'f':</p>
+
+<p class=Jcodemultiline>('abcdef' i. y) { 'ABCDEF'</p>
+
+<p class=MsoBodyText>Extending the previous example: to replace lowercase 'a' through
+'f' with uppercase 'A' through 'F' leaving other characters unchanged:</p>
+
+<p class=Jcodemultiline>(('abcdef' , a.) i. y) { 'ABCDEF' , a.</p>
+
+<p class=BodyTextnoleader>To understand this you need to know the special noun <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a.</span></span>
+which is the character string containing all the ASCII characters in
+order.&nbsp; Work through a simple example
+until you understand how this works--it's a good example of how J thinking
+differs from C thinking.</p>
+
+<p class=MsoBodyText>A similar problem: given a list of keys <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> and a list of
+data <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>,
+with each item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+corresponding to an item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>z</span></span>; and another list of search keys <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>;
+and a default element <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>d&nbsp;</span></span>:
+return the item in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+corresponding to the item of<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'> y</span></span> that matches the item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>, or <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>d</span></span>
+if the item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+didn't match anything in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>(y i. x) { z , d</p>
+
+<p class=MsoBodyText>To evaluate the polynomial defined by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>, so that if for
+example <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;1&nbsp;5</span></span>
+the result is 5y<sup>2</sup>+y+1:</p>
+
+<p class=Jcodemultiline>+/ x * y ^ i. # x</p>
+
+<p class=BodyTextnoleader>(and now you can see why <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0^0</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>).</p>
+
+<p class=MsoBodyText>To evaluate the polynomial defined by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> going the other
+direction, so that if for example <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;1&nbsp;5</span></span> the result is 2y<sup>2</sup>+y+5:</p>
+
+<p class=Jcodemultiline>y #. x</p>
+
+<p class=MsoBodyText>The last example, due to Roger Hui, has a power and
+economy that amount to sorcery.&nbsp; Suppose
+you had a list, and you wanted to know, for each item in the list, how many
+identical items appeared earlier in the list.&nbsp;
+You could find out this way:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; y =. 2 2 2 1 2
+1 4 6 4 2</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; t - (i.~ y) {
+t =. /: /: y</p>
+
+<p class=Jcodemultiline>0 1 2 0 3 1 0 0 1 4</p>
+
+<p class=BodyTextnoleader>Take a little time--maybe a long time--to see how this
+works.&nbsp; The <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/:&nbsp;/:&nbsp;y</span></span>
+is an idiom we discussed earlier--did you figure it out?<span
+style='mso-spacerun:yes'>&nbsp; </span>It gives the <i>ordinal</i> of each item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+in other words the rank of the item among the items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If there are equal items, they will occupy a
+block of successive ordinals.&nbsp; In this
+example you can see that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>t</span></span> does indeed hold the ordinals:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; t</p>
+
+<p class=Jcodemultiline>2 3 4 0 5 1 7 9 8 6</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(i.~&nbsp;y)</span></span> takes the index of each item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+within <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+itself, in other words, for each item, the index of the first item with the
+same value:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (i.~ y)</p>
+
+<p class=Jcodemultiline>0 0 0 3 0 3 6 7 6 0</p>
+
+<p class=BodyTextnoleader>Since the identical items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> are a block of
+successive ordinals, and <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(i.~ y)</span></span> comprises indexes of first items in
+blocks, we can find relative positions in blocks by subtracting the ordinal of
+the first item with a value from the ordinals of all the other items with the
+same value.&nbsp; That is what this expression
+does.&nbsp; Lovely!</p>
+
+<p class=MsoBodyText>We could use the hook to avoid creating the temporary
+variable <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>t</span></span>,
+by writing the line as</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (i.~ y) (] -
+{) /: /: y</p>
+
+<p class=BodyTextnoleader>and we could even avoid naming <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> twice by writing</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (i.~<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(] - {)&nbsp;&nbsp;
+/:@/:) y</p>
+
+<p class=MsoBodyText>In addition to the foregoing <i>ad hoc</i> means of
+varying the operation cell-by-cell J has some language features expressly
+designed for that purpose:</p>
+
+<p class=Section><a name="_Toc191734386"></a><a name="_Toc5414588"></a><a
+name="_Toc5414432"></a><a name="_Toc1896218"><span style='mso-bookmark:_Toc5414432'><span
+style='mso-bookmark:_Toc5414588'><span style='mso-bookmark:_Toc191734386'>Power/If/DoWhile
+Conjunction</span></span></span></a><span style='mso-bookmark:_Toc1896218'><span
+style='mso-bookmark:_Toc5414432'><span style='mso-bookmark:_Toc5414588'><span
+style='mso-bookmark:_Toc191734386'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'> u^:n</span></span> and </span></span></span></span><span
+style='mso-bookmark:_Toc1896218'><span style='mso-bookmark:_Toc5414432'><span
+style='mso-bookmark:_Toc5414588'><span style='mso-bookmark:_Toc191734386'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>u^:v</span></span></span></span></span></span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'><o:p></o:p></span></span></p>
+
+<p class=Subsection><a name="_Toc191734387">Applying </a><span
+style='mso-bookmark:_Toc191734387'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> Repeatedly (Power)</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Power conjunction ^\:&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u^\:n&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:n&nbsp;y</span></span>
+has infinite rank.&nbsp; It applies the verb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+then applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to that result, and so on, for a total of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> applications of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>,
+; in other words <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;u&nbsp;u...(<i>n&nbsp;times</i>)&nbsp;y</span></span>,
+as we see when it is used with the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;:</span></span> (increment) primitive:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &gt;: 5</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &gt;:^:2 (5)</p>
+
+<p class=Jcodemultiline>7</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &gt;:^:3 (5)</p>
+
+<p class=Jcodemultiline>8</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>fndisplay</span></span> gives a picture of what is
+happening:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defverbs 'incr&quot;0'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; incr^:3 (5)</p>
+
+<p class=Jcodemultiline>+----------------+</p>
+
+<p class=Jcodemultiline>|incr incr incr 5|</p>
+
+<p class=Jcodemultiline>+----------------+</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u^:n&nbsp;y</span></span>
+also has infinite rank.&nbsp; It evaluates <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;x&nbsp;u...(<i>n&nbsp;times</i>)&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>A simpler way to say this is to say that it
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&amp;u^:n&nbsp;y</span></span>,
+since <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&amp;u&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 * 2 * 2 * 2
+* 5</p>
+
+<p class=Jcodemultiline>80</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 *^:4 (5)</p>
+
+<p class=Jcodemultiline>80</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u^\:v&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:v&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u^:v&nbsp;y</span></span>
+are defined similarly: first <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span> is evaluated (monadically or dyadically as
+appropriate), and then result is used as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Formally, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u^:v&nbsp;y</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:(v&nbsp;y)&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u^:v&nbsp;y</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x
+u^:(x&nbsp;v&nbsp;y)&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>With dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u^:v</span></span>, it will be
+rare that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+both make sense as an operand into both <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+and you will usually use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@:[</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>@:]</span></span> to cause <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+to operate on only one operand.&nbsp; For
+example, to coalesce the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x+1</span></span> leading axes of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> into one axis,
+you could use <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,/@:]^:[&nbsp;y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 ,/@:]^:[ i.
+2 2 3</p>
+
+<p class=Jcodemultiline>0&nbsp; 1<span
+style='mso-spacerun:yes'>&nbsp; </span>2</p>
+
+<p class=Jcodemultiline>3&nbsp; 4<span
+style='mso-spacerun:yes'>&nbsp; </span>5</p>
+
+<p class=Jcodemultiline>6&nbsp; 7<span
+style='mso-spacerun:yes'>&nbsp; </span>8</p>
+
+<p class=Jcodemultiline>9 10 11</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 ,/@:]^:[ i.
+2 2 3</p>
+
+<p class=Jcodemultiline>0 1 2 3 4 5 6 7 8 9 10 11</p>
+
+<p class=MsoBodyText>This is hardly a commonplace usage, but let's analyze it,
+since conjunctions are still new to us.&nbsp;
+The verb is executed as if parenthesized <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>((,/)@:])^:[</span></span>, so
+the first thing executed is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u^:v</span></span> where <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(,/)@:]</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;[&nbsp;y</span></span> is just <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>, so <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is going to tell us how many times to apply <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&amp;((,/)@:])</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Now, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&amp;((,/)@:])&nbsp;y </span></span>is
+just the same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,/&nbsp;y</span></span>,
+because the purpose of the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@:]</span></span> is to ignore the left argument that was
+put on by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&amp;&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>We remember monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>,/</span></span> from our
+discussion of monad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/</span></span>&nbsp;:
+it combines the 2 leading axes of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.&nbsp;
+So, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,/@:]^:[&nbsp;y</span></span>&nbsp;will
+combine the 2 leading axes of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> times; in other words, combine the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x+1</span></span>
+leading axes of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</p>
+
+<p class=Subsection><a name="_Toc191734388">Applying </a><span
+style='mso-bookmark:_Toc191734388'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> Optionally (If)</span></p>
+
+<p class=MsoBodyText>The importance of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u^:n</span></span> is not in
+applying a verb several times--usually we could just write the instances out if
+we needed to--but rather in 4 special values of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;</span></span>: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_</span></span>&nbsp;(infinity).<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u^:0</span></span>, meaning apply <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> 0 times, is
+simple: it does nothing, with the result <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> in both dyadic
+and monadic forms.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u^:1</span></span> means apply <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+once.&nbsp; <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;If conjunction ^\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Thinking about that, we see
+that if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+is restricted to the values 0 or 1, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>^:n</span></span> means <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'If n'&nbsp;</span></span>: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:n&nbsp;y</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+but modified by application of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> if <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> is 1; in C terms, it is <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;?&nbsp;u(y)&nbsp;:&nbsp;y</span></span>
+.&nbsp; If we want to apply the verb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+only on the items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+for which <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is 1, we can write <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;<a
+href="mailto:u@:%5d%5e:%5b%22_1"><span style='color:windowtext;text-decoration:
+none;text-underline:none'>u@:]^:[&quot;_1</span></a>&nbsp;y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 0 0 1 0
+&gt;:@]^:[&quot;_1 (1 2 3 4 5)</p>
+
+<p class=Jcodemultiline>2 2 3 5 5</p>
+
+<p class=Subsection><a name="_Toc191734389">Applying </a><span
+style='mso-bookmark:_Toc191734389'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> Forever (Converge)</span></p>
+
+<p class=MsoBodyText>When <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>_</span></span><i>, </i><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:italic'>u^:_</span></span>
+means 'apply <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+repeatedly until the result stops changing'; in C, it resembles <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>while(u(y)!=y)y&nbsp;=&nbsp;u(y);</span></span>
+.&nbsp; You could use this to perform a
+numerical calculation that converges on a result; for example if you take ...<i>cos(cos(cos(cos(y))))</i>
+until the result stops changing, you get the solution of the equation <i>y=cos(y)</i>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 o.^:_ (0)</p>
+
+<p class=Jcodemultiline>0.739085</p>
+
+<p class=MsoBodyText>You can think of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u^:_</span></span> as applying an improvement <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+repeatedly until no further improvement is possible.<span
+style='mso-spacerun:yes'>&nbsp; </span>The best-known example of this is Newton's Method for
+evaluating zeros of <i style='mso-bidi-font-style:normal'>f(x)</i>: start with
+an initial guess <i style='mso-bidi-font-style:normal'>y</i>, and then replace
+the guess with <i style='mso-bidi-font-style:normal'>y-(f(y)/f'(y))</i>;
+repeat till there is no change in <i style='mso-bidi-font-style:normal'>y</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, to find the zeros of 3<i
+style='mso-bidi-font-style:normal'>x<sup>3</sup>+</i>2<i style='mso-bidi-font-style:
+normal'>x<sup>2</sup>-</i>10 (the derivative of which is 9<i
+style='mso-bidi-font-style:normal'>x<sup>2</sup>+</i>4<i style='mso-bidi-font-style:
+normal'>x</i>), we create a verb to apply the Newton's-Method step, and then execute it
+repeatedly with a well-chosen initial value:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 : 'y -
+((3*y^3)+(2*y^2)-10) % (9*y^2)+4*y' ^:_ (3)</p>
+
+<p class=Jcodemultiline>1.30142</p>
+
+<p class=BodyTextnoleader>A robust implementation of Newton's Method must be able to find multiple
+roots and handle pathological functions, but a simple implementation such as
+the one above is an efficient way to polish up a root that has been
+approximated by other methods.</p>
+
+<p class=Subsection><a name="_Toc191734390">Applying </a><span
+style='mso-bookmark:_Toc191734390'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> Iteratively (DoWhile)</span></p>
+
+<p class=MsoBodyText>The most important use of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>^:_</span></span> is in the
+special form <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:v^:_</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;DoWhile conjunction u^\:v^\:_&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Consider this form (either
+monad or dyad), with the understanding that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> always produces
+a Boolean result of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is parenthesized <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(u^:v)^:_</span></span>,
+i.&nbsp;e. <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:v</span></span>
+repeated until its result is the same as its right operand.<span
+style='mso-spacerun:yes'>&nbsp; </span>Now, if <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> evaluates to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+the result of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:v</span></span>
+will certainly be the same as its right operand because <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> will not be
+executed; if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is 1, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:v</span></span>
+causes <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to be executed once.&nbsp; So this construct
+is like C's <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>while(v(y))y&nbsp;=&nbsp;u(y);</span></span>
+(except that the J version also stops if the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;y</span></span> is the
+same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+so the complete definition is <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>while(v(y)&amp;&amp;(u(y)!=y))y&nbsp;=&nbsp;u(y);</span></span>
+).&nbsp; The great thing about having a <i>verb</i>
+to do this loop rather than a <i>statement </i>is that we can give the verb a
+rank and apply it to cells, with independent loop control on each cell:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2
+*^:(100&amp;&gt;@:])^:_&quot;0 (1 3 5 7 9 11)</p>
+
+<p class=Jcodemultiline>128 192 160 112 144 176<span style='font-weight:normal'><o:p></o:p></span></p>
+
+<p class=BodyTextnoleader>Read this as 'for each atom of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, double it as
+long as the value is less than 100'.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:_1</span></span>
+is also of great interest but we will discuss it later.</p>
+
+<p class=MsoBodyText>One last point:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &gt;:^:1 2 4
+(5)</p>
+
+<p class=Jcodemultiline>6 7 9</p>
+
+<p class=MsoBodyText>As you can see, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> may be an array, in which case <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u^:n1&nbsp;y</span></span>
+is repeatedly evaluated, with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n1</span></span> assuming the value of each atom of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>,
+and the results are assembled using the shape of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> as the frame and
+with framing fills added as needed.&nbsp; Pop
+quiz: express the preceding English sentence in J.</p>
+
+<p class=MsoBodyText>Solution: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u^:n&nbsp;y</span></span> is equivalent to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;<a
+href="mailto:u@:%5d%5e:%5b%220"><span style='color:windowtext;text-decoration:
+none;text-underline:none'>u@:]^:[&quot;0</span></a>&nbsp;_&nbsp;y</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u^:n&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;x&amp;<a
+href="mailto:u@:%5d%5e:%5b%220"><span style='color:windowtext;text-decoration:
+none;text-underline:none'>u@:]^:[&quot;0</span></a>&nbsp;_&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you can make sense of the answer, you
+should be content with your progress.&nbsp; If
+you came up with either half on your own, you are entitled to claim Apprentice
+Guru status.</p>
+
+<p class=Section><a name="_Toc191734391"></a><a name="_Toc5414589"></a><a
+name="_Toc5414433"></a><a name="_Toc1896219"><span style='mso-bookmark:_Toc5414433'><span
+style='mso-bookmark:_Toc5414589'><span style='mso-bookmark:_Toc191734391'>Tie
+and Agenda (</span></span></span></a><span style='mso-bookmark:_Toc1896219'><span
+style='mso-bookmark:_Toc5414433'><span style='mso-bookmark:_Toc5414589'><span
+style='mso-bookmark:_Toc191734391'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>switch</span></span>)</span></span></span></span></p>
+
+<p class=Subsection><a name="_Toc191734392"></a><a name="_Toc5414590"></a><a
+name="_Toc5414434"></a><a name="_Toc1896220"><span style='mso-bookmark:_Toc5414434'><span
+style='mso-bookmark:_Toc5414590'><span style='mso-bookmark:_Toc191734392'>The
+Tie Conjunction </span></span></span></a><span style='mso-bookmark:_Toc1896220'><span
+style='mso-bookmark:_Toc5414434'><span style='mso-bookmark:_Toc5414590'><span
+style='mso-bookmark:_Toc191734392'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u`v u`n m`v m`n</span></span></span></span></span></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'><o:p></o:p></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;atomic representation&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The backquote character <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+is the conjunction named <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Tie</span></span>.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+is one of the few conjunctions that produce a noun, so it is neither monadic or
+dyadic.&nbsp; If an operand of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+is a verb, it is converted to its <span class=Definition>atomic representation</span>
+which is a noun form from which the verb can be recovered; then the two
+operands <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+(both nouns now since any verb was converted to a noun) are joined by executing
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m,n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>`</span></span> applied between
+the members of a sequence of verbs is a list of special nouns, each of which is
+the atomic representation of a verb.&nbsp; We
+are not concerned with the format of the atomic representation, nor will we
+create or modify an atomic representation (that's Advanced-Guru work); we will
+be content to use the values produced by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>`</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>An example is:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +`-`*`%`(+/)</p>
+
+<p class=Jcodemultiline>+-+-+-+-+-------+</p>
+
+<p class=Jcodemultiline>|+|-|*|%|+-+---+|</p>
+
+<p class=Jcodemultiline>| | | | ||/|+-+||</p>
+
+<p class=Jcodemultiline>| | | | || ||+|||</p>
+
+<p class=Jcodemultiline>| | | | || |+-+||</p>
+
+<p class=Jcodemultiline>| | | | |+-+---+|</p>
+
+<p class=Jcodemultiline>+-+-+-+-+-------+</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Tie conjunction `&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u`v&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->What makes the result of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+special is not the boxing, but the fact that what's in the boxes is not just
+any old data, but data in the format that can be used to recover the original
+verbs.&nbsp; Once created, the result of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+can be operated on like any other noun:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. +:`-`*`%`(+/)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 { a</p>
+
+<p class=Jcodemultiline>+-+</p>
+
+<p class=Jcodemultiline>|%|</p>
+
+<p class=Jcodemultiline>+-+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 0 1 0 1 # a</p>
+
+<p class=Jcodemultiline>+-+-------+</p>
+
+<p class=Jcodemultiline>|*|+-+---+|</p>
+
+<p class=Jcodemultiline>| ||/|+-+||</p>
+
+<p class=Jcodemultiline>| || ||+|||</p>
+
+<p class=Jcodemultiline>| || |+-+||</p>
+
+<p class=Jcodemultiline>| |+-+---+|</p>
+
+<p class=Jcodemultiline>+-+-------+</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;gerund&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->In English grammar, a gerund
+is a form of a verb that is used as a noun, for example the word <i>cooking</i>
+in <i><u>Cooking</u> is fun</i>.&nbsp; The
+result of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+in J is also called a <span class=Definition>gerund</span>, and we can see that
+the name is apt: a gerund in J is a set of J verbs put into a form that can be
+used as a J noun.&nbsp; It has the latent
+power of the verbs put into a portable form, like nitroglycerine that has been
+stabilized by kieselguhr to become dynamite.&nbsp;
+The blasting cap that sets it off is</p>
+
+<p class=Subsection><a name="_Toc191734393"></a><a name="_Toc5414591"></a><a
+name="_Toc5414435"></a><a name="_Toc1896221"><span style='mso-bookmark:_Toc5414435'><span
+style='mso-bookmark:_Toc5414591'><span style='mso-bookmark:_Toc191734393'>The
+Agenda (</span></span></span></a><span style='mso-bookmark:_Toc1896221'><span
+style='mso-bookmark:_Toc5414435'><span style='mso-bookmark:_Toc5414591'><span
+style='mso-bookmark:_Toc191734393'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>switch</span></span>) conjunction </span></span></span></span><span
+style='mso-bookmark:_Toc1896221'><span style='mso-bookmark:_Toc5414435'><span
+style='mso-bookmark:_Toc5414591'><span style='mso-bookmark:_Toc191734393'></span></span></span></span><a
+href="mailto:m@.v"><span style='mso-bookmark:_Toc1896221'><span
+style='mso-bookmark:_Toc5414435'><span style='mso-bookmark:_Toc5414591'><span
+style='mso-bookmark:_Toc191734393'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";color:windowtext;mso-bidi-font-weight:bold;text-decoration:
+none;text-underline:none'>m@.v</span></span></span></span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m@.v&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:m@.v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>m@.v</span></a></span></span> (either monad or dyad) uses
+the result of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+to select a verb from the list of verbs <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m</span></span>, and then
+executes that verb.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:m@.v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>m@.v</span></a></span></span> requires that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+be a valid gerund.&nbsp; It produces a verb
+which can be used monadically or dyadically and whose ranks are the ranks of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The operation of this verb is as follows: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;y </span></span>(if
+monadic) or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;v&nbsp;y
+</span></span>(if dyadic) is evaluated; it must produce a scalar result <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>r </span></span>that
+is a valid index into <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>;
+i.&nbsp;e. <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(-#m)&nbsp;&lt;:&nbsp;r
+</span></span>and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>r&nbsp;&lt;&nbsp;#m&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Then, item <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>r{m</span></span> is selected--it
+is the atomic representation of one of the verbs that went into <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>--and
+that atomic representation is converted to a verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Finally, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;y </span></span>(if
+monadic) or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y
+</span></span>(if dyadic) is executed, and its result is the result of the
+execution of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:m@.v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>m@.v</span></a>&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>So, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>verb0`verb1`verb2&nbsp;@.&nbsp;v&nbsp;y</span></span>
+evaluates <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;y</span></span>,
+resulting in <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>r</span></i></span>,
+and then executes <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>verb<i>r</i>&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The dyadic case <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;verb0`verb1`verb2&nbsp;@.&nbsp;v&nbsp;y</span></span>
+evaluates <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;v&nbsp;y</span></span>,
+resulting in <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>r</span></i></span>,
+and then executes <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;verb<i>r</i>&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The verbs may be any valid verb: a primitive,
+a compound verb, or a named verb.</p>
+
+<p class=MsoBodyText>Examples:</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; (1&amp;+)`(-&amp;2)@.(2&amp;|)
+&quot;0 i. 6</p>
+
+<p class=Jcodemultiline>1 _1 3 1 5 3</p>
+
+<p class=BodyTextnoleader>This added 1 to each even number and subtracted 2
+from each odd number.&nbsp; Note that we had
+to assign rank 0 to the overall combined verb, because otherwise the rank of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(1&amp;+)`(-&amp;2)@.(2&amp;|)</span></span>
+would have been the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&amp;|</span></span> which is infinite because <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&amp;v</span></span>
+has infinite rank.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; _5 _3 _1
+1 3 5 +`-@.(0&amp;&gt;@:[&quot;0) 2</p>
+
+<p class=Jcodemultiline>_7 _5 _3 3 5 7</p>
+
+<p class=BodyTextnoleader>Subtract 2 from elements of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> that are
+negative, add 2 to elements that are nonnegative.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here we assigned the rank to the selector
+verb in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:m@.v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>m@.v</span></a></span></span>; that rank was then
+inherited by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:m@.v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>m@.v</span></a>&nbsp;</span></span>.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 5 uname`+`]
+@. (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman";
+mso-bidi-font-weight:bold'><a href="mailto:*@:%5d%220"><span style='color:windowtext;
+text-decoration:none;text-underline:none'>*@:]&quot;0</span></a></span></span>)
+_5 0 5</p>
+
+<p class=BodyTextnoleader>(Remember that monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> is the signum
+function returning <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>
+for negative, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+for zero, and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+for positive operands)&nbsp; For each atom of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+execute <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;uname&nbsp;y</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is zero, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;+&nbsp;y</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is positive, and pass <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+through unchanged (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;]&nbsp;y</span></span>)
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is negative.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>uname</span></span> must be
+defined elsewhere.&nbsp; This expression makes
+use of negative indexing: if <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>*&nbsp;y</span></span> is negative, verb number <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>
+(the last item) is taken from the gerund.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:m@.v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>m@.v</span></a></span></span> obviously can be used with a
+small rank to afford great control over what operation is performed cell-by-cell,
+but if you do that it will have to apply J verbs on small operands, which is
+inefficient.&nbsp; After all we've been
+through, I feel confident that I can trust you not to use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><a href="mailto:m@.v"><span
+style='color:windowtext;text-decoration:none;text-underline:none'>m@.v</span></a></span></span>
+with small rank unless it's absolutely necessary.<span
+style='mso-spacerun:yes'>&nbsp; </span></p>
+
+</div><!--bottom jump start--><hr><a href="more_verbs_for_boxes.htm">&gt;&gt;</a>&nbsp;
+<a href="verbs_for_arithmetic.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

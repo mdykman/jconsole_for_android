@@ -1,0 +1,115 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>* Signum  -  Times</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d111.htm">&gt;&gt;</a>&nbsp;
+<a href="d102.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Signum</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>* &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Times</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>*y </tt>is<tt> _1 </tt>if <tt>y</tt> is negative,<tt> 0 </tt>
+if it is zero,<tt> 1 </tt>if it is positive; more generally,<tt> *y </tt>
+is the intersection of the unit circle with the line from the origin 
+through the argument<tt> y </tt>in the complex plane.  For example:<br>
+
+<pre>
+   *_3 0 5 3j4
+_1 0 1 0.6j0.8
+</pre>
+
+The comparison with zero is tolerant, as defined by the 
+phrase<tt> (y%|y)*t&lt;:|y </tt>where<tt> t </tt>denotes the tolerance.  
+The fit conjunction applies to signum, as in<tt> *!.t</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>* </tt>denotes multiplication, defined as in elementary mathematics 
+and extended to complex numbers as usual:<br>
+
+<pre>
+   t=:+.x,y [ x=:2j4 [ y=:5j3
+   r=:-/*/t [ i=:+/ . * t
+   (x,:y);t;r;i;(r j. i);(x*y)
++---+---+--+--+-----+-----+
+|2j4|2 4|_2|26|_2j26|_2j26|
+|5j3|5 3|  |  |     |     |
++---+---+--+--+-----+-----+
+</pre>
+</td>                                                         
+</tr></table><br>
+
+Signum is useful in effecting selections.  For example:<br>
+
+<pre>
+   * y=: _4 0 4
+_1 0 1
+
+   &gt;:@* y
+0 1 2
+
+   f=: %:
+   f ^: * &quot; 0 y               NB. Inverse of f, Identity, or f
+16 0 2
+
+   (* y) { ;:'Yes No Maybe'   NB. Select using <a href="d520.htm">Indexing ({)</a></font>
++-----+---+--+
+|Maybe|Yes|No|
++-----+---+--+
+
+   g=: &lt;:`-:`+:@.*&quot;0          NB. See <a href="d621.htm">Agenda (@.)</a>
+   g y
+_8 _1 2
+</pre>
+
+The dyad<tt> * </tt>used on a list and a table illustrates the significance 
+of <i>agreement</i>, as discussed in 
+<a href="dictb.htm">Section II B</a>:<br>
+
+<pre>
+   m=: i. 3 4 [ v=: 3 2 1
+
+   m ; (v*m) ; (m*v) ; (+/ m*v) ; (v +/ . * m)
++---------+----------+----------+-----------+-----------+
+|0 1  2  3|0  3  6  9|0  3  6  9|16 22 28 34|16 22 28 34|
+|4 5  6  7|8 10 12 14|8 10 12 14|           |           |
+|8 9 10 11|8  9 10 11|8  9 10 11|           |           |
++---------+----------+----------+-----------+-----------+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d111.htm">&gt;&gt;</a>&nbsp;
+<a href="d102.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

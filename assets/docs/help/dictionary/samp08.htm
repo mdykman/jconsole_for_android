@@ -1,0 +1,79 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 8.  Classification</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp09.htm">&gt;&gt;</a>&nbsp;
+<a href="samp07.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>8. Classification</b></font><br><br>
+
+Classification is a familiar notion.  For example, 
+the classification of letters of the alphabet as <i>vowel</i>, 
+<i>consonant</i>, <i>sibilant</i>, or <i>plosive</i>; 
+of colors as <i>primary</i> and <i>secondary</i>; 
+and of numbers as <i>odd</i>,<i> even</i>, <i>prime</i>, and 
+<i>complex.</i><br><br>
+
+It is also very important; it provides the basis for many 
+significant notions, such as graphs, barcharts, and sets.<br><br>
+
+A classification may be <i>complete</i>, 
+(each object falling into at least one class), 
+and it may be <i>disjoint </i>(each object falling into at most one class).  
+A <i>graph</i> is a <i>disjoint</i> classification corresponding 
+to the non-disjoint classification used to produce a barchart.<br>
+
+<pre>
+   x=: 1 2 3 4 5 6 7
+   ]y=: (x-3) * (x-5)                      NB. Parabola (roots at 3 and 5)
+8 3 0 _1 0 3 8
+
+   range=: &gt;./ - i.@spread 
+   spread=: 1: + &gt;./ - &lt;./ 
+   spread y
+10
+
+   range y
+8 7 6 5 4 3 2 1 0 _1
+                    
+   ((range &lt;:/ ]);{&amp;' *'@(range&lt;:/])) y    NB. Barcharts of y
++-------------+-------+
+|1 0 0 0 0 0 1|*     *|
+|1 0 0 0 0 0 1|*     *|
+|1 0 0 0 0 0 1|*     *|
+|1 0 0 0 0 0 1|*     *|
+|1 0 0 0 0 0 1|*     *|
+|1 1 0 0 0 1 1|**   **|
+|1 1 0 0 0 1 1|**   **|
+|1 1 0 0 0 1 1|**   **|
+|1 1 1 0 1 1 1|*** ***|
+|1 1 1 1 1 1 1|*******|
++-------------+-------+
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="samp09.htm">&gt;&gt;</a>&nbsp;
+<a href="samp07.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

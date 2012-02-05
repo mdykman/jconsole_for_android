@@ -1,0 +1,87 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Overview</title>
+
+</head><body><!--top jump start--><a href="sql.htm">&gt;&gt;</a>&nbsp;
+<a href="odbc.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>ODBC Data Driver Overview</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+The Open Database Connectivity (ODBC) interface allows applications to access data from database management systems (DBMS), using Structured Query Language (SQL) expressions.
+
+<P>
+J Win9x/NT only supports 32-bit ODBC drivers. 
+
+<P>
+The J/ODBC interface uses the <I>Data Driver</I> verbs, defined in script dd.ijs.
+
+<P>
+The processing required by the application is essentially independent of the DBMS. For example, if you have written programs to access dBase files using ODBC, then you can use similar programs to access Paradox, or indeed any other DBMS.
+
+<P>
+The application, and the driver programs that access the DBMS, are physically separate. To access a DBMS, you need only ensure a driver for that DBMS is available. There are ODBC drivers for virtually all commercial DBMS, and J itself is distributed with drivers for several popular systems, including Access, Btrieve, dBase, Excel, FoxPro, Oracle, Paradox and SQL Server. 
+
+<P>
+Note that the DBMS need not itself support SQL, for example dBase does not. All that matters is that the ODBC DBMS <I>driver</I> is available.
+
+<P>
+An ODBC DBMS driver, together with information on where its datasets are stored, is typically referred to as a <I>data source</I>. 
+
+<P>
+Between the application and the data there are 3 layers, though they appear to the application as a single unit:
+
+<P>
+<TABLE>
+<tr>
+<TD COLSPAN=3 VALIGN="TOP" WIDTH=417><P ALIGN=CENTER><B>J application</B>
+</tr><tr>
+<TD COLSPAN=3 VALIGN="TOP" WIDTH=417><P ALIGN=CENTER><B>Data Driver</B>
+</tr><tr>
+<TD COLSPAN=3 VALIGN="TOP" WIDTH=417><P ALIGN=CENTER><B>ODBC Manager</B>
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=132><P ALIGN=CENTER><B>Data Source</B>
+<TD VALIGN="TOP" WIDTH=124><P ALIGN=CENTER><B>Data Source</B>
+<TD VALIGN="TOP" WIDTH=124><P ALIGN=CENTER><B>Data Source</B>
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=132><P ALIGN=CENTER><B>Data</B>
+<TD VALIGN="TOP" WIDTH=124><P ALIGN=CENTER><B>Data</B>
+<TD VALIGN="TOP" WIDTH=124><P ALIGN=CENTER><B>Data</B>
+</tr></table>
+
+<P>
+The application sends requests to the Data Driver (using the verbs defined in script dd.ijs), which converts them into a standard format and sends them to the ODBC Manager. The ODBC Manager then sends them to the appropriate Data Source, and is also responsible for ensuring the required drivers are loaded. The Data Source drivers then handle the data access. 
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="sql.htm">&gt;&gt;</a>&nbsp;
+<a href="odbc.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

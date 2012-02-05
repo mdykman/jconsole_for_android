@@ -1,0 +1,72 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Miscellaneous</title>
+
+</head><body><!--top jump start--><a href="references.htm">&gt;&gt;</a>&nbsp;
+<a href="case_statements.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+<H1>15B. Miscellaneous</h1>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>v0=. '.'&amp;$: : (2&amp;{.@(&lt;;._1)@,)</tt></TD>	<TD width=60%>Split y on x (on period for monad)</TD></TR>
+  <TR><TD><tt>m1=: (i.@# = i.~) # ]</tt></TD>	<TD>Nub <tt>~.</tt></TD></TR>
+  <TR><TD><tt>n2=: a.{~65 97+/i.26</tt></TD>	<TD>A-Z, a-z</TD></TR>
+</TABLE>
+
+
+<P>For example:</P>
+
+<pre>
+   v0 'filename.ext'
++------------+
+&brvbar;filename&brvbar;ext&brvbar;
++------------+
+
+   ';' v0 'filename;ext'
++------------+
+&brvbar;filename&brvbar;ext&brvbar;
++------------+</pre>
+
+<P>The following illustrates miscellaneous matters, including multiple assignments:</P>
+
+<table width=100%>
+<tr><td width=40%><tt>n=. 'psmith';(i.3 4);100 200</tt></td> <td width=60%>assign local to explicit definition</td></tr>
+<tr><td><tt>n=: 'psmith';(i.3 4);100 200</tt></td> <td>assign global</td></tr> 
+<tr><td><tt>'one two three'=: n</tt></td> <td>assign names</td></tr> 
+<tr><td><tt>'a b c'=: i.3 4</tt></td> <td>assign rows of matrix</td></tr> 
+<tr><td><tt>'a b c d'=: |:i.3 4</tt></td> <td>assign cols of matrix</td></tr> 
+<tr><td><tt>'a b c'=: 1 2 3;'two';3 3$3</tt></td> <td>assign opened elements</td></tr> 
+<tr><td><tt>[x=: i.5</tt></td> <td>assign and display result</td></tr> 
+<tr><td><tt>v=: +:@*:</tt></td> <td>assign name to verb</td></tr> 
+<tr><td><tt>([ v) i.5</tt></td> <td>invoke verb, return argument</td></tr> 
+<tr><td><tt>(;v) i.5</tt></td> <td>invoke verb, return argument linked to result</td></tr> 
+</table>
+<br><br>
+
+
+
+<!--bottom jump start--><hr><a href="references.htm">&gt;&gt;</a>&nbsp;
+<a href="case_statements.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

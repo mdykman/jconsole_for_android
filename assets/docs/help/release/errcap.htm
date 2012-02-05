@@ -1,0 +1,133 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>13!:0 ]2 Error Capture Implemented</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="slashcat.htm">&gt;&gt;</a>&nbsp;
+<a href="9x32.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">13!:0 ]2 </font>
+<font size=+3>Error Capture</font></b>
+</td><td align=right>
+initial writing: 2000-08-02<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The debug mode<tt> 13!:0 </tt>now accepts 2 as an 
+argument.<tt> 13!:0 ]1 </tt>enables error suspension.
+<tt> 13!:0 ]2 </tt>does not permit error suspension;
+instead, where suspension would have happened,
+the following phrase is executed:<br><br><pre>
+    STACK_ERROR_INFO_base_=:  (13!:11 ; 13!:12 ; 13!:13 ; 18!:5) ''
+</pre>
+capturing the error number, error text, stack info, and current locale name.
+The stack is then cleared, and execution goes into 
+immediate execution.<br><br>
+
+Unlike<tt> 13!:0 ]1 </tt>error suspension,<tt> 13!:0 ]2 </tt>error capture 
+does <i>not</i> require a professional key (<tt>9!:31</tt>).<br><br>
+
+<b>Example 0:</b>
+After an error is encountered in executing<tt> 8 foo 'boo boo'</tt>,<tt> </tt>
+there is no indication of anything untoward, nor is there an error suspension.
+However,<tt> STACK_ERROR_INFO_base </tt>contains the error number,
+error text, and stack information at the time of the error.<br>
+<pre>
+   foo=: 4 : 0
+    t=. 6!:0 ''
+    x. plus y.
+   )
+
+   plus=: 17&amp;|@+
+
+   13!:0 ]2
+   
+   8 foo 'boo boo'
+   STACK_ERROR_INFO
++-+------------------------------+-------------------------------------------- ...
+|3||domain error: plus |plus[:0] |+----+-+-+-+-------------------------------- ...
+| |                              ||plus|3|0|3|17amp;|@+                           ...
+| |                              ||    | | | |                                 ...
+| |                              ||    | | | |                                 ...
+| |                              |+----+-+-+-+-------------------------------- ...
+| |                              ||foo |0|1|3|4 : 0  t=. 6!:0 ''  x. plus y. ) ...
+| |                              ||    | | | |                                 ...
+| |                              ||    | | | |                                 ...
+| |                              ||    | | | |                                 ...
+| |                              ||    | | | |                                 ...
+| |                              ||    | | | |                                 ...
+| |                              ||    | | | |                                 ...
+| |                              |+----+-+-+-+-------------------------------- ...
++-+------------------------------+-------------------------------------------- ...
+   q=: STACK_ERROR_INFO_base_
+   $q
+4
+   $&amp;.&gt;q
+++--+---++
+||30|2 8||
+++--+---++
+   &gt;0{q
+3
+   &gt;1{q
+|domain error: plus
+|plus[:0]
+
+   0 2 4 6 7{&quot;1 &gt;2{q
++----+-+--------------------------------+-----------+---------------------------+
+|plus|0|17&amp;|@+                          |+-+-------+|                           |
+|    | |                                ||8|boo boo||                           |
+|    | |                                |+-+-------+|                           |
++----+-+--------------------------------+-----------+---------------------------+
+|foo |1|4 : 0  t=. 6!:0 ''  x. plus y. )|+-+-------+|+--+----------------------+|
+|    | |                                ||8|boo boo|||t |2000 11 30 9 21 54.811||
+|    | |                                |+-+-------+|+--+----------------------+|
+|    | |                                |           ||x.|8                     ||
+|    | |                                |           |+--+----------------------+|
+|    | |                                |           ||y.|boo boo               ||
+|    | |                                |           |+--+----------------------+|
++----+-+--------------------------------+-----------+---------------------------+
+</pre>
+
+<b>Example 1:</b> The latent expression (<tt>9!:29</tt>), executed on
+return to immediate execution, can be used to capture any stack error 
+information.
+<pre>
+   errcap=: 3 : 0
+    (3!:1 STACK_ERROR_INFO_base_) 1!:2 &lt;&quot;:6!:0 ''
+    1!:2&amp;2 'STACK_ERROR_INFO written to file'
+   )
+
+   9!:27 'i.0 [ errcap 0'       NB. set latent expression
+   3 foo 'boo boo' [ 9!:29 ]1   NB. enable latent expression
+STACK_ERROR_INFO written to file
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="slashcat.htm">&gt;&gt;</a>&nbsp;
+<a href="9x32.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

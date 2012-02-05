@@ -1,0 +1,85 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Execution Time &amp; Space</title>
+
+</head><body><!--top jump start--><a href="date_time.htm">&gt;&gt;</a>&nbsp;
+<a href="type_change.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+<H1>14A. Execution Time &amp; Space</h1>
+
+
+<TABLE BORDER=1 CELLSPACING=0 WIDTH="100%">
+  <TR><TD width=40%><tt>v0=: time=: 6!:2</tt></TD>	<TD width=60%>Time to execute y (or avg of x executes)</TD></TR>
+  <TR><TD><tt>m1=: space=: 7!:2</tt></TD>	<TD>Space used to execute y</TD></TR>
+  <TR><TD><tt>v2=:  ts=: 6!:2, 7!:2@]</tt></TD>	<TD>Time and space</TD></TR>
+</TABLE>
+
+
+<P>The foregoing phrases may be used to obtain the time and 
+space required to execute a sentence. For example:</P>
+
+<pre>
+   r=: report=: ?3 4 5$10
+   r;(/:~r);(/:&quot;1~r)
++-----------------------------+
+|6 6 9 3 5|6 4 7 9 7|3 5 6 6 9|
+|8 0 0 5 6|2 0 7 3 6|0 0 5 6 8|
+|0 3 0 4 6|7 9 3 2 9|0 0 3 4 6|
+|5 9 8 5 0|7 7 6 0 6|0 5 5 8 9|
+|         |         |         |
+|6 4 7 9 7|6 6 9 3 5|4 6 7 7 9|
+|2 0 7 3 6|8 0 0 5 6|0 2 3 6 7|
+|7 9 3 2 9|0 3 0 4 6|2 3 7 9 9|
+|7 7 6 0 6|5 9 8 5 0|0 6 6 7 7|
+|         |         |         |
+|8 2 4 7 4|8 2 4 7 4|2 4 4 7 8|
+|2 2 3 1 4|2 2 3 1 4|1 2 2 3 4|
+|8 9 0 9 5|8 9 0 9 5|0 5 8 9 9|
+|5 3 9 4 2|5 3 9 4 2|2 3 4 5 9|
++-----------------------------+
+
+   time '/:~r'
+0
+
+   100 time '/:~r'
+0.0005
+
+   100 time '/:&quot;1~r'
+0.0005
+
+   space '/:&quot;1~r'
+4160
+
+   100 ts '/:&quot;1~r'
+0.0005 4160 
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="date_time.htm">&gt;&gt;</a>&nbsp;
+<a href="type_change.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>D. Plotting</title>
+
+</head><body><!--top jump start--><a href="approximation.htm">&gt;&gt;</a>&nbsp;
+<a href="math_stats.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>10D. Plotting</h1>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+
+
+<TR><TD width=40%><tt>m0=: #&quot;0&amp;1</tt></TD>	<TD width=60%>Stacks of 1s of length y followed by 0s</TD></TR>
+<TR><TD><tt>m1=: #.&amp;.|:</tt></TD>	<TD>Decimal value of 2-item Boolean list y</TD></TR>
+<TR><TD><tt>m2=: ] { ' +ox'&quot;_</tt></TD>	<TD>One of four characters chosen by y</TD></TR>
+<TR><TD><tt>m3=: m2@m1@m0&quot;1</tt></TD>	<TD>Horizontal barchart of two intgr series y</TD></TR>
+<TR><TD><tt>m4=: #&quot;0&amp;'x'</tt></TD>	<TD>Stack of 'x's of length y followed by ' 's</TD></TR>
+<TR><TD><tt>m5=: [: i. [: &gt;: &gt;./</tt></TD>	<TD>Dense indices from 0 thru max y</TD></TR>
+<TR><TD><tt>m6=: [: &gt;: [: i. &gt;./</tt></TD>	<TD>Dense indices from 1 thru max y</TD></TR>
+<TR><TD><tt>d7=: [ + [: i. [: -. -</tt></TD>	<TD>Dense indices from x thru y</TD></TR>
+<TR><TD><tt>m8=: &lt;./ , &gt;./</tt></TD>	<TD>Min and max of y</TD></TR>
+<TR><TD><tt>m9=: #/.~</tt></TD>	<TD>Frequency count of items of y</TD></TR>
+<TR><TD><tt>m10=: &lt;./ d7 &gt;./</tt></TD>	<TD>Integers from min y to max y, inclusive</TD></TR>
+<TR><TD><tt>m11=: [: &gt;: [: i. ]</tt></TD>	<TD>Integers from 1 thru y,  inclusive</TD></TR>
+<TR><TD><tt>m12=: [: i. [: &gt;: ]</tt></TD>	<TD>Integers from 0 through y, inclusive</TD></TR>
+<TR><TD><tt>m13=: m25 d18 'x'&quot;_</tt></TD>	<TD>Barchart of y on vertical axis using ' x'</TD></TR>
+<TR><TD><tt>m14=: m25 d18 1:</tt></TD>	<TD>Barchart of y on vertical axis using 0 1</TD></TR>
+<TR><TD><tt>m15=: |.@|:@m13</tt></TD>	<TD>Barchart of y on horizontl axis using ' x'</TD></TR>
+<TR><TD><tt>m16=: |.@|:@m14</tt></TD>	<TD>Barchart of y on horizontl axis using 0 1</TD></TR>
+<TR><TD><tt>m17=: [: -. m20</tt></TD>	<TD>Table with i{y trailing 0s on row i</TD></TR>
+<TR><TD><tt>d18=: #&quot;0</tt></TD>	<TD>x replications of y</TD></TR>
+<TR><TD><tt>m19=: |.@|:@m23</tt></TD>	<TD>Barchart of y (up the page)</TD></TR>
+<TR><TD><tt>m20=: [: |.&quot;1 m22</tt></TD>	<TD>Table with i{y trailing 1s on row i</TD></TR>
+<TR><TD><tt>m21=: [: -. m22</tt></TD>	<TD>Table with i{y leading 0s on row i</TD></TR>
+<TR><TD><tt>m22=: d18&amp;1</tt></TD>	<TD>y replications of 1, trailing 0s</TD></TR>
+<TR><TD><tt>m23=: d18&amp;'x'</tt></TD>	<TD>Barchart of y (across the page)</TD></TR>
+<TR><TD><tt>d24=: [ {. ] # 1:</tt></TD>	<TD>List of y 1s followed by x-y 0s</TD></TR>
+<TR><TD><tt>m25=: [: &lt;: [: m9 m11@(&gt;./) ,]</tt></TD>	<TD>Count of y among 1 through max y</TD></TR>
+<TR><TD><tt>m26=: [: &lt;: [: m9 m12@(&gt;./) ,]</tt></TD>	<TD>Count of y among 0 through max y</TD></TR>
+<TR><TD><tt>m27=: [: &lt;: [: m9 m10 , ]</tt></TD>	<TD>Count of y among min through max y</TD></TR>
+<TR><TD nowrap><tt>d28=: [:+/\{.@],&gt;:@[#(}.-}:)@]%&gt;:@[</tt></TD>	<TD>Interpolate x values between items of y</TD></TR>
+<TR><TD><tt>d29=: $@]$((* &lt;.@:% #@]) /:@/:@,)</tt></TD>	<TD>Classify y into x groups</TD></TR>
+
+
+</table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="approximation.htm">&gt;&gt;</a>&nbsp;
+<a href="math_stats.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

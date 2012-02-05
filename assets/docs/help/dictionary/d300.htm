@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>. Determinant &#149 Dot Product</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d301.htm">&gt;&gt;</a>&nbsp;
+<a href="d232.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=30%><b><font size=+2>Determinant</font></b></td>
+<td align=center width=37%><font face="Courier New" size=+3>u . v &nbsp;2 _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Dot Product</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+The phrases<tt> -/ . * </tt>and<tt> +/ . * </tt>are the <i>determinant</i> 
+and <i>permanent</i> of square matrix arguments.  More generally, 
+the phrase<tt> u . v </tt>is defined in terms of a recursive expansion 
+by minors along the first column, as discussed below.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+For vectors and matrices, the phrase<tt> x +/ . * y </tt>
+is equivalent to the <i>dot</i>, <i>inner</i>, or <i>matrix</i> 
+product of math; other rank-0 verbs such as<tt> &lt;. </tt>and<tt> *. </tt>
+are treated analogously.  In general,<tt> u . v </tt>is defined 
+by<tt> u@(v&quot;(1+lv,_))</tt> ,<tt> </tt>restated in English below. 
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:
+
+<pre>
+   x=: 1 2 3 [ m=: &gt;1 6 4;4 1 0;6 6 8
+   det=: -/ . * 
+   mp=: +/ . *
+   x ([ ; ] ; det@] ; mp ; mp~ ; mp~@]) m
++-----+-----+----+--------+-------+--------+
+|1 2 3|1 6 4|_112|27 26 28|25 6 42|49 36 36|
+|     |4 1 0|    |        |       | 8 25 16|
+|     |6 6 8|    |        |       |78 90 88|
++-----+-----+----+--------+-------+--------+
+</pre>
+
+The monad<tt> u . v </tt>is defined as illustrated below:<br>
+
+<pre>
+   DET=: 2 : 'v/@,`({.&quot;1 u . v $:@minors)@.(0&lt;{:@$) @ ,. &quot;2'
+     minors=: }.&quot;1 @ (1&amp;([\.))
+
+   -/ DET * m
+_112
+
+   -/ DET * 1 16 64
+49
+
+   -/ DET * i.3 0
+1
+
+   +/ DET * m
+320
+</pre>
+
+<p>The definition<tt> u@(v&quot;(1+lv,_)) </tt>given above for the dyadic 
+case may be re-stated in words as follows:<tt> u </tt>is applied to 
+the result of<tt> v </tt>on lists of &ldquo;left argument cells&rdquo; 
+and the right argument <i>in toto</i>.  The number of items in a 
+list of left argument cells must agree with the number in the right argument.  
+Thus, if<tt> v </tt>has ranks<tt> 2 3 </tt>and the shapes 
+of<tt> x </tt>and<tt> y </tt>are<tt> 2 3 4 5 6 </tt>
+and<tt> 4 7 8 9 10 11</tt>,<tt> </tt>then there are<tt> 2 3 </tt>lists 
+of left argument cells (each shaped<tt> 4 5 6</tt>);<tt> </tt>and if 
+the shape of a result cell is<tt> sr</tt>,<tt> </tt>the overall shape 
+is<tt> 2 3,sr</tt> .</p>
+<br>
+
+<!--bottom jump start--><hr><a href="d301.htm">&gt;&gt;</a>&nbsp;
+<a href="d232.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

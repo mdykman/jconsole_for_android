@@ -1,0 +1,82 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Memory Management</title>
+
+</head><body><!--top jump start--><a href="calling_jdll.htm">&gt;&gt;</a>&nbsp;
+<a href="cd_domain_error.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Memory Management</h1>
+<TR><TD colspan="2"> 
+
+
+<p>
+Some DLL procedures return pointers to memory or require parameters of pointers to memory that cannot be provided by referencing a J array. The following verbs, defined in main\dll.ijs, are provided to allocate, free, read and write memory:
+
+<pre>
+mema      allocate bytes of memory<br>
+memr      read bytes from memory (as type)<br>
+memw      write bytes to memory (from type)<br>
+memf      free memory allocated by mema
+</pre>
+
+<p>
+<code>mema</code> allocates memory. The result is an integer memory address. A 0 result indicates the allocation failed. For example:
+
+<pre>
+   address=: mema length
+</pre>
+
+<p>
+<code>memf</code> frees memory. The argument could be a <code>mema</code> result or pointer returned by a procedure. A 0 result is success and a 1 is failure.
+
+<pre>
+   <code>memf</code> address
+</pre>
+
+<p>
+<code>memr</code> reads data from memory. A _1 count reads up to the first 0  (read a C string).
+
+<pre>
+   data=: memr address,byte_offset,count [,type]
+</pre>
+
+<p>
+<code>memw</code> writes data to memory. If type is char, count can be 1 greater than the length of the string left argument, in which case a 0 is appended (writing a C string).
+<pre>
+   data memw address,byte_offset,count [,type]
+</pre>
+
+<p><code>memr</code> and <code>memw</code> type parameter is 2 4 8 or 16 for char integer float or complex. The default is 2. The count parameter is a count of elements of the type.
+
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="calling_jdll.htm">&gt;&gt;</a>&nbsp;
+<a href="cd_domain_error.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

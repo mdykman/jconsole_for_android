@@ -1,0 +1,186 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Data Driver</title>
+
+</head><body><!--top jump start--><a href="listing_data_sources.htm">&gt;&gt;</a>&nbsp;
+<a href="connection_statement_handles.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Data Driver</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+ODBC access is provided by the Data Driver verbs, that are defined in script dd.ijs. First load this file:
+
+<pre>
+   load 'dd'
+</pre>
+
+<P>
+The Data Driver verbs may be summarized as follows: 
+
+<P>
+Here, <I>ch</I> refers to a connection handle, and <I>sh</I> a statement handle. Note that SQL commands are not case-sensitive.
+
+<P>
+<B>ddcnm</B> <code>r=. ddcnm sh</code><br>
+Column names of selected data
+
+<P>
+<B>ddcnt</B> <code>r=. ddcnt ''</code> (available in J Win95 only)<br>
+Rowcount of last <code>ddsql</code> command
+
+<P>
+<B>ddcol</B> <code>r=. 'tdata' ddcol ch</code><br>
+Column names and atrributes in a database
+
+<P>
+<B>ddcom</B> <code>r=. ddcom ch</code><br>
+Commit a transaction (after a <code>ddtrn</code>)
+
+<P>
+<B>ddcon</B> <code>ch=. ddcon 'dsn=jdata'</code><br>
+Connect to ODBC data source name. The result is a connection handle. The argument can set several parameters, separated by semicolons. Some are supported by all databases, and others have a meaning only for specific databases. Parameters recognized by most database systems are:
+<P>
+<Table>
+<tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<B>dsn</B>
+<TD VALIGN="TOP" WIDTH=402><P>
+ODBC data source name
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<B>dlg</B>
+<TD VALIGN="TOP" WIDTH=402><P>
+dlg=1 prompts for a connection string with a dialog box with entries for User Id and Password (not supported by the distributed dBase driver)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<B>uid</B>
+<TD VALIGN="TOP" WIDTH=402><P>
+user name
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<B>pwd</B>
+<TD VALIGN="TOP" WIDTH=402><P>
+user password
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<B>modifysql</B>
+<TD VALIGN="TOP" WIDTH=402><P>
+set to 1 (the default) to use ODBC SQL grammer. Set to 0 to use native database grammer.
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<B>rereadafterupdate</B>
+<TD VALIGN="TOP" WIDTH=402><P>
+set to 1 to force a re-read of a record after an update. This is useful for retrieving auto-updated values such as timestamps.
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<B>rereadafterinsert</B>
+<TD VALIGN="TOP" WIDTH=402><P>
+set to 1 to force a re-read of a record after an insert<br>
+For example:<br>
+<code>ch=. ddcon'dsn=mydata;uid=george;pwd=sesame'</code>
+<tr></table>
+
+<P>
+<B>dddis</B> <code>r=. dddis ch</code><br>
+Closes connection handle (disconnects from the data source)
+
+<P>
+<B>ddend</B> <code>r=. ddend sh</code><br>
+Closes statement handle
+
+<P>
+<B>dderr</B> <code>r=. dderr ''</code><br>
+Return error message on last command. An error message is given when a data driver verb returns _1.
+
+<P>
+<B>ddfet</B> <code>r=. ddfet sh,n</code><br>
+Fetch next records from selected data. Note that after you have read a record, the next fetch will not read it again. If you need to read it again, you must select it again. For example:
+<p>
+<table>
+<tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<code>r=. ddfet sh</code>
+<TD VALIGN="TOP" WIDTH=402><P>
+fetch next record (same as <code>ddfet sh,1</code>)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<code>r=. ddfet sh,5</code>
+<TD VALIGN="TOP" WIDTH=402><P>
+fetch next 5 records
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+<code>r=. ddfet sh,_1</code>
+<TD VALIGN="TOP" WIDTH=402><P>
+fetch all remaining records.<br>
+<tr></table>
+<P>If you fetch all remaining records using <CODE>ddfet sh,_1</CODE>,  or if your fetch returns fewer records that you requested (i.e. the fetch reads past the end of the file), then <CODE>ddfet</CODE> closes the statement handle. Otherwise, the statement handle remains open, and you should explicitly close it if you have finished reading the file. </P>
+
+<P>
+<B>ddfch</B> <code>r=. ddfch sh,n</code>  (available in J Win95 only)<br>
+As <code>ddfet</code>, but returns data in columns
+
+<P>
+<B>ddrbk</B> <code>r=. ddrbk ch</code><br>
+Discards (rollbacks) a transaction (after a <code>ddtrn</code>)
+
+<P>
+<B>ddsel</B> <code>sh=. 'select * from tdata' ddsel ch</code><br>
+Select data from a database, returning a statement handle
+
+<P>
+<B>ddsql</B> <code>r=. 'create table mydata' ddsql ch</code><br>
+Execute an SQL statement
+
+<P>
+<B>ddsrc</B> <code>r=. ddsrc ''</code><br>
+In J Win95:<br>
+Data source names available from the ODBC manager.<br>
+These names can be used as the dsn= argument to <code>ddcon</code>. 
+
+<P>
+In J Win31:<br>
+a statement handle that can be used with <code>ddfet</code> to return data source names.
+
+<P>
+<B>ddtbl</B> <code>sh=. ddtbl ch</code><br>
+Returns a statement handle for tables in the data source. Some ODBC drivers, including the distributed dBase driver, do not support this service and the result will be empty.
+
+<P>
+<B>ddtrn</B> <code>r=. ddtrn ch</code><br>
+Begin a transaction on a connection. Subsequent actions are not committed to the database until a <code>ddcom</code> is done. Actions since the <code>ddtrn</code> can be discarded by doing a <code>ddrbk</code> (rollback).
+
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="listing_data_sources.htm">&gt;&gt;</a>&nbsp;
+<a href="connection_statement_handles.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

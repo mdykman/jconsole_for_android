@@ -1,0 +1,108 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>A. Anagram Index  -  Anagram</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dbdotn.htm">&gt;&gt;</a>&nbsp;
+<a href="dadot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Anagram Index</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>A. &nbsp;1 0 _</font></td>
+<td align=right  width=33%><b><font size=+2>Anagram</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> T </tt>is the table of all<tt> !n </tt>permutations of 
+order<tt> n </tt>arranged in lexical order (i.e.,<tt> /:T </tt>
+is<tt> i.!n</tt>),<tt> </tt>then<tt> k </tt>is said to be the 
+<i>anagram index</i> of the permutation<tt> k{T</tt> .<br><br>
+
+<tt>A. </tt>applied to a cycle or direct permutation yields 
+its anagram index:<tt> A. 0 3 2 1 </tt>is<tt> 5</tt>,<tt> </tt>as 
+are<tt> A. 3 2 1 </tt>and<tt> A.&lt;3 1 </tt>and<tt> A.0;2;3 1</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+The expression<tt> k A. b </tt>permutes items of<tt> b </tt>by 
+the permutation of order<tt> #b </tt>whose anagram index is<tt> k</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   (A. 0 3 2 1) , (A. &lt;3 1)
+5 5
+
+   A. |. i.45
+119622220865480194561963161495657715064383733759999999999
+
+   &lt;: ! 45x
+119622220865480194561963161495657715064383733759999999999
+
+   tap=: i.@! A. i.           NB. Table of all permutations
+
+   (tap 3);(/: tap 3);({/\ tap 3);(/:{/\ tap 3)
++-----+-----------+-----+-----------+
+|0 1 2|0 1 2 3 4 5|0 1 2|0 1 5 2 4 3|
+|0 2 1|           |0 2 1|           |
+|1 0 2|           |1 2 0|           |
+|1 2 0|           |2 0 1|           |
+|2 0 1|           |1 2 0|           |
+|2 1 0|           |1 0 2|           |
++-----+-----------+-----+-----------+
+</pre>
+
+In particular,<tt> 1 A. b </tt>transposes the last two items 
+of<tt> b</tt>,<tt> </tt>and<tt> <b>_</b>1 A. b </tt>reverses 
+the list of items, and<tt> 3 A. b </tt>and<tt> 4 A. b </tt>rotate the 
+last three items of<tt> b</tt>.<tt> </tt>For example:<br>
+
+<pre>
+   b=: 'ABCD'
+
+   (0 3 2 1{b);(0 3 2 1 C.b);((&lt;3 1)C.b);(3 4 A.b)
++----+----+----+----+
+|ADCB|ADCB|ADCB|ACDB|
+|    |    |    |ADBC|
++----+----+----+----+
+
+   (_19 5 A. b) ; (_19 |~ ! # b)
++----+-+
+|ADCB|5|
+|ADCB| |
++----+-+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dbdotn.htm">&gt;&gt;</a>&nbsp;
+<a href="dadot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

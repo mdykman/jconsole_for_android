@@ -1,0 +1,90 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>m&amp;v Extended</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="edotsp.htm">&gt;&gt;</a>&nbsp;
+<a href="fromsp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">m&amp;v </font>
+<font size=+3>and</font><font size=+3 face="Courier New"> u&n </font>
+<font size=+3>Extended</font></b></td>
+<td align=right>
+initial writing: 2000-11-24<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+<p>The dyads<tt> m&amp;v </tt>and<tt> u&amp;n </tt>(a verb fixed with
+one of its arguments), previously undefined, are now defined
+as follows:<p>
+
+<p>
+<tt> &nbsp; x m&amp;v y </tt><font size=+1>&harr;</font><tt> m&amp;v^:x y</tt><br>
+<tt> &nbsp; x u&amp;n y </tt><font size=+1>&harr;</font><tt> u&amp;n^:x y</tt>
+</p>
+
+That is, the verb<tt> m&amp;v </tt>(<tt>u&amp;n</tt>)<tt> </tt>is 
+applied<tt> x </tt>number(s) of times to the argument<tt> y</tt> .<tt> </tt>
+For example:<br>
+
+<pre>
+   ] x=: _10+i.4 5
+_10 _9 _8 _7 _6
+ _5 _4 _3 _2 _1
+  0  1  2  3  4
+  5  6  7  8  9
+
+   x (3&amp;+) 0
+_30 _27 _24 _21 _18
+_15 _12  _9  _6  _3
+  0   3   6   9  12
+ 15  18  21  24  27
+
+   x (*&amp;2) 1
+0.000976563 0.00195313 0.00390625 0.0078125 0.015625
+    0.03125     0.0625      0.125      0.25      0.5
+          1          2          4         8       16
+         32         64        128       256      512
+
+   x (*&amp;2) 1x
+1r1024 1r512 1r256 1r128 1r64
+  1r32  1r16   1r8   1r4  1r2
+     1     2     4     8   16
+    32    64   128   256  512
+
+   $ x (*&amp;2) i.7
+4 5 7
+
+   0 1 2 4 8 16 32 64 _ (2&amp;o.) 1
+1 0.540302 0.857553 0.79348 0.750418 0.739567 0.739086 0.739085 0.739085
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="edotsp.htm">&gt;&gt;</a>&nbsp;
+<a href="fromsp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

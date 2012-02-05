@@ -1,0 +1,119 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Inverse</title>
+
+</head><body><!--top jump start--><a href="duality.htm">&gt;&gt;</a>&nbsp;
+<a href="random_numbers.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+<H1>11A. Inverse</h1>
+<P>J provides a comprehensive calculus of inverses:
+</P>
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+
+
+<TR><TD width=40%><tt>a0=: I=: ^:_1</tt></TD> <TD width=60%>Inverse (adverb)</TD></TR>
+<TR><TD><tt>m1 =: ^ I</tt></TD> <TD>Natural log (^.); Inverse exponential</TD></TR>
+<TR><TD><tt>m2 =: ^.I</tt></TD> <TD>Exponential</TD></TR>
+<TR><TD><tt>m3 =: 10&amp;^. </tt></TD> <TD>Base 10 log</TD></TR>
+<TR><TD><tt>m4 =: m3 I</tt></TD>  <TD>Inverse base 10 log (10&amp;^)</TD></TR>
+<TR><TD><tt>m5 =: ] -: m4@m3</tt></TD>  <TD>Tautology (test that m4 is left inverse)</TD></TR>
+<TR><TD><tt>m6 =: ] -: m3@m4</tt></TD>  <TD>Tautology (test that m4 is right inverse)</TD></TR>
+<TR><TD><tt>m7 =: ssc=: +/\ </tt></TD> <TD>Sum scan (subtotals)</TD></TR>
+<TR><TD><tt>m8 =: ssc I</tt></TD>  <TD>Inverse sum scan; first differences</TD></TR>
+<TR><TD><tt>m9 =: (]-:m8@m7)*.(]-:m7@m8) </tt></TD>    <TD>Tautology</TD></TR>
+<TR><TD><tt>m10=: assc=: -/\</tt></TD>  <TD>Alternating sum scan</TD></TR>
+<TR><TD><tt>m11=: assc I</tt></TD> <TD>&nbsp;</TD></TR>
+<TR><TD><tt>m12=: ] -: </tt></TD><TD>&nbsp;</TD></TR>
+<TR><TD><tt>m13=: * /\ I</tt></TD>  <TD>e.g.  * /\ m13 3 1 4 15 9 26 5 3</TD></TR>
+<TR><TD><tt>m14=: % /\ I</tt></TD>  <TD>e.g.  % /\ m14 3 1 4 15 9 26 5 3</TD></TR>
+<TR><TD><tt>m15=: ~:/\ I</tt></TD>  <TD>e.g.  ~:/\ m15 1 1 0 1 1 0 1 1</TD></TR>
+<TR><TD><tt>m16=: = /\ I</tt></TD>  <TD>e.g.  = /\ m16 1 1 0 1 1 0 1 1</TD></TR>
+<TR><TD><tt>m17=: + /\. I</tt></TD>  <TD>e.g.  + /\. m17 3 1 4 15 9 26 5 3</TD></TR>
+<TR><TD><tt>m18=: - /\. I</tt></TD>  <TD>e.g.  - /\. m18 3 1 4 15 9 26 5 3</TD></TR>
+<TR><TD><tt>m19=: * /\. I</tt></TD>  <TD>e.g.  * /\. m19 3 1 4 15 9 26 5 3</TD></TR>
+<TR><TD><tt>m20=: % /\. I</tt></TD>  <TD>e.g.  % /\. m20 3 1 4 15 9 26 5 3</TD></TR>
+<TR><TD><tt>m21=: ~:/\. I</tt></TD>  <TD>e.g.  ~:/\. m21 1 1 0 1 1 0 1 1</TD></TR>
+<TR><TD><tt>m22=: = /\. I</tt></TD>  <TD>e.g.  =/\. m22 1 1 0 1 1 0 1 1</TD></TR>
+<TR><TD><tt>d23=: # I</tt></TD>  <TD>Expand; 'ab' -: 1 0 1 # 1 0 1 d23 'ab'</TD></TR>
+<TR><TD><tt>m24=: p: I</tt></TD>  <TD>p (n) the number of primes less than n</TD></TR>
+<TR><TD><tt>m25=: x: I</tt></TD>  <TD>Floating point approx. of a rational. e.g.  m25 3r7</TD></TR>
+<TR><TD><tt>m26=: 1&amp;+ I</tt></TD> <TD>Inverse increment; decrement</TD></TR>
+<TR><TD><tt>m27=: +&amp;1 I</tt></TD>  <TD>Inverse increment; decrement</TD></TR>
+<TR><TD><tt>m28=: &gt;: I</tt></TD>  <TD>Inverse increment; decrement</TD></TR>
+<TR><TD><tt>m29=: _1&amp;+ I</tt></TD>  <TD>Inverse decrement; increment</TD></TR>
+<TR><TD><tt>m30=: +&amp;_1 I</tt></TD>  <TD>Inverse decrement; increment</TD></TR>
+<TR><TD><tt>m31=: -&amp;1 I </tt></TD> <TD>Inverse decrement; increment</TD></TR>
+<TR><TD><tt>m32=: &lt;: I</tt></TD>  <TD>Inverse decrement; increment</TD>
+</TR><TR><TD><tt>m33=: 2&amp;* I</tt></TD>  <TD>Inverse double; halve</TD></TR>
+<TR><TD><tt>m34=: *&amp;2 I </tt></TD> <TD>Inverse double; halve</TD></TR>
+<TR><TD><tt>m35=: +: I</tt></TD>  <TD>Inverse double; halve</TD></TR>
+<TR><TD><tt>m36=: 0.5&amp;* I</tt></TD>  <TD>Inverse halve; double</TD></TR>
+<TR><TD><tt>m37=: *&amp;0.5 I</tt></TD>  <TD>Inverse halve; double</TD></TR>
+<TR><TD><tt>m38=: %&amp;2 I</tt></TD> <TD> Inverse halve; double</TD></TR>
+<TR><TD><tt>m39=: -: I</tt></TD>  <TD>Inverse halve; double</TD></TR>
+<TR><TD><tt>m40=: ^&amp;2 I</tt></TD> <TD>Inverse square</TD></TR>
+<TR><TD><tt>m41=: ^&amp;3 I</tt></TD>  <TD>Inverse cube</TD></TR>
+<TR><TD><tt>m42=: ^&amp;0.5 I</tt></TD>  <TD>Inverse square root</TD></TR>
+<TR><TD><tt>m43=: ^&amp;1r3 I</tt></TD>  <TD>Inverse cube root</TD></TR>
+<TR><TD><tt>m44=: 2&amp;^ I </tt></TD> <TD>Inverse 2 with power; base 2 log</TD></TR>
+<TR><TD><tt>m45=: 10&amp;^ I</tt></TD>  <TD>Inverse 10 with power; base 10 log</TD></TR>
+<TR><TD><tt>m46=: 2&amp;! I</tt></TD>  <TD>Inverse triangular number. e.g. +/i.&lt;.2&amp;! I m</TD></TR>
+<TR><TD><tt>m47=: +~ I</tt></TD>  <TD>Inverse double</TD></TR>
+<TR><TD><tt>m48=: *~ I</tt></TD>  <TD>Inverse square</TD></TR>
+<TR><TD><tt>m49=: ^~ I</tt></TD>  <TD>e.g.  x^x=: ^~ I 12</TD></TR>
+<TR><TD nowrap><tt>m50=: (3&amp;+)@(%&amp;2)I -: (%&amp;2 I)@(3&amp;+ I)</tt></TD>  <TD>Inverse of composition is composition of inverses</TD></TR>
+</table>
+
+<P>These inverses may be illustrated as follows:</P>
+<pre>
+   x=: 2 3 5 7 
+   ,.(] ; m1 ; m2 ; m1@m2) x
++---------------------------------+
+&brvbar;2 3 5 7                          &brvbar;
++---------------------------------&brvbar;
+&brvbar;0.6931472 1.09861 1.60944 1.94591&brvbar;
++---------------------------------&brvbar;
+&brvbar;7.38906 20.0855 148.413 1096.63  &brvbar;
++---------------------------------&brvbar;
+&brvbar;2 3 5 7                          &brvbar;
++---------------------------------+
+
+   (] ; m7 ; m8 ; m9) x
++---------------------------+
+&brvbar;2 3 5 7&brvbar;2 5 10 17&brvbar;2 1 2 2&brvbar;1&brvbar;
++---------------------------+
+   (];m10;m11;m11@m10) x
++-----------------------------------+
+&brvbar;2 3 5 7&brvbar;2 _1 4 _3&brvbar;2 _1 2 _2&brvbar;2 3 5 7&brvbar;
++-----------------------------------+
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="duality.htm">&gt;&gt;</a>&nbsp;
+<a href="random_numbers.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

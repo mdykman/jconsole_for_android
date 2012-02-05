@@ -1,0 +1,82 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>f/ Improved (a)</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="binsert.htm">&gt;&gt;</a>&nbsp;
+<a href="128x4.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">f/ </font>
+<font size=+3>Improved (a)</font></b></td>
+<td align=right>
+initial writing: 2005-09-23<br>last updated: 2005-09-23
+</td></tr></table>
+<br>
+
+<p>If<tt> f </tt>is atomic then<tt> f/ </tt>on<tt> y </tt>where<tt> y </tt>has no items
+(that is,<tt> 0=#y</tt>)<tt> </tt>will attempt to determine the 
+<a href="../dictionary/d420.htm"><i>neutral</i></a> of<tt> f</tt> .<tt> </tt>
+Therefore, in many cases<tt> f/y </tt>will now give a sensible answer
+instead of signalling a domain error.  For example:</p>
+
+<pre>
+   (+-*)"0/ i.0
+0
+</pre>
+
+<p>The process of determining the neutral of atomic<tt> f </tt>
+is modelled by the adverb<tt> neutral</tt> .
+
+<pre>
+neutral=: 1 : 0
+ assert. 0 0 -: }. u. b. 0
+ c=. __ _ 0 1
+ f=. u. ::2:"0
+ t=. c (f/ , f~/) 0 1
+ assert. ($t) -: 2*(#c),1
+ assert. 0 1 e. t
+ (t i. 0 1) { ,~c
+)
+
+   + neutral
+0
+   * neutral
+1
+   >. neutral
+__
+   (+-*)"0 neutral
+0
+   ^. neutral
+|assertion failure: neutral
+|   0 1 e.t
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="binsert.htm">&gt;&gt;</a>&nbsp;
+<a href="128x4.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

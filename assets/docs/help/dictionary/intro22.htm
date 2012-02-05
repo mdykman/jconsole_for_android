@@ -1,0 +1,108 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 22. Recursion</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro23.htm">&gt;&gt;</a>&nbsp;
+<a href="intro21.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>22. Recursion</b></font><br><br>
+
+The factorial function<tt> ! </tt>is commonly defined 
+by the statement that factorial<tt> n </tt>is<tt> n </tt>times 
+factorial<tt> n-1</tt> ,<tt> </tt>and by the further 
+statement that factorial<tt> 0 </tt>is<tt> 1</tt> .<tt> </tt>
+Such a definition is called <i>recursive</i>, because the 
+function being defined recurs in its definition. <br><br>
+
+A case statement can be used to make a recursive definition, 
+the case that employs the function under definition being 
+chosen repeatedly until the terminating case is encountered.  
+For example:<br>
+
+<pre>
+   factorial=: 1:`(]*factorial@&lt;:) @. *
+   factorial &quot;0 i.6
+1 1 2 6 24 120
+</pre>
+
+Note that<tt> 1: </tt>denotes the constant function whose result 
+is<tt> 1</tt> .  <br><br>
+
+In the sentence<tt> (sum=: +/) i.5 </tt>the verb defined by the 
+phrase<tt> +/ </tt>is assigned a name before being used, 
+but in the sentence<tt> +/ i.5 </tt>it is used anonymously.  
+In the definition of<tt> factorial </tt>above, it was essential 
+to assign a name to make it possible to refer to it within the definition.  
+However, the word<tt> $: </tt>provides <i>self-reference</i> 
+that permits anonymous recursive definition.  For example:<br>
+
+<pre>
+   1:`(]*$:@&lt;:) @. * &quot;0 i. 6
+1 1 2 6 24 120
+</pre>
+
+In the Tower of Hanoi puzzle, a set of<tt> n </tt>discs (each 
+of a different size) is to be moved from post A to post B 
+using a third post C and under the restriction that a larger 
+disc is never to be placed on a smaller.  The following is a 
+recursive definition of the process:<br>
+
+<pre>
+   h=: b`(p,.q,.r)@.c
+    c=: 1: &lt; [
+    b=: 2&amp;,@[ $ ]
+      p=: &lt;:@[ h 1: A. ]
+      q=: 1: h ]
+      r=: &lt;:@[ h 5: A. ]
+
+   3 h x=: 'ABC'
+AABACCA
+BCCBABB
+
+   0 1 2 3 4 &lt;@h&quot;0 1 x
+++-+---+-------+---------------+
+||A|AAC|AABACCA|AACABBAACCBCAAC|
+||B|CBB|BCCBABB|CBBCACCBBAABCBB|
+++-+---+-------+---------------+
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>22.1 &nbsp;</td>
+<td>Use the following as exercises in reading and writing: <br>
+
+<pre>
+   f=:1:`(+//.@(,:~)@($:@&lt;:))@.*         <font face=Times size=+1>Binomial Coeffs</font>
+   &lt;@f&quot;0 i.6                             <font face=Times size=+1>Boxed binomials</font>
+   g=:1:`((],+/@(_2&amp;{.))@$:@&lt;:)@.*       <font face=Times size=+1>Fibonacci</font>
+</pre>
+</td></tr></table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro23.htm">&gt;&gt;</a>&nbsp;
+<a href="intro21.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

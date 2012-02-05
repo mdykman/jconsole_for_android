@@ -1,0 +1,1412 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Preliminaries</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="a_first_look_at_j_programs.htm">&gt;&gt;</a>&nbsp;
+<a href="programming_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><span
+style='mso-bookmark:_Toc1896159'><span style='mso-bookmark:_Toc5414519'><a
+name="_Toc191734292"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>3. <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Preliminaries</a></span></span></h1>
+
+<p class=Section><a name="_Toc191734293"></a><a name="_Toc5414520"></a><a
+name="_Toc5414377"></a><a name="_Toc1896160"><span style='mso-bookmark:_Toc5414377'><span
+style='mso-bookmark:_Toc5414520'><span style='mso-bookmark:_Toc191734293'>Notation</span></span></span></a><span
+style='mso-bookmark:_Toc191734293'> Used in This Book</span></p>
+
+<p class=MsoBodyText>C code is set in Arial font, like this: <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>for(I = 0;I&lt;10;I++)p[I] = q;<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>J code is set in Courier New font, like this: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p&nbsp;=.&nbsp;10&nbsp;$&nbsp;q</span></span></p>
+
+<p class=MsoBodyText>When J and C use different words for the same idea, the J
+word is used.&nbsp; The first few times, the C
+word may be given in parentheses, in Arial font: verb (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>function</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>When a word is given a formal definition, it
+is set in bold italics: <span class=Definition>verb</span>.</p>
+
+<p class=Section><a name="_Toc191734294"></a><a name="_Toc5414521"></a><a
+name="_Toc5414378"></a><a name="_Toc1896161"><span style='mso-bookmark:_Toc5414378'><span
+style='mso-bookmark:_Toc5414521'><span style='mso-bookmark:_Toc191734294'>Terminology</span></span></span></a></p>
+
+<p class=MsoBodyText>To describe the elements of programming, J uses a
+vocabulary that will be familiar, though possibly frightening: the vocabulary
+of English grammar.&nbsp; We will speak of
+nouns, verbs, and the like.&nbsp; Don't worry,
+you're not going to have to write a book report!</p>
+
+<p class=MsoBodyText>Use of this terminology is not as strange as it may
+seem.&nbsp; Take 'verb', for example, an idea
+that corresponds to the C '<span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>function</span></span>' or '<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>operator</span></span>'.<span
+style='mso-spacerun:yes'>&nbsp; </span>Why not just say 'operator'?<span
+style='mso-spacerun:yes'>&nbsp; </span>Well, that word is also used in mathematics
+and physics, with a meaning quite different from C's.<span
+style='mso-spacerun:yes'>&nbsp; </span>Even a C 'function' is not a true
+mathematical function--it can return different values after invocations with the
+same arguments.</p>
+
+<p class=MsoBodyText>J avoids imprecise usage by choosing a familiar set of
+words and giving them entirely new meanings.&nbsp;
+Since J is a language, the vocabulary chosen is that of English
+grammar.&nbsp; It is hoped that the familiarity
+of the words will provide some mnemonic value, but as long as you learn the J
+meanings you are free to forget the grammatical ones.<span
+style='mso-spacerun:yes'>&nbsp; </span>The following table may help:</p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=141 style='width:105.8pt;border:solid windowtext 2.25pt;padding:
+  0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal align=center style='text-align:center'>J word</p>
+  </td>
+  <td width=213 style='width:159.8pt;border:solid windowtext 2.25pt;border-left:
+  none;mso-border-left-alt:solid windowtext 2.25pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoNormal align=center style='text-align:center'>C word</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=141 style='width:105.8pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext 2.25pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext 2.25pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>verb</p>
+  </td>
+  <td width=213 style='width:159.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 2.25pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 2.25pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'><span
+  class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>function</span></span>
+  or <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>operator</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=141 style='width:105.8pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>noun</p>
+  </td>
+  <td width=213 style='width:159.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'><span
+  class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>object<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=141 style='width:105.8pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>copula</p>
+  </td>
+  <td width=213 style='width:159.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'><span
+  class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>assignment<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=141 style='width:105.8pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>punctuation</p>
+  </td>
+  <td width=213 style='width:159.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'><span
+  class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>separator<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=141 style='width:105.8pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>adverb</p>
+  </td>
+  <td width=213 style='width:159.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>(<span
+  class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>#define</span></span>
+  macro)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6;mso-yfti-lastrow:yes'>
+  <td width=141 style='width:105.8pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>conjunction</p>
+  </td>
+  <td width=213 style='width:159.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center'>(<span
+  class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>#define</span></span>
+  macro)</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoBodyText>In keeping with the grammatical flavor of the vocabulary,
+we say that every <span class=Definition>word</span> (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>token</span></span>) in <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;word&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->a J program has a <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;parts of speech&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span class=Definition>part of
+speech</span> (<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>name
+type</span></span>) which is one of the following: noun, verb, adverb,
+adjective, copula, or punctuation.</p>
+
+<p class=MsoBodyText>The <span class=Definition>primary parts of speech</span>
+are noun, verb, adverb, and conjunction.&nbsp;
+Every name we can create, and every word defined by J except for the
+copulas (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=.</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=:</span></span>)
+and punctuation, will be a definite one of the primary parts of speech.<span
+style='mso-spacerun:yes'>&nbsp; </span>In this book, the term <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;entity&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span class=Definition>entity</span>
+is used to mean something that can be any of the primary parts of speech.<span
+style='mso-spacerun:yes'>&nbsp; </span>An entity can be assigned to a name, but most
+entities are <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;anonymous entity&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span class=Definition>anonymous</span>,
+appearing and disappearing during the execution of a single sentence (just like
+intermediate results in the evaluation of C expressions).</p>
+
+<p class=MsoBodyText>A <span class=Definition>noun</span> holds data; a <span
+class=Definition>verb</span> operates on one or two nouns to produce a result
+which is a noun; an <span class=Definition>adverb</span> operates on one noun
+or verb to produce a <span class=Definition>derived entity</span>; a <span
+class=Definition>conjunction</span> operates on two nouns or verbs to produce a
+derived entity<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;derived entity&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;modifier&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->.<span
+style='mso-spacerun:yes'>&nbsp; </span>Adverbs and conjunctions are called <span
+class=Definition>modifiers</span>.&nbsp; The
+closest thing C has to a modifier is a preprocessor macro which can accept
+function names as data and produce code sequences including the name.<span
+style='mso-spacerun:yes'>&nbsp; </span>J modifiers perform their actions during
+execution rather than compilation, providing opportunities unknown to C.</p>
+
+<p class=MsoBodyText>A word on <span class=Definition>punctuation</span> under
+J's definition: it consists of the characters <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(&nbsp;)&nbsp;'</span></span>
+and end-of-line (written <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LF</span></span> but representing either a single LF
+character or the CRLF combination), along with the comment delimiter <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>NB.</span></span>
+and a few other special words like <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>if.</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>case.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>There are a lot of other characters that you
+think of as punctuation<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;punctuation&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->, namely <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>[&nbsp;]&nbsp;,&nbsp;.&nbsp;&quot;&nbsp;;&nbsp;{&nbsp;}</span></span>,
+that J uses to do work.&nbsp; You will be
+especially surprised to find that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>[&nbsp;]</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{&nbsp;}</span></span> are
+independent rather than matched pairs, but you'll get used to it.</p>
+
+<p class=Section><a name="_Toc191734295"></a><a name="_Toc5414522"></a><a
+name="_Toc5414379"></a><a name="_Toc1896162"><span style='mso-bookmark:_Toc5414379'><span
+style='mso-bookmark:_Toc5414522'><span style='mso-bookmark:_Toc191734295'>Sentences
+(</span></span></span></a><span style='mso-bookmark:_Toc1896162'><span
+style='mso-bookmark:_Toc5414379'><span style='mso-bookmark:_Toc5414522'><span
+style='mso-bookmark:_Toc191734295'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'>statements</span></span>)</span></span></span></span></p>
+
+<p class=MsoBodyText>The executable unit in J is called the <span
+class=Definition>sentence</span>, corresponding to the C <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>statement</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Definition>sentence
+delimiters</span> in J (corresponding to the semicolon in C) are the linefeed <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LF</span></span>
+and the control words like <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>if.</span></span> that we will learn about later.<span
+style='mso-spacerun:yes'>&nbsp; </span>A sentence<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;sentence&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>comprises all the characters between sentence
+delimiters; since <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LF</span></span>
+is a sentence delimiter, it follows that a J sentence must all fit on one
+line.&nbsp; There is nothing corresponding to <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>\&lt;CR&gt;</span></span>
+in C that allows you to split a sentence across lines.</p>
+
+<p class=Section><a name="_Toc191734296">Comments</a></p>
+
+<p class=MsoBodyText>All comments start with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>NB.</span></span> and run to the
+next <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LF&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The comment is ignored when the sentence is
+executed.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>NB.</span></span> is equivalent
+to <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>//</span></span>
+in C.</p>
+
+<p class=Section><a name="_Toc191734297"></a><a name="_Toc5414523"></a><a
+name="_Toc5414380"></a><a name="_Toc1896163"><span style='mso-bookmark:_Toc5414380'><span
+style='mso-bookmark:_Toc5414523'><span style='mso-bookmark:_Toc191734297'>Word
+Formation (</span></span></span></a><span style='mso-bookmark:_Toc1896163'><span
+style='mso-bookmark:_Toc5414380'><span style='mso-bookmark:_Toc5414523'><span
+style='mso-bookmark:_Toc191734297'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'>tokenizing rules</span></span>)</span></span></span></span></p>
+
+<p class=MsoBodyText>J's <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;name&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span class=Definition>name</span>s
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>identifiers</span></span>)
+are formed much as in C.&nbsp; Names must
+begin with an alphabetic, underscore is allowed, and upper- and lowercase
+letters are distinguished.&nbsp; Names that
+end with an underscore or contain two consecutive underscores are special, and
+you should avoid them until you know what a locale is.</p>
+
+<p class=MsoBodyText>The ASCII graphic characters ('+', for example) are called
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;primitive&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span class=Definition>primitives</span>
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>operators</span></span>)
+in J.&nbsp; You will learn their meanings as
+we go on.</p>
+
+<p class=MsoBodyText>Any name or primitive (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>identifier</span></span> or <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>operator</span></span>)
+can be made into a new primitive by adding <b>'</b><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>.</span></span><b>'</b> or <b>'</b><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span><b>'</b>
+at the end.&nbsp; Since all primitives are
+system-defined (i.&nbsp;e. they are <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>reserved words</span></span>), you may not put <b>'.'</b> or
+<b>':'</b> in your names.&nbsp; No space is
+required after a primitive.&nbsp; The part of
+speech for each primitive is fixed.&nbsp;
+Example primitives are:</p>
+
+<p class=Jcodemultiline align=center style='text-align:center'>+&nbsp;+.&nbsp;+:&nbsp;{&nbsp;{:&nbsp;{::&nbsp;i.&nbsp;i:&nbsp;for.&nbsp;select.&nbsp;case.&nbsp;end.</p>
+
+<p class=MsoBodyText>The first step in processing a sentence is to split it
+into<!--[if supportFields]><span style='mso-element:field-begin'></span> XE &quot;word&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span><span class=Definition>words</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The words correspond roughly to C <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>tokens</span></span>,
+after making allowance for the special status of the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'.'</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>':'</span></span>
+characters.&nbsp; The space and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>TAB</span></span>
+characters are treated as <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>whitespace</span></span>.&nbsp;
+</p>
+
+<p class=MsoBodyText>We will be careful to distinguish periods used for English
+punctuation from the dot that may be at the end of a primitive.<span
+style='mso-spacerun:yes'>&nbsp; </span>When a J word comes at the end of an English
+sentence, we will be sure to leave a space before the period.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, the verb for Boolean Or is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+.</span></span>,
+while the verb for addition is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734298"></a><a name="_Toc5414524"></a><a
+name="_Toc5414381"></a><a name="_Toc1896164"><span style='mso-bookmark:_Toc5414381'><span
+style='mso-bookmark:_Toc5414524'><span style='mso-bookmark:_Toc191734298'>Numbers</span></span></span></a></p>
+
+<p class=MsoBodyText>You do not need to trouble yourself with the distinction
+between integers, floats, and complex numbers.&nbsp;
+If it's a number, J will handle it properly.<span
+style='mso-spacerun:yes'>&nbsp; </span>There are a great many ways to specify
+numbers.&nbsp; We will discuss complex numbers
+and exponential forms in the chapters on mathematics; the more usual forms are:</p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2<o:p></o:p></span></span></p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_2
+</span></span>(underscore, not -, is the negative sign)</p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0.5
+</span></span>(since '.' is special, it must not be the first character of a
+number)</p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1e3</span></span>
+(the same as 1000)</p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>16b1f</span></span>
+(equivalent to <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>0x1f</span></span>;
+the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>16b</span></span>
+indicates a
+base-16 number)</p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_</span></span>
+(infinity, <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;infinity&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->which is a perfectly valid
+number in J)</p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>__</span></span>
+(negative infinity, represented by two underscores)</p>
+
+<p class=Examples><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_.</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>(<span class=Definition>indeterminate</span>,
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;indeterminate&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->the result you get from
+something like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_-_&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Don't get the idea that it would be clever to
+use <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_.</span></span>
+to indicate a
+special data value: <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_.</span></span>
+is hard to test for and gives wildly unpredictable results.<span
+style='mso-spacerun:yes'>&nbsp; </span>Treat <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>_.</span></span> as an indication that you have
+a bug you'd better fix)</p>
+
+<p class=MsoBodyText>A noun whose value is one of the numbers 0 and 1 is said
+to be <span class=Definition>Boolean</span>.&nbsp;
+Many verbs in J are designed to use or produce Boolean values, with 0
+meaning false and 1 meaning true, but there is no Boolean data type: any noun
+can be used as a Boolean if its values are 0 or 1.</p>
+
+<p class=MsoBodyText>A word is in order in defense of the underscore as the
+negative sign.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-x</span></span> means 'take
+the negative of the number <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>'; likewise <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-5 </span></span>means 'take
+the negative of the number <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>5</span></span>'.&nbsp; In
+J, the number 'negative 5' is no cloistered companion, accessible only by
+reference to the number 5: it is a number in its own right and it deserves its
+own symbol: <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_5</span></span>.</p>
+
+<p class=Subsection><a name="_Toc191734299">Adjacent Numbers Form a Single Word</a></p>
+
+<p class=MsoBodyText>Numbers separated by whitespace are treated as a <b
+style='mso-bidi-font-weight:normal'>single word</b> whose value is the list of
+the numbers (we will learn all about lists soon--they're like <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>arrays</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Remember, word formation is the first step in
+processing a sentence, so the numbers are welded into a list before anything
+else can be done with them.&nbsp; This may
+cause you a problem if you have adjacent numbers that should not be made into a
+list.&nbsp; In that case, put parentheses
+around any number you want to keep separate.</p>
+
+<p class=MsoBodyText>You will quickly learn that lists of numbers are so common
+in J that creating them automatically from adjacent numbers saves you a lot of
+typing.</p>
+
+<p class=Subsection><a name="_Toc191734300">Adjacent Named Nouns Do NOT Form a
+Single Word</a></p>
+
+<p class=MsoBodyText>Because the adjacent numbers <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;5</span></span> are
+turned into a list, you might think that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a&nbsp;b</span></span>, when <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+have the values <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>,
+would also be turned into a list.&nbsp; Not
+so.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;5</span></span> becomes a
+list before any of the names are examined; at that point the interpreter does
+not even know the part of speech of the names.&nbsp;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+remain as separate words, to be operated on as execution proceeds.</p>
+
+<p class=Section><a name="_Toc191734301"></a><a name="_Toc5414525"></a><a
+name="_Toc5414382"></a><a name="_Toc1896165"><span style='mso-bookmark:_Toc5414382'><span
+style='mso-bookmark:_Toc5414525'><span style='mso-bookmark:_Toc191734301'>Characters</span></span></span></a></p>
+
+<p class=MsoBodyText>An ASCII string enclosed in single quotes is a constant of
+character type (examples: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'a'</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'abc'</span></span>).&nbsp;
+There is no notation to make the distinction between C's single-quoted
+character constants and double-quoted character strings.</p>
+
+<p class=MsoBodyText>There are no special escape sequences such as <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>'\n'</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you need a quote character inside a
+string, double the quote: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'cannot can be shortened to can''t'</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Character constants <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;character constants&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->do not include a trailing NUL
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>\0</span></span>)
+character, and NUL is a legal character within a string.</p>
+
+<p class=Section><a name="_Toc191734302"></a><a name="_Toc5414526"></a><a
+name="_Toc5414383"></a><a name="_Toc1896166"></a><span style='mso-bookmark:_Toc1896166'><span style='mso-bookmark:
+  _Toc5414383'><span style='mso-bookmark:_Toc5414526'><span style='mso-bookmark:
+  _Toc191734302'>Valence</span></span></span></span><span
+style='mso-bookmark:_Toc1896166'><span style='mso-bookmark:_Toc5414383'><span
+style='mso-bookmark:_Toc5414526'><span style='mso-bookmark:_Toc191734302'> of
+Verbs (</span></span></span></span><span style='mso-bookmark:_Toc1896166'><span
+style='mso-bookmark:_Toc5414383'><span style='mso-bookmark:_Toc5414526'><span
+style='mso-bookmark:_Toc191734302'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'>Binary and Unary Operators</span></span>)</span></span></span></span></p>
+
+<p class=MsoBodyText>C operators can be unary or binary depending on whether
+they have one or two operands; for example, the unary <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> operator means
+pointer dereferencing (<span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>*p</span></span>), while the binary <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> operator means
+multiplication (<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>x*y</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>J verbs also come in unary and binary
+versions, with the addition that this applies to all verbs, both primitive and
+user-defined verbs.</p>
+
+<p class=MsoBodyText>When a J verb (<span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>function</span></span> or <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>operator</span></span>) is
+executed with only one operand (i.&nbsp;e. without a noun or phrase that
+evaluates to a noun on its left) we say its invocation is <span
+class=Definition>monadic</span> (<span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>unary</span></span>); if there is a noun or noun-phrase on
+its left, that noun becomes a second operand to the verb and we say that the
+invocation is <span class=Definition>dyadic</span> (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>binary</span></span>).</p>
+
+<p class=MsoBodyText>There is no ambiguity over which kind of invocation is
+used in any particular case.&nbsp; If dyadic invocation
+is possible, dyadic is used.&nbsp; So, in <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;-&nbsp;2</span></span>,
+the dyadic form of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-</span></span>
+is used; in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;+&nbsp;-&nbsp;2</span></span>,
+the monadic form of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-</span></span>
+is used.<sup><o:p></o:p></sup></p>
+
+<p class=MsoBodyText>Each verb-name really stands for two verbs, one that
+handles monadic invocations and one that handles dyadic. <span
+style='mso-spacerun:yes'>&nbsp;</span>The versions handling the two cases are
+defined independently.&nbsp; We use the term<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;valence&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span><span class=Definition>valence</span> to
+describe the number of operands expected by a verb-definition: a
+verb-definition has <span class=Definition>monadic valence</span> if it can be
+applied only monadically, <span class=Definition>dyadic valence</span> if it
+can be applied only dyadically, and <span class=Definition>dual valence</span>
+if it can be applied either way.&nbsp; Since
+the definitions of the monadic and dyadic forms of a verb can be wildly
+different, when we name a verb we will be careful to indicate which version we
+are talking about: 'monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$</span></span>', 'dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>'.</p>
+
+<p class=MsoBodyText><b>Note</b> that it is impossible to invoke a verb with no
+operands.&nbsp; In C we can write <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>func()</span></span>,
+but in J we always must give an operand.</p>
+
+<p class=MsoBodyText><b>Note</b> also that the syntax of J limits verbs (<span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>functions</span></span>)
+to at most two operands.&nbsp; When you need a
+verb with more than two operands, you will represent it as a monad or dyad in
+which one of the verb's syntactic operands is an aggregate of the actual
+operands the verb will use during its execution.<span
+style='mso-spacerun:yes'>&nbsp; </span>The first thing the verb will do is to split
+its operand into the individual pieces.&nbsp;
+J has primitives to make this process easy.</p>
+
+<p class=MsoBodyText>The value produced by any entity when it is applied to its
+operand(s) is called its <span class=Definition>result</span> (<span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>returned value</span></span>).</p>
+
+<p class=Section><a name="_Toc191734303"></a><a name="_Toc5414527"></a><a
+name="_Toc5414384"></a><a name="_Toc1896167"><span style='mso-bookmark:_Toc5414384'><span
+style='mso-bookmark:_Toc5414527'><span style='mso-bookmark:_Toc191734303'>How
+Names (</span></span></span></a><span style='mso-bookmark:_Toc1896167'><span
+style='mso-bookmark:_Toc5414384'><span style='mso-bookmark:_Toc5414527'><span
+style='mso-bookmark:_Toc191734303'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'>Identifiers</span></span>) Get Assigned</span></span></span></span></p>
+
+<p class=MsoBodyText>Assignment in J is performed by expressions of the form</p>
+
+<p class=Jcodemultiline><i>name</i> =. <i>entity</i><span
+style='mso-spacerun:yes'>&nbsp; </span>NB. private</p>
+
+<p class=BodyTextnoleader>and</p>
+
+<p class=Jcodemultiline><i>name</i> =: <i>entity</i><span
+style='mso-spacerun:yes'>&nbsp; </span>NB. public</p>
+
+<p class=MsoBodyText>Names assigned by public assignment<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;assignment&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>are visible outside the entity in which they
+are defined; names assigned by private assignment usually are not; we will
+learn the details when we discuss modular code.&nbsp;
+The difference between the two forms of assignment is in the character
+following the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Just as in C, the assignment expression is
+considered to produce as its result the value that was assigned, so expressions
+like</p>
+
+<p class=Jcodemultiline>a =. 1 + b =. 5</p>
+
+<p class=BodyTextnoleader>are legal.&nbsp; J
+calls <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=.</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=:</span></span>
+<span class=Definition>copulas</span>.&nbsp; <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;copula&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Just as in C, the entity that
+is assigned to the name can be the result of evaluating an expression.</p>
+
+<p class=MsoBodyText>There are a number of additional capabilities of J
+assignment that you can read about in the Dictionary.<span
+style='mso-spacerun:yes'>&nbsp; </span>One that has no counterpart in C is that the
+name being assigned can itself be a variable, i.&nbsp;e. you can calculate the
+name that you want to assign the value to.</p>
+
+<p class=MsoBodyText>The value assigned can be a noun (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>object</span></span>), verb (<span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>function</span></span>),
+adverb, or conjunction; the name then becomes whatever part of speech was
+assigned to it (even if it was previously defined as a different part of
+speech!).&nbsp; For example,</p>
+
+<p class=Jcodemultiline>n =: 5</p>
+
+<p class=BodyTextnoleader>creates a noun, and</p>
+
+<p class=Jcodemultiline>v =: verb define</p>
+
+<p class=Jcodemultiline>x + y</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=BodyTextnoleader>creates a verb (more below).</p>
+
+<p class=MsoBodyText><b><i>&nbsp;Note:</i></b>
+the J Dictionary uses the terms 'local' and 'global' instead of 'private' and 'public'.<span
+style='mso-spacerun:yes'>&nbsp; </span>I think 'private' and 'public' are more
+accurate terms, because there is another dimension to name scope in J, using
+the J notions <b><i>locale</i></b> and <b><i>path</i></b>, that causes public
+variables to be visible only in certain entities.<span
+style='mso-spacerun:yes'>&nbsp; </span>It will be a long time before we learn about
+locales; until then, public names will be global.</p>
+
+<p class=MsoBodyText><span class=Definition>Note:</span> private and public
+names exist in different namespaces.&nbsp;
+Referencing a variable checks for the private name first, followed by
+the public one.&nbsp; Assignment to a public
+name when the same name is defined in the private namespace is almost always a
+blunder, so it is flagged as an error.</p>
+
+<p class=Section><a name="_Toc191734304"></a><a name="_Toc5414528"></a><a
+name="_Toc5414385"></a><a name="_Toc1896168"><span style='mso-bookmark:_Toc5414385'><span
+style='mso-bookmark:_Toc5414528'><span style='mso-bookmark:_Toc191734304'>Order
+of Evaluation</span></span></span></a></p>
+
+<p class=MsoBodyText>Forget the table of operator precedence!<span
+style='mso-spacerun:yes'>&nbsp; </span>All J verbs (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>functions</span></span> and <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>operators</span></span>)
+have the same priority and associate <b>right-to-left</b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a&nbsp;*&nbsp;b&nbsp;+&nbsp;c </span></span>is
+equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a&nbsp;*&nbsp;(b&nbsp;+&nbsp;c)</span></span>,
+not <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(a&nbsp;*&nbsp;b)&nbsp;+&nbsp;c</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Use care when copying mathematical
+formulas.&nbsp; Note that the negative sign _
+is a part of the number, not a verb.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_5&nbsp;+&nbsp;_4</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_9</span></span>,
+while <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-5&nbsp;+&nbsp;-4</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>.</p>
+
+<p class=MsoBodyText>The executable bits of a sentence (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>statement</span></span>) are
+called <span class=Definition>fragments</span> (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>subexpressions</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>A verb with its operand(s) is a fragment, as
+is a copula with its name and value.&nbsp; We
+will meet other types of fragment later.&nbsp;
+<span class=Definition>Execution</span> of a sentence consists of the
+right-to-left execution of its fragments, with the result of each fragment's
+execution replacing the fragment and being passed as an operand into the next
+fragment.&nbsp; The result of the last
+execution becomes the result of the sentence.&nbsp;
+This result is usually a noun but it can be any of the primary parts of
+speech.&nbsp; As an example, execution of the
+sentence</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. 3 + b =.
+4 * 1 + 4</p>
+
+<p class=BodyTextnoleader>consists of execution of the following fragments: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;+&nbsp;4</span></span>
+with result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;*&nbsp;5</span></span>
+with result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>20</span></span>;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b&nbsp;=.&nbsp;20</span></span>
+with result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>20</span></span>;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;+&nbsp;20</span></span>
+with result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>23</span></span>;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a&nbsp;=.&nbsp;23</span></span>
+with result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>23&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The names <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+are assigned when the assignment fragments are executed.</p>
+
+<p class=MsoBodyText>If a verb has a noun on its left, it is executed as a
+dyadic verb with a left and right operand.&nbsp;
+If the verb does not have a noun on its left, it is executed as monadic
+with just a right operand.&nbsp; You must know
+the part of speech of the names in a sentence to understand the execution
+order.&nbsp; In the sentence</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; result =.
+name1 verb2 5</p>
+
+<p class=BodyTextnoleader>you must know <span style='display:none;mso-hide:
+all'>whether </span><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>name1</span></span>
+is a verb, in which case <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>verb2</span></span> is executed monadically and the result
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>name1(verb2(5))</span></span>,
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>name1</span></span>
+is a noun, in which case <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>verb2</span></span> is dyadic and the result is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(name1&nbsp;verb2&nbsp;5)</span></span>&nbsp;.</p>
+
+<p class=Section><a name="_Toc5414529"></a><a name="_Toc5414386"></a><a
+name="_Toc1896169"></a><a name="_Toc191734305"><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>How
+Names Are Substituted</span></span></span></a><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>When a
+sentence contains names, the sentence is executed as if each name were <b
+style='mso-bidi-font-weight:normal'>enclosed in parentheses</b> and then
+replaced by its value.&nbsp; If </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span> has the value </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4</span></span> and </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>b</span></span> has the value </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>5</span></span>, </span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>a + b</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>is
+equivalent to </span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>(4) +
+(5)</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>Enclosing
+the value in parentheses is a necessary step to get the order of evaluation
+right, just as in ordinary arithmetic, where if <i style='mso-bidi-font-style:
+normal'>a</i> is <i style='mso-bidi-font-style:normal'>x</i>+<i
+style='mso-bidi-font-style:normal'>2</i> and <i style='mso-bidi-font-style:
+normal'>b</i> is <i style='mso-bidi-font-style:normal'>y</i>, <i
+style='mso-bidi-font-style:normal'>ab</i> is not <i style='mso-bidi-font-style:
+normal'>x</i>+<i style='mso-bidi-font-style:normal'>2y</i>, but (<i
+style='mso-bidi-font-style:normal'>x</i>+<i style='mso-bidi-font-style:normal'>2</i>)<i
+style='mso-bidi-font-style:normal'>y</i>.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>If you
+read the Dictionary you will soon encounter the example</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>mean=: +/ % #</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>mean 2 3 4 5 6</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>4</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>and you
+will probably follow in the footsteps of countless J neophytes, typing into
+your J session</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>+/ % # 2 3 4 5 6</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>0.2</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>and be
+baffled by the result.&nbsp; Why </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0.2</span></span> instead of </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4</span></span>?&nbsp;
+Because you left out the parentheses:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(+/ % #) 2 3 4 5 6</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>4</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>In this
+book, the discussion of what </span></span></span><span style='mso-bookmark:
+_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:
+_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(+/&nbsp;%&nbsp;#)</span></span>
+means will be deferred until we discuss modifiers.<span
+style='mso-spacerun:yes'>&nbsp; </span>Later, when we discuss Tacit Programming, it
+will be revealed that our notion of replacing a name with its parenthesized
+value is a simplification of the actual process of execution.<span
+style='mso-spacerun:yes'>&nbsp; </span>Forget that for now--you are highly unlikely
+to encounter a situation where the simplification leads you into error.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>Using
+the parenthesized-substitution rule, we can justify the difference between</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>4&nbsp;5</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>and</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>a&nbsp;b</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'>when </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span> is </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4</span></span> and </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>b</span></span> is </span></span></span><span
+style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span
+style='mso-bookmark:_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>5</span></span>&nbsp;.&nbsp;
+</span></span></span><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;5</span></span>
+is two adjacent numbers, which are always treated as a single word.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></span><span style='mso-bookmark:
+_Toc1896169'><span style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:
+_Toc5414529'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a&nbsp;b</span></span>
+is equivalent to </span></span></span><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(4)&nbsp;(5)</span></span>,
+which is not two adjacent numbers but rather a syntax error.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896169'><span style='mso-bookmark:
+_Toc5414386'><span style='mso-bookmark:_Toc5414529'><a name="_Toc191734306">What
+a verb (</a></span></span></span><span style='mso-bookmark:_Toc1896169'><span
+style='mso-bookmark:_Toc5414386'><span style='mso-bookmark:_Toc5414529'><span
+style='mso-bookmark:_Toc191734306'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'>function</span></span>) looks like</span></span></span></span></p>
+
+<p class=MsoBodyText>As we saw, a J verb (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>function</span></span>) is
+defined by lines that look like:</p>
+
+<p class=Jcodemultiline><i>name</i> =: verb define</p>
+
+<p class=Jcodemultiline><i>J sentences here<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>The result of the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define</span></span> is
+a verb, and normally you will assign the result to a name so you can execute
+the verb by name when you need it.&nbsp;
+Subsequent lines, starting with the one after <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define</span></span>
+and ending before the next line containing only the word <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>')'</span></span>, are read and
+saved as the text of the verb (heaven help you if you leave out the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>)</span></span>!).<span
+style='mso-spacerun:yes'>&nbsp; </span>The verb is not 'compiled'--after the most
+rudimentary syntax checking, the text is saved and will be interpreted when the
+verb is executed.</p>
+
+<p class=MsoBodyText>Each line of the verb is a <span class=Definition>sentence</span>
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>statement</span></span>).
+&nbsp;The result of the last sentence executed
+becomes the result of the whole verb (this is not precisely true but it's close
+enough for now--details will be revealed in 'Control Structures').</p>
+
+<p class=MsoBodyText>Since a J verb has only one or two operands, there is no
+need for you to provide a list of parameter names as you do in a function
+definition in C; instead, J names them for you.&nbsp;
+At the start of a verb's execution, the private name <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is initialized
+with the value of the right operand of the verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the verb is dyadic, the private name <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is initialized with the value of the left operand.<span
+style='mso-spacerun:yes'>&nbsp; </span>Many programmers like to start their verbs by
+assigning these values to more descriptive names.</p>
+
+<p class=Note>Note on special names</p>
+
+<p class=Note>J uses the names <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span>, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> to represent
+arguments to verbs and other entities.&nbsp; You
+should avoid using these names for other purposes.</p>
+
+<p class=MsoBodyText>If your verb is going to define only a monadic or dyadic
+form, you should use <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>monad&nbsp;define</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>dyad&nbsp;define</span></span>
+instead of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you are going to define both valences, the
+way to do so is:</p>
+
+<p class=Jcodemultiline><i>name</i> =: verb define</p>
+
+<p class=Jcodemultiline><i>monadic case here<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>:</p>
+
+<p class=Jcodemultiline><i>dyadic case here<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=BodyTextnoleader>where a line with the single word <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>:</span></span> separates the
+two cases.&nbsp; If you use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define</span></span>
+and don't have the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>,
+the verb will be monadic.</p>
+
+<p class=MsoBodyText>If your verb is only one line long (not at all unusual in
+J!) you can define it all in one line by using the appropriate one of the forms</p>
+
+<p class=Jcodemultiline><i>name</i> =: monad : '<i>text of verb</i>'</p>
+
+<p class=Jcodemultiline><i>name</i> =: dyad : '<i>text of verb</i>'</p>
+
+<p class=Note>In early versions of J, the operands of a verb were named <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x.</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y.</span></span>
+rather than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Some old verbs use these forms.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want to use it you must execute <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9!:49&nbsp;(1)</span></span>
+to enable recognition of the old forms.</p>
+
+<p class=Section><a name="_Toc191734307"></a><a name="_Toc5414530"></a><a
+name="_Toc5414387"></a><a name="_Toc1896170"><span style='mso-bookmark:_Toc5414387'><span
+style='mso-bookmark:_Toc5414530'><span style='mso-bookmark:_Toc191734307'>Running
+a J program</span></span></span></a></p>
+
+<p class=MsoBodyText>No compiling.&nbsp; No
+linking.&nbsp; No makefiles.<span
+style='mso-spacerun:yes'>&nbsp; </span>No debugger required.<span
+style='mso-spacerun:yes'>&nbsp; </span>You simply type J sentences and the
+interpreter executes them and displays any result.<span
+style='mso-spacerun:yes'>&nbsp; </span>At the very simplest, you can use it as a
+desk calculator:</p>
+
+<p class=Jcodemultiline><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>&nbsp;&nbsp;
+22 + 55<o:p></o:p></span></span></p>
+
+<p class=Jcodemultiline><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>77<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>J prints 3 spaces as a prompt, so when you scroll through
+the log of a session, your input will be indented 3 spaces while J's typeout
+will be unindented.&nbsp; The result of a
+sentence typed on the keyboard is displayed, except that to avoid excessive
+typeout nothing is displayed if the last fragment executed in the sentence is
+an assignment.&nbsp; If you are at the
+keyboard while you are reading this book, you can type the examples and see the
+responses, or experiment on your own.</p>
+
+<p class=MsoBodyText>Here is a simple program to add twice the left argument to
+three times the right argument:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; add2x3y =:
+dyad : '(2 * x) + 3 * y'</p>
+
+<p class=BodyTextnoleader>We can run this program by giving it operands:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3 add2x3y
+4 5 6</p>
+
+<p class=Jcodemultiline>14 19 24</p>
+
+<p class=BodyTextnoleader>Instead of simply displaying the result, we can
+assign it to a noun:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =: 1 2 3
+add2x3y 4 5 6</p>
+
+<p class=BodyTextnoleader>We can inspect the value assigned to the noun by
+typing the name of the noun:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a</p>
+
+<p class=Jcodemultiline>14 19 24</p>
+
+<p class=BodyTextnoleader>We can use the noun in an expression:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 * a</p>
+
+<p class=Jcodemultiline>28 38 48</p>
+
+<p class=BodyTextnoleader>We can create a new verb that operates on the noun:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; twicea =:
+monad : '2 * a'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; twicea ''</p>
+
+<p class=Jcodemultiline>28 38 48</p>
+
+<p class=BodyTextnoleader>Notice the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>''</span></span> after the invocation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>twicea</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Remember, to invoke a verb you must give it
+an operand, even if the verb doesn't use an operand.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>''</span></span> is just an empty string; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> or any other
+value would work too.&nbsp; If you leave out
+the operand, J will show you the value of the name; since <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>twicea</span></span> is a verb,
+its value is the definition of the verb:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; twicea</p>
+
+<p class=Jcodemultiline>3 : '2*a'</p>
+
+<p class=MsoBodyText>Of course, in any practical application you will need to
+have most of your programs in a library so you can quickly make them all
+available to J.&nbsp; J calls these libraries <span
+class=Definition>scripts</span> (filename extension<span
+style='mso-spacerun:yes'>&nbsp; </span>'.ijs') and runs them with the <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>load</span></span> verb&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>load</span></span> verb, for
+example:</p>
+
+<p class=Jcodemultiline>load 'system\packages\misc\jforc.ijs'</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>load</span></span>
+reads lines from the script and executes them.&nbsp;
+These lines will normally be all the verb and noun definitions your
+application needs, possibly including <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>load</span></span> commands for other scripts.<span
+style='mso-spacerun:yes'>&nbsp; </span>A script may end with a line executing one of
+the verbs it defined, thereby launching the application; or, it may end after
+defining names, leaving you in control at the keyboard to type sentences for J
+to execute.</p>
+
+<p class=Note>Note: Names defined by private assignment (using <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold;font-style:normal;mso-bidi-font-style:italic'>=.</span></span>) when a
+script is loaded are not available outside the script.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want to define names for use
+elsewhere, make sure you use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold;font-style:normal;mso-bidi-font-style:
+italic'>=:</span></span> for your assignments within a script.</p>
+
+<p class=MsoBodyText>If you are used to debugging with Visual C++(tm) or the like,
+you will find the environment less glitzy and more friendly.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want to change a verb (<span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>function</span></span>),
+you simply edit the script, using the editor of your choice (I use the built-in
+editor provided with J), and rerun it.&nbsp;
+The verb will be updated, but all defined nouns (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>objects</span></span>) will be
+unchanged.&nbsp; Even if you are running a
+large application--yea, even if the application is in the middle of reading from
+an asynchronous socket--you can change the program, without recompiling, relinking,
+or reinitializing.&nbsp; If you'd like to add
+some debugging code while the system is running, go right ahead.<span
+style='mso-spacerun:yes'>&nbsp; </span>This easy interaction with an executing
+program is one of the great benefits of programming in J.</p>
+
+<p class=Subsection><a name="_Toc191734308"></a><a name="_Toc5414531"></a><a
+name="_Toc5414388"></a><a name="_Toc1896171"><span style='mso-bookmark:_Toc5414388'><span
+style='mso-bookmark:_Toc5414531'><span style='mso-bookmark:_Toc191734308'>Interrupting
+Execution</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;interrupting execution&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->If a J verb is taking too long
+to run, signal it to stop by running the Jbreak program that is supplied as
+part of the J installation.&nbsp; Control will
+return to the keyboard.</p>
+
+<p class=Subsection><a name="_Toc191734309">Errors</a></p>
+
+<p class=MsoBodyText>When a sentence contains an error, J stops and displays
+the sentence along with a terse error message.&nbsp;
+Refer to the chapter on Error Messages for explanation of the error.</p>
+
+<p class=Section><a name="_Toc5414532"></a><a name="_Toc5414389"></a><a
+name="_Toc1896172"></a><a name="_Toc191734310"><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The
+Execution Window; Script Windows</span></span></span></a><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>When J
+starts it displays its <span class=Definition>execution window</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The title of the execution window ends with
+the characters </span></span></span><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'.ijx'</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The only way to have a sentence executed is
+to have the sentence sent to the execution window.<span
+style='mso-spacerun:yes'>&nbsp; </span>The simplest way to do that is by typing the
+sentence into the execution window, as we have been doing in the examples so
+far.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The
+execution window is an edit window and a session log as well as a place to type
+sentences for execution.&nbsp; If you put the
+cursor on some line other than the last and press ENTER, the line you were on
+will be copied to the bottom of the session log as if you had typed it for
+execution.&nbsp; You can then edit the line
+before pressing ENTER again to execute it.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>For
+convenience in editing, you may create other windows which will be <span
+class=Definition>script windows</span>.&nbsp;
+Usually these windows will contain J scripts that you are working on,
+and the editor that manages the script windows is familiar with the syntax of
+J.&nbsp; You create a script window by
+clicking File on the Menu Bar and then selecting New ijs, Open, or Recent.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>Sentences
+that you type into a script window are not automatically executed by J; you
+must copy them into the execution window to have them executed.<span
+style='mso-spacerun:yes'>&nbsp; </span>You can use the script-window editor to send
+lines from a script to the execution window: click Run on the Menu Bar and then
+File, Selection, or Window as appropriate.</span></span></span></p>
+
+<p class=Note><span style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:
+_Toc5414389'><span style='mso-bookmark:_Toc5414532'>To run a selection of lines
+from a script window, be sure to use Run|Selection rather than
+cut-and-paste.&nbsp; If you paste a number of
+lines into the execution window, nothing will be executed until you press
+ENTER, and then only the line containing the cursor will be executed.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>It is important
+to remember that the script windows exist only for your convenience in editing
+and are not used during execution.&nbsp; If
+you make a change to a script window, you need to Run that window to cause the
+lines in the script to be executed.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;removing a name&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>If you
+are debugging a script and you remove a definition from the script and Run it,
+the definition will not be removed from the J session.<span
+style='mso-spacerun:yes'>&nbsp; </span>Running the script is like entering the
+sentences one by one from the keyboard, and not-defining the name does
+nothing to expunge an established definition.&nbsp;
+To remove the old definition, use </span></span></span><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4!:55&nbsp;&lt;'<i style='mso-bidi-font-style:normal'>expiredname</i>'</span></span>
+or start a fresh session of J.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:
+_Toc5414389'><span style='mso-bookmark:_Toc5414532'><a name="_Toc191734311">Names
+Defined at Startup</a></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>When J
+starts, a number of useful names are defined.&nbsp;
+Rather than discuss them all, I will show you how they come to be
+defined so you can study them when you need to.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Profile&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>When J
+starts, it executes the script </span></span></span><span style='mso-bookmark:
+_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:
+_Toc5414532'><span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>J-directory</span></i></span></span></span></span><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>\system\extras\config\profile.ijs</span></span> which then
+executes the script </span></span></span><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>J-directory</span></i></span></span></span></span><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>\system\extras\util\boot.ijs</span></span> .<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></span><span style='mso-bookmark:
+_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:
+_Toc5414532'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>boot.ijs</span></span>
+in turn executes a series of scripts in </span></span></span><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>J-directory</span></i></span></span></span></span><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>\system\main</span></span> which define the starting
+environment.&nbsp; Look at these scripts to
+see what they define.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>For
+more information, including how to add your own initial definitions, see the
+section on Startup under &quot;Odds and Ends&quot;.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:
+_Toc5414389'><span style='mso-bookmark:_Toc5414532'><a name="_Toc191734312">Step-By-Step
+Learning: Labs</a></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Labs&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The <span
+class=Definition>Labs</span> are interactive demos describing various topics in
+J.&nbsp; To run the lab for printf, start a J
+session, on the menu bar select Studio|Labs..., then select the lab you are
+interested in, then press 'Run'.&nbsp; The lab
+provides explanatory text interspersed with examples executed in your J session
+which you are free to experiment with as you step through the lab.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>I
+recommend that every now and again you tarry a while among the labs, running
+whichever ones seem interesting.&nbsp; Much of
+the description of the J system can be found only there.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:
+_Toc5414389'><span style='mso-bookmark:_Toc5414532'><a name="_Toc191734313">J
+Documentation</a></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The J
+documentation is available online.&nbsp;
+Pressing F1 brings up the <i>Vocabulary</i> page, from which you can
+quickly go to the Dictionary's description of each J primitive.<span
+style='mso-spacerun:yes'>&nbsp; </span>At the top of each page of documentation are
+links to the manuals distributed with J: these are:</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The <i>Index</i>
+to all documentation;</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The <i>User
+Manual</i> which describes components of J that are not in the language itself,
+including system libraries and external interfaces;</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The <i>J
+Primer</i>, an introduction to J;</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><i
+style='mso-bidi-font-style:normal'>J for C Programmers</i> (this book);</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><i
+style='mso-bidi-font-style:normal'>Learning J</i>, by Roger Stokes, a book
+comparable in scope to this book;</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><i>J
+Phrases</i>, a collection of useful fragments of J (you will need to finish
+this book before trying to use <i>J Phrases</i>);</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>The <i>J
+Dictionary</i>, the official definition of the language;</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><i>Release
+Notes</i> for all releases of J;</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>A
+description of foreign conjunctions (</span></span></span><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>!:</span></span>);</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>A
+description of the operands to the <i>wd</i> verb (Windows interface).</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:
+_Toc5414389'><span style='mso-bookmark:_Toc5414532'><a name="_Toc191734314">Reference
+Card</a></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Reference Card&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:_Toc5414389'><span
+style='mso-bookmark:_Toc5414532'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896172'><span
+style='mso-bookmark:_Toc5414389'><span style='mso-bookmark:_Toc5414532'>A
+Reference Card with a terse description of most of the primitives of J can be
+found in the J Wiki at http://www.jsoftware.com/jwiki/HenryRich .<span
+style='mso-spacerun:yes'>&nbsp; </span>It looks best when printed in color.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896172'><span style='mso-bookmark:
+_Toc5414389'><span style='mso-bookmark:_Toc5414532'><a name="_Toc191734315">Getting
+Help</a></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;J Forum&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Your first step in learning J
+should be to sign up for the J Forum
+at www.jsoftware.com.&nbsp; A great many
+experienced J users monitor messages sent to the Forum and are willing to
+answer your questions on J, from the trivial to the profound.</p>
+
+</div><!--bottom jump start--><hr><a href="a_first_look_at_j_programs.htm">&gt;&gt;</a>&nbsp;
+<a href="programming_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

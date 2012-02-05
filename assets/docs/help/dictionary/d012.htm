@@ -1,0 +1,98 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&lt;: Decrement  -  Less Or Equal</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d020.htm">&gt;&gt;</a>&nbsp;
+<a href="d011.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Decrement</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>&lt;: &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Less than or Equal</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>&lt;:y </tt>is<tt> y-1</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   &lt;: 2 3 5 7
+1 2 4 6
+</pre>
+
+Also see <a href="d121.htm">Not (<tt>-.</tt>)</a> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x&lt;:y </tt>is<tt> 1 </tt>if<tt> x </tt>is less than or 
+equal to<tt> y</tt> ,<tt> </tt>and is otherwise<tt> 0</tt> .<tt> </tt>  
+See <a href="d000.htm">Equal<tt> </tt>(<tt>=</tt>)</a> for a discussion 
+of tolerance. The fit conjunction (<tt>!.</tt>)<tt> </tt>applies 
+to<tt> &lt;:</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+The inverse of<tt> &lt;: </tt>is<tt> &gt;: </tt>(Increment).  For example:<br>
+
+<pre>
+   n=: 5
+
+   &lt;: ^: _1 n
+6
+        
+   &lt;:^: 0 1 2 n               NB. Here ^: applies to a noun right argument (0 1 2)
+5 4 3
+
+   &lt;: ^: i. n                 NB. Here ^: applies to a verb right argument (i.)
+5 4 3 2 1
+
+   */ &lt;: ^: i. n
+120
+            
+   f=: */ @ (&lt;: ^: i.)
+   f n
+120
+            
+   f&quot;0 i. n
+1 1 2 6 24
+
+   (f&quot;0 = !) i. n
+1 1 1 1 1
+  
+   &lt;:/ ~ i. 5                 NB. Table of the dyad &lt;:
+1 1 1 1 1
+0 1 1 1 1
+0 0 1 1 1
+0 0 0 1 1
+0 0 0 0 1
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d020.htm">&gt;&gt;</a>&nbsp;
+<a href="d011.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

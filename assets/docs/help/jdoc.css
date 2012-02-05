@@ -1,0 +1,10 @@
+body {background-color: #ffffff; color: #000000}
+a:link    {color: #0066cc; text-decoration: none}
+a:visited {color: #0066cc; text-decoration: none}
+a:hover   {color: #ff0000; text-decoration: underline}
+h1 {font-size: large}
+h2 {font-size: medium}
+h3 {font-size: medium}
+h4 {font-size: medium}
+pre {background:#FFF8ED; border: 1pt solid #AEBDCC; padding: 5pt }
+

@@ -1,0 +1,121 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>J601 Features</title>
+
+</head><body><!--top jump start--><a href="previous.htm">&gt;&gt;</a>&nbsp;
+<a href="previous602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end--> 
+<h1>J601 Features</h1>
+
+The 601 release is a major release (5 to 6). In minor releases (503 to 504) we avoid changes which will break existing applications. In a major release we introduce incompatible changes if we feel there is sufficient long term benefit. If you have production code that you want to migrate to this release you will have to pay careful attention to these changes and may have to reprogram. See <a href="#incompat">incompatibilities</a> for a summary of incompatible changes.<br><br>
+
+Names<b> x y m n u v </b>are the arguments in user definitions in preference over the names<b> x. y. m. n. u. v. </b>used in previous releases. This release supports only the new spellings or both depending on a configuration setting. The old spellings will be decomitted in a future release. It will take a while for old scripts and documentation to catch up with this change. When you see the old form, translate to the new. Although x y m n u v are normal names, they do have special significance as arguments, and this should be kept in mind and they should not be used except in the context of arguments. <br><br>
+
+J uses UTF-8 (Unicode) encoding for 8 bit data. Previous releases used ANSI code pages. J character data (8 bits) is treated as UTF-8 encoding. This makes it relatively easy to have text input and output in any mix of languages in J applications. Previously character data was treated as ASCII or ANSI code page encodings. See <a href="../user/unicode.htm">Unicode</a> for details.<br><br>
+
+Break (ctrl+c, ctrl+break, break, command+.) has changed completely. See <a href="../user/interrupt.htm">Interrupt Execution</a> for details.<br><br>
+
+See <a href="../release/contents.htm">Release Notes</a> for a summary of J Engine changes.<br><br>
+
+New random number generators, including Mersenne Twister as the default RNG. See <a href="../release/ran601.htm">? Improved</a> and <a href="../dictionary/d640.htm">Roll and Deal</a> for details. <br><br>
+
+The new <font face=courier size=-1>8!:n</font> family supports efficient formatting. See <a href="../dictionary/dx008.htm">format</a> for details.<br><br>
+
+The most visible new facility is the new Grid control. This control is implemented in open J code and is built on top of the isigraph control (as is Plot). This new grid control replaces the obsolete and decomitted grid control that was implemented in the J Front End. See Studio|Demos|grid for a demo and <a href="../user/grid.htm">Grid Control</a> for documentation.<br><br>
+
+Form editor has improved performance.<br><br>
+
+gl2 has changed significantly. It is simpler, faster, and more nearly the same across platforms. The changes were partly driven by requirements for the new grid control. The gl2 commands for the old grid control are decomitted. The gl2 documentation has been updated, but probably the best way to get familiar with the new gl2 is to work through the lab Graphics - gl2 commands.<br><br>
+
+isigraph control supports new events for the middle mouse button, mouse wheel, and focus (gained and lost). See <a href="../user/isigraph_events.htm">isigraph events</a> for details.<br><br>
+
+Box draw characters are used to draw boxes for J boxed data. The portable form of box drawing is with the ascii characters +-|. See <a href="../user/boxdraw.htm">Box Draw Characters</a> for various options.<br><br>
+
+Calling DLLs (Windows dll and Unix so or dylib) is much improved. See <a href="call_procedure.htm">Calling Procedures</a> for details. Change summary: automatic data conversions, cd is rank 1, an open argument is treated as if <font face=courier size=-1>&lt;"0</font> was applied, option &gt; returns just the scalar procedure result, and call overhead has been significantly reduced.<br><br>
+
+Jwdp (Java based J Front End) now uses the J Engine as a shared library. Previous versions communicated through sockets with jconsole running as a separate task. This makes the J system architecture more simliar across platforms and means that GUI interactions with the J code run by the J Engine are much faster. The performance improvement is summarized by:<br>
+ Linux 601 is 6 times faster than 504<br>
+ Mac 601 is 9 times faster than 504<br>
+ Win jwdp 601 is 15 times faster than Win jwdp 504<br>
+The Win jwdp is now within a factor of two performance with jwdw and can be used for serious cross platform development.<br><br>
+
+wd wait command is now supported in both Jwdw and Jwdp. It is used to create modal dialog boxes similar to the mb... family of commands. See <a href="../user/wd_commands.htm">wd commands</a> for more information.<br><br>
+
+wd msgs command allows processing of messages (such as repaints) and discards those that would cause wdhandler events. See <a href="../user/wd_commands.htm">wd commands</a> for more information.<br><br>
+
+Jwdp (Java based J Front End) supports the es_password style.<br><br>
+
+OpenGL (3d graphics) API is supported by direct calls to the API with cd. Run lab OpenGL Introduction for an overview of OpenGL programming and see Studio|Demos|OpenGL and OpenGL Simple. The OpenGL support with 11!:3xxx foreigns in previous releases has been decomitted.<br><br>
+
+PCRE (Perl Compatible Regular Expression) shared library has been updated to the July 2006 6.7 version (previous version was September 2004 5.0). By default regex works with UTF-8. The default can be changed to be not UTF-8 with <font face=courier size=-1>&nbsp;&nbsp; rxutf8_jregex_ 0 </font>.<br><br>
+
+Jconsole startup runs script user\config\startup_console.ijs if it exists. Put Jconsole customization in this script. This is similar to startup.ijs used in Jwd startup in Edit|Configure.<br><br>
+
+New User Manual chapters:<br>
+ <a href="../user/interrupt.htm">Interrupt Execution</a><br>
+ <a href="../user/boxdraw.htm">Box Draw Characters</a><br>
+ <a href="../user/unicode.htm">Unicode</a><br>
+ <a href="../user/dll_so.htm">Binaries - Shared Libraries - Directories</a><br>
+ <a href="../user/message_pump.htm">Message Pump and Long-Running Sentences</a><br><br>
+
+<a name="incompat"></a>
+
+<h1>J60x Engine incompatibilities with J504</h1>
+J Engine is generally upward compatible. The exceptions are:<br><br>
+
+Names x y m n u v are used as the arguments in explicit definitions. The old spellings x. y. m. n. u. v. are still supported depending on a configuration setting (Edit|Configure). Conversion utilities are in system/extras/migrate/fixargs.ijs and are discussed at J wiki page <a href="http://www.jsoftware.com/jwiki/scripts/fixargs">Fixargs</a>. <font face=courier size=-1>9!:48''</font> queries whether x. is allowed, <font face=courier size=-1>9!:49[0</font> disallows it, and <font face=courier size=-1>9!:48[1</font> allows it.<br><br>
+
+Global assignment (<font face=courier size=-1>=:</font>) in an explicit definition to a name that has a local definition signals domain error.<br><br>
+
+Floating point left arguments to <font face=courier size=-1> ": </font> are no longer supported (use <font face=courier size=-1> 3j4 ": x </font> rather than <font face=courier size=-1> 3.4 ": x </font>)<br><br>
+
+Binary representation <font face=courier size=-1> 3!:1 and 3!:2 </font> has changed. See <a href="../dictionary/dx003.htm">Conversions</a> for details.<br><br>
+
+Jfiles are affected by the change in binary representation. J601 can read/write Jfiles from previous releases, but previous releases can not read data written by J601.<br><br>
+
+<font face=courier size=-1>?0</font> can not be 0, and is always strictly between 0 and 1.&nbsp;&nbsp;Previously it could be 0 and was a number greater than or equal to 0 and less than 1. The reason 0 is now excluded is that if 0 is a possible result some transformations and simulations have to use code to work around the fact even though 0 happened with a very low probability (2^_53).<br><br>
+
+(4!:56) (an undocumented form of erase) has been decomitted.<br>
+
+
+<h1>J60x Front End incompatibilities with J504</h1>
+Unicode (UTF-8) support means that previous use that depended on code page encodings of character values greater than 127 or multibyte sequences have a completely different interpretation under the UTF-8 encoding.<br><br>
+
+Regex uses UTF-8 encoding and may give unexpected results for data that is in a different encoding. Verb rxutf8_jregex_ with an argument of 0 selects the old, non UTF-8 behavior and an argument of 1 selects the new UTF-8 behaviour.<br><br>
+
+gl2 commands changed significantly. See the comments in the section above.<br><br>
+
+Windows 95, 98, and ME support is decommitted (required by unicode support).<br><br>
+
+Linux J links with more recent glibc and won't run on older systems (e.g.,&nbsp;&nbsp;Redhat 6.2) with older glibc versions.<br><br>
+
+Linux and Mac jconsole links with ncurses (previously termcap).<br><br>
+
+pmove command no longer treats _1 as special case to inherit old value.<br><br>
+
+wd DDE commands are decomitted.<br><br>
+
+The isipicture control is decommitted.<br>
+<!--bottom jump start--><hr><a href="previous.htm">&gt;&gt;</a>&nbsp;
+<a href="previous602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body></html>

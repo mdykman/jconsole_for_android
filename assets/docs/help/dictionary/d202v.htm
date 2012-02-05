@@ -1,0 +1,108 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>^: Power v</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d210.htm">&gt;&gt;</a>&nbsp;
+<a href="d202n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Power</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u^:v &nbsp;_ _ _</font></td>
+<td align=right  width=33%>&nbsp;</td>
+</tr></table>
+<br>
+
+<table>
+<tr><td valign=top width=100% bgcolor=#eeeeee>
+<p>The case of<tt> ^: </tt>with a verb right argument is 
+defined in terms of the noun right argument 
+case<tt> </tt>(<a href="d202n.htm"><tt>u ^: n</tt></a>)<tt> </tt>as follows:
+<tt>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </tt>
+</p>
+
+<tt>x u ^: v y </tt><font size=+1>&harr;</font><tt> x u^:(x v y) y</tt><br>
+<tt>&nbsp; u ^: v y </tt><font size=+1>&harr;</font><tt> &nbsp;  u^:(&nbsp; v y) y</tt><br><br>
+</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   x=: 1 3 3 1
+   y=: 0 1 2 3 4 5 6
+   x p. y
+1 8 27 64 125 216 343
+
+   x p. ^: (]&gt;3:)&quot;1 0 y
+0 1 2 3 125 216 343
+
+   a=: _3 _2 _1 0 1 2 3
+   %: a
+0j1.73205 0j1.41421 0j1 0 1 1.41421 1.73205
+
+   * a
+_1 _1 _1 0 1 1 1
+
+   %: ^: * &quot; 0 a
+9 4 1 0 1 1.41421 1.73205
+
+   *: a
+9 4 1 0 1 4 9
+</pre>
+
+The following monads are equivalent.  (See the example of<tt> ^ T. _ </tt>
+in the definition of 
+<a href="dtcapdot.htm">Taylor Approximation<tt> </tt>(<tt>T.</tt>)</a> .)<br>
+
+<pre>
+   g=: u ^: p ^: _
+   h=: 3 : 't=. y while. p t do. t=. u t end.'
+
+   u=: -&amp;3 
+   p=: 0&amp;&lt;
+   (g&quot;0 ; h&quot;0) i. 10
++-------------------------+-------------------------+
+|0 _2 _1 0 _2 _1 0 _2 _1 0|0 _2 _1 0 _2 _1 0 _2 _1 0|
++-------------------------+-------------------------+
+</pre>
+
+<p>All partitions of an integer, based on an algorithm by R.E. Boss on 2005-07-05:</p>
+
+<pre>
+partition=: [: final ] (,new)@]^:[ (&lt;i.1 0)&quot;_
+final    =: 0 &lt;@-.&quot;1~ &gt;@{: 
+new      =: [: &lt;@; (-i.)@# cat&amp;.&gt; ]
+cat      =: [ ,. (&gt;: {.&quot;1) # ]
+
+   partition 5
++-+---+---+-----+-----+-------+---------+
+|5|4 1|3 2|3 1 1|2 2 1|2 1 1 1|1 1 1 1 1|
++-+---+---+-----+-----+-------+---------+
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="d210.htm">&gt;&gt;</a>&nbsp;
+<a href="d202n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

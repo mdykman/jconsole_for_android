@@ -1,0 +1,380 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>b. Boolean /</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dbdotu.htm">&gt;&gt;</a>&nbsp;
+<a href="dacapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Boolean</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>m b. &nbsp;_ 0 0</font></td>
+<td align=right  width=33%>&nbsp;</b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+The monad is equivalent to a zero left argument; 
+that is,<br><tt> m b. y </tt><font size=+1>&harr;</font><tt> 0 m b. y</tt>
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> f </tt>is a dyadic boolean function and<tt> d=: 0 1</tt> ,<tt> </tt> 
+then<tt> d f/ d </tt>(or<tt> f/~d</tt>)<tt> </tt>is its complete table.  
+For example the tables for <i>or</i>, <i>nor</i>, <i>and</i>, and 
+<i>not-and</i> appear as follows:<br>
+
+<pre>
+   (+./~ ; +:/~ ; *./~ ; *:/~) d=: 0 1
++---+---+---+---+
+|0 1|1 0|0 0|1 1|
+|1 1|0 0|0 1|1 0|
++---+---+---+---+
+</pre>
+
+If ordered by their tables, each of the sixteen possible boolean dyads 
+can be characterized by its index<tt> k</tt> ;<tt> </tt>the 
+phrase<tt> k b. </tt>produces the corresponding function. 
+Moreover, negative indexing and array arguments may be used.<br><br>
+
+An atom<tt> m=16+k </tt>specifies bitwise boolean functions on integer arguments.
+An argument atom is treated as a list of length<tt> w </tt>of bits, 
+where<tt> w </tt>is the word size of the underlying machine. 
+For example,<tt> 17 b. </tt>specifies bitwise <i>and</i>.<br><br>
+
+Finally,<tt> 32 b. </tt>specifies <i>rotate</i>,<tt> 33 b. </tt>
+specifies <i>shift</i>, and<tt> 34 b. </tt>specifies <i>signed shift</i>.
+
+<br>&nbsp;</td>
+</tr></table><br>
+
+The following table lists all the possible boolean functions:<br>
+
+<table>
+<tr>
+<td valign=bottom align=center colspan=5><b><tt>m</tt></b></td>
+<td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td align=center><b>Ravelled<br>Table</b></td>
+<td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td valign=bottom><b>Function</b></td>
+</tr>
+
+<tr>
+<td><tt>0</tt></td>
+<td></td>
+<td><tt>_16</tt></td>
+<td></td>
+<td><tt>16</tt></td>
+<td></td>
+<td><tt>0 0 0 0</tt></td>
+<td></td>
+<td><tt>0</tt></td>
+</tr>
+
+<tr>
+<td><tt>1</tt></td>
+<td></td>
+<td><tt>_15</tt></td>
+<td></td>
+<td><tt>17</tt></td>
+<td></td>
+<td><tt>0 0 0 1</tt></td>
+<td></td>
+<td><tt>x *. y</tt></td>
+</tr>
+
+<tr>
+<td><tt>2</tt></td>
+<td></td>
+<td><tt>_14</tt></td>
+<td></td>
+<td><tt>18</tt></td>
+<td></td>
+<td><tt>0 0 1 0</tt></td>
+<td></td>
+<td><tt>x &gt; y</tt></td>
+</tr>
+
+<tr>
+<td><tt>3</tt></td>
+<td></td>
+<td><tt>_13</tt></td>
+<td></td>
+<td><tt>19</tt></td>
+<td></td>
+<td><tt>0 0 1 1</tt></td>
+<td></td>
+<td><tt>x</tt></td>
+</tr>
+
+<tr>
+<td><tt>4</tt></td>
+<td></td>
+<td><tt>_12</tt></td>
+<td></td>
+<td><tt>20</tt></td>
+<td></td>
+<td><tt>0 1 0 0</tt></td>
+<td></td>
+<td><tt>x &lt; y</tt></td>
+</tr>
+
+<tr>
+<td><tt>5</tt></td>
+<td></td>
+<td><tt>_11</tt></td>
+<td></td>
+<td><tt>21</tt></td>
+<td></td>
+<td><tt>0 1 0 1</tt></td>
+<td></td>
+<td><tt>y</tt></td>
+</tr>
+
+<tr>
+<td><tt>6</tt></td>
+<td></td>
+<td><tt>_10</tt></td>
+<td></td>
+<td><tt>22</tt></td>
+<td></td>
+<td><tt>0 1 1 0</tt></td>
+<td></td>
+<td><tt>x ~: y</tt></td>
+</tr>
+
+<tr>
+<td><tt>7</tt></td>
+<td></td>
+<td><tt>_9</tt></td>
+<td></td>
+<td><tt>23</tt></td>
+<td></td>
+<td><tt>0 1 1 1</tt></td>
+<td></td>
+<td><tt>x +. y</tt></td>
+</tr>
+
+<tr>
+<td><tt>8</tt></td>
+<td></td>
+<td><tt>_8</tt></td>
+<td></td>
+<td><tt>24</tt></td>
+<td></td>
+<td><tt>1 0 0 0</tt></td>
+<td></td>
+<td><tt>x +: y</tt></td>
+</tr>
+
+<tr>
+<td><tt>9</tt></td>
+<td></td>
+<td><tt>_7</tt></td>
+<td></td>
+<td><tt>25</tt></td>
+<td></td>
+<td><tt>1 0 0 1</tt></td>
+<td></td>
+<td><tt>x = y</tt></td>
+</tr>
+
+<tr>
+<td><tt>10</tt></td>
+<td></td>
+<td><tt>_6</tt></td>
+<td></td>
+<td><tt>26</tt></td>
+<td></td>
+<td><tt>1 0 1 0</tt></td>
+<td></td>
+<td><tt>-. y</tt></td>
+</tr>
+
+<tr>
+<td><tt>11</tt></td>
+<td></td>
+<td><tt>_5</tt></td>
+<td></td>
+<td><tt>27</tt></td>
+<td></td>
+<td><tt>1 0 1 1</tt></td>
+<td></td>
+<td><tt>x &gt;: y</tt></td>
+</tr>
+
+<tr>
+<td><tt>12</tt></td>
+<td></td>
+<td><tt>_4</tt></td>
+<td></td>
+<td><tt>28</tt></td>
+<td></td>
+<td><tt>1 1 0 0</tt></td>
+<td></td>
+<td><tt>-. x</tt></td>
+</tr>
+
+<tr>
+<td><tt>13</tt></td>
+<td></td>
+<td><tt>_3</tt></td>
+<td></td>
+<td><tt>29</tt></td>
+<td></td>
+<td><tt>1 1 0 1</tt></td>
+<td></td>
+<td><tt>x &lt;: y</tt></td>
+</tr>
+
+<tr>
+<td><tt>14</tt></td>
+<td></td>
+<td><tt>_2</tt></td>
+<td></td>
+<td><tt>30</tt></td>
+<td></td>
+<td><tt>1 1 1 0</tt></td>
+<td></td>
+<td><tt>x *: y</tt></td>
+</tr>
+
+<tr>
+<td><tt>15</tt></td>
+<td></td>
+<td><tt>_1</tt></td>
+<td></td>
+<td><tt>31</tt></td>
+<td></td>
+<td><tt>1 1 1 1</tt></td>
+<td></td>
+<td><tt>1</tt></td>
+</tr>
+
+<tr>
+<td colspan=4>&nbsp;</td>
+<td><tt>32</tt></td>
+<td></td>
+<td></td>
+<td></td>
+<td>rotate</td>
+</tr>
+
+<tr>
+<td colspan=4>&nbsp;</td>
+<td><tt>33</tt></td>
+<td></td>
+<td></td>
+<td></td>
+<td>shift</td>
+</tr>
+
+<tr>
+<td colspan=4>&nbsp;</td>
+<td><tt>34</tt></td>
+<td></td>
+<td></td>
+<td></td>
+<td>signed shift</td>
+</tr>
+</table>
+<br>
+
+Further examples:
+
+<pre>
+   (7 b./~ ; 8 b./~ ; 1 b./~ ; 14 b./~) d=: 0 1
++---+---+---+---+
+|0 1|1 0|0 0|1 1|
+|1 1|0 0|0 1|1 0|
++---+---+---+---+
+
+   (_1 b./~ ; _3 b./~ ; _15 b./~) d       NB. negative indexing
++---+---+---+
+|1 1|1 1|0 0|
+|1 1|0 1|0 1|
++---+---+---+
+
+   (&lt;&quot;2) 2 0 1 |: 7 8 1 15 b./~ d         NB. array arguments
++---+---+---+---+
+|0 1|1 0|0 0|1 1|
+|1 1|0 0|0 1|1 1|
++---+---+---+---+
+
+   12345 (17 b.) 67890                    NB. bitwise <i>and</i>
+48
+   f=: (32#2)&amp;#: { '.x'&quot;_
+   f 12345 67890 48
+..................xx......xxx..x
+...............x....x..x..xx..x.
+..........................xx....
+
+   _12345 (23 b.) 67890                   NB. bitwise <i>or</i>
+_12297
+   f _12345 67890 _12297
+xxxxxxxxxxxxxxxxxx..xxxxxx...xxx
+...............x....x..x..xx..x.
+xxxxxxxxxxxxxxxxxx..xxxxxxxx.xxx
+
+   20 b./~ i.10                           NB. bitwise <i>less than</i> table
+0 1 2 3 4 5 6 7 8 9
+0 0 2 2 4 4 6 6 8 8
+0 1 0 1 4 5 4 5 8 9
+0 0 0 0 4 4 4 4 8 8
+0 1 2 3 0 1 2 3 8 9
+0 0 2 2 0 0 2 2 8 8
+0 1 0 1 0 1 0 1 8 9
+0 0 0 0 0 0 0 0 8 8
+0 1 2 3 4 5 6 7 0 1
+0 0 2 2 4 4 6 6 0 0
+
+   23 b./\ 2^i.10                         NB. cumulative bitwise <i>or</i>
+1 3 7 15 31 63 127 255 511 1023
+
+   _5 (33 b.) 12345                       NB. shift
+385
+   f 12345 385   
+..................xx......xxx..x
+.......................xx......x
+
+   _5 (33 b.) _12345                      NB. shift
+134217342
+   f _12345 134217342
+xxxxxxxxxxxxxxxxxx..xxxxxx...xxx
+.....xxxxxxxxxxxxxxxxxx..xxxxxx.
+
+   _5 (34 b.) _12345                      NB. signed shift
+_386
+   f _12345 _386
+xxxxxxxxxxxxxxxxxx..xxxxxx...xxx
+xxxxxxxxxxxxxxxxxxxxxxx..xxxxxx.
+
+</pre>
+
+<!--bottom jump start--><hr><a href="dbdotu.htm">&gt;&gt;</a>&nbsp;
+<a href="dacapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

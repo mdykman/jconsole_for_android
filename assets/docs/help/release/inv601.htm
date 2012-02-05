@@ -1,0 +1,81 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>^: New Inverses</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="argnames.htm">&gt;&gt;</a>&nbsp;
+<a href="pdt601.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">^: </font>
+<font size=+3>New Inverses</font></b></td>
+<td align=right>
+initial writing: 2005-11-10<br>last updated: 2005-11-10
+</td></tr></table>
+<br>
+
+<p>If<tt> p </tt>is an integer permutation vector and<tt>  m=: ({=) p </tt>is
+the corresponding boolean permutation matrix, then<tt> (p{A) -: m +/ .* A </tt>for
+a conformable numeric array<tt> A</tt> .</p>
+
+<p>The table of inverses has been extended so 
+that<tt> {=  </tt>and<tt>  i.&quot;1&amp;1 </tt>are inverses of each other.  
+These convert between integer permutation
+vectors and boolean permutation matrices.  Thus:
+
+<pre>
+   ] p=: ?.~ 11
+5 6 10 7 1 8 4 0 9 3 2
+
+   |:&amp;.({=) p
+7 4 10 9 6 0 1 3 5 8 2
+   /: p
+7 4 10 9 6 0 1 3 5 8 2
+
+   ] m=: 'a' = > ;:'bacon about supra strap scant'
+0 1 0 0 0
+1 0 0 0 0
+0 0 0 0 1
+0 0 0 1 0
+0 0 1 0 0
+   \:&amp;.(i.&quot;1&amp;1) m
+0 0 1 0 0
+0 0 0 1 0
+0 0 0 0 1
+1 0 0 0 0
+0 1 0 0 0
+   |.@|: m   NB. rotate counterclockwise by 90 degrees
+0 0 1 0 0
+0 0 0 1 0
+0 0 0 0 1
+1 0 0 0 0
+0 1 0 0 0
+</pre>
+
+<!--bottom jump start--><hr><a href="argnames.htm">&gt;&gt;</a>&nbsp;
+<a href="pdt601.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

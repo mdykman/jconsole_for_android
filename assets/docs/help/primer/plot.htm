@@ -1,0 +1,66 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Plot</title>
+
+</head><body><!--top jump start--><a href="plot_locale.htm">&gt;&gt;</a>&nbsp;
+<a href="more_primitives.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Plot</h1>
+To use the plot facility you need to load it.<br>
+
+<pre>   load 'plot'
+</pre>
+Try a simple plot.<br>
+
+<pre>   plot 5 10 23 45 8</pre>
+ <img src="plot.gif"></img><br>
+<br>
+The plot is in a separate window. Close the plot window to get rid of it.<br>
+<br>
+Now that you can plot data, let's take a look at some of the primitives you were using in the previous section.<br>
+
+<pre>   plot 2 ^ i. 5
+   plot ? 5 $ 100
+   plot ? 50 $ 100
+   plot ? 100 $ 100
+   plot ? 1 + i. 50
+   plot ? 1 + i. 100</pre>
+A left argument customizes the plot.<br>
+
+<pre>   'TITLE myplot;TYPE bar' plot 2 ^ i. 5</pre>
+Or try the sine values you calculated earlier.<br>
+
+<pre>   plot 1 o. i. 16  </pre>
+There is a family of utilities defined in script trig.ijs you could make use of here. Use load to load that script.<br>
+
+<pre>   load 'trig'
+   plot sin i. 16</pre>
+To produce a finer plot you need to provide more results over a similar range.<br>
+
+<pre>   plot sin 0.2 * i.60
+   plot cos 0.2 * i.60
+</pre>
+<!--bottom jump start--><hr><a href="plot_locale.htm">&gt;&gt;</a>&nbsp;
+<a href="more_primitives.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

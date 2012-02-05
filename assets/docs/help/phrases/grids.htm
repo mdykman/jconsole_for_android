@@ -1,0 +1,140 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Grids</title>
+
+</head><body><!--top jump start--><a href="representations.htm">&gt;&gt;</a>&nbsp;
+<a href="numbers_counting.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>8B. Grids</h1>
+
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0=: i.</tt></TD>	<TD width=60%>First y non-negative integers</TD>
+  </TR><TR><TD><tt>m1=: Ai=: &gt;:@i.</tt></TD>	<TD>Augmented integers (begin at 1)</TD>
+  </TR><TR><TD><tt>m2=: Ei=: i.@&gt;:</tt></TD>	<TD>Extended integers (0 to y inclusive)</TD>
+  </TR><TR><TD><tt>m3=: Si=: -Ei@+:</tt></TD>	<TD>Symmetric integers (-y to y inclusive)</TD></TR>
+  <TR><TD><tt>m4=: grid=: +`(*i.)/</tt></TD>	<TD>General grid (2{y steps from 0{y by 1{y)</TD></TR>
+  <TR><TD><tt>m5=: cb=: ] {. 1 _1&quot;_ $~ &gt;: - 2&amp;|</tt></TD>	<TD>Checkerboard. Try <tt>box cb 2 3 4 5</tt></TD></TR>
+  <TR><TD><tt>m6=: box=: &lt;&quot;2</tt></TD>	<TD>Box rank 2 cells (for readable display)</TD></TR>
+  <TR><TD><tt>m7=: CB=: *cb@$</tt></TD>	<TD>Alternate signs of atoms of y.</TD>
+  </TR><TR><TD><tt>m8=: bcb=: _1&amp;=@cb</tt></TD>	<TD>Boolean checkerboard</TD>
+  </TR><TR><TD><tt>m9=: {. 0 1&quot;_ $~ ] + 2&amp;|@&gt;:</tt></TD>	 	<TD ALIGN="center">"</TD></TR>
+  <TR><TD><tt>m10=: _1: ^ m9</tt></TD>	<TD>Checkerboard</TD>
+  </TR><TR><TD><tt>a11=: syft=: (/~)(@Si)</tt></TD>	<TD>Symmetric function tables</TD>
+  </TR><TR><TD><tt>v12=: WRAP=: wrap : (wrap@]^:[)</tt></TD>	<TD>Wrap (monad) and repeated wrap (dyad) </TD></TR>
+  <TR><TD><tt>m13=: wrap=: RL@(,.(next+i.@#))^:4</tt></TD>	<TD>Wrap argument with successive integers </TD></TR>
+  <TR><TD><tt>m14=: RL=: |.@|:</tt></TD>	<TD>Roll table to left</TD>
+  </TR><TR><TD><tt>m15=: next=: &gt;:@(&gt;./)@,</tt></TD>	<TD>Next integer after largest in table</TD></TR>
+</TABLE>
+
+
+<P>The first four phrases give commonly useful integer lists, 
+and the fifth allows specification of the beginning value, the step size, 
+and the number of steps. For example:</P>
+
+<pre>   (m0 ; Ai ; Ei ; Si) 3
++-----+-----+-------+----------------+
+|0 1 2|1 2 3|0 1 2 3|3 2 1 0 _1 _2 _3|
++-----+-----+-------+----------------+
+
+   (*/~ ; !/~) Si 3
++-------------------+-----------------+
+| 9  6  3 0 _3 _6 _9|1 0 0 0 _1 _4 _10|
+| 6  4  2 0 _2 _4 _6|3 1 0 0  1  3   6|
+| 3  2  1 0 _1 _2 _3|3 2 1 0 _1 _2  _3|
+| 0  0  0 0  0  0  0|1 1 1 1  1  1   1|
+|_3 _2 _1 0  1  2  3|0 0 0 0  1  0   0|
+|_6 _4 _2 0  2  4  6|0 0 0 0 _1  1   0|
+|_9 _6 _3 0  3  6  9|0 0 0 0  1 _2   1|
++-------------------+-----------------+
+
+   grid 3 4 5
+3 7 11 15 19</pre>
+
+<P>Phrases 5-10 give various checkerboard patterns. 
+Note the alternation along each axis:</P>
+
+<pre>   box cb 2 3 4 5
++--------------+--------------+--------------+
+| 1 _1  1 _1  1|_1  1 _1  1 _1| 1 _1  1 _1  1|
+|_1  1 _1  1 _1| 1 _1  1 _1  1|_1  1 _1  1 _1|
+| 1 _1  1 _1  1|_1  1 _1  1 _1| 1 _1  1 _1  1|
+|_1  1 _1  1 _1| 1 _1  1 _1  1|_1  1 _1  1 _1|
++--------------+--------------+--------------+
+|_1  1 _1  1 _1| 1 _1  1 _1  1|_1  1 _1  1 _1|
+| 1 _1  1 _1  1|_1  1 _1  1 _1| 1 _1  1 _1  1|
+|_1  1 _1  1 _1| 1 _1  1 _1  1|_1  1 _1  1 _1|
+| 1 _1  1 _1  1|_1  1 _1  1 _1| 1 _1  1 _1  1|
++--------------+--------------+--------------+
+   CB i. 3 4
+ 0 _1  2  _3
+_4  5 _6   7
+ 8 _9 10 _11
+</pre>
+
+<P>Phrase 11 is an adverb that produces function tables on symmetric arguments:
+</P>
+<pre>
+   (+syft ; *syft ; !syft) 3
++-------------------+-------------------+-----------------+
+|6  5  4  3  2  1  0| 9  6  3 0 _3 _6 _9|1 0 0 0 _1 _4 _10|
+|5  4  3  2  1  0 _1| 6  4  2 0 _2 _4 _6|3 1 0 0  1  3   6|
+|4  3  2  1  0 _1 _2| 3  2  1 0 _1 _2 _3|3 2 1 0 _1 _2  _3|
+|3  2  1  0 _1 _2 _3| 0  0  0 0  0  0  0|1 1 1 1  1  1   1|
+|2  1  0 _1 _2 _3 _4|_3 _2 _1 0  1  2  3|0 0 0 0  1  0   0|
+|1  0 _1 _2 _3 _4 _5|_6 _4 _2 0  2  4  6|0 0 0 0 _1  1   0|
+|0 _1 _2 _3 _4 _5 _6|_9 _6 _3 0  3  6  9|0 0 0 0  1 _2   1|
++-------------------+-------------------+-----------------+
+</pre>
+
+<P>The final phrases produce spirals by wrapping a table (or by default a list or scalar) 
+in a blanket of  successive integers:</P>
+
+<pre>
+   ]t=: i. 2 3
+0 1 2
+3 4 5
+
+   (RL t) ; (WRAP 0) ; (3 WRAP 0) 
++---+-----+--------------------+
+|2 5|6 7 8|42 43 44 45 46 47 48|
+|1 4|5 0 1|41 20 21 22 23 24 25|
+|0 3|4 3 2|40 19  6  7  8  9 26|
+|   |     |39 18  5  0  1 10 27|
+|   |     |38 17  4  3  2 11 28|
+|   |     |37 16 15 14 13 12 29|
+|   |     |36 35 34 33 32 31 30|
++---+-----+--------------------+
+</pre>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="representations.htm">&gt;&gt;</a>&nbsp;
+<a href="numbers_counting.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

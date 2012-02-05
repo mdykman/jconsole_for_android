@@ -1,0 +1,54 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Verb rank</title>
+
+</head><body><!--top jump start--><a href="agreement.htm">&gt;&gt;</a>&nbsp;
+<a href="k_cell.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Verb rank</h1>
+A verb has a rank that determines how it applies to its arguments. A monad of rank k applies to the k-cells of its argument. A dyad of left rank kl and right rank kr applies to the kl-cells of its left argument and the kr-cells of its right argument. Verb rank is a powerful tool that controls the way a verb applies to arrays.<br>
+<br>
+The ranks of a primitive verb are given in the J Dictionary definition. For example, look up the definition of <font face=courier size=-1>+</font> . The rank information follows the word in the header. For <font face=courier size=-1>+</font> this is <font face=courier size=-1>0 0 0</font>. The monad rank is <font face=courier size=-1>0</font> which indicates the monad <font face=courier size=-1>+</font> applies to the atoms. The dyad ranks are 0 for the left argument (indicating it applies to the atoms, or 0-cells), and 0 for the right argument (again indicating it applies to the atoms in the right argument).<br>
+<br>
+Let's see how this works when adding two tables.<br>
+
+<pre>   a =. i. 2 3
+   b =. 6 + a
+   a
+0 1 2
+3 4 5
+   b
+6  7  8
+9 10 11
+   a + b
+ 6  8 10
+12 14 16</pre>
+The dyad <font face=courier size=-1>+</font> has left rank 0. This means it applies to the atoms of its left argument. Similarly the right rank is 0 and it applies to the atoms of its right argument. The verb takes an atom from its left argument, an atom from its right argument, and adds them together to create a partial result. It does this for each atom from the left and right argument and creates an appropriate number of partial results, which are then assembled into the result frame to create the final result.<br>
+<br>
+In the example above the verb <font face=courier size=-1>+</font> has a left rank of 0. This means the left argument is treated as a <font face=courier size=-1>2 3</font> frame of atoms. Similarly, a right rank of 0 means that the right argument is treated as a <font face=courier size=-1>2 3</font> frame of atoms.<br>
+<br>
+The frame of the result is determined by the frames of the arguments, and so its frame is also <font face=courier size=-1>2 3</font> and each cell is the result of adding an atom from the left argument with an atom from the right argument.<br>
+<!--bottom jump start--><hr><a href="agreement.htm">&gt;&gt;</a>&nbsp;
+<a href="k_cell.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,2425 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>More Verbs</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="loopless_code_ii_adverbs__an.htm">&gt;&gt;</a>&nbsp;
+<a href="starting_to_write_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734348"></a><a name="_Toc5414558"></a><a name="_Toc1896193"><span
+style='mso-bookmark:_Toc5414558'><span style='mso-bookmark:_Toc191734348'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>8. <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>More
+Verbs</span></span></a></h1>
+
+<p class=MsoBodyText>Before we can write more complex programs, we need to
+learn some more verbs.&nbsp; We will group
+them into classes and give a few mnemonic hints.</p>
+
+<p class=MsoBodyText>Before we start, I should point out a convention of J: if
+a dyadic verb is asymmetric, for mnemonic purposes you should think of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+as operating on <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>One way to express this is to say that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is control information and <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is data.&nbsp;
+Another way is to say that if you were applying the verb many times, you
+would expect to apply the same <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> to different <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>s rather than the
+other way around.&nbsp; We will note the
+exceptions to this rule--<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>%</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>/:</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>\:</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-</span></span>, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-.</span></span>, and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>e.</span></span>--and
+the reasons for the exception.</p>
+
+<p class=Section><a name="_Toc191734349"></a><a name="_Toc5414559"></a><a
+name="_Toc5414411"></a><a name="_Toc1896194"><span style='mso-bookmark:_Toc5414411'><span
+style='mso-bookmark:_Toc5414559'><span style='mso-bookmark:_Toc191734349'>Arithmetic
+Dyads</span></span></span></a></p>
+
+<p class=MsoBodyText>All these verbs have rank 0 and produce a scalar result,
+so if they are applied to two operands of equal shape the result will also have
+that shape; if applied to two operands that agree, the result has the shape of
+the larger operand.</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x + y</span></span> addition<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;+ dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x - y</span></span> subtraction<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;- dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>(<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> operates on <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> to match the
+mathematical definition)</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x * y</span></span> multiplication<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;* dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x % y</span></span> division<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;% dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;</span>Note that the slash has another use, so <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>%</span></span>
+is division.&nbsp; You don't have to worry
+about division by zero: it produces <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>_</span></span> (infinity) or <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>__</span></span> (negative
+infinity) except for <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0%0</span></span>,
+which yields <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>&nbsp;.</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x ^ y</span></span> exponentiation<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;^ dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>(<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> to the power <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0^0</span></span> yields <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1</span></span>&nbsp;.</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x ^. y</span></span> logarithm<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;^. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>(base-<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> logarithm of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>)</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x | y</span></span> modulus<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;| dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>(remainder when <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is divided by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For the longest time I had trouble
+remembering dyad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>|</span></span>;
+it seemed that the divisor should be <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> by analogy to dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>%</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The inconsistency is that J defines <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x % y</span></span>
+as '<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+divided by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>'
+to match accepted practice in mathematics; that makes dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>%</span></span> anomalous in J,
+because we have <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operating on <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>).</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;comparison tolerance !.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The comparison verbs have rank
+0, and produce Boolean results in which <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1</span></span> means true, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+means false.&nbsp; They use <span
+class=Definition>tolerant comparison</span>, which means that two values that
+are very close to equal are considered equal.&nbsp;
+This saves you the trouble of adding small amounts to mask the effects
+of floating-point rounding: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;=&nbsp;3&nbsp;*&nbsp;1&nbsp;%&nbsp;3</span></span> is
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>,
+unlike <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>1.0&nbsp;==&nbsp;3.0&nbsp;*&nbsp;1.0&nbsp;/&nbsp;3.0</span></span>
+whose value depends on the compiler.&nbsp; If
+you need exact comparison, append <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>!.0</span></span> to the verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>Look under 'Comparison Tolerance' for
+details.</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x = y</span></span>&nbsp;
+equal<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;= dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x ~: y</span></span>&nbsp;
+not equal<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;~\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>(if you squint the colon looks like an equal
+sign)</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x &gt; y</span></span>&nbsp;
+greater-than<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;&gt; dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x &lt; y</span></span> less-than<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;&lt; dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x &gt;: y</span></span>&nbsp;
+greater-than or equal<!--[if supportFields]><span style='mso-element:
+field-begin'></span> XE &quot;&gt;\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>(if you squint the colon looks like an equal
+sign)</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x &lt;: y</span></span> less-than or equal<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;&lt;\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=Section><a name="_Toc191734350"></a><a name="_Toc5414560"></a><a
+name="_Toc5414412"></a><a name="_Toc1896195"><span style='mso-bookmark:_Toc5414412'><span
+style='mso-bookmark:_Toc5414560'><span style='mso-bookmark:_Toc191734350'>Boolean
+Dyads</span></span></span></a></p>
+
+<p class=MsoBodyText>These verbs have rank 0 and are applied to Boolean
+arguments to produce Boolean results:</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x *</span></span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>. y</span></span><b><span
+style='mso-spacerun:yes'>&nbsp; </span></b>Boolean AND<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;*. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x +. y</span></span>&nbsp;
+Boolean OR<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;+. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x = y</span></span>&nbsp;
+Boolean XNOR (1 if the operands are equal)<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;= dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x ~: y</span></span>&nbsp;
+Boolean XOR (1 if operands differ)<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;~\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=Section><a name="_Toc191734351"></a><a name="_Toc5414561"></a><a
+name="_Toc5414413"></a><a name="_Toc1896196"><span style='mso-bookmark:_Toc5414413'><span
+style='mso-bookmark:_Toc5414561'><span style='mso-bookmark:_Toc191734351'>Min
+and Max Dyads</span></span></span></a></p>
+
+<p class=MsoBodyText>These verbs are useful for performing tests, because they
+perform the operation item-by-item, replacing a C loop that does a test for
+each atom.&nbsp; They have rank 0 and produce
+a scalar in each cell, so the result has the shape of the larger operand.</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x &gt;. y</span></span> the greater of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span> XE &quot;&gt;. dyad&quot;
+<![endif]--><!--[if supportFields]><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x &lt;. y</span></span> the lesser of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span> XE &quot;&lt;. dyad&quot;
+<![endif]--><!--[if supportFields]><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><o:p></o:p></span></span></p>
+
+<p class=Section><a name="_Toc191734352"></a><a name="_Toc5414562"></a><a
+name="_Toc5414414"></a><a name="_Toc1896197"><span style='mso-bookmark:_Toc5414414'><span
+style='mso-bookmark:_Toc5414562'><span style='mso-bookmark:_Toc191734352'>Arithmetic
+Monads</span></span></span></a></p>
+
+<p class=MsoBodyText>These verbs have rank 0.</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;: y</span></span>&nbsp;
+increment (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y+1</span></span>)<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;&gt;\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;: y</span></span>&nbsp;
+decrement (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y-1</span></span>)<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;&lt;\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;. y</span></span>&nbsp;
+the largest integer not greater than y (floor function)<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;&lt;. monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;. y</span></span>&nbsp;
+the smallest integer not less than y (ceiling function)<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;&gt;. monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>| y</span></span>&nbsp;
+absolute value of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span>
+XE &quot;| monad&quot; <![endif]--><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]--></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>* y</span></span>&nbsp;
+signum of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is negative, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is tolerantly close to 0, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1</span></span> if <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is positive).<span
+style='mso-spacerun:yes'>&nbsp; </span>Tolerantly close to 0 for <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> means differing
+from 0 by no more than the comparison tolerance, which is slightly different
+from the rule for <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;</span></span>&nbsp;.<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;* monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--></p>
+
+<p class=BodyTextVerbdef>.<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-. y</span></span>&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1-y</span></span><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span> XE &quot;-. monad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--></p>
+
+<p class=Section><a name="_Toc5414563"></a><a name="_Toc5414415"></a><a
+name="_Toc1896198"></a><a name="_Toc191734353"><span style='mso-bookmark:_Toc1896198'><span
+style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Trigonometric
+Functions</span></span></span></a><span style='mso-bookmark:_Toc1896198'><span
+style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896198'><span
+style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;o.&nbsp;y</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>creates the entire family of trigonometric
+functions of </span></span></span><span style='mso-bookmark:_Toc1896198'><span
+style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896198'><span
+style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'> XE
+&quot;o. (trigonometric function)&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896198'><span
+style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;</span>Think of dyad </span></span></span><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>o.</span></span> as a monad, selecting the function based on
+</span></span></span><span style='mso-bookmark:_Toc1896198'><span
+style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span></span></span></span><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, </span></span></span><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;o.&nbsp;y</span></span> is <i>sin</i>(<i>y</i>), and </span></span></span><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>_3&nbsp;o.&nbsp;y</span></span> is <i>arctan</i>(<i>y</i>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Except as noted below, </span></span></span><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(-x)&nbsp;o.</span></span> is the inverse of </span></span></span><span
+style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;o.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For mnemonic purposes, note that the odd
+numbers specify odd functions.</span></span></span></p>
+
+<div align=center>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:-102.2pt;border-collapse:collapse;border:none;mso-border-alt:
+ solid windowtext .5pt;mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;
+ mso-border-insideh:.5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;o.&nbsp;y<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(-x)&nbsp;o.&nbsp;y<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Comments</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>sqrt(1 - y*y)</i> (same as <br>
+  </span></span></span><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>--.&amp;.*:&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Self-inverse</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>sin(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>arcsin(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>cos(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>arccos(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>tan(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>arctan(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>sqrt(1 + y*y)</i> (same as <br>
+  </span></span></span><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;:&amp;.*:&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>sqrt((y*y) - 1)</i> (same as <br>
+  </span></span></span><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;:&amp;.*:&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>sinh(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>arcsinh(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>cosh(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>6<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>arccosh(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>tanh(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>7<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>arctanh(y)<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:9'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>sqrt(-(1 + y*y))<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>- sqrt(-(1 + y*y))<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Not
+  inverse</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:10'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Real
+  part of <i style='mso-bidi-font-style:normal'>y</i> (same as </span></span></span><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>{.@+.&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>y<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Not
+  inverse</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:11'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Magnitude
+  of <i style='mso-bidi-font-style:normal'>y</i> (same as </span></span></span><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>|&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>10<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Conjugate
+  of <i style='mso-bidi-font-style:normal'>y</i> (same as </span></span></span><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>+&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Not
+  inverse</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:12'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Imaginary
+  part of <i style='mso-bidi-font-style:normal'>y</i> (same as </span></span></span><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>{:@+.&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>11<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>iy<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Not
+  inverse</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:13;mso-yfti-lastrow:yes'>
+  <td width=187 style='width:140.0pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Angle
+  of <i style='mso-bidi-font-style:normal'>y</i> (same as </span></span></span><span
+  style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>{:@*.&nbsp;y</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>12<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=166 style='width:124.65pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'><i
+  style='mso-bidi-font-style:normal'>e<sup>iy</sup><o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+  <td width=126 style='width:94.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span style='mso-bookmark:_Toc1896198'><span
+  style='mso-bookmark:_Toc5414415'><span style='mso-bookmark:_Toc5414563'>Not
+  inverse</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:_Toc5414415'><span
+  style='mso-bookmark:_Toc5414563'></span></span></span>
+ </tr>
+</table>
+
+</div>
+
+<p class=Section><span style='mso-bookmark:_Toc1896198'><span style='mso-bookmark:
+_Toc5414415'><span style='mso-bookmark:_Toc5414563'><a name="_Toc191734354">Boolean
+Monad</a></span></span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-. y</span></span>&nbsp;
+(rank 0) Negate <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y </span></span>This is simply the boolean interpretation of
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1-y&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734355"></a><a name="_Toc5414564"></a><a
+name="_Toc5414416"></a><a name="_Toc1896199"><span style='mso-bookmark:_Toc5414416'><span
+style='mso-bookmark:_Toc5414564'><span style='mso-bookmark:_Toc191734355'>Operations
+on Arrays</span></span></span></a></p>
+
+<p class=MsoBodyText>These verbs operate on entire arrays; the data operand
+(usually <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>)
+has infinite rank (in other words, the verb operates on the entire data operand),
+and the control operand has whatever rank is appropriate for the operation
+performed.&nbsp; I am going to give a highly
+simplified definition of the functions of these verbs; consult the Dictionary
+to see all they can do.</p>
+
+<p class=Subsection><a name="_Toc191734356"></a><a name="_Toc5414565"></a><a
+name="_Toc5414417"></a><a name="_Toc1896200"><span style='mso-bookmark:_Toc5414417'><span
+style='mso-bookmark:_Toc5414565'><span style='mso-bookmark:_Toc191734356'>Dyads</span></span></span></a></p>
+
+<p class=Subsubsection>Selection: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>{ # -.</span></span></p>
+
+<p class=Jcodemultiline>x { y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (From)</span><span style='font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;{ dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;From verb {&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->No, nothing was left out!<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{</span></span> is not paired with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>}</span></span>; it is a verb
+and stands by itself.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The left rank is 0; the result
+is item number <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>One of the great insights of J is the
+realization that selection, which in most other languages requires a special
+syntax like C's <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>y[x]</span></span>,
+is really just a dyadic verb like any other.&nbsp;
+Examples:</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 { 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> has rank 1; its
+items have rank 0; item number 2 is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4&nbsp;.</span></span></p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 4 { 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The left frame is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>;
+each atom of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+selects an item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(each an atom), and the results are made into a 2-item list.</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>1 { i. 3 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 4 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> has rank 2; its
+items have rank 1; item number 1 is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3 4 5&nbsp;.</span></span></p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 1 { i. 3 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>6 7 8</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 4 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The left frame is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>;
+each atom of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+selects an item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(each a list), and the results are made into a 2x3-item array.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 0 { 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>You are allowed to select
+item 0 of a scalar.&nbsp; This follows from
+the definition that a scalar has a single item which is the scalar itself.<span
+style='mso-spacerun:yes'>&nbsp; </span>Selecting any other item is an error.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>There are many variations on the
+format of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+providing for multidimensional indexing where each index can be a list.<span
+style='mso-spacerun:yes'>&nbsp; </span>You will have to wait a bit to learn them,
+but I will note here that a negative index counts back from the end of the
+array:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_1 { 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>x # y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Copy)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Copy verb #&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;# dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Left rank is 1.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is a list whose items are all 0 or 1, the
+result has the same rank as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, and contains just the items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+for which the corresponding item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is 1.&nbsp;
+For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 0 1 0 0 0 #
+3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>0 0 1 # i. 3 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>8 9 10 11</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>x -. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Remove)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Remove verb -.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;-. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Both ranks are infinite.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is construed as a collection of cells whose
+rank is that of an item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>&nbsp;.&nbsp;
+Any items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+that match such cells of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> are removed:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>1 2 3 4 5 4 3 -. 2 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1 3 5 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(i. 4 2) -. (i. 2 2)</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>6 7</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(i. 4 2) -. 0 1</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>2 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>6 7</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>In the last two examples,
+the items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+are 1-cells, so the 1-cells of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> are removed from
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Understand the last example especially, to
+see that the shape of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+determines how <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is broken into cells.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The verb is defined with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operating on <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+because of the analogy with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-&nbsp;</span></span>.&nbsp;
+If <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are sets, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;-.&nbsp;y</span></span>
+is the set difference.</p>
+
+<p class=Subsubsection>Indexing: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>i. e. I.</span></span></p>
+
+<p class=Jcodemultiline>x i. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Index Of) and </span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>x
+i.!.0 y</span></span><span style='font-family:"Times New Roman";mso-bidi-font-weight:
+bold'> (Intolerant Index Of)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Index Of verb i.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;i. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left rank is
+infinite.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&nbsp;y</span></span>
+looks through the items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> to find one that matches <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>; the result is
+the item number of the first match.&nbsp;
+Examples:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 1 4 1 5 9 i. 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(i. 4 3) i. 6 7 8</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>2</p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;i. dyad:i.!.0&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The comparison in dyad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>
+is tolerant, that is, numeric operands that are very close to equal are
+considered equal.&nbsp; The special form <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.!.0</span></span>
+is like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>,
+except that the comparison is intolerant.&nbsp;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.!.0</span></span>
+uses a different algorithm from <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.</span></span>, and may be faster even if the operands are
+not numeric.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The rest of this discussion of
+dyad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>
+can be omitted until you need to apply <st2:middlename
+ w:st="on"><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span></st2:middlename>
+ <st2:middlename w:st="on"><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>I.</span></span></st2:middlename> <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>e.</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-.</span></span>
+to arrays of rank 2 or higher.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The rank of the dyads <st2:middlename
+w:st="on"><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span></st2:middlename>
+<st2:middlename w:st="on"><span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>I.</span></span></st2:middlename>
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>e.</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-.</span></span> is infinite, meaning the verb operates on
+both operands in their entirety, but they have the special peculiarity that
+they break up the data operand into cells based on the rank of the control
+operand.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>Reread the definition of
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>
+. &nbsp;For <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> to match an item
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+the rank of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+must be the same as the rank of an item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> (call that <span
+class=Definition>rix</span>, which is one less than the rank of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+(namely <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#$x</span></span>)
+unless <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is an atom; formally, <i>rix</i> is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(0&nbsp;&gt;.&nbsp;(#$x)&nbsp;-&nbsp;1)</span></span>
+or, more cleverly, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#${.x</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is of higher rank, each <i>rix</i>-cell
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is matched against items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Formally, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&quot;(_,<i
+style='mso-bidi-font-style:normal'>rix</i>)&nbsp;y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Example:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 1 4 1 5 9 i. 1 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(i. 3 3) i. (i. 2 3)</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>0 1</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The indexing operation is impossible if the <i
+style='mso-bidi-font-style:normal'>rix</i>-cells of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> do not have the
+same shape as an item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>&nbsp;. <span
+style='mso-spacerun:yes'>&nbsp;</span>Another way of saying this is that the shape
+of an item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(}.$x)</span></span>
+must be a suffix of the shape of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>&nbsp;.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>If an <i>rix</i>-cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+matches none of the items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, the result value for that cell is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#x</span></span>,
+i.&nbsp;e. one more than the largest valid item-number of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> :</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 1 4 1 5 9 i. 8 4 _1</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>6 2 6</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>To be hair-splittingly accurate
+we must say that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&quot;(_,<i
+style='mso-bidi-font-style:normal'>rix</i>)&quot;_&nbsp;y</span></span> because
+the rank of dyad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>
+is infinite.&nbsp; This distinction will
+matter eventually.<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></p>
+
+<p class=Jcodemultiline>x e. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Element Of)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Element Of verb e.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;e. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The right rank is
+infinite.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;e.&nbsp;y</span></span>
+is a lightweight version of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;i.&nbsp;x</span></span>; the result is 1 if <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+matches an item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+0 if not.&nbsp; The verb is applied to <i>riy</i>-cells
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'> </span>(where
+<b><i>riy</i></b> is the rank of an item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Formally, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;e.&nbsp;y</span></span>
+is the same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(#y)&nbsp;~:&nbsp;y&nbsp;i.&nbsp;x</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>e.</span></span> is an exception
+to the rule that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is control information and <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is data.&nbsp;
+It was defined to be reminiscent of mathematical<b> </b>epsilon<b> </b>meaning
+'element of'.<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></p>
+
+<p class=Jcodemultiline>x I. y<span
+style='font-family:"Times New Roman";mso-bidi-font-weight:bold'> (Interval
+Index--Find Insert-Before Point In Sorted List)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Find Insertion Point verb I.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;I.
+dyad&quot; <![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->The
+left rank is infinite.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+must already be sorted in either ascending or descending order of its
+items.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;I.&nbsp;y</span></span> produces,
+for each <i style='mso-bidi-font-style:normal'>rix</i>-cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+as defined above under <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;i.&nbsp;y</span></span>, the index of the item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+before which <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+would be inserted into the sorted list.&nbsp;
+If more than one position is possible, the result is the smallest
+candidate; if the <i style='mso-bidi-font-style:normal'>rix</i>-cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+would have to be put onto the end of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, the result is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#x</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>You may think of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;I.&nbsp;y</span></span>
+as the index that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+would have after it was inserted in its proper spot in the list <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>,
+or as the index of the interval (open on the left, closed on the right)
+containing <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+where interval 0 includes any value coming before or equal to the first item of
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><o:p></o:p></span></span></p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>1 3 5 7 7 9&nbsp;&nbsp;
+I.&nbsp;&nbsp; 4 5 7 10</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>2 2 3 6</p>
+
+<p class=Subsubsection>Take and Drop: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>{. }.</span></span></p>
+
+<p class=Jcodemultiline>x {. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Take)</span></p>
+
+<p class=Jcodemultiline>x }. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Drop)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Drop verb }.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Take verb {.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;}. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;{. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left rank is 1, but the
+verb handles scalars also; we will consider only the case where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is a scalar.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;{.&nbsp;y</span></span> (<span
+class=Definition>take</span>) takes the first <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+i.&nbsp;e. it produces a result which consists of the first <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;}.&nbsp;y</span></span>
+(<span class=Definition>drop</span>) discards the first <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;.</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is negative, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;{.&nbsp;y</span></span>
+takes the last (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>|x</span></span>)
+items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;}.&nbsp;y</span></span>
+discards the last (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>|x</span></span>)
+items (remember, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>|x</span></span>
+is the absolute value of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>).&nbsp; The
+rank of the result is always the same as the rank of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, and in all
+cases the order of items is unchanged.&nbsp;
+Examples:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 {. 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 1</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 }. 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_2 {. 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_1 }. i. 3 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>0 1 2</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 4 5</p>
+
+<p class=MsoBodyText style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;{.&nbsp;y</span></span>
+always gives you as many items as you asked for.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you <span class=Definition>overtake</span>
+by asking for more than <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#y</span></span> items, J will create extra ones, filling
+them with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&nbsp;'</span></span>
+as appropriate:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5 {. 3 1 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 1 4 0 0</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_5 {. 'abc'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp; </span>abc&nbsp;
+NB. Negative overtake: fills added at front</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>We have met fills before; they
+were added to bring the results from different cells of a verb up to a common
+shape so that they could be made into an array.&nbsp;
+The fills added by overtake are different: they are part of the
+execution of the verb itself.&nbsp; We will
+distinguish the two types of fill, calling the ones added by the verb itself <span
+class=Definition>verb fills</span> and the ones added to make <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;fill:verb&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->cell-results compatible <span
+class=Definition>framing fills</span>.&nbsp;
+Framing fills are always <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0</span></span> or <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'&nbsp;'</span></span>, but you can specify the value to use
+for a verb fill, using <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Fit conjunction !.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;!.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->the <span class=Definition>fit
+conjunction</span> <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>!.</span></span>&nbsp;:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5 {.!.9 (3 1 4)</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 1 4 9 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_5 {.!.'x'&nbsp;'abc'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>xxabc</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The fit conjunction creates a
+new verb; in this case <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{.!.f</span></span> is a verb that looks just like <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span>
+but uses <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+for the verb fill.&nbsp; </p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The fit conjunction is by no
+means reserved for specifying verb fills: it is available for use on any
+primitive to make a small change to the operation of the primitive.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>!.</span></span> has a meaning for a primitive, that meaning
+is given in the Dictionary entry for the primitive.</p>
+
+<p class=Subsubsection>Joining Arrays: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>,. ,:</span></span></p>
+
+<p class=Jcodemultiline>x ,. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Stitch)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;,. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Stitch verb ,.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left rank is
+infinite.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,.&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,&quot;_1&nbsp;y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>That means that dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>,</span></span> is applied to
+the corresponding items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, making each
+item of the overall result the concatenation of the corresponding items.<span
+style='mso-spacerun:yes'>&nbsp; </span>Example:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 4 5 ,. 7 8 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 7</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 8</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>x ,: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Laminate)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Laminate verb ,\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;,\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left rank is
+infinite.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,:&nbsp;y</span></span>
+is a list of 2 items: item 0 is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and item 1 is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> do not have the
+same shape, they are brought to a common rank and padded with fills to a common
+shape.&nbsp; Dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>,:</span></span> concatenates <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+along an added axis, in contrast to dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>,</span></span> which
+concatenates them along their leading axis:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 4 5 ,: 7 8 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>7 8 9</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Contrast this with
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,.</span></span>
+above or dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,</span></span>
+which would produce <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;4&nbsp;5&nbsp;7&nbsp;8&nbsp;9&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline style='margin-left:.5in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>1 2 , 3 4 ,: 5 6</p>
+
+<p class=Jcodemultiline style='margin-left:.5in'>1 2</p>
+
+<p class=Jcodemultiline style='margin-left:.5in'>3 4</p>
+
+<p class=Jcodemultiline style='margin-left:.5in'>5 6</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Take a moment to understand
+why in this example the first verb is dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>,</span></span> and the second
+is dyad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,:</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.</p>
+
+<p class=Subsubsection>Rotate Left and Shift Left: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>|.</span></span></p>
+
+<p class=Jcodemultiline>x |. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Rotate Left)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;|. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Rotate Left verb |.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left rank is 1, but we
+will discuss only the case where <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is a scalar.&nbsp;
+The result has the same shape as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, with the items
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+rotated <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+places to the left (with wraparound).&nbsp; If
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is negative, the items are rotated to the right.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 |. 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 1 5 9 3 1</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_1 |. i. 3 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>6 7 8</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>0 1 2</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>x |.!.f y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Shift Left)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span>&nbsp;XE
+&quot;Shift Left verb |.!.f&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->When the fit conjunction is
+used, any item that is rotated across the beginning of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is replaced by
+the fill <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This turns the rotate into a shift where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+gives the value to be shifted in: </p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 |.!.'x'&nbsp;'abcde'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>cdexx</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_2 |.!.'x' 'abcde'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>xxabc</p>
+
+<p class=Subsubsection>Sort: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>/: \:</span></span></p>
+
+<p class=Jcodemultiline>x /: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Sort Up Using)</span></p>
+
+<p class=Jcodemultiline>x \: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Sort Down Using)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Sort Using verb /\: \\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;\\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;/\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left rank is
+infinite.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> must have at
+least as many items as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>.&nbsp; The
+items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+are <i>records</i> and the items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> are <i>keys</i>; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;/:&nbsp;y</span></span>
+is the records <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+sorted into ascending order of corresponding keys <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;\:&nbsp;y</span></span> sorts into descending
+order.&nbsp; Examples:</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 1 4 1 5 9 /: 0 1 2 3 4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 1 4 1 5 9</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> was already in
+order.</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 1 4 1 5 9 /: 5 4 3 2 1 0</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>9 5 1 4 1 3</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Sorting into reverse order.</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3 1 4 1 5 9 /: 0 10 1 20 2 30</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 4 5 1 1 9</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> in order of
+ascending <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(i. 4 3) /: 10 20 1 2</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>6<span
+style='mso-spacerun:yes'>&nbsp; </span>7&nbsp; 8</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>9 10 11</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>0<span
+style='mso-spacerun:yes'>&nbsp; </span>1&nbsp; 2</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3<span
+style='mso-spacerun:yes'>&nbsp; </span>4&nbsp; 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> in order of
+ascending <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>1 3 5 /: 7 8 , 1 2 ,: 4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 5 1</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The keys <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> do not have to
+be single numbers; they don't even have to be numeric.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1 2</span></span> is lowest,
+then <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4 5</span></span>,
+then <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>7 8</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The Dictionary gives complete rules for
+ordering <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>Because sorting is not so easy
+in C, C programmers are not quick to recognize applications of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/:</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>\:</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The J implementation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/:</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>\:</span></span>
+runs in linear time for most <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> and should not be avoided.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>According to our general
+principle, we would expect that in dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/:</span></span> <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+held the keys and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+the data.&nbsp; Dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/:</span></span> is an exception
+to the rule (the reasoning is that in both <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;/:&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/:&nbsp;y</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+holds the ordering information).<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]></p>
+
+<p class=Jcodemultiline>y /: y&nbsp; <span
+style='font-family:"Times New Roman";mso-bidi-font-weight:bold'>or </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/:~ y</span></span><span
+style='font-family:"Times New Roman";mso-bidi-font-weight:bold'> (Sort Up)</span></p>
+
+<p class=Jcodemultiline>y \: y&nbsp; <span
+style='font-family:"Times New Roman";mso-bidi-font-weight:bold'>or </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>\:~ y</span></span><span
+style='font-family:"Times New Roman";mso-bidi-font-weight:bold'> (Sort Down)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Sort verb /\: \\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->When <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are the same, you have the simple case of sorting <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> into ascending
+or descending order.&nbsp; We will learn later
+that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u~&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;u&nbsp;y</span></span>,
+so <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/:~&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>\:~&nbsp;y</span></span>
+can be used to sort <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+into ascending or descending order.</p>
+
+<p class=Subsubsection>Match: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>-:</span></span></p>
+
+<p class=Jcodemultiline>x -: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Match)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Match verb -\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;-\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left rank is
+infinite.&nbsp; The result is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are the same, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+otherwise, <b>except</b>: (1) if they are numeric, the comparison is tolerant;
+(2) for some reason I don't understand, if they are empty, they are considered
+to match even if the types are different, which means that getting a result of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+from <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;-:&nbsp;y</span></span>
+is no guarantee that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+will behave identically:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(0$0) -: ''</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(1 {. 0$0) -: (1 {. '')</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>0</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The important difference between
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>
+and dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=</span></span>
+is that dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>
+has infinite rank so you get a single result covering the entire array, and it
+won't fail if the shapes of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> do not agree.</p>
+
+<p class=Subsection><a name="_Toc191734357"></a><a name="_Toc5414566"></a><a
+name="_Toc5414418"></a><a name="_Toc1896201"><span style='mso-bookmark:_Toc5414418'><span
+style='mso-bookmark:_Toc5414566'><span style='mso-bookmark:_Toc191734357'>Monads</span></span></span></a></p>
+
+<p class=Subsubsection>Enfile: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>,<o:p></o:p></span></span></p>
+
+<p class=Jcodemultiline>, y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Enfile)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Ravel verb ,&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Enfile verb ,&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;, monad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,&nbsp;y</span></span>
+consists of all the atoms of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, made into a list.<span
+style='mso-spacerun:yes'>&nbsp; </span>The order is row-major order , i.&nbsp;e. all
+the atoms of item 0 of the original <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> come first, followed by atoms of item 1, and
+so on; within each item the ordering similarly preserves the order of
+subitems.&nbsp; Examples:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>, i. 2 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>0 1 2 3 4 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The atoms were made into a
+list.</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>a =. 2 2 3 $ 'abcdefghijkl'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>a</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>abc</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>def</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>ghi</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>jkl</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>,a</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>abcdefghijkl</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> of any shape
+produces a list.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>Recall that a single quoted
+character is an atom rather than a list:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>$'x'</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>To get a 1-character list,
+use monad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>$,'x'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>The official name for
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,</span></span>
+is the quaint but unedifying 'ravel', meaning 'separate or undo the texture of'.<span
+style='mso-spacerun:yes'>&nbsp; </span>I prefer the equally quaint but more
+descriptive 'enfile', which means 'arrange in a line (as if on a string)'.</p>
+
+<p class=Subsubsection>Reverse and Transpose: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>|. |:</span></span></p>
+
+<p class=Jcodemultiline>|. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Reverse)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Reverse verb |.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;|. monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are put into reverse order:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp; </span>&nbsp;|. i.
+5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 3 2 1 0</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>|: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Transpose)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Transpose verb |\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;|\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The axes of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> are
+reversed.&nbsp; This is difficult to visualize
+for high ranks but easy for the most common case, rank 2:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>|: i. 3 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>0 4<span
+style='mso-spacerun:yes'>&nbsp; </span>8</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1 5<span
+style='mso-spacerun:yes'>&nbsp; </span>9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>2 6 10</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3 7 11</p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Transpose verb |\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;|\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;|:&nbsp;y</span></span>
+is similar, but rather than simply reordering the axes, the verb permutes them
+by moving the axes specified in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> to the end of the shape.</p>
+
+<p class=Subsubsection>Take and Drop Single Item: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>{. {:
+}. }:</span></span></p>
+
+<p class=Jcodemultiline>{. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Head)</span></p>
+
+<p class=Jcodemultiline>{: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Tail)</span></p>
+
+<p class=Jcodemultiline>}. y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Behead)</span></p>
+
+<p class=Jcodemultiline>}: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Curtail)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Curtail verb }\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Behead verb }.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Tail verb {\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Head verb {.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;}\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;}. monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;{\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;{. monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The operations performed are
+simple; the biggest problem is remembering which primitive does what.<span
+style='mso-spacerun:yes'>&nbsp; </span>Remember that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{</span></span> means <i>take</i>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}</span></span>
+means <i>drop</i>, and that<span style='font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>.</span></span></span> means <i>beginning</i> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+means <i>end</i>.&nbsp; So, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{.y</span></span> is the first
+item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{:y</span></span>
+is the last item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.y</span></span>
+is all of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+except the first item, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>}:y</span></span> is all of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> except the last
+item:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>{. 3 4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>{: i. 3 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>8 9 10 11</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>}. 3 4 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>4 5</p>
+
+<p class=MsoBodyText style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>}.y</span></span> is identical
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1}.y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}:y</span></span>
+is identical to _<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1}.y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{.y</span></span> is <b>not</b> identical to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1{.y</span></span>,
+because <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1{.y</span></span>
+has the same rank as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+while <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.y</span></span>
+has the rank of an item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.</p>
+
+<p class=Subsubsection>Grade (Create Ordering Permutation): <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>/: \:</span></span></p>
+
+<p class=Jcodemultiline>/: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Grade Up)</span></p>
+
+<p class=Jcodemultiline>\: y<span style='font-family:"Times New Roman";
+mso-bidi-font-weight:bold'> (Grade Down)</span></p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Grade verbs /\: \\:&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;\\: monad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;/\: monad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/:&nbsp;y</span></span>
+creates a numeric list with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#y</span></span> items, such that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i{/:y</span></span> is the index
+of the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i</span></span>th-largest
+item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(/:y){y</span></span> gives <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> sorted into
+ascending order.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/:y</span></span> is a <span
+class=Definition>permutation vector</span>, i.&nbsp;e. it contains each integer
+in the range <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(#y)-1</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>\:</span></span> is similar but works in descending
+order.&nbsp; Example:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>/: 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1 3 0 2 4 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Read this result as
+follows: the smallest item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is item 1 (with value 1), the next-smallest
+is item 3 (1), then item 0 (3), then item 2 (4), then item 4 (5), then item 5
+(9).&nbsp; Monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/:</span></span> defined this
+way turns out to be surprisingly useful.&nbsp;
+As a limbering-up exercise in the use of permutation vectors, and an
+example of how compactly J can express ideas, see if you can describe in words
+what <i>two</i> applications of monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>/:</span></span> will give:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>/: /: 3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>2 0 3 1 4 5</p>
+
+<p class=Subsubsection>Add An Axis: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>,:</span></span><span class=Jcode><span
+style='font-family:"Times New Roman";mso-bidi-font-weight:bold'> (Itemize)</span></span></p>
+
+<p class=Jcodemultiline>,: y</p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Itemize verb ,\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;,\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The result of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,:&nbsp;y</span></span>
+has rank one higher than the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, with one item, which is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The shape of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>,:&nbsp;y</span></span> is the
+shape of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+with 1 prepended (in plain J, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$,:y</span></span> is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1,$y</span></span>).</p>
+
+<p class=Subsubsection>Constant Verb</p>
+
+<p class=Jcodemultiline>m&quot;n</p>
+
+<p class=MsoBodyText style='margin-left:.25in'><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Constant verb m\&quot;n&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m<span style='font-size:10.0pt'>\</span>&quot;n&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->We
+have met the rank conjunction <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;</span></span> applied to verb left arguments; applied
+to noun left arguments it produces a verb whose result is always the value of
+the noun.&nbsp; The created verb (which can be
+used as either a monad or a dyad) has ranks, given as the right operand of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5&quot;_ i. 4 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The simplest and most
+common case.&nbsp; Since the verb has infinite
+rank, it operates on the entire operand and produces the scalar value.</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5&quot;0 i. 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>5 5 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Here the verb is applied to
+each 0-cell of the list, giving the scalar result for each cell.</p>
+
+<p class=Jcodemultilinefirst style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>1 2 3&quot;0 i. 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1 2 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1 2 3</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>1 2 3</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Here the result at each
+cell is the left argument of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;</span></span>&nbsp;, the list <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you were expecting the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3</span></span> to be repeated,
+remember that you can look at the words as J sees them:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>;: '1 2 3&quot;0 i. 3'<o:p></o:p></span></span></p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>+-----+-+-+--+-+<o:p></o:p></span></span></p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>|1 2
+3|&quot;|0|i.|3|<o:p></o:p></span></span></p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>+-----+-+-+--+-+<o:p></o:p></span></span></p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3</span></span> is
+a single word.</p>
+
+<p class=Jcodemultilinefirst>_9:..._1: 0: 1:...9: _: __:</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>For a few special values, namely
+the integers <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_9</span></span>
+through <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9</span></span>,
+infinity <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_</span></span>,
+and negative infinity <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>__</span></span>,
+you can create an infinite-rank verb to produce the value by following the
+constant value with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is equivalent to <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>value</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;_&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>3: 'abc'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>3</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The operand <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'abc'</span></span>
+was ignored, and the result was <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3&nbsp;</span></span>.</p>
+
+</div><!--bottom jump start--><hr><a href="loopless_code_ii_adverbs__an.htm">&gt;&gt;</a>&nbsp;
+<a href="starting_to_write_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

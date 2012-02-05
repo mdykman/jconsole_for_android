@@ -1,0 +1,249 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>3!: Conversions</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx004.htm">&gt;&gt;</a>&nbsp;
+<a href="dx002.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Conversions</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>3!:</font></b></td>
+</tr></table>
+<br>
+
+<TABLE>
+<tr><td VALIGN=TOP WIDTH=120><a name="0"></a><tt>3!:0 y</tt></td>
+<td>
+<b>Type</b>. The internal type of the noun<tt> y</tt> ,<tt> </tt>encoded 
+as follows: <br>
+
+<table>
+<tr>
+<td><table>
+<tr><td><tt>1</tt></td>          <td>boolean         </td></tr>
+<tr><td><tt>2</tt></td>          <td>literal         </td></tr>
+<tr><td><tt>4</tt></td>          <td>integer         </td></tr>
+<tr><td><tt>8</tt></td>          <td>floating point  </td></tr>
+<tr><td><tt>16</tt></td>         <td>complex         </td></tr>
+<tr><td><tt>32</tt></td>         <td>boxed           </td></tr>
+<tr><td><tt>64</tt></td>         <td>extended integer</td></tr>
+<tr><td><tt>128&nbsp;</tt></td>  <td>rational        </td></tr>
+</table></td>
+<td><tt>&nbsp; &nbsp; &nbsp;</tt></td>
+<td><table>
+<tr><td><tt>1024</tt></td>          <td>sparse boolean</td></tr>
+<tr><td><tt>2048</tt></td>          <td>sparse literal</td></tr>
+<tr><td><tt>4096</tt></td>          <td>sparse integer</td></tr>
+<tr><td><tt>8192</tt></td>          <td>sparse floating point</td></tr>
+<tr><td><tt>16384</tt></td>         <td>sparse complex</td></tr>
+<tr><td><tt>32768</tt></td>         <td>sparse boxed</td></tr>
+<tr><td><tt>65536</tt></td>         <td>symbol</td></tr>
+<tr><td><tt>131072&nbsp;</tt></td> <td>unicode</td></tr>
+</table></td></tr></table>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="1"></a><tt>[x] 3!:1 y </tt></td>
+<td>
+<b>Convert to Binary Representation</b>. 
+
+In <i>standard byte order</i>, the bytes of a word are listed 
+from most significant to least significant; in <i>reverse byte order</i>, 
+the bytes are listed from least significant to most significant.
+For example, the 4-byte integer 265358979 is<tt> 0fd10e83 </tt>in 
+standard byte order and<tt> 830ed10f </tt>in reverse byte order.
+The PC is a reverse byte order machine.<br><br>
+
+The dyad<tt> x 3!:1 y </tt>applies to an array<tt> y </tt>and produces its
+binary representation, according to the atom<tt> x</tt> :
+
+<table>
+<tr><td>&nbsp;</td> <td><u>x</u> &nbsp; &nbsp;</td> <td><u>word size</u> &nbsp; &nbsp;</td> <td><u>byte order</u></td></tr>
+<tr><td> </td>      <td>0</td>          <td>32 bits</td>   <td>standard</td></tr>
+<tr><td> </td>      <td>1</td>          <td>32 bits</td>   <td>reverse</td></tr>
+<tr><td> </td>      <td>2</td>         <td>64 bits</td>   <td>standard</td></tr>
+<tr><td> </td>      <td>3</td>         <td>64 bits</td>   <td>reverse</td></tr>
+</table>
+<br>
+
+<p>For backward compatibility,<tt> x </tt>may be 10 instead of 2 and 11 instead of 3.
+The monad<tt> 3!:1 </tt>produces the binary representation 
+in the word size and byte order of the current machine.</p>
+
+<p>The result of<tt> 3!:1 y </tt>or<tt> x 3!:1 y </tt>consists 
+of the following parts.  An mword (machine word) is either 32-bits or 64 bits as
+determined from<tt> x</tt> ,<tt> </tt>or from the current machine if<tt> x </tt>is elided.</p>
+
+<table border=1 cellspacing=0 cellpadding=5>
+<tr><td valign=top>flag</td><td valign=top>1 mword</td>
+ <td>The first byte is one of the following:<table>
+    <tr><td><tt>e0</tt></td><td><tt>&nbsp; &nbsp;</tt></td><td>32 bits, standard</td></tr>
+    <tr><td><tt>e1</tt></td><td>&nbsp;</td><td>32 bits, reverse</td></tr>
+    <tr><td><tt>e2</tt></td><td>&nbsp;</td><td>64 bits, standard</td></tr>
+    <tr><td><tt>e3</tt></td><td>&nbsp;</td><td>64 bits, reverse</td></tr>
+   </table></td></tr>
+<tr><td>type</td><td>1 mword</td><td>as in<tt> 3!:0 </tt></td></tr>
+<tr><td>#elements</td><td>1 mword</td><td><tt>*/$y </tt>if dense;<tt> 1 </tt>if sparse</td></td></tr>
+<tr><td>rank</td><td>1 mword</td><td><tt>#$y</tt></td></tr>
+<tr><td>shape</td><td>rank mwords</td><td><tt>$y</tt></td></tr>
+<tr><td>value</td><td>? mwords</td><td>the ravelled elements of<tt> y </tt></td></tr>
+</table>
+
+
+<p>Ravelled elements for the boxed, extended integer, rational, and sparse types
+are byte offsets to the representations of the elements.</p>
+
+<p>See<tt> 3!:3 </tt>below for examples.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="2"></a><tt>3!:2 y</tt></td>
+<td>
+<b>Convert from Binary/Hex Representation</b>. Inverse of<tt> 3!:1 </tt>
+and of<tt> 3!:3</tt> ;<tt> </tt>works on an argument in either word size
+and in either byte order.
+If the first byte of the flag part (see<tt> 3!:1 </tt>above)
+is not one of<tt> e0 e1 e2 e3</tt> ,<tt> </tt>then 
+the conversion proceeds under the assmption that the data is pre-J6.01.
+</p>
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="3"></a><tt>[x] 3!:3 y</tt></td>
+<td>
+<b>Hex Representation</b>.  Like<tt> 3!:1</tt> ,<tt> </tt>but the 
+result is a literal matrix of the hexadecimal representation.  
+For example, under 32-bit Windows:<br>
+
+<pre>
+   (3!:3 x) ; (3!:3 x,o.1) ; 2 (3!:3) x,o.1 [ x=: 1 2 3 0 _1
++--------+--------+----------------+
+|e1000000|e1000000|e200000000000000|
+|04000000|08000000|0000000000000008|
+|05000000|06000000|0000000000000006|
+|01000000|01000000|0000000000000001|
+|05000000|06000000|0000000000000006|
+|01000000|00000000|3ff0000000000000|
+|02000000|0000f03f|4000000000000000|
+|03000000|00000000|4008000000000000|
+|00000000|00000040|0000000000000000|
+|ffffffff|00000000|bff0000000000000|
+|        |00000840|400921fb54442d18|
+|        |00000000|                |
+|        |00000000|                |
+|        |00000000|                |
+|        |0000f0bf|                |
+|        |182d4454|                |
+|        |fb210940|                |
++--------+--------+----------------+
+
+   t=: 0 (3!:3) ;:'fourscore and ten years ago'
+   $t
+43 8
+   12{.t
+e0000000
+00000020
+00000005
+00000001
+00000005
+00000028
+00000048
+00000060
+00000078
+00000094
+e0000000
+00000002
+
+   dfh=: 16 #. '0123456789abcdef' i. ]  NB. decimal from hex
+
+   ((i.#t) e. 0,4 %~ dfh (5+i.5){t) <;.1 t
++--------+--------+--------+--------+--------+--------+
+|e0000000|e0000000|e0000000|e0000000|e0000000|e0000000|
+|00000020|00000002|00000002|00000002|00000002|00000002|
+|00000005|00000009|00000003|00000003|00000005|00000003|
+|00000001|00000001|00000001|00000001|00000001|00000001|
+|00000005|00000009|00000003|00000003|00000005|00000003|
+|00000028|666f7572|616e6400|74656e00|79656172|61676f00|
+|00000048|73636f72|        |        |73000000|        |
+|00000060|65000000|        |        |        |        |
+|00000078|        |        |        |        |        |
+|00000094|        |        |        |        |        |
++--------+--------+--------+--------+--------+--------+
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="4"></a><tt>3!:4 y<BR>3!:5 y</tt></td>
+<td>
+<b>Integer/Floating Conversion</b>. If<tt> ic=: 3!:4 </tt>
+and<tt> fc=: 3!:5 </tt> ,<tt> </tt>then<br><br>
+
+<table>
+<tr><td><tt>&nbsp;3 ic y &nbsp;</tt></td> <td>J integers to sets of 8 bytes (J64 only)</td></tr>
+
+<tr><td><tt>_3 ic y</tt></td> <td>sets of 8 bytes to J integers (J64 only)</td></tr>
+
+<tr><td><tt>&nbsp;2 ic y &nbsp;</tt></td> <td>J integers to sets of 4 bytes</td></tr>
+
+<tr><td><tt>_2 ic y</tt></td> <td>sets of 4 bytes to J integers</td></tr>
+
+<tr><td><tt>&nbsp;1 ic y</tt></td> <td>J integers to sets of 2 bytes</td></tr>
+
+<tr><td><tt>_1 ic y</tt></td> <td>sets of 2 bytes to J integers</td></tr>
+
+<tr><td><tt>&nbsp;0 ic y</tt></td> <td>sets of 2 bytes interpreted as unsigned integers to J integers</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>&nbsp;2 fc y</tt></td> <td>J floats to binary doubles</td></tr>
+
+<tr><td><tt>_2 fc y</tt></td> <td>binary doubles to J floats</td></tr>
+
+<tr><td><tt>&nbsp;1 fc y</tt></td> <td>J floats to binary short floats</td></tr>
+
+<tr><td><tt>_1 fc y</tt></td> <td>binary short floats to J floats</td></tr>
+</table>
+<br>
+
+All ranks are infinite and all inverses of<tt> k&amp;ic </tt>
+and<tt> k&amp;fc </tt>exist for non-zero<tt> k</tt> .
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="6"></a>
+<tt>3!:6 y</tt></td>
+<td><b>Lock Script</b>.  Converts plain script text into locked script text.
+</td></tr>
+
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dx004.htm">&gt;&gt;</a>&nbsp;
+<a href="dx002.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

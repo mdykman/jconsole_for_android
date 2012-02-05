@@ -1,0 +1,59 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Table</title>
+
+</head><body><!--top jump start--><a href="array.htm">&gt;&gt;</a>&nbsp;
+<a href="list.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Table</h1>
+A table is a two dimensional array of atoms. Tables cannot be written directly as a constant as can an atom or a list, but instead must be created with a primitive. The dyad <font face=courier size=-1>$</font> (shape) can create tables. The left argument indicates the count of items in each dimension and the right argument provides items to populate the table.<br>
+
+<pre>   2 3 $ 7	NB. a 2 by 3 table of 7's
+7 7 7
+7 7 7
+   2 3 $ 7 8 9 10 11 12
+ 7  8  9
+10 11 12
+   2 3 $ 7 8	NB. cycle through atoms to get enough
+7 8 7
+8 7 8
+   3 4 $ 'abcdefghijklmnopqrstuv'
+abcd
+efgh
+ijkl</pre>
+The monad <font face=courier size=-1>$</font> (shape of) gives the shape of its argument. The shape is the list of the count of atoms in each dimension of the argument.<br>
+
+<pre>   a =. 2 3 $ 7
+   $ a
+2 3</pre>
+The monad <font face=courier size=-1>i.</font> (integers), introduced earlier for creating a list of integers, can be used to create tables of integers.<br>
+
+<pre>   i.5		NB. list of 5 integers
+0 1 2 3 4
+   i. 2 3	NB. 2 by 3 table of integers
+0 1 2
+3 4 5</pre>
+<!--bottom jump start--><hr><a href="array.htm">&gt;&gt;</a>&nbsp;
+<a href="list.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

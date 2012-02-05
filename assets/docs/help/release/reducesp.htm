@@ -1,0 +1,154 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>f/ on Sparse Arguments Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="greduce.htm">&gt;&gt;</a>&nbsp;
+<a href="eqins.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">f/ </font>
+<font size=+3>on Sparse Arguments Improved</font></b>
+</td><td align=right>
+initial writing: 2001-07-29<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The monads<tt> f/ </tt>on sparse arguments have been
+made more efficient in time and space.  
+The following table compares the time and space required 
+for<tt> +/s </tt>and<tt> +/&quot;1 s </tt>
+for sparse<tt> s </tt>of various shapes.<br>
+
+<pre>
+   s=: 1 $. shape
+   r=: ?. 1e5   $ 1e6
+   i=: ?. (1e5,#$s) $ $s
+   s=: r (&lt;&quot;1 i)}s
+
+   ts=: 6!:2 , 7!:2@]   NB. <font face=Times size=+1>time and space</font>
+   ts '+/   s'
+   ts '+/&quot;1 s'
+</pre>
+
+<table>
+<tr>
+<td><b>&nbsp;&nbsp;&nbsp; Shape</b></td>
+<td><b>Expression &nbsp;&nbsp;&nbsp;</b></td>
+<td align=center colspan=3><b>J 5.01</b></td><td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center colspan=3><b>J 4.06</b></td><td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center colspan=3><b>Ratio</b></td></tr>
+
+<tr>
+<td><tt>10 10 10 10 1e6 &nbsp;&nbsp;&nbsp;</tt></td>
+<td><tt>+/ &nbsp;&nbsp;s</tt></td>
+<td>0.237968</td><td>&nbsp;</td><td align=right> 3802752</td><td></td>
+<td>0.328043</td><td>&nbsp;</td><td align=right>12846848</td><td></td>
+<td>1.38</td>    <td>&nbsp;</td><td>3.38</td></tr>
+
+<tr>
+<td></td>
+<td><tt>+/&quot;1 s</tt></td>
+<td>0.025751</td><td>&nbsp;</td><td align=right>  526144</td><td></td>
+<td>0.191156</td><td>&nbsp;</td><td align=right> 3229632</td><td></td>
+<td>7.42</td>    <td>&nbsp;</td><td>6.14</td></tr>
+
+<tr>
+<td><tt>1e6 10 10 10 10</tt></td>
+<td><tt>+/ &nbsp;&nbsp;s</tt></td>
+<td>0.346326</td><td>&nbsp;</td><td align=right> 1050432</td><td></td>
+<td>0.445293</td><td>&nbsp;</td><td align=right> 9520896</td><td></td>
+<td>1.29</td>    <td>&nbsp;</td><td>9.06</td></tr>
+
+<tr>
+<td></td>
+<td><tt>+/&quot;1 s</tt></td>
+<td>0.051208</td><td>&nbsp;</td><td align=right> 3278656</td><td></td>
+<td>0.206031</td><td>&nbsp;</td><td align=right> 6555584</td><td></td>
+<td>4.02</td>    <td>&nbsp;</td><td>2.00</td></tr>
+
+<tr>
+<td><tt>2 10 10 10 10 1e6</tt></td>
+<td><tt>+/ &nbsp;&nbsp;s</tt></td>
+<td>0.225852</td><td>&nbsp;</td><td align=right> 3802752</td><td></td>
+<td>0.430299</td><td>&nbsp;</td><td align=right>21171776</td><td></td>
+<td>1.91</td>    <td>&nbsp;</td><td>5.57</td></tr>
+
+<tr>
+<td></td>
+<td><tt>+/&quot;1 s</tt></td>
+<td>0.037085</td><td>&nbsp;</td><td align=right>  919360</td><td></td>
+<td>0.221206</td><td>&nbsp;</td><td align=right> 3704768</td><td></td>
+<td>5.96</td>    <td>&nbsp;</td><td>4.03</td></tr>
+
+<tr>
+<td><tt>1e6 10 10 10 10 2</tt></td>
+<td><tt>+/ &nbsp;&nbsp;s</tt></td>
+<td>0.362589</td><td>&nbsp;</td><td align=right> 1443648</td><td></td>
+<td>0.475774</td><td>&nbsp;</td><td align=right>14190336</td><td></td>
+<td>1.31</td>    <td>&nbsp;</td><td>9.83</td></tr>
+
+<tr>
+<td></td>
+<td><tt>+/&quot;1 s</tt></td>
+<td>0.056411</td><td>&nbsp;</td><td align=right> 3278656</td><td></td>
+<td>0.421492</td><td>&nbsp;</td><td align=right>21172160</td><td></td>
+<td>7.47</td>    <td>&nbsp;</td><td>6.46</td></tr>
+
+<tr>
+<td><tt>4$1e6</tt></td>
+<td><tt>+/ &nbsp;&nbsp;s</tt></td>
+<td>0.299557</td><td>&nbsp;</td><td align=right> 3802752</td><td></td>
+<td>0.381521</td><td>&nbsp;</td><td align=right>12846848</td><td></td>
+<td>1.27</td>    <td>&nbsp;</td><td>3.38</td></tr>
+
+<tr>
+<td></td>
+<td><tt>+/&quot;1 s</tt></td>
+<td>0.044956</td><td>&nbsp;</td><td align=right> 3278656</td><td></td>
+<td>0.180579</td><td>&nbsp;</td><td align=right> 6555584</td><td></td>
+<td>4.02</td>    <td>&nbsp;</td><td>2.00</td></tr>
+
+<tr>
+<td><tt>8$1e3</tt></td>
+<td><tt>+/ &nbsp;&nbsp;s</tt></td>
+<td>0.338152</td><td>&nbsp;</td><td align=right> 5900096</td><td></td>
+<td>0.551470</td><td>&nbsp;</td><td align=right>21235712</td><td></td>
+<td>1.63</td>    <td>&nbsp;</td><td>3.60</td></tr>
+
+<tr>
+<td></td>
+<td><tt>+/&quot;1 s</tt></td>
+<td>0.078596</td><td>&nbsp;</td><td align=right> 5376000</td><td></td>
+<td>0.464777</td><td>&nbsp;</td><td align=right>10750080</td><td></td>
+<td>5.91</td>    <td>&nbsp;</td><td>2.00</td></tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="greduce.htm">&gt;&gt;</a>&nbsp;
+<a href="eqins.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

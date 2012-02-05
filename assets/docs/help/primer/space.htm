@@ -1,0 +1,78 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Space</title>
+
+</head><body><!--top jump start--><a href="precedence.htm">&gt;&gt;</a>&nbsp;
+<a href="word_formation.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Space</h1>
+Spaces are not required to separate primitives from other words. On the other hand extra spaces don't change the meaning.<br>
+
+<pre>   2+3
+5
+   2 + 3
+5
+   2    +    3
+5</pre>
+Most examples in this book have spaces around all primitives. This makes the individual words stand out and allows you to concentrate on the meaning of the words without the additional problem of first figuring out what the words are.<br>
+<br>
+However, most J programmers, as they become more experienced, reach a point where they can easily read the words in a sentence, and the extra spaces become a nuisance and hindrance to understanding, rather than an aid. You will notice that in some of the later examples that some of these unnecessary spaces are left out.<br>
+<br>
+There are some cases where a space is essential.<br>
+<br>
+A space must separate names.<br>
+
+<pre>   a=.3
+   plus=.+
+   a plus a
+6
+   aplusa
+¦value error</pre>
+The <font face=courier size=-1>.</font> (dot) and <font face=courier size=-1>:</font> (colon), used as inflections, change the word immediately in front of them into a new word. When used as a primitive or as the start of a primitive, they must have a space in front so that they are not treated as an inflection.<br>
+
+<pre>   ;: 'a . b'	NB. 3 words
++-+-+-+
+¦a¦.¦b¦
++-+-+-+
+   ;: 'a .b'	NB. same 3 words
++-+-+-+
+¦a¦.¦b¦
++-+-+-+
+   ;: 'a. b'	NB. 2 words
++--+-+
+¦a.¦b¦
++--+-+</pre>
+A space must separate a <font face=courier size=-1>.</font> or <font face=courier size=-1>:</font> , that is not being used as an inflection, from the previous word.<br>
+<br>
+Numbers, for example 1e7, can contain letters. There are in fact several letters that can be used in spelling numbers in J. Letters that immediately follow a number are treated as part of the spelling of the number.<br>
+
+<pre>   plus =. +
+   1plus 3
+¦ill-formed number
+   1 plus 3
+4</pre>
+A space must separate a number from a letter that is not a part of the number.<br>
+ <!--bottom jump start--><hr><a href="precedence.htm">&gt;&gt;</a>&nbsp;
+<a href="word_formation.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

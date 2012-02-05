@@ -1,0 +1,115 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>|. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="det.htm">&gt;&gt;</a>&nbsp;
+<a href="dict.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">|. </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+last updated: 2000-06-30
+</td></tr></table>
+<br>
+
+The monad<tt> |. </tt>is now implemented by direct code,
+replacing the previous use of<tt> { </tt>(indexing).
+The result is improved efficiency in time and space,
+especially for boolean and literal arguments.
+Time and space comparisons are as follows.
+The (time,space) numbers in the table were generated
+by<tt> ts '|.x' </tt>for various<tt> x</tt>,<tt> </tt>
+where<tt> ts=: 6!:2 , 7!:2@]</tt><br><br>
+
+<table>
+<tr>
+<td><tt>&nbsp;&nbsp;&nbsp;<b>x</b></tt></td>
+<td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J 4.05</b></td>
+<td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J 4.04</b></td>
+</tr>
+
+<tr>
+<td><tt>?7e5$2 </tt></td>
+<td><tt>0.00932381 1.04934e6</tt></td>
+<td><tt>0.0851563 9.43802e6</tt></td>
+</tr>
+
+<tr>
+<td><tt>a.{~?7e5$#a. </tt></td>
+<td><tt>0.00939672 1.04934e6</tt></td>
+<td><tt>0.085598 9.43802e6</tt></td>
+</tr>
+
+<tr>
+<td><tt>?7e5$1e6 </tt></td>
+<td><tt>0.0249811 4.19507e6</tt></td>
+<td><tt>0.0967405 1.25837e7</tt></td>
+</tr>
+
+<tr>
+<td><tt>0.01*?7e5$1e6 </tt></td>
+<td><tt>0.0491568 8.38938e6</tt></td>
+<td><tt>0.125808 1.6778e7</tt></td>
+</tr>
+
+<tr>
+<td><tt>&nbsp;</tt></td>
+<td><tt>&nbsp;</tt></td>
+<td><tt>&nbsp;</tt></td>
+</tr>
+
+<tr>
+<td><tt>?1e5 7$2 </tt></td>
+<td><tt>0.0125798 1.04934e6 </tt></td>
+<td><tt>0.0221936 2.09798e6 </tt></td>
+</tr>
+
+<tr>
+<td><tt>a.{~?1e5 7$#a. </tt></td>
+<td><tt>0.0126661 1.04934e6 </tt></td>
+<td><tt>0.0262986 2.09798e6 </tt></td>
+</tr>
+
+<tr>
+<td><tt>?1e5 7$1e6 </tt></td>
+<td><tt>0.0329757 4.19507e6</tt></td>
+<td><tt>0.0426951 5.24371e6</tt></td>
+</tr>
+
+<tr>
+<td><tt>0.001*?1e5 7$1e6  &nbsp; &nbsp; </tt></td>
+<td><tt>0.0522762 8.38938e6  &nbsp; &nbsp; </tt></td>
+<td><tt>0.0654083 9.43802e6</tt></td>
+</tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="det.htm">&gt;&gt;</a>&nbsp;
+<a href="dict.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

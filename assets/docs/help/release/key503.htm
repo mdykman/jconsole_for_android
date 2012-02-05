@@ -1,0 +1,189 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>u/. Improved <a </title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="infixfin.htm">&gt;&gt;</a>&nbsp;
+<a href="insert.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">u/. </font><font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2003-09-03<br>last updated: 2007-07-31
+</td></tr></table>
+<br>
+
+<p>The <i>key</i> adverb<tt> u/. </tt>has been made more efficient 
+for the following cases:
+
+<ul>
+<li>The dyad<tt> x #/. y </tt></li>
+<li>The cases<tt> x &lt;/.i.#x </tt>and<tt> (&lt;/. i.@#) x </tt>
+(group the indices of identical items of<tt> x</tt>)</li>
+<li>The dyad<tt> x f//. y </tt>where<tt> y </tt>is a vector,
+and<tt> f </tt>and<tt> y </tt>are one of the following combinations:
+
+<table>
+<tr><td>&nbsp;</td>
+<td>&nbsp; <b>verb<tt> f</tt></b></td><td>&nbsp; &nbsp;</td>
+<td><b><tt>&nbsp; y </tt>type</b></td></tr>
+
+<tr><td>&nbsp;</td>
+<td><tt>= &lt;. &gt;. + +. * *. ~:</tt></td><td>&nbsp;</td>
+<td>Boolean</td></tr>
+
+<tr><td>&nbsp;</td>
+<td><tt>&lt;. &gt;. + </tt></td><td>&nbsp;</td>
+<td>integer, floating-point</td></tr>
+
+<tr><td>&nbsp;</td>
+<td><tt>n b. </tt>for<tt> n</tt>= 17 22 23 25</td><td>&nbsp;</td>
+<td>integer</td></tr>
+</table>
+(In <a href="key602.htm">J 6.02</a> the restriction that<tt> y </tt>
+be a vector is removed.)
+</li>
+</ul></p>
+
+<p>The following benchmarks demonstrate the improvements in time
+and space.</p>
+
+<pre>
+x1=: ?1e6$10
+x2=: ?1e6$100
+x3=: ?1e6$1000
+x4=: ?1e6$10000
+
+c=: (?1e6$10000){a.{~?1e4 6$#a.
+b=: ?1e6$2
+i=: ?1e6$1000
+d=: 0.01*?1e6$1e6
+
+ts=: 6!:2 , 7!:2@]
+ts 'Expression'
+</pre>
+
+<table>
+<tr><td align=center><b>Expression</b></td>  <td><tt>&nbsp;&nbsp;</tt></td>
+<td align=center colspan=2><b>J 5.03</b></td><td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td align=center colspan=2><b>J 5.02</b></td><td><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td align=center colspan=2><b>Ratio</b></td>
+</tr>
+
+<tr><td><tt>x1 #/. i</tt></td><td>&nbsp;</td>
+<td>0.054980</td><td align=right>    1088</td><td>&nbsp;</td><td align=right> 0.142855</td><td align=right>  1.258374e7</td><td>&nbsp;</td><td align=right> 2.60</td><td align=right> 11565.94</td></tr>
+<tr><td><tt>x2 #/. i</tt></td><td>&nbsp;</td>
+<td>0.061149</td><td align=right>    1856</td><td>&nbsp;</td><td align=right> 0.148341</td><td align=right>  1.258374e7</td><td>&nbsp;</td><td align=right> 2.43</td><td align=right>  6780.03</td></tr>
+<tr><td><tt>x3 #/. i</tt></td><td>&nbsp;</td>
+<td>0.057310</td><td align=right>    9024</td><td>&nbsp;</td><td align=right> 0.151128</td><td align=right>  1.258374e7</td><td>&nbsp;</td><td align=right> 2.64</td><td align=right>  1394.48</td></tr>
+<tr><td><tt>x4 #/. i</tt></td><td>&nbsp;</td>
+<td>0.058312</td><td align=right>  131904</td><td>&nbsp;</td><td align=right> 0.163465</td><td align=right>  1.258374e7</td><td>&nbsp;</td><td align=right> 2.80</td><td align=right>    95.40</td></tr>
+<tr><td><tt>c&nbsp; #/. i</tt></td><td>&nbsp;</td>
+<td>0.466662</td><td align=right>12583808</td><td>&nbsp;</td><td align=right> 0.523424</td><td align=right>  1.258381e7</td><td>&nbsp;</td><td align=right> 1.12</td><td align=right>     1.00</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>x1 &lt;/.i.#x1</tt></td><td>&nbsp;</td>
+<td>0.146615</td><td align=right>&nbsp; 9.438592e6</td><td>&nbsp;</td><td>0.541370</td><td align=right>3.565293e7</td><td>&nbsp;</td><td align=right>3.69</td><td align=right>3.78</td></tr>
+<tr><td><tt>x2 &lt;/.i.#x2</tt></td><td>&nbsp;</td>
+<td>0.161843</td><td align=right>1.075046e7</td><td>&nbsp;</td><td>0.571060</td><td align=right>3.696403e7</td><td>&nbsp;</td><td align=right>3.53</td><td align=right>3.44</td></tr>
+<tr><td><tt>x3 &lt;/.i.#x3</tt></td><td>&nbsp;</td>
+<td>0.173669</td><td align=right>9.655296e6</td><td>&nbsp;</td><td>0.603863</td><td align=right>3.588218e7</td><td>&nbsp;</td><td align=right>3.48</td><td align=right>3.72</td></tr>
+<tr><td><tt>x4 &lt;/.i.#x4</tt></td><td>&nbsp;</td>
+<td>0.246410</td><td align=right>9.731584e6</td><td>&nbsp;</td><td>0.709207</td><td align=right>3.582688e7</td><td>&nbsp;</td><td align=right>2.88</td><td align=right>3.68</td></tr>
+<tr><td><tt>c&nbsp; &lt;/.i.#c</tt></td><td>&nbsp;</td>
+<td>0.738528</td><td align=right>1.799411e7</td><td>&nbsp;</td><td>1.094735</td><td align=right>3.580832e7</td><td>&nbsp;</td><td align=right>1.48</td><td align=right>1.99</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>(&lt;/. i.@#) x1</tt></td><td>&nbsp;</td>
+<td>0.110250</td><td align=right>5.244480e6</td><td>&nbsp;</td><td>0.543262</td><td align=right>3.565312e7</td><td>&nbsp;</td><td align=right>4.93</td><td align=right>6.80</td></tr>
+<tr><td><tt>(&lt;/. i.@#) x2</tt></td><td>&nbsp;</td>
+<td>0.117883</td><td align=right>6.556352e6</td><td>&nbsp;</td><td>0.571406</td><td align=right>3.696422e7</td><td>&nbsp;</td><td align=right>4.85</td><td align=right>5.64</td></tr>
+<tr><td><tt>(&lt;/. i.@#) x3</tt></td><td>&nbsp;</td>
+<td>0.130114</td><td align=right>5.461184e6</td><td>&nbsp;</td><td>0.605503</td><td align=right>3.588237e7</td><td>&nbsp;</td><td align=right>4.65</td><td align=right>6.57</td></tr>
+<tr><td><tt>(&lt;/. i.@#) x4</tt></td><td>&nbsp;</td>
+<td>0.203980</td><td align=right>5.537472e6</td><td>&nbsp;</td><td>0.716786</td><td align=right>3.582707e7</td><td>&nbsp;</td><td align=right>3.51</td><td align=right>6.47</td></tr>
+<tr><td><tt>(&lt;/. i.@#) c</tt></td><td>&nbsp;</td>
+<td>0.651008</td><td align=right>1.380013e7</td><td>&nbsp;</td><td>1.101898</td><td align=right>3.580864e7</td><td>&nbsp;</td><td align=right>1.69</td><td align=right>2.59</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>x1 +//. i</tt></td><td>&nbsp;</td>
+<td>0.089229</td><td align=right>   1472</td><td>&nbsp;</td><td align=right> 0.489221</td><td align=right>&nbsp; 3.145965e7</td><td>&nbsp;</td><td align=right> 5.48</td><td align=right>&nbsp;21372.04</td></tr>
+<tr><td><tt>x2 +//. i</tt></td><td>&nbsp;</td>
+<td>0.091571</td><td align=right>   2240</td><td>&nbsp;</td><td align=right> 0.545150</td><td align=right>  3.277690e7</td><td>&nbsp;</td><td align=right> 5.95</td><td align=right> 14632.54</td></tr>
+<tr><td><tt>x3 +//. i</tt></td><td>&nbsp;</td>
+<td>0.089238</td><td align=right>   9408</td><td>&nbsp;</td><td align=right> 0.580384</td><td align=right>  3.169478e7</td><td>&nbsp;</td><td align=right> 6.50</td><td align=right>  3368.92</td></tr>
+<tr><td><tt>x4 +//. i</tt></td><td>&nbsp;</td>
+<td>0.093303</td><td align=right> 132288</td><td>&nbsp;</td><td align=right> 0.696549</td><td align=right>  3.237165e7</td><td>&nbsp;</td><td align=right> 7.47</td><td align=right>   244.71</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>x1 +//. b</tt></td><td>&nbsp;</td>
+<td>0.061756</td><td align=right>   1472</td><td>&nbsp;</td><td align=right> 0.422279</td><td align=right>  2.438176e7</td><td>&nbsp;</td><td align=right> 6.84</td><td align=right> 16563.70</td></tr>
+<tr><td><tt>x2 +//. b</tt></td><td>&nbsp;</td>
+<td>0.061645</td><td align=right>   2240</td><td>&nbsp;</td><td align=right> 0.494004</td><td align=right>  2.471597e7</td><td>&nbsp;</td><td align=right> 8.01</td><td align=right> 11033.91</td></tr>
+<tr><td><tt>x3 +//. b</tt></td><td>&nbsp;</td>
+<td>0.061742</td><td align=right>   9408</td><td>&nbsp;</td><td align=right> 0.510600</td><td align=right>  2.489747e7</td><td>&nbsp;</td><td align=right> 8.27</td><td align=right>  2646.41</td></tr>
+<tr><td><tt>x4 +//. b</tt></td><td>&nbsp;</td>
+<td>0.065804</td><td align=right> 132288</td><td>&nbsp;</td><td align=right> 0.639285</td><td align=right>  2.635066e7</td><td>&nbsp;</td><td align=right> 9.71</td><td align=right>   199.19</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>x1 +.//. b</tt></td><td>&nbsp;</td>
+<td>0.057070</td><td align=right>  1344</td><td>&nbsp;</td><td align=right> 0.422874</td><td align=right>  2.438170e7</td><td>&nbsp;</td><td align=right>  7.41</td><td align=right> 18141.14</td></tr>
+<tr><td><tt>x2 +.//. b</tt></td><td>&nbsp;</td>
+<td>0.057171</td><td align=right>  1728</td><td>&nbsp;</td><td align=right> 0.493326</td><td align=right>  2.471571e7</td><td>&nbsp;</td><td align=right>  8.63</td><td align=right> 14303.07</td></tr>
+<tr><td><tt>x3 +.//. b</tt></td><td>&nbsp;</td>
+<td>0.057439</td><td align=right>  5312</td><td>&nbsp;</td><td align=right> 0.516077</td><td align=right>  2.489747e7</td><td>&nbsp;</td><td align=right>  8.98</td><td align=right>  4687.02</td></tr>
+<tr><td><tt>x4 +.//. b</tt></td><td>&nbsp;</td>
+<td>0.061470</td><td align=right> 33984</td><td>&nbsp;</td><td align=right> 0.650361</td><td align=right>  2.630214e7</td><td>&nbsp;</td><td align=right> 10.58</td><td align=right>   773.96</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>x1 23 b.//. i</tt></td><td>&nbsp;</td>
+<td>0.088951</td><td align=right>   1856</td><td>&nbsp;</td><td align=right> 0.514752</td><td align=right>  3.145997e7</td><td>&nbsp;</td><td align=right> 5.79</td><td align=right> 16950.41</td></tr>
+<tr><td><tt>x2 23 b.//. i</tt></td><td>&nbsp;</td>
+<td>0.088652</td><td align=right>   2816</td><td>&nbsp;</td><td align=right> 0.541060</td><td align=right>  3.277722e7</td><td>&nbsp;</td><td align=right> 6.10</td><td align=right> 11639.64</td></tr>
+<tr><td><tt>x3 23 b.//. i</tt></td><td>&nbsp;</td>
+<td>0.091216</td><td align=right>  11776</td><td>&nbsp;</td><td align=right> 0.580654</td><td align=right>  3.173197e7</td><td>&nbsp;</td><td align=right> 6.37</td><td align=right>  2694.63</td></tr>
+<tr><td><tt>x4 23 b.//. i</tt></td><td>&nbsp;</td>
+<td>0.092286</td><td align=right> 148992</td><td>&nbsp;</td><td align=right> 0.696234</td><td align=right>  3.237453e7</td><td>&nbsp;</td><td align=right> 7.54</td><td align=right>   217.29</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+<tr><td><tt>x4 +//. d</tt></td><td>&nbsp;</td>
+<td>0.099751</td><td align=right>   279744</td><td>&nbsp;</td><td align=right> 0.740266</td><td align=right>  4.168851e7</td><td>&nbsp;</td><td align=right> 7.42</td><td align=right> 149.02</td></tr>
+<tr><td><tt>c&nbsp;  +//. d</tt></td><td>&nbsp;</td>
+<td>0.536441</td><td align=right> 12584192</td><td>&nbsp;</td><td align=right> 1.096851</td><td align=right>  4.167213e7</td><td>&nbsp;</td><td align=right> 2.04</td><td align=right>   3.31</td></tr>
+
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="infixfin.htm">&gt;&gt;</a>&nbsp;
+<a href="insert.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

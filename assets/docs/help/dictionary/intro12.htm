@@ -1,0 +1,170 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 12. Reading and Writing</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro13.htm">&gt;&gt;</a>&nbsp;
+<a href="intro11.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>12. Reading and Writing</b></font><br><br>
+
+Translating to and from a known language provides useful 
+beginning exercises in learning a new one.  The following provides 
+examples.<br><br>
+
+<b>Cover</b> the <b>right</b> side of the page and make 
+a serious attempt to translate the sentences on the <b>left</b> 
+to English; that is, state succinctly in English what the verb 
+defined by each sentence does.  Use any available aids, 
+including the dictionary and experimentation on the computer:<br><br>
+
+<table>
+<tr><td valign=top width=240><tt>f1=: &lt;:</tt></td>
+<td>Decrement (monad); Less or equal</td></tr>
+<tr><td><tt>f2=: f1&amp;9</tt></td><td>Less or equal 9</td></tr>
+<tr><td><tt>f3=: f2 *. &gt;:&amp;2</tt></td><td>Interval test 2 to 9 (inclusive)</td></tr>
+<tr><td><tt>f4=: f3 *. &lt;. = ]</tt></td><td>In 2 to 9 and integer</td></tr>
+<tr><td><tt>f5=: f3 +. &lt;. = ]</tt></td><td>In 2 to 9 or integer</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+<tr><td><tt>g1=: %&amp;1.8</tt></td><td>Divide by 1.8</td>
+<tr><td><tt>g2=: g1^:_1</tt></td><td>Multiply by 1.8</td></tr>
+<tr><td><tt>g3=: -&amp;32</tt></td><td>Subtract 32</td></tr>
+<tr><td><tt>g4=: g3^:_1</tt></td><td>Add 32</td></tr>
+<tr><td><tt>g5=: g1@g3</tt></td><td>Celsius from Fahrenheit</td></tr>
+<tr><td><tt>g6=: g5^:_1</tt></td><td>Fahrenheit from Celsius</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+<tr><td><tt>h1=: &gt;./</tt></td><td>Maximum over list (monad)</td></tr>
+<tr><td valign=top><tt>h2=: h1-&lt;./</tt></td>
+<td>Spread. Try<tt> h2 b </tt>with the parabola:<tt> b=:(-&amp;2 * -&amp;3) -:i.12</tt></td></tr>
+<tr><td><tt>h3=: h1@]-i.@[*h2@]%&lt;:@[</tt></td><td>Grid.  Try<tt> 10 h3 b</tt></td></tr>
+<tr><td><tt>h4=: h3 &lt;:/ ]   </tt></td><td>Barchart.  Try<tt> 10 h4 b</tt></td></tr>
+<tr><td><tt>h5=: {&amp;' *' @ h4</tt></td><td>Barchart.  Try<tt> 10 h5 b</tt></td></tr>
+
+</table><br>
+
+After entering the foregoing definitions, enter each 
+verb name alone to display its definition, and learn to 
+interpret the resulting displays.  To see several forms of display, 
+first enter<tt> 9!:3 (2 4 5) </tt>.<br><br>
+
+<b>Cover </b>the <b>left</b> side of the page, 
+and translate the English definitions on the <b>right</b> 
+back into <b>J</b>.<br><br><br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table><tr><td valign=top>12.1 &nbsp;</td>
+<td>These exercises are grouped by topic and organized 
+like the section, with programs that are first to be read 
+and then to be rewritten.  However, a reader already familiar 
+with a given topic might begin by writing. <br>
+
+    <P ALIGN=CENTER><b>A. Properties of numbers</b></p>
+
+<table>
+<tr><td width=200><tt>pn=: &gt;:@i.</tt></td> 
+<td>Positive numbers (e.g.<tt> pn 9</tt>)</td></tr>
+
+<tr><td><tt>rt=: pn |/ pn</tt></td> 
+<td>Remainder table</td></tr>
+
+<tr><td><tt>dt=: 0&amp;=@rt</tt></td> 
+<td>Divisibility table</td></tr>
+
+<tr><td><tt>nd=: +/@dt</tt></td> 
+<td>Number of divisors</td></tr>
+
+<tr><td><tt>prt=: 2&amp;=@nd</tt></td>
+<td>Prime test</td></tr>
+
+<tr><td><tt>prsel=: prt # pn</tt></td>
+<td>Prime select</td></tr>
+
+<tr><td><tt>N=: &gt;:@pn</tt></td>
+<td>Numbers greater than 1</td></tr>
+
+<tr><td><tt>rtt=: ,@(N */ N)</tt></td>
+<td>Ravelled times table</td></tr>
+
+<tr><td valign=top><tt>aprt=: -.@(N e. rtt) </tt></td>
+<td>Alternative test and selection
+(primes do not occur in the times table for<tt> N</tt>)</td></tr>
+
+<tr><td><tt>apsel=: aprt # N</tt></td> 
+<td>&nbsp;</td></tr>
+
+<tr><td><tt>pfac=: q:</tt></td>
+<td>Prime factors</td></tr>
+
+<tr><td><tt>first=: p:@i.</tt></td>
+<td>First primes</td></tr>
+</table>
+
+<P ALIGN=CENTER><b>B. Coordinate Geometry</b></p>
+
+Do experiments on the vector (or <i>point</i>)<tt> p=: 3 4 </tt>
+and the triangle represented by the 
+table<tt> tri=: 3 2$ 3 4 6 5 7 2</tt><br><br>
+
+<table>
+<tr><td valign=top width=200><tt>L=: %:@:(+/)@:*:&quot;1</tt></td>
+<td>Length of vector  (See <i>rank </i>in the dictionary
+or in <a href="intro20.htm">Section 20</a> of the Introduction)</td></tr>
+
+<td><tt>LR=:L&quot;1</tt></td>
+<td>Length of rows in table</td></tr>
+
+<td><tt>disp=: ] - 1&amp;|.</tt></td>
+<td>Displacement between rows</td></tr>
+
+<td><tt>LS=: LR@disp</tt></td>
+<td>Lengths of sides of figure</td></tr>
+
+<td><tt>sp=: -:@(+/)@LS</tt></td>
+<td>Semiperimeter (try<tt> sp tri</tt>)</td></tr>
+
+<td><tt>H=: %:@(*/)@(sp,sp-LS)</tt></td>
+<td>Heron's formula for area</td></tr>
+
+<td><tt>det=: -/ . *</tt></td>
+<td>Determinant (See dictionary)</td></tr>
+
+<td><tt>SA=: det@(,.&amp;0.5)</tt></td>
+<td>Signed area.  Try<tt> SA@|.</tt></td></tr>
+
+<td><tt>sa=:det@(],.%@!@&lt;:@#)</tt></td>
+<td>General signed volume; try on the tetrahedron</td></tr>
+
+<td><tt>tet=:?4 3$9</tt></td>
+<td>as well as on the triangle<tt> tri</tt> .</td></tr>
+
+</table></table>
+
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro13.htm">&gt;&gt;</a>&nbsp;
+<a href="intro11.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

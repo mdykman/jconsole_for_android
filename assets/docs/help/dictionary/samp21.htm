@@ -1,0 +1,86 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 21. Closure</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp22.htm">&gt;&gt;</a>&nbsp;
+<a href="samp20.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>21. Closure</b></font><br><br>
+
+Just as<tt> b imfam cm </tt>produces the immediate family 
+of<tt> b</tt>,<tt> </tt>so does the 
+phrase<tt> cm imfam cm </tt>produce the immediate families 
+of each of the rows of<tt> cm</tt>.<tt> </tt>We will, 
+however, use a new sparser connection matrix that will be 
+more instructive, and will use powers of<tt> imfam </tt>to 
+produce families of further generations, including an 
+infinite power to give the <i>closure</i> of the connection matrix; 
+that is, the connection matrix for all points reachable by a path 
+of any length:<br>
+
+<pre>
+   cm=: (i. =/ &lt;:@i.) 8
+   &lt;&quot;2 cm imfam^:0 1 2 _ cm
++---------------+---------------+---------------+---------------+
+|0 1 0 0 0 0 0 0|0 1 1 0 0 0 0 0|0 1 1 1 0 0 0 0|0 1 1 1 1 1 1 1|
+|0 0 1 0 0 0 0 0|0 0 1 1 0 0 0 0|0 0 1 1 1 0 0 0|0 0 1 1 1 1 1 1|
+|0 0 0 1 0 0 0 0|0 0 0 1 1 0 0 0|0 0 0 1 1 1 0 0|0 0 0 1 1 1 1 1|
+|0 0 0 0 1 0 0 0|0 0 0 0 1 1 0 0|0 0 0 0 1 1 1 0|0 0 0 0 1 1 1 1|
+|0 0 0 0 0 1 0 0|0 0 0 0 0 1 1 0|0 0 0 0 0 1 1 1|0 0 0 0 0 1 1 1|
+|0 0 0 0 0 0 1 0|0 0 0 0 0 0 1 1|0 0 0 0 0 0 1 1|0 0 0 0 0 0 1 1|
+|0 0 0 0 0 0 0 1|0 0 0 0 0 0 0 1|0 0 0 0 0 0 0 1|0 0 0 0 0 0 0 1|
+|0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0|
++---------------+---------------+---------------+---------------+
+</pre>
+
+The closure of<tt> cm </tt>can therefore be expressed 
+as<tt> cm imfam^:_ cm</tt>,<tt> </tt>and a monadic closure function 
+can be defined as follows:<br>
+
+<pre>
+   (closure=: imfam^:_ ~) cm
+0 1 1 1 1 1 1 1
+0 0 1 1 1 1 1 1
+0 0 0 1 1 1 1 1
+0 0 0 0 1 1 1 1
+0 0 0 0 0 1 1 1
+0 0 0 0 0 0 1 1
+0 0 0 0 0 0 0 1
+0 0 0 0 0 0 0 0
+</pre>
+
+The complete definition of the closure function may now be 
+displayed as follows:<br>
+
+<pre>
+   closure f.
+([ +. +./ .*.)^:_~
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp22.htm">&gt;&gt;</a>&nbsp;
+<a href="samp20.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

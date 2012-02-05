@@ -1,0 +1,108 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>\ Prefix  -  Infix</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d431.htm">&gt;&gt;</a>&nbsp;
+<a href="d422.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=30%><b><font size=+2>Prefix</font></b></td>
+<td align=center width=40%><font face="Courier New" size=+3>m\ &nbsp;u\ &nbsp;_ 0 _</font></td>
+<td align=right  width=30%><b><font size=+2>Infix</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>u\y </tt>has<tt> #y </tt>items resulting from 
+applying<tt> u </tt>to each of the prefixes<tt> k{.y</tt> ,<tt> </tt>
+for<tt> k </tt>from<tt> 1 </tt>to<tt> #y</tt> .<br><br>
+
+<tt>m\y </tt>applies successive verbs from the gerund<tt> m </tt>
+to the prefixes of<tt> y</tt> ,<tt> </tt>extending<tt> m </tt>
+cyclically as required.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> x&gt;:0</tt> ,<tt> </tt>the items of<tt> x u\ y </tt>
+result from applying<tt> u </tt>to each infix of 
+length<tt> x</tt> .<tt> </tt>If<tt> x&lt;0</tt> ,<tt> u </tt>
+is applied to <i>non-overlapping</i> infixes of length<tt> |x</tt>
+,<tt> </tt>including any final shard.<br><br>
+
+<tt>x m\ y </tt>applies successive verbs from the 
+gerund<tt> m </tt>to the infixes of<tt> y</tt> ,<tt> </tt>
+extending<tt> m </tt>cyclically as required.
+<br>&nbsp;</td>
+</tr></table><br>
+
+<pre>
+   +/\a=: 1 2 4 8 16                     NB. Subtotals, or partial sums
+1 3 7 15 31
+
+   */\a                                  NB. Partial products
+1 2 8 64 1024
+
+   &lt;\a
++-+---+-----+-------+----------+
+|1|1 2|1 2 4|1 2 4 8|1 2 4 8 16|
++-+---+-----+-------+----------+
+
+   &lt;\i.3 4
++-------+-------+---------+
+|0 1 2 3|0 1 2 3|0 1  2  3|
+|       |4 5 6 7|4 5  6  7|
+|       |       |8 9 10 11|
++-------+-------+---------+
+
+   (+/\^:_1 +/\ a) ,: */\^:_1 a
+1 2 4 8 16
+1 2 2 2  2
+</pre>
+
+The following examples illustrate the use of the dyad <i>infix</i>:<br>
+
+<pre>
+   (2 -/\ ])  a                          NB. Backward differences
+_1 _2 _4 _8
+   (2 -~/\ ]) a                          NB. Forward  differences
+1 2 4 8
+
+   3  &lt;\ 'abcdefgh'
++---+---+---+---+---+---+
+|abc|bcd|cde|def|efg|fgh|
++---+---+---+---+---+---+
+   _3 &lt;\ 'abcdefgh'
++---+---+--+
+|abc|def|gh|
++---+---+--+
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="d431.htm">&gt;&gt;</a>&nbsp;
+<a href="d422.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

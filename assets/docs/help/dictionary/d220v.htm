@@ -1,0 +1,90 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>~ Reflex  -  Passive</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d220n.htm">&gt;&gt;</a>&nbsp;
+<a href="d212.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Reflexive</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u~ &nbsp;_ ru lu</font></td>
+<td align=right  width=33%><b><font size=+2>Passive</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>u~ y </tt><font size=+1>&harr;</font><tt> y u y</tt> .<tt> </tt>For example,<tt> ^~ 3 </tt>
+is<tt> 27</tt>,<tt> </tt>and<tt> +/~ i. n </tt>is an addition table.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>~ </tt><i>commutes</i> or <i>crosses</i> connections to 
+arguments:<tt> x u~ y </tt><font size=+1>&harr;</font><tt> y u x</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+Certain uses of the reflexive and passive are illustrated below:
+
+<pre>
+   x=: 1 2 3 4 [ y=: 4 5 6
+   x (,.@[ ; ^/ ; ^/~ ; ^/~@[ ; ]) y
++-+-------------+-------------+-----------+-----+
+|1|  1    1    1|4 16  64  256|1  1  1   1|4 5 6|
+|2| 16   32   64|5 25 125  625|2  4  8  16|     |
+|3| 81  243  729|6 36 216 1296|3  9 27  81|     |
+|4|256 1024 4096|             |4 16 64 256|     |
++-+-------------+-------------+-----------+-----+
+
+   into=: %~
+   (i. 6) % 5
+0 0.2 0.4 0.6 0.8 1
+
+   5 into i. 6
+0 0.2 0.4 0.6 0.8 1
+
+   from=: -~
+   (i.6) - 5
+_5 _4 _3 _2 _1 0
+
+   5 from i.6
+_5 _4 _3 _2 _1 0
+
+   (x %/ y);(x %~/ y);(x %/~ y)
++-----------------+-------------------+------------------+
+|0.25 0.2 0.166667|      4       5   6|4   2 1.33333    1|
+| 0.5 0.4 0.333333|      2     2.5   3|5 2.5 1.66667 1.25|
+|0.75 0.6      0.5|1.33333 1.66667   2|6   3       2  1.5|
+|   1 0.8 0.666667|      1    1.25 1.5|                  |
++-----------------+-------------------+------------------+
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d220n.htm">&gt;&gt;</a>&nbsp;
+<a href="d212.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,53 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Script load</title>
+
+</head><body><!--top jump start--><a href="checkpoint_b.htm">&gt;&gt;</a>&nbsp;
+<a href="z_locale.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Script load</h1>
+In addition to the utilities loaded with the standard profile, there are several additional scripts of standard utilities provided with the system. These standard utilities are documented in the J Online Documentation available from the J help menu. You could run these scripts directly, but you would need to remember the path to the script, as well as which locale to run them in. The standard profile provides utilities to make this easier for you. The scripts verb lists scripts that can be loaded with the load verb.<br>
+
+<pre>   scripts ''
+. . .
+.... parts    plot     profile  scripts  stdlib ...
+. . .</pre>
+The scripts verb with an argument of <font face=courier size=-1>'v'</font> lists the scripts with their full path.<br>
+
+<pre>   scripts 'v'
+. . .
+compare  ~system\main\compare.ijs
+ . . </pre>
+The ~system indicates the J system directory.<br>
+<br>
+The convert script contains several conversion utilities.<br>
+
+<pre>   load 'convert'
+   toupper 'testing 1 2 3'
+TESTING 1 2 3
+   tolower 'Sir Richard'
+sir richard</pre>
+<!--bottom jump start--><hr><a href="checkpoint_b.htm">&gt;&gt;</a>&nbsp;
+<a href="z_locale.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

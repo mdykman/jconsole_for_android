@@ -1,0 +1,323 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Culture Shock</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="programming_in_j.htm">&gt;&gt;</a>&nbsp;
+<a href="introduction.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734290"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>2. <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Culture
+Shock</a></h1>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:16.0pt'>A C Programmer's First Thoughts On J<o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>This doesn't look like a
+program.&nbsp; Where did the program go?<o:p></o:p></span></p>
+
+<p class=MsoBodyText>You have gotten used to the pace and structure of C.<span
+style='mso-spacerun:yes'>&nbsp; </span>You can recognize a loop, you figure out what
+the loop is doing, you see what variables it sets.<span
+style='mso-spacerun:yes'>&nbsp; </span>The assignments and the loops are signposts
+that direct your analysis of code.</p>
+
+<p class=MsoBodyText>In J, every operator has a loop built in, so they don't
+jump out at you in the same way.&nbsp; And
+because the syntax of J is so terse, and arrays use the same syntax as single
+variables, there is much less need for temporary variables.</p>
+
+<p class=MsoBodyText>Here's an example.&nbsp;
+Figure out what the following code does:</p>
+
+<p class=Ccodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Ccodemultiline>int i, j, maxcol = 0;</p>
+
+<p class=Ccodemultiline>float maxval = x[0][0];</p>
+
+<p class=Ccodemultiline>for(i = 0;i&lt;=xsize0;++i) {</p>
+
+<p class=Ccodemultiline>&nbsp; for(j =
+0;j&lt;=xsize1;++j) {</p>
+
+<p class=Ccodemultiline>&nbsp;&nbsp;&nbsp; if(x[i][j]
+&gt; maxval) {</p>
+
+<p class=Ccodemultiline>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; maxval =
+x[i][j];</p>
+
+<p class=Ccodemultiline>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; maxcol = j;</p>
+
+<p class=Ccodemultiline>&nbsp;&nbsp;&nbsp; }</p>
+
+<p class=Ccodemultiline>&nbsp; }</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText>Not too hard.&nbsp; When
+the code finishes, <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>maxval</span></span>
+is the largest element in the array <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, and <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>maxcol</span></span> is the
+column number it was in.&nbsp; As it happens,
+all I wanted was the column number, but there was no way for you to know that.</p>
+
+<p class=MsoBodyText>The same code in J:</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>maxcol =. (i. &gt;./) &gt;./ x</p>
+
+<p class=MsoBodyText>With some practice, you will learn to read this code just
+as easily as you read the C.&nbsp; You will
+recognize the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/</span></span>
+as an indicator of a loop that accumulates a
+result, and the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>
+as an indicator
+of a search.&nbsp; The <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>=.</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=:</span></span>
+tokens indicate assignment.</p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>What happened to the </span><span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>if</span></span><span
+class=Definition> statement?<o:p></o:p></span></p>
+
+<p class=MsoBodyText><span class=Definition><span style='font-weight:normal;
+font-style:normal'>It's built into the </span></span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&gt;.</span></span><span
+class=Definition><span style='font-weight:normal;font-style:normal'>
+primitive.&nbsp; Just as most loops are hidden
+inside primitives, so are most conditionals.&nbsp;
+The functions you write can also contain built-in conditionals.<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>What's the statement delimiter?<o:p></o:p></span></p>
+
+<p class=MsoBodyText>There isn't one.&nbsp;
+Statements are exactly one line long.</p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>I've looked at some J code.<span
+style='mso-spacerun:yes'>&nbsp; </span>Every other character is a period or a
+colon.&nbsp; I've got spots before my
+eyes.&nbsp; How can anybody read this stuff?<o:p></o:p></span></p>
+
+<p class=MsoBodyText>You'll get used to it.&nbsp;
+J has a great many primitives, and it's important to keep the names
+short so that you can fit a lot of computation on one line; so the names are
+either single characters, like <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;</span></span>, or a character with a period or colon
+appended (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;.</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;:</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>The period/colon is just part of the
+name.&nbsp; Single letters with period/colon,
+like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>,
+are also used for primitives.&nbsp; If you
+want to assign your own names to the primitives, you are allowed to, but pretty
+soon you'll want to go back to the shorter names to save space and typing.</p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>Where are the declarations?<span
+style='mso-spacerun:yes'>&nbsp; </span>Doesn't J use arrays?<span
+style='mso-spacerun:yes'>&nbsp; </span>How do I know what the type of a variable is?<o:p></o:p></span></p>
+
+<p class=MsoBodyText>Oh yeah, J uses arrays.&nbsp;
+<b style='mso-bidi-font-weight:normal'>Any</b> variable can be an
+array.&nbsp; As for what the type and
+dimensioning is: you assigned the variable, didn't you?<span
+style='mso-spacerun:yes'>&nbsp; </span>It contains whatever you put into it, a
+number, a string, an array, a structure...&nbsp;
+J will remember.&nbsp; If your program
+logic requires you to find out the current attributes of a variable, J can tell
+you.</p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'>Every</b> J
+program, both primitives and programs that you write, can <b style='mso-bidi-font-weight:
+normal'>automatically</b> be applied to arrays.&nbsp;
+The carefully-thought-out way this is done is one of the prime strengths
+of J.&nbsp; The statement</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; x + y</p>
+
+<p class=MsoNormal>means 'add <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>'; it will do
+that if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are single numbers, or if they are multidimensional arrays.<span
+style='mso-spacerun:yes'>&nbsp; </span>The looping needed to operate on the individual numbers is
+built into the language, not into your program.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=Definition>I've looked at a line of J code and it's
+just a mess with no discernible syntax.<o:p></o:p></span></p>
+
+<p class=MsoBodyText>Something like</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; lifodd =.
+]`[@.(2&amp;|@[)</p>
+
+<p class=BodyTextnoleader>perhaps, a program that returns the left operand if
+it is odd, otherwise the right operand?&nbsp; </p>
+
+<p class=MsoNormal>Patience.&nbsp; Every
+character has a meaning, even the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>`&nbsp;&quot;&nbsp;[&nbsp;]&nbsp;{&nbsp;}</span></span>
+characters which act individually,
+not as pairs.&nbsp; Learn what they mean and
+all will become clear.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=Definition>I ran across this line:<span
+style='mso-spacerun:yes'>&nbsp; </span></span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;+&nbsp;3</span></span><span
+class=Definition>.&nbsp; What's with the extra
+number floating in space?<o:p></o:p></span></p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2</span></span><span
+class=Definition><span style='font-weight:normal;font-style:normal'> is a
+one-dimensional array of 2 numbers with the values 1 and 2.<span
+style='mso-spacerun:yes'>&nbsp; </span>Arrays come up so much in J that we use this
+shorthand to define one without requiring any more syntax than just the values
+of the elements of the array.<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>I've looked at a line of J code and I'm
+absolutely sure there are no variables in it at all.<span
+style='mso-spacerun:yes'>&nbsp; </span>How can that mean anything?<o:p></o:p></span></p>
+
+<p class=MsoBodyText>Oh, you've stumbled onto a <span class=Definition>tacit
+program</span>, which describes its computation without referring to any
+variables, not even symbolic parameters.&nbsp;
+The classic teaching example is</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; mean =. +/ % #</p>
+
+<p class=BodyTextnoleader>which finds the mean of an array of numbers.<span
+style='mso-spacerun:yes'>&nbsp; </span>Tacit programs are considered an advanced
+topic in this book, and are covered in a section at the end.<span
+style='mso-spacerun:yes'>&nbsp; </span>They are the ultimate in concise expression;
+many J programmers favor them for that reason, but you can wait to learn about
+them until you've learned simple J.</p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>In the examples all I see are lines that
+contain </span><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=:</span></span><span
+class=Definition> and </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>=.</span></span><span class=Definition>,which you said are
+assignment statements.&nbsp; How do I write a
+program?<o:p></o:p></span></p>
+
+<p class=MsoBodyText><span class=Definition><span style='font-weight:normal;
+font-style:normal'>Some of the assignment statements </span></span><span
+class=Definition><span style='font-style:normal'>are</span></span><span
+class=Definition><span style='font-weight:normal;font-style:normal'>
+programs.&nbsp; In J, a name becomes a
+function name when you assign it a value that is a function.<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>Once I've written a program, how do I
+run it?&nbsp; I don't see anything that looks
+like a function call.<o:p></o:p></span></p>
+
+<p class=MsoBodyText><span class=Definition><span style='font-weight:normal;
+font-style:normal'>In J, there is no special syntax for a function call.<span
+style='mso-spacerun:yes'>&nbsp; </span>Just as you perform the 'minus' function with
+</span></span><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-&nbsp;y</span></span><span
+class=Definition><span style='font-weight:normal;font-style:normal'> or the
+'subtract' function with </span></span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;-&nbsp;y</span></span><span
+class=Definition><span style='font-weight:normal;font-style:normal'>, you
+invoke a user-defined function by typing its name before or between its
+operands: </span></span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;DifferenceSquared&nbsp;y</span></span><span
+class=Definition><span style='font-weight:normal;font-style:normal'> or </span></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>FindPrimeGreaterThan&nbsp;1000</span></span><span
+class=Definition><span style='font-weight:normal;font-style:normal'>.<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span class=Definition><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Definition>How do I compile my program?<o:p></o:p></span></p>
+
+<p class=MsoBodyText>You don't.&nbsp; J is
+interpreted.&nbsp; As soon as you type your
+program in (or read it in from a file), it's ready to use.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here's a starter program:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; h =. verb : '''Hello
+world.'''</p>
+
+<p class=BodyTextnoleader>Type that (note the triple quotes), then run it with</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; h ''</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal><span class=Definition>The triple quotes are ugly.<o:p></o:p></span></p>
+
+<p class=MsoBodyText>Quit bellyaching.&nbsp;
+Read the book and you'll learn how to avoid them.<span
+style='mso-spacerun:yes'>&nbsp; </span>Remember those 10 lines of C that were
+replaced by a quarter-line of J, and learn how to do that yourself.</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+</div><!--bottom jump start--><hr><a href="programming_in_j.htm">&gt;&gt;</a>&nbsp;
+<a href="introduction.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

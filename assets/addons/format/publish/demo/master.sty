@@ -1,0 +1,33 @@
+NB. style file
+
+PAGESIZE=: PSa4
+
+NB. =========================================================
+NB. PAGEMARGINS in twips (72 = 1 inch)
+NB. left, top, right, bottom
+NB. or one setting for all
+NB.
+NB. For example: 1/2 inch left and right
+NB.              1 inch top and bottom:
+NB. PAGEMARGINS=: 36 72 36 72
+
+PAGEMARGINS=: 72 NB. default
+
+NB. =========================================================
+NB. following is a demo of user-defined styles
+NB. see section3.txt for an example:
+BIGPARA=: 0 : 0
+FONTP=: 'sans 12 bold'
+ALIGN=: 'just'
+)
+
+MYPARA=: 0 : 0
+FONTP=: 'times 10 italic'
+ALIGN=: 'just'
+)
+
+NB. =========================================================
+SMALLFONTS=: 0 : 0
+FONTTH=: 'Sans 4' NB. table header
+FONTTC=: 'Sans 4' NB. table cell
+)

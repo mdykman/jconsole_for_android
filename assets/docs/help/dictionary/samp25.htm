@@ -1,0 +1,92 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 25. Polynomials in Terms of Roots</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp26.htm">&gt;&gt;</a>&nbsp;
+<a href="samp24.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>25. Polynomials in Terms of Roots</b></font><br><br>
+
+The product<tt> */y-r </tt>is called a <i>polynomial in terms 
+of the roots</i><tt> r</tt><tt>,</tt><tt> </tt>because it can 
+also be expressed as a polynomial applied to the 
+argument<tt> y</tt>,<tt> </tt>and because<tt> r </tt>is the list 
+of <i>roots</i> or <i>zeros</i> of the resulting function.  For example:<br><br>
+
+<pre>
+   */y-r [ y=: 7 [ r=: 2 3 5 [ x=: 7 6 5 4 3 2
+40
+
+   pp=: +//.@(*/)
+   c=: pp/monomials=: (- ,. 1:) r
+   cfr=: [: pp/ - ,. 1:            NB. Coefficients from roots
+   pir=: */@(]-[)&quot;1 0              NB. Polynomial in terms of roots
+
+  ,.&amp;.&gt;(r;monomials;c;(cfr r);(c&amp;p. y);(r pir x))
++-+----+---+---+--+--+
+|2|_2 1|_30|_30|40|40|
+|3|_3 1| 31| 31|  |12|
+|5|_5 1|_10|_10|  | 0|
+| |    |  1|  1|  |_2|
+| |    |   |   |  | 0|
+| |    |   |   |  | 0|
++-+----+---+---+--+--+
+</pre>
+
+Since the last (highest order) coefficient produced by<tt> cfr </tt>
+is necessarily 1, the function<tt> pir </tt>cannot produce a 
+general polynomial, but it can if provided with a multiplier.  
+We therefore re-define<tt> cfr </tt>and<tt> pir </tt>to apply 
+to a boxed list of multiplier and roots as follows:<br>
+
+<pre>
+   CFR=: (* cfr)&amp;&gt;/
+   PIR=: CFR@[ p. ]
+
+   CFR 3;r
+_90 93 _30 3
+
+   (3;r) PIR x
+120 36 0 _6 0 0
+</pre>
+
+We now illustrate the use of a polynomial in approximation:<br>
+
+<pre>
+   ]ce=: ^ t. i. 7                 NB. First seven terms of Taylor series for exponential
+1 1 0.5 0.166667 0.0416667 0.00833333 0.00138889
+
+   (^ - ce&amp;p.) _1 _0.5 0 0.5 1     NB. Comparison with exponential
+_0.000176114 _1.45834e_6 0 1.65264e_6 0.000226273
+
+   pD ce                           NB. The exponential function equals its own derivative
+1 1 0.5 0.166667 0.0416667 0.00833333
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp26.htm">&gt;&gt;</a>&nbsp;
+<a href="samp24.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

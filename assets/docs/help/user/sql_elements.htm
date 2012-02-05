@@ -1,0 +1,368 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>SQL Elements</title>
+
+</head><body><!--top jump start--><a href="sql_reserved_words.htm">&gt;&gt;</a>&nbsp;
+<a href="sql_statements.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Elements Used in SQL Statements</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+The following elements are used in the SQL statements listed previously .
+<P>
+<TABLE>
+<tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+<B>Element</B>
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER><B>Min</B>
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER><B>Core</B>
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER><B>Ext</B>
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+approximate-numeric-literal ::= mantissaEexponent<br>
+       mantissa ::= exact-numeric-literal<br>
+       exponent ::= [+|-] unsigned-integer
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+approximate-numeric-type ::=<br>
+       FLOAT<br>
+       | DOUBLE PRECISION<br>
+       | REAL
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+argument-list ::= expression | expression, argument-list
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+base-table-identifier ::= user-defined-name
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+base-table-name ::= base-table-identifier
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+base-table-name ::= [user-name.]base-table-identifier 
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+between-predicate ::= expression [NOT] BETWEEN expression AND expression
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+binary-literal ::= {implementation defined}
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+binary-type ::=
+       BINARY (length)<br>
+       | VARBINARY (length)<br>
+       | LONG VARBINARY&#183;
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+character ::= {any character in the implementor's character set}
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+character-string-literal :: = '{character}...'
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+character-string-type ::=<br>
+CHARACTER(length)<br>
+| CHAR(length)
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+character-string-type ::=<br>
+CHARACTER(length)<br>
+| CHAR(length)<br>
+| CHARACTER VARYING(length)<br>
+| VARCHAR(length)
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+character-string-type ::=<br>
+CHARACTER(length)<br>
+| CHAR(length)<br>
+| CHARACTER VARYING(length)<br>
+| VARCHAR(length)<br>
+| LONG VARCHAR
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+column-identifier ::= user-defined-name
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+column-name ::= [table-name.]column-identifier
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+column-name ::= [{table-name | correlation-name}.]column-identifier
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+comparison-operator ::= &lt; | &gt; | &lt;= | &gt;= | = | &lt;&gt;
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+comparison-predicate ::=<br>
+expression comparison-operator expression
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+comparison-predicate ::= expression comparison-operator<br>
+{expression | (sub-query)}
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+correlation-name ::= user-defined-name
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+cursor-name ::= user-defined-name
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+data-type ::= character-string-type
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+data-type ::=<br>
+character-string-type<br>
+| exact-numeric-type<br>
+| approximate-numeric-type
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+data-type ::=<br>
+character-string-type<br>
+| exact-numeric-type<br>
+| approximate-numeric-type<br>
+| binary-type<br>
+| date-type<br>
+| time-type<br>
+| timestamp-type
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+date-literal ::= 'date-value'
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+date-separator ::= -
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+date-type ::= DATE
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+date-value ::=<br>
+years-value date-separator months-value date-separator days-value
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+days-value ::= digit digit&#183;
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+digit ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+dynamic-parameter ::= ?
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+exact-numeric-literal ::=<br>
+         [+|-] { unsigned-integer [.unsigned-integer ]<br>
+         | unsigned-integer.<br>
+         | .unsigned-integer }
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+exact-numeric-type ::= DECIMAL(precision,scale)<br>
+| NUMERIC(precision,scale) | SMALLINT | INTEGER
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+exact-numeric-type ::= DECIMAL(precision,scale)<br>
+| NUMERIC(precision,scale) | BIT | SMALLINT | INTEGER<br>
+|BIGINT
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+exists-predicate ::= EXISTS ( sub-query )
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+expression ::= term | expression {+|-} term<br>
+term ::= factor | term {*|/} factor<br>
+factor ::= [+|-]primary<br>
+primary ::= column-name<br>
+| dynamic-parameter<br>
+| literal<br>
+(continued)<br>
+| ( expression )<br>
+primary ::= column-name<br>
+               | dynamic-parameter<br>
+               | literal<br>
+               | set-function-reference<br>
+               | USER<br>
+               | ( expression )<br>
+primary ::= column-name<br>
+               | dynamic-parameter<br>
+               | literal<br>
+               | ODBC-scalar-function-extension<br>
+               | set-function-reference<br>
+               | USER<br>
+               | ( expression )
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=40>
+<P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>
+<P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+hours-value ::= digit digit
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40>&#160;
+<TD VALIGN="TOP" WIDTH=36><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+index-identifier ::= user-defined-name
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+index-name ::= [index-qualifier.]index-identifier
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+Index-qualifier ::= user-defined-name
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+in-predicate ::=<br>
+       expression [NOT] IN {(value {, value}...) | (sub-query)}<br>
+       value ::= literal | USER  | dynamic-parameter
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=40><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=36>&#160;
+</tr></table>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="sql_reserved_words.htm">&gt;&gt;</a>&nbsp;
+<a href="sql_statements.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

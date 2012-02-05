@@ -1,0 +1,55 @@
+DGTTRS solves one of the systems of equations
+   A*X = B  or  A'*X = B, with a tridiagonal matrix A using the LU
+factorization computed by DGTTRF.
+
+
+Arguments
+=========
+
+TRANS   (input) CHARACTER
+        Specifies the form of the system of equations:
+
+        = 'N':  A * X = B  (No transpose)
+
+        = 'T':  A'* X = B  (Transpose)
+
+        = 'C':  A'* X = B  (Conjugate transpose = Transpose)
+
+N       (input) INTEGER
+        The order of the matrix A.  N >= 0.
+
+NRHS    (input) INTEGER
+        The number of right hand sides, i.e., the number of columns
+        of the matrix B.  NRHS >= 0.
+
+DL      (input) DOUBLE PRECISION array, dimension (N-1)
+        The (n-1) multipliers that define the matrix L from the
+        LU factorization of A.
+
+D       (input) DOUBLE PRECISION array, dimension (N)
+        The n diagonal elements of the upper triangular matrix U from
+        the LU factorization of A.
+
+DU      (input) DOUBLE PRECISION array, dimension (N-1)
+        The (n-1) elements of the first superdiagonal of U.
+
+DU2     (input) DOUBLE PRECISION array, dimension (N-2)
+        The (n-2) elements of the second superdiagonal of U.
+
+IPIV    (input) INTEGER array, dimension (N)
+        The pivot indices; for 1 <= i <= n, row i of the matrix was
+        interchanged with row IPIV(i).  IPIV(i) will always be either
+        i or i+1; IPIV(i) = i indicates a row interchange was not
+        required.
+
+B       (input/output) DOUBLE PRECISION array, dimension (LDB,NRHS)
+        On entry, the right hand side matrix B.
+        On exit, B is overwritten by the solution matrix X.
+
+LDB     (input) INTEGER
+        The leading dimension of the array B.  LDB >= max(1,N).
+
+INFO    (output) INTEGER
+        = 0:  successful exit
+
+        < 0:  if INFO = -i, the i-th argument had an illegal value

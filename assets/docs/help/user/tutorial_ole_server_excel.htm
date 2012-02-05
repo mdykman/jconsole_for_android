@@ -1,0 +1,249 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Tutorial: J COM Server for Excel</title>
+
+</head><body><!--top jump start--><a href="labs.htm">&gt;&gt;</a>&nbsp;
+<a href="j_ole_auto_server.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+<TR valign="baseline"><TD><H1>Tutorial: J COM Server for Excel</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+This tutorial has been created with Excel 2002 and J501. Expect different behavior with other versions!
+
+<P>
+It will help to have the Excel help file readily available.
+
+<P>
+Introduction<br>
+The purpose of COM Automation is to allow a client program to run functions in a server program, and the basic idea is pretty straightforward - simply load J from Excel, then send it the required J functions for execution. In practice is it helpful to create Excel macros that provide cover functions for the basic tasks such as loading J, reading cells for transmission to J and so on. Thus you typically program with a mixture of J functions and Excel macros.
+
+<P>
+In Excel, you can enter these method names in upper or lowercase. When you enter names in Excel, it gives them its default capitalization. Here we use lowercase throughout.
+
+<P>
+Most of the time when things go wrong, you can simply shut down J and Excel and start again.
+
+<P>
+Sometimes when you edit Excel macros, Excel closes down J - it closes the COM Automation object which may in turn cause J to close. You will then need to re-open the J COM Automation object. If J has closed and you try to run an COM command, the error message is &quot;Object variable not Set&quot;. This problem occurs only while you are developing Excel macros, and should not occur when your application is in use. 
+
+<P>
+One of the &quot;user-friendly&quot; features of Excel is to change your entry in a cell if it thinks it may be incorrect.  For example, &quot;i.5&quot; gets changed into &quot;I.5&quot;. To get around this, enter more letters, then backspace and delete the extra entries, for example, instead of &quot;i.5' try entering &quot;ii.5&quot;.
+
+<P>
+Tutorial<br>
+Start by unloading all applications, then loading Excel. Open a new workbook if none is shown.
+
+<P>
+Bring up Visual Basic (Alt-F11 or Tools|Macro|Visual Basic Editor), and insert a new module sheet (Insert|Module).
+
+<P>
+With the module sheet visible, select menu item Tools|References and check
+J DLL Serve and click OK.
+
+<P>
+In the module sheet, enter:
+
+<P>
+Public js As Object
+
+<pre>
+Sub jopen()
+Set js = CreateObject(&quot;jdllserver&quot;)
+js.Quit
+js.Do "BINPATH_z_=:1!:46''"
+js.Do "ARGV_z_=:,&lt;'oleclient'"
+js.Do "(3 : '0!:0 y')&lt;BINPATH,'\profile.ijs'"
+End Sub
+</pre>
+
+<P>
+The function jopen will be used to load the JDLLServer. Note that you can only run this once - you will get an error at this point if you try to open the server twice. 
+
+<P>
+The first statement declares the name js that will be used for the JDLLServer. 
+<P>
+js.Quit ensures that when Excel is closed, the J server will automatically terminate.
+
+<P>
+To load J, enter: jopen
+<P>
+
+<P>
+<B>Sending commands to J</B><br>
+The required function is do, which takes a J sentence as its argument. Note that Excel strings are delimited by the double quote, so that J quotes can be entered as is, and need not be doubled. Try:<br>
+
+<P>
+js.do &quot;i.4 5&quot;
+
+<P>
+<B>Retrieving values from J</B><br>
+The function get retrieves a value from J, as a Variant datatype. Variants cannot be displayed directly in the Immediate window, but can be assigned to a worksheet range. For example:
+
+<P>
+Set value of x in J:
+<P>
+js.do &quot;x=: i.4 5&quot;
+<P>
+Retrieve value of x into Excel variant y:
+<P>
+js.get &quot;x&quot;,y
+<P>
+Set value of y into the worksheet:
+<P>
+Worksheets(&quot;sheet1&quot;).Range(&quot;a1:e4&quot;)=y
+
+<P>
+Now switch to Sheet1 to see that the value of y has been written in.
+
+<P>
+<B>Utilities</B><br>
+Now lets take a look at the J OLE utilities in file system\examples\ole\excel\jsutil.txt. Copy and paste the contents of this file into your Excel module.
+
+<P>
+The utilities available are:
+<P>
+<TABLE>
+<TR>
+<TD VALIGN="TOP" WIDTH=177><P>
+jdopen
+<TD VALIGN="TOP" WIDTH=493><P>
+open JDLLServer
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+jcmd (string)
+<TD VALIGN="TOP" WIDTH=493><P>
+execute J command, return result as variant
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+jcmdc string,r,c,h,w
+<TD VALIGN="TOP" WIDTH=493><P>
+execute J command, store result in active sheet at row,col,height,width
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+jcmdr string,range
+<TD VALIGN="TOP" WIDTH=493><P>
+execute J command, store result in active sheet at range
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+jdo string
+<TD VALIGN="TOP" WIDTH=493><P>
+execute J command
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+jget(x)
+<TD VALIGN="TOP" WIDTH=493><P>
+get J noun x
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=177><P>
+jloadprofile
+<TD VALIGN="TOP" WIDTH=493><P>
+load standard J profile
+</tr></TABLE>
+
+<P>
+You can customize these or add your own utilities.
+
+<P>
+<B><I>jcmd</I></B><br>
+In Excel, switch to Sheet1 and in cell B3 enter:
+
+<P>=jcmd(&quot;+/2 3 5 7&quot;)
+
+<P>
+The statement should be executed in J, and the result (17) displayed in Excel.
+
+<P>
+Try:
+
+<P>
+In cell B5 enter: 12<br>
+In cell B6 enter: 15<br>
+In cell B7 enter: =jcmd(B5 &amp; &quot;*&quot; &amp; B6)
+
+<P>
+B7 displays the result (180). Note that if you now change B5 or B6, then B7 will be recalculated.
+
+<P>
+In general, jcmd can be used for calculations which return a single value to be displayed in the current cell. The right argument is the sentence to be sent to J.
+
+<P>
+This method is really only suitable for simple calculations. Typically, you will want to run calculations that return a range of results to Excel and you set up such calculations by invoking an Excel macro explicitly, for example, by selecting Tools|Macro|Macros|Run or pressing an assigned hot-key.
+
+<P>
+<B>jcmdc, jcmdr</B><br>
+These utilities execute a J expression, displaying the result in a range in the active sheet. Function jcmdc specifies the range as 4 numbers: topleft row, column, number of rows, number of columns. Function jcmdr specifies the range in the traditional alphanumeric notation, for example: C6:E10.
+
+<P>
+We will create a macro run to test these and subsequent expressions. Switch to the module and enter:
+
+<P>
+Sub run()<br>
+jcmdc &quot;?3 4$10&quot;, 2, 3, 3, 4<br>
+End Sub
+
+<P>
+Next, return to the worksheet, select Tools|Macro|Macros, highlight run and click Options. Enter Ctrl-r as the shortcut key and click OK. If J has been closed down, then either reload the spreadsheet or re-run auto_open to load it again.
+Close the Macro dialog, switch to Sheet1 and press Ctrl-r. The macro should run and display the result. Press Ctrl-r again to re-run the macro. 
+
+<P>
+<B>jsetc, jsetr</B><br>
+These utilities set values in J, from a range in the active sheet. As with jcmdc and jcmdr above, jsetc specifies the range as 4 numbers and function jsetr specifies the range in the traditional notation. Switch to the module and edit run to:
+
+<P>
+Sub run()<br>
+jsetr &quot;Y&quot;, &quot;D3:F4&quot;<br>
+End Sub
+
+<P>
+Switch to Sheet1 and as before use Tools|Macro to select Ctrl-r as a shortcut key for the macro. In the worksheet, press Ctrl-r. Then click on the J session and display Y (these are random numbers so the exact values will likely differ):
+
+<pre>
+   Y
++-+-+-+
+|4|8|8|
++-+-+-+
+|7|3|1|
++-+-+-+</pre>
+
+Change run to:
+
+<P>
+Sub run()<br>
+jsetc &quot;Y&quot;, 2, 3, 3, 4<br>
+jcmdc &quot;+/\&gt;Y&quot;, 7, 3, 3, 4<br>
+End Sub
+
+<P>
+Switch to Sheet1, use Tools|Macro to select Ctrl-r as the shortcut key, then in the worksheet, press Ctrl-r. The macro will read the numbers in the upper range and display the sum scan in the lower range. Now if you change one of the numbers in the upper range, for example E2, press Ctrl-r to update the lower range.
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="labs.htm">&gt;&gt;</a>&nbsp;
+<a href="j_ole_auto_server.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

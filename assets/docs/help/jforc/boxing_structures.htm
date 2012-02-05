@@ -1,0 +1,568 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Boxing (structures)</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="compound_verbs.htm">&gt;&gt;</a>&nbsp;
+<a href="continuing_to_write_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc5414572"></a><a name="_Toc1896205"></a><a name="_Toc191734365"></a><a
+name="_Toc5414576"></a><a name="_Toc1896209"><span style='mso-bookmark:_Toc5414576'><span
+style='mso-bookmark:_Toc191734365'><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>11. </span></span><![endif]>Boxing (</span></span></span></span></a><span
+style='mso-bookmark:_Toc1896209'><span style='mso-bookmark:_Toc5414576'><span
+style='mso-bookmark:_Toc191734365'><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Ccode><span style='font-weight:
+normal;mso-bidi-font-weight:bold'>structures</span></span>)</span></span></span></span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span></h1>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;XE &quot;boxing&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'>The nouns we have encountered
+so far have all had items with identical shapes, and with all atoms of the same
+type, either numeric or character.&nbsp; You
+may be afraid that such regular arrays are all that J supports and that you
+will have to forgo C structures; and you may wonder how J will fare in the
+rough-and-tumble of the real world where data is not so regular.<span
+style='mso-spacerun:yes'>&nbsp; </span>This chapter will put those fears to rest.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>I think we should get a formal understanding
+of <span class=Definition>boxing</span> in J before we try to relate it to
+structures in C, because the ideas are just different enough to cause
+confusion.&nbsp; The <span class=Definition>box</span>
+is an <i>atomic data type</i> in J, along with number and character.<span
+style='mso-spacerun:yes'>&nbsp; </span>As with the other types, a single box is a
+scalar, with rank 0 and empty shape.&nbsp;
+Just as a numeric or character atom has a value, so a boxed atom has a
+value, called its <span class=Definition>contents</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The box is special in that its contents can
+be an array while the box itself is an atom.&nbsp;
+The boxing protects the contents and allows them to be treated as an
+atom.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>Arrays of boxes are allowed, and as always <b>all
+the atoms in an array must have the same type</b>: if any element is boxed, all
+must be boxed.&nbsp; </span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;XE &quot;Box
+verb &lt;&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;XE &quot;&lt;
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'>Various verbs create
+boxes.&nbsp; Monad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;&nbsp;</span></span>has
+infinite rank and exists for the sole purpose of <span class=Definition>boxing</span>
+its operand: </span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;&nbsp;y</span></span> creates a box whose contents are </span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+for example:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; &lt;1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|1|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; &lt;1
+2 3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|1 2 3|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; &lt;'abc'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|abc|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>When a box is displayed, the contents are
+surrounded by the boxing characters as seen in the examples.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>Only certain primitives can accept boxes as
+operands; generally, you cannot perform arithmetic on boxes but you can do
+other things like monad and dyad&nbsp;</span></span><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#</span></span>, monad and
+dyad&nbsp;</span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$</span></span>, and other primitives that do not perform
+arithmetic.&nbsp; The significant exception to
+this rule is that you <i>can</i> use monad and dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/:</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>\:</span></span> to order arrays of boxes.<span
+style='mso-spacerun:yes'>&nbsp; </span>Comparison for equality between two atoms is
+not strictly an arithmetic operation--you can compare two characters or a
+character and a number for equality, for example--and it is allowed on boxes,
+both explicitly using dyad&nbsp;</span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>=</span></span> and dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>or
+implicitly using dyad&nbsp;</span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.</span></span> and dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>e.</span></span>;
+but there is an arithmetic flavor to the operation: if the contents of
+corresponding components of the boxes are both numbers, tolerant comparison is
+used.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>Most primitives that accept boxes as operands
+do not examine the contents of the boxes, but instead perform their operation
+on the box atoms themselves.&nbsp; Any
+deviation from this behavior will be noted in the definition of the verb (we
+have not encountered any yet).&nbsp; Examples:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; 3 $
+&lt;'abc'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+---+---+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|abc|abc|abc|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+---+---+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>The dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$</span></span>
+was applied to the box, creating a list of identical boxes.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp;
+(&lt;1 2),(&lt;5),(&lt;'abc')</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+-+---+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|1 2|5|abc|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+-+---+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>The boxes were concatenated, resulting in a
+list of boxes.&nbsp; Note that the contents of
+the boxes do not have to have the same shape or type.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; 1 0 1
+# (&lt;1 2),(&lt;5),(&lt;'abc')</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+---+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|1 2|abc|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+---+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>The selection performed by dyad </span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#</span></span>
+is performed on the boxes, not on their contents.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;XE &quot;a:&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;XE &quot;fill&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'>Since applying a verb may
+result in the addition of verb fills and framing fills, we need to meet the
+fill element used for boxed nouns.&nbsp; It is
+the noun </span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a:</span></span>&nbsp;.&nbsp;
+</span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a:</span></span> is defined to be </span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;0$0</span></span>,
+i.&nbsp;e. an atom which is a box containing an empty numeric list (note that
+this is not the same thing as a box containing an empty string or an empty list
+of boxes).</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; a:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>++</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>||</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>++</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; 3 {.
+&lt;5</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-+++</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|5|||</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-+++</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a:</span></span> was used for the fills added by overtaking
+from this boxed noun.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>The contents of a box can be any noun,
+including a box or array of boxes:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; &lt;
+&lt; 2 3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|+---+|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>||2 3||</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|+---+|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+-----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; (&lt;'abc'),(&lt;&lt;1
+2)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+-----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|abc|+---+|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|&nbsp;&nbsp; ||1
+2||</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|&nbsp;&nbsp;
+|+---+|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>+---+-----+</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>The contents of a box can be recovered by <span
+class=Definition>opening</span> the box with monad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Monad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>
+has rank 0 (since it operates only on boxes, which are atoms), and its result
+is the contents of the box:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; &gt;
+&lt; 'abc'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>abc</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>The contents of the box is the character
+string.</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>a =. (&lt;1 2),(&lt;&lt;5),(&lt;'abc')<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&gt; 0 { a<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>1 2<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&gt; 1 { a<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>+-+<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|5|<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>+-+<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>Here we recover the contents of the selected
+box (which may be a box).</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; &gt;
+(&lt;1 2 3),(&lt;4)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>1 2 3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>4 0 0</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>Remember that monad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>
+has rank 0, so it is applied to each box and the results are collected using
+the frame.&nbsp; Here framing fills were added
+to the shorter result.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+was used as the framing fill because the contents of the boxes were numeric.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;&nbsp; &gt;a</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|domain error</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&gt;a</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>Here the results on the different cells were
+of different types, so it was impossible to collect them into an array.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>If </span></span><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is unboxed, the
+result of </span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;&nbsp;y</span></span> is </span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:
+_Toc5414572'><a name="_Toc191734366"></a><a name="_Toc5414577"></a><a
+name="_Toc5414425"><span style='mso-bookmark:_Toc5414577'><span
+style='mso-bookmark:_Toc191734366'>Terminology</span></span></a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>Before we go further with boxes, let's agree
+on some terminology.&nbsp; Because every atom
+in an array must have the same type, it is reasonable to speak of an array as
+being 'boxed' if its atoms are boxed, 'unboxed' otherwise (some writers use 'open'
+as a synonym for 'unboxed').&nbsp; Trouble arises
+with a phrase like 'boxed list'.&nbsp; If I
+box a list (e.&nbsp;g. </span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;1&nbsp;2&nbsp;3</span></span>), does that give me a
+boxed list?&nbsp; If I have a list whose atoms
+are boxes, (e.&nbsp;g. </span></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(&lt;1),(&lt;2)</span></span>), is that also a boxed
+list?&nbsp; Unfortunately, writers on J have
+not agreed on terminology for these cases.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>In this book, a <span class=Definition>boxed
+list</span> will be a list that has been put into a box (it is therefore an
+atom), and a <span class=Definition>list of boxes</span> is a list each atom of
+which is a box.&nbsp; Higher ranks are
+described similarly.&nbsp; If we say that a
+noun '<span class=Definition>is boxed</span>', that simply means that its atoms
+are boxes.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:
+_Toc5414572'><a name="_Toc191734367"></a><a name="_Toc5414578"></a><a
+name="_Toc5414426"><span style='mso-bookmark:_Toc5414578'><span
+style='mso-bookmark:_Toc191734367'>Boxing As an Equivalent For </span></span></a></span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+style='mso-bookmark:_Toc5414426'><span style='mso-bookmark:_Toc5414578'><span
+style='mso-bookmark:_Toc191734367'><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>Structures</span></span> In C</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>&nbsp;XE &quot;C:structure
+equivalent in J&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'>A C </span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>struct</span></span>
+corresponds to a list of boxes in J, where each box in the list corresponds to
+one structure element.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>Referencing a
+structure element</span></span> in C corresponds to selecting and opening an
+item in J.&nbsp; For example,</span></span></p>
+
+<p class=Ccodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>struct {</span></span></p>
+
+<p class=Ccodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int
+f[ ] = {1,2,3};</span></span></p>
+
+<p class=Ccodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>char
+g[ ] = &quot;abc&quot;;</span></span></p>
+
+<p class=Ccodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+h = 1.0;</span></span></p>
+
+<p class=Ccodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>)</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>is equivalent to</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>(&lt;1 2 3) , (&lt;'abc') , (&lt;1.0)</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>A C </span></span><span style='mso-bookmark:
+_Toc1896205'><span style='mso-bookmark:_Toc5414572'><span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>n-dimensional array of
+structures</span></span> is equivalent to a J array of boxes of rank n+1.<span
+style='mso-spacerun:yes'>&nbsp; </span>The last axis of the J array corresponds to
+the structure, and its length is the number of structure elements in the C
+structure.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896205'><span
+style='mso-bookmark:_Toc5414572'>C has no exact equivalent for a single box.</span></span></p>
+
+</div><!--bottom jump start--><hr><a href="compound_verbs.htm">&gt;&gt;</a>&nbsp;
+<a href="continuing_to_write_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

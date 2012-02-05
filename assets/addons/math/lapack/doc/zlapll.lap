@@ -1,0 +1,30 @@
+Given two column vectors X and Y, let
+
+The subroutine first computes the QR factorization of A = Q*R, and
+then computes the SVD of the 2-by-2 upper triangular matrix R. The
+smaller singular value of R is returned in SSMIN, which is used as the
+measurement of the linear dependency of the vectors X and Y.
+
+
+Arguments
+=========
+
+N       (input) INTEGER
+        The length of the vectors X and Y.
+
+X       (input/output) COMPLEX*16 array, dimension (1+(N-1)*INCX)
+        On entry, X contains the N-vector X.
+        On exit, X is overwritten.
+
+INCX    (input) INTEGER
+        The increment between successive elements of X. INCX > 0.
+
+Y       (input/output) COMPLEX*16 array, dimension (1+(N-1)*INCY)
+        On entry, Y contains the N-vector Y.
+        On exit, Y is overwritten.
+
+INCY    (input) INTEGER
+        The increment between successive elements of Y. INCY > 0.
+
+SSMIN   (output) DOUBLE PRECISION
+        The smallest singular value of the N-by-2 matrix A = ( X Y ).

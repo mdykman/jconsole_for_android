@@ -1,0 +1,114 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>I. Locatives</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dictj.htm">&gt;&gt;</a>&nbsp;
+<a href="dicth.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>I. Locatives</b></font><br><br>
+
+Locative<tt> abc_f_ </tt>refers to<tt> abc </tt>
+in locale<tt> f</tt>;<tt> </tt>indirect locative<tt> abc__xy </tt>
+refers to<tt> abc </tt>in the locale whose name is the current value 
+of<tt> xy</tt>.  For compatibility with previous versions, 
+the non-standard<tt> abc__ </tt>is accepted and is the same 
+as<tt> abc_base_</tt>.<tt> </tt>Thus:<br>
+
+<pre>
+   b=: 1
+   Rome=: 2
+   Rome_NewYork_=: 20
+   f_NewYork_=: 3 : '3*b=: Rome+y'
+   f_NewYork_ 10
+90
+
+   b,Rome
+1 2
+
+   b_NewYork_
+30
+</pre>
+
+A name is global if it is not assigned by<tt> =. </tt>
+within Explicit Definition (<tt>:</tt>).  
+Every global name is executed in the current locale.  
+Initially, the current locale is<tt> base</tt>.<tt> </tt>  
+A locative<tt> f_abc_</tt>,<tt> </tt>while it is executing, 
+switches the current locale to<tt> abc</tt>.<tt> </tt> 
+The verb<tt> </tt><a href="dx018.htm#4"><tt>18!:4</tt></a><tt> </tt>
+also switches the current locale, 
+and<tt> </tt><a href="dx018.htm#5"><tt>18!:5</tt></a><tt> </tt>gives its name.<br><br>
+
+The name<tt> f_abc_ </tt>is <i>executed in</i> locale<tt> abc </tt>
+in the sense that a global name referenced in<tt> f </tt>
+is sought therein and, if not found, is then sought in the 
+locales in the path of<tt> abc </tt>
+(but is still executed in<tt> abc</tt>).  
+The path of a locale is initially<tt> ,&lt;,'z'</tt> , 
+except that locale<tt> z </tt>has an empty path initially, 
+and may be changed using<tt> </tt><a href="dx018.htm#2"><tt>18!:2</tt></a> .<br><br>
+
+A locale is commonly populated by a script, by appropriate 
+naming of the verb used to execute the script.  
+For example, if the file<tt> stats </tt>contains the script:<br>
+
+<pre>
+   mean=: sum % #
+   sum=: +/
+</pre>
+
+Then:<br>
+
+<pre>
+   ssx_z_=: 0!:10             <font face=Times size=+1>Silent script execution</font>
+              
+   ssx_a_ &lt;'stats'            <font face=Times size=+1>Populate locale</font> a
+
+   mean=: 'in base locale'
+   mean_a_ 3 4 5
+4
+              
+   ssx_bc_ &lt;'stats'           <font face=Times size=+1>Populate locale</font> bc
+   sum_bc_ 3 4 5
+12
+</pre>
+
+The example also illustrates the use of locale <i>paths</i>, 
+in this case the<tt> z </tt>locale:  First, 
+the utility<tt> ssx </tt>is defined in the<tt> z </tt>locale.  
+In executing<tt> ssx_a_</tt>,<tt> ssx </tt>is not found in 
+locale<tt> a </tt>and is therefore sought (and found) in 
+locale<tt> z</tt>.<tt> </tt>Since<tt> ssx_a_ </tt>is <i>executed</i> 
+in locale<tt> a</tt>,<tt> </tt>the names in the stats script are 
+<i>defined</i> in locale<tt> a</tt>,<tt> </tt>populating it thereby.  
+Similarly for<tt> ssx_bc_</tt>.<br><br>
+
+See also<tt> <a href="dx018.htm">18!:</a> </tt>in 
+Appendix A and the &ldquo;Locales&rdquo; and &ldquo;Object Oriented Programming&rdquo; 
+labs distributed with the system.<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="dictj.htm">&gt;&gt;</a>&nbsp;
+<a href="dicth.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

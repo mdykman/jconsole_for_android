@@ -1,0 +1,119 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>|. Reverse  -  Rotate (Shift)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d232.htm">&gt;&gt;</a>&nbsp;
+<a href="d230.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Reverse</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>|. &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Rotate</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>|. y </tt>reverses the order of the items of<tt> y</tt> .<tt> </tt>
+For example:<br>
+
+<pre>
+   |. t=: 'abcdefg'
+gfedcba
+</pre>
+
+The <i>right shift</i> is the monad<tt> |.!.f</tt> ,<tt> </tt>
+equivalent to the dyad<tt> |.!.f </tt>
+with a left argument<tt> _1</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   |.!.'#' t
+#abcdef
+    
+   |.!.10 i.3 3
+10 10 10
+ 0  1  2
+ 3  4  5
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x|.y </tt>rotates successive axes of<tt> y </tt>by 
+successive elements of<tt> x</tt> .<tt> </tt>Thus: <br>
+
+<pre>
+   1 2 |. i. 3 5
+ 7  8  9  5  6
+12 13 14 10 11
+ 2  3  4  0  1
+</pre>
+
+The phrase<tt> x |.!.f y </tt>produces a <i>shift</i>: 
+the items normally brought around by the cyclic rotation 
+are replaced by the atom<tt> f </tt>unless<tt> f </tt>is empty<tt> </tt>
+(<tt>0=#f</tt>),<tt> </tt>in which case they are replaced by 
+the normal fill defined under <a href="d521.htm">Take (<tt>{.</tt>)</a>:<br>
+
+<pre>
+   2 _2 |.!.'#'&quot;0 1 t
+cdefg##
+##abcde
+</pre>
+</td>                                                         
+</tr></table><br>
+
+<pre>
+   y=: a.{~ (a. i. 'A') + i. 5 6
+
+   (] ; 2&amp;|. ; _2&amp;|. ; 2&amp;|.&quot;1  ; 2&amp;(|.!.'*'&quot;1)) y
++------+------+------+------+------+
+|ABCDEF|MNOPQR|STUVWX|CDEFAB|CDEF**|
+|GHIJKL|STUVWX|YZ[\]^|IJKLGH|IJKL**|
+|MNOPQR|YZ[\]^|ABCDEF|OPQRMN|OPQR**|
+|STUVWX|ABCDEF|GHIJKL|UVWXST|UVWX**|
+|YZ[\]^|GHIJKL|MNOPQR|[\]^YZ|[\]^**|
++------+------+------+------+------+
+
+   (] ; |. ; |.&quot;1 ; |.!.'*'&quot;1  ; (2: |. ])) y
++------+------+------+------+------+
+|ABCDEF|YZ[\]^|FEDCBA|*ABCDE|MNOPQR|
+|GHIJKL|STUVWX|LKJIHG|*GHIJK|STUVWX|
+|MNOPQR|MNOPQR|RQPONM|*MNOPQ|YZ[\]^|
+|STUVWX|GHIJKL|XWVUTS|*STUVW|ABCDEF|
+|YZ[\]^|ABCDEF|^]\[ZY|*YZ[\]|GHIJKL|
++------+------+------+------+------+
+
+   1 _2 |. !. '*' 3{. y
+**GHIJ
+**MNOP
+******
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d232.htm">&gt;&gt;</a>&nbsp;
+<a href="d230.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

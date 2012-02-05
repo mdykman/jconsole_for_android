@@ -1,0 +1,1107 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Loopless Code VII: Sequential Machines</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="modifying_an_array_m.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_vi_temporary_v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc5414639"></a><a name="_Toc1896267"></a><a name="_Toc191734470"><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>26. </span></span><![endif]>Loopless Code VII: Sequential Machines</span></span></a><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span></h1>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;XE &quot;;\:
+dyad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;XE &quot;Sequential
+machine&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896267'><span style='mso-bookmark:_Toc5414639'>J provides a primitive to
+handle one class of programs, ill-suited for parallel processing, that can be
+described systematically: sequential machines.&nbsp;
+Dyad&nbsp;</span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;:</span></span> takes a sequential-machine description in </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and a stream of input in </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, and produces the result called for by the
+machine description.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>A brief overview is as follows.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Definition>output array</span>
+is initialized to empty.&nbsp; An initial <span
+class=Definition>row number</span> (also called a state number) is chosen.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each item of input is converted into a <span
+class=Definition>column number</span>.&nbsp;
+The column numbers are processed, one per <span class=Definition>iteration</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In an iteration, the next column number is
+supplied to the <span class=Definition>row/action table</span>: the row number
+and column number specify an item of the table, which is a 2-element
+vector giving the new row number and an <span class=Definition>action code</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The action is performed and the row number is
+updated, completing the iteration.&nbsp;
+Execution continues until a 'quit' action is encountered or all the
+column numbers have been supplied.&nbsp; At
+that point the output array, which contains the accumulated results of the
+actions performed, becomes the result of the verb.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>To illustrate the use of dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;:</span></span>
+we will build a machine to recognize hex constants in character input, where a
+hex constant is '</span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0x</span></span>' followed by any positive number of
+hexadecimal digits.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>The machine description, the </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+argument to dyad&nbsp;</span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;:</span></span>, is a list of boxes </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f;s;m;ijrd</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> and </span></span><span style='mso-bookmark:
+_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>ijrd</span></span> may be
+omitted.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> controls the conversion of the items of </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+to column numbers.&nbsp; In the general case, </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+is a list of boxes; then the column number produced for an item of </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is the index of the first box of </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> whose contents have an item equal to the
+item of </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> (if there is no such box, a column number of
+</span></span><span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:
+_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#m</span></span>
+is used).&nbsp; If </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is a string, </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> may be a numeric list containing one column
+number for each character code and the column numbers are </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(a.&nbsp;i.&nbsp;y)&nbsp;{&nbsp;m</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>If </span></span><span style='mso-bookmark:
+_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is numeric, </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+may be empty or omitted, and </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> specifies the column numbers directly.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>In our example problem, we see that the input
+characters are in 4 classes: the character </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>;
+the character </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, the hexadecimal characters </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0123456789abcdefABCDEF</span></span>,
+and all other characters.&nbsp; We will assign
+these column numbers 3, 2, 1, and 0 respectively.<span
+style='mso-spacerun:yes'>&nbsp; </span>The conversion control </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+can be generated by the statements</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;&nbsp; m =.
+a. e. '0x123456789abcdefABCDEF'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;&nbsp; m =.
+m + a. e. '0x'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;&nbsp; m =.
+m + a. e. '0'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>and can be verified by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;&nbsp; (a.
+i. '0x2aq') { m</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>3 2 1 1 0</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>ijrd</span></span> gives the initial values of 4 variables
+used by the sequential machine: the <span class=Definition>input pointer</span>
+<i>i</i>, the <span class=Definition>word pointer</span> <i>j</i>, the row
+number <i>r</i>. and the <span class=Definition>final column</span> <i
+style='mso-bidi-font-style:normal'>d</i>.&nbsp;
+The input pointer is the index in </span></span><span style='mso-bookmark:
+_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> of the next item
+to be processed, and is incremented by 1 at the end of each iteration.<span
+style='mso-spacerun:yes'>&nbsp; </span>The word pointer is the index in </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+of the first item in the <span class=Definition>current word</span>; when the
+action code calls for producing output, the output will start with item <i>j</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>When <i>j</i> is </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>,
+there is no current word.&nbsp; The row
+number, as noted above, is used to index the row/action table.<span
+style='mso-spacerun:yes'>&nbsp; </span>The final column <i style='mso-bidi-font-style:
+normal'>d</i> is an extra column number that will be processed after the last
+item of </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> has been processed; it is the column for 'end-of-input'.<span
+style='mso-spacerun:yes'>&nbsp; </span>If </span></span><span style='mso-bookmark:
+_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>ijrd</span></span> is omitted,
+it defaults to </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;_1&nbsp;0&nbsp;_1</span></span>, which means start
+processing the first item of </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, with no current word, and starting in row
+number 0, with no final column.&nbsp; In our
+example problem, we would like end-of-input to be treated as a non-hexadecimal
+character, so we will use a final column of 0 and our </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>ijrd</span></span>
+will be </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;_1&nbsp;0&nbsp;0</span></span>&nbsp;..</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>s</span></span> gives the row/action table.<span
+style='mso-spacerun:yes'>&nbsp; </span>This table has as many rows as needed to
+encode all the states of the sequential machine, and as many columns as there
+are possible columns numbers of mapped input.&nbsp;
+Each 1-cell of </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>s</span></span> is a 2-element list.<span
+style='mso-spacerun:yes'>&nbsp; </span>The first element will become the row number
+for the next iteration.&nbsp; The second is
+the action code, indicating the action to be performed.<span
+style='mso-spacerun:yes'>&nbsp; </span>The action code is a number from 0 to 6, with
+meanings as follows:</span></span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Action
+  code</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=140 style='width:105.25pt;border:solid windowtext 1.5pt;border-left:
+  none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Addition
+  to output array</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=192 style='width:144.3pt;border:solid windowtext 1.5pt;border-left:
+  none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Change
+  to <i>j</i> (after any addition to the output)</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>0</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=140 style='width:105.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>none</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=192 style='width:144.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>none</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>1</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=140 style='width:105.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>none</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=192 style='width:144.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>j</i>
+  =. <i>i</i></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>2</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=140 style='width:105.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>add
+  single word</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=192 style='width:144.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>j</i>
+  =. <i>i</i></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>3</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=140 style='width:105.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>add
+  single word</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=192 style='width:144.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>j</i>
+  =. _1</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>4</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=140 style='width:105.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>add
+  multiple words</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=192 style='width:144.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>j</i>
+  =. <i>i</i></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>5</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=140 style='width:105.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>add
+  multiple words</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=192 style='width:144.3pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>j</i>
+  =. _1</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes;page-break-inside:avoid'>
+  <td width=76 style='width:57.35pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>6</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=333 colspan=2 valign=top style='width:249.55pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>stop--no
+  further iterations are performed</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>Executing an 'add' action when <i>j</i> is </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>
+produces a domain error.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>The action code indicates when a value is
+appended to the output array.&nbsp; The value
+that is appended depends on the </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f </span></span>parameter (which came from the </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+argument to dyad&nbsp;</span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;:</span></span>) and the values of the iteration
+variables.&nbsp; The values appended for
+different values of </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f</span></span> are (<i>r</i>=row number, <i>c</i>=column
+number, <i>j</i>=word pointer, <i>i</i>=input pointer):</span></span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td width=46 style='width:34.5pt;border:solid windowtext 1.5pt;border-right:
+  solid windowtext 1.0pt;mso-border-alt:solid windowtext 1.5pt;mso-border-right-alt:
+  solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=282 style='width:211.7pt;border-top:solid windowtext 1.5pt;
+  border-left:none;border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:.5pt;mso-border-bottom-alt:1.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Value
+  appended</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=191 valign=top style='width:143.6pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Description</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td width=46 style='width:34.5pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>0</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=282 style='width:211.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>the
+  items of </span></span><span style='mso-bookmark:_Toc1896267'><span
+  style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>y</span></span> between <i>j</i> and <i>i</i>-1, boxed</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=191 valign=top style='width:143.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Boxed
+  word of </span></span><span style='mso-bookmark:_Toc1896267'><span
+  style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>y</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid'>
+  <td width=46 style='width:34.5pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>1</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=282 style='width:211.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>the
+  items of </span></span><span style='mso-bookmark:_Toc1896267'><span
+  style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>y</span></span> between <i>j</i> and <i>i</i>-1</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=191 valign=top style='width:143.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Unboxed
+  word of </span></span><span style='mso-bookmark:_Toc1896267'><span
+  style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>y</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid'>
+  <td width=46 style='width:34.5pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>2</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=282 style='width:211.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>j</i>
+  , <i>i</i>-<i>j</i></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=191 valign=top style='width:143.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Index
+  and length of word</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:4;page-break-inside:avoid'>
+  <td width=46 style='width:34.5pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>3</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=282 style='width:211.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>c</i>
+  + <i>r</i> * number of columns in </span></span><span style='mso-bookmark:
+  _Toc1896267'><span style='mso-bookmark:_Toc5414639'><span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>s</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=191 valign=top style='width:143.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Coded
+  row and column</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:5;page-break-inside:avoid'>
+  <td width=46 style='width:34.5pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>4</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=282 style='width:211.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>j</i>
+  , (<i>i</i>-<i>j</i>) , <i>c</i> + <i>r</i> * number of columns in </span></span><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=191 valign=top style='width:143.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Index
+  and length of word, and coded row and column</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:6;mso-yfti-lastrow:yes;page-break-inside:avoid'>
+  <td width=46 style='width:34.5pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>5</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=282 style='width:211.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><i>i</i>
+  , <i>j</i>, <i>r</i> , <i>c</i> , (&lt;<i>r</i>,<i>c</i>)</span></span><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{s</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td width=191 valign=top style='width:143.6pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Input
+  pointer, word pointer, row, column,<br>
+  new row, action</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>The indicated data is appended to the output
+array whenever an 'add single word' action is executed.<span
+style='mso-spacerun:yes'>&nbsp; </span>The 'add multiple words' action also adds the
+data to the output except that a sequence of consecutive 'add multiple words'
+actions executed from the same row causes only a single item to be added to the
+output array: the 'add multiple words' actions executed after the first one
+modify the item that was added by the first.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>If no 'stop' action has been encountered, then
+after the last item of </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> has been processed, the <span
+class=Definition>end-of-input action</span> is performed: if <i
+style='mso-bidi-font-style:normal'>d</i> is nonnegative, one last iteration is
+performed with <i style='mso-bidi-font-style:normal'>d</i> as the column
+number; otherwise, one final 'emit multiple words' action is performed if <i>j</i>
+is not </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>_1</span></span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>We can build the state table </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+for our sample problem now.&nbsp; There will
+be 4 rows.&nbsp; First, we wait for </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>;
+then we expect </span></span><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>; then we expect a hexadecimal digit,
+signaling start-of-word if we see it; then we wait for a non-hexadecimal-digit,
+and output the word when we get one.&nbsp; The
+state table will look like this:</span></span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Row<br>
+  number</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Description</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Column
+  0<br>
+  other</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Column
+  1<br>
+  hexdigit</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Column
+  2<br>
+  </span></span><span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:
+  _Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Column
+  3<br>
+  </span></span><span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:
+  _Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>0</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Waiting
+  for </span></span><span style='mso-bookmark:_Toc1896267'><span
+  style='mso-bookmark:_Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>0</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1 1<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>1</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Expecting
+  </span></span><span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:
+  _Toc5414639'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>2</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Expecting
+  first digit</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>3</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'>Waiting
+  for nondigit</span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 3<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 3<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'><span
+  style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3 0<o:p></o:p></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'></span></span>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>This state table is generated by:</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>s =. 1 4 2 $ 0 0 0 0 0 0 1 1<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>s =. s , 4 2 $ 0 0 0 0 2 0 0 0<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;</span>&nbsp; s =. s
+, 4 2 $ 0 0 3 0 0 0 3 0<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>s =. s , 4 2 $ 0 3 3 0 0 3 3 0<o:p></o:p></span></b></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>and we use it with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;&nbsp;
+(0;s;m;0 _1 0 0) ;: 'qqq0x30x30x40x0xxxx'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>+----+----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>|0x30|0x40|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>+----+----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>&nbsp;&nbsp;
+(0;s;m;0 _1 0 0) ;: 'qqq0x30x30x40x0x34a'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>+----+----+-----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>|0x30|0x40|0x34a|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>+----+----+-----+</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896267'><span
+style='mso-bookmark:_Toc5414639'>Note in the second example that </span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0x34a</span></span>
+was emitted by the end-of-input action.</span></span></p>
+
+</div><!--bottom jump start--><hr><a href="modifying_an_array_m.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_vi_temporary_v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

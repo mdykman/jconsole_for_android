@@ -1,0 +1,85 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>: Explicit Names Changed</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="vtrans.htm">&gt;&gt;</a>&nbsp;
+<a href="inv601.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3>Explicit Names Changed</font>
+</td><td align=right>
+initial writing: 2006-01-26<br>last updated: 2006-02-13
+</td></tr></table>
+<br>
+
+<p>In an explicit definition, a name assigned by the copula<tt> =. </tt>is 
+made <i>local</i>.  A name assigned by<tt> =: </tt>is global, except that
+global assignment to a local name is not permitted.
+Locative assignment (using either<tt> =: </tt>or<tt> =.</tt>) is always global.</p>
+
+<p>The arguments in an explicit definition have been changed to<tt> x y u v m n </tt>
+from<tt> x. y. u. v. m. n. </tt>.  For example:</p>
+
+<pre>
+   pow=: 4 : '*/ *:^:(I.|.#:y) x' " 0
+
+   3x pow 12 50
+531441 717897987691852588770249
+</pre>
+
+<p>For compatibility, use of<tt> x. </tt>etc. will be permitted, 
+and existing explicit definitions will continue to work except
+if they use<tt> x </tt>etc. as global names.
+The effects for a dyadic verb are as follows:</p>
+
+<table>
+<tr><td><b>J 5.04</b></td><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td><td><b>J 6.01</b></td></tr>
+<tr>
+<td><tt>foo=: 4 : 0</tt><br>
+<tt>&nbsp;x.=. </tt>(left &nbsp; argument)<br>
+<tt>&nbsp;y.=. </tt>(right argument)<br>
+<tt>&nbsp;</tt>(rest of verb)<br>
+<tt>)</tt></td>
+<td>&nbsp;</td>
+<td><tt>foo=: 4 : 0</tt><br>
+<tt>&nbsp;x=. x.=. </tt>(left &nbsp; argument)<br>
+<tt>&nbsp;y=. y.=. </tt>(right argument)<br>
+<tt>&nbsp;</tt>(rest of verb)<br>
+<tt>)</tt></td>
+</tr>
+</table>
+
+<p>The <i>Explicit Argument Names</i> flag is a temporary facility that
+controls whether the names<tt> x. y. u. v. m. n. </tt>are 
+permitted.<tt> 9!:48 </tt>queries the flag;<tt> 9!:49 </tt>sets it.</p>
+
+<br>
+<!--bottom jump start--><hr><a href="vtrans.htm">&gt;&gt;</a>&nbsp;
+<a href="inv601.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>
+

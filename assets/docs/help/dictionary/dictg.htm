@@ -1,0 +1,192 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>G. Extended and Rational Arithmeti</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dicth.htm">&gt;&gt;</a>&nbsp;
+<a href="dictf.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>G. Extended and Rational Arithmetic</b></font><br><br>
+
+Extended precision integer constants can be entered as a sequence 
+of decimal digits terminated by an<tt> x</tt>.  
+The <a href="dxco.htm">monad<tt> x:</tt></a><tt> </tt>
+applies to integers and produces extended integers.  
+For example, the 2-element vector<tt> 1234x 56x </tt>(or<tt> 1234 56x</tt>)
+is equivalent to<tt> x: 1234 56</tt>.  
+Various primitives produce extended results if the argument(s) are extended.  
+Some verbs<tt> f </tt>produce floating point (inexact) results 
+on some extended arguments because the result is not integral; 
+however,<tt> &lt;.@f </tt>and<tt> &gt;.@f </tt>produce extended 
+integer results when applied to extended integer arguments.  
+Comparisons involving extended integers are exact.  For example:<br><br>
+
+<pre>
+   !40
+8.15915e47
+
+   !40x
+815915283247897734345611269596115894272000000000
+
+   */ x: &gt;: i.40
+815915283247897734345611269596115894272000000000
+
+   0j_25 &quot;: ! 2000x * i. 5 1            NB. Exponent format, 25 digits
+  1.0000000000000000000000000e0    
+  3.3162750924506332411753934e5735 
+  1.8288019515140650133147432e12673
+  2.6839997657267395961163166e20065
+  5.1841810604808769398058198e27752
+
+   ] r=: &lt;.@%: 2 * 10 ^ 56x
+14142135623730950488016887242
+
+   ,. *: r + _1 0 1
+199999999999999999999999999968972697904100132394908592081
+199999999999999999999999999997256969151562033370942366564
+200000000000000000000000000025541240399023934346976141049
+</pre>
+
+Rational constants can be entered as the decimal digits of 
+the numerator and denominator, separated by an<tt> r </tt>
+and preceded by an optional sign.  Thus<tt> 3r4 </tt>is the 
+rational number three-quarters and<tt> _12r5 </tt>is 
+negative 12 divided by 5.  Rational numbers are stored and 
+displayed in a standard form, with the numerator and 
+denominator relatively prime and the denominator positive.  
+Thus:<br><br>
+
+<pre>
+   1r2 _1r2 2r4 2r_4 _2r_4 0r9 5 _5
+1r2 _1r2 1r2 _1r2 1r2 0 5 _5
+</pre>
+
+Various primitive verbs produce (exact) rational results 
+if the argument(s) are rational; non-rational verbs produce 
+(inexact) floating point or complex results when applied to rationals, 
+if the verb only has a limited number of rational arguments 
+that produce rational results.  (For example,<tt> %:y </tt>is rational 
+if the atoms of<tt> y </tt>are perfect squares;<tt> ^0r1 </tt>
+is floating point.)  The quotient of two extended integers is 
+an extended integer (if evenly divisible) or rational (if not).  
+Comparisons involving two rationals are exact.  
+Dyadic verbs (e.g. <tt>+ - * % , = &lt;</tt>) 
+that require argument type conversions do so
+according to the following table:<br>
+
+<pre>
+     |  B  I  X  Q  D  Z
+  ---+------------------
+  B  |  B  I  X  Q  D  Z     B - <font face=Times size=+1>boolean</font>
+  I  |  I  I  X  Q  D  Z     I - <font face=Times size=+1>integer</font>
+  X  |  X  X  X  Q  D  Z     X - <font face=Times size=+1>extended integer</font>
+  Q  |  Q  Q  Q  Q  D  Z     Q - <font face=Times size=+1>rational</font>
+  D  |  D  D  D  D  D  Z     D - <font face=Times size=+1>floating point</font>
+  Z  |  Z  Z  Z  Z  Z  Z     Z - <font face=Times size=+1>complex</font>
+</pre>
+
+For example, in the expression<tt> 2.5+1r2</tt>,<tt> </tt>
+the<tt> 1r2 </tt>is converted to<tt> 0.5 </tt>before being added 
+to<tt> 2.5</tt>,<tt> </tt>resulting in a floating point<tt> 3</tt>.<tt> </tt>
+And in the expression<tt> 2+1r2</tt>,<tt> </tt>the<tt> 2 </tt>is 
+converted to<tt> 2r1 </tt>before being added to<tt> 1r2</tt>,<tt> </tt>
+resulting in<tt> 5r2</tt>.<br><br>
+
+In particular, a comparison involving a rational and 
+a floating point number is tolerant, 
+because the rational argument is first converted into a 
+floating point number.<br><br>
+
+The <a href="dxco.htm">verb<tt> x:</tt></a><tt> </tt>produces rational approximations 
+to non-rational arguments.<br>
+
+<pre>
+   2%3
+0.666667
+
+   2%3x
+2r3
+
+   (+%)/\10$1                           NB. Floating point convergents to golden mean
+1 2 1.5 1.66667 1.6 1.625 1.61538 1.61905 1.61765 1.61818
+
+   (+%)/\x: 10$1                        NB. Rational versions of same
+1 2 3r2 5r3 8r5 13r8 21r13 34r21 55r34 89r55
+
+   |: 2 x: (+%)/\x: 10$1
+1 2 3 5 8 13 21 34 55 89
+1 1 2 3 5  8 13 21 34 55
+
+   (+%)/ 100$1r1
+573147844013817084101r354224848179261915075
+
+   0j30 &quot;: (+%)/100$1r1                 NB. Display 30 decimal places
+1.618033988749894848204586834366
+
+   H=: % @: &gt;: @: (+/~) @: i. @ x:      NB. Hilbert matrix of order n
+
+   ] h=: H 6
+  1 1r2 1r3 1r4  1r5  1r6
+1r2 1r3 1r4 1r5  1r6  1r7
+1r3 1r4 1r5 1r6  1r7  1r8
+1r4 1r5 1r6 1r7  1r8  1r9
+1r5 1r6 1r7 1r8  1r9 1r10
+1r6 1r7 1r8 1r9 1r10 1r11
+
+   -/ .* h                              NB. Determinant of h
+1r186313420339200000
+
+   ~. q: % -/ .* h                      NB. Unique prime factors of reciprocal of det
+2 3 5 7 11
+
+   i.&amp;.(p:^:_1) 2*#h                    NB. Primes less than 2*n
+2 3 5 7 11
+
+   ^ 2r1                                NB. ^y is floating point or complex
+7.38906
+
+   %: 49r25                             NB. %: on a rational perfect square is rational
+7r5
+
+   %: 49r25 10r9
+1.4 1.05409
+
+   %: _2r1
+0j1.41421
+                
+   1 = 1+10r1^_15                       NB. Exact (rational) comparison
+0
+
+   (1.5-0.5) = 1+10r1^_15               NB. Tolerant (floating point) comparison
+1
+             
+   0.5 = 1r2
+1
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dicth.htm">&gt;&gt;</a>&nbsp;
+<a href="dictf.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

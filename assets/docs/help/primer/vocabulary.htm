@@ -1,0 +1,84 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Vocabulary</title>
+
+</head><body><!--top jump start--><a href="checkpoint_a.htm">&gt;&gt;</a>&nbsp;
+<a href="monad.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Vocabulary</h1>
+The J Dictionary (menu Help|Dictionary) is the J reference book and is your ultimate, authoritative source of information on J. The sooner you become familiar with using it the better, and a good way to start is by looking up the primitives that have been introduced so far.<br>
+<br>
+Press F1 to show the vocabulary and click a primitive to jump to the entry. If you press F1 while holding down Ctrl you get context sensitive help. If the caret is at a <font face=courier size=-1>+</font>, pressing Ctrl+F1 will jump to the <font face=courier size=-1>+</font> entry. <br>
+<br>
+In the vocabulary take a look at the row for + , which is the fifth row. The first entry in this row contains: <font face=courier size=-1>+</font> Conjugate <font face=courier size=-1>o</font> Plus. The word <font face=courier size=-1>+</font> is a verb and its monad is called conjugate, and its dyad is called plus. The dyad <font face=courier size=-1>+</font> is plus as defined in arithmetic.<br>
+<br>
+The monad <font face=courier size=-1>+</font> is interesting. In math, the conjugate of a complex number is the number with the same real part and an imaginary part of opposite sign. On real numbers the conjugate has no effect and the result is the argument, and on complex numbers it changes the sign of the imaginary part. J supports complex numbers just as directly as integers or real numbers. A complex number is indicated by a j separating the real and imaginary parts.<br>
+<br>
+
+<pre>   int =. 23
+   + int
+23
+   float =. 23.5
+   + float
+23.5
+   imagine =. 2j3    NB. 2 real part, 3 imaginary part
+   + imagine	     NB. change sign of imaginary part
+2j_3</pre>
+Many primitives support complex numbers and the J Dictionary must document this, which means there is a bit of extra complexity in some of the descriptions. If you need complex numbers in your application this is fantastic. But if you are a beginner and are not concerned with complex numbers, then you have to know enough to be able to ignore these bits and not get distracted or confused.<br>
+<br>
+Let's look at the + Dictionary page. The header line of the page gives the monad name Conjugate on the left side, and the dyad name Plus on the right. The formal name of the primitive <font face=courier size=-1>+</font> is near the center. The <font face=courier size=-1>0 0 0</font> to the right of the <font face=courier size=-1>+</font> will be explained later.<br>
+<br>
+Below this header are two boxes. The left box has the monad definition and the right box has the dyad definition. The page then continues with general discussion and examples.<br>
+<br>
+The J Dictionary is a concise, rigorous, and complete reference suitable for the most experienced users. This can make it difficult for beginners who don't know what to expect. For example, in the general discussion and examples for <font face=courier size=-1>+</font> there is considerable discussion of complex numbers and not a single example of just adding a couple of integers. Great for the experienced user who would be insulted if told how to add integers, but a bit of a reading challenge for the real beginner. You have to learn how to tune out, for now, the bits that are too advanced or are not relevant to your current interest, and concentrate on the parts that are.<br>
+<br>
+Go to the vocabulary page and take a look at the +. entry (fifth row, second entry) which contains: <font face=courier size=-1>+.</font> Real/Imaginary o GCD (Or). There is a lot of information here, and again much of it is not relevant at this early stage. Let's look at the definition.<br>
+<br>
+Glance at the left box for the monad definition and notice that it is for complex numbers. File it for future reference, but give it a pass for now.<br>
+<br>
+The dyad case in the header is described as: GCD (Or). This gives two informal names, GCD and Or, and indicates it can be used in two different ways. The dyad definition is in the right box. Note that GCD stands for greatest common divisor (which should at least ring a bell of math memories). Further on in the definition you will find that if the arguments are boolean then the <font face=courier size=-1>+.</font> is the logical or function. The GCD is a useful extension of the domain of the or function to non-boolean arguments. This extension of the domain of primitives is common in J. For now, it is interesting to note that <font face=courier size=-1>+.</font> has this larger domain, but it is also easy to limit it to boolean arguments.<br>
+
+<pre>   0 +. 0	NB. 0 or 0
+0
+   0 +. 1
+1
+   1 +. 0
+1
+   1 +. 1
+1</pre>
+The vocabulary page entry for <font face=courier size=-1>+:</font> contains: Double o Not-Or. The definition page gives quite simple definitions for both the monad and dyad.<br>
+<br>
+The monadic case is called double and does just what you'd expect.<br>
+<br>
+
+<pre>   +:  3
+6</pre>
+The dyadic case is the logical negation of the or of the arguments.<br>
+<br>
+Again, for both <font face=courier size=-1>+.</font> and <font face=courier size=-1>+:</font> much of the general discussion and examples are perhaps beyond your capabilities right now. But the key is to know how to navigate and to get the information that is relevant.<br>
+<br>
+ After the row for <font face=courier size=-1>?</font> there are additional rows for primitives that are spelled with names that are inflected with a dot or colon.<br>
+<!--bottom jump start--><hr><a href="checkpoint_a.htm">&gt;&gt;</a>&nbsp;
+<a href="monad.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>e. Raze In  -  Member (In)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="decapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="ddcapco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Raze In</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>e. &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Member (In)</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>e.y </tt>produces a boolean result that determines 
+for each atom of<tt> y </tt>whether its open contains an 
+item of the raze of<tt> y</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> x </tt>has the shape of an item of<tt> y</tt> ,<tt> </tt>
+then<tt> x e. y </tt>is<tt> 1 </tt>if<tt> x </tt>matches an item 
+of<tt> y</tt> .<tt> </tt>
+In general,<tt> x e. y </tt><font size=+1>&harr;</font><tt> (#y)&gt;y i. x</tt> .<br><br>
+
+The fit conjunction provides tolerant comparison, as in<tt> e.!.t</tt> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   ]y=:'abc';'dc';'a'
++---+--+-+
+|abc|dc|a|
++---+--+-+
+
+   ;y
+abcdca
+
+   e. y
+1 1 1 0 1 1
+0 0 1 1 1 0
+1 0 0 0 0 1
+
+   f=: ] e.~&amp;&gt;/ ;
+   f y
+1 1 1 0 1 1
+0 0 1 1 1 0
+1 0 0 0 0 1
+
+   'cat' e. 'abcd'
+1 1 0
+
+   ]z=: 2 3$'catdog'
+cat
+dog
+
+   'cat' e. z
+1
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="decapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="ddcapco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

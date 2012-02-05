@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 26. Polynomial Roots I</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp27.htm">&gt;&gt;</a>&nbsp;
+<a href="samp25.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>26. Polynomials: Roots from Coefficients (Newton&rsquo;s Method)</b></font><br><br>
+
+Because the polynomials<tt> (m;r)&amp;PIR </tt>and<tt> (c=:CFR (m;r))&amp;p. </tt>
+are identical, the parameters<tt> m;r </tt><tt>and</tt><tt> c </tt>
+are said to be different <i>representations</i> of the same function.  
+Each representation has its own useful properties.  For example, 
+addition of polynomials is easy in the coefficient representation 
+but difficult in the root representation; 
+the identification of the zeros of the function is 
+difficult in the coefficient representation but trivial 
+in the root representation.  It is therefore useful to have 
+functions that transform each representation to the 
+other.<tt> CFR </tt>serves for one direction; 
+the inverse problem is approached by methods 
+of successive approximation.<br><br>
+
+For a differentiable function<tt> f</tt> ,<tt> </tt>the difference<tt> (f r)-(f a) </tt>
+for nearby points<tt> r </tt>and<tt> a </tt>is approximately equal 
+to the difference<tt> r-a </tt>multiplied by the slope of the 
+tangent to the graph of<tt> f </tt>at the point<tt> a,f a </tt>,<tt> </tt>
+that is, the derivative of<tt> f </tt>at<tt> a</tt> .<tt> </tt>
+Conversely, the difference<tt> r-a </tt>is approximated 
+by<tt> ((f r)-(f a))%f D a</tt>,<tt> </tt>and<tt> r </tt>is 
+approximated by<tt> a+((f r)-(f a))%f D a</tt> .<br><br>
+
+If<tt> f </tt>is the polynomial<tt> c&amp;p. </tt>
+and<tt> r </tt>is one of its roots, then<tt> f r </tt>is zero, 
+and if<tt> a </tt>is an approximation to<tt> r</tt> ,<tt> </tt>
+the expression for<tt> r </tt>reduces to<tt> a-(f a)%f D a</tt> .<tt> </tt>  
+This may provide a better approximation to<tt> r</tt> ,<tt> </tt>
+and is embodied in <i>Newton&rsquo;s method</i>, defined as an adverb, 
+and illustrated as follows:<br>
+
+<pre>
+   newton=: 1 : '] - x % x D'
+
+   f=: (c=: 12 _10 2)&amp;p.
+
+   f a=: 2.4 
+_0.48
+
+   f newton a
+1.2
+
+   f 2
+0
+
+   f newton ^:0 1 2 3 4 _ a
+2.4 1.2 1.75385 1.9594 1.99848 2
+
+   ]a=: (^ - 4:) newton ^: 0 1 2 3 _ a=: 1
+1 1.47152 1.38982 1.3863 1.38629
+
+   ^ {: a
+4
+</pre>
+
+For the particular case of polynomials, we may define an 
+adverb that applies to coefficients and uses the polynomial 
+derivative<tt> pD </tt>instead of the general derivative<tt> D</tt> :<br><br>
+
+<pre>
+   pD=: 1 }. ] * i.@#
+   NEWTON=: 1 : '] - x&amp;p. % (pD x)&amp;p.'
+
+   c NEWTON ^:0 1 2 3 4 _ a=: 2.4
+2.4 1.2 1.75385 1.9594 1.99848 2
+
+</pre>
+
+<!--bottom jump start--><hr><a href="samp27.htm">&gt;&gt;</a>&nbsp;
+<a href="samp25.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

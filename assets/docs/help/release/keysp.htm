@@ -1,0 +1,64 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>f/. Sparse Arguments</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="infix2.htm">&gt;&gt;</a>&nbsp;
+<a href="18x3.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">f/. </font>
+<font size=+3>Sparse Arguments</font></b></td>
+<td align=right>
+initial writing: 2001-04-21<br>last updated: 2001-04-21<br>
+</td></tr></table>
+<br>
+
+The dyads<tt> f/. </tt>now supports sparse arguments.
+For example:<br>
+
+<pre>
+   d=: ?. 20 $ 5
+   v=: ?. 20 $ 100
+   d ,: v
+ 0  3  2  2  1 0  3  3  4  1  2  4 0 0  2  3 0  1 0  2
+13 75 45 53 21 4 67 67 93 38 51 83 3 5 52 67 0 38 6 41
+
+   d +//. v
+31 276 242 97 176
+   ($.d) +//. v
+31 276 242 97 176
+   d +//. $. v
+31 276 242 97 176
+   ($.d) +//. $. v
+31 276 242 97 176
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="infix2.htm">&gt;&gt;</a>&nbsp;
+<a href="18x3.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

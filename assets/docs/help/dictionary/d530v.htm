@@ -1,0 +1,87 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>} Item Amend &#149; Amend</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d531.htm">&gt;&gt;</a>&nbsp;
+<a href="d530n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Item Amend</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u} &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Amend</font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr>
+<td bgcolor=#eeeeee>
+<tt>u} </tt>is defined in terms of the noun case<tt> m}</tt> ,<tt> </tt>
+the verb<tt> u </tt>applying to the argument or arguments to provide 
+the numeric indices required by it.
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   x=: 100 + i. 2 4
+   u=: */@$@] | (5: * i.@$@[)
+   y=: i. 3 2 4
+   x ; y ; (x u y) ; (x u} y)
++---------------+-----------+----------+---------------+
+|100 101 102 103| 0  1  2  3| 0 5 10 15|100 105   2   3|
+|104 105 106 107| 4  5  6  7|20 1  6 11|  4 101 106   7|
+|               |           |          |               |
+|               | 8  9 10 11|          |  8   9 102 107|
+|               |12 13 14 15|          | 12  13  14 103|
+|               |           |          |               |
+|               |16 17 18 19|          | 16  17  18  19|
+|               |20 21 22 23|          |104  21  22  23|
++---------------+-----------+----------+---------------+
+</pre>
+
+The positions selected by<tt> x u} y </tt>may be made to depend on 
+either or both of the arguments<tt> x </tt>and<tt> y</tt> ,<tt> </tt>
+and related adverbs can be defined for convenient use in common cases.  
+For example:<br>
+
+<pre>
+   A=: @(i.@$@])
+   u=: (&lt;0 1)&amp;|:
+   x=: 'DIAG' [ y=: a. {~ (a. i. 'a') + i. 4 5
+   x;y;(x u A y);(x u A} y)
++----+-----+---------+-----+
+|DIAG|abcde|0 6 12 18|Dbcde|
+|    |fghij|         |fIhij|
+|    |klmno|         |klAno|
+|    |pqrst|         |pqrGt|
++----+-----+---------+-----+
+</pre>
+
+Also see the case<tt> m} </tt>for the use of gerunds.<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="d531.htm">&gt;&gt;</a>&nbsp;
+<a href="d530n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

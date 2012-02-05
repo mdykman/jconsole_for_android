@@ -1,0 +1,130 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>{. Head  -  Take</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d522.htm">&gt;&gt;</a>&nbsp;
+<a href="d520.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Head</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>{. &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Take</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>{.y </tt>selects the leading item of<tt> y</tt> ,<tt> </tt>or an
+item of fills if<tt> y </tt>has no items; that is,<tt> {.y </tt>
+<font size=+1>&harr;</font><tt> 0{1{.y</tt> .<tt> </tt>
+Thus:<br>
+
+<pre>
+   a=: i. 3 2 3
+   a;({.a);({.&quot;2 a);({.&quot;1 a)
++--------+-----+--------+-----+
+| 0  1  2|0 1 2| 0  1  2| 0  3|
+| 3  4  5|3 4 5| 6  7  8| 6  9|
+|        |     |12 13 14|12 15|
+| 6  7  8|     |        |     |
+| 9 10 11|     |        |     |
+|        |     |        |     |
+|12 13 14|     |        |     |
+|15 16 17|     |        |     |
++--------+-----+--------+-----+
+
+   ]b=: ;/a
++-----+-------+--------+
+|0 1 2|6  7  8|12 13 14|
+|3 4 5|9 10 11|15 16 17|
++-----+-------+--------+
+    
+   {.&amp;&gt; b
+ 0  1  2
+ 6  7  8
+12 13 14
+
+   {. i.0 3
+0 0 0
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> x </tt>is an atom,<tt> x{.y </tt>takes 
+from<tt> y </tt>an interval of<tt> |x </tt>items; beginning at the front 
+if<tt> x </tt>is positive, ending at the tail if it is negative.<br><br>
+
+In an <i>overtake</i> (in which the number to be taken exceeds the number of 
+items), extra items consist of <i>fills</i>; 
+zeros if<tt> y </tt>is numeric,<tt> a: </tt>if it is boxed, 
+spaces if literal, and<tt> s: ' ' </tt>if symbol.  
+The fill atom<tt> f </tt>is also specified by <i>fit</i>, 
+as in<tt> {.!.f</tt> .<br><br>
+
+In general, if<tt> y </tt>is not an atom,<tt> x </tt>may be a list of length not 
+more than<tt> $$y</tt> ,<tt> </tt>and if<tt> y </tt>is an atom, it is replaced 
+by<tt> ((#x)$1)$y</tt> .<tt> </tt>
+Element<tt> k </tt>produces<tt> (k{x){.&quot;(($$y)-k) y</tt> ;<tt> </tt>
+an infinite value is replaced by the length of the
+corresponding axis.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+The following examples illustrate the use of the dyad <i>take</i>:<br>
+
+<pre>
+   y=: i. 3 4
+   y;(2{.y);(5{.y);(_5{.y);(_6{.'abcd');(2 _3{.y)
++---------+-------+---------+---------+------+-----+
+|0 1  2  3|0 1 2 3|0 1  2  3|0 0  0  0|  abcd|1 2 3|
+|4 5  6  7|4 5 6 7|4 5  6  7|0 0  0  0|      |5 6 7|
+|8 9 10 11|       |8 9 10 11|0 1  2  3|      |     |
+|         |       |0 0  0  0|4 5  6  7|      |     |
+|         |       |0 0  0  0|8 9 10 11|      |     |
++---------+-------+---------+---------+------+-----+
+
+   2 {.&quot;1 y
+0 1
+4 5
+8 9
+  
+   _ 2 {. y
+0 1
+4 5
+8 9
+
+   6{.'ab';'cde';'fghi'
++--+---+----++++
+|ab|cde|fghi||||
++--+---+----++++
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d522.htm">&gt;&gt;</a>&nbsp;
+<a href="d520.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

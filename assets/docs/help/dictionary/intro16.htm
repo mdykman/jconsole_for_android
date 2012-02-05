@@ -1,0 +1,116 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 16. Word Formation</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro17.htm">&gt;&gt;</a>&nbsp;
+<a href="intro15.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>16. Word Formation</b></font><br><br>
+
+The interpretation of a written English sentence begins 
+with word formation.  The process is based on spaces to 
+separate the sentence into units, but is complicated by 
+matters such as apostrophes and punctuation marks: 
+<i>was</i> and <i>Brown</i> and <i>Ross&rsquo;</i> are each 
+single units, but <i>however,</i> is not 
+(since the comma is a separate unit).<br><br>
+
+The following lists of characters represent sentences 
+in <b>J</b>, and can be executed by applying the <i>do</i> 
+or <i>execute</i> function<tt> &quot;. </tt>:<br>
+
+<pre>
+   m=: '3 %: y'
+   d=: 'x %: y'
+   x=: 4
+   y=: 27 4096
+
+   &quot;. m
+3 16
+
+   do=: &quot;. 
+   do d
+2.27951 8
+</pre>
+
+The word formation rules of <b>J</b> are prescribed in 
+<a href="dict1.htm">Part I</a> of the dictionary.  
+Moreover, the word-formation function<tt> ;: </tt>can be applied 
+to the string representing a sentence to produce a boxed list 
+of its words:<br>
+
+<pre>
+   ;: m
++-+--+-+
+|3|%:|y|
++-+--+-+
+
+   words=: ;:
+   words d
++-+--+-+
+|x|%:|y|
++-+--+-+
+</pre>
+
+The rhematic rules of <b>J</b> apply reasonably well to English phrases:<br>
+
+<pre>
+   words p=: 'Nobly, nobly, Cape St. Vincent'
++-----+-+-----+-+----+---+-------+
+|Nobly|,|nobly|,|Cape|St.|Vincent|
++-----+-+-----+-+----+---+-------+
+
+   &gt;words p
+Nobly  
+,      
+nobly  
+,      
+Cape   
+St.    
+Vincent
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>16.1 &nbsp;</td>
+<td>Choose sentences such as<tt> pp=:+//.@(*/) </tt>
+from earlier exercises, enclose them in quotes, 
+and observe the effects of word-formation<tt> </tt>(<tt>;:</tt>)<tt> </tt>
+on them.<br><br>
+
+<tr><td valign=top>16.2 &nbsp;</td>
+<td>Move the cursor to the left of a line so that it is separated 
+from the line by one or more spaces, and press Ctrl F1 to display 
+the individually boxed words in the sentence.<br><br>
+
+</td></tr>
+</table>
+
+<br>
+
+<!--bottom jump start--><hr><a href="intro17.htm">&gt;&gt;</a>&nbsp;
+<a href="intro15.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

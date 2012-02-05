@@ -1,0 +1,107 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>2!: Host</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx003.htm">&gt;&gt;</a>&nbsp;
+<a href="dx001.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Host</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>2!:</font></b></td>
+</tr></table>
+<br>
+
+<table>
+<tr><td valign=top width=120><tt>2!:0 y</tt></td>
+<td>
+<b>Host</b>. The list<tt> y </tt>is executed by the host system, 
+and the result is returned. For example,<tt> 2!:0 'dir *.exe'</tt>.<tt> </tt>
+Not available for Windows.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><tt>2!:1 y</tt></td>
+<td>
+<b>Spawn</b>. (Unix only.)  Like<tt> 2!:0</tt>,<tt> </tt>
+but yields<tt> '' </tt>without waiting for the host to finish.  
+Any output is ignored. For example,<tt> 2!:1 </tt>can be used 
+to invoke a text-editor.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><tt>2!:2 y</tt></td>
+<td>
+<b>Host IO</b>. (Unix only.) The host command line<tt> y </tt>
+is passed to<tt> /bin/sh </tt>for processing, connecting two file numbers 
+to the command&rsquo;s standard input and output.  The result is 
+a 3-element list of the process id of the task started and the 
+file numbers associated with its standard input and output.  
+These file numbers also appear in the result of<tt> 1!:20</tt> .<tt> </tt>
+In this case, instead of appearing with a name they appear 
+with the command line, prefixed by<tt> &gt; </tt>(standard input) 
+or<tt> &lt; </tt>(standard output).  The files associated with 
+the process should be closed with<tt> 1!:22 </tt>when no longer in use.  
+See also<tt> 2!:3 </tt>for a verb to wait for processes to complete.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><tt>2!:3 y</tt></td>
+<td>
+<b>Wait</b>. (Unix only.) Wait for process id<tt> y </tt>
+to terminate.  The result is the status code returned by the process.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><tt>2!:5 y</tt></td>
+<td>
+<b>Getenv</b>. The value of the shell environment variable 
+named<tt> y</tt>.<tt> </tt>If the named variable is undefined, 
+the result is 0.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><tt>2!:6 y</tt></td>
+<td>
+<b>Getpid</b>. The value of the process ID.
+</td></tr>
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><tt>2!:55 y</tt></td>
+<td>
+<b>Terminate Session</b>.<tt> y </tt>is an integer return code
+</td></tr></TABLE>
+
+<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dx003.htm">&gt;&gt;</a>&nbsp;
+<a href="dx001.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

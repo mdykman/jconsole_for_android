@@ -1,0 +1,74 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>(2;a)$.y and $.y Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="sp4and5.htm">&gt;&gt;</a>&nbsp;
+<a href="intdivrem.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">(2;a)$.y </font>
+<font size=+3>and</font><font size=+3 face="Courier New"> $. y </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2007-01-29<br>last updated: 2007-02-01
+</td></tr></table>
+<br>
+
+<p><tt>(2;a)$.y </tt>and<tt> $.y </tt>(equivalent to<tt> (2;i.#$y)$.y</tt> ) 
+have been more efficient, in particular for matrix or boolean<tt> y</tt> .<tt> </tt>
+The following benchmarks demonstrate the improvement:</p>
+
+<pre>
+b2=:      1e5 10 ?@$ 2
+x2=: b2 * 1e5 10 ?@$ 0
+b3=:      313 317 11 ?@$ 2
+x3=: b3 * 313 317 11 ?@$ 0
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'Expression'
+</pre>
+
+<table>
+<tr>
+<td><b>Expression</b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+</tr>
+<tr><td><tt>$.b2       </tt></td><td>&nbsp;</td><td>0.0274254</td><td>&nbsp;</td><td>4.72032e6</td><td>&nbsp;</td><td>0.0799200</td><td>&nbsp;</td><td>1.52066e7</td><td>&nbsp;</td><td align=right>   2.91</td><td>&nbsp;</td><td align=right>   3.22</td></tr>
+<tr><td><tt>$.x2       </tt></td><td>&nbsp;</td><td>0.0670972</td><td>&nbsp;</td><td>1.04876e7</td><td>&nbsp;</td><td>0.1179362</td><td>&nbsp;</td><td>3.35567e7</td><td>&nbsp;</td><td align=right>   1.76</td><td>&nbsp;</td><td align=right>   3.20</td></tr>
+<tr><td><tt>$.b3       </tt></td><td>&nbsp;</td><td>0.0569772</td><td>&nbsp;</td><td>9.43891e6</td><td>&nbsp;</td><td>0.1119333</td><td>&nbsp;</td><td>3.04109e7</td><td>&nbsp;</td><td align=right>   1.96</td><td>&nbsp;</td><td align=right>   3.22</td></tr>
+<tr><td><tt>$.x3       </tt></td><td>&nbsp;</td><td>0.0941701</td><td>&nbsp;</td><td>2.09733e7</td><td>&nbsp;</td><td>0.1662019</td><td>&nbsp;</td><td>6.71111e7</td><td>&nbsp;</td><td align=right>   1.76</td><td>&nbsp;</td><td align=right>   3.20</td></tr>
+<tr><td><tt>(2;0 1)$.b3</tt></td><td>&nbsp;</td><td>0.0105079</td><td>&nbsp;</td><td>5.50778e6</td><td>&nbsp;</td><td>0.0185355</td><td>&nbsp;</td><td>8.65350e6</td><td>&nbsp;</td><td align=right>   1.76</td><td>&nbsp;</td><td align=right>   1.57</td></tr>
+<tr><td><tt>(2;0 1)$.x3</tt></td><td>&nbsp;</td><td>0.0404309</td><td>&nbsp;</td><td>3.48680e7</td><td>&nbsp;</td><td>0.0631660</td><td>&nbsp;</td><td>5.26938e7</td><td>&nbsp;</td><td align=right>   1.56</td><td>&nbsp;</td><td align=right>   1.51</td></tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="sp4and5.htm">&gt;&gt;</a>&nbsp;
+<a href="intdivrem.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

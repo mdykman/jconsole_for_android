@@ -1,0 +1,66 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Unicode</title>
+</head><body> <!--top jump start--><a href="locked_scripts.htm">&gt;&gt;</a>&nbsp;
+<a href="boxdraw.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+<h1>Unicode - character data and UTF-8 encoding</h1>
+See Studio|Demos|unicode simple and Studio|Demos|unicode for examples of J support for non-English language text. These demos require appropriate fonts.<br>
+<br>
+Standard library script unicode.ijs (open'unicode') has utilities for working with unicode.<br>
+<br>
+There are good Unicode and UTF-8 references on the web, including: <a href="http://www.utf-8.com">www.utf-8.com</a>.<br>
+<br>
+UTF-8 and Unicode are fully supported. UTF-8 is multibyte encoding for 8 bit data that includes all Unicode code points and maps 7 bit ASCII unchanged. The system continues to use the J character data type of 8 bits. The big difference is that when it is interpreted as displayable characters the UTF-8 encoding is used rather than ANSI code pages.<br>
+<br>
+UTF-8 is supported by scripts, foreigns, files, GUI forms, controls, and OLE/COM. Your J application can be fully unicode aware.<br>
+<br>
+In addition to support for UTF-8 encoding the 16 bit character data type has extended support. See <a href="../dictionary/duco.htm">u:</a> for details. <br>
+<br>
+J interacts with the world with byte strings (strings of 8 bit values). At the keyboard your entry of <font face=courier size=-1>i.3</font> causes the bytes 105 46 51 to be sent to J. J builds a sentence from these values, runs it, and sends the byte string 48 32 49 32 50 for display on the screen. The encoding that maps the keyboard presses of i . 3 to the input values 105 46 51 and the output values 48 32 49 32 50 to the screen characters 0 blank 1 blank 2 is the ASCII encoding.<br>
+<br>
+ASCII encoding maps English lowercase and uppercase alphabet, digits, and punctuation and symbols to the byte values 32 through 127. The values 0 through 31 and the value 127 are used for 'controls' such as enter, backspace, and tab. ASCII encoding does not include byte values from 128 to 255.<br>
+<br>
+In previous J releases the restriction to English could be partially relaxed by the use of an encoding called ANSI. This encoding gave character symbol meanings to the byte values 128 to 255. But the increase of 128 symbols only satisfied the requirements of a few European lanuages. User selectable code pages, as an implicit argument, changed the symbols&nbsp;&nbsp;mapped and extended the range of languages covered and the use of double byte sequences (2 bytes indicating a symbol in a code page) allowed the support of all languages. At best the use of ANSI with code pages and double byte sequences was awkward and confusing.<br>
+<br>
+Over many years (and countless committee meetings) standards organizations finally agreed on a mapping of a unique code point (integer value) for every symbol in every language. All symbols required by all languages can be mapped to values in the range 0 to 65535. For example:<br>
+97 is a, 65 is A, 240 is æ, and 25180 is a Chinese symbol.<br>
+<br>
+Several years ago J introduced wchar as a second character data type that is similar to the char data but instead of having values of 0 to 255 it can have values of 0 to 65535. A wchar can have any unicode code point.<br>
+<br>
+The whar data type is useful for manipulating unicode data in J. However, the outside world is still very much byte oriented. This includes text files, ijs text files, web pages, email messages, etc and all the software that is oriented towards working with this byte data.<br>
+<br>
+In a perfect world computers would never have had 8 bit bytes and 7 bit ASCII. Instead it would have had 16 bits for character data with the unicode code point mapping.<br>
+<br>
+But given where we are (lots of 8 bit data and 8 bit oriented programs) and the absolute need for computers to more easily and consistently support all languages the UTF-8 encoding offers an interesting and useful compromise.<br>
+<br>
+UTF-8 encoding maps the unicode code points to a string of bytes. This allows the byte oriented nature of much of the existing stuff to continue and still have almost all the advantages of unicode.<br>
+<br>
+Starting in J601 J char data assumes UTF-8 encoding when used as text. This is very different from the previous encoding assumptions based on ANSI and code pages.<br>
+<br>
+If you used non-English language in your J applications you will definitely have to do some conversion work. But the end result will be cleaner and if you are starting now to do this kind of work you'll find things much easier.<br>
+<br>
+A key point is that UTF-8 support is becoming common. In J you can enter and display non-English lanuage text just as you would with any other application. And with email and web page support you can cut and paste with J. The UTF-8 support, in addition to being complete and easy to use on Windows, is also the preferred Unicode approach on Unix.<br>
+<!--bottom jump start--><hr><a href="locked_scripts.htm">&gt;&gt;</a>&nbsp;
+<a href="boxdraw.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>
+</html>

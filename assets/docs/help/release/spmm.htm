@@ -1,0 +1,83 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>        +/ .* Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="ipbx.htm">&gt;&gt;</a>&nbsp;
+<a href="zpown.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New"> +/ .* </font><font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2009-05-01<br>last updated: 2009-06-07
+</td></tr></table>
+<br>
+
+<p><tt>x +/ .*y </tt>is now more efficient on vector 
+and sparse matrix arguments.
+The following benchmarks illustrate the improvements 
+in time and space.</p>
+
+<pre>
+
+sa=: 4 : 0  NB. random sparse array with density x and shape y
+ m=. >.x**/y
+ 1$.y;(i.#y);0;((m,#y)?@$y);65536%~_5e8+m ?@$ 1e9
+)
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+
+x=. d sa 2$n
+y=. d sa 2$n
+ts 'x +/ .* y'
+</pre>
+
+<table>
+<tr>
+<td align=center><b>d</b></td><td>&nbsp;</td>
+<td align=center><b>n</b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 7.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td></tr>
+
+<tr><td>0.01</td><td>&nbsp;</td><td>&nbsp;200</td><td>&nbsp;</td><td>0.000479</td><td>&nbsp;</td><td>2.60480e4</td><td>&nbsp;</td><td>0.012485</td><td>&nbsp;</td><td>5.57312e5</td><td>&nbsp;</td><td align=right>26.06</td><td>&nbsp;</td><td align=right>21.40</td></tr>
+<tr><td>0.01</td><td>&nbsp;</td><td>&nbsp;400</td><td>&nbsp;</td><td>0.003083</td><td>&nbsp;</td><td>2.09344e5</td><td>&nbsp;</td><td>0.092145</td><td>&nbsp;</td><td>3.89229e6</td><td>&nbsp;</td><td align=right>29.89</td><td>&nbsp;</td><td align=right>18.59</td></tr>
+<tr><td>0.01</td><td>&nbsp;</td><td>&nbsp;800</td><td>&nbsp;</td><td>0.008078</td><td>&nbsp;</td><td>1.59162e6</td><td>&nbsp;</td><td>0.628309</td><td>&nbsp;</td><td>3.01444e7</td><td>&nbsp;</td><td align=right>77.78</td><td>&nbsp;</td><td align=right>18.94</td></tr>
+<tr><td>0.01</td><td>&nbsp;</td><td>1600     </td><td>&nbsp;</td><td>0.053682</td><td>&nbsp;</td><td>1.26232e7</td><td>&nbsp;</td><td>4.999638</td><td>&nbsp;</td><td>2.36795e8</td><td>&nbsp;</td><td align=right>93.13</td><td>&nbsp;</td><td align=right>18.76</td></tr>
+<tr><td>&nbsp;</td></tr>
+
+<tr><td>0.1 </td><td>&nbsp;</td><td>&nbsp;200</td><td>&nbsp;</td><td>0.008470</td><td>&nbsp;</td><td>1.58342e6</td><td>&nbsp;</td><td>0.118047</td><td>&nbsp;</td><td>6.44698e6</td><td>&nbsp;</td><td align=right>13.94</td><td>&nbsp;</td><td align=right> 4.07</td></tr>
+<tr><td>0.1 </td><td>&nbsp;</td><td>&nbsp;400</td><td>&nbsp;</td><td>0.042008</td><td>&nbsp;</td><td>6.30714e6</td><td>&nbsp;</td><td>0.853741</td><td>&nbsp;</td><td>3.86877e7</td><td>&nbsp;</td><td align=right>20.32</td><td>&nbsp;</td><td align=right> 6.13</td></tr>
+<tr><td>0.1 </td><td>&nbsp;</td><td>&nbsp;800</td><td>&nbsp;</td><td>0.084491</td><td>&nbsp;</td><td>2.51917e7</td><td>&nbsp;</td><td>7.353612</td><td>&nbsp;</td><td>2.59295e8</td><td>&nbsp;</td><td align=right>87.03</td><td>&nbsp;</td><td align=right>10.29</td></tr>
+<tr><td>0.1 </td><td>&nbsp;</td><td>1600     </td><td>&nbsp;</td><td>0.499803</td><td>&nbsp;</td><td>1.00714e8</td><td>&nbsp;</td><td align=center colspan=3>out of memory</td><td>&nbsp;</td><td align=right> - </td><td>&nbsp;</td><td align=right> - </td></tr>
+</table>
+
+
+<br>
+<!--bottom jump start--><hr><a href="ipbx.htm">&gt;&gt;</a>&nbsp;
+<a href="zpown.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

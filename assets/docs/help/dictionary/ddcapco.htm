@@ -1,0 +1,99 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>D: Secant Slope</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dedot.htm">&gt;&gt;</a>&nbsp;
+<a href="ddcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=17%><b><font size=+2></font></b></td>
+<td align=center width=50%><font face="Courier New" size=+3>u D: n &nbsp;mu mu</font></td>
+<td align=right  width=33%><b><font size=+2>Secant Slope</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+&nbsp;
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x u D: 1 y </tt>is the <i>secant slope</i> of the 
+function<tt> u </tt>through the points<tt> y </tt>and<tt> y+x</tt> .<tt> </tt>
+The secant slope is generalized to the case<tt> x<b> </b>u D. n y </tt>
+in the manner of the derivative <tt>D.</tt> .<tt> </tt>
+The argument <tt>x</tt> may be a list, giving several slopes.<br><br>
+
+In the general case, each item of<tt> x </tt>has the 
+shape<tt> {. $$&quot;r y</tt>, where<tt> r </tt>is the rank of<tt> u</tt>,<tt> </tt>
+therefore specifying the increment in each possible direction.  
+An argument<tt> x </tt>of lower rank is extended in the usual manner. 
+For example,<tt> x=: 1e_8 </tt>provides the same increment in 
+each direction and, because of the small magnitude, yields an 
+approximation to the derivative.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   log=: ^.
+   y=: 2 3 4
+   1 log D:1 y
+0.405465 0.287682 0.223144
+
+   incr=: 1 0.1 0.01 1e_8
+   incr log D:1/y
+0.405465 0.287682 0.223144
+0.487902 0.327898 0.246926
+0.498754 0.332779 0.249688
+     0.5 0.333333     0.25
+
+   log D.1 y
+0.5 0.333333 0.25
+   %y
+0.5 0.333333 0.25
+
+   f=: +/@:*:&quot;1 
+   g=: +/@:*:\&quot;1
+   (f y) ; (1 f D:1 y) ; (1 0.1 1e_8 f D:1 y)
++--+-----+--------------+
+|29|5 7 9|  5  0.61 8e_8|
+|  |     | 50   6.1 8e_7|
+|  |     |5e8 6.1e7    8|
++--+-----+--------------+
+
+   (g y) ; (1 g D:1 y)
++-------+-----+
+|4 13 29|5 0 0|
+|       |5 7 0|
+|       |5 7 9|
++-------+-----+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="dedot.htm">&gt;&gt;</a>&nbsp;
+<a href="ddcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

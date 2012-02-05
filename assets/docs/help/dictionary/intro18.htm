@@ -1,0 +1,200 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 18. Explicit Definition</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro19.htm">&gt;&gt;</a>&nbsp;
+<a href="intro17.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>18. Explicit Definition</b></font><br><br>
+
+The sentences in the example:<br>
+
+<pre>
+   m=: '3 %: y'
+   d=: 'x %: y'
+</pre>
+
+that were executed in the discussion of word formation, 
+can be used with the <i>explicit definition</i> conjunction<tt> : </tt>
+to produce a verb:<br>
+
+<pre>
+   script=: 0 : 0
+3 %: y
+:
+x %: y
+)
+
+   roots=: 3 : script
+   roots 27 4096
+3 16
+
+   4 roots 27 4096
+2.27951 8
+</pre>
+
+Adverbs and conjunctions may also be defined explicitly.  For example:<br>
+
+<pre>
+   table=: 1 : 0
+[ by ] over x/              <font face=Times>Verbs</font> by <font face=Times>and</font> over <font face=Times>from <a href="intro03.htm">Section 3</a></font>
+)
+  
+   2 3 5 ^ table 0 1 2 3
++-+----------+
+| |0 1  2   3|
++-+----------+
+|2|1 2  4   8|
+|3|1 3  9  27|
+|5|1 5 25 125|
++-+----------+
+</pre>
+
+Control structures may also be used.  For example:<br><br>
+
+<table>
+<tr><td valign=top>
+<pre>
+f=: 3 : 0              
+if. y&lt;0            
+  do. *:y             
+  else. %:y           
+end.            
+)
+                 
+   f&quot;0 (_4 4)    
+16 2                 
+</pre>
+</td>
+<td valign=top>
+<pre>
+factorial=: 3 : 0
+a=. 1
+while. y&gt;1
+do. a=. a*y
+y=. y-1 end. a
+)
+
+   factorial&quot;0 i. 6
+1 1 2 6 24 120
+</pre>
+</td></tr></table>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>18.1 &nbsp;</td>
+<td>Experiment with and display the functions<tt> roots=: 3 : script </tt>
+and<tt> 13 : script </tt>(which are equivalent).<br><br>
+</td></tr>
+
+<tr><td valign=top>18.2 &nbsp;</td>
+<td>See the discussion of control structures in the dictionary, 
+and use them in defining further verbs. <br><br>
+</td></tr>
+
+<tr><td valign=top>18.3 &nbsp;</td>
+<td>Experiment with expressions such as<tt> ! d b=: i.7</tt> ,<tt> </tt>
+after defining the adverb<tt> d </tt>:<br>
+
+<pre>
+d=: 1 : 0
++:@x
+)
+</pre>
+</td></tr>
+
+<tr><td valign=top>18.4 &nbsp;</td>
+<td>Using the program<tt> pol </tt>from Exercise 14.2, 
+perform the following experiments and comment on their results: <br><br>
+
+<pre>
+g=: 11 7 5 3 2 &amp; pol
+e=: 11 0 5 0 2 &amp; pol
+o=:  0 7 0 3 0 &amp; pol
+(g = e + o) b=: i.6
+(e = e@-) b
+(o = -@o@-) b
+</pre>
+
+Answer: The function<tt> g </tt>is the sum of the functions<tt> e </tt>
+and<tt> o</tt> .<tt> </tt>Moreover,<tt> e </tt>is an even function 
+(whose graph is reflected in the vertical axis), and<tt> o </tt>
+is an odd function (reflected in the origin). <br><br>
+</td></tr>
+
+<tr><td valign=top>18.5 &nbsp;</td>
+<td>Review <a href="dicth.htm">Section H</a> of Part II and 
+use scripts to make further explicit definitions. <br><br>
+</td></tr>
+
+<tr><td valign=top>18.6 &nbsp;</td>
+<td>Enter the following explicit definition 
+of the adverb<tt> even </tt>and perform the 
+suggested experiments with it, using the functions defined 
+in the preceding exercise: <br>
+
+<pre>
+even=: 1 : 0
+-:@(x f. + x f.@-)
+)
+ge=: g even
+(e = ge) b
+(e = e even) b
+</pre>
+</td></tr>
+
+<tr><td valign=top>18.7 &nbsp;</td>
+<td>Define an adverb<tt> odd </tt>and use it in the 
+following experiments: <br>
+
+<pre>
+exp=: ^
+sinh=: 5&amp;o.
+cosh=: 6&amp;o.
+(sinh = exp odd) b
+(sinh = exp .: -) b            <font face=Times>The primitive odd adverb</font> .: -
+(cosh = exp even) b
+(exp = exp even + exp odd) b
+</pre>
+</td></tr>
+
+<tr><td valign=top>18.8 &nbsp;</td>
+<td>The following experiments involve complex numbers, 
+and should perhaps be ignored by anyone unfamiliar with them: <br>
+
+<pre>
+sin=: 1&amp;o.
+cos=: 2&amp;o.
+(cos = ^@j. even) b
+(j.@sin = ^@j. odd) b
+</pre>
+</td></tr>
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro19.htm">&gt;&gt;</a>&nbsp;
+<a href="intro17.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,83 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Directory Paths</title>
+
+</head><body>
+<!--top jump start--><a href="start_tech.htm">&gt;&gt;</a>&nbsp;
+<a href="cmdline.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+<h1>Directory Paths in J</h1>
+
+<h3>Directory Foreigns</h3>
+<pre>
+1!:43 y      Query Current Working Directory
+1!:44 y      Set Current Working Directory
+</pre>
+
+<h3>Folder Tables</h3>
+
+JFE defines BINAPTH_z_ as the full path to the J bin folder that contains JFE, JE, and profile.ijs.<br><br>
+
+profile.ijs, before it boots up the rest of the standard library, defines SystemFolders_j_ as a 2-column table of folder names and paths.<br><br>
+
+UserFolders_j_ is a similar table defined from the user's configuration script <tt>config.ijs</tt>. As much as possible it should be defined relative to the names in SystemFolders_j_. UserFolder names should start with an upper-case letter.<br><br>
+
+<h3>Directory Verbs</h3>
+The profile defines the following verbs in the <tt>z</tt> locale:
+
+<pre>
+jpath       converts argument to a full path name
+jcwdpath    return path in current working directory
+</pre>
+
+These verbs are used to provide the full pathname for files, and to ensure that the path separator is correct for the host operating system.
+
+<H3>jpath</H3>
+Verb <tt>jpath</tt> references the folder tables. It converts strings with folder names preceded with <tt>~</tt>, for example <tt>~Mywork</tt>. The folder name is read up to the first path separator or the end, for example:
+<PRE>
+  jpath '~temp'
+c:\j701-user\temp
+
+  jpath '~temp\t2.ijs'
+c:\j701-user\temp\t2.ijs
+
+  jpath '~JPB\classes\board\init.ijs'
+d:\jss\jpb\source\classes\board\init.ijs
+</PRE>Where the folder name is preceded with <tt>~.</tt>, for example <tt>~.Mywork</tt>, this refers to the corresponding parent directory, for example:
+<PRE>
+  jpath '~.JPB\dev\regtest.ijs'
+d:\jss\jpb\dev\regtest.ijs
+
+  jpath '~..JPB\release\pbr.ijs'
+d:\jss\release\pbr.ijs
+</PRE>
+Verbs <tt>load</tt>, <tt>require</tt> and <tt>script</tt> call <tt>jpath</tt>, and so recognize <tt>~path</tt> names, e.g.
+<PRE>
+  load '~JPB\classes\board\init.ijs'
+  require '~user\projects\run\run.ijs'
+</PRE>
+
+<!--bottom jump start--><hr><a href="start_tech.htm">&gt;&gt;</a>&nbsp;
+<a href="cmdline.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>
+</html>

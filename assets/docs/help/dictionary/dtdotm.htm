@@ -1,0 +1,80 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>m t.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dtco.htm">&gt;&gt;</a>&nbsp;
+<a href="dtdotu.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Assign Taylor</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>m t. &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table><tr><td width=49% bgcolor=#eeeeee>
+The function<tt> h=: u`v t. </tt>is equivalent to<tt> u </tt>
+except that the function produced by<tt> h t. </tt>is<tt> v</tt> .<tt> </tt>
+For example, an explicit definition (such as the definition 
+of<tt> exp </tt>below) has no associated Taylor series, 
+but one can be assigned.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   y=: i. 5
+   ^y
+1 2.71828 7.38906 20.0855 54.5982
+
+   ^ t. y
+1 1 0.5 0.1666667 0.04166667
+
+   exp=: 3 : '^ y'
+   exp y
+1 2.71828 7.38906 20.0855 54.5982
+
+   exp t. y
+|domain error
+|       exp t.y
+
+   e=: exp`(%@!) t.
+   e y
+1 2.71828 7.38906 20.0855 54.5982
+
+   e t. y
+1 1 0.5 0.1666667 0.04166667
+
+   %@e t. y
+1 _1 0.5 _0.1666667 0.04166667
+
+   %@^ t. y
+1 _1 0.5 _0.1666667 0.04166667
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dtco.htm">&gt;&gt;</a>&nbsp;
+<a href="dtdotu.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

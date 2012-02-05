@@ -1,0 +1,110 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>/: and \: Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="infixc.htm">&gt;&gt;</a>&nbsp;
+<a href="gradesp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">/: </font>
+<font size=+3>and</font><font size=+3 face="Courier New"> \: </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2002-04-15<br>last updated: 2002-10-26
+</td></tr></table>
+<br>
+
+The dyad<tt> /: </tt>when the left and right arguments
+are the same boolean, literal, integer, or floating point vector, 
+is now more efficient in time and space.  
+Likewise for the dyad<tt> /:&quot;1 </tt>when the left and right 
+arguments are the same
+boolean, literal, integer, or floating point array; 
+likewise for the monads<tt> /:~ </tt>and<tt> /:~&quot;1 </tt>
+and<tt> /:&quot;1~ </tt>; likewise for<tt> \: </tt>instead of<tt> /: </tt>.
+
+<pre>
+   ts=: 6!:2 , 7!:2@]           <font face=Times size=+1>time and space</font>
+
+   b=: ?1e6$2                   <font face=Times size=+1>boolean</font>
+   c=: a.{~?1e6$#a.             <font face=Times size=+1>literal</font>
+   i=: _5e3+?1e6$1e4            <font face=Times size=+1>integer</font>
+   j=: _5e5+?1e6$1e6            <font face=Times size=+1>integer</font>
+   k=: _5e8+?1e6$1e9            <font face=Times size=+1>integer</font>
+   d=: 0.01 * _5e8+?1e6$1e9     <font face=Times size=+1>floating point</font>
+</pre>
+
+<table>
+<tr>
+<td align=center><b>Expression</b></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>J 5.01</b></td>    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>J 4.06</b></td>    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>ratio</b></td>
+</tr>
+<tr>
+<td><tt>/:~b </tt>boolean</td><td>&nbsp;</td>
+<td>0.00878715 1.04934e6</td><td>&nbsp;</td>
+<td>0.141366 &nbsp;9.43795e6</td><td>&nbsp;</td>
+<td>16.09 &nbsp;8.99</td>
+</tr>
+<tr>
+<td><tt>/:~c </tt>literal</td><td>&nbsp;</td>
+<td>0.0190410 &nbsp;&nbsp;1.04934e6</td><td>&nbsp;</td>
+<td>0.179816 &nbsp;9.43795e6</td><td>&nbsp;</td>
+<td>&nbsp;&nbsp;9.44 &nbsp;8.99</td>
+</tr>
+<tr>
+<td><tt>/:~i </tt>integer</td><td>&nbsp;</td>
+<td>0.0810399 &nbsp;&nbsp;4.26061e6</td><td>&nbsp;</td>
+<td>0.349042 &nbsp;1.25837e7</td><td>&nbsp;</td>
+<td>&nbsp;&nbsp;4.31 &nbsp;2.95</td>
+</tr>
+<tr>
+<td><tt>/:~j </tt>integer</td><td>&nbsp;</td>
+<td>0.282443 &nbsp;&nbsp;&nbsp;&nbsp;8.38938e6</td><td>&nbsp;</td>
+<td>0.767728 &nbsp;1.25837e7</td><td>&nbsp;</td>
+<td>&nbsp;&nbsp;2.72 &nbsp;1.50</td>
+</tr>
+<tr>
+<td><tt>/:~k </tt>integer</td><td>&nbsp;</td>
+<td>0.543127 &nbsp;&nbsp;&nbsp;&nbsp;8.91366e6</td><td>&nbsp;</td>
+<td>0.905413 &nbsp;1.25837e7</td><td>&nbsp;</td>
+<td>&nbsp;&nbsp;1.67 &nbsp;1.41</td>
+</tr>
+<tr>
+<td><tt>/:~d </tt>floating point</td><td>&nbsp;</td>
+<td>0.936980 &nbsp;&nbsp;&nbsp;&nbsp;1.73023e7</td><td>&nbsp;</td>
+<td>1.60221 &nbsp;&nbsp;&nbsp;1.67780e7</td><td>&nbsp;</td>
+<td>&nbsp;&nbsp;1.71 &nbsp;0.97</td>
+</tr>
+</table>
+<br><br>
+
+<!--bottom jump start--><hr><a href="infixc.htm">&gt;&gt;</a>&nbsp;
+<a href="gradesp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

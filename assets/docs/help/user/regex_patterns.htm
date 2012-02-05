@@ -1,0 +1,106 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Patterns</title>
+
+</head><body><!--top jump start--><a href="regex_verbs.htm">&gt;&gt;</a>&nbsp;
+<a href="regex_expressions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+<h1>Regular Expression Patterns</h1>
+A simple description that covers POSIX regular expressions and ignores Perl extensions follows. See <a href="../pcre/pcrepattern.html">complete PCRE pattern documentation</a> for more information. <br>
+<br>
+A regular expression pattern is a sequence of elements which matches successive portions of a character string. For example, simple letters are elements which match the same characters in the string. The asterisk indicates that the previous element should be matched <font face=courier size=-1>0</font> or more times. So, a pattern of <font face=courier size=-1>abcd</font> must match in the string exactly; a pattern of <font face=courier size=-1>ab*cd</font> matches the letter <font face=courier size=-1>a</font> followed by <font face=courier size=-1>0</font> or more occurrences of the letter <font face=courier size=-1>b</font> , followed by the letters <font face=courier size=-1>cd</font> . <br>
+<br>
+<b>Characters</b><br>
+Non-special characters match exactly. Non-special characters are anything other than:<br>
+<font face=courier size=-1>&nbsp;&nbsp; [ ] ( ) { } $ ^ . * + ? | \</font><br>
+<br>
+A special character is included as simple text by preceding it with a backslash.<br>
+<br>
+<b>Character sets</b><br>
+The special character <font face=courier size=-1>.</font> matches any character (except the null character, <font face=courier size=-1>0{a. )</font><br>
+<br>
+The special characters <font face=courier size=-1>^</font> and <font face=courier size=-1>$</font> match the start and end of lines.<br>
+<br>
+Sets of characters are defined by enclosing the list of characters in brackets:<br>
+ <font face=courier size=-1>[aeiou]</font> matches a single vowel character<br>
+<br>
+Ranges can also be included within the brackets:<br>
+ <font face=courier size=-1>[a-z]</font> matches any lower case letter<br>
+<br>
+Combinations of the above are acceptable:<br>
+ <font face=courier size=-1>[a-zA-Z13579]</font> matches any lower case, upper case, or odd digit<br>
+<br>
+Fixed sets (classes) of characters can be included in the list, as a name within bracket-colon pairs:<br>
+ <font face=courier size=-1>[#[:digit:]abc]</font> matches the character <font face=courier size=-1>#</font> , a digit, or any of the letters <font face=courier size=-1>a , b ,</font> or <font face=courier size=-1>c</font><br>
+<br>
+The character classes defined are:<font face=courier size=-1><br>
+&nbsp;&nbsp; alnum&nbsp;&nbsp;alphanumeric&nbsp;&nbsp;alpha&nbsp;&nbsp; alphabetic <br>
+ <br>
+&nbsp;&nbsp; blank&nbsp;&nbsp;tab+space&nbsp;&nbsp;&nbsp;&nbsp; cntrl&nbsp;&nbsp; control chars <br>
+ <br>
+&nbsp;&nbsp; digit&nbsp;&nbsp;digits&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph&nbsp;&nbsp; printable (except space) <br>
+ <br>
+&nbsp;&nbsp; lower&nbsp;&nbsp;lowercase&nbsp;&nbsp;&nbsp;&nbsp; print&nbsp;&nbsp; printable <br>
+ <br>
+&nbsp;&nbsp; punct&nbsp;&nbsp;punctuation&nbsp;&nbsp; space&nbsp;&nbsp; whitespace <br>
+ <br>
+&nbsp;&nbsp; upper&nbsp;&nbsp;uppercase&nbsp;&nbsp;&nbsp;&nbsp; xdigit&nbsp;&nbsp;hex digits <br>
+</font><br>
+If a set begins with <font face=courier size=-1>^</font> , then the pattern will match with any character <i>not</i> in the set.<br>
+<br>
+<b>Subexpressions</b><br>
+A series of elements may be combined by enclosing them in parenthesis. Subexpression are affected by closures such as <font face=courier size=-1>*</font> just as simple characters are:<br>
+ <font face=courier size=-1>([a-z][0-9])*</font> matches any number of occurrences of a letter followed by a digit<br>
+<br>
+The result of searches for a pattern return a match for the overall pattern, and a separate match for each subexpression<br>
+<br>
+A <font face=courier size=-1>\</font> followed by a digit, N, matches the same substring which occurred in the Nth subexpression:<br>
+ <font face=courier size=-1>([[:digit:]]+)#\1</font> matches one or more digits, followed by a <font face=courier size=-1>#</font> , followed by the same string of digits<br>
+<br>
+<b>Closures</b><br>
+A <font face=courier size=-1>*</font> following an element matches <font face=courier size=-1>0</font> or more occurrences of that element:<br>
+ <font face=courier size=-1>[aeiou]*</font> matches <font face=courier size=-1>0</font> or more vowels<br>
+<br>
+A <font face=courier size=-1>+</font> following an element matches 1 or more occurrences of that element:<br>
+ <font face=courier size=-1>[[:alpha:]]+</font> matches <font face=courier size=-1>1</font> or more alphabetic characters<br>
+<br>
+A <font face=courier size=-1>?</font> following an element matches 0 or 1 occurrences of that element:<br>
+ <font face=courier size=-1>-?[[:digit:]]+</font> matches an optional hyphen, followed by <font face=courier size=-1>1</font> or more digits<br>
+<br>
+An interval expression, <font face=courier size=-1>{m,n}</font> , follows an element to allow it to match at least m, and no more than n, occurrences of the element:<br>
+ <font face=courier size=-1>[[:digit:]]{3,5}</font> matches <font face=courier size=-1>3, 4</font>, or <font face=courier size=-1>5</font> digits<br>
+<br>
+<b>Alternation</b><br>
+Multiple regular expressions can be separated with a vertical bar <font face=courier size=-1>|</font> to match any of them:<br>
+ <font face=courier size=-1>print|list|exit</font> matches any of the strings <font face=courier size=-1>print</font> , <font face=courier size=-1>list</font> , and <font face=courier size=-1>exit</font><br>
+<br>
+<b>Matches</b><br>
+When searching for a pattern in a string, it is possible to find multiple substrings which match the pattern. The one that is returned is the one which starts earliest in the string. If more than one match starts at the same place, the longest one is returned.<br>
+<br>
+Even once a particular match is located, it is possible for there to be multiple combinations of the contents of the subexpressions which make it up. As a rule, whenever possible the subexpressions which begin earlier in the string will be as long as possible.<br>
+<br>
+The result of a match is a table which describes the match. The first row covers the whole match, and subsequent rows describe where the subexpressions in the pattern match in the string. Each row has two elements: index of the first character of the start of the match, and the length of the match. Any row which doesn't participate in the match is filled with <font face=courier size=-1>_1 0</font>.<br>
+<!--bottom jump start--><hr><a href="regex_verbs.htm">&gt;&gt;</a>&nbsp;
+<a href="regex_expressions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>
+</html>

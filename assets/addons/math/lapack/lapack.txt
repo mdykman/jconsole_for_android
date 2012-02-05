@@ -1,0 +1,30 @@
+Directory: addons\lapack
+
+Lapack provides access to lapack routines.
+
+The lapack routines are compiled from C source available
+from the netlib web site. The C source was originally built
+by automatic conversion from the original Fortran.
+
+All double and complexdouble routines are in jlapack.dll.
+Double routines start with d and doublecomplex routines
+start with z.
+
+The routines are called with the J DLL call mechanism as
+documented in User Manual chapter "DLL's and Memory
+Management".
+
+Script covers have been written for a few routines. It is
+easy add them by reading the documentation and following
+the pattern in the existing ones. Use dgeev.ijs as a simple
+example. Please pass back any you do so we can build up the
+library.
+
+lapack.ijs provides some common definitions.
+
+The interface to an lapack routine is defined in a script
+with the name of the routine. For example, routine dgeev is
+defined in geev.ijs.
+
+Attention needs to be paid to the Fortran column-major
+order used in lapack vs the J row-major order.

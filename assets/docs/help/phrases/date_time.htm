@@ -1,0 +1,88 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Date & Time</title>
+
+</head><body><!--top jump start--><a href="case_statements.htm">&gt;&gt;</a>&nbsp;
+<a href="execution_time_space.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>14B. Date &amp; Time</h1>
+
+<TABLE BORDER=1 CELLSPACING=0 WIDTH="100%">
+  <TR><TD width=40%><tt>m0=: 6!:0</tt></TD>	<TD width=60%>System time stamp yyyy mm dd hh mm ss (argument y needed but ignored)</TD></TR>
+  <TR><TD><tt>m1=: [:&lt;._3:{.]</tt></TD>	<TD>hh mm ss part of time stamp</TD></TR>
+  <TR><TD><tt>m2=: 1000&quot;_ #. ]</tt></TD>	<TD>Base-1000 form of y</TD></TR>
+  <TR><TD><tt>m3=: (':'&quot;_) _6 _3} &quot;:</tt></TD>	<TD>Format with ':' between fields</TD></TR>
+  <TR><TD><tt>m4=: [:&lt;.3:{.]</tt></TD>	<TD>yyyy mm dd part of time stamp</TD></TR>
+  <TR><TD><tt>m5=: ('/'&quot;_) 4 7} &quot;:</tt></TD>	<TD>Format with '/' between fields</TD></TR>
+  <TR><TD><tt>m6=: [: m3 [: m2 [: m1 m0</tt></TD>	<TD>Formatted time stamp hh:mm:ss</TD></TR>
+  <TR><TD><tt>m7=: [: m5 [: m2 [: m4 m0</tt></TD>	<TD>Formatted date stamp yyyy/mm/dd</TD></TR>
+  <TR><TD><tt>m8=: (':'&quot;_) 2 5} [: &quot;: 1000&quot;_ #. _3: {. [: &lt;. m0</tt></TD>	<TD>Formatted time stamp hh:mm:ss</TD></TR>
+  <TR><TD><tt>m9=: ('/'&quot;_) 4 7} [: &quot;: 1000&quot;_ #.  3: {. [: &lt;. m0</tt></TD>	<TD>Formatted date stamp yyyy.mm/dd</TD></TR>
+  <TR><TD><tt>m10=: 100&quot;_#.100&quot;_|3:{. m0</tt></TD>	<TD>yymmdd from ccyy mm dd (y neglected)</TD></TR>
+  <TR><TD><tt>m11=: 0: ~:/ .= 4 100 400&quot;_ |/ ]</tt></TD>	<TD>Is y a leap year?</TD></TR>
+  <TR><TD><tt>m12=: 28&quot;_ + m11@]</tt></TD>	<TD>Number of days in February of year y</TD></TR>
+  <TR><TD><tt>d13=: 31&quot;_ - 2: | 7: | [</tt></TD>	<TD>31 - 2 | 7 | x: days in month x, not = 1</TD></TR>
+  <TR><TD><tt>d14=: d13`m12@.([=1:)</tt></TD>	<TD>Number of days in month x of year y</TD></TR>
+  <TR><TD><tt>m15=: ('0123456789 '&quot;_ i.[:&quot;:[:|. 3: {. 6!:0) { ('0123456789.'&quot;_)</tt></TD>	<TD>Current date in dd.mm.yy fmt, neglect y</TD></TR>
+  <TR><TD><tt>m16=: ((12&quot;_ &lt;: {.),2:) { 'apm'&quot;_</tt></TD>	<TD>am or pm depending on first atom of y</TD></TR>
+  <TR><TD><tt>m17=: ([: m3 m2) , (' '&quot;_ , m16)</tt></TD>	<TD>Formatted 3-atom time y in 'm' form</TD></TR>
+  <TR><TD><tt>m18=: [:&quot;:[:(1:|.])100&quot;_|[:m4 m0</tt></TD>	<TD>Formatted date in mm dd yy form</TD></TR>
+  <TR><TD><tt>m19=: '/'&quot;_(]#[:i.#)@(' '&quot;_=])}]</tt></TD>	<TD>Replace blanks in y by '/'</TD></TR>
+  <TR><TD><tt>m20=: m19@m18</tt></TD>	<TD>Formatted date in mm/dd/yy form</TD></TR>
+  <TR><TD><tt>m21=: &gt;:@(365&amp;* + m22)@(-&amp;1601)</tt></TD>	<TD># of New Year&#146;s Day, Gregorian  year y; m21 1601 is 1</TD></TR>
+  <TR><TD><tt>m22=: -/@:&lt;.@(%&amp;4 100 400)&quot;0</tt></TD>	<TD># of leap days in y years (Clavian corr.)</TD></TR>
+  <TR><TD><tt>m23=: 7&amp;|@m21</tt></TD>	<TD>Day of week year y begins (0=Sunday)
+  </TD></TR>
+</TABLE>
+<br>
+ 
+Number of New Year&#146;s Day for Gregorian years.</P>
+
+<pre>
+   m21 1601 1602 2001
+1 366 146098
+</pre>
+
+Number of leap days in<tt> y </tt>years
+
+<pre>
+   m22 0 1 4 100 400 2000
+0 0 1 24 97 485
+</pre>
+
+Day of week year<tt> y </tt>begins (0 is Sunday)
+
+<pre>
+   m23 1900 2000
+1 6
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="case_statements.htm">&gt;&gt;</a>&nbsp;
+<a href="execution_time_space.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

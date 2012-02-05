@@ -1,0 +1,138 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>{:: Map  -  Fetch</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d530n.htm">&gt;&gt;</a>&nbsp;
+<a href="d522.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Map</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>{:: &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Fetch</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>{::y </tt>has the same boxing as<tt> y </tt>and its 
+elements are the paths to each leaf (each open array).
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x{::y </tt>fetches a subarray of<tt> y </tt>according to 
+path<tt> x</tt> ;<tt> </tt>the selection at each level is based 
+on<tt> { </tt>and, except at the last level, must result in an atom.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+Map and Fetch can be modeled as follows:<br>
+
+<pre>
+   cat  =: { @: (i.&amp;.&gt;) @: $
+   mapp =: 4 : 'if. L. y do. (&lt;&quot;0 x,&amp;.&gt;&lt;&quot;0 cat y) mapp&amp;.&gt; y else. &gt;x end.'
+   map  =: a:&amp;mapp
+   fetch=: &gt;@({&amp;&gt;/)@(&lt;&quot;0@|.@[ , &lt;@]) &quot; 1 _
+</pre>
+
+The following phrases illustrate the use of Map and Fetch:<br>
+
+<pre>
+   ] y=: 1 2 3;4 5;i.4 5
++-----+---+--------------+
+|1 2 3|4 5| 0  1  2  3  4|
+|     |   | 5  6  7  8  9|
+|     |   |10 11 12 13 14|
+|     |   |15 16 17 18 19|
++-----+---+--------------+
+</pre>
+
+<table>
+<tr><td width=240><tt>&nbsp; (2;_1 _1){::y</tt></td><td>The number 19</td></tr>
+<tr><td><tt>&nbsp; (_1;3 4) {::y</tt></td><td>The number 19</td></tr>
+<tr><td><tt>&nbsp; {::y</tt></td><td>Paths to each open array</td></tr>
+<tr><td><tt>&nbsp; {::cat L: 0 y</tt></td><td>Paths to each open scalar</td></tr>
+</table>
+
+<pre>
+   ] t=: 5!:2 &lt;'fetch'         <font face=Times size=+1>An array with an interesting structure</font>
++------------------------------------------------------+-+---+
+|+-----------------+-+--------------------------------+|&quot;|1 _|
+||+-+-+-----------+|@|+--------------------+-+-------+|| |   |
+|||&gt;|@|+-------+-+|| ||+--------------+-+-+|,|+-+-+-+||| |   |
+||| | ||+-+-+-+|/||| |||+-------+-+--+|@|[|| ||&lt;|@|]|||| |   |
+||| | |||{|&amp;|&gt;|| ||| ||||+-+-+-+|@||.|| | || |+-+-+-+||| |   |
+||| | ||+-+-+-+| ||| |||||&lt;|&quot;|0|| |  || | || |       ||| |   |
+||| | |+-------+-+|| ||||+-+-+-+| |  || | || |       ||| |   |
+||+-+-+-----------+| |||+-------+-+--+| | || |       ||| |   |
+||                 | ||+--------------+-+-+| |       ||| |   |
+||                 | |+--------------------+-+-------+|| |   |
+|+-----------------+-+--------------------------------+| |   |
++------------------------------------------------------+-+---+
+</pre>
+
+<table>
+<tr>
+<td width=240><tt>&nbsp; (0;2;0;0;0){:: t</tt></td>
+<td>Fetch the subarray corresp. to<tt> &lt;&quot;0 </tt>in<tt> t</tt></td>
+</tr>
+
+<tr>
+<td><tt>&nbsp; (0;2;0;0;0;_1){:: t</tt></td>
+<td>Fetch the<tt> 0 </tt>in that</td>
+</tr>
+
+<tr>
+<td><tt>&nbsp; t ,&amp;&lt; L: 0 1 {:: t</tt></td>
+<td>Label each leaf with its path</td>
+</tr>
+
+<tr>
+<td><tt>&nbsp; &lt; S: 0 t</tt></td>
+<td>The boxed leaves of<tt> t</tt></td>
+</tr>
+
+<tr>
+<td><tt>&nbsp; &lt; S: 1 {:: t</tt></td>
+<td>The boxed paths of<tt> t</tt></td>
+</tr>
+
+<tr>
+<td><tt>&nbsp; t ,&amp;&lt; S: 0 1 {:: t</tt></td>
+<td>A 2-column table of leaves and paths</td>
+</tr>
+
+<tr>
+<td><tt>&nbsp; # 0: S: 0 t</tt></td>
+<td>The number of leaves in<tt> t</tt></td>
+</tr>
+</table>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d530n.htm">&gt;&gt;</a>&nbsp;
+<a href="d522.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

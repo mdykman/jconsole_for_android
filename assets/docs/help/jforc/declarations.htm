@@ -1,0 +1,1768 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Declarations</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="loopless_code_i_verbs_have_r.htm">&gt;&gt;</a>&nbsp;
+<a href="a_first_look_at_j_programs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734319"></a><a name="_Toc5414536"></a><a name="_Toc1896176"><span
+style='mso-bookmark:_Toc5414536'><span style='mso-bookmark:_Toc191734319'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>5. <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Declarations</span></span></a></h1>
+
+<p class=MsoBodyText>J has no declarations.&nbsp;
+Good riddance!&nbsp; No more will you
+have to warn the computer of all the names you intend to use, and their types
+and sizes.&nbsp; No more will your program
+crash if you step outside an array bound.&nbsp;
+You specify the calculations you want to perform; if, along the way, you
+want to assign a result to a name, J will allocate enough space for the
+data.&nbsp; It will free the space when the
+name is no longer needed.</p>
+
+<p class=MsoBodyText>Seasoned C programmers have learned to use declarations to
+create a web of type-checking, making sure that objects pointed to are of the
+expected type.&nbsp; This is an example of
+making a virtue of necessity.&nbsp; Since J avoids
+pointer trouble much more directly--by not having pointers at all--you will soon
+lose your uneasiness with weak typing.</p>
+
+<p class=Section><a name="_Toc191734320"></a><a name="_Toc5414537"></a><a
+name="_Toc5414392"></a><a name="_Toc1896177"><span style='mso-bookmark:_Toc5414392'><span
+style='mso-bookmark:_Toc5414537'><span style='mso-bookmark:_Toc191734320'>Arrays</span></span></span></a></p>
+
+<p class=MsoBodyText>But, you ask, Without declarations, how does the computer
+know that a name represents an array<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;array&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->? <span
+style='mso-spacerun:yes'>&nbsp;</span>For that matter, how do <i>I</i> know that a
+name represents an array?</p>
+
+<p class=MsoBodyText style='text-align:justify'>The answer affords a first
+glimpse of the power of J.&nbsp; Every J verb,
+whether a primitive (<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>operator</span></span>)
+or a user-written verb (<span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>function</span></span>), accepts arguments that can be
+arrays, even multidimensional arrays.&nbsp;
+How is this possible?&nbsp; Like this:
+Suppose you write a verb that works with 2-dimensional arrays.<span
+style='mso-spacerun:yes'>&nbsp; </span>Part of your verb definition will indicate
+that fact.&nbsp; If your verb is executed with
+an argument that is a 3-dimensional array, J will automatically split the
+3-dimensional array into a sequence of 2-dimensional arrays, call your verb for
+each one, and put the results together into an array of results.</p>
+
+<p class=MsoBodyText style='text-align:justify'>We will very soon go into this
+procedure in great detail.&nbsp; For now, you
+should learn the vocabulary J uses to deal with arrays.</p>
+
+<p class=MsoBodyText style='text-align:justify'>What C calls an <span
+class=Ccode><i><span style='mso-bidi-font-family:"Times New Roman"'>n</span></i></span><span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>-dimensional
+array of rank <i>ixjx...xk</i></span></span> is in J an <span class=Definition>array</span>
+of <span class=Definition>rank</span> <i>n</i> with <span class=Definition>axes</span>
+of length <i>i,j,...,k</i>.</p>
+
+<p class=MsoBodyText style='text-align:justify'>Every noun (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>variable</span></span> or <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>object</span></span>)
+has a <span class=Definition>shape</span> which is the array (of rank 1) made
+by concatenating the lengths of all its axes.&nbsp;
+For example, if <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>q</span></span> is the array corresponding to the C array
+defined by the declaration</p>
+
+<p class=BodyTextnoleader><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int
+q[4][5][6];<o:p></o:p></span></span></p>
+
+<p class=BodyTextnoleader>its shape<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;shape&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>is the array <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;5&nbsp;6&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>As you can see, the number of items in the
+shape is exactly the rank<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;rank&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->.</p>
+
+<p class=Note>Note: a sequence of numbers written with no intervening
+punctuation defines a numeric array of rank 1 (i.&nbsp;e. a list).<span
+style='mso-spacerun:yes'>&nbsp; </span>You may have to use parentheses if you have
+adjacent numbers that you don't want to have made into a list.</p>
+
+<p class=MsoBodyText>Unlike in C, an array in J may have one or more axes of
+length 0.&nbsp; Such an array has no atoms,
+but its rank is still the number of its axes.</p>
+
+<p class=MsoBodyText style='text-align:justify'>A single number or character is
+called an <span class=Definition>atom</span> (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>object of basic type</span></span>)
+which is said to have the <span class=Definition>type</span> numeric or
+character as appropriate.&nbsp; (Actually,
+there are types other than number and character, including a type<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;type&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>that resembles a <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>structure</span></span> and can
+contain components of different types, but we won't get to them for a
+while).&nbsp; An atom<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;atom&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;scalar&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>is also called a <span class=Definition>scalar</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>An atom is defined to have rank 0; therefore,
+its shape is an array with 0 items, i.&nbsp;e. an empty array of rank 1.</p>
+
+<p class=MsoBodyText style='text-align:justify'>An atom is a degenerate array,
+with no axes, but it follows the rules for arrays nonetheless.</p>
+
+<p class=MsoBodyText style='text-align:justify'>Just as in C, every atom of an
+array must have the same type. </p>
+
+<p class=Section><a name="_Toc191734321"></a><a name="_Toc5414538"></a><a
+name="_Toc5414393"></a><a name="_Toc1896178"><span style='mso-bookmark:_Toc5414393'><span
+style='mso-bookmark:_Toc5414538'><span style='mso-bookmark:_Toc191734321'>Cells</span></span></span></a></p>
+
+<p class=MsoBodyText>Because the execution of every J verb involves breaking
+the argument into pieces, presenting the pieces to the verb, and assembling
+results, J has a vocabulary for describing these operations.</p>
+
+<p class=MsoBodyText>A rank-3 array of shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;5&nbsp;6</span></span>
+such as the one defined in C by the declaration</p>
+
+<p class=Ccodemultiline><span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int
+q[4][5][6];<o:p></o:p></span></span></p>
+
+<p class=BodyTextnoleader>can be thought of as an array of 4 elements, each
+with rank 2 and shape <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;6</span></span>,
+or as a 4x5 array of elements, each with rank 1 and shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>6</span></span>, or as a 4x5x6
+array of rank-0 atoms.&nbsp; These
+smaller arrays, which can be arrayed together to constitute the larger array,
+are called <span class=Definition>cells</span>.&nbsp;
+As seen in the example above, the axes of a cell are a suffix of the
+axes of the entire array.&nbsp; A cell of rank
+<i style='mso-bidi-font-style:normal'>k</i> is called a <span class=Definition><span
+style='font-style:normal'>k</span>-cell</span>: a <span class=Definition>0-cell</span>
+is an atom, a <span class=Definition>1-cell</span> is an element of rank
+1, a <span class=Definition>2-cell</span> is an element of rank 2, and so
+on. &nbsp;You can view an array as an array of
+its cells, and in more than one way, depending on what cell-size you choose.<span
+style='mso-spacerun:yes'>&nbsp; </span></p>
+
+<p class=MsoBodyText><!--[if gte vml 1]><v:shapetype id="_x0000_t75"
+ coordsize="21600,21600" o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe"
+ filled="f" stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:382.5pt;
+ height:169.5pt'>
+ <v:imagedata src="jforcprogrammers_files/image001.png" o:title="JforC 1 Cells"/>
+</v:shape><![endif]--><![if !vml]><img width=510 height=226
+src="jforcprogrammers_files/image002.jpg" v:shapes="_x0000_i1025"><![endif]></p>
+
+<p class=MsoBodyText>Each time you operate on an array, you decide the rank of
+the cells to be operated on.&nbsp; The rank of
+the cells is not a property of the array; rather, it indicates how you want to
+group the atoms of the array for a single operation.<span
+style='mso-spacerun:yes'>&nbsp; </span>When you have decided to operate on cells<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;cell&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>of rank <i style='mso-bidi-font-style:normal'>n</i>,
+you can think of your noun as an array of <i style='mso-bidi-font-style:normal'>n</i>-cells;
+the shape of that array of cells is called the <span class=Definition>frame</span>
+of the noun <b style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:
+normal'>relative to </i>n<i style='mso-bidi-font-style:normal'>-cells</i></b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>It follows that the frame<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;frame&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->, concatenated with the shape
+of the cells, will be equal to the shape of the noun.<span
+style='mso-spacerun:yes'>&nbsp; </span>The frame itself (like all shapes) is an array
+of rank 1.</p>
+
+<p class=MsoBodyText>The diagram illustrates cells of different ranks.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that the twenty 6-atom 1-cells
+are arranged in a 4x5 array; this is the meaning of the frame of the 1-cells.<span
+style='mso-spacerun:yes'>&nbsp; </span>The four 5x6 2-cells are arranged as a
+vector of 2-cells; this is the meaning of their frame.</p>
+
+<p class=MsoBodyText>A selected cell is analogous to the subarray selected by
+indexing in C.&nbsp; Using <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>q</span></span> as defined
+above, in C <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>q[3]</span></span>
+is a 5x6 array (i.&nbsp;e. a 2-cell); <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>q[1][0]</span></span> is a
+6-element vector (i.&nbsp;e. a 1-cell); <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>q[2][0][3]</span></span> is a
+scalar (0-cell).</p>
+
+<p class=MsoBodyText>The noun <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>q</span></span> we have been using as an example can be
+thought of in any of the following 4 ways:</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext 1.5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td valign=top style='border-top:solid windowtext 1.5pt;border-left:solid windowtext 1.5pt;
+  border-bottom:none;border-right:solid windowtext 2.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td colspan=2 valign=top style='border-top:solid windowtext 1.5pt;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:2.25pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:
+  1.5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>Frame</p>
+  </td>
+  <td colspan=2 valign=top style='border-top:solid windowtext 1.5pt;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext 1.5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>Cells</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td valign=top style='border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 2.25pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>as an array of</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;mso-border-top-alt:.5pt;
+  mso-border-left-alt:2.25pt;mso-border-bottom-alt:1.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>Length</p>
+  </td>
+  <td valign=top style='border-top:solid windowtext 1.0pt;border-left:none;
+  border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-top-alt:.5pt;mso-border-left-alt:
+  .5pt;mso-border-bottom-alt:1.5pt;mso-border-right-alt:1.5pt;mso-border-color-alt:
+  windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>Value</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-top-alt:.5pt;
+  mso-border-left-alt:1.5pt;mso-border-bottom-alt:1.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>Rank</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>Shape</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td valign=top style='border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 2.25pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:1.5pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:
+  2.25pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>0-cells</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:2.25pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>3</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:.5pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:
+  1.5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>4 5 6<o:p></o:p></span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:1.5pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>0</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:.5pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:
+  1.5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>(empty)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td valign=top style='border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 2.25pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:.5pt;mso-border-left-alt:
+  1.5pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:2.25pt;mso-border-color-alt:
+  windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>1-cells</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>2</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>4 5<o:p></o:p></span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>1</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>6<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td valign=top style='border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 2.25pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-top-alt:.5pt;mso-border-left-alt:
+  1.5pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:2.25pt;mso-border-color-alt:
+  windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>2-cells</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>1</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>4<o:p></o:p></span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>2</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>5 6<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td valign=top style='border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.5pt;border-right:solid windowtext 2.25pt;
+  mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>3-cells</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 2.25pt;mso-border-top-alt:.5pt;
+  mso-border-left-alt:2.25pt;mso-border-bottom-alt:1.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>0</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>(empty)</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-top-alt:.5pt;
+  mso-border-left-alt:1.5pt;mso-border-bottom-alt:1.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>3</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-element:frame;
+  mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>4 5 6<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+</table>
+
+<div style='mso-element:frame;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:
+paragraph;mso-element-anchor-horizontal:page;mso-element-left:center;
+mso-element-top:.05pt;mso-height-rule:exactly'>
+
+<table cellspacing=0 cellpadding=0 hspace=0 vspace=0 align=center>
+ <tr>
+  <td valign=top align=left style='padding-top:0in;padding-right:0in;
+  padding-bottom:0in;padding-left:0in'>
+  <p class=MsoNormal align=center style='text-align:center;background:white;
+  mso-shading:white;mso-pattern:solid white;mso-element:frame;mso-element-wrap:
+  no-wrap-beside;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
+  page;mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<![if !supportTextWrap]><br clear=ALL>
+<![endif]>
+
+<p class=Subsection><a name="_Toc191734322"></a><a name="_Toc5414539"></a><a
+name="_Toc5414394"><span style='mso-bookmark:_Toc5414539'><span
+style='mso-bookmark:_Toc191734322'>Choosing Axis Order</span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;axis&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;axis:order&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Because J verbs operate on
+cells of nouns, you should choose an order of axes that makes the cells
+meaningful for your application.&nbsp;
+Referring to the figure, we can see that the groups of items that fall
+into horizontal strips (1-cells) or horizontal slabs (2-cells) will
+be easy to operate on individually.&nbsp;
+Vertical strips or slabs will not correspond to cells and so will not be
+accessible individually; to work on them we may have to reorder the axes of the
+noun to make them correspond to cells.&nbsp;
+Such reordering of axes is easy in J but it can often be avoided by
+ordering the axes properly in the first place.</p>
+
+<p class=Subsection><a name="_Toc191734323"></a><a name="_Toc5414540"></a><a
+name="_Toc5414395"><span style='mso-bookmark:_Toc5414540'><span
+style='mso-bookmark:_Toc191734323'>Negative Cell-Rank; Items</span></span></a></p>
+
+<p class=MsoBodyText>In some cases, you may know the length of the frame and
+want to define the cells to have whatever rank is left over (for example, you
+may have a noun with one cell per employee, but you may not know the rank of
+the cells).&nbsp; We say that you are
+selecting the cells of the noun relative to the given frame.<span
+style='mso-spacerun:yes'>&nbsp; </span>Negative cell-ranks indicate this.<span
+style='mso-spacerun:yes'>&nbsp; </span>A _1-cell has the shape corresponding
+to a frame of length 1 (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>5&nbsp;6</span></span> in our example), a _2-cell has
+the shape corresponding to a frame of length 2 (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>6</span></span> in our example),
+and so on.&nbsp; If the specified frame is
+longer than the rank of the noun, the entire shape of the noun is used for the
+frame (and the cells are 0-cells, i.&nbsp;e. atoms).<span
+style='mso-spacerun:yes'>&nbsp; </span>In our example, a _3-cell, a _4-cell,
+a _5-cell, etc., all refer to atoms.&nbsp;
+As an important case of this, the _1-cell of an atom is the atom
+itself.</p>
+
+<p class=MsoBodyText>_1-cells are so important in J that they are given
+the name <span class=Definition>items</span>.&nbsp;
+Our example has 4 items, each of shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;6&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>An atom has one item<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;item&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->, itself.</p>
+
+<p class=Note>Remember: an atom has one item: itself.</p>
+
+<p class=MsoBodyText>The <span class=Definition>index</span> of an item in an
+array is the sequence number of the item from the beginning of the array.<span
+style='mso-spacerun:yes'>&nbsp; </span>The first item in an array has the index 0,
+just as in C.</p>
+
+<p class=Subsection><a name="_Toc191734324"></a><a name="_Toc5414541"></a><a
+name="_Toc5414396"><span style='mso-bookmark:_Toc5414541'><span
+style='mso-bookmark:_Toc191734324'>Lists</span></span></a></p>
+
+<p class=MsoBodyText>When we choose to view a non-atomic <st2:Sn w:st="on">array</st2:Sn>
+(i. e. an array of rank 1 or higher) as a collection of its items, we say that
+the array is a <span class=Definition>list</span> of its items.<span
+style='mso-spacerun:yes'>&nbsp; </span>In our example above, the items of the 4x5x6
+array are 5x6 arrays, and we say that the whole array is a list<!--[if supportFields]><span
+style='mso-element:field-begin'></span> XE &quot;list&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4</span></span> items each with shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;6</span></span>&nbsp;(equivalently,
+we say that it is a list of four 5x6 arrays).&nbsp;
+So many of J's primitives operate on items of their operands that we
+will find ourselves usually thinking of an array as a list of its items.</p>
+
+<p class=MsoBodyText>When the word 'list' is used without any indication of
+what the list contains, the list is assumed to contain atoms.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, 'the <span class=Definition>list</span> <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>'
+refers to an array of rank 1 (<span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>one-dimensional array</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;3&nbsp;5</span></span> is a numeric list.</p>
+
+<p class=MsoBodyText>Note that J's use of the term 'list' has nothing to do
+with linked lists such as you are familiar with, where an element in the list
+contains a pointer to other elements.&nbsp;
+Since J has no pointers at all, you will not need that meaning, and you
+can get used to calling rank-1 arrays 'lists'.<span
+style='mso-spacerun:yes'>&nbsp; </span>A list can also be called a <span
+class=Definition>vector</span>.</p>
+
+<p class=Section><a name="_Toc5414542"></a><a name="_Toc5414397"></a><a
+name="_Toc1896179"></a><a name="_Toc191734325"><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>Phrases
+To Memorize</span></span></span></a><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>A non-atomic
+<b>array</b> is a <b>list</b> of its <b>items</b>.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>An atom
+has one item, itself.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>The <b>rank</b>
+of a noun is the <b>length</b> of its <b>shape</b>.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>The <b>shape</b>
+of an <b>atom</b> is the <b>empty list</b>.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>The <b>suffixes</b>
+of the <b>shape</b> of a noun give the shapes of its <b>cells</b>: the <i>k</i>
+trailing atoms of the shape of a noun give the shape of its <i>k</i>-cell.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>The <b>frame</b>
+of a noun <b>with respect to <i>k</i>-cells</b> is the <b>shape</b> of
+the noun, <b>with the last <i>k</i> atoms of the shape removed</b>.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'><o:p>&nbsp;</o:p></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896179'><span
+style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'>The
+terminology of nouns is summarized in the following table.</span></span></span></p>
+
+<table class=MsoTableGrid border=0 cellspacing=0 cellpadding=0 width=605
+ style='width:453.75pt;border-collapse:collapse;mso-yfti-tbllook:480;
+ mso-padding-alt:0in 5.75pt 0in 5.75pt'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid;
+  height:20.65pt'>
+  <td colspan=5 style='border:solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><b style='mso-bidi-font-weight:normal'>Summary of Terminology
+  for Nouns in J<o:p></o:p></b></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid;height:20.15pt'>
+  <td style='border:solid windowtext 1.5pt;border-top:none;mso-border-top-alt:
+  solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;height:20.15pt'><span
+  style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:20.15pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Atom</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td colspan=3 style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.15pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Non-Atomic Array</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid;height:20.65pt'>
+  <td style='border:solid windowtext 1.5pt;border-top:none;mso-border-top-alt:
+  solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Rank</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.5pt;
+  border-right:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>0</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>1</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>2</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>higher <i style='mso-bidi-font-style:normal'>n<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid;height:49.05pt'>
+  <td style='border:solid windowtext 1.5pt;border-top:none;mso-border-top-alt:
+  solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;height:49.05pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Name</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext 1.5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-top-alt:1.5pt;
+  mso-border-left-alt:1.5pt;mso-border-bottom-alt:.5pt;mso-border-right-alt:
+  .5pt;mso-border-color-alt:windowtext;mso-border-style-alt:solid;padding:0in 5.75pt 0in 5.75pt;
+  height:49.05pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Atom<br>
+  (or<br>
+  Scalar)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:49.05pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>List<br>
+  (or<br>
+  Vector)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:49.05pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Table</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:49.05pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Rank-<i style='mso-bidi-font-style:normal'>n</i> Array</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:4;page-break-inside:avoid;height:76.9pt'>
+  <td style='border:solid windowtext 1.5pt;border-top:none;mso-border-top-alt:
+  solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;height:76.9pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Shape (always a list)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:76.9pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>(<i style='mso-bidi-font-style:normal'>empty&nbsp;list</i>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:76.9pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>1-item list </span></span></span><span style='mso-bookmark:_Toc1896179'><span
+  style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,l</span></span><br>
+  where </span></span></span><span style='mso-bookmark:_Toc1896179'><span
+  style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>l</span></span>
+  is the length of the list</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:76.9pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>2-item list </span></span></span><span style='mso-bookmark:_Toc1896179'><span
+  style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>r,c</span></span>
+  for an </span></span></span><span style='mso-bookmark:_Toc1896179'><span
+  style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:_Toc5414542'><span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>r</span></span>x</span></span></span><span
+  style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>c</span></span> table with </span></span></span><span
+  style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>r</span></span> rows and </span></span></span><span
+  style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>c</span></span> columns</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:76.9pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><i style='mso-bidi-font-style:normal'>n</i>-item list</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:5;page-break-inside:avoid;height:35.6pt'>
+  <td style='border:solid windowtext 1.5pt;border-top:none;mso-border-top-alt:
+  solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;height:35.6pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Items</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:35.6pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>The atom itself</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:35.6pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>atoms</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:35.6pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>lists (each with shape </span></span></span><span
+  style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>,c</span></span>)</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:35.6pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><i style='mso-bidi-font-style:normal'>(n-1)</i>-cells</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:6;page-break-inside:avoid;height:20.65pt'>
+  <td rowspan=2 style='border-top:none;border-left:solid windowtext 1.5pt;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.5pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext 1.5pt;
+  mso-border-bottom-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>Name/Shape if<br>
+  there are no items </span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td rowspan=2 style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;mso-border-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><i style='mso-bidi-font-style:normal'>impossible<o:p></o:p></i></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>empty list</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>empty table</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'>empty array</span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+ <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes;page-break-inside:avoid;
+  height:20.65pt'>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,0<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0,c<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:20.65pt'>
+  <p class=Tableitems style='mso-element:frame;mso-element-frame-width:0in;
+  mso-element-frame-height:0in;mso-element-wrap:no-wrap-beside;mso-element-left:
+  center;mso-element-top:.05pt;mso-height-rule:exactly'><span style='mso-bookmark:
+  _Toc1896179'><span style='mso-bookmark:_Toc5414397'><span style='mso-bookmark:
+  _Toc5414542'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0,...<o:p></o:p></span></span></span></span></span></p>
+  </td>
+  <span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'></span></span></span>
+ </tr>
+</table>
+
+<div style='mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:
+no-wrap-beside;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
+page;mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>
+
+<table cellspacing=0 cellpadding=0 hspace=0 vspace=0 align=center>
+ <tr>
+  <td valign=top align=left style='padding-top:0in;padding-right:9.35pt;
+  padding-bottom:0in;padding-left:9.35pt'>
+  <p class=MsoNormal style='background:white;mso-shading:white;mso-pattern:
+  solid white;mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:
+  no-wrap-beside;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
+  page;mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'><span
+  style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:_Toc5414397'><span
+  style='mso-bookmark:_Toc5414542'><o:p>&nbsp;</o:p></span></span></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<![if !supportTextWrap]><br clear=ALL>
+<![endif]>
+
+<p class=Section><span style='mso-bookmark:_Toc1896179'><span style='mso-bookmark:
+_Toc5414397'><span style='mso-bookmark:_Toc5414542'><a name="_Toc191734326">Constant
+Lists</a></span></span></span></p>
+
+<p class=MsoBodyText>A character or numeric list can be created simply by
+including the list in a sentence.&nbsp; <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;character constants&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->We have seen that a sequence
+of numbers separated by spaces is recognized as a single word representing the
+list.&nbsp; Similarly, a character or a
+character list can be represented directly by a quoted string.<span
+style='mso-spacerun:yes'>&nbsp; </span>C distinguishes between single-character
+constants (such as <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>'a'</span></span>)
+and strings (such as <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;abc&quot;</span></span>),
+using single quotes for characters and double quotes for strings.<span
+style='mso-spacerun:yes'>&nbsp; </span>J uses only single quotes for defining
+character constants (the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;</span></span> character is a primitive in its own
+right).&nbsp; If exactly one character is
+between the quotes, the value is an atom; if none or more than one, the result
+is a list.</p>
+
+<p class=Section><a name="_Toc191734327"></a><a name="_Toc5414543"></a><a
+name="_Toc5414398"></a><a name="_Toc1896180"><span style='mso-bookmark:_Toc5414398'><span
+style='mso-bookmark:_Toc5414543'><span style='mso-bookmark:_Toc191734327'>Array-creating
+Verbs</span></span></span></a></p>
+
+<p class=MsoBodyText>Now that we know how to talk about arrays, we might as
+well create a few and see what they look like.&nbsp;
+As mentioned earlier, every J verb can be used to create an array--there
+are no special 'declaration' verbs--but we will start with a couple that do
+little else.&nbsp; The J lines are taken from
+an interpreter session; you can type them into your own session and get the
+same results.&nbsp; The indented lines were
+typed into J, and the unindented ones are J's responses.</p>
+
+<p class=Subsection><a name="_Toc191734328"></a><a name="_Toc5414544"></a><a
+name="_Toc5414399"></a><a name="_Toc1896181"><span style='mso-bookmark:_Toc5414399'><span
+style='mso-bookmark:_Toc5414544'><span style='mso-bookmark:_Toc191734328'>Dyad </span></span></span></a><span
+style='mso-bookmark:_Toc1896181'><span style='mso-bookmark:_Toc5414399'><span
+style='mso-bookmark:_Toc5414544'><span style='mso-bookmark:_Toc191734328'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>$</span></span> ($hape) and monad </span></span></span></span><span
+style='mso-bookmark:_Toc1896181'><span style='mso-bookmark:_Toc5414399'><span
+style='mso-bookmark:_Toc5414544'><span style='mso-bookmark:_Toc191734328'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>$</span></span> ($hape Of)</span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$</span></span> dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The verb dyad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$</span></span>
+is invoked as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;$&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result of dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$</span></span> has the frame <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+relative to the rank of the items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, and is made up of the items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+repeated cyclically as needed.&nbsp; It
+follows that the shape of this result is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> concatenated with
+the shape of an item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>We will have to work together on this.<span
+style='mso-spacerun:yes'>&nbsp; </span>Confronted with a definition like that, you
+might: (a) decide that J must be a language for tax accountants, and give up;
+(b) decide the definition is Greek and go on, hoping it will make sense later;
+(c) try a few examples to get an idea for what the definition means; (d) read
+it over and over again until you understand it.&nbsp;
+I hope you will eschew (a) and (b), and settle for no less than full understanding.<span
+style='mso-spacerun:yes'>&nbsp; </span>For my part, I will offer a few useful
+examples that you can compare against the definition.<span
+style='mso-spacerun:yes'>&nbsp; </span>Not everything in J will be as abstract as
+this.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 5 $ 2</p>
+
+<p class=Jcodemultiline>2 2 2 2 2</p>
+
+<p class=BodyTextnoleader>The simplest case, creating (and displaying) a list
+of 5 items, each of which is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;.</span></span>&nbsp;
+Let's see how this result matches the definition.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is a scalar, so it has one item, which is
+also a scalar.&nbsp; Therefore, the result has
+the shape <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>
+(<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+(i.&nbsp;e. <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>)
+concatenated with the shape of an item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>; the shape of a
+scalar item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is the empty list; <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>
+concatenated with an empty list is a list with the single element <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>The scalar is repeated to fill the 5 items of
+the result.&nbsp; J displays a 1-cell on
+a single line, as shown.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 $ 'ab'</p>
+
+<p class=Jcodemultiline>ababa<span style='font-weight:normal'><o:p></o:p></span></p>
+
+<p class=BodyTextnoleader>Now <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is a list, but its items are still scalars,
+with rank 0 and shape empty; so the result still has the shape <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The 5 items come from the items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+cyclically.</p>
+
+<p class=MsoBodyText>We can distill the foregoing analysis above to the
+observation that <b>when </b><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span><b> is an atom or a list, </b><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span><b>
+specifies the shape of </b><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;$&nbsp;y&nbsp;</span></span>.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 4 4 $ 'There
+is a tide in the affairs of men'</p>
+
+<p class=Jcodemultiline>Ther</p>
+
+<p class=Jcodemultiline>e is</p>
+
+<p class=Jcodemultiline>&nbsp;a t</p>
+
+<p class=Jcodemultiline>ide</p>
+
+<p class=BodyTextnoleader>The items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> are still
+scalars, with rank 0 and shape empty; the result has the shape <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;4&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The 16 items come from the items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+cyclically.&nbsp; Not all items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are used.&nbsp; J displays a rank-2
+array as a sequence of lines, one for each 1-cell.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 0 $ 2</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=BodyTextnoleader>(The display is a single blank line)<span
+style='mso-spacerun:yes'>&nbsp; </span>Just like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;$&nbsp;2</span></span>,
+but the resulting list has 0 items, i.&nbsp;e. it is an empty list.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 1 $ 2</p>
+
+<p class=Jcodemultiline>2</p>
+
+<p class=BodyTextnoleader>Similarly, a 1-item list.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; (0 $ 2) $
+2</p>
+
+<p class=Jcodemultiline>2</p>
+
+<p class=BodyTextnoleader>Here <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(0&nbsp;$&nbsp;2)</span></span> produces an empty list, as
+we saw above, and that is the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> to the second <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$&nbsp;.</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>The items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> are still
+scalars, so the result has shape empty (an empty list concatenated with an
+empty list), i.&nbsp;e. it is a scalar.</p>
+
+<p class=MsoBodyText>The displays of a scalar and a 1-item list are
+identical.&nbsp; Does that mean that a scalar
+is the same thing as a 1-item list?&nbsp;
+No.&nbsp; I mean <b>no.<span
+style='mso-spacerun:yes'>&nbsp; </span></b><b><span style='font-size:16.0pt;
+mso-bidi-font-size:12.0pt'>NO!</span></b>&nbsp;
+They are not (I say this with the same resignation as when I tell my
+kids not to rollerblade too fast down our street, knowing that only painful
+experience will drive the message home).&nbsp;
+How can you tell them apart?&nbsp; What
+we need is a way to see the shape of a noun.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$</span></span> monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->That way is monad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$&nbsp;y</span></span> is the
+shape of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(always a numeric list).&nbsp; For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ 1 2 3 4</p>
+
+<p class=Jcodemultiline>4</p>
+
+<p class=BodyTextnoleader>A 4-item list has the shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Did you forget that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3&nbsp;4</span></span>
+is a single list rather than 4 separate numbers?<span
+style='mso-spacerun:yes'>&nbsp; </span>You can ask the interpreter how it splits a
+line into words by using monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;:&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ;: '$ 1 2 3 4'</p>
+
+<p class=Jcodemultiline>+-+-------+</p>
+
+<p class=Jcodemultiline>|$|1 2 3 4|</p>
+
+<p class=Jcodemultiline>+-+-------+</p>
+
+<p class=BodyTextnoleader>The words are shown in boxes.<span
+style='mso-spacerun:yes'>&nbsp; </span>The list <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3&nbsp;4</span></span>
+is recognized as a single word.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; $ 6</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=BodyTextnoleader>The shape of a scalar is a 0-length list, as we have
+seen.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; $ 1 $ 2</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=BodyTextnoleader>Remember, all sentences are executed right-to-left,
+so this is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$&nbsp;(1&nbsp;$&nbsp;2)</span></span>,
+which gives the shape of the 1-item list.&nbsp;
+When a verb can be invoked dyadically, it is, so the rightmost <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$</span></span>
+is executed as a dyad, not as a monad.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; $ (0 $ 2)
+$ 2</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=BodyTextnoleader>Here, we get the shape of the scalar--an empty list.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; $ 'a'</p>
+
+<p class=BodyTextnoleader>A single character is an atom, whose shape is the
+empty list.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $'abc'</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=BodyTextnoleader>A 3-item list, one item for each character.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ ''</p>
+
+<p class=Jcodemultiline>0</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>''</span></span> is the empty character string, which you
+will see a lot of.&nbsp; Because it is easy to
+type, it is the value most often used when an empty list of any type will do.</p>
+
+<p class=MsoBodyText>Executing monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$</span></span> twice gives the rank: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$&nbsp;$&nbsp;y</span></span> is
+the rank<!--[if supportFields]><span style='mso-element:field-begin'></span> XE
+&quot;rank&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->&nbsp;of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(as a single-item list).&nbsp; I suggest you
+not read on until you understand why.</p>
+
+<p class=MsoBodyText>Resuming our inquiries into dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$</span></span>, we have</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 2 5 $ 1
+10</p>
+
+<p class=Jcodemultiline>&nbsp;1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10&nbsp; 1</p>
+
+<p class=Jcodemultiline>10&nbsp; 1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10</p>
+
+<p class=BodyTextnoleader>Again <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is a list, so the items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are scalars.&nbsp; The shape of the result is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2 5</span></span>,
+and the items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are repeated to fill that shape.&nbsp; Note
+that the corresponding atoms in each cell are aligned in the display.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 1 5 $ 1
+10</p>
+
+<p class=Jcodemultiline>1 10 1 10 1</p>
+
+<p class=BodyTextnoleader>Similarly, but now the result has shape <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;5</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is not the same as a 5-item list, which
+has shape <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Again, monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$</span></span> shows the shape:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ 1 5 $ 1 10</p>
+
+<p class=Jcodemultiline>1 5</p>
+
+<p class=MsoBodyText>When <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is not a scalar or a list, its items are not
+scalars, and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+does not give the shape of the result.&nbsp;
+Let us work through an example using the definition of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;$&nbsp;y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 $ 1 5 $ 1 10</p>
+
+<p class=Jcodemultiline>1 10 1 10 1</p>
+
+<p class=Jcodemultiline>1 10 1 10 1</p>
+
+<p class=Jcodemultiline>1 10 1 10 1</p>
+
+<p class=BodyTextnoleader>Remember, this is processed as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;$&nbsp;(1&nbsp;5&nbsp;$&nbsp;1&nbsp;10)</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The parenthesized part produces an array of
+shape <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;5</span></span>;
+since this has rank 2, its items are its 1-cells, each with shape <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The shape of the overall result is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+concatenated with the shape of an item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, to wit <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;5</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is populated with the cells of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+of which there is only 1.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 3 $ 2 5 $
+'There is a tide in the affairs of men'</p>
+
+<p class=Jcodemultiline>There</p>
+
+<p class=Jcodemultiline>&nbsp;is a</p>
+
+<p class=Jcodemultiline>There<span style='font-weight:normal'><o:p></o:p></span></p>
+
+<p class=BodyTextnoleader>You should be able to explain where each line came
+from, and you should note that <b>in general, </b><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span><b> specifies the
+frame of </b><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;$&nbsp;y</span></span><b>
+with respect to items of </b><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span><b>&nbsp;</b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>When <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is a list or an
+atom, its items are atoms and <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> gives the entire shape of the result.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 2 2 $ 2 5
+$ 1 10</p>
+
+<p class=Jcodemultiline>&nbsp;1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10&nbsp; 1</p>
+
+<p class=Jcodemultiline>10&nbsp; 1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10&nbsp; 1</p>
+
+<p class=Jcodemultiline>10&nbsp; 1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ 2 2 $ 2 5 $
+1 10</p>
+
+<p class=Jcodemultiline>2 2 5</p>
+
+<p class=BodyTextnoleader>Now the shape of the result is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;2&nbsp;5</span></span>, a
+rank-3 array.&nbsp; J displays the 2-cells
+with a blank line in between.&nbsp; Similarly,
+a rank-4 array is displayed as all the 3-cells with 2 blank lines
+in between, and so on for higher ranks.</p>
+
+<p class=MsoBodyText>We <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;result to produce no typeout&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->have seen that the display of
+a zero-length list is a single blank line: proper, as there is one list, and it
+has no items.&nbsp; The display of a rank-2
+array with no items is different: here we have zero lists, so we should expect
+no lines at all.&nbsp; This is indeed what
+happens:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 0$0</p>
+
+<p class=BodyTextnoleader>(there is no blank line).<span
+style='mso-spacerun:yes'>&nbsp; </span>This is the result you should produce if you
+want a function to display nothing.</p>
+
+<p class=MsoBodyText>Here are two exercises.&nbsp;
+Once you can explain each result, you will be well on your way to
+becoming a J programmer.&nbsp; What will each
+of these sentences produce (answer on the next page)?</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 1 $ 2 5 $ 1
+10</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 3 $ 2 5 $ 1
+10 15</p>
+
+<span style='font-size:12.0pt;font-family:"Times New Roman";mso-fareast-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:always'>
+</span>
+
+<p class=BodyTextnoleader>Solutions:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 1 $ 2 5 $ 1
+10</p>
+
+<p class=Jcodemultiline>&nbsp;1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10&nbsp; 1</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>10&nbsp; 1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;1 10<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10&nbsp; 1</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 2 3 $ 2 5
+$ 1 10 15</p>
+
+<p class=Jcodemultiline>&nbsp;1 10 15<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10</p>
+
+<p class=Jcodemultiline>15&nbsp; 1 10 15<span
+style='mso-spacerun:yes'>&nbsp; </span>1</p>
+
+<p class=Jcodemultiline>&nbsp;1 10 15<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>15&nbsp; 1 10 15<span
+style='mso-spacerun:yes'>&nbsp; </span>1</p>
+
+<p class=Jcodemultiline>&nbsp;1 10 15<span
+style='mso-spacerun:yes'>&nbsp; </span>1 10</p>
+
+<p class=Jcodemultiline>15&nbsp; 1 10 15<span
+style='mso-spacerun:yes'>&nbsp; </span>1</p>
+
+<p class=Subsection><a name="_Toc191734329"></a><a name="_Toc5414545"></a><a
+name="_Toc5414400"></a><a name="_Toc1896182"><span style='mso-bookmark:_Toc5414400'><span
+style='mso-bookmark:_Toc5414545'><span style='mso-bookmark:_Toc191734329'>Monad
+</span></span></span></a><span style='mso-bookmark:_Toc1896182'><span
+style='mso-bookmark:_Toc5414400'><span style='mso-bookmark:_Toc5414545'><span
+style='mso-bookmark:_Toc191734329'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>#</span></span> (Tally)</span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#</span></span> monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The result of<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#&nbsp;y</span></span> is a scalar, the number of items in <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is the first item in the list <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$y</span></span>,
+except that if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is an atom, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$y</span></span>
+is empty but <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#y</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+(because, remember, an atom has one item, itself).<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is a list, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#y</span></span> is the length
+of the list.&nbsp; Quiz question: What is the
+difference between the results of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$&nbsp;1&nbsp;2&nbsp;3</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>and&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#&nbsp;1&nbsp;2&nbsp;3</span></span>?</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ 1 2 3</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; # 1 2 3</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=BodyTextnoleader>Answer: the result of monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$</span></span> is always a
+list, but the result of monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#</span></span> is a scalar:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ $ 1 2 3</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ # 1 2 3</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#$y</span></span>,
+like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$$y</span></span>,
+gives the rank<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;rank&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->&nbsp;of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;.</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>Since monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#</span></span> produces a
+scalar rather than a list, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#$y</span></span> is usually preferred.<span
+style='mso-spacerun:yes'>&nbsp; </span>Just remember that <b style='mso-bidi-font-weight:
+normal'><i style='mso-bidi-font-style:normal'>the length of the shape is the
+rank</i></b>.</p>
+
+<p class=Subsection><a name="_Toc191734330"></a><a name="_Toc5414546"></a><a
+name="_Toc5414401"></a><a name="_Toc1896183"><span style='mso-bookmark:_Toc5414401'><span
+style='mso-bookmark:_Toc5414546'><span style='mso-bookmark:_Toc191734330'>Monad
+</span></span></span></a><span style='mso-bookmark:_Toc1896183'><span
+style='mso-bookmark:_Toc5414401'><span style='mso-bookmark:_Toc5414546'><span
+style='mso-bookmark:_Toc191734330'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>i.</span></span> (Integers)</span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i.</span></span> monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i.</span></span> accepts a
+scalar or vector operand and creates an array.&nbsp;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.&nbsp;y</span></span>
+produces the same result as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;$&nbsp;<i>ints</i></span></span>, where <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ints</span></i></span>
+is the list of all nonnegative integers in order.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; i. 5</p>
+
+<p class=Jcodemultiline>0 1 2 3 4</p>
+
+<p class=BodyTextnoleader>A list of 5 items; the items are ascending integers.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; i. 2 3</p>
+
+<p class=Jcodemultiline>0 1 2</p>
+
+<p class=Jcodemultiline>3 4 5</p>
+
+<p class=BodyTextnoleader>A rank-2 result.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; i. 2 3 4</p>
+
+<p class=Jcodemultiline>&nbsp;0<span
+style='mso-spacerun:yes'>&nbsp; </span>1&nbsp;
+2&nbsp; 3</p>
+
+<p class=Jcodemultiline>&nbsp;4<span
+style='mso-spacerun:yes'>&nbsp; </span>5&nbsp;
+6&nbsp; 7</p>
+
+<p class=Jcodemultiline>&nbsp;8<span
+style='mso-spacerun:yes'>&nbsp; </span>9 10 11</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>12 13 14 15</p>
+
+<p class=Jcodemultiline>16 17 18 19</p>
+
+<p class=Jcodemultiline>20 21 22 23</p>
+
+<p class=BodyTextnoleader>A rank-3 result.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; i. 0</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=BodyTextnoleader>A list of 0 items.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; i. _5</p>
+
+<p class=Jcodemultiline>4 3 2 1 0</p>
+
+<p class=BodyTextnoleader>When the argument is negative, the absolute value is
+used for the shape, but the items run in reverse order.</p>
+
+</div><!--bottom jump start--><hr><a href="loopless_code_i_verbs_have_r.htm">&gt;&gt;</a>&nbsp;
+<a href="a_first_look_at_j_programs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

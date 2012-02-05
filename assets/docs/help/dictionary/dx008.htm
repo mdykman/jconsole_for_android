@@ -1,0 +1,229 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>8!: Format</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx009.htm">&gt;&gt;</a>&nbsp;
+<a href="dx007.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Format</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>8!:</font></b></td>
+</tr></table>
+<br>
+
+
+<TABLE>
+<tr><td valign=top width=120><a name="0"></a><tt>[x] 8!:0 y</tt></td>
+<td><B>Format</B>. Format array<tt> y </tt>according to format phrases<tt> x</tt> .<tt> </tt>
+Each formatted number is in a box.</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top width=120><a name="1"></a><tt>[x] 8!:1 y</tt></td>
+<td><B>Format1</B>. As in<tt> x 8!:0 y</tt> ,<tt> </tt>but<tt> y </tt>has rank
+at most 2 and each formatted column is in a box.</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top width=120><a name="2"></a><tt>[x] 8!:2 y</tt></td>
+<td><B>Format2</B>. As in<tt> x 8!:0 y</tt> ,<tt> </tt>but<tt> y </tt>has rank
+at most 2 and the result is a literal table.</td></tr>
+</table>
+
+<br><hr width=88%><br>
+
+<p>The ranks of<tt> 8!:n </tt>are infinite.<tt> x 8!:n y </tt>
+formats array<tt> y </tt>according to format phrases<tt> x</tt> .</p>
+
+<p><tt>y </tt>is usually an array of real numbers.<tt> y </tt>may also be a literal array; 
+in that case<tt> x </tt>is ignored and the result is<tt> &lt;@,&quot;1 y </tt>
+(with further processing depending on the variant of format).
+Finally,<tt> y </tt>may be a boxed array 
+where each opened atom is a real number or a string, 
+whence each opened atom is independently formatted.</p>
+
+<p><tt>x </tt> is a string of phrases separated by commas
+or an atom or list of phrases individually boxed.
+There is either a single phrase (applying to all columns)
+or one phrase per column. 
+An elided<tt> x </tt>is equivalent to<tt> a:$~(_1+#$y)}.$y</tt> .<tt> </tt>
+That is,<tt> 8!:n y </tt>is equivalent to computing the number of decimal places 
+independently for each column and using the minimum width for each number.</p>
+
+<p>A <i>format phrase</i> consists of zero or more modifiers 
+followed by an optional<tt> w.d</tt> ,<tt> </tt>which specifies
+the width and the number of decimal 
+places.<tt> w </tt>may be 0, and<tt>  w. </tt>or<tt> w.d </tt>itelf may be omitted.
+The meanings in each case are as follows:</p>
+
+<table>
+<tr><td>&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align=center>width</td><td>&nbsp;&nbsp;&nbsp;</td>
+ <td align=center>decimal places</td></tr>
+<tr><td><tt>w.d</tt></td><td>&nbsp;</td><td align=center><tt>w</tt></td><td>&nbsp;</td>
+ <td align=center><tt>d</tt></td></tr>
+<tr><td><tt>0.d</tt></td><td>&nbsp;</td><td align=center>computed</td><td>&nbsp;</td>
+ <td align=center><tt>d</tt></td></tr>
+<tr><td><tt>d</tt></td><td>&nbsp;</td><td align=center>minimum</td><td>&nbsp;</td>
+ <td align=center><tt>d</tt></td></tr>
+<tr><td>omitted</td><td>&nbsp;</td><td align=center>minimum<tt> </tt></td><td>&nbsp;</td>
+ <td align=center>computed</td></tr>
+</table>
+</table>
+
+
+<p>A specified or computed<tt> w </tt>applies to the entire set, whereas
+a minimum<tt> w </tt>applies to each number.
+An insufficient width gives a result of<tt> *</tt>s.</p>
+
+<p><tt>d </tt>is at most 9.
+A computed<tt> d </tt>applies to the entire set, and in that case    
+exponential notation is used for non-zero numbers with magnitude less than
+<tt> 1e_9 </tt>or greater than<tt> 2e9</tt> .</p>
+<p>The modifiers are as follows. A modifier may be used at most once in a format phrase.</p>
+
+<table>
+<tr><td><tt>c</tt></td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+ <td>insert a comma between triplets of digits left of the decimal point</td></tr>
+<tr><td><tt>l</tt></td><td>&nbsp;</td>
+ <td>left justify (<tt>w </tt>must be specified or computed)</td></tr>
+<tr><td><tt>b&lt;xx&gt;</tt></td><td>&nbsp;</td>
+ <td>replacement for formatted zero</td></tr>
+<tr><td><tt>d&lt;xx&gt;</tt></td><td>&nbsp;</td>
+ <td>replacement for<tt> _ __ _.</tt> ;<tt> </tt> 
+ absent the<tt> d </tt>modifier<tt> _ __ _. </tt>are shown as is</td></tr>
+<tr><td><tt>m&lt;xx&gt;</tt></td><td>&nbsp;</td>
+ <td>prefix for negative formatted numbers, replacing the minus sign<tt> - </tt></td></tr>
+<tr><td><tt>n&lt;xx&gt;</tt></td><td>&nbsp;</td>
+ <td>suffix for negative formatted numbers, replacing the minus sign<tt> - </tt></td></tr>
+<tr><td><tt>p&lt;xx&gt;</tt></td><td>&nbsp;</td>
+ <td>prefix for non-negative formatted numbers</td></tr>
+<tr><td><tt>q&lt;xx&gt;</tt></td><td>&nbsp;</td>
+ <td>suffix for non-negative formatted numbers</td></tr>
+<tr><td><tt>r&lt;xx&gt;</tt></td><td>&nbsp;</td>
+ <td>background text, replicated cyclically as in the dyad<tt> $ </tt></td></tr>
+<tr><td valign=top><tt>s&lt;xx&gt;</tt> </td><td>&nbsp;</td>
+ <td><tt>xx </tt>is an even number of chars (default,substitute)
+         providing substitutes for defaults<br>
+         valid first chars are:<tt> e,.-* </tt><br>
+         the minus sign is<tt> - </tt>(instead of<tt> _</tt> )<tt> </tt>by default</td></tr>
+</table>
+
+<p>The<tt> &lt;xx&gt; </tt>may be omitted and means<tt> &lt;&gt;</tt> .<tt> </tt>
+For example,<tt> b </tt>by itself means blank out formatted 
+zeros.<tt> (xx) </tt>or<tt> [xx] </tt>or<tt> {xx} </tt>may be used instead 
+of<tt> &lt;xx&gt;</tt>. </p>
+
+<p>Examples:</p>
+<pre>
+   fmt =: 8!:0
+   fmt1=: 8!:1
+   fmt2=: 8!:2
+
+   ] y=: 1.23 12345 123.4 0.12 ,__ 0 1.15 _1234.5,: _44 0.5 _0.5 0.1
+1.23 12345 123.4    0.12
+  __     0  1.15 _1234.5
+ _44   0.5  _0.5     0.1
+
+   '' fmt y            NB. minimum w and computed d, applying to all columns
++------+--------+------+--------+
+|1.23  |12345.00|123.40|0.12    |
++------+--------+------+--------+
+|__    |0.00    |1.15  |-1234.50|
++------+--------+------+--------+
+|-44.00|0.50    |-0.50 |0.10    |
++------+--------+------+--------+
+   $ '' fmt y
+3 4
+   #&> '' fmt y
+4 8 6 4
+2 4 4 8
+6 4 5 4
+
+   ',,,' fmt y         NB. minimum w and computed d individually for each column
++------+-------+------+--------+
+|1.23  |12345.0|123.40|0.12    |
++------+-------+------+--------+
+|__    |0.0    |1.15  |-1234.50|
++------+-------+------+--------+
+|-44.00|0.5    |-0.50 |0.10    |
++------+-------+------+--------+
+   ((4$&lt;'') fmt y) -: ',,,' fmt y
+1
+   (fmt y) -: ',,,' fmt y
+1
+
+   '0.2' fmt y         NB. computed w, 2 decimal places, apply to all columns
++--------+--------+--------+--------+
+|    1.23|12345.00|  123.40|    0.12|
++--------+--------+--------+--------+
+|      __|    0.00|    1.15|-1234.50|
++--------+--------+--------+--------+
+|  -44.00|    0.50|   -0.50|    0.10|
++--------+--------+--------+--------+
+   (4$&lt;'0.2') fmt y    NB. computed w, 2 decimal places, individually for each column
++------+--------+------+--------+
+|  1.23|12345.00|123.40|    0.12|
++------+--------+------+--------+
+|    __|    0.00|  1.15|-1234.50|
++------+--------+------+--------+
+|-44.00|    0.50| -0.50|    0.10|
++------+--------+------+--------+
+
+   NB. using various modifers
+   (4$&lt;'m&lt;(&gt;n&lt;)&gt;q&lt; &gt;0.2') fmt y
++-------+---------+-------+---------+
+|  1.23 |12345.00 |123.40 |    0.12 |
++-------+---------+-------+---------+
+|     __|    0.00 |  1.15 |(1234.50)|
++-------+---------+-------+---------+
+|(44.00)|    0.50 | (0.50)|    0.10 |
++-------+---------+-------+---------+
+   (4$&lt;'cs&lt;, .,&gt;b&lt;nil&gt;d&lt;n/a&gt;0.2') fmt y
++------+---------+------+---------+
+|  1,23|12 345,00|123,40|     0,12|
++------+---------+------+---------+
+|   n/a|      nil|  1,15|-1 234,50|
++------+---------+------+---------+
+|-44,00|     0,50| -0,50|     0,10|
++------+---------+------+---------+
+
+   NB. fmt1 and fmt2
+   'b&lt;nil&gt;d&lt;n/a&gt;0.2' fmt1 y
++--------+--------+--------+--------+
+|    1.23|12345.00|  123.40|    0.12|
+|     n/a|     nil|    1.15|-1234.50|
+|  -44.00|    0.50|   -0.50|    0.10|
++--------+--------+--------+--------+
+   'b&lt;nil&gt;d&lt;n/a&gt;c11.2' fmt2 y
+       1.23  12,345.00     123.40       0.12
+        n/a        nil       1.15  -1,234.50
+     -44.00       0.50      -0.50       0.10
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="dx009.htm">&gt;&gt;</a>&nbsp;
+<a href="dx007.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

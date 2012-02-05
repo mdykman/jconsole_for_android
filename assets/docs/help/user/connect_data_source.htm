@@ -1,0 +1,71 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Data Source Connection</title>
+
+</head><body><!--top jump start--><a href="select_and_read_data.htm">&gt;&gt;</a>&nbsp;
+<a href="odbc_error_messages.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Connecting to a data source</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+The <code>ddcon</code> command connects to a data source returning a connection handle, using the form:
+
+<pre>
+   [ch=. ddcon 'dsn=jdata'
+1
+</pre>
+
+<P>
+We have now connected to a data source, but not yet to a data file. The file we will use is <I>tdata</I>, and the next statement uses <code>ddcol</code> to retrieve the column names and attributes for this file: 
+
+<pre>
+   $cols=. 'tdata' ddcol ch
+7 13
+
+   3 4 7 {&quot;1 cols
++------+----+---------+
+|Column|Type|Type_Name|
++------+----+---------+
+|NAME  |1   |CHAR     |
++------+----+---------+
+|SEX   |1   |CHAR     |
++------+----+---------+
+|DEPT  |1   |CHAR     |
++------+----+---------+
+...
+</pre>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="select_and_read_data.htm">&gt;&gt;</a>&nbsp;
+<a href="odbc_error_messages.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

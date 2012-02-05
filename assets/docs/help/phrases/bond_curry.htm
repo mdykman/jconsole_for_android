@@ -1,0 +1,224 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Bond or Curry</title>
+
+</head><body><!--top jump start--><a href="rank.htm">&gt;&gt;</a>&nbsp;
+<a href="function_tables.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>2A. Bond or Curry </h1>
+<TR><TD colspan="2">
+
+<P>Fixing an argument of a verb produces a monad. 
+Some verbs so produced are sufficiently important to justify 
+being denoted by a primitive symbol, 
+and the following table often shows the corresponding primitive 
+together with the English definition. The conjunction<tt> &amp; </tt>
+(often called <i>with</i>) is used to bond an argument to a verb.</P>
+
+<TABLE BORDER="1" CELLSPACING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0 =: 1&amp;+</tt></TD> <TD width=60%>Increment<tt> &gt;:</tt></TD>
+  </TR>
+
+  <TR><TD><tt>m1 =: +&amp;1</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+
+  <TR><TD><tt>m2 =: _1&amp;+</tt></TD> <TD>Decrement<tt> &lt;:</tt></TD>
+  </TR>
+  
+  <TR><TD><tt>m3 =: -&amp;1</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+
+  <TR><TD><tt>m4 =: 1&amp;-</tt></TD> <TD>Not<tt> -. </tt>(logical and probability complement)</TD>
+  </TR>
+
+  <TR><TD><tt>m5 =: 1&amp;~:</tt></TD> <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+
+  <TR><TD><tt>m6 =: 0&amp;=</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+  <TR><TD><tt>m7 =: 0&amp;-</tt></TD> <TD>Negate<tt> - </tt>(arithmetic)</TD>
+  </TR>
+  <TR><TD><tt>m8 =: _1&amp;*</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+  
+  <TR><TD><tt>m9 =: *&amp;_1</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+  <TR><TD><tt>m10=: 2&amp;*</tt></TD> <TD>Double <tt>+:</tt></TD>
+  </TR>
+  <TR><TD><tt>m11=: *&amp;2</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+  <TR><TD><tt>m12=: 3&amp;*</tt></TD> <TD>Triple</TD>
+  </TR>
+  <TR><TD><tt>m13=: *&amp;3</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+  <TR><TD><tt>m14=: 0j1&amp;*</tt></TD> <TD><tt>j. </tt>(Multiply by &radic;-1)</TD>
+  </TR>
+  <TR><TD><tt>m15=: ^@j.</tt></TD> <TD><tt>r. </tt>(Complex # on unit circle at y radians)</TD>
+  </TR>
+  <TR><TD><tt>m16=: 1p1&amp;*</tt></TD> <TD>&pi; times</TD>
+  </TR>
+  <TR><TD><tt>m17=: 0.5&amp;*</tt></TD> <TD>Halve<tt> -:</tt></TD>
+  </TR>
+  <TR><TD><tt>m18=: *&amp;0.5</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+  <TR><TD><tt>m19=: %&amp;2</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+  </TR>
+  <TR><TD><tt>m20=: 1&amp;%</tt></TD> <TD>Reciprocal<tt> %</tt></TD>
+  </TR>
+
+<TR><TD><tt>m21=: ^&amp;_1</tt></TD><TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+</TR>
+<TR><TD><tt>m22=: ^&amp;2</tt></TD> <TD>Square<tt> *:</tt></TD></TR>
+
+<TR><TD><tt>m23=: ^&amp;3</tt></TD> <TD>Cube</TD>
+</TR>
+<TR><TD><tt>m24=: ^&amp;0.5</tt></TD><TD>Square root<tt> %:</tt></TD>
+</TR>
+
+<TR><TD><tt>m25=: ^&amp;1r2</tt></TD><TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+</TR>
+<TR><TD><tt>m26=: 2&amp;%:</tt></TD> <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD></TR>
+
+<TR><TD><tt>m27=: ^&amp;(%3)</tt></TD> <TD>Cube root</TD>
+</TR>
+<TR><TD><tt>m28=: ^&amp;1r3</tt></TD> <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD></TR>
+
+<TR><TD><tt>m29=: 3&amp;%:</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+</TR>
+
+<TR><TD><tt>m30=: (^1)&amp;^</tt></TD> <TD>Exponential<tt> ^ </tt></TD>
+</TR>
+
+<TR><TD><tt>m31=: 1x1&amp;^</tt></TD>     <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+</TR>
+
+<TR><TD><tt>m32=: 1x1&amp;^.</tt></TD> <TD>Natural log<tt> ^.</tt></TD>
+</TR>
+<TR><TD><tt>m33=: 10&amp;^</tt></TD> <TD>Antilog</TD>
+</TR>
+
+<TR><TD><tt>m34=: 10&amp;^.</tt></TD> <TD>Base-10 log</TD>
+</TR>
+<TR><TD><tt>m35=: &gt;:@&lt;.@(10&amp;^.)@(1&amp;&gt;.)</tt></TD> <TD># of digits needed to represent integer <tt>y</tt></TD></TR>
+
+<TR><TD><tt>m36=: #@(10&amp;#.^:_1)&quot;0</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+</TR>
+<TR><TD><tt>m37=: &gt;:@&lt;.@( 2&amp;^.)@(1&amp;&gt;.)</tt></TD> <TD># of bits needed to represent integer y</TD>
+</TR>
+
+<TR><TD><tt>m38=: #@( 2&amp;#.^:_1)&quot;0</tt></TD>  <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;</TD>
+</TR>
+<TR><TD><tt>m39=: 0&amp;{</tt></TD> <TD>Head  (first)<tt> {.</tt></TD>
+</TR>
+<TR><TD><tt>m40=: _1&amp;{</tt></TD> <TD>Tail (last)<tt> {:</tt></TD>
+</TR>
+<TR><TD><tt>m41=: 1&amp;}.</tt></TD> <TD>Behead<tt> }.</tt></TD>
+</TR>
+<TR><TD><tt>m42=: _1&amp;}.</tt></TD><TD> Curtail<tt> }:</tt></TD>
+</TR>
+<TR><TD><tt>m43=: 0&amp;&lt;</tt></TD> <TD>Positive test</TD>
+</TR>
+<TR><TD><tt>m44=: 0&amp;&gt;</tt></TD> <TD>Negative test</TD>
+</TR>
+<TR><TD><tt>m45=: 0&amp;&gt;.</tt></TD> <TD>Max (0,y)</TD> 
+</TR>
+<TR><TD><tt>m46=: 0&amp;&lt;.</tt></TD> <TD>Min (0,y) </TD>
+</TR>
+<TR><TD><tt>m47=: (0&amp;=)@(2&amp;|)</tt></TD> <TD>Even test</TD>
+</TR>
+<TR><TD><tt>m48=: (1&amp;=)@(2&amp;|)</tt></TD> <TD>Odd test</TD>
+</TR>
+
+<TR><TD><tt>m49=: _1&amp;A.</tt></TD> <TD>Reverse <tt>|.</tt></TD>
+</TR>
+<TR><TD><tt>m50=: (&lt;0 _1)&amp;C.</tt></TD> <TD>Interchange first and last items</TD>
+</TR>
+<TR><TD><tt>m51=: &lt;.@(0.5&amp;+)</tt></TD> <TD>Round</TD>
+</TR>
+<TR><TD><tt>m52=: ,~ $ 1: , ] $ 0:</tt></TD> <TD>Identity matrix of order <tt>y</tt></TD>
+</TR>
+<TR><TD><tt>m53=: -.@(' &nbsp;'&amp;E.) # ]</tt></TD> <TD>Remove multiple blanks</TD>
+</TR>
+<TR><TD><tt>m54=: BC=: i.@&gt;: ! ]</tt></TD> <TD>Binomial coefficients of order <tt>y</tt></TD>
+</TR>
+<TR><TD><tt>m55=: (0&amp;,+,&amp;0)^:([ `1:)</tt></TD> <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;  (recursive)</TD>
+</TR>
+<TR><TD><tt>m56=: BCT=:i. !/ i.</tt></TD> <TD>BC table of orders to y-1</TD>
+</TR>
+<TR><TD><tt>m57=: PAT=: |:@BCT</tt></TD> <TD>Pascal&rsquo;s triangle</TD>
+</TR>
+<TR><TD><tt>m58=: (0&amp;,+,&amp;0)^:(i.`1:)</tt></TD> <TD>&nbsp;&nbsp;&nbsp;&nbsp;&quot;  (recursive)</TD>
+</TR>
+<TR><TD><tt>m59=: IX=: a.&amp;i.</tt></TD> <TD>Index in ASCII alphabet</TD>
+</TR>
+<TR><TD><tt>m60=: Lt=:(1&amp;e.)@(e.&amp;a.)@,</tt></TD> <TD>Literal test</TD>
+</TR>
+<TR><TD><tt>m61=: 1&amp;#.</tt></TD> <TD>Sum over lists (last axis) <tt>+/&quot;1</tt></TD>
+</TR>
+<TR><TD><tt>m62=: 1&amp;,</tt></TD> <TD>Preface a row of 1&rsquo;s</TD>
+</TR>
+<TR><TD><tt>m63=: ,&amp;1</tt></TD> <TD>Append a row of 1&rsquo;s</TD>
+</TR>
+<TR><TD><tt>m64=: 1&amp;,.</tt></TD> <TD>Preface a column of 1&rsquo;s</TD>
+</TR>
+<TR><TD><tt>m65=: ,.&amp;1</tt></TD> <TD>Append a column of 1&rsquo;s</TD>
+</TR>
+<TR><TD><tt>m66=: 1&amp;,@$ $ ,</tt></TD> <TD>Itemize (append leading 1 to shape) <tt>,:</tt></TD>
+</TR>
+<TR><TD><tt>m67=: sin=: 1&amp;o.</tt></TD> <TD>Sin</TD>
+</TR>
+<TR><TD><tt>m68=: asin=: _1&amp;o.</tt></TD> <TD>Arcsin</TD>
+</TR>
+<TR><TD><tt>m69=: cos=: 2&amp;o.</tt></TD> <TD>Cos</TD>
+</TR>
+<TR><TD><tt>m70=: acos=: _2&amp;o.</tt></TD> <TD>Arccos</TD>
+</TR>
+<TR><TD><tt>m71=: tan=: 3&amp;o.</tt></TD> <TD>Tan</TD>
+</TR>
+<TR><TD><tt>m72=: atan=: _3&amp;o.</tt></TD> <TD>Arctan</TD>
+</TR>
+<TR><TD><tt>m73=: sinh=: 5&amp;o.</tt></TD> <TD>Sinh</TD>
+</TR>
+<TR><TD><tt>m74=: asinh=: _5&amp;o.</tt></TD> <TD>Arcsinh</TD>
+</TR>
+<TR><TD><tt>m75=: cosh=: 6&amp;o.</tt></TD> <TD>Cosh</TD>
+</TR>
+<TR><TD><tt>m76=: acosh=: _6&amp;o.</tt></TD> <TD>Arccosh</TD>
+</TR>
+<TR><TD><tt>m77=: tanh=: 7&amp;o.</tt></TD> <TD>Tanh</TD>
+</TR>
+<TR><TD><tt>m78=: atanh=: _7&amp;o.</tt></TD> <TD>Arctanh</TD>
+</TR>
+
+</TABLE>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="rank.htm">&gt;&gt;</a>&nbsp;
+<a href="function_tables.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

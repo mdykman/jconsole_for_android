@@ -1,0 +1,68 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>u/. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="key602.htm">&gt;&gt;</a>&nbsp;
+<a href="128x5.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">u/. </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2007-06-15<br>last updated: 2007-06-15
+</td></tr></table>
+<br>
+
+<p>The monad<tt> u/. </tt> (<i>Oblique</i>) has been made faster and leaner
+for the general case.  
+Specific cases of<tt> u/. </tt>
+<a href="oblique.htm">supported by special code</a> remain unchanged.
+The following benchmarks demonstrate the improvement:</p>
+
+<pre>
+y=: 200 5000 ?@$ 0
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'Expression'
+</pre>
+
+<table>
+<tr>
+<td><b>Expression</b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+<tr><td><tt>&lt;/.y</tt></td><td>&nbsp;</td><td>0.083978</td><td>&nbsp;</td><td>3.24223e7</td><td>&nbsp;</td><td>1.368435</td><td>&nbsp;</td><td>1.58000e8</td><td>&nbsp;</td><td>16.30</td><td>&nbsp;</td><td>4.87</td></tr>
+<tr><td><tt>]/.y</tt>   </td><td>&nbsp;</td><td>0.096348</td><td>&nbsp;</td><td>3.04436e7</td><td>&nbsp;</td><td>1.401710</td><td>&nbsp;</td><td>1.58000e8</td><td>&nbsp;</td><td>14.55</td><td>&nbsp;</td><td>5.19</td></tr>
+</tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="key602.htm">&gt;&gt;</a>&nbsp;
+<a href="128x5.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

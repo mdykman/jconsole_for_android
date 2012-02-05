@@ -1,0 +1,70 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Empty Array</title>
+
+</head><body><!--top jump start--><a href="single_atom_array.htm">&gt;&gt;</a>&nbsp;
+<a href="rank.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Empty Array</h1>
+An array is empty if it contains no atoms. An empty array has a 0 in its shape.<br>
+
+<pre>   a =. 0 $ 0	NB. empty list
+   $a
+0
+   $ ''	NB. empty list
+0
+   b =. 2 0 3 $ 'a'	NB. empty rank 3 array
+   $b
+2 0 3</pre>
+Empty arrays have no atoms to display and their display can be confusing if you don't know what to expect. An empty list displays as a blank line. A table with 0 rows displays as 0 lines; a table with 3 rows, but 0 columns, displays as 3 blank lines.<br>
+
+<pre>   2 $ 5
+5 5
+   1 $ 5
+5
+   0 $ 5	NB. empty list displays as blank line
+   2 2 $ 5
+5 5
+5 5
+   1 2 $ 5
+5 5
+   2 0 $ 5	NB. 2 rows displays 2 lines
+
+
+   0 2 $ 5	NB. 0 rows displays 0 lines</pre>
+The display of lists and tables with 1 row can look the same, and you have to look at their shape to distinguish them.<br>
+
+<pre>   a =. 2 $ 5
+   b =. 1 2 $ 5
+   a
+5 5
+   b		NB. b displays the same as a
+5 5
+   $ a
+2
+   $ b		NB. but b has a different shape
+1 2</pre>
+ <!--bottom jump start--><hr><a href="single_atom_array.htm">&gt;&gt;</a>&nbsp;
+<a href="rank.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,53 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>z locale</title>
+
+</head><body><!--top jump start--><a href="script_load.htm">&gt;&gt;</a>&nbsp;
+<a href="locale.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end-->
+<h1>z locale</h1>
+The <font face=courier size=-1>z</font> locale is the <em>parent locale</em> of all other locales.<br>
+<br>
+If a name is not found in the current locale, and there is a definition for it in the <font face=courier size=-1>z</font> locale, then that definition is used as if it were in the current locale.<br>
+<br>
+The <font face=courier size=-1>z</font> locale is for common utilities that you want to be available everywhere. From the <font face=courier size=-1>z</font> locale, they are available for execution in any locale as if they were in that locale, yet there is only a single copy, and the names in the z locale don't clutter up the names in the other locales.<br>
+<br>
+The profile.ijs that runs when you start J defines many standard utilities in the <font face=courier size=-1>z</font> locale. You have used both the erase and the names verbs which are defined in the <font face=courier size=-1>z</font> locale. You can tell this by the following:<br>
+
+<pre>   names 3	NB. verbs in the base locale
+...
+</pre>
+The above does not list names as a name, yet you are able to execute it. This is because when it is not found in the base locale, its definition from the <font face=courier size=-1>z</font> locale is used as if it were in fact defined in the base locale.<br>
+
+<pre>   names_z_ 3	NB. verbs in z locale
+...
+</pre>
+The result is too long to list here. The verb names has a dyadic definition that takes a left argument which indicates the first letter of names to return.<br>
+
+<pre>    'n' names_z_ 3
+nameclass namelist names nc nl ...
+</pre>
+<!--bottom jump start--><hr><a href="script_load.htm">&gt;&gt;</a>&nbsp;
+<a href="locale.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

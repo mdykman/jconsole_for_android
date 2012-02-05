@@ -1,0 +1,366 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Loopless Code VI: Temporary Variables</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="loopless_code_vii_sequential.htm">&gt;&gt;</a>&nbsp;
+<a href="when_programs_are_data.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734469"></a><a name="_Toc5414638"></a><a name="_Toc1896266"><span
+style='mso-bookmark:_Toc5414638'><span style='mso-bookmark:_Toc191734469'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>25. </span></span><![endif]>Loopless Code VI</span></span></a><span
+style='mso-bookmark:_Toc191734469'>: Temporary Variables</span></h1>
+
+<p class=MsoBodyText>The algorithms that are hardest to put into loopless form
+are the ones that chug through the items of an array, modifying a set of
+temporary variables that control the operation at each step.<span
+style='mso-spacerun:yes'>&nbsp; </span>I am going to show you how to put one example
+of such an algorithm into loopless form.&nbsp;
+The resulting structure can be used for many such problems.</p>
+
+<p class=MsoBodyText>The example problem is a simulation.<span
+style='mso-spacerun:yes'>&nbsp; </span>In a certain church most of the worshippers
+are devout, but the front pew is always packed with knaves.<span
+style='mso-spacerun:yes'>&nbsp; </span>Collection is taken every Sunday.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each knave brings two coins to throw in, but,
+being a knave, he first removes the two most-valuable coins from the plate
+before adding his own.&nbsp; Given <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p</span></span>,
+the contents of the plate when it reaches the front row (a list of coin-values)
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>k</span></span>,
+the coins brought by the knaves (an nx2 array), what is the final contents of
+the plate, and what does each knave make off with?<span
+style='mso-spacerun:yes'>&nbsp; </span>For test data, we will use</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; p =. 100 25
+100 50 5 10</p>
+
+<p class=BodyTextnoleader>giving the contents of the plate as it enter the
+knaves' row, ,and</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]k =. _2 ]\ 50
+50 100 25 5 10 25 50 25 10</p>
+
+<p class=Jcodemultiline>&nbsp;50 50</p>
+
+<p class=Jcodemultiline>100 25</p>
+
+<p class=Jcodemultiline>&nbsp; 5 10</p>
+
+<p class=Jcodemultiline>&nbsp;25 50</p>
+
+<p class=Jcodemultiline>&nbsp;25 10</p>
+
+<p class=BodyTextnoleader>as the coins to be thrown in by the greedy knaves.</p>
+
+<p class=MsoBodyText>After trying for a clever solution for a little while we
+give up and decide we are going to have to simulate the action of each
+knave.&nbsp; We start by writing a verb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+to perform a knave's action.&nbsp; The design
+of this verb requires a little careful joinery to make it useful later: we will
+invoke it as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;knave&nbsp;y</span></span>
+where <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is an item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>k</span></span>,
+i.&nbsp;e. the input for one knave, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is the result
+from applying <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+for the previous knave; the result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>knave</span></span> must have the same format as the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operand of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>;
+finally, the result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>knave</span></span> must include whatever we want as the final
+solution of the problem.</p>
+
+<p class=MsoBodyText>The trick is that the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>, which will
+be the input to the next invocation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>, must carry
+all the information needed by the next invocation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>; this is the
+way information is passed from knave to knave.&nbsp;
+The main design decision is to figure out what the format of the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operand of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+will be.</p>
+
+<p class=MsoBodyText>Obviously we need to know the contents of the plate as it
+is given to each knave.&nbsp; Also, the
+purpose of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+is to calculate what coins are removed, so those coins should be part of the
+result.&nbsp; We decide that the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operand of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+will consist of those two things, in the order <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(coins&nbsp;removed),(plate&nbsp;contents)</span></span>,
+and we already know that the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> operand will have the format of an item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>k</span></span>,
+i.&nbsp;e. the knave's two coins.&nbsp; Now we
+are ready to code <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>It should look at the plate-contents portion of its right
+argument, sort it into order of size, take the two biggest values as the result
+of interest, and use the rest (with the knave's own coins added) as the plate
+contents to be passed to the next knave.&nbsp;
+The coins that were removed are put into their place at the beginning of
+the result vector.&nbsp; In J this will be:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; knave =: dyad
+define</p>
+
+<p class=Jcodemultiline>xlen =. #x&nbsp; NB.
+number of coins added/removed</p>
+
+<p class=Jcodemultiline>splate =. \:~ xlen }. y&nbsp;
+NB. extract plate contents, sort</p>
+
+<p class=Jcodemultiline>(xlen {. splate) , (xlen }. splate) , x<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. build result</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>Let's test it.&nbsp; The <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operand to the first invocation of knave will have a couple of placeholders in
+the place where the coins removed by the previous knave would be, followed by
+the initial contents of the plate.&nbsp; In
+other words,</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]inity =.
+({:k),p</p>
+
+<p class=Jcodemultiline>25 10 100 25 100 50 5 10</p>
+
+<p class=BodyTextnoleader>Here we used the last item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>k</span></span> as a
+placeholder.&nbsp; The values don't matter but
+we want the right shape so the program will still work if we change the number
+of coins in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>k&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Applying this value to the first knave we get</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 50 50 knave
+inity</p>
+
+<p class=Jcodemultiline>100 100 50 25 10 5 50 50</p>
+
+<p class=BodyTextnoleader>Yes, that's right: the first two items of the result
+are the two dollar coins the knave took, and he threw his coins in at the end.</p>
+
+<p class=MsoBodyText>Before we go on we can't help noticing that taking the
+first two items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>splate</span></span>
+and then dropping those same items--that's needless work.<span
+style='mso-spacerun:yes'>&nbsp; </span>We can simplify <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>knave</span></span> to</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; knave =: dyad
+: '(\:~ (#x) }. y) , x'</p>
+
+<p class=MsoBodyText>Now we need to apply <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>knave</span></span> sequentially
+on all items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>k&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>We have learned enough J to write a sentence
+to do that, but because this is a recurring problem I have written a
+conjunction <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LoopWithInitial</span></span>
+to hide the complexity (we'll look at its details in a moment).<span
+style='mso-spacerun:yes'>&nbsp; </span>This conjunction takes the verb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>,
+the initial value <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>inity</span></span>,
+and the array <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>k</span></span>
+and applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+repeatedly, with each item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>k</span></span> taking a turn as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> with the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+set to the result from the previous invocation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>knave&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]res =. knave
+LoopWithInitial inity&nbsp;&nbsp; k</p>
+
+<p class=Jcodemultiline>100 100 50 25 10 5&nbsp;
+50 50</p>
+
+<p class=Jcodemultiline>&nbsp;50<span
+style='mso-spacerun:yes'>&nbsp; </span>50 50 25 10 5 100 25</p>
+
+<p class=Jcodemultiline>100&nbsp; 50 25 25 10
+5&nbsp;&nbsp; 5 10</p>
+
+<p class=Jcodemultiline>&nbsp;25<span
+style='mso-spacerun:yes'>&nbsp; </span>25 10 10&nbsp;
+5 5&nbsp; 25 50</p>
+
+<p class=Jcodemultiline>&nbsp;50<span
+style='mso-spacerun:yes'>&nbsp; </span>25 10 10&nbsp;
+5 5&nbsp; 25 10</p>
+
+<p class=BodyTextnoleader>We see the result after each application of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+(if you want to see the input alongside the result, type <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>k&nbsp;,&amp;&lt;&quot;_1&nbsp;res</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>The contents of the plate are included in <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>res</span></span>
+as well; we can extract the desired result simply as</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 {.&quot;1
+res</p>
+
+<p class=Jcodemultiline>100 100</p>
+
+<p class=Jcodemultiline>&nbsp;50<span
+style='mso-spacerun:yes'>&nbsp; </span>50</p>
+
+<p class=Jcodemultiline>100&nbsp; 50</p>
+
+<p class=Jcodemultiline>&nbsp;25<span
+style='mso-spacerun:yes'>&nbsp; </span>25</p>
+
+<p class=Jcodemultiline>&nbsp;50<span
+style='mso-spacerun:yes'>&nbsp; </span>25</p>
+
+<p class=MsoBodyText>Once you have defined the verb and the initial value, you
+can use <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LoopWithInitial</span></span>
+to solve problems of this kind.</p>
+
+<p class=MsoBodyText>You may skip the rest of this chapter if you are not
+curious about how <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LoopWithInitial</span></span>
+works.&nbsp; It performs the following steps:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+LoopWithInitial =: conjunction define</p>
+
+<p class=Jcodemultiline>by =. &lt;&quot;_1 y <span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>NB. 1 box items of y</p>
+
+<p class=Jcodemultiline>ry =. |. by&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+NB. 2 reverse order for \.</p>
+
+<p class=Jcodemultiline>ey =. ry , &lt;n <span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;</span>NB. 3 append initial value</p>
+
+<p class=Jcodemultiline>r&nbsp; =. u&amp;.&gt;/\.
+ey &nbsp;NB. 4 apply u in boxes</p>
+
+<p class=Jcodemultiline>er =. }: r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+NB. 5 remove initial value</p>
+
+<p class=Jcodemultiline>rr =. |. er&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+NB. 6 put in original order</p>
+
+<p class=Jcodemultiline>&gt;rr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+NB. 7 remove boxing</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>Since the initial value is going to be appended to the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operand, and they have dissimilar shapes, it is necessary to box each item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+as well as the initial value.&nbsp; Once the
+items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are boxed, they are put into reverse order, because as we have seen <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/\.</span></span>
+is much faster than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/\&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Then the initial value is appended to the
+reversed boxed <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>With that preparation complete, the operation
+can be performed: <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;/\.</span></span>
+applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;</span></span>
+(in words: unbox each operand, apply <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span>, and rebox) starting at the end of the
+reversed <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The first application of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;</span></span> will
+be between the original first element of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> and the initial
+value; the next application will be between the original second element of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and the result of the first application; and so on.<span
+style='mso-spacerun:yes'>&nbsp; </span>The results from the applications of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;</span></span>
+are collected in an array.&nbsp; Finally, the
+preparation steps are undone, discarding the initial value, reversing the array
+into original order, and unboxing the result.</p>
+
+<p class=MsoBodyText>The actual implementation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>LoopWithInitial</span></span> is
+a bit more elegant than that schematic representation.<span
+style='mso-spacerun:yes'>&nbsp; </span>Observe that step 7 is the inverse of step 1,
+step 6 of 2, and step 5 of 3; each pair is an opportunity to use <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;.v</span></span>,
+and the actual verb produced by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LoopWithInitial</span></span> is:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; knave
+LoopWithInitial inity</p>
+
+<p class=Jcodemultiline>knave&amp;.&gt;/\.&amp;.(,&amp;(&lt;25 10 100 25 100 50
+5 10))&amp;.|.&amp;.(&lt;&quot;_1)</p>
+
+<p class=BodyTextnoleader>which performs all the steps of the longer form.<span
+style='mso-spacerun:yes'>&nbsp; </span>We will examine this conjunction in a later
+chapter.</p>
+
+<p class=MsoBodyText>You may object that since the left operand of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LoopWithInitial</span></span>
+is applied to each item, it still has to be interpreted for each item, so
+nothing is gained by avoiding the loop.&nbsp;
+An astute observation, but in the second part of this book we will learn
+how to write verbs that are not reinterpreted for each item.</p>
+
+<p class=MsoBodyText>Finally, you may observe that the temporary vector, which
+only needs to be a list, turns into a rank-2 array by the time we have
+passed it through each item.&nbsp; Doesn't
+that waste a lot of space?&nbsp; Yes, it does,
+and if your problem is big enough that the space matters, you may have a valid
+application for a loop.&nbsp; An alternative
+would be to make the temporary vector a public variable accessed by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>knave</span></span>
+in the same way that temporary variables would be used in C.</p>
+
+</div><!--bottom jump start--><hr><a href="loopless_code_vii_sequential.htm">&gt;&gt;</a>&nbsp;
+<a href="when_programs_are_data.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

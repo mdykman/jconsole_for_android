@@ -1,0 +1,196 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>C. Cycle-Direct  -  Permute</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dddot.htm">&gt;&gt;</a>&nbsp;
+<a href="dbdotu.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Cycle</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>C. &nbsp;1 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Permute</font></b></td>
+</tr></table>
+<br>
+
+If<tt> p </tt>is a permutation of the atoms of<tt> i.n</tt>,<tt> </tt>
+then<tt> p </tt>is said to be a permutation vector of 
+order<tt> n</tt>,<tt> </tt>and if<tt> n=#b</tt>,<tt> </tt>
+then<tt> p{b </tt>is a permutation of the items of<tt> b</tt> .<br><br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>C.p </tt>yields a list of boxed lists of the atoms 
+of<tt> i.#p</tt>,<tt> </tt>called the <i>standard</i> cycle 
+representation of the permutation<tt> p</tt> .<tt> </tt>Thus, 
+if<tt> p=:4 5 2 1 0 3</tt>,<tt> </tt>
+then<tt> C.p </tt>is<tt> (,2);4 0;5 3 1 </tt>
+because the permutation<tt> p </tt>moves to 
+position<tt> 2 </tt>the item<tt> 2</tt>,<tt> </tt>
+to<tt> 4 </tt>the item<tt> 0</tt>,<tt> </tt>
+to<tt> 0 </tt>the item<tt> 4</tt>,<tt> </tt>
+to<tt> 5 </tt>the item<tt> 3</tt>,<tt> </tt>
+to<tt> 3 </tt>the item<tt> 1</tt>,<tt> </tt>and 
+to<tt> 1</tt> the item<tt> 5</tt>.<tt> </tt>The monad<tt> C. </tt>
+is self-inverse; applied to a standard cycle it gives the 
+corresponding direct representation.<br><br>
+
+A given permutation could be represented by cycles in 
+a variety of ways; the standard form is made unique by 
+the following restrictions: the cycles are disjoint and exhaustive 
+(i.e., the atoms of the boxed elements together form a permutation vector); 
+each boxed cycle is rotated to begin with its largest element; 
+and the boxed cycles are put in ascending order on their 
+leading elements.<br><br>
+
+<tt>C. </tt>is extended to non-negative non-standard cases 
+by treating any argument<tt> q </tt>as a representation of a 
+permutation of order<tt> 1+&gt;./; q</tt> .<br><br>
+
+The monad<tt> C.!.2 </tt>computes the <i>parity</i> of a 
+permutation<tt> p</tt> ;<tt> </tt>it is<tt> 1 </tt>or<tt> _1 </tt>
+as the number is even or odd of pairwise interchanges necessary 
+to get<tt> p </tt>from the identity permutation<tt> i.#p </tt>
+(and<tt> 0 </tt>if<tt> p </tt>is not a permutation).
+For example:
+
+<pre>
+   ] x=: 2 , (i.4) ,: 1 0 2 3 
+2 2 2 2
+0 1 2 3
+1 0 2 3
+   C.!.2 x
+0 1 _1
+</pre></td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> p </tt>and<tt> c </tt>are standard and cycle representations 
+of order<tt> #b</tt>,<tt> </tt>then<tt> p C. b </tt>and<tt> c C. b </tt>produce 
+the permutation of<tt> b</tt> .<tt> </tt>The arguments<tt> p </tt>and<tt> c </tt>
+can be <i>non-standard</i> in ways to be defined.  In particular, 
+negative integers down to<tt> -#b </tt>may be used, and are treated 
+as their residues modulo<tt> #b</tt> .<br><br>
+
+If<tt> q </tt>is not boxed, and the elements of<tt> (#b)|q </tt>
+are distinct, then<tt> q C. b </tt>is equivalent to<tt> p{b</tt> ,<tt> </tt>
+where<tt> p </tt>is the standard form of<tt> q </tt>
+that is given by<tt> p=:((i.n)-.n|q),n|q</tt> ,<tt> </tt>
+for<tt> n=:#b</tt> .  In other words, positions occurring in<tt> q </tt>
+are moved to the tail end.<br><br>
+
+If<tt> q </tt>is boxed, the elements of<tt> (#b)|&gt;j{q </tt>must 
+be distinct for each<tt> j</tt> ,<tt> </tt>and the boxes are applied 
+in succession.  For example:<br>
+
+<pre>
+   (2 1;3 0 1) C. i.5
+1 2 3 0 4
+
+   (&lt;2 1) C. (&lt;3 0 1) C. i.5
+1 2 3 0 4
+
+   q=: C. p=: 1 2 3 0 4 [ a=: 'abcde'
+   q ; (q C. a) ; (p C. a) ; (p { a)
++-----------+-----+-----+-----+
+|+-------+-+|bcdae|bcdae|bcdae|
+||3 0 1 2|4||     |     |     |
+|+-------+-+|     |     |     |
++-----------+-----+-----+-----+
+
+   a ; (&lt;0 _1) C. a
++-----+-----+
+|abcde|ebcda|
++-----+-----+
+</pre>
+</td>                                                         
+</tr></table><br>
+
+Further examples:<br><br>
+<pre>
+   ] p=: 22 ?. 22             NB. A random permutation of order 22
+16 18 21 8 6 15 10 14 7 11 0 2 5 3 9 12 20 17 4 19 13 1
+
+   C. p                       NB. Its cycles
++-------+--+--+-----------------------------------------+
+|15 12 5|17|19|21 1 18 4 6 10 0 16 20 13 3 8 7 14 9 11 2|
++-------+--+--+-----------------------------------------+
+
+   *./ #&amp;&gt; C. p               NB. LCM of the cycle lengths
+51
+
+   # ~. p&amp;{^:(i.200) i.#p     NB. Size of the subgroup generated by p
+51
+</pre>
+
+The verb<tt> CT </tt>computes the <i>complete tensor</i> of order<tt> n </tt>
+as a sparse array; entry<tt> (&lt;i){CT n </tt>is the parity
+of the index<tt> i</tt> .
+
+<pre>
+   CT=: 3 : '(C.!.2 p) (&lt;&quot;1 p=. (i.!y) A. i.y)}1$.$~y'
+
+   CT 3
+0 1 2 |  1
+0 2 1 | _1
+1 0 2 | _1
+1 2 0 |  1
+2 0 1 |  1
+2 1 0 | _1
+
+   ($.^:_1 CT 3) ; ,&quot;2 ' ' ,&quot;1 '012'{~ &gt;{ i.&amp;.&gt; $~3
++--------+------------+
+| 0  0  0| 000 001 002|
+| 0  0  1| 010 011 012|
+| 0 _1  0| 020 021 022|
+|        |            |
+| 0  0 _1| 100 101 102|
+| 0  0  0| 110 111 112|
+| 1  0  0| 120 121 122|
+|        |            |
+| 0  1  0| 200 201 202|
+|_1  0  0| 210 211 212|
+| 0  0  0| 220 221 222|
++--------+------------+
+
+   (CT 3) -: C.!.2&amp;&gt; { i.&amp;.&gt; $~ 3
+1
+
+   ] m=: ?. 3 3$10
+6 5 9
+2 4 9
+0 7 0
+
+   +/ , (CT #m) * *// m
+_252
+   -/ .* m                    NB. <a href="d300.htm">Determinant</a> 
+_252
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="dddot.htm">&gt;&gt;</a>&nbsp;
+<a href="dbdotu.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

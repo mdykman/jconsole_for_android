@@ -1,0 +1,111 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>(f,) Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="cutbox.htm">&gt;&gt;</a>&nbsp;
+<a href="space.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">(f,) </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2000-12-01<br>last updated: 2000-12-01
+</td></tr></table>
+<br>
+
+For some time, the dyad hook<tt> ($,) </tt>has been supported
+by special code.  Special code has now been implemented
+for the dyads<tt> {, {., }., e., </tt>.<tt> </tt>
+Time and space comparisons are as follows:<br><br>
+
+<pre>
+   b=: ?(6$10)$2
+   c=: a.{~?(6$10)$#a.
+   y=: ($c)$'y'
+   a=: a.{~ ?13 17 19$#a.
+   i=: _1e6+?13 17 19$2e6
+
+   ts=: 6!:2 , 7!:2@]
+   ts 'Expression'
+</pre>
+
+<table>
+<tr><td valign=bottom><b>Expression</b></td> 
+<td align=center valign=bottom><b>J 4.06&nbsp;&nbsp;</b></td> 
+<td align=center valign=bottom><b>J 4.05&nbsp;&nbsp;</b></td>
+<td><b>Time<br> Ratio</b></td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<td><tt>1 (e.,) b&nbsp;&nbsp;&nbsp;</tt></td> 
+<td><tt>0.000032 &nbsp;&nbsp;&nbsp;1024</tt></td> 
+<td><tt>0.008775 1049728</tt></td>
+<td><tt>274</tt></td></tr>
+
+<td><tt>0 (e.,) b</tt></td> 
+<td><tt>0.000028 &nbsp;&nbsp;&nbsp;1024</tt></td> 
+<td><tt>0.008578 1049728</tt></td>
+<td><tt>306</tt></td></tr>
+
+<td><tt>'x' (e.,) c</tt></td> 
+<td><tt>0.000023 &nbsp;&nbsp;&nbsp;1152</tt></td> 
+<td><tt>0.008736 1049856</tt></td>
+<td><tt>380</tt></td></tr>
+
+<td><tt>'x' (e.,) y</tt></td> 
+<td><tt>0.007173 &nbsp;&nbsp;&nbsp;1152</tt></td> 
+<td><tt>0.018425 1049856</tt></td>
+<td><tt>2.57</tt></td></tr>
+
+<td><tt>a (e.,) c</tt></td> 
+<td><tt>0.013079 &nbsp;&nbsp;43072</tt></td> 
+<td><tt>0.020343 1090624</tt></td>
+<td><tt>1.56</tt></td></tr>
+
+<td><tt>i ({,) c</tt></td> 
+<td><tt>0.000437 &nbsp;&nbsp;43008</tt></td> 
+<td><tt>0.009308 1090560</tt></td>
+<td><tt>21.3</tt></td></tr>
+
+<td><tt>2000 ({.,) c</tt></td> 
+<td><tt>0.000051 &nbsp;&nbsp;&nbsp;4160</tt></td> 
+<td><tt>0.008711 1051712</tt></td>
+<td><tt>171</tt></td></tr>
+
+<td><tt>2000 (}.,) c &nbsp;&nbsp;&nbsp;</tt></td> 
+<td><tt>0.009629 1050752&nbsp;&nbsp;&nbsp;&nbsp;</tt></td> 
+<td><tt>0.016291 2098304&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td><tt>1.69</tt></td></tr>
+
+</table>
+<br>
+
+<br>
+<!--bottom jump start--><hr><a href="cutbox.htm">&gt;&gt;</a>&nbsp;
+<a href="space.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

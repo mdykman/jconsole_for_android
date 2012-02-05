@@ -1,0 +1,53 @@
+   DLASQ3 is the workhorse of the whole bidiagonal SVD algorithm.
+   This can be described as the differential qd with shifts.
+
+
+Arguments
+=========
+
+N       (input/output) INTEGER
+        On entry, N specifies the number of rows and columns
+        in the matrix. N must be at least 3.
+        On exit N is non-negative and less than the input value.
+
+Q       (input/output) DOUBLE PRECISION array, dimension (N)
+        Q array in ping (see IPHASE below)
+
+E       (input/output) DOUBLE PRECISION array, dimension (N)
+        E array in ping (see IPHASE below)
+
+QQ      (input/output) DOUBLE PRECISION array, dimension (N)
+        Q array in pong (see IPHASE below)
+
+EE      (input/output) DOUBLE PRECISION array, dimension (N)
+        E array in pong (see IPHASE below)
+
+SUP     (input/output) DOUBLE PRECISION
+        Upper bound for the smallest eigenvalue
+
+SIGMA   (input/output) DOUBLE PRECISION
+        Accumulated shift for the present submatrix
+
+KEND    (input/output) INTEGER
+        Index where minimum D(i) occurs in recurrence for
+        splitting criterion
+
+OFF     (input/output) INTEGER
+        Offset for arrays
+
+IPHASE  (input/output) INTEGER
+        If IPHASE = 1 (ping) then data is in Q and E arrays
+        If IPHASE = 2 (pong) then data is in QQ and EE arrays
+
+ICONV   (input) INTEGER
+        If ICONV = 0 a bottom part of a matrix (with a split)
+        If ICONV =-3 a top part of a matrix (with a split)
+
+EPS     (input) DOUBLE PRECISION
+        Machine epsilon
+
+TOL2    (input) DOUBLE PRECISION
+        Square of the relative tolerance TOL as defined in DLASQ1
+
+SMALL2  (input) DOUBLE PRECISION
+        A threshold value as defined in DLASQ1

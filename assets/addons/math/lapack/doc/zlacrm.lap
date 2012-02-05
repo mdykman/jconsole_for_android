@@ -1,0 +1,39 @@
+ZLACRM performs a very simple matrix-matrix multiplication:
+         C := A * B,
+
+where A is M by N and complex; B is N by N and real;
+
+C is M by N and complex.
+
+
+Arguments
+=========
+
+M       (input) INTEGER
+        The number of rows of the matrix A and of the matrix C.
+        M >= 0.
+
+N       (input) INTEGER
+        The number of columns and rows of the matrix B and
+        the number of columns of the matrix C.
+        N >= 0.
+
+A       (input) COMPLEX*16 array, dimension (LDA, N)
+        A contains the M by N matrix A.
+
+LDA     (input) INTEGER
+        The leading dimension of the array A. LDA >=max(1,M).
+
+B       (input) DOUBLE PRECISION array, dimension (LDB, N)
+        B contains the N by N matrix B.
+
+LDB     (input) INTEGER
+        The leading dimension of the array B. LDB >=max(1,N).
+
+C       (input) COMPLEX*16 array, dimension (LDC, N)
+        C contains the M by N matrix C.
+
+LDC     (input) INTEGER
+        The leading dimension of the array C. LDC >=max(1,N).
+
+RWORK   (workspace) DOUBLE PRECISION array, dimension (2*M*N)

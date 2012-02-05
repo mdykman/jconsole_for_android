@@ -1,0 +1,216 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Introduction to Forks</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="parsing_and_execution_i.htm">&gt;&gt;</a>&nbsp;
+<a href="tacit_programs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734583"></a><a name="_Toc5414675"></a><a name="_Toc1896296"><span
+style='mso-bookmark:_Toc5414675'><span style='mso-bookmark:_Toc191734583'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>37. </span></span><![endif]>Introduction to Forks</span></span></a></h1>
+
+<p class=MsoBodyText>Before we learn the rules for making tacit forms, you
+should understand why you are going to the trouble of learning how to write programs
+that hide their operands.&nbsp; First, they
+are extraordinarily compact.&nbsp; The
+explicit definitions we have written so far are laconically terse by the
+standards of most computer languages, but they will seem positively windy
+compared to the tacit forms.&nbsp; Second, the
+shorter definitions are easier to combine with other verbs and with the
+modifiers that add so much power to J expressions.<span
+style='mso-spacerun:yes'>&nbsp; </span>Third, the tacit definitions are parsed when
+they are defined, in contrast to explicit definitions, in which each line is
+parsed as it is executed; we reduce interpretive overhead by using tacit
+forms.&nbsp; Fourth, in learning to write
+tacit verbs you are also learning to write tacit adverbs and conjunctions, with
+which you will be able to craft your own private toolkit of modifiers that you
+can use to combine verbs in ways that are useful to your application.</p>
+
+<p class=MsoBodyText>In what follows, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>N<i>x</i></span></span> will represent a noun, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>V<i>x</i></span></span>
+a verb, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>C<i>x</i></span></span>
+a conjunction, and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>A<i>x</i></span></span>
+an adverb, where <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span>
+is any suffix.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:trains&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->We begin by observing that the
+rules we have learned so far give no meaning to some combinations of
+words.&nbsp; Consider three verbs in a row,
+with no noun to operate on, as in the sequence</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (V0 V1 V2)</p>
+
+<p class=BodyTextnoleader>where each <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>V<i>n</i></span></span> represents a verb--an example would
+be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>((+/)&nbsp;%&nbsp;#)&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Without some special rules, we have no way to
+interpret this sequence.&nbsp; Such sequences
+of words that cannot immediately be executed to produce a result are called <span
+class=Definition>trains</span>.&nbsp; Examples
+are <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>C0&nbsp;C1&nbsp;A2</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>V0&nbsp;V1</span></span>,
+and the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>V0&nbsp;V1&nbsp;V2</span></span>
+we are considering now.</p>
+
+<p class=MsoBodyText>Understanding tacit programming will largely be a matter
+of understanding how trains are parsed and executed.<span
+style='mso-spacerun:yes'>&nbsp; </span>You will learn that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(V0&nbsp;V1&nbsp;V2)</span></span>
+is a new verb that can be applied to noun operands, and you will learn how it
+applies to nouns.&nbsp; To begin with, observe
+that there is no reason that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(V0&nbsp;V1&nbsp;V2)&nbsp;N</span></span> should be the same
+as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>V0&nbsp;V1&nbsp;V2&nbsp;N</span></span>
+which as we know is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(V0&nbsp;(V1&nbsp;(V2&nbsp;N)))&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>The meaning J assigns to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(V0&nbsp;V1&nbsp;V2)&nbsp;Ny&nbsp;</span></span>is:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(V0&nbsp;V1&nbsp;V2)&nbsp;Ny <span style='mso-bidi-font-family:"Courier New"'><span
+style='mso-spacerun:yes'>&nbsp;</span><i>is</i>&nbsp;
+</span>(V0 Ny) V1 (V2 Ny)</p>
+
+<p class=BodyTextnoleader><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:fork&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->This substitution goes by the
+name <span class=Definition>monadic fork</span>. <span
+style='mso-spacerun:yes'>&nbsp;</span>I think finding this definition was a stroke
+of brilliance in the design of J.&nbsp; An
+example of the use of the fork is:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (+/ % #) 4 6 8</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=BodyTextnoleader>which calculates the mean of the operand.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is processed using the substitution rule
+above as</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (+/ 4 6 8) %
+(# 4 6 8)</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=BodyTextnoleader>which divides the sum of the items in the list by the
+number of items in the list.&nbsp; You can use
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>fndisplay</span></span>
+to help yourself see how the substitutions are made:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defverbs 'plus&quot;0
+div&quot;0 tally'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (plus/ div
+tally) 4 6 8</p>
+
+<p class=Jcodemultiline>+---------------------------------+</p>
+
+<p class=Jcodemultiline>|(4 plus 6 plus 8) div tally 4 6 8|</p>
+
+<p class=Jcodemultiline>+---------------------------------+</p>
+
+<p class=MsoBodyText>The sequence <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(+/&nbsp;%&nbsp;#)</span></span> is a verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>It can therefore be assigned to a name:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; mean =: (+/ %
+#)</p>
+
+<p class=BodyTextnoleader>or</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; mean =: +/ % #</p>
+
+<p class=BodyTextnoleader>and then used by that name:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; mean 12 18 24</p>
+
+<p class=Jcodemultiline>18</p>
+
+<p class=BodyTextnoleader>Impressive, isn't it?&nbsp;
+With just 4 symbols we described a program to take the mean of a list of
+numbers (or a list of lists...).&nbsp; The
+beauty and the power are in the way the operands and verbs are connected; that's
+what we'll be learning in the next few chapters.</p>
+
+<p class=MsoBodyText>At this point you may be impressed with the economy of the
+monadic fork but a bit confused about the details.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, we said that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(V0&nbsp;V1&nbsp;V2)&nbsp;Ny&nbsp;</span></span>is
+not the same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>V0&nbsp;V1&nbsp;V2&nbsp;Ny
+</span></span>and yet we said that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>mean&nbsp;=:&nbsp;(+/&nbsp;%&nbsp;#) </span></span>is the
+same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mean&nbsp;=:&nbsp;+/&nbsp;%&nbsp;#&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>How can that be?<span
+style='mso-spacerun:yes'>&nbsp; </span>If we use the version without parentheses,
+why doesn't <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mean&nbsp;12&nbsp;18&nbsp;24</span></span>
+get evaluated like</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +/ % # 12 18
+24</p>
+
+<p class=Jcodemultiline>0.333333</p>
+
+<p class=BodyTextnoleader>?</p>
+
+<p class=MsoBodyText>I could give you a simple rule of thumb, namely that you
+can always imagine an extra set of parentheses around any value assigned to a
+name.&nbsp; That would be true but misleading,
+because it would encourage you to think that the values of defined names are
+substituted into a sentence before the sentence is executed.<span
+style='mso-spacerun:yes'>&nbsp; </span>That gets it backwards: in reality <b>the
+operands are supplied to the stored definitions, which include compounds
+defined in the sentence</b>.&nbsp; The
+execution of a J sentence is a subtle alternation between creating definitions
+and executing them.&nbsp; We will take the
+next couple of chapters to give you a thorough understanding of execution,
+after which we will return to see what magic we can work with forks and their
+brethren.</p>
+
+</div><!--bottom jump start--><hr><a href="parsing_and_execution_i.htm">&gt;&gt;</a>&nbsp;
+<a href="tacit_programs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

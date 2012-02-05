@@ -1,0 +1,92 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>III. Definitions</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="vocabul.htm">&gt;&gt;</a>&nbsp;
+<a href="dictj.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>III. Definitions</b></font><br><br>
+
+Each main entry in the body of the dictionary is headed by a 
+line beginning with the informal name of the monadic case of the function, 
+and ending with the informal name of the dyadic case.  
+The line also contains the formal name of the function, 
+consisting of a single graphic, or a graphic 
+modified by one or more following inflections (a period or colon).  
+In the case of a conjunction, the formal name is preceded by<tt> m </tt>or 
+by<tt> u </tt>(denoting a noun or a verb argument) and is followed 
+by<tt> n </tt>or<tt> v</tt>.  An adverb has no symbol to its right.<br><br>
+
+The three ranks (in the order <i>monadic</i>, <i>left, </i>and <i>right</i>) 
+are also indicated, using the symbol<tt> _ </tt>for an 
+infinite (unbounded) rank, and with ranks dependent on the ranks 
+of argument verbs shown as<tt> mu</tt>,<tt> lv</tt>,<tt> </tt>etc.<br><br>
+
+Examples are provided with each definition, and the more complex 
+of them may use auxiliary functions as yet unfamiliar.  
+These examples may be approached by ignoring all but the 
+immediately relevant aspects of such auxiliaries, 
+and by examining (and perhaps entering for execution) 
+component phrases that can be used to build up the final result.<br><br>
+
+For example, in the discussion of the adverb<tt> /</tt> , 
+the sentences below display various uses of it for convenient comparison:<br>
+
+<pre>
+   x=: 1 2 3 4 5 [ y=: 7 5 3
+   (,.x);(x+/y);y;(x*/y);(+/y);(*/y)
++-+-------+-----+--------+--+---+
+|1| 8  6 4|7 5 3| 7  5  3|15|105|
+|2| 9  7 5|     |14 10  6|  |   |
+|3|10  8 6|     |21 15  9|  |   |
+|4|11  9 7|     |28 20 12|  |   |
+|5|12 10 8|     |35 25 15|  |   |
++-+-------+-----+--------+--+---+
+</pre>
+
+Even if the auxiliary functions<tt> ; </tt>and<tt> ,. </tt>are unfamiliar, 
+their relevant effects are probably evident; 
+if not, they may be clarified by the following experiments:<br>
+
+<pre>
+   x;y                         ,.7 8               $,.7 8
++---------+-----+           7                   2 1
+|1 2 3 4 5|7 5 3|           8
++---------+-----+
+</pre>
+
+Although a name (such as <i>foreign</i> for<tt> !:</tt>)
+is suggested for each word, others can be used in addition 
+to or instead of them.  Thus, <i>joy</i> might be used for<tt> ! </tt>
+since the exclamation mark derives from an I placed above an o, 
+an abbreviation of the Latin <i>io</i>.  Similarly, <i>iota</i> 
+might be used instead of <i>integers</i> and <i>index of</i> 
+for<tt> i.</tt> .<br>
+
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="vocabul.htm">&gt;&gt;</a>&nbsp;
+<a href="dictj.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,103 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>; Raze  -  Link</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d331.htm">&gt;&gt;</a>&nbsp;
+<a href="d322.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Raze</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>; &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Link</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>;y </tt>assembles along a leading axis the opened elements 
+of the ravel of<tt> y</tt> .<tt> </tt>The fit 
+conjunction<tt> </tt>(<tt>;!.f</tt>)<tt> </tt>provides fill 
+specified by the atom<tt> f</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x;y </tt>is<tt> (&lt;x),y </tt>if<tt> y </tt>is boxed, 
+and<tt><b> </b>(&lt;x),&lt;y </tt>if<tt> y </tt>is open.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   ]bv=: 1 2 3;4 5 6;7 8 9
++-----+-----+-----+
+|1 2 3|4 5 6|7 8 9|
++-----+-----+-----+
+
+   ;bv
+1 2 3 4 5 6 7 8 9
+
+   ]m=: &gt;bv
+1 2 3
+4 5 6
+7 8 9
+
+   ;/ m
++-----+-----+-----+
+|1 2 3|4 5 6|7 8 9|
++-----+-----+-----+
+
+   (;/1 2 3 4 5) ,&amp;&lt; (;/i. 3 4)
++-----------+---------------------------+
+|+-+-+-+-+-+|+-------+-------+---------+|
+||1|2|3|4|5|||0 1 2 3|4 5 6 7|8 9 10 11||
+|+-+-+-+-+-+|+-------+-------+---------+|
++-----------+---------------------------+
+
+   ]txt=: '3 %: 4 ^. 5'
+3 %: 4 ^. 5
+            
+   ]s=: ;: txt                 NB. Word formation
++-+--+-+--+-+
+|3|%:|4|^.|5|
++-+--+-+--+-+
+
+   ;s
+3%:4^.5
+            
+   (boxifopen=: &lt;^:(&lt; -: {:@;~)) 3 4
++---+
+|3 4|
++---+
+
+   (&lt;3 4) = boxifopen &lt;3 4
+1
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d331.htm">&gt;&gt;</a>&nbsp;
+<a href="d322.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

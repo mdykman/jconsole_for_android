@@ -1,0 +1,2055 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Compound Verbs</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="empty_operands.htm">&gt;&gt;</a>&nbsp;
+<a href="boxing_structures.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><span
+style='mso-bookmark:_Toc1896205'><span style='mso-bookmark:_Toc5414572'><a
+name="_Toc191734368"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>12. </span></span><![endif]>Compound Verbs</a></span></span></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;compound verb&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;derived verb&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->On New Year's Day my rich
+uncle gives me <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+dollars, which I add to the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> dollars I already have earning 4%
+interest.&nbsp; How much money will I have at
+the end of the year?&nbsp; Simple in J--I just
+write <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1.04&nbsp;*&nbsp;x&nbsp;+&nbsp;y</span></span>,
+and I have the answer, whether <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> are scalars or arrays.<span
+style='mso-spacerun:yes'>&nbsp; </span>That's nice, but I have an enviable problem:
+I expect his largesse to continue, and in my anticipation I have estimated his
+gifts for the next few years as the list <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>; I want to know
+what I'll be left with at the end.&nbsp; I
+need to pass each year's starting balance into the calculation for the next
+year.&nbsp; I know what I want the result to
+look like: it'll be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v/&nbsp;(|.x)&nbsp;,&nbsp;y</span></span>
+which will be evaluated as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>xn&nbsp;v&nbsp;...x2&nbsp;v&nbsp;x1&nbsp;v&nbsp;x0&nbsp;v&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>But what is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span>?<span
+style='mso-spacerun:yes'>&nbsp; </span>The problem with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1.04&nbsp;*&nbsp;x&nbsp;+&nbsp;y</span></span>
+is that it contains 2 verbs and a constant, and I need it all lumped into a
+single verb so that I can have the adverb dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/</span></span> modify the whole
+thing.&nbsp; One solution would be to create
+the verb</p>
+
+<p class=Jcodemultiline>v =: dyad : '1.04 * x + y'</p>
+
+<p class=BodyTextnoleader>after which <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v/&nbsp;(|.x),y</span></span> works, but it's a shame to
+have to interrupt a J sentence just to define a verb with such a puny
+function--I want magic words to let me say <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(1.04&nbsp;*&nbsp;+&nbsp;abracadabra...combine!)/&nbsp;(|.x),y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>J has such magic words, and we will learn a
+few now.</p>
+
+<p class=MsoBodyText>The magic words will join verbs and nouns together, so
+they must be modifiers: adverbs and conjunctions.<span
+style='mso-spacerun:yes'>&nbsp; </span>Before we start, we need a little notation to
+help with the different cases we will encounter.<span
+style='mso-spacerun:yes'>&nbsp; </span>Given a conjunction <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>c</span></span> or adverb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>,
+we call its left operand <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> if it is a noun, or <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> if it is a
+verb.&nbsp; Similarly we call a conjunction's
+right operand <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+if it is&nbsp; noun, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> if a verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>There are four possible ways to invoke a
+conjunction (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;c&nbsp;v</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;c&nbsp;v</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;c&nbsp;n</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;c&nbsp;n</span></span>)
+and two for an adverb (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;a</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;a</span></span>) and <b>they
+are defined independently</b>.&nbsp; Moreover,
+the <span class=Definition>derived verb</span> produced by the invocation (the
+derived entity may be a noun, adverb, or conjunction too but that is unusual)
+can be used as a dyad (e.&nbsp;g. <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;u&nbsp;c&nbsp;n&nbsp;y</span></span>) or as a monad
+(e.&nbsp;g. <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;a&nbsp;y</span></span>),
+and those cases are defined independently as well.<span
+style='mso-spacerun:yes'>&nbsp; </span>You won't get the cases mixed up, because
+verbs and nouns are so different that it will seem natural for <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;c&nbsp;n</span></span>
+to be different from <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;c&nbsp;v</span></span>;
+just be aware that the variants are many and that we will be learning a tiny
+subset of J's toolkit.&nbsp; The adverb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/</span></span>
+is an example: we have learned about monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u/</span></span>, but dyad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/</span></span>
+is very different, as is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m/</span></span>&nbsp;.</p>
+
+<p class=Section><a name="_Toc191734369"></a><a name="_Toc5414573"></a><a
+name="_Toc5414422"></a><a name="_Toc1896206"><span style='mso-bookmark:_Toc5414422'><span
+style='mso-bookmark:_Toc5414573'><span style='mso-bookmark:_Toc191734369'>Verb
+Sequences--</span></span></span></a><span style='mso-bookmark:_Toc1896206'><span
+style='mso-bookmark:_Toc5414422'><span style='mso-bookmark:_Toc5414573'><span
+style='mso-bookmark:_Toc191734369'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u@:v</span></span> and </span></span></span></span><span
+style='mso-bookmark:_Toc1896206'><span style='mso-bookmark:_Toc5414422'><span
+style='mso-bookmark:_Toc5414573'><span style='mso-bookmark:_Toc191734369'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>u@v</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u@\:v dyad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:u@:v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>u@:v</span></a></span></span> creates a derived verb of
+infinite rank that applies <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span> to its argument(s) and then applies <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to the result.&nbsp; In other words, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:u@:v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>u@:v</span></a>&nbsp;y</span></span> is the same as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;v&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;<a
+href="mailto:u@:v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>u@:v</span></a>&nbsp;y</span></span> is the same as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;x&nbsp;v&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; {. @: /:
+3 1 4 1 5 9</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=BodyTextnoleader>Monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>/:</span></span> produced the permutation <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;3&nbsp;0&nbsp;2&nbsp;4&nbsp;5</span></span>
+of which we took the first item.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 1 2 3
++/@:* 1 2 3</p>
+
+<p class=Jcodemultiline>14</p>
+
+<p class=BodyTextnoleader>Dyad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>*</span></span> produced <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;4&nbsp;9</span></span>
+whose items we then summed.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>fndisplay</span></span>
+shows the details:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defverbs 'plus&quot;0
+times&quot;0'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3
+plus/@:times 1 2 3</p>
+
+<p class=Jcodemultiline>+-------------------------------------------+</p>
+
+<p class=Jcodemultiline>|(1 times 1) plus (2 times 2) plus 3 times 3|</p>
+
+<p class=Jcodemultiline>+-------------------------------------------+</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u@v dyad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:u@v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>u@v</span></a></span></span> is like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><a href="mailto:u@:v"><span
+style='color:windowtext;text-decoration:none;text-underline:none'>u@:v</span></a></span></span>
+except that the rank of the derived verb is the rank of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> (also
+expressible as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><a
+href="mailto:u@:v%22v"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>(u@:v)&quot;v</span></a></span></span> because <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&quot;v</span></span>
+is defined to have the function of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> with the rank of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>My advice is to stick to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>@:</span></span> and avoid <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@</span></span>
+unless you're sure you need it.</p>
+
+<p class=Subsection><a name="_Toc191734370">The Difference Between </a><span
+style='mso-bookmark:_Toc191734370'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u@:v</span></span> and </span><span
+style='mso-bookmark:_Toc191734370'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u@v</span></span></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'><o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>Because <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u@:v</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u@v</span></span> have very
+similar definitions, and produce identical results in many cases, almost every
+beginning J programmer confounds the two.&nbsp;
+The key is to remember that each sequence produces a <i>new verb</i>
+which has a rank.&nbsp; In <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u@:v</span></span>, this rank is
+infinite, so that in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u@:v&nbsp;y</span></span>,
+the derived verb <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u@:v</span></span>
+is applied to the entire <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, meaning that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is applied to the entire <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+is applied to the entire result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v&nbsp;</span></span>.&nbsp;
+In the other case, the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u@v</span></span> is the rank of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span>, so in <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u@v&nbsp;y</span></span>
+the verb <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u@v</span></span>
+is applied to individual cells of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, where the
+cell-size is given by the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v&nbsp;</span></span>: for each of those cells, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is applied followed by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span>, and the results from the cells are
+collected into an array.</p>
+
+<p class=MsoBodyText>If we try to take the sum-of-products using <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u@v</span></span>
+instead of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u@:v</span></span>,
+we see the difference between the two forms:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3 +/@* 1 2
+3</p>
+
+<p class=Jcodemultiline>1 4 9</p>
+
+<p class=BodyTextnoleader>What happened? We thought we were multiplying the
+vectors and then taking the sum.&nbsp; Because
+we used <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@</span></span>
+rather than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@:</span></span>,
+the derived verb had the rank of dyad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>*</span></span>, namely 0, which means that the derived verb
+was applied to each cell: at each cell we multiplied and then took the sum <i>of
+the single cell</i>.&nbsp; In <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>fndisplay</span></span>
+form,</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defverbs 'plus&quot;0
+times&quot;0'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3
+plus/@times 1 2 3</p>
+
+<p class=Jcodemultiline>+---------+---------+---------+</p>
+
+<p class=Jcodemultiline>|1 times 1|2 times 2|3 times 3|</p>
+
+<p class=Jcodemultiline>+---------+---------+---------+</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>plus</span></span> never got executed, because <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>plus/</span></span>
+was applied to 1-element lists, leaving in each case the single element.</p>
+
+<p class=MsoBodyText>Many J programmers think of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>@</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@:</span></span>
+as establishing a different kind of connection between <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u@:v</span></span>
+applying <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to the entire result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u@v</span></span> applying <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to <i>result cells</i> of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span> (where a result cell is the output produced
+by applying <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+to a single operand cell).&nbsp; Such an
+interpretation makes it easy to understand the operation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+/@*&nbsp;</span></span>: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/</span></span>
+is applied on result cells of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>*</span></span>, which are scalars.</p>
+
+<p class=MsoBodyText>The connection interpretation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u@v</span></span> correctly
+accounts for the results produced by J, but as you use it you should be aware
+that it is inaccurate because it suggests that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> is executed
+against the operand(s) in their entirety.&nbsp;
+The actual cell-at-a-time execution of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u@v</span></span> is different
+in two ways: it is slower because the verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> must be
+restarted for each cell; and if the temporary space required by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is large, cell-at-a-time execution uses less space because the temporary space
+for each cell is freed before the next cell is processed.</p>
+
+<p class=Subsection><a name="_Toc191734371">An Exercise in </a><span
+style='mso-bookmark:_Toc191734371'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'>@</span></span> and </span><span
+style='mso-bookmark:_Toc191734371'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'>@:</span></span></span></p>
+
+<p class=MsoBodyText>Given the definition</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =: 1 2 3 ;
+4 5 ; 6 7 8</p>
+
+<p class=Jcodemultiline>+-----+---+-----+</p>
+
+<p class=Jcodemultiline>|1 2 3|4 5|6 7 8|</p>
+
+<p class=Jcodemultiline>+-----+---+-----+</p>
+
+<p class=BodyTextnoleader>we want to create a verb that will throw away the
+first box (using the Behead verb, monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>}.</span></span>), and for each
+remaining box open it and keep just the first atom (using the Head verb,
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>The result will be a list of the first items
+in all boxes except the first, in this case <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;6&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Understand how the following verbs work or
+don't work:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; }.@:({.@&gt;)
+a&nbsp;&nbsp;&nbsp; NB. Verb 1</p>
+
+<p class=Jcodemultiline>4 6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; }.@({.@&gt;)
+a&nbsp;&nbsp; NB. Verb 2 (the output is 3 blank
+lines)</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; }.@:{.@&gt; a
+NB. Verb 3 (the output is 3 blank lines)</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; }.@({.@:&gt;)
+a&nbsp;&nbsp; NB. Verb 4</p>
+
+<p class=Jcodemultiline>2 3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; {.@&gt;@}. a<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>NB. Verb 5</p>
+
+<p class=Jcodemultiline>4 6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; {.@:&gt;@}.
+a&nbsp;&nbsp; NB. Verb 6</p>
+
+<p class=Jcodemultiline>4 5 0</p>
+
+<p class=MsoBodyText>Solutions:</p>
+
+<p class=MsoBodyText>In verb 1 (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>}.@:({.@&gt;)</span></span>), the overall verb has infinite
+rank because of the use of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@:</span></span>, so the entire <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> is applied to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>({.@&gt;)</span></span>
+and then <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.</span></span>
+operates on the entire result.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span>
+has rank 0 because <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@</span></span>
+was used and the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;</span></span> is 0.&nbsp;
+So each atom of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span>, i.&nbsp;e. each box, is separately opened
+and the first element taken, giving a 3-element vector <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;4&nbsp;6</span></span>
+which is then beheaded to give <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4&nbsp;6</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>The following table shows how the operand is
+passed through the verb, with each row representing a cell of input to each
+verb.&nbsp; The table should be read from
+right to left.</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:2.15pt 5.75pt 2.9pt 5.75pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:2.15pt 5.75pt 2.9pt 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.</span></span>
+  <br>
+  (final<br>
+  result)</p>
+  </td>
+  <td colspan=4 style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Processing
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.@:({.@&gt;)</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Cells of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid;height:.4in'>
+  <td rowspan=3 style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 6</p>
+  </td>
+  <td rowspan=3 style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 4 6</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>1</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>1 2 3</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.75pt 0in 5.75pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+  <td rowspan=3 style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+    <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+    solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+    <td style='border:solid windowtext 1.0pt;border-left:none;mso-border-left-alt:
+    solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid;height:.4in'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>4</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>4 5</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;page-break-inside:avoid;
+  height:.4in'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>6</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>6 7 8</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:2.15pt 5.75pt 2.9pt 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>In verb 2 (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>}.@({.@&gt;)</span></span>), the overall verb has rank 0
+because <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@</span></span>
+was used and the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>({.@&gt;)</span></span> is 0.<span
+style='mso-spacerun:yes'>&nbsp; </span>So each atom of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span>, i.&nbsp;e. each
+box, will be opened, the first element taken, and then the first element of
+that beheaded, leaving an empty list; this is done for each atom of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>,
+giving a result of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0$0</span></span>
+which displays 3 blank lines.</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Final<br>
+  result</p>
+  </td>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.</span></span>
+  </p>
+  </td>
+  <td colspan=4 style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Processing
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.@({.@&gt;)</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid;height:.4in'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Cells of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid;height:.4in'>
+  <td rowspan=3 style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>3$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>1 2 3</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.75pt 0in 5.75pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid;height:.4in'>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>4 5</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;page-break-inside:avoid;
+  height:.4in'>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>6 7 8</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>In verb 3 (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>}.@:{.@&gt;</span></span>), the ordering rules for modifiers
+cause the verb to be equivalent to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(}.@:{.)@&gt;</span></span>, which again has rank 0 because
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@</span></span>
+with right operand of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>,
+so each atom is passed through the whole verb giving the same result as verb 2.</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Final<br>
+  result</p>
+  </td>
+  <td width=239 colspan=3 style='width:179.3pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Processing
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.@:{.</span></span></p>
+  </td>
+  <td width=80 rowspan=2 valign=bottom style='width:60.2pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in'>Result
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span></p>
+  </td>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.@:{.@&gt;</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.@:{.</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid;height:.4in'>
+  <td rowspan=3 style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>3$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2 3</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;page-break-inside:avoid;height:.4in'>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;page-break-inside:avoid;
+  height:.4in'>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>0$0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7 8</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>In verb 4 (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>}.@({.@:&gt;)</span></span>), the rank of the overall verb
+is infinite because <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>@:</span></span>
+makes the rank of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>({.@:&gt;)</span></span>
+infinite.&nbsp; The entire <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> is passed into <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>({.@:&gt;)</span></span>,
+where it is opened and padded with fills to make an array of shape <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;3</span></span>;
+then the first item is taken, yielding <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3</span></span>;
+then this list is beheaded, giving <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;3</span></span>&nbsp;.</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.</span></span>
+  <br>
+  (final<br>
+  result)</p>
+  </td>
+  <td colspan=4 style='border:solid windowtext 1.0pt;border-left:none;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Processing
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;</span></span></p>
+  </td>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.@({.@:&gt;)</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;</span></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes;page-break-inside:avoid;
+  height:59.5pt'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:59.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>2 3</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:59.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2 3</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:59.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2 3</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:59.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2 3<br>
+  4 5 0<br>
+  6 7 8</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:59.5pt'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:59.5pt'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>Verb 5 (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{.@&gt;@}.</span></span>) is equivalent to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>({.@&gt;)@}.</span></span>
+which has infinite rank because <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>}.</span></span> does.&nbsp;
+The list of boxes, taken in full, is beheaded and the result (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;5;6&nbsp;7&nbsp;8</span></span>)
+passed to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>({.@&gt;)</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This verb has rank 0 (from <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>), so each box
+is individually opened and the first item taken, giving the result <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;6</span></span>&nbsp;.</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Final<br>
+  result</p>
+  </td>
+  <td width=319 colspan=4 valign=top style='width:239.5pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-pagination:
+  widow-orphan lines-together;page-break-after:avoid'>Processing of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;@}.</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Cells<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;page-break-inside:avoid;height:.4in'>
+  <td rowspan=2 style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 6</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+  <td rowspan=2 style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes;page-break-inside:avoid;
+  height:.4in'>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7 8</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:.4in'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>Verb 6 (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{.@:&gt;@}.</span></span>) is equivalent to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>({.@:&gt;)@}.</span></span>
+which is like verb 5 except that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>({.@:&gt;)</span></span> has infinite rank.<span
+style='mso-spacerun:yes'>&nbsp; </span>When the beheaded list of boxes (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;5;6&nbsp;7&nbsp;8</span></span>)
+is presented to this verb, the whole list is processed at once: it is opened
+and filled with zeros to produce an array of shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;3</span></span>, then the
+first item is taken giving <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4&nbsp;5&nbsp;0</span></span> (the 0 was added as a fill
+when the list was opened).</p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.75pt 0in 5.75pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;page-break-inside:avoid'>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Final<br>
+  result</p>
+  </td>
+  <td width=319 colspan=4 valign=top style='width:239.5pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;mso-pagination:
+  widow-orphan lines-together;page-break-after:avoid'>Processing of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;</span></span></p>
+  </td>
+  <td rowspan=2 valign=bottom style='border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;@}.</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;page-break-inside:avoid'>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result of<br>
+  <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;</span></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Result<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span></p>
+  </td>
+  <td valign=bottom style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>Cells<br>
+  of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes;page-break-inside:avoid;
+  height:39.5pt'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.75pt 0in 5.75pt;
+  height:39.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5 0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:39.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5 0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:39.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5 0</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:39.5pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5 0<br>
+  6 7 8</p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:39.5pt'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.75pt 0in 5.75pt;height:39.5pt'>
+  <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+   style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+   mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+   .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+   <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+    <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>1 2
+    3</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>4 5</p>
+    </td>
+    <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+    mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+    padding:0in 5.4pt 0in 5.4pt'>
+    <p class=MsoBodyText align=center style='text-align:center;text-indent:
+    0in;mso-pagination:widow-orphan lines-together;page-break-after:avoid'>6 7
+    8</p>
+    </td>
+   </tr>
+  </table>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-pagination:widow-orphan lines-together;page-break-after:avoid'><o:p></o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=Section><a name="_Toc191734372"></a><a name="_Toc5414574"></a><a
+name="_Toc5414423"></a><a name="_Toc1896207"><span style='mso-bookmark:_Toc5414423'><span
+style='mso-bookmark:_Toc5414574'><span style='mso-bookmark:_Toc191734372'>Making
+a Monad Into a Dyad: The Verbs [ and ]</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Identity verbs [ ]&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;[&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;]&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The characters <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]</span></span>
+are not paired in J; each is an independent verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is jarring at first but you'll get used
+to it.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]</span></span>
+are identity verbs: they have infinite rank, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>]&nbsp;y</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[&nbsp;y</span></span>
+both result in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>As dyads, they pick one operand: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;[&nbsp;y</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;]&nbsp;y</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>They can be useful when you have a monadic
+verb that for one reason or another must be used as a dyad with an unwanted
+operand: then <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;<a
+href="mailto:v@:%5b"><span style='color:windowtext;text-decoration:none;
+text-underline:none'>v@:[</span></a>&nbsp;y</span></span> applies <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;v@:]&nbsp;y</span></span>
+applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3 {.@:[ 4
+5 6</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=MsoBodyText>Here are some other uses of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>[</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]&nbsp;.</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>We have already met the first one, which is
+to display the result of an assignment:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. 1 2 3</p>
+
+<p class=BodyTextnoleader>produces no typeout, but</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =. 1 2 3</p>
+
+<p class=Jcodemultiline>1 2 3</p>
+
+<p class=MsoBodyText>Second, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>[</span></span> can be used to put multiple assignments on
+the same line, since each application of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>[</span></span> ignores what is
+to its right:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. 5 [ b =. 'abc'
+[ c =. 0</p>
+
+<p class=MsoBodyText>Finally, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>]</span></span> can be used instead of parentheses to
+separate numbers that would otherwise be treated as a list:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 ,&quot;0 1 2</p>
+
+<p class=Jcodemultiline>|syntax error</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; 5<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>,&quot;0 1 2</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 ,&quot;0 (1
+2)</p>
+
+<p class=Jcodemultiline>5 1</p>
+
+<p class=Jcodemultiline>5 2</p>
+
+<p class=Jcodemultiline>&nbsp;<span
+style='mso-spacerun:yes'>&nbsp; </span>5 ,&quot;0 ] 1 2</p>
+
+<p class=Jcodemultiline>5 1</p>
+
+<p class=Jcodemultiline>5 2</p>
+
+<p class=Section><a name="_Toc191734373"></a><a name="_Toc5414575"></a><a
+name="_Toc5414424"></a><a name="_Toc1896208"><span style='mso-bookmark:_Toc5414424'><span
+style='mso-bookmark:_Toc5414575'><span style='mso-bookmark:_Toc191734373'>Making
+a Dyad Into a Monad: </span></span></span></a><span style='mso-bookmark:_Toc1896208'><span
+style='mso-bookmark:_Toc5414424'><span style='mso-bookmark:_Toc5414575'><span
+style='mso-bookmark:_Toc191734373'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u&amp;n</span></span> and </span></span></span></span><span
+style='mso-bookmark:_Toc1896208'><span style='mso-bookmark:_Toc5414424'><span
+style='mso-bookmark:_Toc5414575'><span style='mso-bookmark:_Toc191734373'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>m&amp;v</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m&amp;v monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u&amp;n monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->A dyadic verb takes two
+operands, but if you know you are going to hold one fixed, you can create a
+monadic verb out of the combination of the dyad and the fixed operand; the
+monad's operand will be applied to whichever operand of the dyad was not held
+fixed.&nbsp; The conjunction <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;</span></span>,
+when one of its operands is a noun, fixes an operand to a dyad: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&amp;v&nbsp;y</span></span>
+has infinite rank and is equivalent to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;v&nbsp;y</span></span>; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;n&nbsp;y</span></span>
+has infinite rank and is equivalent to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;u&nbsp;n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2&amp;^ 0 1 2
+3</p>
+
+<p class=Jcodemultiline>1 2 4 8</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (-&amp;2)
+4 5 6</p>
+
+<p class=Jcodemultiline>2 3 4</p>
+
+<p class=MsoBodyText>Note that the compound <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&amp;n</span></span> or <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&amp;v</span></span>
+actually does have a meaning when used dyadically (it means apply the monad
+form <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+times), so if you are making a monad from a dyad, be sure to use the resulting
+verb monadically.</p>
+
+<p class=MsoBodyText>Now we can solve our original problem, which was to put <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1.04&nbsp;*&nbsp;x&nbsp;+&nbsp;y</span></span>
+into the form <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;v&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span> should be</p>
+
+<p class=Jcodemultiline>1.04&amp;* @: +</p>
+
+<p class=BodyTextnoleader>which we can verify using <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>fndisplay</span></span> as</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defverbs 'plus&quot;0
+times&quot;0'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defnouns 'x y'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; x<span
+style='mso-spacerun:yes'>&nbsp; </span>1.04&amp;times @: plus<span
+style='mso-spacerun:yes'>&nbsp; </span>y</p>
+
+<p class=Jcodemultiline>+-------------------+</p>
+
+<p class=Jcodemultiline>|1.04 times x plus y|</p>
+
+<p class=Jcodemultiline>+-------------------+</p>
+
+<p class=BodyTextnoleader>and to get my total savings after receiving all
+payments I use monad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/</span></span>
+to apply that verb for each payment, giving the expression:</p>
+
+<p class=Jcodemultiline>1.04&amp;* @: + / (|.x) , y</p>
+
+<p class=MsoBodyText>Let's take a moment to understand the parsing and
+execution of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1.04&amp;*&nbsp;@:&nbsp;+&nbsp;/&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><b>The left operand of a modifier includes
+all preceding words up to and including the nearest noun or verb that is not
+immediately preceded by a conjunction</b>.&nbsp;
+This is a precise way of saying that modifiers associate left to
+right.&nbsp; In the phrase <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1.04&amp;*&nbsp;@:&nbsp;+&nbsp;/</span></span>,
+the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1.04
+</span></span>is not preceded by a conjunction, so it is the beginning of all
+the conjunctions' left operands, and the verb is parsed as if it were written <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(((1.04&amp;*)&nbsp;@:&nbsp;+)&nbsp;/&nbsp;)&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>Note that left-to-right <i>association</i> of modifiers
+corresponds to right-to-left <i>execution</i>.&nbsp;
+When the derived verb monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(((1.04&amp;*)&nbsp;@:&nbsp;+)&nbsp;/&nbsp;) </span></span>is
+executed, it performs according to the definition of monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u/</span></span>, with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>((1.04&amp;*)&nbsp;@:&nbsp;+)</span></span>
+as the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>;
+execution of monad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/</span></span>
+inserts <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+between items, so <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>((1.04&amp;*)&nbsp;@:&nbsp;+)
+</span></span>is executed between items; at each such execution the dyad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+</span></span>
+is executed first, followed by the monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1.04&amp;*</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Fortunately, the result of the parsing rules
+is that conjunctions and adverbs, just like verbs, should be read
+right-to-left.</p>
+
+<p class=MsoBodyText>If I wanted to spend half of my uncle's money , the amount
+I would be left with is</p>
+
+<p class=Jcodemultiline>0.5 * 1.04&amp;* @: + / (|.x) , y</p>
+
+<p class=MsoBodyText>No parentheses are needed, because <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1.04 </span></span>is still not
+preceded by a conjunction and so <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1.04&amp;*&nbsp;@:&nbsp;+&nbsp;/&nbsp;(|.x),y </span></span>is
+still evaluated before that value is multiplied by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0.5&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734374">The Invisible Modifiers: Hooks and
+Forks</a></p>
+
+<p class=MsoBodyText>A modifier, as we have seen, can take verbs as operands to
+produce a new verb that combines the functions of the operand verbs in a
+particular way.&nbsp; J has two special
+modifiers that don't even use a symbol to specify the combination: they are
+recognized by syntax.&nbsp; These modifiers
+are the <span class=Definition>fork</span></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (verb0 verb1
+verb2)</p>
+
+<p class=BodyTextnoleader>and the <span class=Definition>hook</span></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (verb0 verb1)</p>
+
+<p class=BodyTextnoleader>Without some special definition, such a sequence of
+verbs with no noun operand would be undefined.</p>
+
+<p class=MsoBodyText>When given an operand <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> and an optional
+operand <span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span>, the fork
+creates a verb of infinite rank that executes as</p>
+
+<p class=Jcodemultiline><span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>x</span></i></span>&nbsp;(f&nbsp;g&nbsp;h)&nbsp;y<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>is&nbsp;&nbsp; (<span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></i></span>&nbsp;f&nbsp;y)&nbsp;g&nbsp;(<i
+style='mso-bidi-font-style:normal'>x</i>&nbsp;h&nbsp;y)</p>
+
+<p class=MsoBodyText>For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (+/ % #) 1 2 3</p>
+
+<p class=Jcodemultiline>2</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (+/ 1 2 3) %
+(# 1 2 3)</p>
+
+<p class=Jcodemultiline>2</p>
+
+<p class=BodyTextnoleader>The fork was executed as shown in the second line,
+with the same result.&nbsp; This hook found
+the average value of the list operand.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 8 (&lt;.
+% &gt;.) 10</p>
+
+<p class=Jcodemultiline>0.8</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (8 &lt;. 10) %
+(8 &gt;. 10)</p>
+
+<p class=Jcodemultiline>0.8</p>
+
+<p class=BodyTextnoleader>The fork calculated the smaller operand as a fraction
+of the larger.</p>
+
+<p class=MsoBodyText>The hook takes an operand <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> and an optional
+operand <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+to produce</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(f&nbsp;g)&nbsp;y&nbsp;&nbsp; is<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>y&nbsp;f&nbsp;g&nbsp;y</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+x&nbsp;(f&nbsp;g)&nbsp;y&nbsp;&nbsp; is<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>x&nbsp;f&nbsp;g&nbsp;y</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; (% +/) 0
+4 1 5</p>
+
+<p class=Jcodemultiline>0 0.4 0.1 0.5</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 4 1 5 % +/ 0
+4 1 5</p>
+
+<p class=Jcodemultiline>0 0.4 0.1 0.5</p>
+
+<p class=BodyTextnoleader>The list was divided by its sum, producing a result
+whose items sum to 1.</p>
+
+<p class=MsoBodyText>You can use the fork and hook to save some repetition of
+operands, as in the examples above.&nbsp; In
+the second part of this book, we will see that the hook and fork are gateways
+to the language of <span class=Definition>tacit programming</span>, which
+allows you to describe programs entirely as a sequence of functions without
+visibly referring to operands.</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText>Once you get the hang of it, you will be able to
+understand and build composite verbs of great power.<span
+style='mso-spacerun:yes'>&nbsp; </span>That will be a useful skill to develop,
+because you never know when you are going to want to make some sequence of
+functions the operand of a modifier, and then you're going to have to be able
+to express the sequence in a single compound verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>It will take a lot of practice, as well as
+coding techniques to break a gristly mass of conjunction-bound words into digestible
+pieces (we'll learn them later).&nbsp; For the
+time being, be content if you can understand the simple examples shown above.</p>
+
+</div><!--bottom jump start--><hr><a href="empty_operands.htm">&gt;&gt;</a>&nbsp;
+<a href="boxing_structures.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

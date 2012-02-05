@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# vim ctags searches with nomagic, only metacharacters are ^ and $
+
+dir="$1"
+: "${dir:=.}"
+
+# make find, sort and awk behave programmatically:
+LC_ALL=C
+export LC_ALL
+
+cd "$dir"
+echo '!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/' > tags
+echo '!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/' >> tags
+find . \( \! \( -regex '.*\/\.\(git\|snp\|svn\)\/.*' -o -regex '.*\/release\/.*' \) \) -type f -iname '*.ijs' -print0 | xargs -0 awk '
+/[a-zA-Z][a-zA-Z0-9_]*[ \t]*=:/ {
+  tag=$0; sub (/[ \t]*=:.*/, "", tag); gsub (/[ \t]/, "", tag)
+  gsub (/\\/, "\\\\", $0); gsub (/\//, "\\/", $0); gsub (/\$$/, "\\$", $0)
+  printf ("%s\t%s\t/^%s$/;\"\td\n", tag, FILENAME, $0)
+}' | sort -u >> tags

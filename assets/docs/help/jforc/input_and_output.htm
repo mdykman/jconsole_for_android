@@ -1,0 +1,1177 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Input And Output</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="calling_external_programs.htm">&gt;&gt;</a>&nbsp;
+<a href="u_1_uv_uv_and_u_v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734418"></a><a name="_Toc5414613"></a><a name="_Toc1896243"><span
+style='mso-bookmark:_Toc5414613'><span style='mso-bookmark:_Toc191734418'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>20. </span></span><![endif]>Input And Output</span></span></a></h1>
+
+<p class=Section><a name="_Toc191734419"></a><a name="_Toc5414614"></a><a
+name="_Toc5414453"></a><a name="_Toc1896244"><span style='mso-bookmark:_Toc5414453'><span
+style='mso-bookmark:_Toc5414614'><span style='mso-bookmark:_Toc191734419'>Foreigns</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;!\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Foreign conjunction !\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;input and output&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->In J, all file operations are
+handled by <span class=Definition>foreigns</span> which are created by the <span
+class=Definition>foreign</span> <span class=Definition>conjunction</span> <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>!:&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The foreigns are a grab-bag of functions and
+you would do well to spend some time glancing over their descriptions in the
+Dictionary so you'll have an idea what is available.<span
+style='mso-spacerun:yes'>&nbsp; </span>All the foreigns defined to date in J are of
+the form <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m!:n</span></span>
+with numeric <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>,
+and they are organized with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> identifying the class of the foreign.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, the foreigns for operations on
+files have <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>=1.</p>
+
+<p class=Section><a name="_Toc191734420"></a><a name="_Toc5414615"></a><a
+name="_Toc5414454"></a><a name="_Toc1896245"><span style='mso-bookmark:_Toc5414454'><span
+style='mso-bookmark:_Toc5414615'><span style='mso-bookmark:_Toc191734420'>File
+Operations </span></span></span></a><span style='mso-bookmark:_Toc1896245'><span
+style='mso-bookmark:_Toc5414454'><span style='mso-bookmark:_Toc5414615'><span
+style='mso-bookmark:_Toc191734420'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>1!:n</span></span>; Error Handling</span></span></span></span></p>
+
+<p class=MsoBodyText>The foreigns <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:n</span></span> perform file operations.<span
+style='mso-spacerun:yes'>&nbsp; </span>For ease of use I have given several of them
+names in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>jforc.ijs&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>To see the details of what they do, read the
+Dictionary.</p>
+
+<p class=MsoBodyText>J's native file operations are file-oriented rather than
+stream-oriented; that is, they read an entire file at a time, and there is no
+notion of a 'current file pointer', or a newline character, or a <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>readline</span></span>
+verb that returns just one record.&nbsp; Such
+facilities are easy to write, but it is usually better to work with entire
+files at a time, just as for ordinary computation J works with whole arrays at
+a time.&nbsp; Read your file in, split it into
+records, and work on the list of records.</p>
+
+<p class=BodyTextVerbdef>Monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:1</span></span> (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>ReadFile</span></span>) has rank
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:1&nbsp;y</span></span> takes a filename as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and produces a result that is a list of characters containing the text of the
+file.&nbsp; In our examples, the filename is a
+boxed character string; <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> can be a file number but we won't get into
+that.</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>s =. 1!:1 &lt;'system\packages\misc\jforc.ijs'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>s</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>NB. File definitions for'J
+For C Programmers'</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>NB. Copyright (c) 2002 Henry
+H. Rich</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>...</p>
+
+<p class=BodyTextVerbdef>Dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:2</span></span> (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>WriteFile</span></span>) has
+rank<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>
+_&nbsp;0&nbsp;</span></span>.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;1!:2&nbsp;y</span></span>
+writes to the file <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+using the character string <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> to provide the contents.<span
+style='mso-spacerun:yes'>&nbsp; </span>Any existing file <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is
+overwritten.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is a boxed
+character string or a file number.</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>('Test Data',CR,LF) 1!:2 &lt;'c:\Temp\temp.dat'</p>
+
+<p class=BodyTextVerbdef>Dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:3</span></span> (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>AppendFile</span></span>) has
+rank <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_&nbsp;0&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;1!:3&nbsp;y</span></span> appends the character
+string <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+to the of file <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(creating the file if it does not exist):</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>('Line 2',CR,LF) 1!:3 &lt;'c:\Temp\temp.dat'</p>
+
+<p class=BodyTextVerbdef>Monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:55</span></span> (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>EraseFile</span></span>) has
+rank <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:55&nbsp;y</span></span> erases the file <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+with no prompting.&nbsp; Be careful: the power
+of J makes it possible for you to delete every file on your system with one sentence.</p>
+
+<p class=MsoBodyText>The special file number <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2</span></span> sends output to
+the screen.&nbsp; The verb monad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Display</span></span>
+in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>jforc.ijs</span></span>
+uses file number <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>
+to display its operand (which must be a character string) on the screen; you
+can put <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Display</span></span>
+sentences in a long verb to see intermediate results.<span
+style='mso-spacerun:yes'>&nbsp; </span>In most cases you will prefer to use <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>printf</span></span>,
+described below.</p>
+
+<p class=MsoBodyText>There are many other <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1!:n</span></span> foreigns to
+manage file locks, query directories, handle index read/write, and do other
+useful things.&nbsp; The Dictionary describes
+them.</p>
+
+<p class=Subsection><a name="_Toc191734421"></a><a name="_Toc5414616"></a><a
+name="_Toc5414455"></a><a name="_Toc1896246"><span style='mso-bookmark:_Toc5414455'><span
+style='mso-bookmark:_Toc5414616'><span style='mso-bookmark:_Toc191734421'>Error
+Handling: </span></span></span></a><span style='mso-bookmark:_Toc1896246'><span
+style='mso-bookmark:_Toc5414455'><span style='mso-bookmark:_Toc5414616'><span
+style='mso-bookmark:_Toc191734421'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u&nbsp;::v</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc191734421'>, </span><span style='mso-bookmark:_Toc191734421'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>13!:11</span></span>, and </span><span style='mso-bookmark:_Toc191734421'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>9!:8</span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u \:\:v&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;error handling&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->When you deal with files you
+have to expect errors, which will look something like</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; s =. 1!:1 &lt;'c:\xxx\yyy.dat'</p>
+
+<p class=Jcodemultiline>|file name error</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; s=.<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>1!:1&lt;'c:\xxx\yyy.dat'</p>
+
+<p class=BodyTextnoleader>indicating that the file was not found.</p>
+
+<p class=MsoBodyText>You can set up your verbs to catch errors instead of
+interrupting with a message at the console.&nbsp;
+We will learn one way here and another later when we study control
+structures for J verbs.&nbsp; The compound <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;::v</span></span>
+has infinite rank, and can be applied either monadically or dyadically.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;::v</span></span> executes the verb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+first (monad or dyad, as appropriate); if <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> completes
+without error, its result becomes the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;::v</span></span>; but if
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+encounters an error, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is then executed, and its result becomes the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;::v&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; rerr =: 1!:1
+:: (13!:11@(''&quot;_))</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>rerr&nbsp;y</span></span> will execute <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1!:1</span></span> to read <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>;
+if that fails it will execute the foreign <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>13!:11&nbsp;'' </span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>13!:11&nbsp;''</span></span> produces as result the error
+number of the last error encountered.&nbsp;
+This means that if <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:1</span></span> succeeds, the result of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>rerr</span></span>
+will be a string, while if <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1!:1</span></span> fails, the result will be a number:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; rerr &lt;'system\packages\misc\jforc.ijs'</p>
+
+<p class=Jcodemultiline>NB. File definitions for'J For C Programmers'</p>
+
+<p class=Jcodemultiline>NB. Copyright (c) 2002 Henry H. Rich</p>
+
+<p class=Jcodemultiline>...</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; rerr &lt;'c:\xxx\yyy.dat'</p>
+
+<p class=Jcodemultiline>25</p>
+
+<p class=MsoBodyText>You could use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3!:0</span></span> to see whether the result of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>rerr</span></span>
+is a string or a number (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2</span></span> means string, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8</span></span>,
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>16</span></span>
+means number).&nbsp; If you want to see the
+error message associated with an error number, there's a foreign <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9!:8 </span></span>to
+give you the list of errors:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 25 { 9!:8 ''</p>
+
+<p class=Jcodemultiline>+-----------------+</p>
+
+<p class=Jcodemultiline>|file number error|</p>
+
+<p class=Jcodemultiline>+-----------------+</p>
+
+<p class=Section><a name="_Toc5414617"></a><a name="_Toc5414456"></a><a
+name="_Toc1896247"></a><a name="_Toc191734422"><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>Treating
+a File as a Noun: Mapped Files</span></span></span></a><span style='mso-bookmark:
+_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:
+_Toc5414617'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span
+style='mso-bookmark:_Toc5414617'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;mapped files&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span
+style='mso-bookmark:_Toc5414617'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span
+style='mso-bookmark:_Toc5414617'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>Rather
+than reading a file and assigning the data to a noun, you can leave the data in
+a file and create a noun that points to the data.<span
+style='mso-spacerun:yes'>&nbsp; </span>The data will be read only when the noun is
+referred to.&nbsp; This is called <span
+class=Definition>mapping</span> the file to a noun.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>J's
+facilities for mapping files are described in the Lab 'Mapped Files'.<span
+style='mso-spacerun:yes'>&nbsp; </span>A quick example of a mapped file is</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>require 'jmf'</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>JCHAR map_jmf_ 'text'; 'system\packages\misc\jforc.ijs'</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>after
+which the noun </span></span></span><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>text</span></span>
+contains the data in the file:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>45 {. text</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>NB.
+File definitions for'J For C Programmers'</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>Moreover,
+if you assign a new value to </span></span></span><span style='mso-bookmark:
+_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:
+_Toc5414617'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>text</span></span>,
+the file will be modified.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>If you
+are dealing with large files, especially read-only files or files that don't
+change much, mapping the files can give a huge performance improvement because
+you don't have to read the whole file.&nbsp;
+You must be very careful, though, if you map files to nouns, because
+there are unexpected side effects.&nbsp; If we
+executed</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>temp =: text</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>temp =: 'abcdefgh'</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>we
+would find that the value of </span></span></span><span style='mso-bookmark:
+_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:
+_Toc5414617'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>text</span></span>
+had changed too!&nbsp; (If you try this, use a
+file you don't mind losing).&nbsp; The
+assignment of </span></span></span><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>text</span></span>
+to </span></span></span><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>temp</span></span>
+did not create a copy of data of </span></span></span><span style='mso-bookmark:
+_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:
+_Toc5414617'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>text</span></span>,
+and when </span></span></span><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>temp</span></span>
+was modified, the change was applied to the shared data.<span
+style='mso-spacerun:yes'>&nbsp; </span>If a file is mapped to a noun, you have to
+make sure that the noun, or any copy made of the noun in any verb you pass the
+noun to, is not changed unless you are prepared to have some or all of the
+other copies changed.&nbsp; This topic is
+examined in greater depth under 'Aliasing of Variables' in the chapter on DLLs.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896247'><span
+style='mso-bookmark:_Toc5414456'><span style='mso-bookmark:_Toc5414617'>If the
+faster execution is enticement enough for you to take that trouble, you can
+consult the Lab to get all the details.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896247'><span style='mso-bookmark:
+_Toc5414456'><span style='mso-bookmark:_Toc5414617'><a name="_Toc191734423">Format
+Data For Printing: Monad And Dyad </a></span></span></span><span
+style='mso-bookmark:_Toc1896247'><span style='mso-bookmark:_Toc5414456'><span
+style='mso-bookmark:_Toc5414617'><span style='mso-bookmark:_Toc191734423'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>&quot;:</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;format for printing&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span style='font-size:10.0pt'>\</span>&quot;\:
+dyad&quot; <![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->Since
+J reads and writes all files as character strings, you will need to be able to
+convert numbers to their character representation.<span
+style='mso-spacerun:yes'>&nbsp; </span>Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span> has rank <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;_&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> may be numeric or boxed, of any rank (we
+will not consider boxed <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> here).&nbsp;
+If <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is a scalar it is replicated to the length of a 1-cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is numeric, each 1-cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+produces a character-list result, with each atom in the 1-cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+being converted to a character string as described by the corresponding atom of
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and with the results of adjacent 0-cells being run together; the results
+from all 1-cells are collected into an array using the frame with respect
+to 1-cells.&nbsp; That sounds like the
+description of a verb with rank 1; almost so but not quite, because <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span>
+looks at the entire <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and adds extra spaces as necessary to make all the columns line up neatly.</p>
+
+<p class=MsoBodyText>A field descriptor in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> needs two
+numbers, <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>w</span></i></span>
+and <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>d</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>These are represented as the real and
+imaginary parts of a complex number, so that only a single scalar is needed to
+hold the field descriptor.&nbsp; The real part
+of the field descriptor is <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>w</span></i></span>, and it gives the width of the field in
+characters.&nbsp; If the result will not fit
+into the field, the entire field is filled with asterisks; to prevent this you
+may use a <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>w</span></i></span>
+of 0 which will cause the interpreter to make the field as wide as
+necessary.&nbsp; The imaginary part of the
+field descriptor is <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>d</span></i></span>, giving the number of digits following
+the decimal point.&nbsp; If either <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>w</span></i></span>
+or <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>d</span></i></span>
+is less than zero, the result is in exponential form (and the absolute value of
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>w</span></i></span>
+or <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>d</span></i></span>
+gives the corresponding width), otherwise the result is in standard form.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 &quot;: i. 4
+4</p>
+
+<p class=Jcodemultiline>&nbsp;0<span
+style='mso-spacerun:yes'>&nbsp; </span>1&nbsp;
+2&nbsp; 3</p>
+
+<p class=Jcodemultiline>&nbsp;4<span
+style='mso-spacerun:yes'>&nbsp; </span>5&nbsp;
+6&nbsp; 7</p>
+
+<p class=Jcodemultiline>&nbsp;8<span
+style='mso-spacerun:yes'>&nbsp; </span>9 10 11</p>
+
+<p class=Jcodemultiline>12 13 14 15</p>
+
+<p class=BodyTextnoleader>Note that extra spaces were added to the one-digit
+values to make them line up.&nbsp; Note also
+that 'enough space' includes a leading space to keep adjacent results from
+running together.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 &quot;: i. 4
+4</p>
+
+<p class=Jcodemultiline>0123</p>
+
+<p class=Jcodemultiline>4567</p>
+
+<p class=Jcodemultiline>89**</p>
+
+<p class=BodyTextnoleader>When you specify a width, you are expected to mean
+it, and no extra space is added.&nbsp; Here
+two-digit results would not fit and were replaced with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'*'</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 0j3 0j_3 &quot;:
+100 %~ i. 3 3</p>
+
+<p class=Jcodemultiline>0 0.010&nbsp; 2.000e_2</p>
+
+<p class=Jcodemultiline>0 0.040&nbsp; 5.000e_2</p>
+
+<p class=Jcodemultiline>0 0.070&nbsp; 8.000e_2</p>
+
+<p class=BodyTextnoleader>A complex number has its parts separated by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'j'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here the first field is an integer, the
+second has 3 decimal places, and the third is in exponential form.</p>
+
+<p class=MsoBodyText>When dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;:</span></span> is applied to an array, the result has
+the same rank as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you need to write that result to a file,
+you will need to use monad&nbsp;, to convert it to a list, possibly after
+adding <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>CR</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LF</span></span>
+characters at the ends of lines.</p>
+
+<p class=Subsection><a name="_Toc191734424"></a><a name="_Toc5414618"></a><a
+name="_Toc5414457"><span style='mso-bookmark:_Toc5414618'><span
+style='mso-bookmark:_Toc191734424'>Monad </span></span></a><span
+style='mso-bookmark:_Toc5414457'><span style='mso-bookmark:_Toc5414618'><span
+style='mso-bookmark:_Toc191734424'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>&quot;:</span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span style='font-size:10.0pt'>\</span>&quot;.
+dyad&quot; <![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->Monad
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span>
+resembles dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span>
+with a default <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+except that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+depends on the value of the corresponding atom of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>The simple description of monad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span>
+is that it formats numbers the way you'd like to see them formatted.<span
+style='mso-spacerun:yes'>&nbsp; </span>The full description is as follows: The
+precision <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>d</span></i></span>
+is given by a system variable that can be set by the foreign <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>9!:11&nbsp;y</span></span> (and
+queried by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9!:10&nbsp;y</span></span>;
+initially it is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>6</span></span>)
+; as a quick override you may use the fit conjunction <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;:!.<i>d</i></span></span>
+to specify the value of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>d</span></i></span> for a single use of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;:&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If an atom of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is an integer, a
+field descriptor of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+is applied; if the atom has significance in the first 4 decimal places, a field
+descriptor of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0j<i>d</i></span></span>
+is applied; otherwise a field descriptor of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0j_3</span></span> is applied.<span
+style='mso-spacerun:yes'>&nbsp; </span>Trailing zeros below the decimal point are
+omitted.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 9!:10 ''</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &quot;: 0 0.01
+0.001 0.000015 0.12345678 2</p>
+
+<p class=Jcodemultiline>0 0.01 0.001 1.5e_5 0.123457 2</p>
+
+<p class=BodyTextnoleader>In spite of all the detail I gave about the default
+formatting, in practice you just apply monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span> to any numeric
+operand and you get a good result.&nbsp;
+Monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span>
+accepts character arguments as well and leaves them unchanged:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ; &quot;:&amp;.&gt;
+'Today ';'is ';2002 1 24</p>
+
+<p class=Jcodemultiline>Today is 2002 1 24</p>
+
+<p class=BodyTextnoleader>We went inside the boxes with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&amp;.&gt;</span></span> and
+formatted each box's contents with monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span>; this made
+all the contents strings and we could run them together using monad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span></p>
+
+<p class=MsoBodyText>Monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;:</span></span> also converts boxed operands to the
+character arrays, including boxing characters, that we have seen in the display
+of boxed nouns.</p>
+
+<p class=Section><a name="_Toc5414619"></a><a name="_Toc5414458"></a><a
+name="_Toc1896248"></a><a name="_Toc191734425"><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>Format
+an Array: </span></span></span></a><span style='mso-bookmark:_Toc191734425'><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>8!:n</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;format for printing&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;8!\:n&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>To
+format an entire array, perhaps for display using the Grid Control, use the </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>8!:n</span></span> family of foreigns.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></span><span style='mso-bookmark:
+_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:
+_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;8!:0&nbsp;y</span></span>
+formats each atom of </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+into a boxed character string under control of the <span class=Definition>format
+phrases</span> in </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>'3.0,m&lt;$(&gt;p&lt;$&gt;n&lt;)&gt;q&lt;
+&gt;c14.2' 8!:0 (10 500.32 ,: 22 _123456)</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>| 10| <span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>$500.32 |</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>| 22| $(123,456.00)|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>The
+format phrases are separated by commas; here there were two, the simple </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3.0</span></span> and the more advanced </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&lt;$(&gt;p&lt;$&gt;n&lt;)&gt;q&lt; &gt;c13.2</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>The last thing in a format phrase is the
+field-width specifier <i style='mso-bidi-font-style:normal'>w.d</i>, which
+means what you expect.&nbsp; If <i
+style='mso-bidi-font-style:normal'>w</i> is 0, a computed width is used for the
+entire column, while if <i style='mso-bidi-font-style:normal'>w.</i> is
+omitted, the minimum width is used for each number individually.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>Preceding
+the <i style='mso-bidi-font-style:normal'>w.d</i> field come the <span
+class=Definition>modifiers</span>.&nbsp; They
+include the single letters </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>c</span></span>
+(put commas in the formatted number) and </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>l</span></span> (left justify), and a number of modifiers,
+called <span class=Definition>format strings</span>, that have a
+character-string value.&nbsp; These are
+specified as </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></i></span></span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;<i style='mso-bidi-font-style:normal'>string</i>&gt;</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></i></span></span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(<i style='mso-bidi-font-style:normal'>string</i>)</span></span>,
+or </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></i></span></span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>[<i style='mso-bidi-font-style:normal'>string</i>]</span></span>,
+where </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></i></span> <span
+style='mso-spacerun:yes'>&nbsp;</span>is the one-character name of a format string--you
+pick a bracket character </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(</span></span>,
+or </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[</span></span>
+that doesn't occur in your </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>string</span></i></span>.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>The format-string
+modifiers replace the default <span class=Definition><span style='font-weight:
+normal;font-style:normal'>format strings</span></span> for the column, except
+for the </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+modifier described presently.&nbsp; The format
+strings have the names </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>d</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>q</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>r</span></span>,
+and </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The default values are </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>s='e,.-*'</span></span>, </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>b='0'</span></span>, </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>d=</span></span>infinity, </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m=</span></span>(</span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2{s</span></span> if </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> is omitted, </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>''</span></span> if </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> is given), others=</span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>''</span></span>&nbsp;.&nbsp;
+The </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+modifier is set differently: it is in the form </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>s[<i style='mso-bidi-font-style:normal'>abab...</i>]</span></span>
+where each </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></i></span> character is one of the default </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>e,.-*</span></span> and the following </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>b</span></i></span>
+character replaces that </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></i></span> character in the format string.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>A
+number is classified according to its value; the value is converted to the <span
+class=Definition>value string</span> </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span> according to <i style='mso-bidi-font-style:
+normal'>w.d</i>; then the formatted result is created from a combination of the
+format strings and the value string, based on the value:</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>Infinite/indeterminate:
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>d</span></span>
+(default is </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>__</span></span>,
+or </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_.</span></span>
+according to value)</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>Negative:
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mvn</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>Zero: </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>b</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>Positive: </span></span></span><span style='mso-bookmark:
+_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:
+_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pvq</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>The
+elements of </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+give characters to use for exponent, thousands separator, decimal point, minus
+sign, and insufficient field-width.&nbsp; If
+the formatted result calculated above is shorter than the field width, the
+field is first initialized with the </span></span></span><span
+style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span
+style='mso-bookmark:_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>r</span></span> format string, repeated cyclically as necessary,
+and the formatted value is overlaid on that.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>There
+are three verbs in the </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8!:n</span></span>
+family.&nbsp; All have infinite rank.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></span><span style='mso-bookmark:
+_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:
+_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8!:0</span></span>
+produces a box for each atom of </span></span></span><span style='mso-bookmark:
+_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:
+_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+</span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8!:1</span></span>
+produces a box for each column of </span></span></span><span style='mso-bookmark:
+_Toc1896248'><span style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:
+_Toc5414619'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+and </span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8!:2</span></span>
+produces an unboxed character array:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>'3.0,14.2' 8!:0 (10 500.32 ,: 22 _123456)</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>|
+10|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 500.32|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>|
+22|&nbsp;&nbsp;&nbsp; -123456.00|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>'3.0,14.2' 8!:1 (10 500.32 ,: 22 _123456)</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>|
+10|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 500.32|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>|
+22|&nbsp;&nbsp;&nbsp; -123456.00|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'>+---+--------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>'3.0,14.2' 8!:2 (10 500.32 ,: 22 _123456)</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-spacerun:yes'>&nbsp;</span>10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+500.32</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-spacerun:yes'>&nbsp;</span>22&nbsp;&nbsp;&nbsp;
+-123456.00</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896248'><span style='mso-bookmark:
+_Toc5414458'><span style='mso-bookmark:_Toc5414619'><a name="_Toc191734426">Format
+binary data: </a></span></span></span><span style='mso-bookmark:_Toc1896248'><span
+style='mso-bookmark:_Toc5414458'><span style='mso-bookmark:_Toc5414619'><span
+style='mso-bookmark:_Toc191734426'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>3!:n</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText>If you need to write numbers to files in binary format,
+you need something that will coerce your numbers into character strings without
+changing the binary representation.&nbsp; J
+provides the foreigns <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3!:4</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3!:5</span></span>
+for this purpose.&nbsp; Each is a family of
+conversions, invoked as a dyad where the left operand selects the conversion to
+be performed.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;(3!:4)&nbsp;y</span></span>
+converts the numeric list <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> to a character string, representing each
+item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+by 4 characters whose values come from the binary values of the low-order 32
+bits of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 16b31424334</p>
+
+<p class=Jcodemultiline>826426164</p>
+
+<p class=BodyTextnoleader>This is an integer whose value is <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>0x31424344</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>We can convert it to a character string:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 (3!:4) 826426164</p>
+
+<p class=Jcodemultiline>4CB1</p>
+
+<p class=BodyTextnoleader>The 4 characters (with values <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>0x34</span></span>, <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>0x43</span></span>,
+<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>0x42</span></span>,
+<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>0x31</span></span>)
+correspond to the bits of the number <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>826426164</span></span> in little-endian order.</p>
+
+<p class=BodyTextnoleader><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>We can use
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a.&nbsp;i.</span></span>
+to look at the codes for each character in case they are not printable:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a. i. 2 (3!:4)
+1000 100000</p>
+
+<p class=Jcodemultiline>232 3 0 0 160 134 1 0</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>232&nbsp;3&nbsp;0&nbsp;0</span></span> corresponds to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1000</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>160&nbsp;134&nbsp;1&nbsp;0</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>100000&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_2&nbsp;(3!:4)&nbsp;y</span></span>
+is the inverse of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;(3!:4)&nbsp;y</span></span>,
+converting a character string to integers:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; _2 (3!:4) '4CB15CB1'</p>
+
+<p class=Jcodemultiline>826426164 826426165</p>
+
+<p class=MsoBodyText>The other integer conversions are similar. <span
+style='mso-spacerun:yes'>&nbsp;</span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;(3!:4)&nbsp;y</span></span> converts the low-order 16
+bits of each item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+to 2 characters, and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1&nbsp;(3!:4)&nbsp;y</span></span>
+converts back to integers, 2 characters per integer.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;(3!:4)&nbsp;y</span></span> is like <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1&nbsp;(3!:4)&nbsp;y</span></span>
+but the integers are unsigned (i.&nbsp;e. in the range <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0-65535</span></span>).</p>
+
+<p class=MsoBodyText>The floating-point conversions are analogous.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;(3!:5)&nbsp;y</span></span> converts each item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+to 8 characters representing long floating-point form, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>_2&nbsp;(3!:5)&nbsp;</span></span>y
+converts back; <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;(3!:5)&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1&nbsp;(3!:5)&nbsp;y</span></span>
+use 4-character short floating-point form.</p>
+
+<p class=Section><a name="_Toc191734427"></a><a name="_Toc5414620"></a><a
+name="_Toc5414459"></a><a name="_Toc1896249"><span style='mso-bookmark:_Toc5414459'><span
+style='mso-bookmark:_Toc5414620'><span style='mso-bookmark:_Toc191734427'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>printf</span></span>, </span></span></span></a><span style='mso-bookmark:
+_Toc1896249'><span style='mso-bookmark:_Toc5414459'><span style='mso-bookmark:
+_Toc5414620'><span style='mso-bookmark:_Toc191734427'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>sprintf</span></span>,
+and </span></span></span></span><span style='mso-bookmark:_Toc1896249'><span
+style='mso-bookmark:_Toc5414459'><span style='mso-bookmark:_Toc5414620'><span
+style='mso-bookmark:_Toc191734427'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>qprintf</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;printf&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->When you need formatted lines
+for printing you may feel at home using <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>printf</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sprintf</span></span>,
+which work like their C counterparts.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>printf</span></span>
+displays a line, while <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sprintf</span></span> produces a string result:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 'The
+population of %s is %d\n' printf 'Raleigh';240000</p>
+
+<p class=Jcodemultiline>The population of Raleigh
+is 240000</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; s =. 'The
+total of %j is %d.\n' sprintf 1 2 3;+/1 2 3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; s</p>
+
+<p class=Jcodemultiline>The total of 1 2 3 is 6.</p>
+
+<p class=MsoBodyText>You need to execute</p>
+
+<p class=Jcodemultiline>load&nbsp;'printf'</p>
+
+<p class=BodyTextnoleader>to get the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>printf</span></span> verbs defined.<span
+style='mso-spacerun:yes'>&nbsp; </span>J's <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>printf</span></span> contains a few features beyond C's such
+as the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>%j</span></span>
+field type seen above.&nbsp; You should run
+the Lab 'Formatting with printf' for details.</p>
+
+<p class=MsoBodyText>One feature with no analogue in C is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>qprintf</span></span>, which
+produces handy typeout for debugging:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. 3 4 5 [ b
+=. 'abc';'def';5 [ c =: i. 3 3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; qprintf 'a b c
+'</p>
+
+<p class=Jcodemultiline>a=3 4 5 b=</p>
+
+<p class=Jcodemultiline>+---+---+-+</p>
+
+<p class=Jcodemultiline>|abc|def|5|</p>
+
+<p class=Jcodemultiline>+---+---+-+</p>
+
+<p class=Jcodemultiline>&nbsp;c=</p>
+
+<p class=Jcodemultiline>0 1 2</p>
+
+<p class=Jcodemultiline>3 4 5</p>
+
+<p class=Jcodemultiline>6 7 8</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>qprintf</span></span> is described in the 'Formatting with
+printf' lab.</p>
+
+<p class=Section><a name="_Toc191734428"></a><a name="_Toc5414621"></a><a
+name="_Toc5414460"></a><a name="_Toc1896250"><span style='mso-bookmark:_Toc5414460'><span
+style='mso-bookmark:_Toc5414621'><span style='mso-bookmark:_Toc191734428'>Convert
+Character To Numeric: Dyad </span></span></span></a><span style='mso-bookmark:
+_Toc1896250'><span style='mso-bookmark:_Toc5414460'><span style='mso-bookmark:
+_Toc5414621'><span style='mso-bookmark:_Toc191734428'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>&quot;.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Numbers verb <span style='font-size:
+10.0pt'>\</span>&quot;.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span style='font-size:10.0pt'>\</span>&quot;.
+dyad&quot; <![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->Dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span>
+has infinite rank.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;&quot;.&nbsp;y</span></span>
+looks for numbers in the words of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, which must be a character array.<span
+style='mso-spacerun:yes'>&nbsp; </span>Words representing valid numbers are
+converted to numbers; words not representing valid numbers are replaced by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If 1-cells of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> have differing
+numbers of numbers, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is used to pad short rows.&nbsp; 'Valid numbers'
+to dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span>
+are anything you could type into J as a number, and more: the negative sign may
+be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'-'</span></span>
+rather than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'_'</span></span>;
+numbers may contain commas, which are ignored; and a number may start with a
+decimal point rather than requiring a digit before the decimal point.<span
+style='mso-spacerun:yes'>&nbsp; </span>With the relaxed rules you can import numbers
+from a spreadsheet into J, using <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&amp;&quot;.</span></span> to convert them to numbers:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 999 &quot;. '12
+.5 3.6 -4 1,000 x25'</p>
+
+<p class=Jcodemultiline>12 0.5 3.6 _4 1000 999</p>
+
+<p class=BodyTextnoleader>All legal numbers except for <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'x25'&nbsp;</span></span>.</p>
+
+<p class=Note>If your character string is a valid J number, either monad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;. </span></span>or
+dyad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span>
+can be used to convert it, but dyad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;.</span></span> is much faster. </p>
+
+</div><!--bottom jump start--><hr><a href="calling_external_programs.htm">&gt;&gt;</a>&nbsp;
+<a href="u_1_uv_uv_and_u_v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

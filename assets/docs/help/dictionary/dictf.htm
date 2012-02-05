@@ -1,0 +1,82 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>F. Trains</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dictg.htm">&gt;&gt;</a>&nbsp;
+<a href="dicte.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>F. Trains</b></font><br><br>
+
+An isolated sequence, such as<tt> (+ */)</tt> ,<tt> </tt>which the
+&ldquo;normal&rdquo; parsing rules do not resolve to a single part of speech is
+called a <i>train</i>, and may be further resolved as described below. <br><br>
+
+A train of two or three verbs produces
+a verb and (by repeated resolution), a verb train of any length also produces a
+verb. For example, the trains<tt> +-*% </tt>and<tt> +-*%^ </tt>are
+equivalent to<tt> +(-*%) </tt>and<tt> +-(*%^)</tt>. 
+The production is defined by the following diagrams:<br>
+<pre>
+         HOOK                FORK             CAPPED FORK
+
+      g       g           g        g            g     g
+     / \     / \         / \      / \           |     |
+    y   h   x   h       f   h    f   h          h     h
+        |       |       |   |   / \ / \         |    / \
+        y       y       y   y   x y x y         y   x   y
+</pre>
+
+For example,<tt> 5(+*-)3 </tt>is<tt> (5+3)*(5-3).</tt>
+If<tt> f </tt>is a cap<tt> </tt>(<tt>[:</tt>)<tt> </tt>
+the capped branch simplifies the forks to<tt> g h y </tt>and<tt> g x h y</tt> .<tt> </tt>
+The train<tt> N g h </tt>(a noun followed by two verbs) is equivalent
+to<tt> N&quot;_ g h</tt> .<tt> </tt>
+The ranks of the hook and fork are infinite.<br><br>
+
+A two-element train of a conjunction with a noun or a verb produces an adverb. 
+For example,<tt> &amp;.&gt; </tt>produces an adverb that might be called &ldquo;each&rdquo;, 
+and the adverb<tt> bc=:&lt;&quot; </tt>might be called &ldquo;box cells&rdquo;
+because, for example,<tt> 0 bc x </tt>would box the atoms of<tt> x</tt> .<br><br>
+
+Finally, a train of two adverbs produces an adverb, and (by implication) a train of any
+number of adverbs also produces an adverb. For example,<tt> /\ </tt>is the adverb &ldquo;insert scan&rdquo;,
+and<tt> ~/~ </tt>is the &ldquo;commuted table&rdquo;. For example:
+
+<pre>
+   is=:/\
+   + is 1 2 3 4 5
+1 3 6 10 15
+   
+   ct=: ~/~
+   - ct 1 2 3
+ 0  1 2
+_1  0 1
+_2 _1 0
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="dictg.htm">&gt;&gt;</a>&nbsp;
+<a href="dicte.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

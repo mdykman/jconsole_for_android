@@ -1,0 +1,105 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Control structure</title>
+
+</head><body><!--top jump start--><a href="checkpoint_c.htm">&gt;&gt;</a>&nbsp;
+<a href="comparative.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Control structure</h1>
+In centigrade the sentences in the definition are just executed sequentially, one after the other. To conditionally control which sentences are executed you use control structures.<br>
+<br>
+Control structures are built with control words and sentences. The following is an example of a control structure:<br>
+
+<pre>if. x = 'c'
+ do. centigrade y
+ else. fahrenheit y
+end. 
+</pre>
+The<font face=courier size=-1> if.</font> control word starts the control structure and the end. control word ends it. The result of the <font face=courier size=-1>x = 'c'</font> sentence is the test result and it determines which of the other sentences in the control structure are executed. If the test result is 1, then the sentence after the <font face=courier size=-1>do.</font> control word is executed. If the test result is any other value then the sentence after the <font face=courier size=-1>else.</font> control word is executed. In English: if the left argument equals the letter c, then execute <font face=courier size=-1>centigrade</font>, otherwise execute <font face=courier size=-1>fahrenheit</font>.<br>
+<br>
+Use this capability to add a new verb to your cf.ijs script that will convert a number from Fahrenheit to centigrade or from centigrade to Fahrenheit depending on the value of the left argument. Open your cf.ijs script and add the following definition at the end.<br>
+
+<pre>NB. convert f to c if x is 'c', otherwise c to f
+convert =: dyad : 0
+if. x = 'c'
+ do. centigrade y
+ else. fahrenheit y
+end.
+)</pre>
+This defines the dyadic case of the verb. The dyad has a left argument with the name <font face=courier size=-1>x</font> and a right argument with the name <font face=courier size=-1>y</font> . The verb <font face=courier size=-1>convert </font>takes a left argument of <font face=courier size=-1>'c'</font> to convert a Fahrenheit value to centigrade. Any left argument other than <font face=courier size=-1>'c'</font> will convert a centigrade value to Fahrenheit.<br>
+<br>
+Note that you use your verbs <font face=courier size=-1>fahrenheit </font>and <font face=courier size=-1>centigrade </font>just as you would use primitive verbs.<br>
+<br>
+Run the script and test convert.<br>
+
+<pre>   'c' convert  212
+100
+   'f' convert 100
+212</pre>
+Normally a sentence is a line in a script. However, with control words separating a line into several sentences it is possible to have more than one sentence on a line.<br>
+<br>
+The following line is equivalent to the multiple lines used earlier.<br>
+
+<pre>if. x = 'c' do. centigrade y else. fahrenheit y end.
+</pre>
+Control structures are only allowed in definitions and you cannot type one directly into the ijx window for execution.<br>
+<br>
+There are nine control structure patterns:<br>
+
+<pre>if. T do. B end.
+if. T do. B else. B1 end.
+if. T do. B elseif. T1 do. B1 elseif. T2 do. B2 end.
+try. B catch. B1 end.
+while. T do. B end.
+whilst. T do. B end.
+for. T do. B end.
+for_i. T do. B end.
+select. T
+ case. T0 do. B0
+ case. T1 do. B1
+ fcase.T2 do. B2
+ case. T3 do. B3
+end.</pre>
+A control structure starts with <font face=courier size=-1>if.</font> , <font face=courier size=-1>try.</font> , <font face=courier size=-1>while.</font> , <font face=courier size=-1>whilst </font>, <font face=courier size=-1>for.</font> , <font face=courier size=-1>for_i.</font> , or <font face=courier size=-1>select.</font> and ends with a matching end<font face=courier size=-1>.</font> .<br>
+<br>
+Words beginning with T or B denote a block of 0 or more sentences and can contain nested control structures.<br>
+<br>
+The result of the last sentence in a T block determines which block is executed next and whether execution in the control structure is finished.<br>
+<br>
+Often the T block is a single sentence that makes a simple test like the one in the example.<br>
+<br>
+The <font face=courier size=-1>try</font>. control structure is an interesting one. It executes the B block of sentences, and if there are no errors it skips to the end of the structure. However, if there is an error, then the B1 block is executed.<br>
+<br>
+The <font face=courier size=-1>while.</font> control structure executes the T block and if its result is not 0 then it executes the B block and continues this until the T block has a 0 result. If the T block is 0 the first time, then the B block is not executed.<br>
+<br>
+The <font face=courier size=-1>whilst.</font> control structure is the same as while. except that the T block is skipped the first time. This means that the B block is always executed at least once.<br>
+<br>
+In the for. structure, the B block is evaluated once for each item of the array A that results from evaluating the T block. In the for_i. form, the local name i is set to the value of an item on each evaluation of the B block and i_index is set to the index of the item. A break. goes to the end of the for. control structure, and continue. goes to the evaluation of B for the next item. <br>
+<br>
+In the select. structure, the result R of T is compared to the elements of the result Ri of Ti , and the Bi block of the first case. or fcase. with a match is evaluated. Evaluation of the select. control structure then terminates for a case. , or continues with the next B(i+1) block for an fcase. (and further continues if it is an fcase.). <br>
+<br>
+See the J Dictionary for more information on control structures.<br>
+<!--bottom jump start--><hr><a href="checkpoint_c.htm">&gt;&gt;</a>&nbsp;
+<a href="comparative.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

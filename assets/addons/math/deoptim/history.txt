@@ -1,0 +1,22 @@
+math/deoptim - change history
+
+== 1.0.5/6 ==
+ * add: option to re-evaluate best population member
+ * add: sampling utilities
+ * fix: Refresh of outputs for demo in Jwdp
+
+== 1.0.4 ==
+ * fix: Fix bugs when providing constraint function
+ * add: Test case for providing a constraint function
+
+== 1.0.3 ==
+ * chg: Minor improvements and simplification of demo
+
+== 1.0.2 ==
+ * chg: Demo updates during optimization
+ * fix: Fix bug when providing initial population
+ * add: Test case for providing an initial population
+ * chg: Simplify incrementing generations
+
+== 1.0.1 ==
+ * publish in JAL

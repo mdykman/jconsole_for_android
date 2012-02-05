@@ -1,0 +1,600 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 26: Script Files</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="27.htm">&gt;&gt;</a>&nbsp;
+<a href="25.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <H1>Chapter 26: Script Files</H1>
+<A NAME="01"></A>
+A file containing text in the form of lines of J is called a script-file, 
+or just a script. 
+By convention a script has a filename 
+terminating with <TT>.ijs</TT> .
+The process of executing the lines of J in a script-file
+is called "loading" a script.
+<p>
+We write our own scripts for our 
+particular programming projects. 
+In addition, the J system comes supplied
+with a library of predefined scripts of
+general utility.
+<p>
+The plan for this chapter is to look at
+<UL>
+<LI> built-in verbs for loading scripts</LI>
+<LI> the <TT>load</TT> verb and its advantages, 
+including convenient loading of library scripts</LI>
+<LI> the "profile" script automatically loaded at the beginning of a J session </LI>
+</UL>
+<H2>26.1  Creating Scripts</H2>
+Suppose we have an existing directory where
+we intend to store our own scripts. 
+It is useful to begin by identifying this directory.
+For example, with Linux we could say:
+<PRE>
+        scriptdir =: '/home/username/jscripts/'
+</PRE>
+(Notice that last character). With Windows we could say,
+for example, :
+<PRE>
+        scriptdir =: 'c:\users\homer\jscripts\'
+</PRE>
+Scripts are usually created using a text editor,
+but here it is convenient
+to use J to create small examples of scripts 
+as we need them. 
+Here is an example of creating a tiny script,
+with a filename of say <TT>example.ijs</TT>, using 
+the built-in verb <TT>1!:2</TT> thus:
+<PRE>
+   (0 : 0) (1!:2) < scriptdir,'example.ijs'
+plus =: +
+k    =: 2 plus 3
+k plus 1   
+)
+</PRE>
+<A NAME="02"></A>
+<H2>26.2  Loading Scripts</H2>
+There is a built-in verb <TT>0!:1</TT> to load a script.
+The argument is a filename as a boxed string.
+<PRE>
+   0!:1 < scriptdir,'example.ijs'
+   plus =: +
+   k    =: 2 plus 3
+   k plus 1   
+6
+</PRE>
+We see on the screen a display of the lines of the script as they were executed,
+together with the result-values of any computations. 
+The definitions of <TT>plus</TT> and <TT>k</TT> are now available:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>plus</TT></TD>
+<TD><TT>k</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+</TT></TD>
+<TD><TT>5</TT></TD>
+</TABLE>
+<p>
+The verb <TT>0!:1</TT>, as we saw, loads a script with a display. 
+If there is an error in the script, <TT>0!:1</TT> will stop. 
+We can choose whether or not to display, and 
+whether to stop or to continue loading after an error. There are four similar verbs:
+<p>
+<TABLE CELLPADDING=6>
+<TR><TD> <TT>0!:0</TT> </TD><TD> no display   </TD><TD> stopping on error  </TD></TR>
+<TR><TD> <TT>0!:1</TT> </TD><TD> with display </TD><TD> stopping on error  </TD></TR>
+<TR><TD> <TT>0!:10</TT></TD><TD> no display   </TD><TD> continuing on error</TD></TR>
+<TR><TD> <TT>0!:11</TT></TD><TD> with display </TD><TD> continuing on error</TD></TR>
+</TABLE>
+For example:
+<PRE>
+   0!:0 < scriptdir,'example.ijs'
+</PRE>
+We see nothing on the screen. The value computed in the script for <TT>k plus 1</TT>
+is discarded. 
+<H2>26.3  The load Verb</H2>
+There is a verb <TT>load</TT> which is predefined, that is, automatically available
+in the standard J setup. 
+It can be used just like <TT>0!:0</TT> to load a script
+<PRE>
+   load < scriptdir,'example.ijs'
+</PRE>
+The script is loaded without a display and stopping on error. There is a companion
+verb <TT>loadd</TT> which loads with a display, stopping on error.
+<PRE>
+   loadd < scriptdir, 'example.ijs'
+   plus =: +
+   k    =: 2 plus 3
+   k plus 1   
+6
+</PRE>
+<TT>load</TT> and <TT>loadd</TT> have several advantages compared with <TT>0!:n</TT> .
+The first of these is that the filename need not be boxed.
+<PRE>
+   loadd scriptdir, 'example.ijs'
+   plus =: +
+   k    =: 2 plus 3
+   k plus 1   
+6
+   
+</PRE>
+<A NAME="03"></A>
+<H2>26.4  Local Definitions in Scripts</H2>
+Now we look at the treatment of local variables in scripts.
+Here is an example of a script.
+<PRE>
+   (0 : 0) (1!:2) < scriptdir, 'ex1.ijs'
+w   =: 1 + 1
+foo =: + & w  
+)
+</PRE>
+Suppose that variable <TT>w</TT> has the sole purpose
+of helping to define verb <TT>foo</TT> and otherwise <TT>w</TT> is of
+no interest. It would be better
+to make <TT>w</TT> a local variable.
+<p>
+Firstly, we need to assign to <TT>w</TT> with <TT>=.</TT>
+in the same way that we assign to local variables in explicit
+functions.  Our revised script becomes:
+<PRE>
+   (0 : 0) (1!:2) < scriptdir, 'ex2.ijs'
+w   =. 1 + 1
+foo =: + & w  
+)
+</PRE>
+Secondly, we need something for <TT>w</TT> to be local to, that is, an explicit
+function, because outside any explicit function
+(that is, "at the top level") <TT>=.</TT> is the same as <TT>=:</TT>
+All that would be needed is the merest wrapper of explicit definition
+around <TT>0!:n</TT>, such as:
+<PRE>
+   LL =: 3 : '0!:0 y'
+</PRE>
+If we now load our script
+<PRE>
+   LL < scriptdir, 'ex2.ijs'
+</PRE>
+and then look at the results:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>foo</TT></TD>
+<TD><TT>w</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+&2</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+we see that <TT>foo</TT> is as expected, 
+and, as intended, there  is no value for <TT>w</TT>. 
+Therefore <TT>w</TT> was local to the execution of the script,
+ or strictly speaking,
+local to the execution of <TT>LL</TT>.
+<p>
+An advantage of the <TT>load</TT> verb is that it provides the explicit function
+needed to make <TT>w</TT> local.
+<PRE>
+   erase 'foo';'w'
+1 1
+   
+   load scriptdir, 'ex2.ijs'
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>foo</TT></TD>
+<TD><TT>w</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+&2</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+<A NAME="04"></A>
+<H3>26.4.1  Local Verbs in Scripts</H3>
+In the previous example,
+the local variable <TT>w</TT> was a noun. 
+With a local verb,
+there is a further consideration. 
+Here is an example of a script which tries to use
+a local verb (<TT>sum</TT>) to assist the 
+definition of a global verb (<TT>mean</TT>).
+<PRE>
+   (0 : 0) (1!:2) < scriptdir, 'ex3.ijs'
+sum  =. +/
+mean =: sum % # 
+)
+   
+   load  < scriptdir, 'ex3.ijs'
+</PRE>
+We see that this will not work, because
+mean needs <TT>sum</TT> and 
+<TT>sum</TT>, being local, is no longer available. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>mean</TT></TD>
+<TD><TT>sum</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>sum % #</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+The remedy is to "fix" the definition of <TT>mean</TT>,
+with the adverb <TT>f.</TT> (as we did in <A HREF="12.htm">Chapter 12</A>).
+Our revised script becomes
+<PRE>
+   (0 : 0) (1!:2) < scriptdir, 'ex4.ijs'
+sum =. +/
+mean =: (sum % #)  f.
+)
+</PRE>
+Now <TT>mean</TT> is independent of <TT>sum</TT>
+<PRE>
+   load  < scriptdir, 'ex4.ijs'
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>mean</TT></TD>
+<TD><TT>sum</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+/ % #</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+<A NAME="05"></A>
+<H2>26.5  Loading Into Locales</H2>
+We looked at locales in <A HREF="24.htm">Chapter 24</A>.  
+When we load a script with <TT>0!:n</TT> or <TT>load</TT>
+it is the current locale that becomes populated with definitions
+from the script.
+<p>
+By default, the current locale is <TT>base</TT>.
+In general, we may wish to load a script into
+a specified locale, say locale <TT>one</TT>.  
+<p>
+Here is one way: 
+<PRE>
+   load_one_  scriptdir, 'example.ijs'
+   
+   plus_one_
++
+</PRE>
+Another way is to let the script itself specify the 
+locale. For example,
+<PRE>
+   (0 : 0) (1!:2) < scriptdir, 'ex5.ijs'
+18!:4 < 'two'
+w   =. 1 + 1
+foo =: + & w  
+)
+</PRE>
+and then the script steers itself into locale <TT>two</TT>
+<PRE>
+   load scriptdir, 'ex5.ijs'
+   
+   foo_two_
++&2
+</PRE>
+Here is a further advantage of <TT>load</TT> compared with <TT>0!:n</TT>. 
+Notice that the current locale is <TT>base</TT>.
+<PRE>
+   18!:5 ''  NB. current locale before loading
++----+
+|base|
++----+
+</PRE>
+If we now <TT>load</TT>  <TT>ex5.ijs</TT>, the current locale
+is still <TT>base</TT> afterwards, 
+regardless of the fact that the script visited locale <TT>two</TT>.
+<PRE>
+   load scriptdir,'ex5.ijs'
+   18!:5 ''  NB. current locale after loading
++----+
+|base|
++----+
+</PRE>
+However, loading the same script with <TT>0!:n</TT> does NOT restore
+the previously current locale.
+<PRE>
+   18!:5 '' NB. current locale before loading
++----+
+|base|
++----+
+   0!:0 < scriptdir,'ex5.ijs'
+   18!:5 '' NB.  current locale after loading
++---+
+|two|
++---+
+   
+</PRE>
+so we conclude that self-steering scripts should be loaded with <TT>load</TT> and
+not with <TT>0!:n</TT>.
+<p>
+We return to base.
+<PRE>
+   18 !: 4 < 'base'
+</PRE>
+<A NAME="06"></A>
+<H2>26.6  Repeated Loading, and How to Avoid It</H2>
+Another advantage of <TT>load</TT> is this. 
+Suppose one script depends on (definitions in) 
+a second script. If the first
+includes a line 
+such as <TT>load 'second'</TT> then 
+ the second is automatically loaded 
+when the first is loaded. 
+<p>
+If we load the first script again 
+(say, after correcting an error)
+then the second will be loaded again. This may
+be unnecessary or undesirable. 
+The  predefined verb <TT>require</TT> is like <TT>load</TT> 
+but does not load a script if it is already loaded.
+<p>
+Here is a demonstration. Suppose we have 
+these two lines for the first script:
+<PRE>
+   (0 : 0) (1!:2) < scriptdir,'first.ijs'
+    require scriptdir, 'second.ijs'
+    a =: a + 1
+)
+</PRE>
+Here the variable <TT>a</TT> is a counter:
+ every time <TT>first.ijs</TT> is loaded,
+ <TT>a</TT> will be incremented. 
+Similarly for a second script:
+<PRE>
+   (0 : 0) (1!:2) < scriptdir, 'second.ijs'
+    b  =: b + 1
+)
+</PRE>
+We set the counters <TT>a</TT> and <TT>b</TT> to zero, load the first script
+and inspect the counters:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>(a =: 0),(b =: 0)</TT></TD>
+<TD><TT>load scriptdir, 'first.ijs'</TT></TD>
+<TD><TT>a,b</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 0</TT></TD>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>1 1</TT></TD>
+</TABLE>
+<p>
+Evidently each script has executed once. 
+If we now load the first again, 
+we see that it has executed again, but the second has not:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>load scriptdir,'first.ijs'</TT></TD>
+<TD><TT>a,b</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>2 1</TT></TD>
+</TABLE>
+<p>
+<H2>26.7  Load Status</H2>
+The J system keeps track of ALL scripts
+loaded in the session, whether with <TT>load</TT> or with <TT>0!:0</TT>.   The built-in verb
+<TT>4!:3</TT> with a null argument gives a report
+as a boxed list of filenames. Here are the last few entries 
+in this report for the current session.
+<PRE>
+   ,. _4 {. 4!:3 ''
++----------------------------------+
+|c:\users\homer\jscripts\ex4.ijs   |
++----------------------------------+
+|c:\users\homer\jscripts\ex5.ijs   |
++----------------------------------+
+|c:\users\homer\jscripts\first.ijs |
++----------------------------------+
+|c:\users\homer\jscripts\second.ijs|
++----------------------------------+
+   
+   
+</PRE>
+Recall that we defined <TT>plus</TT>
+in the script <TT>example.ijs</TT> which we loaded above. 
+The built-in verb <TT>4!:4</TT> keeps track
+of which name was loaded from which script. 
+The argument is a name (<TT>plus</TT> for example) 
+and the result is an index into the list of scripts
+generated by <TT>4!:3</TT>.  We see that <TT>plus</TT> was indeed
+defined by loading the script <TT>example.ijs</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>i =: 4!:4 < 'plus'</TT></TD>
+<TD><TT>i { 4!:3 '' </TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>13</TT></TD>
+<TD><TT>+-----------------------------------+<BR>
+|c:\users\homer\jscripts\example.ijs|<BR>
++-----------------------------------+</TT></TD>
+</TABLE>
+<p>
+<A NAME="07"></A>
+<H2>26.8  Library Scripts</H2>
+<H3>26.8.1  The Standard Library</H3>
+The J system comes supplied with script files containing 
+a useful collection of predefined functions.
+<p>
+We can look at the list of scripts loaded automatically at the 
+beginning of the session. For this we use the built-in verb <TT>4!:3</TT> 
+to generate a boxed list of file-names.  Here are the first 9 scripts:
+<PRE>
+   ,. 9 {. 4 !: 3 ''
++---------------------------------------------+
+|C:\Users\homer\j701\bin\profile.ijs          |
++---------------------------------------------+
+|C:\Users\homer\j701\system\util\boot.ijs     |
++---------------------------------------------+
+|C:\Users\homer\j701\system\main\stdlib.ijs   |
++---------------------------------------------+
+|C:\Users\homer\j701\system\util\scripts.ijs  |
++---------------------------------------------+
+|C:\Users\homer\j701\system\main\regex.ijs    |
++---------------------------------------------+
+|C:\Users\homer\j701\system\main\task.ijs     |
++---------------------------------------------+
+|C:\Users\homer\j701\system\util\configure.ijs|
++---------------------------------------------+
+|c:\users\homer\j701-user\config\recent.dat   |
++---------------------------------------------+
+|c:\users\homer\j701\system\main\ctag.ijs     |
++---------------------------------------------+
+   
+</PRE>
+We see that among these is the script-file <TT>stdlib.ijs</TT>
+<p>
+Functions defined in <TT>stdlib.ijs</TT> end up in the <TT>z</TT> locale where they 
+are conveniently available to the programmer. 
+There are more than 300 things defined in the <TT>z</TT> locale:
+<PRE>
+   # nl_z_ ''
+361
+   
+</PRE>
+For example, the file-handling utility functions documented in the 
+ <A HREF="http://www.jsoftware.com/user/contents.htm"> J User Manual </A>
+are found in the <TT>z</TT> locale with names beginning with the letter 'f'.
+<PRE>
+   6 6 $ 'f' nl_z_ ''
++---------+--------------+-----------+--------+----------+--------+
+|fappend  |fappends      |fapplylines|fboxname|fc        |fcompare|
++---------+--------------+-----------+--------+----------+--------+
+|fcompares|fcopynew      |fdir       |ferase  |fetch     |fexist  |
++---------+--------------+-----------+--------+----------+--------+
+|fexists  |fi            |find_dll   |flatten |foldpara  |foldtext|
++---------+--------------+-----------+--------+----------+--------+
+|fork     |fpathcreate   |fpathname  |fread   |freadblock|freadr  |
++---------+--------------+-----------+--------+----------+--------+
+|freads   |freplace      |fselect    |fsize   |fss       |fssrplc |
++---------+--------------+-----------+--------+----------+--------+
+|fstamp   |fstringreplace|ftostring  |ftype   |funrep    |fview   |
++---------+--------------+-----------+--------+----------+--------+
+   
+</PRE>
+<H3>26.8.2  The J Application Library</H3>
+There is an extensive collection of script-files 
+forming the J Application Library (JAL).
+The JAL is documented <A HREF="http://www.jsoftware.com/jwiki/JAL"> here </A>
+<A NAME="08"></A>
+<H2>26.9  User-Defined Startup Script</H2>
+Suppose we have a collection of our own definitions which we wish to be loaded
+ automatically at the beginning of every J session.
+To achieve this we can put our definitions into a script-file which must be named <TT>startup.ijs</TT>.
+The full pathname for this file is given by the expression
+<PRE>
+   jpath '~config/startup.ijs'  
+c:/users/homer/j701-user/config/startup.ijs
+   
+</PRE>
+Here is an example.  We create the script-file with a few definitions. For this example 
+we could define a few verbs useful for type-checking. 
+<PRE>
+   (0 : 0)  (1 !: 2) < jpath '~config/startup.ijs'  
+is_int    =: 4 = 3 !: 0
+is_char   =: 2 = 3 !: 0
+is_number =: 1 4 8 16 64 128  e.~  3!:0
+is_scalar =: 0 = # @: $
+is_list   =: 1 = # @: $
+is_string =: is_char *. is_list
+)
+</PRE>
+With this script-file in place,  the next session should automatically load it.
+We verify this by looking at the list of scripts loaded at the beginning of the new session.
+<PRE>
+   ,. 10 {. 4 !: 3 ''
++---------------------------------------------+
+|C:\Users\homer\j701\bin\profile.ijs          |
++---------------------------------------------+
+|C:\Users\homer\j701\system\util\boot.ijs     |
++---------------------------------------------+
+|C:\Users\homer\j701\system\main\stdlib.ijs   |
++---------------------------------------------+
+|C:\Users\homer\j701\system\util\scripts.ijs  |
++---------------------------------------------+
+|C:\Users\homer\j701\system\main\regex.ijs    |
++---------------------------------------------+
+|C:\Users\homer\j701\system\main\task.ijs     |
++---------------------------------------------+
+|C:\Users\homer\j701\system\util\configure.ijs|
++---------------------------------------------+
+|c:\users\homer\j701-user\config\recent.dat   |
++---------------------------------------------+
+|c:\users\homer\j701\system\main\ctag.ijs     |
++---------------------------------------------+
+|c:\users\homer\j701-user\config\startup.ijs  |
++---------------------------------------------+
+   
+</PRE>
+We see that <TT>startup.ijs</TT> has been loaded and its definitions are available.
+<PRE>
+   is_string 'hello'
+1
+   
+</PRE>
+This is the end of Chapter 26.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="27.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="27.htm">&gt;&gt;</a>&nbsp;
+<a href="25.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

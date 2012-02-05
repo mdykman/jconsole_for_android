@@ -1,0 +1,123 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Locale</title>
+
+</head><body><!--top jump start--><a href="z_locale.htm">&gt;&gt;</a>&nbsp;
+<a href="when_not_same.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Locale</h1>
+First of all, note that locale is a very different word from local, even though there is only one less letter in the latter.<br>
+<br>
+A locale is a set of global names. There can be several locales, so there can be several sets of globals.<br>
+<br>
+A global name in a locale is distinguished from the same name in other locales by qualifying the name with the addition of the locale name bracketed by <font face=courier size=-1>_</font> (underbar) characters. A name qualified by a locale is always a global name.<br>
+
+<pre>   abc_def_ =: 2</pre>
+The above sentence can be read as global abc in locale <font face=courier size=-1>def </font>is <font face=courier size=-1>2</font>.<br>
+
+<pre>   abc_base_ =: 4</pre>
+The above sentence can be read as global <font face=courier size=-1>abc </font>in locale base is 4. <br>
+<br>
+If the locale name is elided, it is assumed to be base. <br>
+
+<pre>   abc__   NB. the same as abc_base_
+4
+</pre>
+If a global name is not qualified with a locale name, then it is in the current locale. The base locale is the current locale unless it has been explicitly changed by executing a verb in a different locale. The following defines <font face=courier size=-1>abc </font>in the base locale:<br>
+
+<pre>   abc =. 6
+   abc_base_
+6
+   abc
+6
+</pre>
+Since the base locale is the current locale, the names <font face=courier size=-1>abc </font>and <font face=courier size=-1>abc_base_</font> are the same.<br>
+<br>
+The name <font face=courier size=-1>abc_def_</font> is clearly different from <font face=courier size=-1>abc</font>, but so far there is no way of telling that anything special is going on. In what sense are <font face=courier size=-1>abc </font>and <font face=courier size=-1>foo </font>in the same (base) locale? And <font face=courier size=-1>abc </font>and <font face=courier size=-1>abc_def_</font> in different locales?<br>
+<br>
+One way of distinguishing is to use the names utility verb that lists global names.<br>
+
+<pre>   a =. 23
+   b =. 24
+   a_q_ =. 25
+   w_q_ =. 26
+   names 0	NB. 0 lists nouns
+a abc b</pre>
+Your names result may be different, but it will include all global nouns you have defined in the base locale. You should see the <font face=courier size=-1>a</font> and <font face=courier size=-1>b</font> that you defined above and note that you do not see the <font face=courier size=-1>w</font> that was defined in locale <font face=courier size=-1>q</font>.<br>
+<br>
+To see the names defined in locale <font face=courier size=-1>q</font> you can do the following:<br>
+
+<pre>   names_q_ 0	NB. names in locale q
+a w</pre>
+Nouns <font face=courier size=-1>a</font> and <font face=courier size=-1>w</font> are defined in the <font face=courier size=-1>q</font> locale.<br>
+<br>
+Locales partition global names into different sets, and utilities, such as names, can work with globals in a particular locale.<br>
+<br>
+The real power of locales comes into play with verbs defined in a locale. When a verb executes in a locale it executes with that locale, not the base locale, as the current locale.<br>
+<br>
+Let's define a simple verb in the <font face=courier size=-1>q</font> locale to see how this works.<br>
+
+<pre>   f_q_ =. 3 : 'a =: y'</pre>
+This verb defines global a with its right argument. There can be many different locales, each with their own global <font face=courier size=-1>a</font>. But when <font face=courier size=-1>f_q_</font> executes, it executes in the <font face=courier size=-1>q</font> locale and the <font face=courier size=-1>q</font> locale is the current local, and global names it uses are from the <font face=courier size=-1>q</font> locale. Try the following experiments:<br>
+
+<pre>   a =. 23	NB. define a in the base locale
+   a_q_ =. 24	NB. define a in locale q
+   f_q_ 100	NB. execute f in locale q
+100
+   a
+23
+   a_q_
+100
+</pre>
+Executing <font face=courier size=-1>f_q_ 100</font> defined global <font face=courier size=-1>a_q_</font> as 100. It did not affect the global<font face=courier size=-1> a</font> in the base locale.<br>
+<br>
+If a verb explicitly references a name in a locale then that is the global that is affected. For example, define verb <font face=courier size=-1>g_q_</font> that defines a in the base locale. You will see that the <font face=courier size=-1>a</font> in the base locale is defined and the <font face=courier size=-1>a</font> in the <font face=courier size=-1>q</font> locale is not changed:<br>
+
+<pre>   g_q_ =. 3 : 'a_base_ =: y'	NB. explicit locale name
+   g_q_ 200
+200
+   a
+200
+   a__
+200
+   a_q_
+100</pre>
+Locales partition global names into separate sets. In particular, related nouns and verbs, say in a set of utilities, can be defined in their own locale. Their names don't conflict with names in the base or other locales. When you look at your application you can look at just the related globals that are in a particular locale. When a verb runs in a locale it uses globals from that same locale.<br>
+<br>
+The names verb with an argument of 0 lists nouns, with 3 it lists verbs, and with 6 it lists locale names.<br>
+
+<pre>   names_q_ 0
+a w
+   names_q_ 3	NB. verbs
+f g
+   names 6	NB. locale names
+base j q z</pre>
+The list of locale names is interesting. <font face=courier size=-1>base </font>and <font face=courier size=-1>q</font> you know about, but what about <font face=courier size=-1>j</font> and <font face=courier size=-1>z</font> ?<br>
+<br>
+The globals in the <font face=courier size=-1>j</font> and <font face=courier size=-1>z</font> locales are defined when J starts up and runs the profile.ijs script. The j locale contains things which are useful in building an application and is discussed in the J Online Documentation.<br>
+<br>
+The <font face=courier size=-1>z</font> locale is very interesting indeed.<br>
+<!--bottom jump start--><hr><a href="z_locale.htm">&gt;&gt;</a>&nbsp;
+<a href="when_not_same.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

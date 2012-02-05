@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 12. Sorting</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp13.htm">&gt;&gt;</a>&nbsp;
+<a href="samp11.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>12. Sorting</b></font><br><br>
+
+The sort<tt> x /: y </tt>re-orders<tt> x </tt>according to the 
+grade of<tt> y</tt> ,<tt> </tt>that is,<tt> /:y</tt> :<br>
+
+<pre>
+   x=: 2 7 1 8 [ y=: 1 7 3 2
+   (/:y);((/:y){x);(x/:y);(x/:x)
++-------+-------+-------+-------+
+|0 3 2 1|2 8 1 7|2 8 1 7|1 2 7 8|
++-------+-------+-------+-------+
+</pre>
+
+The grade and sort of literal characters is based upon the 
+ordering of the underlying alphabet<tt> a.</tt> .<tt> </tt> 
+For example, if the name &ldquo;text&rdquo; is used for the present sentence 
+(up to and including the colon), then:<br>
+
+<pre>
+   tdw=: &gt;dwds=: ~. wds=: ;: text
+   ($tdw),($dwds),($wds),($text)
+21 9 21 25 103
+
+   ]alph=: a. {~ ,(i. 26) +/ (a.i.'aA')
+aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+
+   tdw; (tdw /: tdw);(tdw/: alph i. tdw)
++---------+---------+---------+
+|For      |&quot;        |and      |
+|example  |(        |colon    |
+|,        |)        |example  |
+|if       |,        |for      |
+|the      |For      |For      |
+|name     |and      |if       |
+|&quot;        |colon    |including|
+|text     |example  |is       |
+|is       |for      |name     |
+|used     |if       |present  |
+|for      |including|sentence |
+|present  |is       |text     |
+|sentence |name     |then:    |
+|(        |present  |the      |
+|up       |sentence |to       |
+|to       |text     |up       |
+|and      |the      |used     |
+|including|then:    |,        |
+|colon    |to       |&quot;        |
+|)        |up       |(        |
+|then:    |used     |)        |
++---------+---------+---------+
+</pre>
+
+The middle column is the alphabetized table of 
+distinct words, but (because the cases are not interleaved 
+in the alphabet<tt> a.</tt>), the words &ldquo;for&rdquo; and &ldquo;For&rdquo;
+are widely separated; they are brought together in the last 
+column by indexing the table by a suitable alphabet. <br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp13.htm">&gt;&gt;</a>&nbsp;
+<a href="samp11.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

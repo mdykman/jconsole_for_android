@@ -1,0 +1,49 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Local</title>
+
+</head><body><!--top jump start--><a href="global.htm">&gt;&gt;</a>&nbsp;
+<a href="script_file.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Local</h1>
+The verb centigrade uses names <font face=courier size=-1>t1</font>, <font face=courier size=-1>t2</font>, and <font face=courier size=-1>t3 </font>in its definition, but if you refer to them outside the verb they are not defined.<br>
+<br>
+
+<pre>   centigrade 32
+0
+   t1
+¦value error
+   t1 =. 123
+   t1
+123
+   centigrade 212
+100
+   t1
+123</pre>
+The use of <font face=courier size=-1>t1 </font>inside the definition of centigrade has not conflicted with your use of <font face=courier size=-1>t1 </font>outside the definition. The verb centigrade does not define a <font face=courier size=-1>t1 </font>outside of itself, as indicated by the value error, and setting a value into its t1 does not change the value of <font face=courier size=-1>t1 </font>outside the definition.<br>
+<br>
+The <font face=courier size=-1>t1 </font>used inside centigrade is a local name. A local name exists only inside the verb. The <font face=courier size=-1>t1 </font>used outside centigrade is a global name. A name defined in the execution of a verb with the copula <font face=courier size=-1>=.</font> is a local name.<br>
+<!--bottom jump start--><hr><a href="global.htm">&gt;&gt;</a>&nbsp;
+<a href="script_file.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

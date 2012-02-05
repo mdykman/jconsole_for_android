@@ -1,0 +1,145 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Selecting &amp; reading data</title>
+
+</head><body><!--top jump start--><a href="update_records.htm">&gt;&gt;</a>&nbsp;
+<a href="connect_data_source.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Selecting and reading data</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+To read data from a file, you first select the data you want to read using the <code>ddsel</code> verb, which returns a statement handle. You then use <code>ddfet</code> or <code>ddfch</code> to fetch the records. 
+
+<P>
+The left argument of <code>ddsel</code> is a SQL selection expression. Here are typical examples:
+
+<P>
+Select all records (* means all columns):
+
+<pre>
+   sh=. 'select * from tdata' ddsel ch
+</pre>
+
+<p>
+Fetch the first 3 records:
+
+<pre>
+   ddfet sh,3
++--------------+-+----+---------+---------+-----+
+|MACDONALD B   |F|D101|1.95906e7|1.97805e7|32591|
++--------------+-+----+---------+---------+-----+
+|GENEREAUX S   |F|D103|1.94503e7|1.96602e7|95415|
++--------------+-+----+---------+---------+-----+
+|KOEBEL R      |M|D101|1.93711e7|1.98009e7|63374|
++--------------+-+----+---------+---------+-----+
+</pre>
+
+<p>
+Fetch the next record:
+
+<pre>
+   ddfet sh
++--------------+-+----+---------+---------+-----+
+|KELLER J      |F|D101|1.95105e7|1.97404e7|48898|
++--------------+-+----+---------+---------+-----+
+</pre>
+
+<P>
+Close the statement handle:
+
+<pre>
+   ddend sh
+</pre>
+
+<P>
+You should always close the statement handle when you no longer need it. However to avoid repetition, the remaining examples do not show this.
+
+<P>
+Select males with salary exceeding 40000:
+
+<pre>
+   sel=.'select * from tdata where sex=''M'' and salary &gt;= 40000'
+   sh=. sel ddsel ch
+   ddfet sh,4
++--------------+-+----+---------+---------+------+
+|KOEBEL R      |M|D101|1.93711e7|1.98009e7|63374 |
++--------------+-+----+---------+---------+------+
+|NEWTON R      |M|D108|1.95601e7|1.97902e7|73368 |
++--------------+-+----+---------+---------+------+
+|DINGEE S      |M|D103|1.9641e7 |1.98309e7|46877 |
++--------------+-+----+---------+---------+------+
+|ROGERSON G    |M|D101|1.95712e7|1.98302e7|108777|
++--------------+-+----+---------+---------+------+
+</pre>
+
+<P>
+Select only the name, department and salary fields, where date of birth is before 1950:
+
+<pre>
+   sel=.'select name,dept,salary from tdata where dob&lt;19500000'
+</pre>
+
+<P>
+Fetch the first such record:
+
+<pre>
+   ddfet (sel ddsel 1),1
++--------------+----+-----+
+|GENEREAUX S   |D103|95415|
++--------------+----+-----+
+</pre>
+
+<P>
+Use <code>ddfch</code> to return data in columns:
+
+<pre>
+   [a=. ddfch 1005,_1
++--------------+-+----+---------+---------+-----+
+|MACDONALD B   |F|D101|1.95906e7|1.97805e7|32591|
+|GORDON E      |F|D103|1.95202e7|1.97908e7|29960|
+|BAUERLEIN J   |F|D103|1.96204e7|1.98409e7|33668|
+|CHESHER D     |F|D103| 1.9561e7|1.98408e7|35184|
++--------------+-+----+---------+---------+-----+
+
+   (;:'name sex dept dob doh salary')=. a
+salary
+32591
+29960
+33668
+35184
+</pre>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="update_records.htm">&gt;&gt;</a>&nbsp;
+<a href="connect_data_source.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

@@ -1,0 +1,169 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>F. Geometry</title>
+
+</head><body><!--top jump start--><a href="sums_means.htm">&gt;&gt;</a>&nbsp;
+<a href="quadrature_simpson.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>9F. Geometry</h1>
+
+<P>We begin with some simple functions (Length, Area, Volume) of various figures 
+(rectangle, box, circle, cone, sphere, pyramid) applied to a length or list of lengths. 
+For example:</P>
+ 
+
+<TABLE ALIGN="center" BORDER=1 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+  <TR><TD width=40%><tt>m0=: Ar=: */</tt></TD> <TD width=60%>Area of rectangle</TD></TR>
+  <TR><TD><tt>m1=: Ab=: 2: * [:+/ ] *1&amp;|.</tt></TD> <TD>Area of box</TD></TR>
+  <TR><TD><tt>m2=: Vb=: */</tt></TD> <TD>Volume of box</TD></TR>
+  <TR><TD><tt>m3=: Lci=: 2: * o.</tt></TD> <TD>Length (circumference) of circle (radius)</TD></TR>
+  <TR><TD><tt>m4=: Aci=: [:o. ] ^ 2:</tt></TD> <TD>Area of circle (r)</TD></TR>
+  <TR><TD><tt>d5=: Aco=: o.@* </tt></TD><TD>Area of cone, excluding base (h r)</TD></TR>
+  <TR><TD><tt>d6=: Vco=: 1r3p1&quot;_ * ] * *</tt></TD> <TD>Volume of cone (h r)</TD></TR>
+  <TR><TD><tt>m7=: As=: 4p1&quot;_ * ] ^ 2:</tt></TD> <TD>Area of sphere (r)</TD></TR>
+  <TR><TD><tt>m8=: Vs=: 4r3p1&quot;_ * ] ^ 3:</tt></TD> <TD>Volume of sphere (r)</TD></TR>
+  <TR><TD><tt>m9=: L=: +/&amp;.(*:&quot;_)&quot;1</tt></TD> <TD>Length of a vector</TD></TR>
+  <TR><TD><tt>d10=: Lp=: [: L [ , [: L [: -: ]</tt></TD> <TD>Length of edges of pyramid (h   w,l)</TD></TR>
+  <TR><TD><tt>d11=: Ap=: [:+/ ]* [:L&quot;1 [,&quot;0-:@]</tt></TD> <TD>Area of pyramid, excluding base (h w,l)</TD></TR>
+  <TR><TD><tt>d12=: Vp=: 1r3&quot;_ * */@,</tt></TD> <TD>Volume of pyramid</TD></TR>
+  <TR><TD><tt>m13=: sp=: -:@(+/)</tt></TD> <TD>Semi-perimeter</TD></TR>
+  <TR><TD><tt>m14=: h=: [: %: [: */ sp - 0: , ]</tt></TD> <TD>Heron's formula for area of triangle</TD></TR>
+</TABLE>
+
+
+<P>For example:</P></TD>
+
+<pre>   h 3 4 5
+6
+
+   h 51 52 53
+1170
+
+   h 2 2 2
+1.73205</pre>
+
+<P>In treating coordinate geometry we will use a list of n elements to represent 
+a point in n-space, and an m by n table to represent a polygon of m vertices. 
+For example:</P></TD>
+
+<pre>
+   p=: 3 1 [ q=: 4 1 [ r=: 5 9   NB. Three points
+   T=: p,q,:r                    NB. A triangle
+   L=: +/&amp;.(*:&quot;_)&quot;1              NB. Length function
+   L p
+3.16228
+
+   u=: 1&amp;|.   Rotate up
+   D=: u-]   Displacements
+ 
+   ,.&amp;.&gt;(];u;D;L@D)T3            NB. Displacements and lengths (of sides)
++---+---+-----+-------+
+|3 1|4 1| 1  0|      1|
+|4 1|5 9| 1  8|8.06226|
+|5 9|3 1|_2 _8|8.24621|
++---+---+-----+-------+
+
+   line=: 3 1 4,:1 5 9           NB. A line in 3-space
+   (];-/;L@(-/);L)               NB. line Line, disp, length, distances to ends
++-----+-------+------+---------------+
+|3 1 4|2 _4 _5|6.7082|5.09902 10.3441|
+|1 5 9|       |      |               |
++-----+-------+------+---------------+
+
+   T3=: ?.3 3$10                 NB. Random triangle in 3-space
+   ,.&amp;.&gt;(];u;D;L@D) T3
++-----+-----+--------+-------+
+|1 7 4|5 2 0| 4 _5 _4|7.54983|
+|5 2 0|6 6 9| 1  4  9|9.89949|
+|6 6 9|1 7 4|_5  1 _5|7.14143|
++-----+-----+--------+-------+
+</pre>
+
+
+<TABLE ALIGN="center" BORDER=1 CELLSPACING=0 CELLPADDING=0 WIDTH=100%>
+  <TR><TD width=40%><tt>m15 =: L=: +/&amp;.(*:&quot;_)&quot;1</tt></TD> <TD width=60%>Length</TD></TR>
+  <TR><TD><tt>m16=: D=: 1&amp;|.-]</tt></TD> <TD>Displacement</TD></TR>
+  <TR><TD><tt>m17=: LS=: L&quot;1@D</tt></TD> <TD>Lengths of sides</TD></TR>
+  <TR><TD><tt>m18=: S=: 1&amp;o.@(*&amp;1r180p1)</tt></TD> <TD>Sine in degrees</TD></TR>
+  <TR><TD><tt>m19=: C=: 2&amp;o.@(*&amp;1r180p1)</tt></TD> <TD>Cosine in degrees</TD></TR>
+  <TR><TD><tt>m20=: r=: (C,S),:(-@S,C)</tt></TD> <TD>2-dim rotation matrix in degrees</TD></TR>
+  <TR><TD><tt>m21=: b=: &lt;&quot;1@(,&quot;0/~)</tt></TD> <TD>Table of boxed index pairs: do <tt>i 0 2</tt> </TD></TR>
+  <TR><TD><tt>d22=: R=: (r@])`(b@[)`(=@i.@3:)}</tt></TD> <TD>3-dim rm: From axis 0 to 2 is <tt>0 2 R a</tt></TD></TR>
+  <TR><TD><tt>d23=: mp=: +/ . *</tt></TD> <TD>Matrix product</TD></TR>
+  <TR><TD NOWRAP><tt>m24=: R3=: (2 0&quot;_ R 0&amp;{)mp(1 2&quot;_ R <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      1&amp;{)mp(0 1&quot;_ R 2&amp;{)</tt></TD> <TD><tt>R3 p,q,r</tt> is p-rotate from axis 2 to 1 on q-r from 1 to 2 on r-r from 0 to 1</TD>
+  </TR><TR><TD><tt>m25=: Det=: -/ . *</tt></TD> <TD>Determinant</TD></TR>
+  <TR><TD><tt>m26=: Area=: [:Det ] ,. %@!@{:@$</tt></TD> <TD>Area of triangle</TD></TR>
+  <TR><TD><tt>m27=: Vol=: Area f.</tt></TD> <TD>Volume of simplex in n-space (fixed)</TD></TR>
+  <TR><TD NOWRAP><tt>d28=: dsplitby=: ~:/@:*@:Vol@: <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    (,&quot;1 2)</tt></TD> <TD>Are points pairs (2 by n matrix) x separated by n by n simplex y?</TD></TR>
+  <TR><TD>m29=: Area2=: [: -: [: +/ 2: Det\ ]</TD> <TD>Area of polygon</TD></TR>
+</TABLE>
+
+
+<P>Area yields the area of a triangle expressed as a 3 by 2 
+list of x-y coordinates:</P></TD>
+
+<pre>   TT 
+3 3
+6 5
+2 7
+
+   Area TT
+7</pre>
+
+<TD><P>Area2 also yields the area of a triangle, expressed by a similar table, 
+but with the top row repeated at the bottom:</P>
+
+<pre>   TT2
+3 3
+6 5
+2 7
+3 3
+
+   Area2 TT2
+7</pre>
+
+<P>It is more general, however, and will yield the area of arbitrary polygons:</P>
+
+<pre>   Polygon
+ 7 2
+10 5
+ 6 8
+ 3 6
+ 4 3
+ 7 2
+
+   Area2 Polygon
+24.5 </pre>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="sums_means.htm">&gt;&gt;</a>&nbsp;
+<a href="quadrature_simpson.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

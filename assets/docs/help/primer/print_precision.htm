@@ -1,0 +1,76 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Print precision</title>
+
+</head><body><!--top jump start--><a href="inexact_numbers.htm">&gt;&gt;</a>&nbsp;
+<a href="plot_locale.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Print precision</h1>
+Print precision is the number of digits shown when a number is displayed.<br>
+
+<pre>   1 % 3
+0.333333
+   10 % 3
+3.33333
+   100 % 3
+33.3333
+</pre>
+Using lists and some of the new primitives you can now see this more concisely:<br>
+
+<pre>   (10 ^ i. 6) % 3
+0.333333 3.33333 33.3333 333.333 3333.33 33333.3
+</pre>
+You can guess that the default print precision is 6 because in each case 6 digits are shown.<br>
+
+<pre>   a =. 1e5 + 10 % 3
+   b =. a + 0.1
+   a
+100003
+   b
+100003
+   a = b
+0</pre>
+With only 6 digits shown, <font face=courier size=-1>a</font> and <font face=courier size=-1>b</font> look the same even though they aren't. In a situation like this you need to see more digits. The print precision can be changed by use of the following verb.<br>
+
+<pre>   pps =. 9!:11	NB. print precision set</pre>
+Don't worry about the curious appearance of this verb, just use it.<br>
+
+<pre>   pps 9
+   a
+100003.333
+   b
+100003.433
+</pre>
+With print precision of 9 there is enough detail to see what is going on.<br>
+
+<pre>   pps 6
+   %3 9 13
+0.333333 0.111111 0.0769231
+   pps 12
+   %3 9 13
+0.333333333333 0.111111111111 0.0769230769231</pre>
+The default print precision of 6 is adequate for most situations because you don't usually have to see all those extra digits of detail. However, it is important to know that they really are there, and that the display has been abbreviated as a matter of convenience.<br>
+<!--bottom jump start--><hr><a href="inexact_numbers.htm">&gt;&gt;</a>&nbsp;
+<a href="plot_locale.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,1249 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Loopless Code V: Partitions</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="when_programs_are_data.htm">&gt;&gt;</a>&nbsp;
+<a href="socket_programming.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><a
+name="_Toc191734451"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>23. </span></span><![endif]>Loopless Code V: Partitions</a></span></span></h1>
+
+<p class=MsoBodyText>The adverb <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>\</span></span> operated on subsets of the operand <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+that were taken in a regular way.&nbsp; Now we
+will take the next step, and operate on irregular subsets of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This will finally give us the chance to do
+interesting work with character strings.</p>
+
+<p class=Section><a name="_Toc191734452"></a><a name="_Toc5414625"></a><a
+name="_Toc5414462"></a><a name="_Toc1896254"><span style='mso-bookmark:_Toc5414462'><span
+style='mso-bookmark:_Toc5414625'><span style='mso-bookmark:_Toc191734452'>Find
+Unique Items: Monad </span></span></span></a><span style='mso-bookmark:_Toc1896254'><span
+style='mso-bookmark:_Toc5414462'><span style='mso-bookmark:_Toc5414625'><span
+style='mso-bookmark:_Toc191734452'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>~.</span></span> and Monad </span></span></span></span><span
+style='mso-bookmark:_Toc1896254'><span style='mso-bookmark:_Toc5414462'><span
+style='mso-bookmark:_Toc5414625'><span style='mso-bookmark:_Toc191734452'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>~:</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Nub Sieve verb ~\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;~\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Nub verb ~.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span>&nbsp;XE
+&quot;~. monad&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->Monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>~.</span></span> has infinite
+rank.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>~.&nbsp;y</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+with duplicate items removed and is called the <span class=Definition>nub</span>
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>~.&nbsp;y</span></span> are in
+the order of their first appearance in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ~. 'Green grow
+the lilacs'</p>
+
+<p class=Jcodemultiline>Gren gowthliacs</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =. _2 ]\ 0
+1 1 2 0 1 2 3 1 3 1 2</p>
+
+<p class=Jcodemultiline>0 1</p>
+
+<p class=Jcodemultiline>1 2</p>
+
+<p class=Jcodemultiline>0 1</p>
+
+<p class=Jcodemultiline>2 3</p>
+
+<p class=Jcodemultiline>1 3</p>
+
+<p class=Jcodemultiline>1 2</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ~.a</p>
+
+<p class=Jcodemultiline>0 1</p>
+
+<p class=Jcodemultiline>1 2</p>
+
+<p class=Jcodemultiline>2 3</p>
+
+<p class=Jcodemultiline>1 3</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> can have any rank, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>~.&nbsp;y</span></span> gives
+the unique items.</p>
+
+<p class=MsoBodyText>Monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~:</span></span> has infinite rank and tells you which items
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~.</span></span>
+would pick.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>~:&nbsp;y</span></span> is a
+Boolean list where each element is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1</span></span> if the corresponding item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+would have been selected for the nub of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ~: 'Green grow
+the lilacs'</p>
+
+<p class=Jcodemultiline>1 1 1 0 1 1 1 0 1 1 0 1 1 0 0 1 1 0 1 1 1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ~: a</p>
+
+<p class=Jcodemultiline>1 1 0 1 1 0</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (~: a) # a</p>
+
+<p class=Jcodemultiline>0 1</p>
+
+<p class=Jcodemultiline>1 2</p>
+
+<p class=Jcodemultiline>2 3</p>
+
+<p class=Jcodemultiline>1 3</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~.&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(~:&nbsp;y)&nbsp;#&nbsp;y&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734453"></a><a name="_Toc5414626"></a><a
+name="_Toc5414463"></a><a name="_Toc1896255"><span style='mso-bookmark:_Toc5414463'><span
+style='mso-bookmark:_Toc5414626'><span style='mso-bookmark:_Toc191734453'>Apply
+On Subsets: Dyad </span></span></span></a><span style='mso-bookmark:_Toc1896255'><span
+style='mso-bookmark:_Toc5414463'><span style='mso-bookmark:_Toc5414626'><span
+style='mso-bookmark:_Toc191734453'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u/.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Apply On Subsets adverb /.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u/. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u/.</span></span> has infinite
+rank.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u/.&nbsp;y</span></span>
+applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to subsets of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+for which the corresponding items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> (called the <span class=Definition>keys</span>)
+are identical.&nbsp; I will skip the formal
+description in favor of a verbal one: First find the nub of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>, call it <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>nx</span></i></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Then, for each item of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>nx</span></i></span>, find all
+matching items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>;
+make an array of the corresponding items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> (this array will
+always have rank one more than the rank of an item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>), and apply <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to that array; the result becomes one item of the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u/.&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u/.&nbsp;y</span></span>
+thus correspond to items of the nub of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that the subsets of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> may have
+different shapes (they will all have the same rank, being made of items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+but each subset may have a different number of items).<span
+style='mso-spacerun:yes'>&nbsp; </span>For this reason, we usually have <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+produce a boxed result to avoid framing fills.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =. 2 0 1 0
+2 &lt;/. 'Hello'</p>
+
+<p class=Jcodemultiline>+--+--+-+</p>
+
+<p class=Jcodemultiline>|Ho|el|l|</p>
+
+<p class=Jcodemultiline>+--+--+-+</p>
+
+<p class=BodyTextnoleader>The subsets were created, and each one was
+boxed.&nbsp; Note that each subset is a list,
+even the one with only one element:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $&amp;.&gt; a</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=Jcodemultiline>|2|2|1|</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 3 0 3 0 3
++//. 100 1 200 2 300</p>
+
+<p class=Jcodemultiline>600 3</p>
+
+<p class=BodyTextnoleader>The summing was performed for each subset.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that the result is sorted not on the
+value of the keys, but rather on the smallest index of each key in <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; ]a =. _2
+]\ 'Fred';100;'Joe';200;'Fred';50;'Sam';30</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Fred|100|</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Joe |200|</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Fred|50 |</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Sam |30 |</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=BodyTextnoleader>A small database of amounts we owe.<span
+style='mso-spacerun:yes'>&nbsp; </span>We can quickly get a total for each creditor:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]b =. ({.&quot;1
+a) +/@:&gt;/. ({:&quot;1 a)</p>
+
+<p class=Jcodemultiline>150 200 30</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>({.&quot;1&nbsp;a)</span></span> gives the list of names,
+which we use as keys for the data given by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>({:&quot;1&nbsp;a)&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For each subset, we open the boxes and add up
+the results.&nbsp; Note that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/@&gt;/.</span></span>
+would not do in place of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/@:&gt;/.</span></span>, and understand why.</p>
+
+<p class=MsoBodyText>It would be nice to have names associated with the totals:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (~. {.&quot;1
+a) ,. &lt;&quot;0 b</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Fred|150|</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Joe |200|</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Sam |30 |</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=BodyTextnoleader>We box the totals using <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&lt;&quot;0</span></span> before
+we join items of the totals to the items of the nub.<span
+style='mso-spacerun:yes'>&nbsp; </span>Recall that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,.&nbsp;y</span></span>
+concatenates each item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> with the corresponding item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.We
+take advantage of the fact that the results of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u/.</span></span> have the same
+order as the nub.</p>
+
+<p class=Section><a name="_Toc191734454"></a><a name="_Toc5414627"></a><a
+name="_Toc5414464"></a><a name="_Toc1896256"><span style='mso-bookmark:_Toc5414464'><span
+style='mso-bookmark:_Toc5414627'><span style='mso-bookmark:_Toc191734454'>Apply
+On Partitions: Monad </span></span></span></a><span style='mso-bookmark:_Toc1896256'><span
+style='mso-bookmark:_Toc5414464'><span style='mso-bookmark:_Toc5414627'><span
+style='mso-bookmark:_Toc191734454'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u;.1</span></span> and </span></span></span></span><span
+style='mso-bookmark:_Toc1896256'><span style='mso-bookmark:_Toc5414464'><span
+style='mso-bookmark:_Toc5414627'><span style='mso-bookmark:_Toc191734454'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>u;.2</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Partitions:implied&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Apply On Partitions conjunction \;.&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u\;.1 and u\;.2 monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Unlike dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/.</span></span>
+which applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to scattered subsets of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u;.n</span></span> applies <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> to sequential
+subsets of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;.n</span></span>, the subsets
+are computed from information in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> itself; in dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;.n</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+specifies the subsets.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.n</span></span>
+is really 4 different cases distinguished by the number <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span>; we will start
+with the case where <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>,
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_2&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>Avoid the error of thinking that an operation on a subset
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+somehow modifies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Never happens.<span
+style='mso-spacerun:yes'>&nbsp; </span>In J, the result of a verb is always a new
+noun.&nbsp; You may assign that noun to the
+same name as one of the operands, but until you do, the old operand is
+unchanged, and both it and the result of the verb are available for further
+use.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.1&nbsp;y</span></span>
+<span class=Definition>partitions</span> <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> by finding the
+items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+that match the first item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> (i.&nbsp;e. <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0{y</span></span>); each such
+item, called a <span class=Definition>fret</span>, is the start of an <span
+class=Definition>interval</span> of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> which runs from the fret to the last item
+before the next fret (the last interval runs to the end of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> is applied to
+each interval (which is always a list of items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>), and the
+results of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+become the items of the overall result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;.1&nbsp;y&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &lt;;.1 ' a
+list of words '</p>
+
+<p class=Jcodemultiline>+--+-----+---+------+-+</p>
+
+<p class=Jcodemultiline>| a| list| of| words| |</p>
+
+<p class=Jcodemultiline>+--+-----+---+------+-+</p>
+
+<p class=BodyTextnoleader>Each <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'&nbsp;'</span></span> character, even the one at the end,
+started a new interval.&nbsp; We are not
+restricted to boxing the intervals:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; #;.1 ' a list
+of words '</p>
+
+<p class=Jcodemultiline>2 5 3 6 1</p>
+
+<p class=BodyTextnoleader>Here we report the length of each word.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;._1&nbsp;y</span></span>
+is like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.1&nbsp;y</span></span>
+except that the fret itself is omitted from the interval.<span
+style='mso-spacerun:yes'>&nbsp; </span>The interval could be empty in that case:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &lt;;._1 ' a
+list of words '</p>
+
+<p class=Jcodemultiline>+-+----+--+-----++</p>
+
+<p class=Jcodemultiline>|a|list|of|words||</p>
+
+<p class=Jcodemultiline>+-+----+--+-----++</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; #;._1 ' a list
+of words '</p>
+
+<p class=Jcodemultiline>1 4 2 5 0</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.2&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;._2&nbsp;y</span></span>
+are like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.1&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;._1&nbsp;y</span></span>
+except that the frets are those items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> that match its <i>last</i>
+item, and each marks the <i>end</i> of an interval:</p>
+
+<p class=Jcodemultiline>&nbsp;<span
+style='mso-spacerun:yes'>&nbsp; </span>&lt;;.2 'Mississippi'</p>
+
+<p class=Jcodemultiline>+--+---+---+---+</p>
+
+<p class=Jcodemultiline>|Mi|ssi|ssi|ppi|</p>
+
+<p class=Jcodemultiline>+--+---+---+---+</p>
+
+<p class=Subsection><a name="_Toc191734455">Creating An Array Using </a><span
+style='mso-bookmark:_Toc191734455'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;:0</span></span> And </span><span style='mso-bookmark:
+_Toc191734455'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;._2</span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Creating an array using 0 \:0&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;.2&nbsp;y</span></span> to
+split a list when you know the ending marker for the intervals.<span
+style='mso-spacerun:yes'>&nbsp; </span>An important use of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;._2</span></span> is to
+execute <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+on each line of a noun that is defined with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;:0</span></span>&nbsp;:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ;: ;._2 (0 :
+0)</p>
+
+<p class=Jcodemultiline>Fred 500</p>
+
+<p class=Jcodemultiline>Joe 200</p>
+
+<p class=Jcodemultiline>Fred 50</p>
+
+<p class=Jcodemultiline>Sam 30</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Fred|500|</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Joe |200|</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Fred|50 |</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=Jcodemultiline>|Sam |30 |</p>
+
+<p class=Jcodemultiline>+----+---+</p>
+
+<p class=BodyTextnoleader>Here <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(0 : 0)</span></span> creates a noun from the lines that
+follow.&nbsp; Each line ends with an unseen <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LF</span></span>
+character which provides a convenient fret for splitting the lines.<span
+style='mso-spacerun:yes'>&nbsp; </span>We use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;._2</span></span> to apply
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;:</span></span>
+to the text of each line (not including the fret, which is dropped by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;._2</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;:</span></span> splits each
+string into words and boxes the words.&nbsp;
+The result is not the same as the array we created earlier, because the
+second column is character rather than numeric.&nbsp;
+We could have written <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>noun&nbsp;define</span></span> instead of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(0 : 0)</span></span>&nbsp;.</p>
+
+<p class=MsoBodyText>The verb you apply to each line of the noun depends on
+what is in your noun.&nbsp; One common choice
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span>,
+to be discussed in the next chapter, which executes each line as a sentence,
+returning the result.</p>
+
+<p class=MsoBodyText>Monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u;.n</span></span> has rank <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;_</span></span> when <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>,
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_2&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734456"></a><a name="_Toc5414628"></a><a
+name="_Toc5414465"></a><a name="_Toc1896257"><span style='mso-bookmark:_Toc5414465'><span
+style='mso-bookmark:_Toc5414628'><span style='mso-bookmark:_Toc191734456'>Apply
+On Specified Partitions: Dyad </span></span></span></a><span style='mso-bookmark:
+_Toc1896257'><span style='mso-bookmark:_Toc5414465'><span style='mso-bookmark:
+_Toc5414628'><span style='mso-bookmark:_Toc191734456'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>u;.1</span></span>
+and</span></span></span></span><span style='mso-bookmark:_Toc1896257'><span
+style='mso-bookmark:_Toc5414465'><span style='mso-bookmark:_Toc5414628'><span
+style='mso-bookmark:_Toc191734456'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'> u;.2</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Partitions:specified&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Apply On Selected Partitions
+conjunction \;.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u\;.1and u\;.2 dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->When <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>,
+or _<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman";
+mso-bidi-font-style:italic'>2</span></span><span style='mso-bidi-font-style:
+italic'>, </span><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman";
+mso-bidi-font-style:italic'>x&nbsp;u;.n&nbsp;y</span></span><span
+style='mso-bidi-font-style:italic'> has infinite rank and, in the
+one-dimensional case where </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-style:italic'>x</span></span><span
+style='mso-bidi-font-style:italic'> is a Boolean list of </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:
+italic'>0</span></span><span style='mso-bidi-font-style:italic'>s and </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:
+italic'>1</span></span><span style='mso-bidi-font-style:italic'>s, resembles </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:
+italic'>u;.n&nbsp;y&nbsp;</span></span><span style='mso-bidi-font-style:italic'>.
+&nbsp;The difference is that the frets are
+given by the positions of </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-style:italic'>1</span></span><span
+style='mso-bidi-font-style:italic'>s in </span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:italic'>x</span></span><span
+style='mso-bidi-font-style:italic'> rather than by values of the items of </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:
+italic'>y&nbsp;</span></span><span style='mso-bidi-font-style:italic'>.<span
+style='mso-spacerun:yes'>&nbsp; </span>We can define </span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:italic'>u;.1&nbsp;y</span></span><span
+style='mso-bidi-font-style:italic'> as </span><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-style:italic'>(({.y)=&quot;_</span></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;_1&nbsp;y)&nbsp;u;.1&nbsp;y</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.n&nbsp;y</span></span>
+for the other values of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> similarly.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 1 0 1 0
++/;.1 (20 30 40 50 60)</p>
+
+<p class=Jcodemultiline>70 110</p>
+
+<p class=BodyTextnoleader>As in this example, some leading items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+may not be in any interval.</p>
+
+<p class=MsoBodyText>In the general case <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is a list of
+boxed Boolean lists, with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>j{::x</span></span> supplying the frets for axis <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>j&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The partition is then multidimensional:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (0 1 1;1 0 0
+1) &lt;;.1 i. 3 4</p>
+
+<p class=Jcodemultiline>+------+--+</p>
+
+<p class=Jcodemultiline>|4 5 6 |7 |</p>
+
+<p class=Jcodemultiline>+------+--+</p>
+
+<p class=Jcodemultiline>|8 9 10|11|</p>
+
+<p class=Jcodemultiline>+------+--+</p>
+
+<p class=MsoBodyText>In both the monadic and dyadic cases of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;.1</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;._1</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.2</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;._2</span></span>,
+the partitions to which <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> is applied have the same rank as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(but the shapes along the leading axes are reduced by the partitioning).</p>
+
+<p class=Subsection><a name="_Toc191734457"></a><a name="_Toc5414629"></a><a
+name="_Toc5414466"></a><a name="_Toc1896258"><span style='mso-bookmark:_Toc5414466'><span
+style='mso-bookmark:_Toc5414629'><span style='mso-bookmark:_Toc191734457'>Find
+Sequence Of Items: Dyad&nbsp;</span></span></span></a><span style='mso-bookmark:
+_Toc1896258'><span style='mso-bookmark:_Toc5414466'><span style='mso-bookmark:
+_Toc5414629'><span style='mso-bookmark:_Toc191734457'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>E.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Find Sequence verb E.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;E. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>E.</span></span> has infinite
+rank and is used to slide a pattern across an array and look for positions at
+which the pattern matches the items of the array.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> should have the
+same rank, and the sliding occurs along all axes of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, giving a
+Boolean result with the same shape as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.&nbsp;
+We will consider only the cases where <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is a list.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 'is' E. 'Mississippi'</p>
+
+<p class=Jcodemultiline>0 1 0 0 1 0 0 0 0 0 0</p>
+
+<p class=BodyTextnoleader>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1</span></span>s in the result tell where the pattern
+starts.&nbsp; The result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>E.</span></span> is often used
+as input to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.1&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('is' E. 'Mississippi') &lt;;.1 'Mississippi'</p>
+
+<p class=Jcodemultiline>+---+-------+</p>
+
+<p class=Jcodemultiline>|iss|issippi|</p>
+
+<p class=Jcodemultiline>+---+-------+</p>
+
+<p class=MsoBodyText>A more ambitious example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; html =. 0 : 0</p>
+
+<p class=Jcodemultiline>&lt;th&gt;&lt;a href='page1.html'&gt;Press here to go
+back&lt;/a&gt;&lt;/th&gt;</p>
+
+<p class=Jcodemultiline>&lt;th&gt;&lt;a href='page2.html'&gt;Press here to go
+home&lt;/a&gt;&lt;/th&gt;</p>
+
+<p class=Jcodemultiline>&lt;th&gt;&lt;a href='page3.html'&gt;Press here to go
+away&lt;/a&gt;&lt;/th&gt;</p>
+
+<p class=Jcodemultiline>&lt;/table&gt;</p>
+
+<p class=Jcodemultiline>&lt;/center&gt;</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('&lt;a' E.
+html) {.@:(&lt;@:(8&amp;}.);._1)@:('&gt;'&amp;,);.1 html</p>
+
+<p class=Jcodemultiline>+------------+------------+------------+</p>
+
+<p class=Jcodemultiline>|'page1.html'|'page2.html'|'page3.html'|</p>
+
+<p class=Jcodemultiline>+------------+------------+------------+</p>
+
+<p class=BodyTextnoleader>That looks like a useful result, but what a mess to
+produce it!&nbsp; If you want, you may try to
+understand that, but a better approach is to break it up:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; extracthref =:
+&lt;@:(8&amp;}.) ;._1 @:('&gt;'&amp;,)</p>
+
+<p class=BodyTextnoleader>This seems understandable, with effort: the execution
+order is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>((&lt;@:(8&amp;}.))&nbsp;;._1)&nbsp;@:('&gt;'&amp;,)</span></span>;
+we prepend <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&gt;'</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+then we use <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;._1</span></span>
+on the string.&nbsp; That will make the
+prepended <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&gt;'</span></span>
+the fret, and so we will break the string into parts that start with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&gt;'</span></span>,
+throw away the first 8 characters of each part, and box each trimmed-down
+part.&nbsp; We can even try it on a test bit:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; extracthref 'abcdefghijkl&gt;xxx'</p>
+
+<p class=Jcodemultiline>+----++</p>
+
+<p class=Jcodemultiline>|ijkl||</p>
+
+<p class=Jcodemultiline>+----++</p>
+
+<p class=BodyTextnoleader>Now we can look again at our original line,
+rewritten:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('&lt;a' E.
+html) {.@:extracthref ;.1 html</p>
+
+<p class=Jcodemultiline>+------------+------------+------------+</p>
+
+<p class=Jcodemultiline>|'page1.html'|'page2.html'|'page3.html'|</p>
+
+<p class=Jcodemultiline>+------------+------------+------------+</p>
+
+<p class=BodyTextnoleader>This makes some sense now.<span
+style='mso-spacerun:yes'>&nbsp; </span>The execution order is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>('&lt;a'&nbsp;E.&nbsp;html)&nbsp;({.@:extracthref&nbsp;;.1)&nbsp;html&nbsp;</span></span>.
+We use <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>E.</span></span>
+to find all the starting positions of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'&lt;a'</span></span> tags; then, for each one, we split
+what follows the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&lt;a'</span></span>
+into blocks terminated by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'&gt;'</span></span>, and then we take the first one, which
+will have the data before the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'&gt;'</span></span> that matched the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'&lt;a'&nbsp;</span></span>.</p>
+
+<p class=Subsection><a name="_Toc191734458">Multidimensional Partitions</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Partitions:multidimensional&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The left argument to the
+partitioning dyads <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;.n</span></span>
+can be a list of boxes.&nbsp; In this case the
+first box contains the partition marks for axis 0, then next box contains the
+marks for axis 1, and so on.&nbsp; If a set of
+partition marks is an empty list, the corresponding axis will be unpartitioned.</p>
+
+<p class=Section><a name="_Toc191734459"></a><a name="_Toc5414630"></a><a
+name="_Toc5414467"></a><a name="_Toc1896259"><span style='mso-bookmark:_Toc5414467'><span
+style='mso-bookmark:_Toc5414630'><span style='mso-bookmark:_Toc191734459'>Apply
+On Subarray: Dyad </span></span></span></a><span style='mso-bookmark:_Toc1896259'><span
+style='mso-bookmark:_Toc5414467'><span style='mso-bookmark:_Toc5414630'><span
+style='mso-bookmark:_Toc191734459'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u;.0</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Apply On Subarray conjunction \;.&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u\;.0 dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;.0</span></span> has rank <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;_&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;u;.0&nbsp;y</span></span> uses <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> to specify a
+subarray of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>;
+the subarray is extracted, and <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> is applied to it to produce the final result.<span
+style='mso-spacerun:yes'>&nbsp; </span>We will discuss the simple case where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is a rank-2 array.</p>
+
+<p class=MsoBodyText>The first item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> (call that <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>s</span></i></span>)
+gives the starting corner of the subarray.&nbsp;
+The second item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> gives the length of each axis of the
+subarray.&nbsp; If <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is shorter than
+the rank of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+unspecified axes are taken in full.&nbsp; The
+following examples use the test array <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =. a. {~
+(a. i. 'a') + i. 4 4</p>
+
+<p class=Jcodemultiline>abcd</p>
+
+<p class=Jcodemultiline>efgh</p>
+
+<p class=Jcodemultiline>ijkl</p>
+
+<p class=Jcodemultiline>mnop</p>
+
+<p class=BodyTextnoleader>A cute little expression in its own right.<span
+style='mso-spacerun:yes'>&nbsp; </span>See why this produces the 4x4 array of
+characters shown.&nbsp; Remember that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a.</span></span>
+is the alphabet of all ASCII characters in order.<span
+style='mso-spacerun:yes'>&nbsp; </span>An even more elegant way to produce the same
+result would be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(i.&nbsp;4&nbsp;4)&amp;+&amp;.(a.&amp;i.)&nbsp;'a'&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (0 0 ,: 2 2)
+];.0 a</p>
+
+<p class=Jcodemultiline>ab</p>
+
+<p class=Jcodemultiline>ef</p>
+
+<p class=BodyTextnoleader>Starting corner <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;0</span></span>; lengths <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;2</span></span>;
+result is a 2x2 subarray, left unchanged by monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>]&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (1 2 ,: 3 2)
+];.0 a</p>
+
+<p class=Jcodemultiline>gh</p>
+
+<p class=Jcodemultiline>kl</p>
+
+<p class=Jcodemultiline>op</p>
+
+<p class=BodyTextnoleader>Starting corner <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2</span></span>; lengths <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;2</span></span>;
+result is a 3x2 subarray, left unchanged by monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>]&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You get the idea.</p>
+
+<p class=MsoBodyText>If an item of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>s</span></i></span> is negative, the negative index selects
+a starting point counting back from the end of the array, just as a negative
+index does in dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{&nbsp;</span></span>.&nbsp;
+The interval extends backwards from there:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (2 _1 ,: 2 2)
+];.0 a</p>
+
+<p class=Jcodemultiline>kl</p>
+
+<p class=Jcodemultiline>op</p>
+
+<p class=BodyTextnoleader>Starting corner <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;_1 </span></span>(the
+character <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'l'</span></span>);
+lengths <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;2</span></span>,
+but running backward in axis 1; result is a 2x2 subarray, left unchanged by
+monad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that the axis extends backward, but the
+items retain their normal order--you have merely specified the interval by its
+endpoint rather than its beginning point.&nbsp;
+If you want to reverse the order of the axis, you can do that too, by
+making the corresponding <i>length</i> negative:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (2 _1 ,: 2 _2)
+];.0 a</p>
+
+<p class=Jcodemultiline>lk</p>
+
+<p class=Jcodemultiline>po</p>
+
+<p class=BodyTextnoleader>Starting corner <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;_1 </span></span>(the
+character <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'l'</span></span>);
+lengths <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;2</span></span>,
+but running backward in axis 1; result is a 2x2 subarray with axis 1 reversed,
+left unchanged by monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>]&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>The subarray must end at the limits of the array. <span
+style='mso-spacerun:yes'>&nbsp;</span>If the length requests more than that, the
+subarray will be shorter than was requested.&nbsp;
+A length of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>__</span></span>
+will always fetch from the starting point to the limit of the array.</p>
+
+<p class=MsoBodyText>Dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u;.0</span></span> is a great way to pick out a subarray to
+work on.&nbsp; Always consider using it
+whenever you find yourself using more than one application of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span>and
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.</span></span>
+to select a portion of an array.&nbsp; Even if
+you are working with a list, using dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u;.0</span></span> is a good way
+to work on a portion of the list without copying any part you aren't working
+on.</p>
+
+<p class=Section><a name="_Toc191734460"></a><a name="_Toc5414631"></a><a
+name="_Toc5414468"><span style='mso-bookmark:_Toc5414631'><span
+style='mso-bookmark:_Toc191734460'>Apply On All Subarrays: Dyad </span></span></a><span
+style='mso-bookmark:_Toc5414468'><span style='mso-bookmark:_Toc5414631'><span
+style='mso-bookmark:_Toc191734460'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u;.3</span></span> and </span></span></span><span
+style='mso-bookmark:_Toc5414468'><span style='mso-bookmark:_Toc5414631'><span
+style='mso-bookmark:_Toc191734460'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u;._3</span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Apply On All Subarrays conjunction \;.&quot;
+<![endif]--><!--[if supportFields]><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u\;.3 and u\;._3 dyad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u;._3&nbsp;y</span></span>
+applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to subarrays of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+as specified by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The operation is similar to dyad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u\</span></span>
+(infix), but dyad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u\</span></span>
+slides a one-dimensional window across <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> to select
+sequences of items of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+while dyad <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u;._3</span></span>
+moves a multidimensional window throughout <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> to select
+multidimensional regions.&nbsp; When <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+has only one dimension, the operation is like dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u\</span></span> but with a
+little extra control over the positions of the window.</p>
+
+<p class=MsoBodyText>The second item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> (actually, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>|&nbsp;1{x</span></span>)
+gives the size of the window (if an item is negative the corresponding axis is
+reversed before <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+is applied to the window; an infinite value means 'take all the way to the end
+of the array').&nbsp; The first item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+(<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0{x</span></span>)
+is the <span class=Definition>movement vector</span>: the window is positioned
+at every point at which each item of the window position is an integral
+multiple of the corresponding item of the movement vector, as long as the
+window fits inside <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If an item of the movement vector is smaller
+than the corresponding item of the size, the windows will overlap along that
+axis.</p>
+
+<p class=MsoBodyText>If the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is greater than the length of an item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+(in other words if the window has lower rank than <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>), the omitted
+trailing dimensions have starting point <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> and length <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>In all cases the verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> is applied to an
+array of cells in which the cells have the shape of the window and the frame of
+the array with respect to those cells has the rank of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>Dyad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u;._3</span></span> is useful in imaging applications.<span
+style='mso-spacerun:yes'>&nbsp; </span>The following example averages 2x2-pixel
+regions in an image using a simple box filter:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]image =. ? 8
+8 $ 100</p>
+
+<p class=Jcodemultiline>31 88 65 15 68 38 38 49</p>
+
+<p class=Jcodemultiline>14 58 84 59 95 55 14 98</p>
+
+<p class=Jcodemultiline>40 14 56 25 48 46 96 12</p>
+
+<p class=Jcodemultiline>19 31 62 12 65 62 80 24</p>
+
+<p class=Jcodemultiline>47 38 20&nbsp; 2 90 42
+14 94</p>
+
+<p class=Jcodemultiline>41 13 88&nbsp; 9
+16&nbsp; 7 36 25</p>
+
+<p class=Jcodemultiline>13 78 45 34 45 80 93 65</p>
+
+<p class=Jcodemultiline>21 67 90 25 86 47 50 60</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (2 2,:2 2)
+(*&amp;0.25)@:(+/)@:, ;._3 image</p>
+
+<p class=Jcodemultiline>47.75 55.75&nbsp;&nbsp;&nbsp; 64
+49.75</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 26 38.75
+55.25&nbsp;&nbsp;&nbsp; 53</p>
+
+<p class=Jcodemultiline>34.75 29.75 38.75 42.25</p>
+
+<p class=Jcodemultiline>44.75&nbsp; 48.5<span
+style='mso-spacerun:yes'>&nbsp; </span>64.5&nbsp;&nbsp;&nbsp;
+67</p>
+
+<p class=MsoBodyText>The rank of each operand presented to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> is the same as
+the rank of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The shape of each operand presented to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+is the shape of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+with the leading items replaced by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>|1{x</span></span> (formally, this is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(|1{x),(#x)}.$y)</span></span>.</p>
+
+<p class=MsoBodyText>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> has rank less than 2, it is processed as if
+it were <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1,:x</span></span>
+which will try the window at all possible locations.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u;.3&nbsp;y</span></span>
+is similar to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u;._3&nbsp;y</span></span>,
+but the window is positioned at every starting point that is within <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+even if the entire window will not fit within <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For those positions at which the window will
+not fit, the operand to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> is truncated.</p>
+
+<p class=Section><a name="_Toc191734461">Extracting Variable-Length Fields
+Using </a><span style='mso-bookmark:_Toc191734461'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>^:a:</span></span>
+and </span><span style='mso-bookmark:_Toc191734461'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>;.1</span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Extracting variable-length records&quot;
+<![endif]--><!--[if supportFields]><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Power conjunction ^\::a\: as operand&quot;
+<![endif]--><!--[if supportFields]><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]-->Breaking
+a string of variable-length fields into its individual fields seems to be a
+problem requiring a loop.&nbsp; How can you
+find the second field until you have examined the length of the first?<span
+style='mso-spacerun:yes'>&nbsp; </span>There happens to be a good way to do this in
+loopless J.&nbsp; We will use as an example a
+set of character-string records where each record is preceded by a one-digit
+length (maximum string length is 9 characters).&nbsp;
+For example, the string</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; data =. '5There2is1a4tide2in3the7affairs2of3men'</p>
+
+<p class=BodyTextnoleader>contains 9 records, each containing a single English
+word.&nbsp; How do we split the string into
+its records?</p>
+
+<p class=MsoBodyText>First, we examine each possible starting position and
+calculate how long a record would be if it started at that position.<span
+style='mso-spacerun:yes'>&nbsp; </span>The calculated length must be the entire
+record length including that of the length field itself.<span
+style='mso-spacerun:yes'>&nbsp; </span>Obviously, we will be calculating spurious
+lengths at the places that turn out not to be record-start points, but that is
+the small price we pay for loopless coding.&nbsp;
+Here, the data length is given by the difference between the ASCII value
+of each byte and the ASCII value of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'0'</span></span>, and we add one to account for the length
+of the length field:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]l =. &gt;:
+(a. i. data) - a. i. '0'</p>
+
+<p class=Jcodemultiline>6 37 57 54 67 54 3 58 68 2 50 5 69 58 53 54 3 ...</p>
+
+<p class=MsoBodyText>Next, we calculate, for each position, where the next
+record will start assuming that a record starts at that position.<span
+style='mso-spacerun:yes'>&nbsp; </span>Clearly, we do this by adding the putative
+record length to the offset of the position.&nbsp;
+If the resulting total is past the end of the string, we limit the
+position to one character past the end of the string:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]n =. (#l)
+&lt;. l + i. # l</p>
+
+<p class=Jcodemultiline>6 38 38 38 38 38 9 38 38 11 ...</p>
+
+<p class=MsoBodyText>Now for the trick.&nbsp;
+The first record starts at offset 0.&nbsp;
+The next record starts at offset <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0{n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The record after that starts at offset <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(0{n){n</span></span>,
+and so on.&nbsp; To get the list of all the
+starting positions, we use</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]pos =. (n,_1)
+{~^:a: 0</p>
+
+<p class=Jcodemultiline>0 6 9 11 16 19 23 31 34 38 _1</p>
+
+<p class=BodyTextnoleader>The special power <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u^:a:</span></span> means 'keep
+applying <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+until the result stops changing, and return the vector of results'.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u^:_</span></span> in that it
+applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+until the result stops changing, but <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u^:a:</span></span> returns all the intermediate results
+from <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>,
+not just the last one.&nbsp; The result from <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{~^:a:</span></span>
+is the list of start-of-record positions, and all that remains is to collect
+the records.&nbsp; We discard record pointers
+that are off the end, and box the records starting at the positions given.<span
+style='mso-spacerun:yes'>&nbsp; </span>We do this by converting the list of valid
+record-start points to a Boolean vector, and using the partitioning functions
+to box the records:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ((i. #data) e.
+pos) &lt;;._1 data</p>
+
+<p class=Jcodemultiline>+-----+--+-+----+--+---+-------+--+---+</p>
+
+<p class=Jcodemultiline>|There|is|a|tide|in|the|affairs|of|men|</p>
+
+<p class=Jcodemultiline>+-----+--+-+----+--+---+-------+--+---+</p>
+
+<p class=Section><a name="_Toc191734462">Example: Combining Adjacent Boxes</a></p>
+
+<p class=MsoBodyText>Sometimes the mapping of a problem into J is not
+obvious.&nbsp; Consider this problem: we have
+a list of boxes, each containing a set of positive numbers in a list.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the last item of one box equals the first
+item of the next, we want to join the two boxes, replacing them by a single box
+whose contents are all the unique items in both boxes.<span
+style='mso-spacerun:yes'>&nbsp; </span>If a box is to be joined to both the previous
+and the following box, all three are to be combined into one box; generally, if
+there is a sequence of <i style='mso-bidi-font-style:normal'>n</i> boxes each
+to be joined to the next, those <i style='mso-bidi-font-style:normal'>n</i>
+boxes, plus the following box, are replaced by a single box containing all the
+unique items of the <i style='mso-bidi-font-style:normal'>n</i>+1 boxes.</p>
+
+<p class=MsoBodyText>For example, the input</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =. 1 2;2
+3;3 4;5 6;(,7);7 8 9;10</p>
+
+<p class=Jcodemultiline>+---+---+---+---+-+-----+--+</p>
+
+<p class=Jcodemultiline>|1 2|2 3|3 4|5 6|7|7 8 9|10|</p>
+
+<p class=Jcodemultiline>+---+---+---+---+-+-----+--+</p>
+
+<p class=BodyTextnoleader>should produce the output</p>
+
+<p class=Jcodemultiline>+-------+---+-----+--+</p>
+
+<p class=Jcodemultiline>|1 2 3 4|5 6|7 8 9|10|</p>
+
+<p class=Jcodemultiline>+-------+---+-----+--+</p>
+
+<p class=MsoBodyText>The trick is to see that this is a job for partitioning.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each group of boxes to be joined should be in
+a separate partition, and each box not to be joined should be in a partition by
+itself.&nbsp; Then, we just need a verb that
+will do the join if there are multiple boxes, and do nothing if there is only one
+box.</p>
+
+<p class=MsoBodyText>First, let's write that verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>We could do an explicit test, using the If
+conjunction <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>^:</span></span>
+or the agenda conjunction <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@.</span></span>, but the simplest solution is the verb</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &lt;@:~.@:;</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;</span></span> runs together the contents of the boxes, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~.</span></span>
+throws out any duplicates, and <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;</span></span> puts the result in a single box.<span
+style='mso-spacerun:yes'>&nbsp; </span>It does what we want whether it's given one
+box or many.</p>
+
+<p class=MsoBodyText>Next, we need to establish the partitions.<span
+style='mso-spacerun:yes'>&nbsp; </span>We come up with the rule: if a box is not to
+be joined to the previous box, it starts a new partition.<span
+style='mso-spacerun:yes'>&nbsp; </span>So in any string of boxes to be joined
+together, the first will start a partition and the others will not, with the
+result that they will all be in the same partition.</p>
+
+<p class=MsoBodyText>A box is not joined to the previous box if its first item
+is different from the previous box's last item (or if it is the first
+box).&nbsp; The first item of all boxes except
+the first is</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; }.@:({.@&gt;)
+a</p>
+
+<p class=Jcodemultiline>2 3 5 7 7 10</p>
+
+<p class=BodyTextnoleader>(we take the first item of each box and discard the
+first item of the result--make sure you know why we use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;</span></span> rather
+than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.@:&gt;</span></span>,
+and also why <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}.@:{.@&gt;</span></span>,
+leaving out the parentheses, would fail but <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{.@&gt;@}.</span></span> would
+work [hint: it's all about rank]).&nbsp; The
+last item of all boxes except the last is</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; }:@:({:@&gt;)
+a</p>
+
+<p class=Jcodemultiline>2 3 4 6 7 9</p>
+
+<p class=MsoBodyText>We set the partition mask based on inequality of these two
+lists, add on a leading 1 for the first partition, and apply our joining verb
+to the partitions:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (1 ,
+(}:@:({:@&gt;) a) ~: (}.@:({.@&gt;) a))&nbsp;
+&lt;@:~.@:; ;.1&nbsp; a</p>
+
+<p class=Jcodemultiline>+-------+---+-----+--+</p>
+
+<p class=Jcodemultiline>|1 2 3 4|5 6|7 8 9|10|</p>
+
+<p class=Jcodemultiline>+-------+---+-----+--+</p>
+
+</div><!--bottom jump start--><hr><a href="when_programs_are_data.htm">&gt;&gt;</a>&nbsp;
+<a href="socket_programming.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

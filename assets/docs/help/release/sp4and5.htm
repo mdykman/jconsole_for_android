@@ -1,0 +1,67 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>4$.y and 5$.y Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="pdt602.htm">&gt;&gt;</a>&nbsp;
+<a href="spaxes.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">4$.y </font>
+<font size=+3>and</font><font size=+3 face="Courier New"> 5$.y </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2007-01-29<br>last updated: 2007-02-01
+</td></tr></table>
+<br>
+
+<p><tt>4$.5 </tt>and<tt> 5$.y </tt>have been made 
+more efficient in time and space.
+The following benchmarks demonstrate the improvements:</p>
+
+<pre>
+sx=: $. (1e5 10 ?@$ 2) * (1e5 10 ?@$ 0)
+
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts 'Expression'
+</pre>
+
+<table>
+<tr>
+<td><b>Expression</b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.02</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>J 6.01</b></td><td><tt>&nbsp; &nbsp;</tt></td>
+<td align=center colspan=3><b>Ratio</b></td>
+</tr>
+<tr><td><tt>4$.sx      </tt></td><td>&nbsp;</td><td>0.0000021</td><td>&nbsp;</td><td>7.04000e2</td><td>&nbsp;</td><td>0.0068610</td><td>&nbsp;</td><td>4.19501e6</td><td>&nbsp;</td><td align=right>3214.96</td><td>&nbsp;</td><td align=right>5958.82</td></tr>
+<tr><td><tt>5$.sx      </tt></td><td>&nbsp;</td><td>0.0000019</td><td>&nbsp;</td><td>7.04000e2</td><td>&nbsp;</td><td>0.0068179</td><td>&nbsp;</td><td>4.19501e6</td><td>&nbsp;</td><td align=right>3509.02</td><td>&nbsp;</td><td align=right>5958.82</td></tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="pdt602.htm">&gt;&gt;</a>&nbsp;
+<a href="spaxes.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

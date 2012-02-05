@@ -1,0 +1,78 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>f/@, Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="stitchsl.htm">&gt;&gt;</a>&nbsp;
+<a href="errcap.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New"> f/@, </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2000-00-00<br>
+last updated: 2004-10-21<br>
+</td></tr></table>
+<br>
+
+The phrase<tt> f/@, </tt>
+is now supported by special code, for dense as well as sparse arrays.
+(Previously, it was supported by special code for sparse arrays only.)
+A time-space comparison is as follows:<br><br>
+
+<pre>   ts=: 6!:2 , 7!:2@]        NB. time-space
+
+   x=: o. ?11 13 17 61$1000  NB. dense array
+   s=: $. x * 0=?($x)$10     NB. sparse array with density of 0.1
+</pre>
+<b>J 4.05</b>
+<pre>   ts '+/@, x'
+0.00631756 2688
+   ts '&gt;./@, x'
+0.00842537 2688
+
+   ts '+/@, s'
+0.000160914 1728
+   ts '&gt;./@, s'
+0.000274057 1728</pre>
+
+<b>J 4.04</b>
+<pre>   ts '+/@, x'
+0.0133911 2.09888e6
+   ts '&gt;./@, x'
+0.0170284 2.09888e6
+
+   ts '+/@, s'
+0.000164267 1792
+   ts '&gt;./@, s'
+0.000271543 1792
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="stitchsl.htm">&gt;&gt;</a>&nbsp;
+<a href="errcap.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,143 @@
+<html><head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>J602 Features</title></head><body><!--top jump start--><a href="previous601.htm">&gt;&gt;</a>&nbsp;
+<a href="stdin_stdout.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+<h1>J602 Features</h1>
+
+Following is from the J602 Release Highlights and Overview<br><br>
+
+If your are familiar with the previous release (J601) see <a href="#602feats">J602 Features</a> for an overview of what's new.<br><br>
+
+If your are familiar with J50x, see <a href="previous601.htm">J601 Features</a> for an overview of those changes before reading <a href="#602feats">J602 features</a>.<br><br>
+
+J has a console interface called Jconsole and a GUI interface called Jwd. Use Jwd for an easier introduction to both standard and new features. In Windows start Jwd with the blue J icon in the J program group. In Linux start Jwd by running jwd in the J bin folder (for example, ~/j602/bin/jwd). In Mac start Jwd with the red J icon in the J folder.<br><br>
+
+The system includes 3 online books that are introductions: <a href="../primer/contents.htm">J Primer</a> by Eric Iverson,&nbsp;&nbsp;<a href="../jforc/contents.htm">J for C Programmers</a> by Henry Rich, and <a href="../learning/contents.htm">Learning J</a> by Roger Stokes. They vary in approach and you can probably benefit from reading all three. Hopefully you will find one which matches your requirements and outlook. <br><br>
+
+Take the time to read the User Manual chapter <a href="overview.htm">J System Overview</a>.<br><br>
+
+Whether you are new to J or an old hand, it is a good idea to start by exploring the Jwd menu. Browse the Help menu to get an idea of what is there and how to navigate. Try Studio|Demos to get an idea of what J can do. And do some of the labs in Studio|Labs.<br><br>
+
+<a href="http://www.jsoftware.com">www.jsoftware.com</a>, <a href="http://www.jsoftware.com/jwiki">www.jsoftware.com/jwiki</a>, and the J forums are J resources. Take some time and explore J on the web.<br><br>
+
+<a name="602feats"></a>
+<h1>J602 features</h1>
+
+<h2>J Engine</h2>
+See <a href="../release/contents.htm">Release Notes</a> (Help|Release Notes) for a summary of J Engine changes.<br><br>
+
+<a href="../release/mcapdot.htm"><font face=courier size=-1>M.</font></a> memoization will be of interest to some users.<br><br>
+
+<tt>_. </tt> (IEEE floating point NaN (Not A Number)) treatment has changed. See Release Notes and <a href="../dictionary/d031.htm">Indeterminate</a> for details.
+
+<h2>IDE</h2>
+Readonly is default for ijs (script edit) window. Edit|Read Only (Ctrl+T) toggles readonly. Edit|Configure|Session sets file categories to open readonly.<br><br>
+
+Menu File|Open creates and opens a non-existent file name.<br><br>
+
+Prompts to delete or save temporary scripts (n.ijs for integer n) are removed. They are saved as required and are not deleted unless empty.<br><br>
+
+Session close dialog is shown if CONFIRMCLOSE_j_ is set to 1. The default value is 1 and can be changed in Edit|Configure|Session.<br><br>
+
+<h2>Installation</h2>
+Installation has been changed to be simpler for each platform.<br><br>
+  
+A standard install puts the J install and user folder in your home folder. For 32 bit systems the install folder is j602 and the user folder is j602-user. For 64 bit they are j64-602 and j64-602-user. Vista home is similar to Unix. XP home is "\Documents and Settings\username".<br><br>
+
+A standard install in home rather than a system folder such as "Program Files" or /usr... requires no admin privilege for either the install or for JAL updates.<br><br>
+
+See <a href="install.htm">Install</a> for details.<br><br>
+
+<h2>Package Manager (pacman)</h2>
+Package Manager is the extensibility platform for J programming systems, consisting of the core system library and addons contributed by J users. It features online package updating from portal <a href="http://www.jsoftware.com">www.jsoftware.com</a> with addons documentation, source versioning, build and distribution systems. Pacman is sometimes referred to as J Application Library (JAL).<br><br>
+
+Pacman is a critical step that opens J development to shared contributions from users. We urge you to take a look at what is already available and to take the time and effort to provide your own contributions back to the J community.<br><br>
+
+Pacman beta versions that ran on J601 required sometimes problematic install steps and configuration. J602 JAL should run 'out of the box' on all platforms without any extra steps or configs. In part this was done by providing the new tools folder that includes the zip and wget tools required in Windows.
+
+<h2>Treeview Control</h2>
+Treeview control (built on isigraph as are grid and plot controls) is now available. See treeview demo.
+
+
+<h2>Splitter Control</h2>
+Splitter control (built on isigraph) is now available. This control was developed by Oleg Kobchenko. See splitter demo.
+
+<h2>cd (shared library call) enhanced - PCALL </h2>
+The cd enhancements suggested and modeled by Oleg Kobchenko with his PCALL facility have been implemented. The changes allow cd to call a procedure directly by its address (rather than indirectly through module and procedure names). It also allows calls of objects with a THIS pointer and a vtable.See <a href="call_procedure.htm">Calling Procedures</a> for details.
+
+<h2>Application Distribution - Installer</h2>
+New lab "Application Distribution - Installer" presents a way to packaging simple J applications for distribution. The core idea is to use the same installer as J (Windows exe, Linux sh, or Mac dmg) with a zip of all the system and application files in the same standard folder structure as in the development system.
+
+<h2>J Engine Protocol - Decomitted</h2>
+The major user of the J Engine Protocol in J50x was the Unix Jwdp front end that used the J Engine in a separate task with sockets. This architecture had serious performance limitations and was replaced in J60x with the direct use by the Java Jwdp front end of the J Engine as a shared library.This new architecture has proven so successful that continuing support for the J Engine Protocol isn't justified and it is decommitted.<br><br>
+
+Applications that used JEP should replace it with either direct use of the J Engine as a shared library or with a much simpler application specific socket protocol between the client and server. For example, they could be reworked to use the facilities shown in Lab Client/Server (Simple Socket).
+
+<h2>J Front End - Example Source Code</h2>
+A simple and complete source example of a console J Front End is available in folder system/examples/jfe. This source demonstrates all aspects of the J Engine shared library API. In particular it shows output and wd callbacks to the front end.
+
+<h2>bin Folder</h2>
+Files for J Front Ends and the J Engine are now in the J bin folder.
+
+<h2>tools Folder</h2>
+The tools folder has utilities (binaries and related files) used by J. The jpcre shared library for regex has been moved to the tools/regex folder. The J Windows folders tools/zip and tools/ftp contain the files that JAL requires that are available standard in Unix.
+
+<h2>BINPATH, PROFILE, 1!:45</h2>
+J Front End sets BINPATH_z_ as the fullpath of the folder that contains the JFE. This is the J bin folder with the the JFE, J Engine, profile.ijs, etc. The J folder is back one level and contains the addons, help, system, and tools folders in addition to the bin folder.<br><br>
+
+INSTALLFOLDER_z_ and PROFILE_z_ are no longer set.<br><br>
+
+Foreign 1!:45 (full path of profile.ijs) is decommitted.<br><br>
+
+<h2>USB Memory Stick System</h2>
+A complete and portable J system can be installed on a USB memory stick. See
+<a href="install.htm">Install</a> for details.
+
+<h2>wd editm control</h2>
+The Windows limit that prevented typing in an editm control with more than 30000 characters has been removed.
+
+<h2>wd setlocale command</h2>
+setlocale is a new wd command that sets a locale name for a control so that events run wdhandler in the control locale instead of the form locale.<br><br>
+
+<font face=courier size=-1>&nbsp;&nbsp;&nbsp;wd'setlocale id locale'</font><br><br>
+
+This allows defining control event handlers in the control locale (usually a numbered control object locale) rather than in the parent locale (usually a numbered form object locale). Previously you had to define handlers in the form object locale that passed events on to the control object handlers.<br><br>
+
+setlocale works for all controls but is probably most useful with control objects based on an isigraph.<br><br>
+
+syslocalec is a new entry in the wdq result that is the child locale.<br><br>
+
+syslocalep is a new entry in the wdq result that is the parent locale. The old entry syslocale is no longer set. Replacing syslocale with syslocalep is compatible with other naming conventions.<br><br>
+
+A handler in a control object locale can use syslocalep to access the forms object for services and data. For example, to call a routine in the parent to inform it of changes in the control (perhaps to update another control).
+
+<h2>JEXEServer and JDLLServer</h2>
+J OLE automation server changes are covered in <a href="j_ole_auto_server.htm">J OLE Automation Server</a>. The main change is in the steps necessary to load profile.
+<br><br>
+
+
+<h2>New J Icons</h2>
+The new J icons (J folder bin\icons) in various formats, sizes, and colors were created for Jsoftware by Ric Sherlock. Thanks!
+ <!--bottom jump start--><hr><a href="previous601.htm">&gt;&gt;</a>&nbsp;
+<a href="stdin_stdout.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body></html>

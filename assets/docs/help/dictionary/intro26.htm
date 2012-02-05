@@ -1,0 +1,113 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 26. Obverse and Under</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro27.htm">&gt;&gt;</a>&nbsp;
+<a href="intro25.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>26. Obverse and Under</b></font><br><br>
+
+The result of<tt> f^:_1 </tt>is called the <i>obverse</i> of 
+the function<tt> f</tt> ;<tt> </tt>if<tt> f=: g :. h</tt>,<tt> </tt>
+this obverse is<tt> h</tt>,<tt> </tt>and it is otherwise an inverse 
+of<tt> f</tt> .<tt> </tt>Inverses are provided for over 25 primitives 
+(including the case of the square root illustrated in 
+<a href="intro11.htm">Section 11</a>), 
+as well as many bonded dyads such as<tt> -&amp;3 </tt>and<tt> 10&amp;^. </tt>
+and<tt> 2&amp;o.</tt> .<tt> </tt>Moreover,<tt> u@v^:_1 </tt>
+is given by<tt> (v^:_1)@(u^:_1) </tt>.<tt> </tt>For example:<br>
+
+<pre>
+   fFc=: (32&amp;+)@(*&amp;1.8)
+   ]b=:fFc _40 0 100
+_40 32 212
+
+   cFf=: fFc^:_1
+   cFf b
+_40 0 100
+</pre>
+
+The result of the phrase<tt> f &amp;. g </tt>is the 
+verb<tt> (g^:_1)@(f &amp; g)</tt> .<tt> </tt>The function<tt> g </tt>
+can be viewed as <i>preparation</i> (which is done before 
+and undone after) for the application of the &ldquo;main&rdquo; 
+function<tt> f</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   b=: 0 0 1 0 1 0 1 1 0 0 0
+   sup=: &lt;/\                   <font face=Times size=+1>Suppress ones <i>after</i> the <i>first</i></font>
+   sup b
+0 0 1 0 0 0 0 0 0 0 0
+
+   |. sup |. b                 <font face=Times size=+1>Suppress ones <i>before</i> the <i>last</i></font>
+0 0 0 0 0 0 0 1 0 0 0
+
+   sup&amp;.|. b
+0 0 0 0 0 0 0 1 0 0 0
+
+   3 +&amp;.^. 4                   <font face=Times size=+1>Multiply by applying the exponential</font>
+12                             <font face=Times size=+1>to the sum of logarithms</font>
+
+   (^.3)+(^.4)
+2.48491
+
+   ^ (^.3)+(^.4)
+12
+
+   ]c=: 1 2 3;4 5;6 7 8
++-----+---+-----+
+|1 2 3|4 5|6 7 8|
++-----+---+-----+
+          
+   |.&amp;.&gt; c                     <font face=Times size=+1>Open, reverse, and then box</font>
++-----+---+-----+
+|3 2 1|5 4|8 7 6|
++-----+---+-----+
+</pre>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>26.1 &nbsp;</td>
+<td>Use the following as exercises in reading and writing.  
+Try using arguments such as<tt> a=: 2 3 5 7 </tt>and<tt> b=: 1 2 3 4 </tt>
+and<tt> c=: &lt;@i.&quot;0 i. 3 4</tt> : <br>
+
+<pre>
+f=: +&amp;.^.                      <font face=Times size=+1>Multiplication by addition of natural logs</font>
+g=: +&amp;.(10&amp;^.)                 <font face=Times size=+1>Multiplication using base-10 logs</font>
+h=: *&amp;.^                       <font face=Times size=+1>Addition from multiplication</font>
+i=: |.&amp;.&gt;                      <font face=Times size=+1>Reverse each box</font>
+j=: +/&amp;.&gt;                      <font face=Times size=+1>Sum each box</font>
+k=: +/&amp;&gt;                       <font face=Times size=+1>Sum each box and leave open</font>
+</pre>
+</td></tr>
+</table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro27.htm">&gt;&gt;</a>&nbsp;
+<a href="intro25.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

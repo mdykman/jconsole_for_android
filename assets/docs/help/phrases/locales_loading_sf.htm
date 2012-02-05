@@ -1,0 +1,106 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Loading Scripts</title>
+
+</head><body><!--top jump start--><a href="specimens.htm">&gt;&gt;</a>&nbsp;
+<a href="conventions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>1B. Locales And The Loading Of Script Files</h1>
+
+<P>The phrases for each section are contained in the 
+subdirectory<tt> system\examples\phrases </tt>in the J system. 
+They can be loaded as illustrated below:</P>
+
+<PRE>
+   load 'system\examples\phrases\phrd1.ijs'
+   bft
+1 : 'i. by i. over x./~@i.'
+
+   * bft 4
++---------+
+| |0 1 2 3|
++-+-------|
+|0|0 0 0 0|
+|1|0 1 2 3|
+|2|0 2 4 6|
+|3|0 3 6 9|
++---------+
+</PRE>
+
+<P>For most use this load into the base locale is satisfactory. 
+However, in any joint use of phrases from different sections 
+it must be remembered that the names <TT>m0</TT>, <TT>m1</TT>, etc., 
+are unique only within each section. 
+Distinct names can be assigned by loading the files into distinct locales, 
+perhaps using the letter that denotes the section followed by the number 
+that denotes the chapter. For example:</P>
+
+<PRE>
+   'a2' load 'system\examples\phrases\phra2.ijs'
+	The file for Section A of Chapter 2
+   m67_a2_
+1&amp;o.
+
+   m67_a2_ 0 1
+0 0.841471
+
+   m67
+|value error
+   sin_a2_ 0 1
+0 0.841471
+</PRE>
+
+<P>Any names may be used for locales, 
+but the use of majuscules will avoid conflict with those (such as j) 
+used by the utilities. Simpler names may also be assigned at will, 
+as in</P>
+
+<PRE>
+   q=: m67_a2_
+</PRE>
+
+<P>For a screen display of any group of phrases 
+(complete with comments), use the file read. Thus:</P>
+
+<pre>
+   y=: 1!:1 &lt;'system\examples\phrases\phra1.ijs'
+   y
+n0=: i. 6               NB. List of first six non-negative integers
+m1=: ^&amp;3                NB. Cube
+m2=: mean=: +/ % #	NB. Arithmetic mean
+d3=: $,:		NB. x copies of y 
+m4=: &lt;.@(0.5&amp;+)		NB. Round
+m5=: =+	        	NB. Test for real number
+m6=: (&lt;0 _1)&amp;C.	        NB. Swap leading and final items 
+m7=: +/\  -: +/\.&amp;.|.   NB. Prefix sum scan is suffix under reversal
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="specimens.htm">&gt;&gt;</a>&nbsp;
+<a href="conventions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

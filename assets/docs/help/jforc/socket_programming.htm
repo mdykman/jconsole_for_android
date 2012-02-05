@@ -1,0 +1,990 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Socket Programming</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="loopless_code_v_partitions.htm">&gt;&gt;</a>&nbsp;
+<a href="calling_external_programs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc5414624"></a><a name="_Toc1896253"></a><a name="_Toc191734441"><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>22. </span></span><![endif]>Socket Programming</span></span></a><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span></h1>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>J </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>provides the standard set
+of socket functions.&nbsp; This chapter
+assumes you already understand socket programming and provides a description of
+J's facilities.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>First, you must load the script that defines
+the socket interface:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+require 'socket'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>(</span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>require</span></span> is like </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>load</span></span>
+but if the file has already been </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>load</span></span>ed it does nothing).<span
+style='mso-spacerun:yes'>&nbsp; </span>This will define a number of variables inside
+J.&nbsp; You must make the variables visible
+to your program, and the easiest way to do that is with the verb </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>DefSockets</span></span>
+defined in </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>system\packages\misc\jforc.ijs</span></span>:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+DefSockets ''</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>You are then ready to create a socket:</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'> XE &quot;sockets:sdsocket&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdsocket AF_INET,SOCK_STREAM,0</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+--+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>|0|96|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+--+</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdsocket</span></span> returns </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>socket_number</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Nonzero return codes indicate errors; look in
+</span></span><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>J_directory</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/system/main/socket.ijs</span></span>
+for definitions.&nbsp; The valid address
+families and socket types are defined in </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>J_directory</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/system/main/defs/netdefs_<i>YourOS</i>.ijs</span></span>.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><a name="_Toc191734442"><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>sdselect</span></span></a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>You check the status of sockets </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdselect&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdselect <i>read_list</i>;<i>write_list</i>;<i>error_list</i>;<i>maxtime</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>The three lists are lists of sockets and </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>maxtime</span></i></span>
+is a time in milliseconds.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdselect</span></span>
+will delay for a maximum of </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>maxtime</span></i></span> milliseconds until it sees a
+socket in </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>read_list</span></i></span> that is ready for reading, or
+one in </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>write_list</span></i></span> that is ready for writing, or
+one in </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>error_list</span></i></span> that has an error.<span
+style='mso-spacerun:yes'>&nbsp; </span>When it finds a qualifying socket, or when
+the time limit is reached, it returns</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><i>result_code</i>;<i>read_ready_list</i>;<i>write_ready_list</i>;<i>error_list</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>which lists all the qualifying sockets.<span
+style='mso-spacerun:yes'>&nbsp; </span>A </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>maxtime</span></i></span> of 0
+always returns immediately, giving the current status of the specified sockets.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>If </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sdselect</span></span> is
+invoked with an empty operand (</span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdselect&nbsp;''</span></span>), it checks all sockets with
+a </span></span><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>maxtime</span></i></span>
+of 0.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><a name="_Toc191734443">Asynchronous Sockets and </a></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+style='mso-bookmark:_Toc191734443'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>socket_handler</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>By default, sockets created by </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdsocket</span></span>
+are <span class=Definition>blocking</span> sockets; an operation on such a
+socket waits until data is available.&nbsp;
+This can tie up your J session while the remote computer is responding,
+so if you are serious about your socket programming you will want to make your
+sockets <span class=Definition>nonblocking</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You do so </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdasync&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdasync <i>socket_number</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>which marks that socket as nonblocking and
+requests notification of changes in its status.&nbsp;
+All operations to a nonblocking socket return immediately (with the
+error code </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>EWOULDBLOCK</span></span> if the operation cannot be
+immediately completed).&nbsp; When there is a
+change in the status of a nonblocking socket, the interpreter executes</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+socket_handler&nbsp;''</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>and</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'> XE &quot;sockets:socket_handler&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+style='mso-spacerun:yes'>&nbsp;</span>it is up to you to have a </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>socket_handler</span></span>
+defined that will use </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdselect</span></span> to see what sockets are ready for
+transfers and then execute those transfers.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><a name="_Toc191734444">Names and IP Addresses</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>Sockets </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:IP
+addresses&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdgethostbyname&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>are addressed by IP address
+and port number.&nbsp; To translate a domain
+name to an IP address, use</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgethostbyname <i>domain_name</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>for example,</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgethostbyname 'www.jsoftware.com'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+---------------+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>|0|2|216.122.139.159|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+---------------+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>where the result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>address_family</i>;<i>address</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the domain is unknown an address of </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'255.255.255.255'</span></span>
+is returned.</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgethostbyaddr <i>address_family</i>;<i>address</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>will </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdgethostbyaddr&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>translate an IP address
+back to a domain name.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>The name of your machine is given </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdgethostname&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgethostname ''</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>|0|1qfe3|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-----+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>(result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>name</i></span></span>)
+so you can get your own IP address by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgethostbyname 1 {:: sdgethostname ''</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+-----------+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>|0|2|65.80.203.8|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+-----------+</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>If you have a socket with an active connection
+you can get some information about the machine on the other end </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdgetpeername&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgetpeername <i>socket_number</i></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+------------+--+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>|0|2|64.58.76.229|80|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+------------+--+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>where the result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>address_family</i>;<i>remote_IP_addr</i>;<i>remote_port</i>&nbsp;</span></span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>You can get information about your own end of
+a connected </span></span><!--[if supportFields]><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdgetpeername&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>socket with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgetsockname <i>socket_number</i></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+-----------+----+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>|0|2|65.80.203.8|2982|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>+-+-+-----------+----+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>where the result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>address_family</i>;<i>local_IP_addr</i>;<i>local_port</i>&nbsp;</span></span>.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><a name="_Toc191734445">Connecting</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>Reading from a Web site, you use the sequence </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdsocket</span></span>/</span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdconnect</span></span>/</span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdsend</span></span>/</span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecv</span></span>/</span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdclose&nbsp;</span></span>.</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdconnect <i>socket</i>;<i>address_family</i>;<i>IP_addr</i>;<i>port</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>will </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdconnect&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>connect your socket to the
+remote machine addressed by </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>address_family</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>IP_addr</i>;<i>port</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the socket is blocking, </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdconnect</span></span>
+completes when the connection has been made.&nbsp;
+If the socket is nonblocking, </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sdconnect</span></span> will
+return immediately with the error code </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>EWOULDBLOCK</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>socket_handler</span></span>
+will be called when the connection has been made.<span
+style='mso-spacerun:yes'>&nbsp; </span>An example is</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdconnect 184;2;'64.58.76.229';80</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>With the connection established, you can send
+data </span></span><!--[if supportFields]><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;sockets:sdsend&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp; <i>data</i>
+sdsend <i>socket</i>;<i>flags</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>where the </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>flags</span></i></span>
+are any of the</span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'> MSG_</span></span> values from </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>socket.ijs</span></span>,
+usually 0.&nbsp; The result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>number_of_bytes_sent</i></span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Fewer bytes may be sent than were in your
+data; you will have to resend the excess.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>You receive data</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'> XE &quot;sockets:sdrecv&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+style='mso-spacerun:yes'>&nbsp;</span>with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdrecv <i>socket</i>,<i>count</i>,<i>flags</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>where </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>count</span></i></span> is the
+maximum number of bytes you will accept and </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>flags</span></i></span>
+are any of the</span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'> MSG_</span></span> values from </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>socket.ijs</span></span>,
+usually 0.&nbsp; The result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>data</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the socket is blocking, </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecv</span></span>
+will wait until it is ready for reading; if the socket is nonblocking, </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecv</span></span>
+will immediately return (presumably you issued the </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecv</span></span>
+only after using </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdselect</span></span> to verify that the socket was ready
+for reading).&nbsp; In either case, </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecv</span></span>
+will return with </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>data</span></i></span> if it has any; if the length of </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>data</span></i></span>
+is 0, that means that the connection was closed by the peer and all data sent
+by the peer has been received.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>When you have finished all you data transfers
+for a socket, ,you must close it </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdclose&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdclose <i>socket<o:p></o:p></i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>which has as result an unboxed </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><a name="_Toc191734446">Listening</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>If you want to wait for a remote machine to
+get in touch with you, use the </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdbind</span></span>/</span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sdlisten</span></span>/</span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdaccept</span></span>
+sequence instead of </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdconnect&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The sequence is:</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdbind <i>socket</i>;<i>address_family</i>;<i>IP_addr</i>;<i>port</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>to </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdbind&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>establish a connection between
+the </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>socket</span></i></span> and the address given by </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>address_family</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>IP_addr</i>;<i>port</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>IP_addr</span></i></span> is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>''</span></span>,
+the socket can be used to listen for a connection to any address on the
+machine.&nbsp; If </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>port</span></i></span>
+is 0, the system will assign a port number.&nbsp;
+The result of </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdbind</span></span> is an unboxed </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdlisten <i>socket</i>;<i>connection_limit</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>causes </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdlisten&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>the operating system to
+start listening for connections to the address bound to </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>socket</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is an unboxed </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.A
+maximum of </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>connection_limit</span></i></span> connections can be queued
+awaiting </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdaccept&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>When a connection is made to a listening
+socket's address, the socket is shown in </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sdselect</span></span> as ready
+to read, and you should issue</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdaccept <i>socket</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>which </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdaccept&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>will return </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>clone_socket</i></span></span>
+where </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>clone_socket</span></i></span> is a new socket, with all the
+attributes of </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>socket</span></i></span> but additionally with a connection
+to the remote host.&nbsp; You should direct
+all your </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdsend</span></span>, </span></span><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sdrecv</span></span>, and </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdclose</span></span>
+operations to the </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>clone_socket</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:
+_Toc5414624'><a name="_Toc191734447">Other Socket Verbs</a></span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><a name="_Toc191734448">Datagrams</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>The </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:datagrams&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>sequences given above apply
+to sockets of type </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>SOCK_STREAM</span></span>, e.&nbsp;g. TCP sockets.<span
+style='mso-spacerun:yes'>&nbsp; </span>Connectionless sockets with type </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>SOCK_DGRAM</span></span>
+are also supported, and could be used for UDP transfers.<span
+style='mso-spacerun:yes'>&nbsp; </span>The verbs to use to transfer datagrams are</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdrecvfrom <i>socket</i>;<i>count</i>;<i>flags</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>where</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'> XE &quot;sockets:sdrecvfrom&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+style='mso-spacerun:yes'>&nbsp;</span></span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>count</span></i></span> is the maximum number of bytes you
+will accept and </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>flags</span></i></span> are any of the</span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'> MSG_</span></span>
+values from </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>socket.ijs</span></span>, usually 0.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>data</i>;<i>sending_address</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the socket is blocking, </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecvfrom</span></span>
+will wait until it is ready for reading; if the socket is nonblocking, </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecvfrom</span></span>
+will immediately return (presumably you issued the </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sdrecvfrom</span></span>
+only after using </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sdselect</span></span> to verify that the socket was ready
+for reading).&nbsp; The returned </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>data</span></i></span>
+is the datagram, which may have a length of 0.</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp; <i>data</i>
+sdsendto <i>socket</i>;<i>flags</i>;<i>address_family</i>;<i>IP_addr</i>;<i>port</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>where </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdsendto&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>the </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>flags</span></i></span>
+are any of the</span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'> MSG_</span></span> values from </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>socket.ijs</span></span>,
+usually 0.&nbsp; The datagram is sent to the
+remote address given by </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>address_family</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>IP_addr</i>;<i>port</i></span></span>,
+and the result is </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>number_of_bytes_sent</i></span></span>&nbsp;.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><a name="_Toc191734449">Socket Options</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>Verbs to query and set socket options </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:socket
+options&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>are</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgetsockopt <i>socket</i>;<i>option_level</i>;<i>option_name</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>with </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdgetsockopt&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>result </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>option_value</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgetsockopt sk;SOL_SOCKET;SO_DEBUG</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgetsockopt sk;SOL_SOCKET;SO_LINGER</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdsetsockopt <i>socket</i>,<i>option_level</i>,<i>option_name</i>,<i>value_list</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>(note that the operand is an <b>unboxed</b>
+list)&nbsp; </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:setsockopt&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>The option is set, and the
+result is </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>option_value</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>sdsetsockopt sk,SOL_SOCKET,SO_DEBUG,1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>sdsetsockopt sk,SOL_SOCKET,SO_LINGER,1 66</span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdioctl <i>socket</i>,<i>option</i>,<i>value</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>reads or </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdioctl&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>sets control information
+(result is </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>value</i></span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdioctl sk,FIONBIO,0&nbsp; NB. set
+blocking</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdioctl sk,FIONBIO,1&nbsp; NB. set
+non-blocking</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdioctl sk,FIONREAD,0&nbsp; NB. count
+ready data</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><a name="_Toc191734450">Housekeeping</a></span></span></p>
+
+<p class=Jcodemultilinefirst><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdgetsockets&nbsp; ''</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>The </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdgetsockets&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>result is </span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>return_code</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;<i>list_of_all_active_socket_numbers</i>&nbsp;</span></span>.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;&nbsp;
+sdcleanup ''</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>All </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'>&nbsp;XE &quot;sockets:sdcleanup&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896253'><span style='mso-bookmark:_Toc5414624'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896253'><span style='mso-bookmark:_Toc5414624'>sockets are closed and the
+socket system is reinitialized.&nbsp; The
+result is </span></span><span style='mso-bookmark:_Toc1896253'><span
+style='mso-bookmark:_Toc5414624'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;</span></span>.</span></span></p>
+
+</div><!--bottom jump start--><hr><a href="loopless_code_v_partitions.htm">&gt;&gt;</a>&nbsp;
+<a href="calling_external_programs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

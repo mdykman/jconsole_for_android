@@ -1,0 +1,132 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>q: Prime Factors  -  Prime Exponents </title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="drdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dpco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Prime Factors</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>q: &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Prime Exponents</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>q: y </tt>is the list of prime factors of a positive integer 
+argument<tt> y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   y=: 105600
+   q: y
+2 2 2 2 2 2 2 3 5 5 11
+   */ q: y
+105600
+   $ q: 1
+0
+   */ q: 1
+1
+   q: b. _1
+*/
+   q: _1+2^67x
+193707721 761838257287
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> x </tt>is positive and finite,<tt> x q: y </tt>
+is the list of exponents in the prime decomposition of positive 
+integer<tt> y</tt>,<tt> </tt>based upon the first<tt> x </tt>primes; 
+if<tt> x </tt>is<tt> _</tt> ,<tt> </tt>a sufficient number 
+of primes is used.<br><br>
+
+If<tt> x </tt>is negative and finite,<tt> x q: y </tt>
+is a 2-row table of the last<tt> |x </tt>primes and exponents 
+in the prime factorization of<tt> y</tt> ;<tt> </tt>if<tt> x </tt>is
+<tt> __</tt> ,<tt> </tt>a sufficient number of primes is used.  
+For example:<br><br>
+
+<pre>
+   2 q: 700
+2 0
+   10 q: 700
+2 0 2 1 0 0 0 0 0 0
+   _ q: 700
+2 0 2 1
+</pre>
+</td>                                                         
+</tr></table><br>
+
+<p>Currently, factors in the result of<tt> q: </tt>larger than<tt> 2^31 </tt>are tested
+to be prime according to a probabilistic algorithm (Miller-Rabin).</p>
+
+<pre>
+   ~.@q: 700                            NB. Distinct prime factors
+2 5 7
+
+   +/&quot;1@=@q: 700                        NB. Exponents in prime factorization
+2 2 1
+
+   5 q: 144^100x
+400 200 0 0 0
+
+   __ q: 700
+2 5 7
+2 2 1
+
+   __ q: !20x
+ 2 3 5 7 11 13 17 19
+18 8 4 2  1  1  1  1
+
+   y=: 100
+   e=: _&amp;q:                             NB. Completed list of exponents
+   (e ; +:&amp;.e ; -:&amp;.e ; %&amp;3&amp;.e)y        NB. Exponents, square, sqrt, cube root
++-----+-----+--+-------+
+|2 0 2|10000|10|4.64159|
++-----+-----+--+-------+
+
+   V=: /@,:                             NB. For vectors of disparate lengths
+
+   12 (+V&amp;.e; -V&amp;.e; &gt;.V&amp;.e; &lt;.V&amp;.e) y  NB. Product, quotient, LCM, GCD
++----+----+---+-+
+|1200|0.12|300|4|
++----+----+---+-+
+
+   totient=: * -.@%@~.&amp;.q:              NB. Euler's totient function
+   totient 700
+240
+
+   +/ 1 = 700 +. i.700
+240
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="drdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dpco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

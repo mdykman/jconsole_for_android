@@ -1,0 +1,113 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 23. Iteration</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro24.htm">&gt;&gt;</a>&nbsp;
+<a href="intro22.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>23. Iteration</b></font><br><br>
+
+The repetition of a process, or of a sequence of similar processes, 
+is called <i>iteration</i>. Much iteration is implicit, 
+as in<tt> */b </tt>and<tt> a*/b</tt>,<tt> </tt>
+and<tt> a*b</tt> ;<tt> </tt>explicit iteration is provided 
+by the power conjunction<tt> </tt>(<tt>^:</tt>),<tt> </tt>
+by agenda<tt> </tt>(<tt>@.</tt>)<tt> </tt>with self-reference, 
+and by control structures:<br>
+
+<pre>
+   (cos=: 2&amp;o.) ^: (i.6) b=: 1
+1 0.540302 0.857553 0.65429 0.79348 0.701369
+
+   ]y=: cos^:_ b
+0.739085
+
+   y=cos y
+1
+</pre>
+
+The example<tt> cos^:_ </tt>illustrates the fact that 
+infinite iteration is meaningful (that is, terminates) 
+if the process being applied converges.<br><br>
+
+<i>Controlled</i> iteration of a process<tt> p </tt>
+is provided by<tt> p^:q</tt> ,<tt> </tt>where the result 
+of<tt> q </tt>determines the number of applications 
+of<tt> p </tt>performed.  The forms<tt> $:@p^:q </tt>
+and<tt> p^:q^:_</tt> are commonly useful.<br><br>
+
+If<tt> f </tt>is a continuous function, and if<tt> f i </tt>
+and<tt> f j </tt>differ in sign, then there must be a 
+<i>root</i><tt> r </tt>between<tt> i </tt>and<tt> j </tt>
+such that<tt> f r </tt>is zero; 
+the list<tt> b=:i,j </tt>is said to <i>bracket</i> a root.  
+A narrower bracket is provided by the mean of<tt> b </tt>together 
+with that element of<tt> b </tt>whose result on applying<tt> f </tt>
+differs in sign from its result.  Thus:<br>
+
+<pre>
+   f=: %: - 4:                 NB. A sample function
+
+   root=: 3 : 0
+m=. +/ % #
+while. ~:/y
+do.
+if. ~:/ * f ({.,m) y
+   do. y=. ({.,m) y
+ else. y=. ({:,m) y
+end.
+end. m y
+)
+
+   b=: 1 32
+   root b
+16
+
+   f b,root b
+_3 1.65685 1.77636e_15
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>23.1 &nbsp;</td>
+<td>Use the function<tt> root </tt>to find the roots of 
+various functions, such as<tt> f=: 6&amp;-@!</tt><br><br>
+</td></tr>
+
+<tr><td valign=top>23.2 &nbsp;</td>
+<td>Experiment with the function<tt> fn=: +/\ </tt>
+(which produces the figurate numbers when applied repeatedly 
+to<tt> i.n</tt>),<tt> </tt>and explain the behaviour of the 
+function<tt> fn^:(?@3:)</tt>
+</td></tr>
+</table>
+
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro24.htm">&gt;&gt;</a>&nbsp;
+<a href="intro22.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

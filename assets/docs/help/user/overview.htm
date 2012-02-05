@@ -1,0 +1,53 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>J System Overview</title>
+
+</head><body><!--top jump start--><a href="cmdline.htm">&gt;&gt;</a>&nbsp;
+<a href="uninstall.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end--> 
+<h1>J System Overview</h1>
+J is a high-level, general purpose programming language. The J system provides: an engine for executing J; various front ends that provide user interfaces to the J engine; a library, written in J, that provides an IDE (interactive development environment), numerous tools, utililties, demos, tutorials; and online documention.<br>
+
+<h1>J Engine (JE)</h1>
+The JE executes J sentences and maintains state information such as the definitions of verbs, the values of nouns, and the execution stack. The JE acts as a server to a J Front End that provides a user interface. All other JE interfaces with the world outside its own execution and state are through a few 'foreign conjunctions' that enable the JE to work with files, call routines in external libraries (DLLs), and access host services.<br>
+<br>
+See <a href="../release/contents.htm">Release Notes</a> for details on J Engine changes in this, and earlier releases.<br>
+
+<h1>J Front End (JFE)</h1>
+A JFE provides a user interface to the JE. Typically a JFE takes user input from the keyboard, gives it to the JE, and then displays the formatted result that the JE returns on the screen.<br>
+
+<h1>Jconsole</h1>
+Jconsole is a command line interface to the JE. Jconsole is very similar in Windows and Unix and can be run from a host console and can be used like any other console command. The jconsole binary in Windows is called jconsole.exe and in Unix it is called jconsole.<br>
+
+<h1>Script Library</h1>
+J definitions are stored in ASCII plain text files called scripts. J scripts usually have a filename suffix of ijs. The system includes an extensive script library and related files that include an IDE, tutorials, demos, tools, and utilities.<br>
+
+<h1>profile</h1>
+When a JFE starts it loads profile.ijs from the library to initialize the system. <br>
+
+<h1>Portability</h1>
+J is portable across platforms. A J application is as close as you can get to 'write once, run anywhere'.
+<!--bottom jump start--><hr><a href="cmdline.htm">&gt;&gt;</a>&nbsp;
+<a href="uninstall.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>
+</html>

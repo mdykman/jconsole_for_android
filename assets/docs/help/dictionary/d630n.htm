@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&amp; Bond</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d630v.htm">&gt;&gt;</a>&nbsp;
+<a href="d622.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33><b><font size=+2>Bond</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>m&amp;v &nbsp;u&amp;n &nbsp;_ 0 _</font></td>
+<td align=right  width=33%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>m&amp;v y </tt>is defined as<tt> m&nbsp;v&nbsp;y</tt> ;<tt> </tt>that is, 
+the left argument<tt> m </tt>is bonded with the dyad<tt> v </tt>
+to produce a monadic function. 
+Similarly,<tt> u&amp;n y </tt>is defined as<tt> y&nbsp;u&nbsp;n</tt> ;<tt> </tt>
+in other words, as the dyad<tt> u </tt>provided with the right 
+argument<tt> n </tt>to produce a monadic function.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x m&amp;v y </tt><font size=+1>&harr;</font><tt> m&amp;v^:x y</tt><br>
+<tt>x u&amp;n y </tt><font size=+1>&harr;</font><tt> u&amp;n^:x y</tt><br>
+</td>                                                         
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   10&amp;^. 2 3 10 100 200
+0.30103 0.477121 1 2 2.30103
+
+   base10log=: 10&amp;^.
+   base10log 2 3 10 100 200
+0.30103 0.477121 1 2 2.30103
+
+   sine=: 1&amp;o.
+   sine o. 0 0.25 0.5 1.5 2
+0 0.707107 1 _1 0
+
+   ^&amp;3 (1 2 3 4 5)
+1 8 27 64 125
+
+   ^&amp;2 3&quot;0 (1 2 3 4 5)
+ 1   1
+ 4   8
+ 9  27
+16  64
+25 125
+</pre>
+
+Use of the bond conjunction is often called <i>Currying</i> 
+in honor of Haskell Curry.<br><br>
+
+The phrase<tt> x f@[&amp;0 y </tt>is equivalent to<tt> f^:x y</tt> ,<tt> </tt>apply 
+the monad<tt> f x </tt>times to<tt> y</tt> .  For example:
+
+<pre>
+   fib=: (0 1,:1 1)&amp;(+/ .*)@[&amp;0 &amp; 0 1
+   fib i.10
+ 0  1
+ 1  1
+ 1  2
+ 2  3
+ 3  5
+ 5  8
+ 8 13
+13 21
+21 34
+34 55
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d630v.htm">&gt;&gt;</a>&nbsp;
+<a href="d622.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

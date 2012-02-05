@@ -1,0 +1,445 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Verb-Definition Revisited</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="u_1_uv_uv_and_u_v.htm">&gt;&gt;</a>&nbsp;
+<a href="more_verbs_for_boxes.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734405"></a><a name="_Toc5414599"></a><a name="_Toc1896229"><span
+style='mso-bookmark:_Toc5414599'><span style='mso-bookmark:_Toc191734405'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>18. </span></span><![endif]>Verb-Definition Revisited</span></span></a></h1>
+
+<p class=MsoBodyText>Before we discuss verbs in more detail, let me point out
+that the colon character (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>:</span></span>), which you have seen used mostly as a
+suffix to create new primitives, has its own meaning when it is used alone or
+as the first character of a primitive: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>:</span></span> is a
+conjunction, and so are <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>:.</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>::&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The dot (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>.</span></span>) also has a
+meaning but we won't be discussing it for a while.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>.</span></span> or <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+not to be treated as a suffix, make sure you precede it by a space: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;:&nbsp;'y'</span></span>
+defines a verb, while <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3:&nbsp;'y'</span></span>
+applies the verb <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3:</span></span>
+to the noun <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'y'</span></span>
+producing the result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734406"></a><a name="_Toc5414600"></a><a
+name="_Toc5414442"></a><a name="_Toc1896230"><span style='mso-bookmark:_Toc5414442'><span
+style='mso-bookmark:_Toc5414600'><span style='mso-bookmark:_Toc191734406'>What
+really happens during </span></span></span></a><span style='mso-bookmark:_Toc1896230'><span
+style='mso-bookmark:_Toc5414442'><span style='mso-bookmark:_Toc5414600'><span
+style='mso-bookmark:_Toc191734406'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>m :n</span></span> and </span></span></span></span><span
+style='mso-bookmark:_Toc1896230'><span style='mso-bookmark:_Toc5414442'><span
+style='mso-bookmark:_Toc5414600'><span style='mso-bookmark:_Toc191734406'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>verb define</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;verb:definition&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Now that you're getting older
+it's time we had a little talk.&nbsp; About where
+verbs come from.&nbsp; Up till now the verb-definition
+sequence has been exotic and peculiar, with a unique form; a possessor of great
+power but shrouded in mystery.&nbsp; We know
+only that it somehow breathes life into lines of text:</p>
+
+<p class=Jcodemultiline><i>name</i> =: verb define</p>
+
+<p class=Jcodemultiline><i>verb definition<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=BodyTextnoleader>or</p>
+
+<p class=Jcodemultiline><i>name</i> =: verb : '<i>verb definition</i>'</p>
+
+<p class=BodyTextnoleader>leaving <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>name</span></i></span> a verb.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m \:n&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->With a layer of cosmetics
+scrubbed off it is more approachable.&nbsp; In
+both cases the conjunction <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&nbsp;:n</span></span> is at work.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> must be a number, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> may be either a
+character string or the special number <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;</span></span>(a list of
+boxed strings is also possible but we ignore that, considering it a
+curiosity).&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;:n</span></span> executes
+the conjunction <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+with the arguments <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>;
+as with any conjunction, the result of this execution is an entity which can be
+any of the primary parts of speech (noun, adverb, conjunction, verb). <span
+style='mso-spacerun:yes'>&nbsp;</span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> indicates the part of speech of the
+resulting entity: <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>=0
+means noun, 1 means adverb, 2 means conjunction, 3 means verb, 4 means dyadic
+verb; 13 is also possible and you will learn about it when you study Tacit
+Programming.&nbsp; You can remember the
+numbers 0-2 because nouns take no operands, adverbs 1, and conjunctions
+2; verbs are last in the precedence order so they get number 3, and dyadic
+verbs with their extra operand get number 4.&nbsp;
+If <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+is a character string, it supplies the text of the entity (which, again, is
+given the part of speech indicated by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span>); if <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+the interpreter interrupts the execution of the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>:</span></span> conjunction and
+reads lines from its input source until it finds one that contains only the
+word <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>')'</span></span>;
+execution of the interrupted sentence then continues, with the text of those
+lines becoming the right argument to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>:</span></span> and thence the text of the defined
+noun/adverb/conjunction/verb.&nbsp; If the
+verb is defined in a script file, the input source (for lines to satisfy <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;:0</span></span>)
+is the script file; otherwise the input source is the keyboard.</p>
+
+<p class=MsoBodyText>So what's with this '<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb define</span></span>'
+lingo?&nbsp; Simple: when you start J, you get
+a few names defined automatically, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>define</span></span>
+are two of them--as you can see by asking the interpreter what their values are:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; verb</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; define</p>
+
+<p class=Jcodemultiline>:0</p>
+
+<p class=BodyTextnoleader>--so when you use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb define</span></span> you
+are really executing <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;:0</span></span>
+to produce a verb; similarly <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>dyad&nbsp;:&nbsp;'<i>one-line&nbsp;definition</i>'</span></span>
+is the same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;:&nbsp;'<i>one-line&nbsp;definition</i>'</span></span>
+which executes the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+conjunction to produce a dyadic-verb result.</p>
+
+<p class=MsoBodyText>The point to note is that a verb-definition sequence is
+just an instance of a compound verb produced by a conjunction, and the
+resulting verb can appear anywhere a verb is allowed; when the resulting verb
+is executed, it operates by interpreting the text of the definition one line at
+a time.&nbsp; You may assign the verb to a
+name but that's not required.&nbsp; Here are
+some examples showing how a definition is just an ordinary part of a sentence:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; addrow =:
+monad : '+/y' &quot;1</p>
+
+<p class=BodyTextnoleader><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;rank&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->We define the verb, using the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+conjunction, and then we use the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;</span></span> conjunction to create a verb with rank
+1.&nbsp; This is a principle to live by: <b>Always
+make sure any verb you define has the proper rank</b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Following this rule will save you untold
+trouble by guaranteeing that the verb is applied to the rank of cell that you
+intended.&nbsp; The verb produced by the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+conjunction has infinite rank; here, we expect to apply <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>addrow</span></span> to lists,
+so we create a rank-1 verb that we then assign to the name <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>addrow&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (3 : '+/y') i.
+6</p>
+
+<p class=Jcodemultiline>15</p>
+
+<p class=BodyTextnoleader>See?&nbsp; we define
+a verb, then we execute it.&nbsp; It doesn't
+have to be assigned to a name.&nbsp; The
+distinction between code and data is not sharp as it is in C.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. '+/';'*/'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; b =. (0{::a),'y'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (3 : b) 1 2 3
+4 5 6</p>
+
+<p class=Jcodemultiline>21</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>b</span></span> is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'+/y'</span></span> so we can use it as the text of a verb
+which we then execute.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; b =. (1{::a),'y'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (3 : b) 1 2 3
+4 5 6</p>
+
+<p class=Jcodemultiline>720</p>
+
+<p class=BodyTextnoleader>Here <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>b</span></span> is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'*/y'</span></span>&nbsp;.&nbsp;
+In a later chapter we will explore the delights that result from being
+able to change the text of a program while you are executing it.</p>
+
+<p class=Note>Remember: make sure the verbs you define have the proper rank.</p>
+
+<p class=Section><a name="_Toc191734407"></a><a name="_Toc5414601"></a><a
+name="_Toc5414443"></a><a name="_Toc1896231"><span style='mso-bookmark:_Toc5414443'><span
+style='mso-bookmark:_Toc5414601'><span style='mso-bookmark:_Toc191734407'>Compound
+Verbs Can Be Assigned</span></span></span></a></p>
+
+<p class=MsoBodyText>Since we now understand that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define</span></span>
+is just a conjunction producing a verb result, and we know that we can assign
+its result to a name, we wonder whether we are allowed to assign any compound
+verb to a name.&nbsp; Yes indeed, we can, as
+we saw in the assignment to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>addrow</span></span> in the previous section.<span
+style='mso-spacerun:yes'>&nbsp; </span>Any verb can be assigned to a name:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; dotprod =:
++/@:*&quot;1<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman";
+font-weight:normal'><o:p></o:p></span></span></p>
+
+<p class=BodyTextnoleader>Dot-product of two lists is the sum of the products
+of respective pairs of elements in the lists.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3 dotprod
+1 2 3</p>
+
+<p class=Jcodemultiline>14</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>dotprod</span></span> takes the dot-product.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; veclength =:
+%:@:(dotprod~)&quot;1</p>
+
+<p class=BodyTextnoleader>The length of a vector is the square root of its
+dot-product with itself.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; veclength 1 2
+3</p>
+
+<p class=Jcodemultiline>3.74166</p>
+
+<p class=Section><a name="_Toc191734408"></a><a name="_Toc5414602"></a><a
+name="_Toc5414444"></a><a name="_Toc1896232"><span style='mso-bookmark:_Toc5414444'><span
+style='mso-bookmark:_Toc5414602'><span style='mso-bookmark:_Toc191734408'>Dual-Valence
+verbs: </span></span></span></a><span style='mso-bookmark:_Toc1896232'><span
+style='mso-bookmark:_Toc5414444'><span style='mso-bookmark:_Toc5414602'><span
+style='mso-bookmark:_Toc191734408'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u :v</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u \:v&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;valence&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;:v</span></span>
+also defines a verb of infinite rank but it is completely different from <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;:n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The defined verb is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> if it is used
+monadically, but <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+if used dyadically:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; bv =. (monad :
+'+/y') : (dyad : 'y - x')</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; bv i. 7</p>
+
+<p class=Jcodemultiline>21</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 bv i. 7</p>
+
+<p class=Jcodemultiline>_2 _1 0 1 2 3 4</p>
+
+<p class=BodyTextnoleader>You can see that the appropriate valence was chosen
+based on whether the verb was executed as a dyad or as a monad.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;:v</span></span>
+is often used to assign a default left operand to a dyadic verb:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; pwr =:
+2&amp;pwr : (dyad : 'x^y')</p>
+
+<p class=BodyTextnoleader>If you execute <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>pwr</span></span> as a dyad you
+get <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x^y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you execute it as a monad you get <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;pwr&nbsp;y</span></span>
+which is then executed (using the <i>dyadic</i> valence of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>pwr</span></span>) to become <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;^&nbsp;y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 pwr 4</p>
+
+<p class=Jcodemultiline>81</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; pwr 4</p>
+
+<p class=Jcodemultiline>16</p>
+
+<p class=Section><a name="_Toc191734409"></a><a name="_Toc5414603"></a><a
+name="_Toc5414445"></a><a name="_Toc1896233"><span style='mso-bookmark:_Toc5414445'><span
+style='mso-bookmark:_Toc5414603'><span style='mso-bookmark:_Toc191734409'>The
+Suicide Verb&nbsp;</span></span></span></a><span style='mso-bookmark:_Toc1896233'><span
+style='mso-bookmark:_Toc5414445'><span style='mso-bookmark:_Toc5414603'><span
+style='mso-bookmark:_Toc191734409'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>[:</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Suicide verb [\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;[\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The verb<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&nbsp;[:</span></span> fails if
+it is executed.&nbsp; Use it as one side of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;:v</span></span>
+to produce a verb that fails if it is used with the wrong valence.<span
+style='mso-spacerun:yes'>&nbsp; </span>Example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; i. 100 110 120
+130</p>
+
+<p class=Jcodemultiline>|out of memory</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i.100 110
+120 130</p>
+
+<p class=BodyTextnoleader>Oops, we thought we were looking those values up in a
+list.&nbsp; We're lucky that we just ran out
+of memory--sometimes using the wrong valence of a verb can have catastrophic
+consequences.&nbsp; To prevent it, use</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; dyadi =: [: :
+i.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; dyadi 100 110
+120 130</p>
+
+<p class=Jcodemultiline>|domain error: dyadi</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dyadi 100
+110 120 130</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 100 130 150
+dyadi 100 110 120 130</p>
+
+<p class=Jcodemultiline>0 3 3 1</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[:</span></span>
+also has a special meaning when it appears in a <i>fork</i>, which we will
+encounter later.</p>
+
+<p class=Section><a name="_Toc191734410"></a><a name="_Toc5414604"></a><a
+name="_Toc5414446"></a><a name="_Toc1896234"><span style='mso-bookmark:_Toc5414446'><span
+style='mso-bookmark:_Toc5414604'><span style='mso-bookmark:_Toc191734410'>Multi-Line
+Comments Using </span></span></span></a><span style='mso-bookmark:_Toc1896234'><span
+style='mso-bookmark:_Toc5414446'><span style='mso-bookmark:_Toc5414604'><span
+style='mso-bookmark:_Toc191734410'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>0 :0</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;comments in code&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->We know that all comments in J
+start with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>NB.</span></span>
+and go only to the end of the line.&nbsp;
+There is no way to extend a comment to more than one line, but there is
+a way to put a series of non-executing lines into a script without having to
+have <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>NB.</span></span>
+in each of them.&nbsp; You simply define a
+noun using <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;:0</span></span>
+and put your comment inside the noun:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 :0</p>
+
+<p class=Jcodemultiline>This is the first line of a comment.</p>
+
+<p class=Jcodemultiline>The lines of the comment will become a noun; but,</p>
+
+<p class=Jcodemultiline>since the noun is not assigned to anything, it simply</p>
+
+<p class=Jcodemultiline>disappears.</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=Section><a name="_Toc191734411"></a><a name="_Toc5414605"></a><a
+name="_Toc5414447"></a><a name="_Toc1896235"><span style='mso-bookmark:_Toc5414447'><span
+style='mso-bookmark:_Toc5414605'><span style='mso-bookmark:_Toc191734411'>Final
+Reminder</span></span></span></a></p>
+
+<p class=Note>Remember: make sure the verbs you define have the proper rank.</p>
+
+</div><!--bottom jump start--><hr><a href="u_1_uv_uv_and_u_v.htm">&gt;&gt;</a>&nbsp;
+<a href="more_verbs_for_boxes.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

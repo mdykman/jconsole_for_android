@@ -1,0 +1,107 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>{ Sparse Arguments</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="bond.htm">&gt;&gt;</a>&nbsp;
+<a href="index0.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">{ </font>
+<font size=+3>Sparse Arguments</font></b></td>
+<td align=right>
+initial writing: 2001-03-01<br>last updated: 2004-10-26<br>
+</td></tr></table>
+<br>
+
+The dyads<tt> { </tt>now supports sparse left arguments.
+(It had long supported sparse right arguments.)
+For example:<br>
+
+<pre>
+   ] d=: ?. 2 3 $ 7
+0 5 3
+3 1 0
+
+   ] s=: $. d
+0 1 | 5
+0 2 | 3
+1 0 | 3
+1 1 | 1
+
+   ] v=: 7 ?. 7
+6 1 2 5 4 3 0
+
+   s{v
+0 1 | 3
+0 2 | 5
+1 0 | 5
+1 1 | 1
+
+   $.^:_1 s{v
+6 3 5
+5 1 6
+
+   d{v
+6 3 5
+5 1 6
+
+   (s{v) -: d{v
+1
+
+   s{i.7 3
+|non-unique sparse elements
+|   s    {i.7 3
+
+   s{&quot;(1) 0,. 10 20+/i.7
+0 1 | 14
+0 2 | 12
+1 0 | 22
+1 1 | 20
+
+   d{&quot;(1) 0,. 10 20+/i.7
+ 0 14 12
+22 20  0
+
+   s{&quot;(1) 10 20+/i.7
+|non-unique sparse elements
+|   s    {&quot;(1)10 20+/i.7
+
+   j=: ?. 1000$2e9
+   s=: 1 j} 1 $. 2e9 ;0;0
+   $s
+2000000000
+   $ s { 10 20
+2000000000
+   (s { 10 20) -: 20 j} 1 $. 2e9;0;10
+1
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="bond.htm">&gt;&gt;</a>&nbsp;
+<a href="index0.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

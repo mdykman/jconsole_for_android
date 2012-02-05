@@ -1,0 +1,52 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Fork</title>
+
+</head><body><!--top jump start--><a href="tacit_definition.htm">&gt;&gt;</a>&nbsp;
+<a href="hook.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Fork</h1>
+A train of three verbs is a fork and is evaluated as follows:<br>
+
+<pre>  (f g h) y	evaluates as	(f y) g (h y)
+x (f g h) y	evaluates as	(x f y) g (x h y)
+</pre>
+A simple example of a fork is the sequence of three verbs <font face=courier size=-1>+/ % #</font> . The <font face=courier size=-1>/</font> adverb takes its left argument <font face=courier size=-1>+</font> and returns a verb, so there is a sequence of three verbs. Let's examine the use of this fork monadically.<br>
+
+<pre>   (f  g h) y	evaluates as	(f  y) g (h y)
+   (+/ % #) y	evaluates as	(+/ y) % (# y)</pre>
+This can be read as: sum over the argument divided by the count of the argument. This is the definition of the mean or average.<br>
+
+<pre>   (+/ % #) 5 9 12
+8.66667
+   (+/ % #) i.9
+4</pre>
+You can now define mean as a fork with <font face=courier size=-1>+/ % #</font> .<br>
+
+<pre>   mean =. +/ % #
+   mean i.9
+4</pre>
+<!--bottom jump start--><hr><a href="tacit_definition.htm">&gt;&gt;</a>&nbsp;
+<a href="hook.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

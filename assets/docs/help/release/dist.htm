@@ -1,0 +1,62 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>({.,#)/. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="ranking.htm">&gt;&gt;</a>&nbsp;
+<a href="key504.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">({.,#)/. </font>
+<font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2005-01-20<br>last updated: 2005-01-20
+</td></tr></table>
+<br>
+
+<p>The verb<tt> x ({.,#)/. y </tt>produces a 2-column table of elements
+and frequency of occurrences.  This verb and the verb<tt> x (#,{.)/.y </tt> 
+have been made faster and leaner.
+The following benchmarks demonstrate the improvement.</p>
+
+<pre>
+ts=: 6!:2 , 7!:2@]  NB. time and space
+ts '({.,#)/.~ x' 
+</pre>
+<table>
+<tr><td align=center><b>x</b></td><td>&nbsp;&nbsp;&nbsp;</td><td align=center colspan=3><b>J 5.04</b></td><td>&nbsp;</td><td align=center colspan=3><b>J 5.03</b></td><td>&nbsp;</td><td align=center colspan=2><b>Ratio</b></td></tr>
+<tr><td><tt>1e6 ?@$ 2</tt>         </td><td>&nbsp;</td><td>0.0003974</td><td>&nbsp;</td><td>  1.6000000e3</td><td>&nbsp;</td><td>0.0405565</td><td>&nbsp;</td><td>  1.5730432e7</td><td>&nbsp;</td><td align=right> 102.05</td><td align=right>&nbsp; 9831.52</td></tr>
+<tr><td><tt>1e6 ?@$ 1e4</tt>       </td><td>&nbsp;</td><td>0.0089623</td><td>&nbsp;</td><td>  1.9782400e5</td><td>&nbsp;</td><td>0.1310025</td><td>&nbsp;</td><td>  1.8705344e7</td><td>&nbsp;</td><td align=right>  14.62</td><td align=right>         94.56</td></tr>
+<tr><td><tt>1e6 ?@$ 1e5</tt>       </td><td>&nbsp;</td><td>0.0234292</td><td>&nbsp;</td><td>  1.5740800e6</td><td>&nbsp;</td><td>0.3067714</td><td>&nbsp;</td><td>  2.6209600e7</td><td>&nbsp;</td><td align=right>  13.09</td><td align=right>         16.65</td></tr>
+<tr><td><tt>1e6 ?@$ 1e6</tt>       </td><td>&nbsp;</td><td>0.1065352</td><td>&nbsp;</td><td>  1.2584128e7</td><td>&nbsp;</td><td>0.8107853</td><td>&nbsp;</td><td>  7.3483584e7</td><td>&nbsp;</td><td align=right>   7.61</td><td align=right>          5.84</td></tr>
+<tr><td><tt>0.01 * 1e6 ?@$ 1e5</tt></td><td>&nbsp;</td><td>0.4857553</td><td>&nbsp;</td><td>  1.8875584e7</td><td>&nbsp;</td><td>0.7405234</td><td>&nbsp;</td><td>  3.1452736e7</td><td>&nbsp;</td><td align=right>   1.52</td><td align=right>          1.67</td></tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="ranking.htm">&gt;&gt;</a>&nbsp;
+<a href="key504.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

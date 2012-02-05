@@ -1,0 +1,13 @@
+general/jtags - change history
+
+== 1.0.0 ==
+ * publish in JAL
+
+== 1.0.1/6 ==
+ * J701 beta release
+
+== 1.0.7 ==
+ * exclude snap directory
+
+== 1.0.8 ==
+ * special handling for gtkinclude

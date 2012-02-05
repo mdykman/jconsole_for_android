@@ -1,0 +1,56 @@
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+
+<title>64 bit Component Files</title>
+</head>
+<body><!--top jump start--><a href="odbc.htm">&gt;&gt;</a>&nbsp;
+<a href="keyed_files.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+<h1>64 bit Component Files</h1>
+<p>
+J files are updated in J504 to support 64 bits.
+<p>
+<b>Background</b>
+<p>
+A J file contains a set of data components, and a set of directories.
+<p>
+The data components store the 3!:1 representation of data. This representation differs between J32 and J64, but is readable by either system. Thus there is no need to update data components when moving between J32 and J64. A component file may have data components written by either or both J32 and J64.
+<p>
+The directories are integer pointers, and must be consistent in size. J32 directories have 4 byte pointers, and J64 directories have 8 byte pointers. Either can read each others' directories. However, when a J64 system writes to a component file, it always writes 8 byte pointers, converting the file directories if necessary.
+<p>
+<b>Key Points</b>
+<p>
+With this background, the following are the key points:
+<p>
+1. J Files can be read and written by either J32 or J64.
+<p>
+2. When J64 writes to a J32 file, it converts the file directory to J64 format. This is a one time change. The reverse does not happen, i.e. J32 writing to a J64 file preserves the file directory format.
+<p>
+3. When J32 reads J64 files, data will be converted if necessary. For example,
+integers in J64 might be converted to floating point in J32.
+<p>
+4. J32 cannot access a file more than 2GB in size. There is no such limitation for J64, so it is possible to create a file in J64 that cannot be read by J32.
+<p>
+5. J32 files created in J504 can be accessed by earlier versions of J. However, J64 files cannot be accessed by earlier versions of J.
+<!--bottom jump start--><hr><a href="odbc.htm">&gt;&gt;</a>&nbsp;
+<a href="keyed_files.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>

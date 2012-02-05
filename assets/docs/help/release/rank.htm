@@ -1,0 +1,89 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>u&quot;r Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="adot.htm">&gt;&gt;</a>&nbsp;
+<a href="iamend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">u"r </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2000-00-00<br>
+last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The rank operator<tt> u&quot;r </tt>for a general verb<tt> u </tt>
+is now more efficient in the use of temporary arrays, 
+resulting in improved performance in time (slightly) and in space.
+In the time and space comparisons presented below,  
+the result of<tt> 7!:3 </tt>is a 2-column table of
+block sizes and the number of available temps of that size.<br>
+<pre>
+   ts=: 6!:2 , 7!:2@]
+
+   pi  =: 3 : 'o.y.'
+   plus=: 4 : 'x.+y.'
+   x=: o.?1e5$1e6
+   y=: o.?1e5$1e6
+
+<b>J 4.05                         J 4.04</b>
+
+   7!:3 ''                        7!:3 ''
+  64 1207                        64 1097
+ 128 1130                       128 1109
+ 256  255                       256  277
+ 512   84                       512   84
+1024   45                      1024   44
+
+   ts 'pi&quot;0 y'                    ts 'pi&quot;0 y'
+5.02835 1.05498e6              5.16796 1.4836e7
+
+   7!:3 ''                        7!:3 ''
+  64 1207                        64 100425
+ 128 1130                       128   1109
+ 256  255                       256    277
+ 512   84                       512     84
+1024   45                      1024    556
+
+   ts 'x plus&quot;0 y'                ts 'x plus&quot;0 y'
+5.45015 1.0553e6               5.5558 8.48902e6
+
+   7!:3 ''                        7!:3 ''
+  64 1207                        64 100425
+ 128 1130                       128   1109
+ 256  255                       256    277
+ 512   84                       512     84
+1024   45                      1024    556
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="adot.htm">&gt;&gt;</a>&nbsp;
+<a href="iamend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

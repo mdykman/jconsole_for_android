@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>*: Square  -  Not-And</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d120.htm">&gt;&gt;</a>&nbsp;
+<a href="d111.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Square</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>*: &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Not-And</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>*: y </tt>is the square of<tt> y</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x *: y </tt>is the negation of<tt> x </tt><i>and</i><tt> y</tt> .<tt> </tt>
+For example<tt> 0 *: 0 </tt>is<tt> 1</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+The inverse of the square is the square root.  For example:<br>
+
+<pre>
+   *: ^: _1 (_2 _1 0 1 2)
+0j1.41421 0j1 0 1 1.41421
+
+   3 +&amp;.*: 4                  NB. Hypotenuse of triangle with sides 3 and 4
+5
+</pre>
+
+Since the domain of nand is limited to zero and one, its entire 
+behaviour can be seen in the following function tables:<br>
+
+<pre>
+   d=: 0 1                    NB. Domain of nand
+   d *:/ d                    NB. Table of nand
+1 1
+1 0
+
+   d *./ d                    NB. Table of and
+0 0
+0 1
+          
+   -. d *./ d
+1 1
+1 0
+</pre>
+
+Nand, Not and, and the dual of Nor all agree, as illustrated below:<br>
+
+<pre>
+   (*:/~ ; -.@*./~ ; +:&amp;.-./~) d
++---+---+---+
+|1 1|1 1|1 1|
+|1 0|1 0|1 0|
++---+---+---+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d120.htm">&gt;&gt;</a>&nbsp;
+<a href="d111.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

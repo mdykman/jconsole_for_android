@@ -1,0 +1,927 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 22: Vectors and Matrices</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="23.htm">&gt;&gt;</a>&nbsp;
+<a href="21.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <H1>Chapter 22: Vectors and Matrices</H1>
+<A NAME="01"></A>
+In this chapter we look at built-in functions
+which support computation with vectors and matrices. 
+<A NAME="02"></A>
+<H2>22.1  The Dot Product Conjunction</H2>
+Recall the composition of verbs, from <A HREF="08.htm">Chapter 08</A>. 
+A sum-of-products verb can be composed from <TT>sum</TT> and <TT>product</TT>
+with the <TT>@:</TT> conjunction.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>P =: 2 3 4</TT></TD>
+<TD><TT>Q =: 1 0 2</TT></TD>
+<TD><TT>P * Q</TT></TD>
+<TD><TT>+/ P * Q</TT></TD>
+<TD><TT>P (+/ @: *) Q</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 3 4</TT></TD>
+<TD><TT>1 0 2</TT></TD>
+<TD><TT>2 0 8</TT></TD>
+<TD><TT>10</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+There is a conjunction  .  (dot, called "Dot Product"). 
+It can be used instead of <TT>@:</TT> to compute the sum-of-products of two lists.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>P</TT></TD>
+<TD><TT>Q</TT></TD>
+<TD><TT>P (+/ @: *) Q</TT></TD>
+<TD><TT>P (+/ . *) Q</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 3 4</TT></TD>
+<TD><TT>1 0 2</TT></TD>
+<TD><TT>10</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+<p>
+Evidently, the  . conjunction is a form of composition, 
+a variation of <TT>@:</TT> or <TT>@</TT>. 
+We will see below that it is more convenient
+for working with vectors and matrices.
+<A NAME="03"></A>
+<H2>22.2  Scalar Product of Vectors</H2>
+Recall that <TT>P</TT> is a list of 3 numbers. If we interpret these numbers as 
+coordinates
+of a point in 3-dimensional space, then <TT>P</TT> can be regarded as
+defining a vector, a line-segment with length and direction, from the 
+origin at <TT>0 0 0</TT> 
+to the point <TT>P</TT>.  We can refer to the vector <TT>P</TT>.
+<p>
+With <TT>P</TT> and <TT>Q</TT> interpreted as vectors, then the expression <TT>P (+/ . *) Q</TT> 
+gives 
+what is called the "scalar product" of <TT>P</TT> and <TT>Q</TT>.  
+Other names for the same thing are "dot product", or "inner product", or 
+"matrix product",
+depending on context. 
+In this chapter let us stick to the neutral term "dot product", for which 
+we define a function <TT>dot</TT>:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>dot =: +/ . *</TT></TD>
+<TD><TT>P</TT></TD>
+<TD><TT>Q</TT></TD>
+<TD><TT>P dot Q</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+/ .*</TT></TD>
+<TD><TT>2 3 4</TT></TD>
+<TD><TT>1 0 2</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+A textbook definition
+of scalar product of vectors <TT>P</TT> and <TT>Q</TT> may appear in the form:
+<PRE>
+          (magnitude P) * (magnitude Q) * (cos alpha)
+</PRE>
+where the magnitude (or length) of a vector is 
+the square root of sum of squares of components,
+and <TT>alpha</TT> is the smallest non-negative angle between
+<TT>P</TT> and <TT>Q</TT>.  To show the equivalence
+of this form with <TT>P dot Q</TT>, 
+we can define utility-verbs <TT>ma</TT> for magnitude-of-a-vector
+and <TT>ca</TT> for cos-of-angle-between-vectors.
+<PRE>
+   ma  =: %: @: (+/ @: *:)
+   ca  =: 4 : '(-/ *: b,(ma x-y), c) % (2*(b=.ma x)*(c=. ma y))'
+</PRE>
+We expect the magnitude of vector <TT>3 4</TT> to be <TT>5</TT>, and expect the angle 
+between <TT>P</TT>
+and itself to be zero, and thus cosine to be <TT>1</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>ma 3 4</TT></TD>
+<TD><TT>P ca P</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>5</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+then we see that the <TT>dot</TT> verb is equivalent to the textbook form above
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>P</TT></TD>
+<TD><TT>Q</TT></TD>
+<TD><TT>P dot Q</TT></TD>
+<TD><TT>(ma P)*(ma Q)*(P ca Q)</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 3 4</TT></TD>
+<TD><TT>1 0 2</TT></TD>
+<TD><TT>10</TT></TD>
+<TD><TT>10</TT></TD>
+</TABLE>
+<p>
+<A NAME="04"></A>
+<H2>22.3  Matrix Product</H2>
+The verb we called <TT>dot</TT> is "matrix product" for vectors and matrices.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M =: 3 4 ,: 2 3</TT></TD>
+<TD><TT>V =: 3 5</TT></TD>
+<TD><TT>V dot M</TT></TD>
+<TD><TT>M dot V</TT></TD>
+<TD><TT>M dot M</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3</TT></TD>
+<TD><TT>3 5</TT></TD>
+<TD><TT>19 27</TT></TD>
+<TD><TT>29 21</TT></TD>
+<TD><TT>17 24<BR>
+12 17</TT></TD>
+</TABLE>
+<p>
+To compute <TT>Z =: A dot B</TT> 
+the last dimension of <TT>A</TT> must equal  
+the first dimension of <TT>B</TT>. 
+<PRE>
+   A =: 2 5 $ 1
+   B =: 5 4 $ 2
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>$ A</TT></TD>
+<TD><TT>$ B</TT></TD>
+<TD><TT>Z =: A dot B</TT></TD>
+<TD><TT>$ Z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 5</TT></TD>
+<TD><TT>5 4</TT></TD>
+<TD><TT>10 10 10 10<BR>
+10 10 10 10</TT></TD>
+<TD><TT>2 4</TT></TD>
+</TABLE>
+<p>
+The example shows that the last-and-first
+dimensions disappear from the result. If these two
+dimensions are not equal then an error is signalled.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>$ B</TT></TD>
+<TD><TT>$ A</TT></TD>
+<TD><TT>B dot A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>5 4</TT></TD>
+<TD><TT>2 5</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+<H2>22.4  Generalizations</H2>
+<H3>22.4.1  Various Verbs</H3>
+The "Dot Product" conjunction forms the 
+dot-product verb with <TT>(+/ . *)</TT>. Other verbs
+can be formed on the pattern <TT>(u . v)</TT>.
+<p>
+For example, consider a relationship between people:
+person i is a child of person j, represented by a square
+boolean matrix true at row i column j. 
+Using verbs <TT>+.</TT> (logical-or) and <TT>*.</TT> (logical-and).
+We can compute
+a grandchild relationship with the verb <TT>(+./ . *.)</TT>.
+<PRE>
+   g   =: +. / . *.
+</PRE>
+Taking the "child" relationship to be the matrix <TT>C</TT>:
+<PRE>
+   C =: 4 4 $ 0 0 0 0 1 0 0 0 1 0 0 0 0 1 0 0
+</PRE>
+Then the grandchild relationship is, so to speak,
+the child relationship squared.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>C</TT></TD>
+<TD><TT>G =: C g C</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 0 0 0<BR>
+1 0 0 0<BR>
+1 0 0 0<BR>
+0 1 0 0</TT></TD>
+<TD><TT>0 0 0 0<BR>
+0 0 0 0<BR>
+0 0 0 0<BR>
+1 0 0 0</TT></TD>
+</TABLE>
+<p>
+We can see from <TT>C</TT> that person 3 is a child of person 1,
+and person 1 is a child of person 0. Hence, as we see in <TT>G</TT>
+person 3 is a grandchild of person 0.
+<A NAME="05"></A>
+<H3>22.4.2  Symbolic Arithmetic</H3>
+By 'symbolic arithmetic' is meant, for example, 
+symbolically adding the strings <TT>'a'</TT> and <TT>'b'</TT> to get 
+the string <TT>'a+b'</TT>. 
+Here is a small collection
+of utility functions to 
+do some limited symbolic arithmetic on (boxed) strings.
+<PRE>
+   pa     =: ('('&,) @: (,&')')   
+   cp     =: [ ` pa @. (+./ @: ('+-*' & e.))
+   symbol =: (1 : (':';'< (cp > x), u, (cp > y)'))(" 0 0)
+   
+   splus  =: '+' symbol 
+   sminus =: '-' symbol 
+   sprod  =: '*' symbol 
+   
+   a =: <'a'
+   b =: <'b'
+   c =: <'c'
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a</TT></TD>
+<TD><TT>b</TT></TD>
+<TD><TT>c</TT></TD>
+<TD><TT>a splus b</TT></TD>
+<TD><TT>a sprod b splus c</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+<BR>
+|a|<BR>
++-+</TT></TD>
+<TD><TT>+-+<BR>
+|b|<BR>
++-+</TT></TD>
+<TD><TT>+-+<BR>
+|c|<BR>
++-+</TT></TD>
+<TD><TT>+---+<BR>
+|a+b|<BR>
++---+</TT></TD>
+<TD><TT>+-------+<BR>
+|a*(b+c)|<BR>
++-------+</TT></TD>
+</TABLE>
+<p>
+As a variant of the symbolic product, we could elide the multiplication 
+symbol
+to give an effect more like conventional notation:
+<PRE>
+   sprodc =: '' symbol 
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a sprod b</TT></TD>
+<TD><TT>a sprodc b</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+---+<BR>
+|a*b|<BR>
++---+</TT></TD>
+<TD><TT>+--+<BR>
+|ab|<BR>
++--+</TT></TD>
+</TABLE>
+<p>
+As arguments to the "Dot Product" conjunction
+we could supply  
+verbs to perform symbolic arithmetic. For the <TT>dot</TT> verb, 
+which we recall is <TT>(+/ . *)</TT>, 
+a symbolic version is:  
+<PRE>
+   sdot =: splus / . sprodc
+</PRE>
+To illustrate:
+<PRE>
+   S =: 3 2 $ < "0 'abcdef'
+   T =: 2 3 $ < "0 'pqrstu'
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>S</TT></TD>
+<TD><TT>T</TT></TD>
+<TD><TT>S sdot T</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+-+<BR>
+|a|b|<BR>
++-+-+<BR>
+|c|d|<BR>
++-+-+<BR>
+|e|f|<BR>
++-+-+</TT></TD>
+<TD><TT>+-+-+-+<BR>
+|p|q|r|<BR>
++-+-+-+<BR>
+|s|t|u|<BR>
++-+-+-+</TT></TD>
+<TD><TT>+-----+-----+-----+<BR>
+|ap+bs|aq+bt|ar+bu|<BR>
++-----+-----+-----+<BR>
+|cp+ds|cq+dt|cr+du|<BR>
++-----+-----+-----+<BR>
+|ep+fs|eq+ft|er+fu|<BR>
++-----+-----+-----+</TT></TD>
+</TABLE>
+<p>
+<H3>22.4.3  Matrix Product in More than 2 Dimensions</H3>
+An example in 3 dimensions will be
+sufficiently general. Symbolically:
+<PRE>
+   A =: 1 2 3 $ <"0 'abcdef'
+   B =: 3 2 2 $ <"0 'mnopqrstuvwx'
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>B</TT></TD>
+<TD><TT>Z =: A sdot B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+-+-+<BR>
+|a|b|c|<BR>
++-+-+-+<BR>
+|d|e|f|<BR>
++-+-+-+</TT></TD>
+<TD><TT>+-+-+<BR>
+|m|n|<BR>
++-+-+<BR>
+|o|p|<BR>
++-+-+<BR>
+<BR>
++-+-+<BR>
+|q|r|<BR>
++-+-+<BR>
+|s|t|<BR>
++-+-+<BR>
+<BR>
++-+-+<BR>
+|u|v|<BR>
++-+-+<BR>
+|w|x|<BR>
++-+-+</TT></TD>
+<TD><TT>+----------+----------+<BR>
+|am+(bq+cu)|an+(br+cv)|<BR>
++----------+----------+<BR>
+|ao+(bs+cw)|ap+(bt+cx)|<BR>
++----------+----------+<BR>
+<BR>
++----------+----------+<BR>
+|dm+(eq+fu)|dn+(er+fv)|<BR>
++----------+----------+<BR>
+|do+(es+fw)|dp+(et+fx)|<BR>
++----------+----------+</TT></TD>
+</TABLE>
+<p>
+The last dimension of <TT>A</TT> must equal the first dimension
+of <TT>B</TT>.  The shape of the result <TT>Z</TT> is
+the leading dimensions of <TT>A</TT>
+ followed
+by the trailing dimensions of <TT>B</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>$A</TT></TD>
+<TD><TT>$B</TT></TD>
+<TD><TT>$Z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 2 3</TT></TD>
+<TD><TT>3 2 2</TT></TD>
+<TD><TT>1 2 2 2</TT></TD>
+</TABLE>
+<p>
+The last-and-first dimension of <TT>A</TT> and <TT>B</TT>
+have disappeared, because each dimensionless scalar in <TT>Z</TT>
+combines a "row" of <TT>A</TT> with a "column" of <TT>B</TT>.
+We see in the result <TT>Z</TT> that each row of <TT>A</TT> is
+combined separately with the whole of <TT>B</TT>.
+<H3>22.4.4  Dot Compared With @:</H3>
+Recall from <A HREF="07.htm">Chapter 07</A> that a dyadic verb 
+<TT>v</TT> has a left and right rank. 
+Here are some utility functions to extract the ranks from a given verb.
+<PRE>
+   RANKS   =: 1 : 'u b. 0'
+   LRANK   =: 1 : '1 { (u RANKS)'   NB. left rank only
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>* RANKS</TT></TD>
+<TD><TT>* LRANK</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 0 0</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+The general scheme defining dyadic verbs of the form (<TT>u . v</TT>) is:
+<PRE>
+             u . v   means  u @ (v " (1+L, _))   where L = (v LRANK)
+</PRE>
+or equivalently,
+<PRE>
+              u . v   means (u @: v) " (1+L, _)
+</PRE>
+<PRE>
+        and hence
+</PRE>
+<PRE>
+             +/.*   means (+/ @: *)" 1 _
+</PRE>
+and so we see the difference between <TT>.</TT> and <TT>@:</TT>.
+For simple vector arguments they are the same, in which case
+the dimensions of the arguments must be the same, but this 
+is not the condition we require for matrix multiplication
+in general, where (in the example above) each row of <TT>A</TT> is combined with 
+the whole
+of <TT>B</TT>.
+<A NAME="06"></A>
+<H2>22.5  Determinant</H2>
+The monadic verb <TT>(- / . *)</TT> computes 
+the determinant of a matrix.
+<PRE>
+   det =: - / . *
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>det M</TT></TD>
+<TD><TT>(3*3)-(2*4)</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+Symbolically:
+<PRE>
+   sdet =: sminus / . sprodc
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>S</TT></TD>
+<TD><TT>sdet S</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+-+<BR>
+|a|b|<BR>
++-+-+<BR>
+|c|d|<BR>
++-+-+<BR>
+|e|f|<BR>
++-+-+</TT></TD>
+<TD><TT>+----------------------------+<BR>
+|(a(d-f))-((c(b-f))-(e(b-d)))|<BR>
++----------------------------+</TT></TD>
+</TABLE>
+<p>
+<A NAME="07"></A>
+<H3>22.5.1  Singular Matrices</H3>
+A matrix is said to be singular if the rows (or columns)
+are not linearly independent, that is, if one row
+(or column) can be obtained from another 
+by multiplying by a constant. 
+A singular matrix has a zero determinant.
+<p>
+In the following
+example <TT>A</TT> is a (symbolic) singular matrix,
+with <TT>m</TT> the constant multiplier.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A =: 2 2 $ 'a';'b';'ma';'mb'</TT></TD>
+<TD><TT>sdet A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+--+--+<BR>
+|a |b |<BR>
++--+--+<BR>
+|ma|mb|<BR>
++--+--+</TT></TD>
+<TD><TT>+-------+<BR>
+|amb-mab|<BR>
++-------+</TT></TD>
+</TABLE>
+<p>
+We see that the resulting term <TT>(amb-mab)</TT> must be zero for all
+<TT>a</TT>, <TT>b</TT> and <TT>m</TT>.
+<A NAME="08"></A>
+<H2>22.6  Matrix Divide</H2>
+<A NAME="09"></A>
+<H3>22.6.1  Simultaneous Equations</H3>
+The built-in verb <TT>%.</TT> 
+(percent dot) is called "Matrix Divide". It can be used
+to find solutions to systems of simultaneous linear equations.
+For example,  consider the equations 
+written conventionally as:
+<PRE>
+              3x + 4y = 11
+</PRE>
+<PRE>
+              2x + 3y =  8
+</PRE>
+Rewriting as a matrix equation, we have, informally,
+<PRE>
+              M dot U = R
+</PRE>
+where <TT>M</TT> is the matrix of coefficients
+<TT>U</TT> is the vector of unknowns <TT>x,y</TT>  and <TT>R</TT> is the vector of
+right-hand-side values:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M =: 3 4 ,: 2 3</TT></TD>
+<TD><TT>R =: 11 8</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3</TT></TD>
+<TD><TT>11 8</TT></TD>
+</TABLE>
+<p>
+The vector of unknowns <TT>U</TT> (that is, <TT>x,y</TT>) can be found
+by dividing <TT>R</TT> by matrix <TT>M</TT>. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>R</TT></TD>
+<TD><TT>U =: R  %. M</TT></TD>
+<TD><TT>M dot U</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3</TT></TD>
+<TD><TT>11 8</TT></TD>
+<TD><TT>1 2</TT></TD>
+<TD><TT>11 8</TT></TD>
+</TABLE>
+<p>
+We see that <TT>M dot U</TT> equals <TT>R</TT>, that is, <TT>U</TT> solves the equations.
+<H3>22.6.2  Complex, Rational and Vector Variables</H3>
+The equations to be solved may be in complex variables.
+For example:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>R =: 15j22 11j16</TT></TD>
+<TD><TT>U =: R %. M</TT></TD>
+<TD><TT>M dot U</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3</TT></TD>
+<TD><TT>15j22 11j16</TT></TD>
+<TD><TT>1j2 3j4</TT></TD>
+<TD><TT>15j22 11j16</TT></TD>
+</TABLE>
+<p>
+or in rationals. In this case both <TT>M</TT> and <TT>R</TT>
+must be rationals to give a rational result.
+<PRE>
+   M =: 2 2 $ 3x 4x 2x 3x
+   R =: 15r22 11r16
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>R</TT></TD>
+<TD><TT>U =: R %. M</TT></TD>
+<TD><TT>M dot U</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3</TT></TD>
+<TD><TT>15r22 11r16</TT></TD>
+<TD><TT>_31r44 123r176</TT></TD>
+<TD><TT>15r22 11r16</TT></TD>
+</TABLE>
+<p>
+In the previous examples the unknowns in <TT>U</TT> were scalars.
+Now suppose the unknowns are vectors and our equations
+for solving are:
+<PRE>
+              3x + 4y = 15 22
+</PRE>
+<PRE>
+              2x + 3y = 11 16
+</PRE>
+so we write: 
+<PRE>
+   M =: 2 2 $ 3 4 2 3
+   R =: 2 2 $ 15 22 11 16
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>R</TT></TD>
+<TD><TT>U =: R  %. M</TT></TD>
+<TD><TT>M dot U</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3</TT></TD>
+<TD><TT>15 22<BR>
+11 16</TT></TD>
+<TD><TT>1 2<BR>
+3 4</TT></TD>
+<TD><TT>15 22<BR>
+11 16</TT></TD>
+</TABLE>
+<p>
+The unknowns <TT>x</TT> and <TT>y</TT> are the rows of <TT>U</TT>, that is, vectors.
+<A NAME="10"></A>
+<H3>22.6.3  Curve Fitting</H3>
+Suppose we aim to plot the best straight line fitting
+a set of data points. If the data points are <TT>x,y</TT> pairs
+given as:
+<PRE>
+   x =: 10 20 30
+   y =: 31 49 70
+</PRE>
+we aim to find <TT>a</TT> and <TT>b</TT> for the equation:
+<PRE>
+                  y = a + bx 
+</PRE>
+The 3 data points give us 3 equations in the 2 unknowns 
+<TT>a</TT> and <TT>b</TT>.  Conventionally:
+<PRE>
+         1 . a  +  10 . b  =   31
+</PRE>
+<PRE>
+         1 . a  +  20 . b  =   49
+</PRE>
+<PRE>
+         1 . a  +  30 . b  =   70
+</PRE>
+so we take the matrix of coefficients <TT>M</TT> to be  
+<PRE>
+   M =: 3 2 $ 1 10  1 20  1 30
+</PRE>
+and divide <TT>y</TT> by matrix <TT>M</TT> to get the vector of unknowns
+<TT>U</TT>, (that is,  <TT>a,b</TT>)
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M </TT></TD>
+<TD><TT> y</TT></TD>
+<TD><TT>U =: y %. M</TT></TD>
+<TD><TT>M dot U</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 10<BR>
+1 20<BR>
+1 30</TT></TD>
+<TD><TT>31 49 70</TT></TD>
+<TD><TT>11 1.95</TT></TD>
+<TD><TT>30.5 50 69.5</TT></TD>
+</TABLE>
+<p>
+Here we have more equations than unknowns, 
+(more rows than columns in <TT>M</TT>) 
+and so the solutions <TT>U</TT> are the best fit
+to all the equations together. We see that <TT>M dot U</TT>
+is close to, but not exactly equal to, <TT>y</TT>.
+<p>
+"Best fit" means that the sum of the squares of 
+the errors is minimized, where the errors are 
+given by <TT>y - M dot U</TT>.
+If the sum of squares is minimized, then we expect that
+by perturbing <TT>U</TT> slightly, the sum of squares is increased.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>+/  *: y - M dot U</TT></TD>
+<TD><TT>+/  *: y - M dot (U + 0.01)</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1.5</TT></TD>
+<TD><TT>1.6523</TT></TD>
+</TABLE>
+<p>
+The method extends straightforwardly to fitting
+a polynomial to a set of data points. 
+Suppose we aim to fit
+<PRE>
+          y = a + bx + cx<SUP>2</SUP>
+</PRE>
+to the data points:
+<PRE>
+   x =: 0   1  2  3 
+   y =: 1   6 17 34.1
+</PRE>
+The four equations to be solved are:
+<PRE>
+      1.a + bx<sub>0</sub> + cx<sub>0</sub><sup>2</sup> = y<sub>0</sub>
+      1 a + bx<sub>1</sub> + cx<sub>1</sub><sup>2</sup> = y<sub>1</sub>
+      1.a + bx<sub>2</sub> + cx<sub>2</sub><sup>2</sup> = y<sub>2</sub>
+      1.a + bx<sub>3</sub> + cx<sub>3</sub><sup>2</sup> = y<sub>3</sub>
+</PRE>
+and so the columns of matrix <TT>M</TT> are <TT>1, x, x^2</TT>, 
+conveniently given by:
+<TT>x ^/ 0 1 2</TT> 
+<PRE>
+   M =: x ^/ 0 1 2
+</PRE>
+and the unknowns <TT>a, b, c</TT> are given by vector <TT>U</TT> as follows:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M </TT></TD>
+<TD><TT>y</TT></TD>
+<TD><TT>U =: y %. M</TT></TD>
+<TD><TT> M dot U</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 0 0<BR>
+1 1 1<BR>
+1 2 4<BR>
+1 3 9</TT></TD>
+<TD><TT>1 6 17 34.1</TT></TD>
+<TD><TT>1.005 1.955 3.025</TT></TD>
+<TD><TT>1.005 5.985 17.02 34.09</TT></TD>
+</TABLE>
+<p>
+There may be more equations than unknowns,
+as this example shows, but evidently there cannot be fewer.
+That is, in <TT>R %. M</TT> matrix <TT>M</TT> must have no more columns than rows.
+<H3>22.6.4  Dividing by Higher-Rank Arrays</H3>
+Here is an example of <TT>U =: R %. M</TT>, 
+in which the divisor <TT>M</TT> is of rank 3.   
+<PRE>
+   M =: 3 2 2 $ 3 4 2 3 0 3 1 2 3 1 2 3
+   R =: 21 42
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>R</TT></TD>
+<TD><TT>U =: R %. M</TT></TD>
+<TD><TT>M dot U</TT></TD>
+<TD><TT>M dot"2 1 U</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4<BR>
+2 3<BR>
+<BR>
+0 3<BR>
+1 2<BR>
+<BR>
+3 1<BR>
+2 3</TT></TD>
+<TD><TT>21 42</TT></TD>
+<TD><TT>_105 84<BR>
+&nbsp;&nbsp;28&nbsp;&nbsp;7<BR>
+&nbsp;&nbsp;&nbsp;3 12</TT></TD>
+<TD><TT>error</TT></TD>
+<TD><TT>21 42<BR>
+21 42<BR>
+21 42</TT></TD>
+</TABLE>
+<p>
+The dyadic rank of <TT>%.</TT> is <TT>_ 2</TT>, 
+<PRE>
+   %. b. 0
+2 _ 2
+</PRE>
+and so in this example
+the whole of <TT>R</TT> is combined separately
+with each of the 3 matrices in <TT>M</TT>. That is, we have 3
+separate sets of equations, each with the same right-hand-side <TT>R</TT>
+Thus we have 3 separate solutions (the rows of <TT>U</TT>).
+<p>
+The condition <TT>R=M dot U</TT> evidently does not hold 
+(because the last dimension of <TT>M</TT> is not equal to the 
+first of <TT>U</TT>), but it does hold separately
+for each matrix in <TT>M</TT> with corresponding row of <TT>U</TT>.
+<A NAME="11"></A>
+<H2>22.7  Identity Matrix</H2>
+A (non-singular) square matrix <TT>M</TT> divided by itself yields 
+an "identity matrix", <TT>I</TT> say, such that <TT>(M dot I) = M</TT>.
+<PRE>
+   M =: 3 3 $ 3 4 7 0 0 4 6 0 3
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>I =: M %. M</TT></TD>
+<TD><TT>M dot I</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4 7<BR>
+0 0 4<BR>
+6 0 3</TT></TD>
+<TD><TT>1 0 0<BR>
+0 1 0<BR>
+0 0 1</TT></TD>
+<TD><TT>3 4 7<BR>
+0 0 4<BR>
+6 0 3</TT></TD>
+</TABLE>
+<p>
+<A NAME="12"></A>
+<H2>22.8  Matrix Inverse</H2>
+The monadic verb <TT>%.</TT> computes the inverse of a matrix
+That is, <TT>%. M</TT> is 
+equivalent to <TT>I %. M</TT> for a suitable
+identity matrix <TT>I</TT>:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>M</TT></TD>
+<TD><TT>I =: M %. M</TT></TD>
+<TD><TT>I %. M</TT></TD>
+<TD><TT>%. M</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 4 7<BR>
+0 0 4<BR>
+6 0 3</TT></TD>
+<TD><TT>1 0 0<BR>
+0 1 0<BR>
+0 0 1</TT></TD>
+<TD><TT>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;_0.125 0.1667<BR>
+0.25 _0.3438 _0.125<BR>
+&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0.25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</TT></TD>
+<TD><TT>&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;_0.125 0.1667<BR>
+0.25 _0.3438 _0.125<BR>
+&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;0.25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0</TT></TD>
+</TABLE>
+<p>
+For a vector <TT>V</TT>, the inverse <TT>W</TT>
+has the reciprocal magnitude and the same direction.
+Thus the product of the magnitudes is <TT>1</TT> and the cosine
+of the angle between is <TT>1</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>V</TT></TD>
+<TD><TT>W =:  %. V</TT></TD>
+<TD><TT>(ma V) * (ma W)</TT></TD>
+<TD><TT>V ca W</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3 5</TT></TD>
+<TD><TT>0.08824 0.1471</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+This is the end of Chapter 22.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="23.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="23.htm">&gt;&gt;</a>&nbsp;
+<a href="21.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

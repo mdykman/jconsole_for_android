@@ -1,0 +1,112 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Intervals</title>
+
+</head><body><!--top jump start--><a href="locate_select.htm">&gt;&gt;</a>&nbsp;
+<a href="merge_amend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>4A. Intervals </h1>
+
+
+<P>It is a common need in programming to have to test whether a given number x lies between two other numbers a and b, with a less than b, called the lower boundary and upper boundary. The numbers that lie between the boundaries are called an interval. Each boundary may or may not be included in the interval. If the boundary is included in the interval, the interval is said to be closed on that side; if it is excluded it is said to be open on that side. If an interval is closed on both sides, it is said to be a closed interval. If it is open on both sides it is said to be an open interval. If it is open on the left side, it is said to be half open on the left. If it is open on the right it is said to be half open on the right. This is usually expressed in common mathematical notation in one of the following ways, which permit all possible ways in which the boundary numbers are or are not included in the interval:</P>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="80%">
+  <TR><TD>set notation</TD>	<TD>interval notation</TD>	<TD>description of interval</TD></TR>
+  <TR><TD>{x | a &lt; x &lt; b}</TD>	<TD>(a , b)</TD>	<TD>open</TD>
+  </TR><TR><TD>{x | a &lt; x * b}</TD>	<TD>(a , b]</TD>	<TD>half-open on the left</TD></TR>
+  <TR><TD>{x |a * x &lt; b}</TD>	<TD>[a , b)</TD>	<TD>half-open on the right</TD></TR>
+  <TR><TD>{x |a * x * b}</TD>	<TD>[a , b]</TD>	<TD>closed</TD>
+  </TR>
+</TABLE>
+
+<P>In the usual case, a and b are finite numbers, with a less than b. If we permit the boundaries to be infinite, and a to be equal to b, we get the cases tabulated below. See Andrew M. Gleason, <I>Fundamentals of Abstract Analysis</I>, Addison-Wesley, 1966, sect. 14-10.7</P>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD>set notation</TD>	<TD>interval notation</TD>	<TD>description of interval</TD></TR>
+  <TR><TD>{x | a &lt; x }</TD>	<TD>(a , _)</TD>	<TD>x greater than a</TD>
+  </TR><TR><TD>{x | x &lt; b}</TD>	<TD>(__, b)</TD>	<TD>x less than b</TD>
+  </TR><TR><TD><B>R</B></TD>	<TD>(__ , _)</TD>	<TD>x all finite real numbers</TD></TR>
+  <TR><TD>{x | x * b}</TD>	<TD>(__ , b]</TD>	<TD>x less than or equal to b</TD></TR>
+  <TR><TD>{x | a * x}</TD>	<TD>[a , _)</TD>	<TD>x greater than or equal to a</TD></TR>
+  <TR><TD>{a}</TD>	<TD>[a , a]</TD>	<TD>x equal to a</TD>
+  </TR><TR><TD>{}</TD>	<TD>(a , a)</TD>	<TD>x is the empty set</TD>
+  </TR>
+</TABLE>
+
+ 
+<P>In the verbs below the limits a and b form the two items of the right argument y. The verbs <tt>d0 </tt>through <tt>d3 </tt>below are reasonably efficient and allow testing for inclusion in an interval by using the relational symbols &lt; and &le; in pairs in all four possible ways. The verbs <tt>d5 </tt>through <tt>d8 </tt>use a common subverb <tt>d9 </tt>which when applied between arguments x and y yields a result between _ 2 and 2, depending on whether x is less than a, equal to a, strictly between a and b, equal to b, or greater than b, thus permitting a wide variety of tests.  It subtracts y from x, yielding a two-atom result, and takes the sum of the signum of this. They are not particularly efficient, but are interesting pedagogically. The verbs <tt>d10 </tt>and <tt>d11 </tt>do not generalize readily, but may be useful in the special case of a need for a half-open left interval. All of these verbs may be used with Boolean, integer, or real arguments. When used with real arguments, you may wish to consider whether the relations should be fuzzed or made with zero tolerance.</P>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>d0=: OO=: ({.@] &lt;  [)*.([ &lt; {:@])</tt></TD>	<TD width=60%>x OinO y  (Is x in open interval y)</TD></TR>
+  <TR><TD><tt>d1=: OC=: ({.@] &lt;  [)*.([ &lt;: {:@])</tt></TD><TD>	x OinC y</TD>
+  </TR><TR><TD><tt>d2=: CO=: ({.@] &lt;: [)*.([ &lt;  {:@])</tt></TD>	<TD>x CinO y</TD>
+  </TR><TR><TD><tt>d3=: CC=: ({.@] &lt;: [)*.([ &lt;: {:@])</tt></TD>	<TD>x CinC y</TD>
+  </TR><TR><TD><tt>d4=: +/&quot;1@d2</tt></TD>	<TD>Number of x OinC y</TD>
+  </TR><TR><TD><tt>d5=: 0:    e.~ class</tt></TD>	<TD>x OinO y</TD>
+  </TR><TR><TD><tt>d6=: 0 1&quot;_ e.~ class</tt></TD>	<TD>x OinC y</TD>
+  </TR><TR><TD><tt>d7=: _1 0  &quot;_ e.~ class</tt></TD>	<TD>x CinO y</TD>
+  </TR><TR><TD><tt>d8=: _1 0 1&quot;_ e.~ class</tt></TD>	<TD>x CinC y</TD>
+  </TR><TR><TD><tt>d9=: class=: [: +/&quot;1 [: * -/</tt></TD>	<TD>Class _2 to 2:   &lt;A  ="a"  CINC="b"&gt;b</TD></TR>
+  <TR><TD><tt>d10=: [: ~:/ &gt;:/~</tt></TD>	<TD>x OinC y</TD>
+  </TR><TR><TD><tt>d11=: ] &gt;/ .&gt;~ [: ,.~ [</tt></TD>	<TD>x OinC y</TD>
+  </TR><TR><TD><tt>d12=: sgd=: *@(-~/~)</tt></TD>	<TD>Signum of difference</TD>
+  </TR><TR><TD><tt>d13=: 0&amp;=@(+/)@sgd</tt></TD>	<TD>OO</TD>
+  </TR><TR><TD><tt>d14=: e.&amp;0 1@(+/)@sgd</tt></TD>	<TD>OC</TD>
+  </TR><TR><TD><tt>d15=: 0&amp;&gt;:@(%/)@sgd</tt></TD>	<TD>CO</TD>
+  </TR><TR><TD><tt>d16=: &gt;/@sgd</tt></TD>	<TD>CC</TD>
+  </TR>   
+</TABLE>
+
+<pre>   x=:i.12 [ y=: 3 8
+   x ([ , OO , OC ,CO ,: CC) y
+0 1 2 3 4 5 6 7 8 9 10 11
+0 0 0 0 1 1 1 1 0 0  0  0	( )
+0 0 0 0 1 1 1 1 1 0  0  0	( ]
+0 0 0 1 1 1 1 1 0 0  0  0	[ )
+0 0 0 1 1 1 1 1 1 0  0  0	[ ]
+
+ 
+   x(CC = OC +. CO) y	NB. Tautology
+1 1 1 1 1 1 1 1 1 1 1 1
+
+   x (d5 = OO) y
+1 1 1 1 1 1 1 1 1 1 1 1
+
+   x ,: x d9 y
+ 0  1  2  3 4 5 6 7 8 9 10 11
+_2 _2 _2 _1 0 0 0 0 1 2  2  2 
+
+   x d12 y
+_1 _1 _1  0  1  1  1  1 1 1 1 1
+_1 _1 _1 _1 _1 _1 _1 _1 0 1 1 1
+
+</pre>
+
+<!--bottom jump start--><hr><a href="locate_select.htm">&gt;&gt;</a>&nbsp;
+<a href="merge_amend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

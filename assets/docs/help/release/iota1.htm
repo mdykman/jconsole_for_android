@@ -1,0 +1,70 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>       #\ and #\. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="amipcommute.htm">&gt;&gt;</a>&nbsp;
+<a href="ordstat.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">#\ </font>
+<font size=+3>and<font size=+3 face="Courier New"> #\. </font></font><font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2010-08-05<br>last updated: 2010-08-05
+</td></tr></table>
+<br>
+
+<p>The monads<tt> #\ </tt>and<tt> #\. </tt>
+are now implemented by special code and
+are faster and leaner (linear instead of quadratic).</p>
+
+<pre>
+   #\ 7$'a'
+1 2 3 4 5 6 7
+   #\. 7$'a'
+7 6 5 4 3 2 1
+
+   x=: 1e6 $ 'palindromic'
+   ts=: 6!:2 , 7!:2@]  NB. time and space
+
+   ts '#\x'
+0.00905422 4.19501e6
+   ts '#\.x'
+0.00906344 4.19501e6
+
+   NB. in contrast
+   ts '1+i.#x'
+0.0194871 8.38931e6
+   ts '1+i.-#x'
+0.0212759 8.38944e6
+</pre>
+
+
+<br>
+<!--bottom jump start--><hr><a href="amipcommute.htm">&gt;&gt;</a>&nbsp;
+<a href="ordstat.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

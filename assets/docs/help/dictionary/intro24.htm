@@ -1,0 +1,135 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 24. Permutations</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro25.htm">&gt;&gt;</a>&nbsp;
+<a href="intro23.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>24. Permutations</b></font><br><br>
+
+Anagrams are familiar examples of the important notion 
+of <i>permutations</i>:<br>
+
+<pre>
+   w=: 'STOP'
+   3 2 0 1 { w
+POST
+
+   2 3 1 0 { w
+OPTS
+
+   3 0 2 1 { w
+PSOT
+</pre>
+
+The left arguments of<tt> { </tt>above are themselves permutations 
+of the list<tt> i.4</tt> ;<tt> </tt>examples of <i>permutation vectors</i>, 
+used to represent permutation functions in the form<tt> p&amp;{</tt> .<br><br>
+
+If<tt> p </tt>is a permutation vector, the phrase<tt> p&amp;C. </tt>
+also represents the permutation<tt> p&amp;{</tt> .<tt> </tt>
+However, other cases of the <i>cycle</i> function<tt> C. </tt>
+are distinct from the <i>from</i> function<tt> {</tt> .<tt> </tt> 
+In particular,<tt> C. p </tt>yields the <i>cycle representation</i> 
+of the permutation<tt> p</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   ]c=: C. p=: 2 4 0 1 3
++---+-----+
+|2 0|4 3 1|
++---+-----+
+
+   c C. 'ABCDE'                   C. c
+CEABD                          2 4 0 1 3
+</pre>
+
+Each of the boxed elements of a cycle specify a list of 
+positions that cycle among themselves; in the example above, 
+the element from position<tt> 3 </tt>moves to position<tt> 4</tt> ,<tt> </tt>
+element<tt> 1 </tt>moves to<tt> 3</tt> ,<tt> </tt>and element<tt> 4 </tt>
+to<tt> 1</tt> .<br><br>
+
+A permutation can be identified by its index in the table of 
+all<tt> !n </tt>permutations of order<tt> n </tt>listed in increasing order.  
+This index is the <i>anagram index</i> of the permutation; 
+the corresponding permutation is effected by the function<tt> A. </tt>
+as illustrated below:<br>
+
+<pre>
+   1 A. 'ABCDE'                   A. 0 1 2 4 3
+ABCED                          1
+
+   (i.!3) A. i.3                  (i.!3) A. 'ABC'
+0 1 2                          ABC
+0 2 1                          ACB
+1 0 2                          BAC
+1 2 0                          BCA
+2 0 1                          CAB
+2 1 0                          CBA
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b>
+
+<table>
+<tr><td valign=top>24.1 &nbsp;</td>
+<td>Use the following as exercises in reading and writing (try 
+on<tt> a=:'abcdef' </tt>and<tt> b=: i. 6 </tt>and<tt> c=: i. 6 6</tt>): <br>
+
+<pre>
+f=: 1&amp;A.                       <font face=Times size=+1>Interchange last two items</font>
+g=: 3&amp;A.                       <font face=Times size=+1>Rotate last three items</font>
+h=: 5&amp;A.                       <font face=Times size=+1>Reverse last three items</font>
+i=: &lt;:@!@[ A. ]                k i a <font face=Times size=+1>reverses last</font> k <font face=Times size=+1>items</font>
+</pre>
+</td></tr>
+  
+<tr><td valign=top>24.2 &nbsp;</td>
+<td>Experiment with the following expressions and others 
+like them to determine the rules for using abbreviated arguments 
+to<tt> C. </tt>and compare your conclusions with the 
+dictionary definitions: <br>
+
+<pre>
+2 1 4 C. b=:i.6
+(&lt;2 1 4) C. b
+(3 1;5 0) C. b
+</pre>
+</td></tr>
+
+<tr><td valign=top>24.3 &nbsp;</td>
+<td>Make a program<tt> ac </tt>that produces a table of the cycle 
+representations of all permutations of the order of its argument, 
+as in<tt> ac 3</tt> . <br><br>
+
+Answer:<tt> ac=: C.@(i.@! A. i.)</tt>
+</td></tr>
+</table>
+
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro25.htm">&gt;&gt;</a>&nbsp;
+<a href="intro23.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,110 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 17. Names and Displays</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro18.htm">&gt;&gt;</a>&nbsp;
+<a href="intro16.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>17. Names and Displays</b></font><br><br>
+
+In addition to the normal names used thus far, there are three 
+further classes:<br><br>
+
+<table>
+<tr><td valign=top>1) &nbsp;</td>
+<td><tt> $: </tt>is used for self-reference, allowing 
+a verb to be defined recursively without necessarily 
+assigning a name to it, as illustrated 
+in <a href="intro22.htm">Section 22</a>.<br><br>
+
+<tr><td valign=top>2) &nbsp;</td>
+<td>The names<tt> x </tt>and<tt> y </tt>are used in 
+explicit definition, discussed in <a href="intro18.htm">Section 18</a>.  
+They denote the arguments used in explicit definition.<br><br>
+
+<tr><td valign=top>3) &nbsp;</td>
+<td>A name (such as<tt> ab_cd_</tt>)<tt> </tt>that has two 
+underbars of which one is the final character, is a <i>locative</i>.  
+Names used in a <i>locale</i><tt> F </tt>can be referred to 
+in another locale<tt> G </tt>by using the suffix<tt> F </tt>
+in a locative name of the form<tt> pqr_F_</tt> ,<tt> </tt>
+thus avoiding conflict with otherwise identical names in 
+the locale<tt> G</tt> .<tt> </tt> 
+See <a href="dicti.htm">Section I</a> of Part II
+for further details.<br><br>
+</table>
+
+The form of the display invoked by entering a name 
+alone is established by<tt> 9!:3</tt> ,<tt> </tt>
+as described in <a href="dx009.htm">Appendix A</a>.  
+For example:<br>
+
+<pre>
+   mean=: +/ % #
+
+   9!:3 (4)                    <font face=Times size=+1>Tree form</font>
+
+   mean
+  +- / --- +
+--+- %      
+  +- #      
+
+   9!:3 (5)                    <font face=Times size=+1>Linear form</font>
+
+   mean
++/ % #
+</pre>
+
+Multiple displays are also possible:<br>
+
+<pre>
+   9!:3 (5 4 2)
+
+   mean
+
++/ % #
+  +- / --- +
+--+- %      
+  +- #      
++-----+-+-+
+|+-+-+|%|#|
+||+|/|| | |
+|+-+-+| | |
++-----+-+-+
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table><tr><td valign=top>17.1 &nbsp;</td>
+<td>Experiment with the use of locatives.
+</td></tr>
+</table>
+
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro18.htm">&gt;&gt;</a>&nbsp;
+<a href="intro16.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

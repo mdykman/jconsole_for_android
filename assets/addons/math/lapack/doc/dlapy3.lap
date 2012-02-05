@@ -1,0 +1,15 @@
+DLAPY3 returns sqrt(x**2+y**2+z**2), taking care not to cause
+unnecessary overflow.
+
+
+Arguments
+=========
+
+X       (input) DOUBLE PRECISION
+
+
+Y       (input) DOUBLE PRECISION
+
+
+Z       (input) DOUBLE PRECISION
+        X, Y and Z specify the values x, y and z.

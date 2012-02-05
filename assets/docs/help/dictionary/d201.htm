@@ -1,0 +1,87 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>^. Natural Log  -  Logarithm</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d202n.htm">&gt;&gt;</a>&nbsp;
+<a href="d200.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Natural Log</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>^. &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Logarithm</font></b></td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+The <i>natural logarithm</i><tt> </tt>(<tt>^.</tt>)<tt> </tt>is inverse to 
+the exponential<tt> ^ </tt>(i.e.,<tt> y=^.^y </tt>and<tt> y=^^.y</tt>).
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+The <i>base-x logarithm</i><tt> x^.y </tt>is the inverse of power<tt> </tt>
+(<tt>^</tt>)<tt> </tt>in the sense that<tt> y = x^.x^y </tt>
+and<tt> y = x^x^.y</tt> .
+</td>
+</tr></table><br>
+
+Certain properties of logarithms are illustrated below:<br>
+
+<pre>
+   x=: 4 [ y=: 0 1 2 3
+   (x^y);(x^.x^y);(x^.y);(x^x^.y)
++---------+-------+-----------------+-------+
+|1 4 16 64|0 1 2 3|__ 0 0.5 0.792481|0 1 2 3|
++---------+-------+-----------------+-------+
+
+   logtable=: ^./~@i.
+   &lt;6j2 &quot;: logtable 6
++------------------------------------+
+|    _.  0.00  0.00  0.00  0.00  0.00|
+|    __  0.00     _     _     _     _|
+|    __  0.00  1.00  1.58  2.00  2.32|
+|    __  0.00  0.63  1.00  1.26  1.46|
+|    __  0.00  0.50  0.79  1.00  1.16|
+|    __  0.00  0.43  0.68  0.86  1.00|
++------------------------------------+
+</pre>
+
+The first derivative of the natural logarithm is the reciprocal.  
+For example:<br>
+
+<pre>
+   ^. d. 1 y=: 0 1 2 3 4 5 6
+_ 1 0.5 0.333333 0.25 0.2 0.166667
+
+   % ^. d. 1 y
+0 1 2 3 4 5 6
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d202n.htm">&gt;&gt;</a>&nbsp;
+<a href="d200.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

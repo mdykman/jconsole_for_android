@@ -1,0 +1,558 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Continuing to Write in J</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="boxing_structures.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_ii_adverbs__an.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734363"></a><a name="_Toc5414571"></a><a name="_Toc1896204"><span
+style='mso-bookmark:_Toc5414571'><span style='mso-bookmark:_Toc191734363'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>10. </span></span><![endif]>Continuing to Write in J</span></span></a></h1>
+
+<p class=MsoBodyText>Now that we have a formidable battery of verbs at our
+command, let's continue writing programs in J.&nbsp;
+The data definitions are repeated here for convenience:</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>empno[nemp]</span></span>
+(in J, just <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>empno</span></span>)
+- employee number for each member of the staff.&nbsp;
+The number of employees is <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>nemp</span></span>.</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>payrate[nemp]</span></span>
+- number of dollars per hour the employee is paid</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>billrate[nemp]</span></span>
+- number of dollars per hour the customer is billed for the services of this
+employee</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>clientlist[nclients]</span></span>
+- every client has a number; this is the list of all of them.<span
+style='mso-spacerun:yes'>&nbsp; </span>The number of clients is <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>nclients</span></span>.</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>emp_client[nemp]</span></span>
+- number of the client this employee is billed to</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>hoursworked[nemp][31]
+</span></span>- for each employee, and for each day of the month, the number of
+hours worked</p>
+
+<p class=MsoBodyText>Problem 4: Find the amount to bill a given client.<span
+style='mso-spacerun:yes'>&nbsp; </span>C code:</p>
+
+<p class=Ccodemultiline>// cno is number of client we are looking up</p>
+
+<p class=Ccodemultiline>// result is amount to bill</p>
+
+<p class=Ccodemultiline>int billclient(int cno)</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int i, j,
+temp, total;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>total = 0;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(i =
+0;i&lt;nemp;++i) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(emp_client[i]==cno)
+{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(j
+= 0, temp = 0;j&lt;31;++j)temp += hoursworked[i][j];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>total
++= billrate[i] * temp;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline>return(total);</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoBodyText>The function is implemented in C by looping over the
+employees and picking the ones that are working for the specified client.<span
+style='mso-spacerun:yes'>&nbsp; </span>In J we deal with entire arrays rather than
+with elements one at a time, and the general plan is:</p>
+
+<p class=Ccodemultiline>get the mask of employees billed to the requested
+client;</p>
+
+<p class=Ccodemultiline>select the hoursworked records for the applicable
+employees;</p>
+
+<p class=Ccodemultiline>for(each employee) // 1</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(each
+day) accumulate total hours; // 2</p>
+
+<p class=Ccodemultiline>for(each employee)multiply hours by billing rate;</p>
+
+<p class=Ccodemultiline>for(each employee)get total billing;</p>
+
+<p class=MsoBodyText>This example is the first one in which an argument is
+passed into the J verb.&nbsp; Within the verb
+the right argument is referred to as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> and the left argument (if the verb is a
+dyad) is referred to as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;</span></span>.&nbsp;
+As usual in C we might use fewer big loops, but in J we stick to small
+loops.&nbsp; The mask of employees billed to
+the client is given by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>emp_client&nbsp;=&nbsp;y</span></span> which is a mask with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+for the selected employees, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0</span></span> for the others (remember that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=</span></span>
+is a test for equality, not an assignment).&nbsp;
+We can select the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>hoursworked</span></span> items for the specified client by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(emp_client&nbsp;=&nbsp;y)&nbsp;#&nbsp;hoursworked</span></span>;
+then the sum for each day will be a sum within each 1-cell, resulting in
+a list of hours for each selected employee.&nbsp;
+The line <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/&quot;1&nbsp;(emp_client&nbsp;=&nbsp;y)&nbsp;#&nbsp;hoursworked</span></span>
+performs the functions of loops 1 and 2 in the pseudocode: loop 1 within each
+cell and loop 2 in the implied loop over the cells.<span
+style='mso-spacerun:yes'>&nbsp; </span>Then, it is a simple matter to select the
+billing rates for the employees, multiply each billing rate by the number of
+hours worked, and take the total over all employees billed to the customer.<span
+style='mso-spacerun:yes'>&nbsp; </span>The solution (using a temporary variable to
+hold the mask) is</p>
+
+<p class=Jcodemultiline>billclient =: monad define</p>
+
+<p class=Jcodemultiline>mask =. emp_client = y</p>
+
+<p class=Jcodemultiline>+/ (mask # billrate) * +/&quot;1 mask # hoursworked</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>Problem 5: For each day, find the worker who billed the
+most hours (don't worry about a tie for first place--just pick any one worker
+from the top billers for each day).&nbsp; C
+code:</p>
+
+<p class=Ccodemultiline>// result: drudges[] is empno of worker with most hours
+each day</p>
+
+<p class=Ccodemultiline>void dailydrudge(int drudges[31])</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int i, j,
+highhours;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(i =
+0;i&lt;31;++i) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>highhours
+= -1;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(j
+= 0;j&lt;nemp;++j)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(hoursworked[j][i]&gt;highhours)
+{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>drudges[i]
+= empno[j];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>highhours
+= hoursworked[j][i];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoBodyText>We note that the inner loop, which records the employee
+number of any employee who worked more than the previous high, does not
+correspond to any of our J verbs.&nbsp; So, we
+break this loop into operations that do correspond to J verbs:</p>
+
+<p class=Ccodemultiline>for(each day)find the maximum number of hours worked;
+// 1</p>
+
+<p class=Ccodemultiline>for(each day)find the index of the employee who worked
+that much; // 2</p>
+
+<p class=Ccodemultiline>for(each day)translate the index to an employee number;
+// 3</p>
+
+<p class=MsoBodyText>Loop 1 is simply <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;./&nbsp;hoursworked&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Loop 2 calls for dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i.</span></span> to perform the
+search, but there is a little problem: each search must go through a column of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>hoursworked</span></span>,
+giving the hours worked by each employee on that day, but the column is not an
+item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>hoursworked</span></span>;
+each item is a row, giving hours worked on each day by one employee.<span
+style='mso-spacerun:yes'>&nbsp; </span>The solution is to transpose <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>hoursworked</span></span>
+(by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>|:&nbsp;hoursworked</span></span>),
+making the items correspond to days rather than employees.<span
+style='mso-spacerun:yes'>&nbsp; </span>Then we match up the resulting1-cells
+with the 0-cells of the maximum found by loop 1 and find the index of
+each maximum, using <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.&quot;1&nbsp;0</span></span>
+or the equivalent<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>
+i.&quot;_1&nbsp;</span></span>.&nbsp; Loop 3 is a simple application of dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The final code is</p>
+
+<p class=Jcodemultiline>dailydrudge =: monad define</p>
+
+<p class=Jcodemultiline>((|: hoursworked) i.&quot;_1 &gt;./ hoursworked) {
+empno</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>Problem 6: Order the employees by the amount of profit
+produced.&nbsp; This is a bagatelle for J and
+we won't even bother with C code.&nbsp; We
+have a verb that returns the profit for each employee, so we call it and use
+the result as the keys for sorting the employee numbers into descending
+order.&nbsp; Note that a verb must be given an
+argument when it is executed; we use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0</span></span> as a convenient value.<span
+style='mso-spacerun:yes'>&nbsp; </span>The final J code is</p>
+
+<p class=Jcodemultiline>producers=: monad : 'empno \: empprofit 0'</p>
+
+<p class=BodyTextnoleader>which makes use of the verb we defined earlier:</p>
+
+<p class=Jcodemultiline>empprofit =: monad define</p>
+
+<p class=Jcodemultiline>(billrate - payrate) * +/&quot;1 hoursworked</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>Problem 7 is similar: Order the clients by the amount of
+profit produced.&nbsp; It requires more
+ingenuity, and the C code would be more than I want to show, so let's try to
+write in J directly.&nbsp; We start with the
+list of clients <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>clientlist</span></span>,
+the list that tells which client each employee worked for <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>emp_client</span></span>, and
+the profit per employee given by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>empprofit&nbsp;0</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>For each client, we need to find the
+employees that worked for the client and add up the profit they brought
+in.&nbsp; For this kind of problem we want an <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>array</span></span>
+with employees for one axis and clients for the other, with a 1 in the
+positions where the employee is assigned; then we can do <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>array&nbsp;*&nbsp;empprofit&nbsp;0</span></span>
+and do some suitable summing of the result.&nbsp;
+Let's work out what <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>array</span></span> must look like.<span
+style='mso-spacerun:yes'>&nbsp; </span>Since dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> has rank 0, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>array&nbsp;*&nbsp;empprofit&nbsp;0</span></span>
+is going to replicate 0-cells of the shorter-frame argument (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>empprofit&nbsp;0</span></span>)
+which means that a single profit value is going to multiply an entire 1-cell
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>array</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>So we see that the leading axis of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>array</span></span>
+must be clients and the second axis must be employees; each item will have the
+client mask for one employee.&nbsp; The way to
+create that is by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>clientlist&nbsp;=&quot;1&nbsp;0&nbsp;emp_client</span></span>
+which will compare the entire client list against each 0-cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>emp_client</span></span>
+and form the results into an array.&nbsp;
+Then, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(clientlist&nbsp;=&quot;1&nbsp;0&nbsp;emp_client)
+* empprofit&nbsp;0</span></span> will have one item per employee, each item
+having the amount billed to each client; we sum these items to produce a list
+with the profit from each client, and use that to order the client
+numbers.&nbsp; Solution:</p>
+
+<p class=Jcodemultiline>custbyprofit =: monad define</p>
+
+<p class=Jcodemultiline>clientlist \: +/ (clientlist=&quot;1 0 emp_client) *
+empprofit 0</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>For our final problem in the payroll department, consider
+how to calculate withholding tax on each employee's earnings.<span
+style='mso-spacerun:yes'>&nbsp; </span>The tax rate within tax brackets will be
+assumed to be the same for all employees.&nbsp;
+C code for this would look like:</p>
+
+<p class=Ccodemultiline>// result: withholding for each employee in shekels[]</p>
+
+<p class=Ccodemultiline>int renderuntocaesar(float shekels[])</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//
+tax-bracket table: start of each bracket, ending with high value</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+bktmin[4] = {0,10000,20000,1e9};</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//
+tax-bracket table: rate in each bracket</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+bktrate[3] = {0.05,0.10,0.20};</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int
+earns[nemp];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int i, j;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>empearnings(earns);<span
+style='mso-spacerun:yes'>&nbsp; </span>// get earnings for each employee</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(i =
+0;i&lt;nemp;++i) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>shekels[i]=
+0.0;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(j
+= 0;j&lt;sizeof(bktrate)/sizeof(bktrate[0]);++j) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(earns[i]
+&gt; bktmin[j]) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+bktval = bktmin[j+1];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(earns[i]
+&lt; bktval)bktval = earns[i];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:4'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>shekels[i]
++= bktval * bktrate[j];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoBodyText>In J, we will sum over the tax brackets and we must create
+a suitable array for the summation.&nbsp; The
+items in this array will be the amounts earned in each tax bracket.<span
+style='mso-spacerun:yes'>&nbsp; </span>Corresponding to the two <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>if</span></span> statements we
+will use conditional verbs to discard amounts earned outside the tax bracket.<span
+style='mso-spacerun:yes'>&nbsp; </span>The conditionals will operate on each row, so
+they will have rank 1, and they will look something like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;&gt;.&nbsp;(bracket_top&nbsp;&lt;.&nbsp;earned)&nbsp;-&nbsp;bracket_bottom</span></span>
+which will give the amount earned in the bracket, set to 0 if the earnings are
+below the bracket and to the size of the bracket if above.<span
+style='mso-spacerun:yes'>&nbsp; </span>We will create <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>bracket_top</span></span> by
+shifting the brackets left and filling with infinity (this corresponds to the <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>bktmin[j+1]</span></span>
+reference in the C code).&nbsp; We could
+create <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>earned</span></span>
+by replicating the earnings for each employee to form a 1-cell for each
+bracket--the code for this would be <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(#bktmin)$&quot;0&nbsp;empearnings&nbsp;''</span></span>--but
+it's not necessary to create that array explicitly: we just use the implicit
+looping to cause each cell of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>empearnings&nbsp;''</span></span> to be replicated during
+the comparison with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>bracket_top</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Making all these substitutions, noting that
+all the operations have rank 1, and summing at the end over the items within
+each 1-cell, we get the final code:</p>
+
+<p class=Jcodemultiline>renderuntocaesar =: monad define</p>
+
+<p class=Jcodemultiline>bktmin =. 0 10000 20000</p>
+
+<p class=Jcodemultiline>bktrate =. 0.05 0.10 0.20</p>
+
+<p class=Jcodemultiline>t=. ((1 |.!._ bktmin) &lt;.&quot;1 0 empearnings '') -&quot;1
+bktmin</p>
+
+<p class=Jcodemultiline>+/&quot;1 bktrate *&quot;1 (0) &gt;. t</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=BodyTextnoleader>We used the temporary variable <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>t</span></span> so our sentences
+would fit on the page.</p>
+
+<h3><a name="_Toc191734364">Example: Counting Words and Lines</a></h3>
+
+<p class=MsoBodyText>Let's write a program to count the lines and words in a
+file.&nbsp; This is a simple task, and in C it
+might look like:</p>
+
+<p class=Ccodemultiline>// f points to filename</p>
+
+<p class=Ccodemultiline>// result is words,lines</p>
+
+<p class=Ccodemultiline>int[2] wc(char *f)</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>FILE fid;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int
+ct[2];&nbsp; /* # words, # lines */</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>char c;</p>
+
+<p class=Ccodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fid =
+fopen(f);</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>while(EOF !=
+(c = fgetc(fid)) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(c
+== '&nbsp;')++ct[0];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>if(c
+== LF)++ct[1];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>return (ct);</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoBodyText>Rather than loop for each character, in J we process files
+by reading the whole file into a list of characters and then operating on the
+list.&nbsp; The monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>ReadFile</span></span> (defined
+in the script <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>jforc.ijs</span></span>)
+has infinite rank; it takes a filename <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> and yields as
+result the contents of the file, as a list of characters.<span
+style='mso-spacerun:yes'>&nbsp; </span>Once the file is a list, it is trivial to
+compare each character against space and linefeed, yielding for each a list of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>s
+at each position filled by the character; then summing the list gives the
+number of each character.&nbsp; J code to do
+this is:</p>
+
+<p class=Jcodemultiline>NB. y is string filename, result is (#words),(#lines)</p>
+
+<p class=Jcodemultiline>wc =: monad define</p>
+
+<p class=Jcodemultiline>+/&quot;1 ('&nbsp;',LF) =&quot;0 1 ReadFile y</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>Suppose our user complains that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>wc</span></span> needs
+improvement: specifically, it should also return the number of characters in
+the file, should not count multiple consecutive whitespace characters
+(including TAB) as separate words, and should treat the trailing LF as a word
+delimiter as well as a line delimiter.&nbsp;
+In C, we would respond by adding a few more tests and flags, but in J we
+realize that a major change to the program's function calls for a thorough
+rethinking.</p>
+
+<p class=MsoBodyText>To ignore multiple whitespace characters we need to define
+what an ignored whitespace is, without using flags and loops.<span
+style='mso-spacerun:yes'>&nbsp; </span>This part of the problem often calls for
+creative thought; here we realize that a whitespace character is to be ignored
+if the previous character is whitespace.&nbsp;
+That's easy, then: we just calculate a Boolean vector, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+if the character is whitespace, and then use shift and Boolean AND to ignore
+multiple whitespace.&nbsp; The code to do this
+is worth looking at; it is </p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sw
+=. (-. _1 |. w) *. w =. f e. '&nbsp;',TAB,LF<o:p></o:p></span></span></p>
+
+<p class=BodyTextnoleader>where <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f</span></span> is the contents of the file.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that we assign a value to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>w</span></span>
+just before we right-shift <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>w&nbsp;</span></span>.&nbsp;
+This is legal in J: sentences are processed right-to-left, and the
+interpreter has not seen the reference to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>w</span></span> at the time <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>w</span></span>
+is assigned.&nbsp; A similar statement in C,
+for example <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;=&nbsp;w&nbsp;+&nbsp;(w
+= 4);</span></span> , would be undefined.&nbsp;
+Of course, even though it's legal in J, some would cavil--we will
+eventually learn ways to do this without defining a variable at all--but I leave
+it to you to decide how far you will detour to avoid jaywalking.<span
+style='mso-spacerun:yes'>&nbsp; </span>Once <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sw</span></span> has been
+calculated, the rest of the program is trivial.&nbsp;
+The final result is:</p>
+
+<p class=Jcodemultiline>NB.Version 2.&nbsp;
+Discard multiple whitespace,</p>
+
+<p class=Jcodemultiline>NB.and return (#chars),(#words),(#lines)</p>
+
+<p class=Jcodemultiline>wc2 =: monad define</p>
+
+<p class=Jcodemultiline>f =. ReadFile y</p>
+
+<p class=Jcodemultiline>sw =. (-. _1 |. w) *. w =. f e. '&nbsp;',TAB,LF</p>
+
+<p class=Jcodemultiline>(#f),(+/sw),(+/ LF = f)</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+</div><!--bottom jump start--><hr><a href="boxing_structures.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_ii_adverbs__an.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

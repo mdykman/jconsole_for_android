@@ -1,0 +1,97 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>*. Length/Angle  -  LCM (And)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d112.htm">&gt;&gt;</a>&nbsp;
+<a href="d110.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Length / Angle</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>*. &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>LCM (And)</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>*.y </tt>is a two-element list of the length and angle (in radians) 
+of the hypotenuse of a triangle with base and altitude equal to 
+the real and imaginary parts<tt> y</tt> .<tt> </tt>
+For example,<tt> *. 3j4 </tt>is<tt> 5 0.927295</tt>.
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x*.y </tt>is the least common multiple of<tt> x </tt>
+and<tt> y</tt> .<tt> </tt>For boolean arguments (<tt>0 </tt>and<tt> 1</tt>)
+it is equivalent to <i>and</i>.  Thus:<br>
+
+<pre>
+   0 1 *./ 0 1
+0 0
+0 1
+</pre>
+</td>                                                         
+</tr></table><br>
+
+Some properties of the length / angle are illustrated 
+in the following, including the fact that the length (i.e. magnitude) 
+of the product of two complex numbers is the product of their lengths, 
+and the angle of the product is the sum of their angles:<br>
+
+<pre>
+   (| ; *. ; r./@*.) y=: 3j4
++-+----------+---+
+|5|5 0.927295|3j4|
++-+----------+---+
+
+   x=: 2j_6
+   *. x,y                               NB. Polar coordinates
+6.32456 _1.24905
+      5 0.927295
+
+   f=: */@:({.&quot;1) , +/@:(}.&quot;1)          NB. Product over first col and sum over last
+   f *. x , y
+31.6228 _0.321751
+
+   *. x * y                             NB. Length and angle of product
+31.6228 _0.321751
+</pre>
+
+The least common multiple is the product divided by the GCD.  For example:<br>
+
+<pre>
+   24 *. 60
+120
+   24 +. 60
+12
+   (24 * 60) % (24 +. 60)
+120
+</pre>
+
+<!--bottom jump start--><hr><a href="d112.htm">&gt;&gt;</a>&nbsp;
+<a href="d110.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

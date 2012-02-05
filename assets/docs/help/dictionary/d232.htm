@@ -1,0 +1,103 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>|: Transpose</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d300.htm">&gt;&gt;</a>&nbsp;
+<a href="d231.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Transpose</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>|: &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Transpose</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>|: </tt>reverses the order of the axes of its argument. For example:<br>
+
+<pre>
+   (] ; |:) i. 3 4
++---------+------+
+|0 1  2  3|0 4  8|
+|4 5  6  7|1 5  9|
+|8 9 10 11|2 6 10|
+|         |3 7 11|
++---------+------+
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x|:y </tt>moves axes<tt> x </tt>to the tail end.  If<tt> x </tt>is 
+boxed, the axes in each box are <i>run together</i> to produce 
+a single axis:<br>
+
+<pre>
+   y=: 3 4$'abcdefghijkl'
+   y;(1 0|:y);(0|:y);((&lt;0 1)|:y)
++----+---+---+---+
+|abcd|aei|aei|afk|
+|efgh|bfj|bfj|   |
+|ijkl|cgk|cgk|   |
+|    |dhl|dhl|   |
++----+---+---+---+
+</pre>
+</td>                                                         
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   y=: a.{~ (a. i. 'a') + i. 2 3 4
+   z=: y;(2 1 |: y);((&lt;2 1) |: y);(|: i. 4 5)
+   z ,&amp;&lt; |:&amp;.&gt; z
++------------------------+-------------------------+
+|+----+---+---+---------+|+--+--+--+--------------+|
+||abcd|aei|afk|0 5 10 15|||am|am|am| 0  1  2  3  4||
+||efgh|bfj|mrw|1 6 11 16|||eq|bn|fr| 5  6  7  8  9||
+||ijkl|cgk|   |2 7 12 17|||iu|co|kw|10 11 12 13 14||
+||    |dhl|   |3 8 13 18|||  |dp|  |15 16 17 18 19||
+||mnop|   |   |4 9 14 19|||bn|  |  |              ||
+||qrst|mqu|   |         |||fr|eq|  |              ||
+||uvwx|nrv|   |         |||jv|fr|  |              ||
+||    |osw|   |         |||  |gs|  |              ||
+||    |ptx|   |         |||co|ht|  |              ||
+|+----+---+---+---------+||gs|  |  |              ||
+|                        ||kw|iu|  |              ||
+|                        ||  |jv|  |              ||
+|                        ||dp|kw|  |              ||
+|                        ||ht|lx|  |              ||
+|                        ||lx|  |  |              ||
+|                        |+--+--+--+--------------+|
++------------------------+-------------------------+
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d300.htm">&gt;&gt;</a>&nbsp;
+<a href="d231.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Control structures</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="cassert.htm">&gt;&gt;</a>&nbsp;
+<a href="dcons.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font size=+2>Control Structures</font></b><br><br>
+
+Control words are used in 
+<a href="d310n.htm">Explicit Definition<tt> </tt>(<tt>:</tt>) </a> <tt> </tt>
+and are punctuation that determine the 
+sequence of execution.  
+Matching control words and the enclosed sentences 
+make up a control structure.  The following control words and 
+structures are available:<br>
+
+<pre>
+<a href="cassert.htm">assert.</a> T
+
+<a href="cbreak.htm">break.</a>
+
+<a href="ccont.htm">continue.</a>
+
+<a href="cfor.htm">for.</a>     T do. B end.
+for_xyz. T do. B end.
+
+<a href="cgoto.htm">goto_name.</a>
+label_name.
+
+<a href="cif.htm">if.</a> T do. B end.
+
+if. T do. B else. B1 end.
+
+if.     T  do. B
+elseif. T1 do. B1
+elseif. T2 do. B2
+end.
+
+<a href="cret.htm">return.</a>
+
+<a href="csel.htm">select.</a> T
+ case.  T0 do. B0
+ fcase. T1 do. B1
+ case.  T2 do. B2
+end.
+
+<a href="cthrow.htm">throw.</a>
+
+<a href="ctry.htm">try.</a> B catch. B1 catchd. B2 catcht. B3 end.
+
+<a href="cwhile.htm">while.</a>  T do. B end.
+whilst. T do. B end.
+</pre>
+
+Words beginning with<tt> <b>B</b> </tt>or<tt> <b>T</b> </tt>
+denote blocks, comprising zero or more simple sentences 
+and control structures.  The last sentence executed in 
+a<tt> <b>T</b> </tt>block is tested for a non-zero value in its 
+leading atom, and determines the block to be executed next.  
+(An empty<tt> <b>T</b> </tt>block result or an omitted<tt> <b>T</b> </tt>
+block tests true.)  
+The final result is the result of the last sentence 
+executed that was not in a<tt> <b>T</b> </tt>block, and 
+if there is no such last executed sentence, 
+the final result is<tt> i.0 0</tt> .<br><br>
+
+These control words and control structures are further 
+detailed in the immediately following pages.<br>
+
+<br><br>
+<!--bottom jump start--><hr><a href="cassert.htm">&gt;&gt;</a>&nbsp;
+<a href="dcons.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

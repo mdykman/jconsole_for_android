@@ -1,0 +1,201 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Files</title>
+
+</head><body><!--top jump start--><a href="component_files.htm">&gt;&gt;</a>&nbsp;
+<a href="foreign.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Files</h1>
+Many applications require reading and writing files. Like all J interfaces with the environment, files are accessed with the foreign conjunction. The 1 family of foreigns work with files. First define a few verbs for convenience.<br>
+
+<pre>   readfile =: 1!:1
+   writefile =: 1!:2
+</pre>
+Let's create a file with some data in it. You'll be using the filename several times, so give it a name. The file foreigns require that the file name be a boxed string.<br>
+
+<pre>   fn =. &lt; 'user\test.txt'
+   'testing 1 2 3' writefile fn</pre>
+Use whatever file editor you like to take a look at the file test.txt that was created in the J user directory. You could also open it as a script file in J by using the <b>File|Open</b> command (you will have to change the "List files of type" combobox to list all files in order to see your test.txt file).<br>
+<br>
+You can read the data from this file.<br>
+
+<pre>   data =. readfile fn
+   data
+testing 1 2 3</pre>
+You can rewrite the file and read the new data.<br>
+
+<pre>   'new stuff for the file' writefile fn
+   readfile fn
+new stuff for the file</pre>
+Use an editor to change and resave the test.txt file and read it again to see that you get the new data. Again, you could do this by opening the file as a script file in J, editing it, and closing it and saving the changes.<br>
+<br>
+Let's assume you had a numeric table that you wanted to write out as text file.<br>
+
+<pre>   numtab =. i. 4 5
+   numtab writefile fn
+¦domain error
+¦   numtab     writefile fn</pre>
+If you try to write <font face=courier size=-1>numtab </font>out you get a domain error because <font face=courier size=-1>writefile </font>requires a string as its left argument. So, you need to convert the numeric table to a string. The first step is to convert the numeric data to character data. The primitive <font face=courier size=-1>":</font> (format) does this.<br>
+
+<pre>   cdata =. ": numtab
+   cdata
+ 0  1  2  3  4
+ 5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19
+   $cdata
+4 14
+</pre>
+The display of <font face=courier size=-1>cdata </font>looks like the numeric data, but its shape of <font face=courier size=-1>4 14</font> makes it clear that it is a character table. However, you still can't write this out to file because a file must be a list, not a table.<br>
+<br>
+The monad <font face=courier size=-1>,</font> (ravel) puts all the atoms of an array into a list.<br>
+
+<pre>   crdata =. , cdata
+   $ crdata
+56
+   crdata writefile fn
+   readfile fn 
+ 0  1  2  3  4 5  6  7  8  910 11 12 13 1415 16 17 18 19</pre>
+The data has been written to the file. However, reading the data from the file shows there are still some problems. The fact that there were four rows of numbers has been lost and some of the numbers from the end of a row (such as 9) run right into the first number of the next row. Important information has been lost. The character list should indicate that it has four lines of data.<br>
+<br>
+Different platforms use different characters to mark the break between lines. Unix systems use the new line character (often called line feed). Macintosh systems use the carriage return character. And Windows systems use the two character sequence of carriage return and line feed. The standard profile gives names to these as LF, CR, and CRLF.<br>
+<br>
+J systems can work with any of the line break conventions but often use LF internally and convert between that and the host preference only as data is moved in and out of the J application.<br>
+
+<pre>   'abc' , LF , 'defghi'
+abc
+defghi</pre>
+To each item (list) in cdata you want to append LF. You need do this with a rank 1 version of append.<br>
+
+<pre>   ddata =. cdata ,"1 LF
+   ddata
+ 0  1  2  3  4
+
+ 5  6  7  8  9
+
+10 11 12 13 14
+
+15 16 17 18 19</pre>
+The blank lines in the display occur because the LF character causes a new line, but the end of the row of a table also causes a new line. However, when you ravel this to create a list, the system won't have any rows to worry about and the display will again look OK.<br>
+
+<pre>   ldata =. , ddata
+   ldata
+ 0  1  2  3  4
+ 5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19</pre>
+Now you have a string with complete information about the original data. Standard profile verb toHOST converts a string with LF line breaks to the host preferred line break.<br>
+<br>
+
+<pre>  (toHOST ldata) writefile fn</pre>
+Open the file in an editor, or as a script file, to see that the data is there.<br>
+<br>
+What if you had this file and wanted to get the numbers in it into J for processing? You need to reverse the previous process.<br>
+
+<pre>   rdata =. readfile fn
+   rdata
+ 0  1  2  3  4
+ 5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19</pre>
+Getting the raw character data in is easy. But notice from the shape that it is a list of character data and remember that it may have LF, CR, or CRLF as its line breaks. Standard profile verb toJ converts the various line breaks to LF.<br>
+
+<pre>   dlf =. toJ rdata
+   dlf
+ 0  1  2  3  4
+ 5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19</pre>
+You can use the cutopen verb to partition the data.<br>
+
+<pre>   bdata =. cutopen dlf
+   bdata
++---------+---------+--------------+--------------+
+¦0 1 2 3 4¦5 6 7 8 9¦10 11 12 13 14¦15 16 17 18 19¦
++---------+---------+--------------+--------------+</pre>
+Each box contains the character data for the corresponding line. You need a primitive that converts strings to numbers. The dyad <font face=courier size=-1>".</font> can be used to convert characters to numbers.<br>
+
+<pre>   0 ". '5 2 7'
+5 2 7
+   a =. 0 ". '5 2 7'
+   3 + a
+8 5 10</pre>
+The left argument of <font face=courier size=-1>".</font> is the value used if a conversion of a number fails.<br>
+
+<pre>   0 ". '5 7.5 23.b 8'
+5 7.5 0 8</pre>
+Use the each adverb to convert each of the boxes to numbers.<br>
+
+<pre>   ndata =. 0 ". each bdata
+   ndata
++---------+---------+--------------+--------------+
+¦0 1 2 3 4¦5 6 7 8 9¦10 11 12 13 14¦15 16 17 18 19¦
++---------+---------+--------------+--------------+</pre>
+The display of <font face=courier size=-1>bdata </font>and <font face=courier size=-1>ndata </font>look the same, but the <font face=courier size=-1>bdata </font>boxes contain characters and the <font face=courier size=-1>ndata </font>boxes contain numbers. Open the <font face=courier size=-1>ndata </font>boxes to get the numeric table result.<br>
+
+<pre>   d =. &gt; ndata
+   d
+ 0  1  2  3  4
+ 5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19</pre>
+You can wrap this all together by creating a new script file, entering the following definitions, and saving it with a permanent name.<br>
+
+<pre>writetable =: dyad : 0
+d =. ": x
+d =. d ,"1 LF
+d =. toHOST , d
+d 1!:2 y
+)
+readtable =: 3 : 0
+d =. 1!:1 y
+d =. toJ d
+d =. cutopen d
+d =. 0 ". each d
+d =. &gt; d
+)</pre>
+Run the script file and test your definitions.<br>
+
+<pre>   (i. 3 7) writetable fn
+   1 + readtable fn
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21</pre>
+As you gain more experience with J you will start combining sentences together. A more experienced J programmer would probably write the above definitions as follows:<br>
+
+<pre>writetable =: 4 : '(toHOST,(": x),"1 LF) 1!:2 y'
+readtable =: 3 : '&gt;0 ". each cutopen toJ 1!:1 y'</pre>
+The script files.ijs provide many useful utilities for working with files. Look them up in the J Online Documentation.<br>
+
+<pre>   load 'files'
+   (": i. 3 9) fwrites 'newtest.txt'
+84
+   0 ". freadr 'newtest.txt'
+ 0  1  2  3  4  5  6  7  8
+ 9 10 11 12 13 14 15 16 17
+18 19 20 21 22 23 24 25 26
+</pre>
+<!--bottom jump start--><hr><a href="component_files.htm">&gt;&gt;</a>&nbsp;
+<a href="foreign.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

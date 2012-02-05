@@ -1,0 +1,1125 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Writing Your Own Modifiers</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="applied_mathematics_in_j.htm">&gt;&gt;</a>&nbsp;
+<a href="modular_code.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc1896278"></a><a name="_Toc191734495"></a><a name="_Toc5414654"><span
+style='mso-bookmark:_Toc191734495'><span style='mso-bookmark:_Toc1896278'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>30. </span></span><![endif]>Writing Your Own Modifiers</span></span></a><span
+style='mso-bookmark:_Toc1896278'></span></h1>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc1896278'>&nbsp;XE &quot;modifier:user-defined&quot;
+</span><![endif]--><span style='mso-bookmark:_Toc1896278'></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'></span><span style='mso-element:field-end'></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'>If you find that you are coding recurring
+patterns of operations, you can write a modifier that represents the
+pattern.&nbsp; You will find that reading your
+code is easier when the patterns are exhibited with names of your choosing.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>You write a
+modifier like you write a verb, using </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>conjunction&nbsp;define</span></span>
+or </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>adverb&nbsp;define</span></span>,
+or </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;:n</span></span> or </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;:n</span></span> for one-liners.<span
+style='mso-spacerun:yes'>&nbsp; </span>When you assign the modifier to a name, that
+name becomes a conjunction or adverb, and it will be invoked as </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;<i>name</i>&nbsp;v&nbsp;y</span></span> (monad) or </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;u&nbsp;<i>name</i>&nbsp;v&nbsp;y</span></span> (dyad)
+if it is a conjunction, or </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;<i>name</i>&nbsp;y</span></span>
+(monad)or </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;<i>name</i>&nbsp;y</span></span>
+(dyad) if it is an adverb.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>When a modifier is
+invoked, the lines of the modifier are executed one by one, just as when a verb
+is invoked, and the result of the last sentence executed becomes the result of
+the modifier.&nbsp; The </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> (and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+for conjunctions) operand(s) of the modifier are assigned to the local names </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> (and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>)
+when the modifier starts execution (in addition, if </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> is a noun, it is assigned to the local name </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> and if </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is a noun it is assigned to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>)</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>User-written
+modifiers are of two types: those that refer to the variables </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+and those that do not.</span></p>
+
+<p class=Note><span style='mso-bookmark:_Toc1896278'>In early versions of J,
+operands were named </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x.</span></span>,
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y.</span></span>, </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u.</span></span>, </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v.</span></span>,
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m.</span></span>, and </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n.</span></span> rather than </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span>, </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m</span></span>, and </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span>&nbsp;.&nbsp;
+The old form is obsolete.&nbsp; If you
+want to use it you must execute </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9!:49&nbsp;(1)</span></span>
+to enable recognition of the old forms.</span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><a name="_Toc191734496"></a><a
+name="_Toc5414655"></a><a name="_Toc5414486"><span style='mso-bookmark:_Toc5414655'><span
+style='mso-bookmark:_Toc191734496'>Modifiers That Do Not Refer To </span></span></a></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414486'><span
+style='mso-bookmark:_Toc5414655'><span style='mso-bookmark:_Toc191734496'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>x</span></span> Or </span></span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414486'><span style='mso-bookmark:
+_Toc5414655'><span style='mso-bookmark:_Toc191734496'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>y</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>If the modifier
+does not refer to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+or </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, its text is
+interpreted when its operands (</span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and, for conjunctions, </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>)
+are supplied, and its result is an entity which may be any of the four
+principal parts of speech.&nbsp; The result
+replaces the modifier and its operands in the sentence, and execution of the
+sentence continues.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>For example, if the
+explicitly-defined conjunction </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>c</span></span>,
+which does not refer to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+or </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, is invoked as</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>x&nbsp;u&nbsp;c&nbsp;v&nbsp;y</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>the sequence </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;c&nbsp;v</span></span> is evaluated to produce a
+resulting verb, and then that verb is executed with </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+as operands.&nbsp; The text of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>c</span></span> is executed without reference to </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Usually you will
+want your modifier to produce a verb, but nothing keeps you from writing a
+conjunction whose result is, for example, another conjunction.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here we will confine ourselves to verb
+results.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Let's write some of
+the utility modifiers referred to in earlier chapters.<span
+style='mso-spacerun:yes'>&nbsp; </span></span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Ifany</span></span>
+was an adverb that executed </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+if </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> had a nonzero
+number of items:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>9!:3 (5)&nbsp;
+NB. Do this once to select simplified display</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>Ifany =: 1 : 'u ^: (*@#@])'</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&lt; Ifany</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>&lt;^:(*@#@])</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Ifany</span></span>
+does not need to look at </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>;
+it creates a verb that executes </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+only if </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> has items.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here we have executed the adverb </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Ifany</span></span> with the left operand </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;</span></span>, and the result is a verb--the compound
+verb </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&lt;^:(*@#@])&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>We can execute that verb on a noun operand:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&lt; Ifany 1 2 3</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+-----+</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>|1 2 3|</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+-----+</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>Remember that </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Ifany</span></span> is an adverb, so it has precedence and
+the line is executed as if </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;&nbsp;Ifany)&nbsp;1&nbsp;2&nbsp;3&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The verb </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;&nbsp;Ifany)</span></span>,
+which has the value </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;^:(*@#@])</span></span>,
+is applied to </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3</span></span>
+and produces the boxed result.</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&lt; Ifany ''</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>An empty </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is left unboxed.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;Butifnull&nbsp;n</span></span>
+was a conjunction that applied </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+if </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> had items,
+otherwise it produced a result of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>It could be written:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>Butifnull =: 2 : 'n&quot;_ ` u @. (*@:#@:])'</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>Again </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(*@:#@:])</span></span> will check whether </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> has items, and this time the result will be
+used to select the appropriate verb to execute.</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&lt; Butifnull 5</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>5&quot;_`&lt;@.(*@:#@:])</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>When </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Butifnull</span></span> is executed with operands, it
+produces a verb.</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&lt; Butifnull 5<span
+style='mso-spacerun:yes'>&nbsp; </span>'abc'</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+---+</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>|abc|</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+---+</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&lt; Butifnull 5<span
+style='mso-spacerun:yes'>&nbsp; </span>''</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>5</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>The verb it
+produces can be applied to its own noun operands.</span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><a
+name="_Toc191734497">Example: Creating an Operating-System-Dependent Verb</a></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>The great thing
+about modifiers that do not refer to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+or </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is that they are
+fully interpreted before the </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> operands are
+supplied, so there is no interpretive overhead during the processing of the
+data.&nbsp; Here is a more complex example
+taken from the J system.&nbsp; The goal is to
+define a verb </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>playsound</span></span> that can
+be used to play a .wav file under Windows:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>NB. y is the
+file data to be played</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>playsound =: ''
+adverb define</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>select. 9!:12
+NIL</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>case. 2 do.</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp; </span>'winmm.dll sndplaysound i *c i' &amp; (15!:0)
+@ (;&amp;1)</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>case. 6 do.</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>NB. 2=nodefault
++ 4=memory&nbsp; +<span
+style='mso-spacerun:yes'>&nbsp; </span>16b20000 = file</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp; </span>'winmm.dll PlaySound i *c i i' &amp; (15!:0)
+@ (;&amp;(0;4))</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>end.</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>)</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>To begin with,
+let's make sense of this odd sequence </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>''&nbsp;adverb&nbsp;define&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>adverb&nbsp;define</span></span>
+defines an adverb, but what's the </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>''</span></span>?<span
+style='mso-spacerun:yes'>&nbsp; </span>Simple--it's the left argument to the adverb
+that was defined: the adverb is executed with </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+set to </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>''&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result of that <i>execution</i> of the
+adverb is what gets assigned to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>playsound&nbsp;</span></span>.</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>So, what happens when the adverb is
+executed?&nbsp; The adverb calls the foreign </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>9!:12</span></span> to see what operating system is running,
+and executes a selected line that contains the definition of a compound
+verb.&nbsp; Since that line is the last one
+executed, it becomes the result of the adverb; so the result of the adverb is
+the selected verb, and that is what is assigned to </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>playsound</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>On my system, this leaves </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>playsound</span></span> defined as a single compound verb:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>playsound</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>'winmm.dll
+PlaySound i *c i i'&amp;(15!:0)@(;&amp;(0;4))</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>Lovely!<span
+style='mso-spacerun:yes'>&nbsp; </span>No check for operating system needs to be
+made when I invoke </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>playsound</span></span>;
+the check was made when </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>playsound</span></span>
+was defined.</span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><a
+name="_Toc191734498">Example: The</a></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc191734498'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'> LoopWithInitial</span></span>
+Conjunction</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>The conjunction </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LoopWithInitial</span></span> that we learned about earlier
+can be written as</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>LoopWithInitial =: 2 : 'u&amp;.&gt;/\.&amp;.(,&amp;(&lt;v))&amp;.|.&amp;.(&lt;&quot;_1)'</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>It's just one
+application of </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&amp;.</span></span> after
+another.&nbsp; We can use it to illustrate a
+subtlety about modifiers that you should be aware of.<span
+style='mso-spacerun:yes'>&nbsp; </span>Consider an invocation of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LoopWithInitial&nbsp;</span></span>:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>vb =. +</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>init =. 4 5</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>vb LoopWithInitial init</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>vb&amp;.&gt;/\.&amp;.(,&amp;(&lt;4
+5))&amp;.|.&amp;.(&lt;&quot;_1)</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc1896278'>&nbsp;XE &quot;operand
+passing:by name&quot; </span><![endif]--><span style='mso-bookmark:_Toc1896278'></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'></span><span style='mso-element:field-end'></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc1896278'>&nbsp;XE &quot;operand
+passing:by value&quot; </span><![endif]--><span style='mso-bookmark:_Toc1896278'></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'></span><span style='mso-element:field-end'></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'>The verb that is produced seems in order, but
+notice one point: the verb contains the value of </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>init</span></span>,
+but the name of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>vb&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is a rule: <b>the name of a verb
+argument is passed into a modifier, but the value of a noun argument is passed</b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that if these lines appear inside a
+verb, the verb </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>vb</span></span>, which is
+assigned by private assignment, is not defined inside </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LoopWithInitial</span></span>, because </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LoopWithInitial</span></span> is running in a different
+explicit definition from the one in which </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>vb</span></span>
+was assigned.&nbsp; As we see above, </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LoopWithInitial</span></span> can pass </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>vb</span></span> into other modifiers, but if </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>LoopWithInitial</span></span> tried to execute </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>vb</span></span> it would fail. </span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Before we move on I
+want to point out one tiny example of the beauty of J.<span
+style='mso-spacerun:yes'>&nbsp; </span>For </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.(,&amp;(&lt;4&nbsp;5))</span></span>
+to work, there must be some obverse of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,&amp;(&lt;4&nbsp;5)</span></span>
+that undoes its effect.&nbsp; What would that
+be?&nbsp; We can see what the interpreter
+uses:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>,&amp;(&lt;4 5) b. _1</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>}:
+:.(,&amp;(&lt;4 5))</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>It undoes the
+addition of a trailing item with </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}:</span></span>
+which discards the last item.&nbsp; Yes, that
+makes sense (the obverse has its own obverse which is the original verb).</span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><a
+name="_Toc191734499">Example: A Conjunction that Analyzes </a></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc191734499'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>u</span></span> and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc191734499'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>v</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>The conjunction </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&amp;.v</span></span> expresses with great clarity the
+sequence of applying a transformation </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+then applying the operation </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>,
+then inverting the transformation </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The dyad </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&amp;.v&nbsp;y</span></span>
+applies the same transformation to both </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, but in many
+cases the transformation is meaningful only on one operand, and what we would
+like is a conjunction </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Undery</span></span>
+such that </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;Undery&nbsp;v&nbsp;y</span></span>
+produces </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v^:_1&nbsp;x&nbsp;u&nbsp;v&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, to encipher the characters of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> by replacing each one by the letter </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> positions earlier, we would use</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5 1 3 2 -~ Undery ('abcdefghijkl'&amp;i.&quot;0)
+'hijk'</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>to perform the
+function</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>t =. 'abcdefghijkl'&amp;i.&quot;0 'hijk'</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>t =. 5 1 3 2 -~ t</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>t { 'abcdefghijkl'</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>chgi</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>With that </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> stuck in the middle of the desired result </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v^:_1&nbsp;x&nbsp;u&nbsp;v&nbsp;y&nbsp;</span></span> it
+appears that we will have to refer to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+in our conjunction, but actually we can use an advanced feature of J to make
+the </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> disappear.<span
+style='mso-spacerun:yes'>&nbsp; </span>The sequence </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(u&nbsp;v)</span></span>
+produces a verb that, when executed as the dyad </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;(u&nbsp;v)&nbsp;y</span></span>,
+gives the result of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;v&nbsp;y</span></span>
+(you will learn about this and more if you persevere with the part of the book
+devoted to tacit programming).&nbsp; So, the
+verb we are looking for is </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v^:_1&nbsp;@:&nbsp;(u&nbsp;v)</span></span>
+and we can write</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>Undery =: 2 : 'v^:_1 @: (u v)'</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5 1 3 2 -~ Undery ('abcdefghijkl'&amp;i.&quot;0)
+'hijk'</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>chgi</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Before we pat
+ourselves on the back for this achievement, we should consider whether the verb
+produced by </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>Undery</span></span> has the
+proper rank.&nbsp; We see that it does not: </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Undery</span></span> applies </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+to the entire </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, and </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> to the entire </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and the result of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;y</span></span>,
+when really we should be performing the operation on <i>cells</i> of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+where the cell-size of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is given by the left rank of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and the cell-size of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is given by the right rank of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, if we wanted to take the </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-x</span></span> least-significant bits of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, we could use</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_3 {.&quot;0 1 Undery #: 30 </span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>6</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>(remember that
+monad&nbsp;</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#</span></span>: converts an
+integer </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> to its binary
+representation, producing a Boolean list--we are taking </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> bits of that and then converting back to
+integer)&nbsp; The binary code for 30 is </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>11110</span></span>, the 3 low-order bits are </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>110</span></span>, and the result is </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>6</span></span>.&nbsp; But
+when we have list arguments, we get an incorrect result:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_3 _4 _3 {.&quot;0 1 Undery #: 32 31 30 </span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>0 15 12</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>The result for
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>30</span></span> is wrong:
+because </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#:</span></span> was applied to
+the entire </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>110</span></span> was extended with framing fills to become </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1100</span></span>, and the result is </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>12</span></span> instead of the expected </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>6</span></span>.&nbsp; To
+get the right result we need to apply the verb to cells of the correct size:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_3 _4 _3 ({. Undery #:&quot;0) 32 31 30 </span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>0 15 6</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>and naturally
+we would like to make </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Undery</span></span>
+automatically produce a verb with the correct rank.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>The way to find the
+rank of the verb </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+is to execute </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;b.&nbsp;0&nbsp;</span></span>.</span><span
+style='mso-bookmark:_Toc1896278'><span style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt'>&nbsp; </span>In our conjunction </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+are verbs, and we can use their ranks to produce an </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Undery</span></span> that gives the correct rank:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>Undery =: 2 :'(v^:_1)@:(u v)&quot;((1{u b.0),2{v
+b.0)'</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>We have
+selected the left rank of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and the right rank of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+and put them as the ranks of the verb produced by </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Undery&nbsp;</span></span>.&nbsp;
+This produces the desired result:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>_3 _4 _3 {.&quot;0 1 Undery #: 32 31 30 </span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>0 15 6</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>and we can see
+the verb produced by </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Undery</span></span>,
+with its ranks:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>{.&quot;0 1 Undery #:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>#:^:_1@:({.&quot;0
+1 #:)&quot;0 0</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>This version of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Undery</span></span> produces correct results, but we should
+add one small improvement: the inverse of monad&nbsp;</span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#:</span></span> should be monad&nbsp;</span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#.</span></span> rather than monad&nbsp;</span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#:^:_1</span></span>, because the two forms are
+different.&nbsp; One difference is obvious:
+the rank of </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#:^:_1</span></span> is
+infinite, while the rank of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#</span></span>.
+is 1; but that is immaterial in </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Undery&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The other difference is subtle but it could
+be significant: the two forms may have different performance in compounds. <span
+style='mso-spacerun:yes'>&nbsp;</span>The interpreter recognizes certain compounds
+for special handling; the list grows from release to release, but it's a pretty
+safe bet that </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#.</span></span> will be
+selected for special treatment before </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#:^:_1</span></span>
+(and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&lt;</span></span> before </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;^:_1</span></span>, and so on).<span
+style='mso-spacerun:yes'>&nbsp; </span>So, we would like to replace the </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v^:_1</span></span> with the actual inverse of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span>&nbsp;.&nbsp;
+We can get the inverse of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+by looking at </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;b.&nbsp;_1</span></span>
+which produces a character-string representation of the inverse of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v&nbsp;</span></span>.&nbsp;
+We can then convert this string to a verb by making it the result of an
+adverb (we can't make it the result of a verb, because the result of a verb
+must be a noun).&nbsp; So, we are led to</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp; </span>Undery=:2 :'(a: 1 :(v b._1))@:(u v)&quot;((1{u
+b.0),2{v b.0)'</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>where we
+defined the adverb </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;:(v b._1)</span></span>
+and then immediately executed it with an ignored left operand </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a:</span></span> to create the desired verb form.<span
+style='mso-spacerun:yes'>&nbsp; </span>Now we have</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>{.&quot;0 1 Undery #:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>#.@:({.&quot;0 1
+#:)&quot;0 0</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>which we can
+be content with.</span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><a
+name="_Toc191734500">An Exception: Modifiers that Do Not Refer to </a></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc191734500'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>u</span></span> or </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc191734500'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>v</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>In very early
+versions of J, modifiers could not refer to their </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operands.&nbsp; In those days, a modifier used
+the names </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> to mean what we now mean by </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Modern versions of J continue to execute the
+old-fashioned modifiers correctly by applying the following rule: if a modifier
+does not contain any reference to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>,
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span>, </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span>, or </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>,
+it is assumed to be an old-style modifier, and references to</span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'> x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are treated as if they were </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You may encounter old code that relies on
+this rule, but you should not add any new examples of your own.</span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><a name="_Toc191734501"></a><a
+name="_Toc5414656"></a><a name="_Toc5414487"><span style='mso-bookmark:_Toc5414656'><span
+style='mso-bookmark:_Toc191734501'>Modifiers That Refer To </span></span></a></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414487'><span
+style='mso-bookmark:_Toc5414656'><span style='mso-bookmark:_Toc191734501'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>x</span></span> Or </span></span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414487'><span style='mso-bookmark:
+_Toc5414656'><span style='mso-bookmark:_Toc191734501'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>y</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Most of the
+modifiers you write will refer to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>The names </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> refer to the
+noun operands that are supplied when the modifier is invoked as </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>[x]&nbsp;u&nbsp;<i>adverb</i>&nbsp;y</span></span> or </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>[x]&nbsp;u&nbsp;<i>conjunction</i>&nbsp;v&nbsp;y&nbsp;</span></span>.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Here is an example,
+which is invoked as</span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>
+[x]&nbsp;u&nbsp;InLocales&nbsp;n&nbsp;y</span></span>, where </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> is a verb and </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+is a list of locale names; it executes </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;y</span></span>
+(or </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y</span></span> if
+the invocation is dyadic) in each locale of </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;</span></span>:</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>InLocales =: 2 : 0<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>l1 =. 18!:5 ''<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>for_l. n do.<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;
+cocurrent l<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;
+u y<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>end.<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>cocurrent l1<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>''<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>:<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>l1 =. 18!:5 ''<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>for_l. n do.<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;
+cocurrent l<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;
+x u y<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>end.<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>cocurrent l1<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>''<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><b
+style='mso-bidi-font-weight:normal'><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>)<o:p></o:p></span></b></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>This
+illustrates the important points.&nbsp; The
+text of the definition is not interpreted until the </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are available, in other words until the verb <i>defined</i> by </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;InLocales&nbsp;n</span></span> is invoked.<span
+style='mso-spacerun:yes'>&nbsp; </span>Since that invocation may be either monadic
+or dyadic, two versions of the conjunction are given, one for each
+valence.&nbsp; The result of the execution
+must be a noun, because the definition defines a verb and the result of a verb
+is always a noun.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>That last point is
+important and I want to emphasize it.&nbsp; It
+is true that </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>InLocales</span></span> is a
+conjunction, and yet its text defines a verb.&nbsp;
+How is this possible?&nbsp; Because </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>InLocales</span></span><b> is executed as a conjunction at
+the time it gets its </b></span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span><b>
+and </b></span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span><b> operands, but
+its text is not interpreted until the derived verb (which consists of </b></span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span><b>, </b></span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span><b>,
+and the text of </b></span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>InLocales</span></span><b>)
+gets its </b></span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span><b> and </b></span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span><b> operands</b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>When </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>InLocales</span></span>
+is supplied with </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span>, it is executed
+to produce a verb which consists of the text of </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>InLocales</span></span>
+along with </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> and the value of
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This <span class=Definition>derived verb</span>
+is hidden inside the interpreter where it waits to be applied to a </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> (and possibly </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>When the derived verb is given its operands,
+it starts interpreting the text of </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>InLocales</span></span>,
+which was unusable until the time that </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> could be given
+values, and initializes </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> from the values
+that were saved when </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;InLocales&nbsp;n</span></span>
+was executed.&nbsp; Thus the text of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>InLocales</span></span> describes a verb operating on </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Your modifiers
+should refer to </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> only if
+necessary.&nbsp; </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Ifany</span></span> from the previous section could have
+been written</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>Ifany =: 1 : 'u^:(*#y) y'</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>which would
+produce exactly the same result as the other definition, but it would usually
+be slower, because the text could not be interpreted until </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+could be defined.&nbsp; If the conjunction
+happens to be used in a verb of low rank, the result could be soporific.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Here's a puzzle
+that may be of interest to those readers whose eventual goal is Full Guru
+certification.&nbsp; Why did </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>InLocales</span></span> save and restore the current
+locale?&nbsp; Didn't we say that completion of
+any named entity restores the original locale?</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>Let's see what
+happens when we don't restore, using a simple testcase:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>t =: 1 : 0</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>cocurrent u</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>y</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>)</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(&lt;'abc') t 0</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>0</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>18!:5 ''</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+---+</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>|abc|</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+---+</span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'>Sure enough,
+the current locale was changed!&nbsp; But see
+what happens when we give a name to the verb created by the execution of </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>t&nbsp;</span></span>:</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>cocurrent &lt;'base'</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>tt =: (&lt;'abc') t</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>tt 0</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>0</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>18!:5 ''</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+----+</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>|base|</span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'>+----+</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>The current locale
+was restored.&nbsp; What causes the
+difference?</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>The answer is that
+in the sentence </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;'abc')&nbsp;t&nbsp;0</span></span>,
+the named adverb </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>t</span></span>
+is executed when it is given its operand </span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;'abc'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result of that execution is the derived
+verb </span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(&lt;'abc')&nbsp;t</span></span>
+<i>which has no name</i>.&nbsp; When the
+derived verb is executed with the operand </span><span style='mso-bookmark:
+_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+the text is interpreted, causing a change to the current locale, and when the
+derived verb finishes, the current locale is not restored because the derived
+verb is anonymous.&nbsp; If we give that
+derived verb a name (</span><span style='mso-bookmark:_Toc1896278'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>tt</span></span>
+here), it restores the current locale on completion.</span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'>The observed
+behavior reinforces the point that the <b>text</b> of a modifier that refers to
+</span><span style='mso-bookmark:_Toc1896278'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> or </span><span
+style='mso-bookmark:_Toc1896278'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is not interpreted when the modifier is
+executed; it <b>is interpreted only when the derived verb is executed</b>.</span></p>
+
+</div><!--bottom jump start--><hr><a href="applied_mathematics_in_j.htm">&gt;&gt;</a>&nbsp;
+<a href="modular_code.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

@@ -1,0 +1,72 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>-.@-:&quot;r Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="powop.htm">&gt;&gt;</a>&nbsp;
+<a href="nvv.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">-.@-:&quot;r </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2005-06-09<br>last updated: 2005-07-05
+</td></tr></table>
+<br>
+
+<p>The dyads<tt> -.@-:&quot;r  </tt>and<tt> -.@:-:&quot;r </tt>are now implemented 
+by special code and 
+is faster.  The following benchmark demonstrates the improvement.</p>
+
+<pre>
+i=: 1e5 3 ?@$ 10         <font face=Times size=3>integer</font>
+j=: 1e5 3 ?@$ 10
+x=: 1e5 3 ?@$ 0          <font face=Times size=3>floating point</font>
+y=: 1e5 3 ?@$ 0
+b=: 1e5 3 ?@$ 2          <font face=Times size=3>boolean</font>
+c=: 1e5 3 ?@$ 2
+
+ts=: 6!:2 , 7!:2@]       <font face=Times size=3>time and space</font>
+ts 'Expression'
+</pre>
+
+<table>
+<tr><td><b>Expression</b></td><td>&nbsp; &nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 6.01</b></td><td>&nbsp; &nbsp;</td>
+<td align=center colspan=3><b>J 5.04</b></td><td>&nbsp; &nbsp;</td>
+<td align=center colspan=3><b>Ratio</b></td>
+</tr>
+
+<tr><td><tt>i -.@-:&quot;_1 j</tt></td><td>&nbsp;</td><td>0.00119036</td><td>&nbsp;</td><td>132288</td><td>&nbsp;</td><td>0.06041349</td><td>&nbsp;</td><td>132608</td><td>&nbsp;</td><td align=right>50.75</td><td>&nbsp;</td><td align=right>1.00</td></tr>
+<tr><td><tt>x -.@-:&quot;_1 y</tt></td><td>&nbsp;</td><td>0.00402586</td><td>&nbsp;</td><td>132288</td><td>&nbsp;</td><td>0.06087866</td><td>&nbsp;</td><td>132608</td><td>&nbsp;</td><td align=right>15.12</td><td>&nbsp;</td><td align=right>1.00</td></tr>
+<tr><td><tt>b -.@-:&quot;_1 c</tt></td><td>&nbsp;</td><td>0.00165867</td><td>&nbsp;</td><td>132288</td><td>&nbsp;</td><td>0.06012318</td><td>&nbsp;</td><td>132608</td><td>&nbsp;</td><td align=right>36.25</td><td>&nbsp;</td><td align=right>1.00</td></tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="powop.htm">&gt;&gt;</a>&nbsp;
+<a href="nvv.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

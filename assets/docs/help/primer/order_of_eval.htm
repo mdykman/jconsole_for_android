@@ -1,0 +1,85 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Order of evaluation</title>
+
+</head><body><!--top jump start--><a href="verb_definition.htm">&gt;&gt;</a>&nbsp;
+<a href="parentheses.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Order of evaluation</h1>
+What is the answer if the parentheses are left out?<br>
+
+<pre>   10 - 4 - 3
+9</pre>
+J evaluates the sentence as:<br>
+
+<pre>   10 - (4 - 3)
+9
+</pre>
+Most other languages would evaluate it as:<br>
+
+<pre>   (10 - 4) - 3
+3</pre>
+In the absence of parentheses, J implicitly provides them from the right towards the left. Other languages provide them from the left towards the right. A longer sentence will make this visually clearer.<br>
+
+<pre>   10 - 4 - 3 - 1
+8
+   10 - (4 - (3 - 1))	NB. J right-to-left
+8
+   ((10 - 4) - 3) - 1	NB. others left-to-right
+2</pre>
+ Now consider a sequence of monadic verbs.<br>
+
+<pre>   - - - 4
+_4</pre>
+Everyone knows how to parenthesize this, and every language does it the same.<br>
+
+<pre>   - (- (- 4))
+_4</pre>
+The grouping is done right-to-left and in this case the other languages agree with J. J always parenthesizes from right-to-left, whereas other languages have different rules for different situations.<br>
+<br>
+J has a right-to-left order of evaluation. Most other languages have a left-to-right order of evaluation for dyads, right-to-left for monads; and this is modified by the relative precedence of the verbs involved.<br>
+<br>
+With nouns and verbs the J evaluation rule from J Dictionary section E is:
+<blockquote>Execution proceeds from right to left, except that when a right parenthesis is encountered, the segment enclosed by it and its matching left parenthesis is executed, and its result replaces the entire segment and its enclosing parentheses.<br>
+</blockquote>
+There are things in J, other than nouns and verbs, that you have not yet met that complicate this rule by adding a few more. It is these additional classes that largely justify the J break with tradition and adoption of a right-to-left evaluation.To further quote from the J Dictionary section E:
+<blockquote>One important consequence of these rules is that in an unparenthesized expression the right argument of any verb is the result of the entire phrase to its right.</blockquote>
+This is due to the lack of verb precedence as well as right-to-left evaluation.<br>
+<br>
+No verb precedence, right-to-left evaluation, and the rules for the other classes make the overall evaluation rules simple, reduce the need for parentheses, and make sentences easier for an experienced J user to read and write.<br>
+<br>
+Read the following sentences, evaluate them in your head, and understand how the no precedence and right-to-left rules explain the answer.<br>
+
+<pre>    2 * 4 + 5
+18
+   2 + 4 * 5
+22
+   2 - 4 - 5
+3
+   8 % 2 + 2
+2</pre>
+Remember: no verb precedence and right-to-left evaluation.<br>
+<!--bottom jump start--><hr><a href="verb_definition.htm">&gt;&gt;</a>&nbsp;
+<a href="parentheses.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,111 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Finance</title>
+
+</head><body><!--top jump start--><a href="inside_boxes.htm">&gt;&gt;</a>&nbsp;
+<a href="transformations.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>12A. Finance</h1>
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  
+  <TR><TD width=40%><tt>d0=: %@&gt;:@(] % 100&quot;_) #. |.@[</tt></TD>	<TD width=60%>Present value flows x at y%</TD></TR>
+  <TR><TD><tt>d1=: &gt;:@(] % 100&quot;_) #. [</tt></TD>	<TD>Future value of flows x at interest rate y</TD></TR>
+  <TR><TD><tt>d2=: ([: &gt;: [ % 100&quot;_) ^/ ]</tt></TD>	<TD>Amount of 1 at x% for y periods</TD></TR>
+  <TR><TD><tt>d3=: 13 : '|: y.%-.(&gt;:y.) ^/ -x.'</tt></TD>	<TD>Annuity coefficient: periods x at rate y</TD></TR>
+  <TR><TD><tt>d4=: [ d3 [: m5 ]</tt></TD>	<TD>Annuity coefficient: periods x at  y %</TD></TR>
+  <TR><TD><tt>m5=: 0.01&amp;*</tt></TD>	<TD>Rate from percent</TD></TR>
+  <TR><TD><tt>m6=: 100&amp;*</tt></TD>	<TD>Percent from rate</TD></TR>
+  <TR><TD><tt>d7=: &lt;: @ ((^%)~ &gt;:)</tt></TD> 	<TD>Modal rate from annual rate</TD></TR>
+  <TR><TD><tt>d8=: stretch=: [ $ ] , ($ ,: @ {:)</tt></TD>	<TD>Stretch y to length x</TD></TR>
+  <TR><TD><tt>d9=: */\ @ (1&amp;,) @ (stretch &gt;:)</tt></TD>	<TD>Accumulate at y for period x</TD></TR>
+  <TR><TD><tt>m10=: (% {.) @ (|.@(+/\)@i.@&gt;:)</tt></TD>	<TD>Outstanding balances on rule of 78</TD></TR>
+  <TR><TD><tt>m11=: }.%}: </tt></TD>	<TD>Rate of change from amounts</TD></TR>
+  <TR><TD><tt>m12=: 2&amp;((%~)/\)</tt></TD>	<TD>Rate of change from amounts</TD></TR>
+  <TR><TD><tt>d13=:4 :'r*+/\y.%r=:*/\1,x.$~&lt;:#y.'</tt></TD> 	<TD>Accumulate deposits y at x</TD></TR>
+  <TR><TD><tt>d14=: [+2: -/\ [: &gt;./\ 0:,[: +/\ - </tt></TD>	<TD>Work done; x=capacity, y=demand</TD></TR>
+</TABLE>
+
+
+<P>Convert an annual interest rate of 7% to a monthly rate.</P>
+
+<pre>
+   ]m=: 12 d7 0.07
+0.00565415
+   (1 + m)^12
+1.07
+</pre>
+
+
+<P>Calculate the amount of 1 for 5 periods at rates of 7% for 
+the first two years and 6% thereafter. 
+The function <tt>d9</tt> uses <tt>d8</tt> to fill out the term 
+with the last given rate.</P>
+
+<pre>
+   5 d9 0.07 0.07 0.06
+1 1.07 1.1449 1.21359 1.28641 1.36359
+</pre>
+
+ 
+<P>Calculate the declining balances for a year for 1 using 
+the rule of 78.</P>
+
+<pre>
+   ,.m10 12
+        1
+ 0.846154
+ 0.705128
+ 0.576923
+ 0.461538
+ 0.358974
+ 0.269231
+ 0.192308
+ 0.128205
+0.0769231
+0.0384615
+0.0128205
+        0
+   x: m10 12
+1 11r13 55r78 15r26 6r13 14r39 7r26 5r26 5r39 1r13 1r26 1r78 0
+   78 * m10 12
+78 66 55 45 36 28 21 15 10 6 3 1 0
+</pre>
+
+<P>Calculate the balances after periodic payments of 100, 100, 200, 
+and 200 are made at rates of 10%, 10%, and 5%.</P>
+
+<pre>
+   1.10 1.10 1.05 m13 100 100 200 200
+100 210 431 652.55
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="inside_boxes.htm">&gt;&gt;</a>&nbsp;
+<a href="transformations.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

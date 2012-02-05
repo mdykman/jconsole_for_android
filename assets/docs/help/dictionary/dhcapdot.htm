@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>H. Hypergeometric</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="didot.htm">&gt;&gt;</a>&nbsp;
+<a href="dfdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Hypergeometric</font></b></td>
+<td align=center width=50%><font face="Courier New" size=+3>m H. n &nbsp;0 0 0</font></td>
+<td align=right  width=17%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+The conjunction<tt> H. </tt>applies to two numeric lists to produce 
+a monad which is the hypergeometric function defined in 
+Section 15 of <a href="ref.htm#13">Abramowitz and Stegun [13]</a>; 
+it is the limit of the dyadic case, whose left argument restricts 
+the number of terms of the approximating series.<br><br>
+
+As discussed in <a href="ref.htm#14">Iverson [14]</a>, 
+the conjunction is defined as follows:<br>
+
+<pre>
+   rf=: 1 : '(,m) ^!.1/ i.@['          NB. Rising factorial
+   L1=: 2 : 'm rf %&amp;(*/) n rf'
+   L2=: (i.@[ ^~ ]) % !@i.@[
+   H =: 2 : '(m L1 n +/ . * L2) &quot; 0'
+</pre>
+</td></tr></table><br>
+
+For example:<br>
+
+<pre>
+   'a b'=: 2 3 5; 6 5
+
+   a L1 b
+(2 3 5 ^!.1/ i.@[) %&amp;(*/) 6 5 ^!.1/ i.@[
+
+   t=: 4 [ z=: 7
+
+   t a L1 b z
+1 1 1.71429 4.28571
+
+   t (a H b , a H. b) z
+295 295
+
+   8 (1 H. 1) i. 6
+1 2.71825 7.38095 19.8464 51.8063 128.619
+   (1 H. 1) i. 6
+1 2.71828 7.38906 20.0855 54.5982 148.413
+   ^ i. 6
+1 2.71828 7.38906 20.0855 54.5982 148.413
+
+   erf   =: (1 H. 1.5)@*: * 2p_0.5&amp;* % ^@:*:    NB. error function
+   n01cdf=: -: @: &gt;: @: erf @: ((%:0.5)&amp;*)      NB. CDF of normal 0,1
+
+   erf 0.5 1 1.5
+0.5205 0.842701 0.966105
+   n01cdf _2 _1.5 _1 _0.5 0 0.5 1 1.5 2
+0.0227501 0.0668072 0.158655 0.308538 0.5 0.691462 0.841345 0.933193 0.97725
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="didot.htm">&gt;&gt;</a>&nbsp;
+<a href="dfdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,124 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>e.i.1: Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="idot504.htm">&gt;&gt;</a>&nbsp;
+<a href="fmt504.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">e.i.1: </font>
+<font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2004-08-18<br>last updated: 2005-04-21
+</td></tr></table>
+<br>
+
+<p>The dyad<tt> e.i.1: </tt>(and others, see below) are now supported 
+by special code.  These are similar to the dyads previously described in 
+<a href="compsc.htm">J5.02</a> and <a href="compsc1.htm">J5.03</a>.
+A complete table of such dyads are as follows:</p>
+
+<table>
+<tr><td><tt>f i. 0:</tt></td><td><tt>&nbsp; &nbsp;</tt></td>
+ <td><tt>i.&0@:f</tt></td><td><tt>&nbsp; &nbsp;</tt></td>
+ <td>first place where not<tt> x f y</tt></td></tr>
+<tr><td><tt>f i. 1:</tt></td><td>&nbsp;</td>
+ <td><tt>i.&1@:f</tt></td><td>&nbsp;</td>
+ <td>first place where<tt> x f y </tt></td></tr>
+<tr><td><tt>f i: 0:</tt></td><td>&nbsp;</td>
+ <td><tt>i:&0@:f</tt></td><td>&nbsp;</td>
+ <td>last place where not<tt> x f y </tt></td></tr>
+<tr><td><tt>f i: 1:</tt></td><td>&nbsp;</td>
+ <td><tt>i:&1@:f</tt></td><td>&nbsp;</td>
+ <td>last place where<tt> x f y </tt></td></tr>
+<tr><td><tt>[: + / f</tt></td><td>&nbsp;</td>
+ <td><tt>+ /@:f</tt></td><td>&nbsp;</td>
+ <td>number of places where<tt> x f y</tt></td></tr>
+<tr><td><tt>[: +./ f</tt></td><td>&nbsp;</td>
+ <td><tt>+./@:f</tt></td><td>&nbsp;</td>
+ <td><tt>x f y </tt>anywhere?</td></tr>
+<tr><td><tt>[: *./ f</tt></td><td>&nbsp;</td>
+ <td><tt>*./@:f</tt></td><td>&nbsp;</td>
+ <td><tt>x f y </tt>everywhere?</td></tr>
+<tr><td><tt>[: I. &nbsp;f</tt></td><td>&nbsp;</td>
+ <td><tt>I. @:f</tt></td><td>&nbsp;</td>
+ <td>indices where<tt> x f y</tt></td></tr>
+</table>
+<table>
+<tr><td colspan=4>Notes:</td></tr>
+<tr><td>&nbsp;</td><td valign=top>&#149;</td><td>&nbsp;</td>
+ <td><tt>f </tt>is one of the verbs<tt> = ~: &lt; &lt;: &gt; &gt;: E. e. </tt></td></tr>
+<tr><td>&nbsp;</td><td valign=top>&#149;</td><td>&nbsp;</td>
+ <td>Special code is available only for Boolean, integer, floating point, literal, 
+ and symbol arguments</td></tr>
+<tr><td>&nbsp;</td><td valign=top>&#149;</td><td>&nbsp;</td>
+ <td>Special code is used only for atoms and lists if<tt> f </tt>is not<tt> e. </tt></td></tr>
+<tr><td>&nbsp;</td><td valign=top>&#149;</td><td>&nbsp;</td>
+ <td>If<tt> f </tt>is<tt> E.</tt> ,<tt> </tt>special code only 
+   for<tt> &nbsp; E.i.1: &nbsp;+/@:E. &nbsp;+./@:E. &nbsp;I.@:E.</tt></td></tr>
+</table>
+
+<p>Moreover, if<tt> f </tt>is<tt> e. </tt>and the right argument is fixed,
+that is,<tt> (e.i.0:)&amp;m </tt> , then that also is supported by special code.  
+(<a href="midot.htm">See details here.</a>)</p>
+
+<p>The following benchmarks demonstrate the improvement:</p>
+
+<pre>
+x=: 1e6 ?.@$ 1e6
+y=: 1e3 ?.@$ 1e4
+
+a=: 'abcdefghijklmnopqrstuvwxyz'
+c=: a {~ 1e5 4 ?.@$ #a
+d=: a {~ 1e4 4 ?.@$ #a
+
+ts=: 6!:2 , 7!:2@]
+ts 'Expression'
+</pre>
+
+<table>
+<tr><td align=center><b>Expression</b></td> <td>&nbsp;&nbsp;</td> 
+ <td align=center colspan=3><b>J 5.04</b></td> <td>&nbsp;&nbsp;&nbsp;</td> 
+ <td align=center colspan=3><b>J 5.03</b></td> <td>&nbsp;&nbsp;</td> 
+ <td align=center colspan=3><b>Ratio</b></td></tr> 
+
+<tr><td><tt>x(e.i.1:)y</tt></td><td> </td><td>0.0000119</td><td></td><td align=right>   17664</td><td> </td><td>0.0309512</td><td></td><td align=right> 5244160</td><td></td><td align=right> 2600.01</td><td></td><td align=right> 296.88</td></tr>
+<tr><td><tt>x(e.i:1:)y</tt></td><td> </td><td>0.0000123</td><td></td><td align=right>   17664</td><td> </td><td>0.0308734</td><td></td><td align=right> 5244160</td><td></td><td align=right> 2509.46</td><td></td><td align=right> 296.88</td></tr>
+<tr><td><tt>x +/@:e. y</tt></td><td> </td><td>0.0027426</td><td></td><td align=right>   17792</td><td> </td><td>0.0248151</td><td></td><td align=right> 2098496</td><td></td><td align=right>    9.05</td><td></td><td align=right> 117.95</td></tr>
+<tr><td><tt>x I.@e.  y</tt></td><td> </td><td>0.0031021</td><td></td><td align=right> 4211648</td><td> </td><td>0.0265907</td><td></td><td align=right> 2098112</td><td></td><td align=right>    8.57</td><td></td><td align=right>   0.50</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><tt>c(e.i.1:)d</tt></td><td> </td><td>0.0002968</td><td></td><td align=right>  132352</td><td> </td><td>0.0045880</td><td></td><td align=right>  656640</td><td></td><td align=right>   15.46</td><td></td><td align=right>   4.96</td></tr>
+<tr><td><tt>c(e.i:1:)d</tt></td><td> </td><td>0.0002963</td><td></td><td align=right>  132352</td><td> </td><td>0.0046068</td><td></td><td align=right>  656640</td><td></td><td align=right>   15.55</td><td></td><td align=right>   4.96</td></tr>
+<tr><td><tt>c +/@:e. d</tt></td><td> </td><td>0.0032609</td><td></td><td align=right>  132480</td><td> </td><td>0.0039788</td><td></td><td align=right>  263488</td><td></td><td align=right>    1.22</td><td></td><td align=right>   1.99</td></tr>
+<tr><td><tt>c I.@e.  d</tt></td><td> </td><td>0.0033605</td><td></td><td align=right>  656320</td><td> </td><td>0.0041747</td><td></td><td align=right>  263104</td><td></td><td align=right>    1.24</td><td></td><td align=right>   0.40</td></tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="idot504.htm">&gt;&gt;</a>&nbsp;
+<a href="fmt504.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,249 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>E. Parsing and Execution</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dictf.htm">&gt;&gt;</a>&nbsp;
+<a href="dictd.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>E. Parsing and Execution</b></font><br><br>
+
+A sentence is evaluated by executing its phrases in a sequence 
+determined by the parsing rules of the language.  
+For example, in the sentence<tt> 10%3+2</tt> ,<tt> </tt>
+the phrase<tt> 3+2 </tt>is evaluated first to obtain a result 
+that is then used to divide<tt> 10</tt>.  In summary:<br>
+
+<table cellspacing=8>
+<tr><td valign=top>1.</td>
+<td>Execution proceeds from right to left, except that when 
+a right parenthesis is encountered, the segment enclosed by it 
+and its matching left parenthesis is executed, and its result 
+replaces the entire segment and its enclosing parentheses.
+</td></tr>
+
+<tr><td valign=top>2.</td>
+<td valign=top>Adverbs and conjunctions are executed before verbs; 
+the phrase<tt> ,&quot;2-a </tt>is equivalent to<tt> (,&quot;2)-a</tt> ,<tt> </tt>
+not to<tt> ,&quot;(2-a)</tt> .<tt> </tt>Moreover, the left argument of 
+an adverb or conjunction is the entire verb phrase that precedes it.  
+Thus, in the phrase<tt> +/ . */b</tt> ,<tt> </tt>the rightmost 
+adverb<tt> / </tt>applies to the verb derived from the 
+phrase<tt> +/ . *</tt> ,<tt> </tt>not to the verb<tt> *</tt> .
+</td></tr>
+
+<tr><td valign=top>3.</td>
+<td>A verb is applied dyadically if possible; that is, if preceded by 
+a noun that is not itself the right argument of a conjunction.
+</td></tr>
+
+<tr><td valign=top>4.</td>
+<td>Certain <i>trains</i> form verbs and adverbs,
+as described in <a href="dictf.htm"><b>&#167;</b> F</a>.
+</td></tr>
+
+<tr><td valign=top>5.</td>
+<td>To ensure that these summary parsing rules agree with the 
+precise parsing rules prescribed below, it may be necessary 
+to parenthesize an adverbial or conjunctival phrase that produces 
+anything other than a noun or verb.
+</td></tr>
+
+</table>
+
+One important consequence of these rules is that in an 
+unparenthesized expression the right argument of any verb is 
+the result of the entire phrase to its right.  The sentence<tt> 3*p%q^|r-5 </tt>
+can therefore be <i>read</i> from left to right: the overall result 
+is 3 times the result of the remaining phrase, 
+which is the quotient of<tt> p </tt>and the part following 
+the<tt> %</tt> ,<tt> </tt>and so on.<br><br>
+
+Parsing proceeds by moving successive elements (or 
+their <i>values</i> except in the case of proverbs and names 
+immediately to the left of a copula) from the tail end of a <i>queue</i> 
+(initially the original sentence prefixed by a  
+marker <tt>&#167;</tt>) to the top of a <i>stack</i>
+(initially four markers), 
+and eventually executing some eligible portion of the stack and 
+replacing it by the result of the execution.  
+For example, if<tt> a=: 1 2 3</tt>,<tt> </tt>then<tt> b=:+/2*a </tt>
+would be parsed and executed as follows.  (The four markers at the bottom
+of the stack are not shown.)<br>
+
+<pre>
+   &#167; b =: + / 2 * a               
+   &#167; b =: + / 2 *            1 2 3      Move
+   &#167; b =: + / 2           *  1 2 3      Move
+   &#167; b =: + /          2  *  1 2 3      Move
+   &#167; b =: +         /  2  *  1 2 3      Move
+   &#167; b =: +               /  2 4 6    2 Dyad
+   &#167; b =:              +  /  2 4 6      Move
+   &#167; b             =:  +  /  2 4 6      Move
+   &#167; b               =:  +/  2 4 6    3 Adverb
+   &#167; b                      =:  12    0 Monad
+   &#167;                     b  =:  12      Move
+   &#167;                            12    7 Is
+                              &#167; 12
+</pre>
+
+The foregoing illustrates two points:
+1) Execution of the phrase<tt> 2 * 1 2 3 </tt>is deferred until 
+the next element (the<tt> /</tt>) is transferred; 
+had it been a conjunction, the<tt> 2 </tt>would have been 
+<i>its</i> argument, and the monad<tt> * </tt>would have applied 
+to<tt> 1 2 3</tt>;<tt> </tt>and  
+2) Whereas the <i>value</i> of the name<tt> a </tt>moves to the stack, 
+the name<tt> b </tt>(because it precedes a copula) moves unchanged, 
+and the pronoun<tt> b </tt>is assigned the value<tt> 12</tt>.<br><br>
+
+Parsing can be observed using the trace 
+facility in<tt> <a href="../release/trace.htm">system\packages\misc\trace.ijs</a></tt> .
+<br><br>
+
+The executions in the stack are confined to <i>the first four 
+elements</i> only, and eligibility for execution is determined 
+only by the <i>class </i>of each element (noun, verb, etc., 
+an unassigned name being treated as a verb),
+ as prescribed in the following parse table.  
+The classes of the first four elements of the stack are 
+compared with the first four columns of the table, and the 
+first row that agrees in all four columns is selected.  
+The bold italic elements in the row are then subjected 
+to the action shown in the final column, and are replaced 
+by its result.  If no row is satisfied, the next element 
+is transferred from the queue.<br><br>
+
+<table cellspacing=3>
+<tr>
+<td><font size=-1>EDGE</font></td> 
+<td><font size=-1><b><i>VERB</b></i></font></td> 
+<td><font size=-1><b><i>NOUN</b></i></font></td>
+<td><font size=-1>ANY</font></td>
+<td>&nbsp; &nbsp;</td>
+<td>0 Monad</td>
+</tr>
+
+<tr>
+<td><font size=-1>EDGE+AVN</font></td> 
+<td><font size=-1>VERB</font></td> 
+<td><font size=-1><b><i>VERB</i></b></font></td>
+<td><font size=-1><b><i>NOUN</i></b></font></td>
+<td> </td>
+<td>1 Monad</td>
+</tr>
+
+<tr>
+<td><font size=-1>EDGE+AVN</font></td> 
+<td><font size=-1><b><i>NOUN</i></b></font></td> 
+<td><font size=-1><b><i>VERB</i></b></font></td>
+<td><font size=-1><b><i>NOUN</i></b></font></td>
+<td> </td>
+<td>2 Dyad</td>
+</tr>
+
+<tr>
+<td><font size=-1>EDGE+AVN</font></td> 
+<td><font size=-1><b><i>VERB+NOUN</i></b></font></td> 
+<td><font size=-1><b><i>ADV</i></b></font></td>
+<td><font size=-1>ANY</font></td>
+<td> </td>
+<td>3 Adverb</td>
+</tr>
+
+<tr>
+<td><font size=-1>EDGE+AVN</font></td> 
+<td><font size=-1><b><i>VERB+NOUN</b></i></font></td> 
+<td><font size=-1><b><i>CONJ</b></i></font></td>
+<td><font size=-1><b><i>VERB+NOUN</b></i></font></td>
+<td> </td>
+<td>4 Conj</td>
+</tr>
+
+<tr>
+<td><font size=-1>EDGE+AVN</font></td> 
+<td><font size=-1><b><i>VERB+NOUN</b></i></font></td> 
+<td><font size=-1><b><i>VERB</b></i></font></td>
+<td><font size=-1><b><i>VERB</b></i></font></td>
+<td> </td>
+<td>5 Fork</td>
+</tr>
+
+<tr>
+<td><font size=-1>EDGE</font></td> 
+<td><font size=-1><b><i>CAVN</b></i></font></td> 
+<td><font size=-1><b><i>CAVN</b></i></font></td>
+<td><font size=-1>ANY</font></td>
+<td> </td>
+<td>6 Bident</td>
+</tr>
+
+<tr>
+<td><font size=-1><b><i>NAME+NOUN</i></b></font></td> 
+<td><font size=-1><b><i>ASGN</i></b></font></td> 
+<td><font size=-1><b><i>CAVN</i></b></font></td>
+<td><font size=-1>ANY</font></td>
+<td> </td>
+<td>7 Is</td>
+</tr>
+
+<tr>
+<td><font size=-1><b><i>LPAR</i></b></font></td> 
+<td><font size=-1><b><i>CAVN</i></b></font></td> 
+<td><font size=-1><b><i>RPAR</i></b></font></td>
+<td><font size=-1>ANY</font></td>
+<td> </td>
+<td>8 Paren</td>
+</tr>
+
+</table>
+<br>
+
+<table cellspacing=2>
+<tr>
+<td>Legend: &nbsp;</td>
+<td><font size=-1>AVN</font></td>
+<td>denotes</td>
+<td><font size=-1>&nbsp; ADV+VERB+NOUN</font></td>
+</tr>
+
+<tr>
+<td> </td>
+<td><font size=-1>CAVN</font></td>
+<td>denotes</td>
+<td><font size=-1>&nbsp; CONJ+ADV+VERB+NOUN</font></td>
+</tr>
+
+<tr>
+<td> </td>
+<td><font size=-1>EDGE</font></td>
+<td>denotes</td>
+<td><font size=-1>&nbsp; MARK+ASGN+LPAR</font></td>
+</tr>
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dictf.htm">&gt;&gt;</a>&nbsp;
+<a href="dictd.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

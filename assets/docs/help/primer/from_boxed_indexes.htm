@@ -1,0 +1,138 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>From - boxed indexes</title>
+
+</head><body><!--top jump start--><a href="from_scattered_index.htm">&gt;&gt;</a>&nbsp;
+<a href="from_dyad.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>From (boxed indexes)</h1>
+If the left argument of <font face=courier size=-1>{</font> is boxed, then it is opened and each of its items gives the indexes along successive axes of the right argument. This can be used to select any subarray from an array.<br>
+
+<pre>   m =. i. 3 4
+   m
+0 1  2  3
+4 5  6  7
+8 9 10 11
+   (&lt; 1 2) { m
+6</pre>
+The opened left argument is the list <font face=courier size=-1>1 2</font>. The first item is <font face=courier size=-1>1</font>, and it is used as the index of the 1st axis; the second item is <font face=courier size=-1>2</font>, and it is used as the index of the 2nd axis. The <font face=courier size=-1>1</font> selects the list <font face=courier size=-1>4 5 6 7</font> and the <font face=courier size=-1>2</font> selects <font face=courier size=-1>6</font> from that list.<br>
+<br>
+If there are fewer items in the list than there are axes, then all of the trailing axes are selected.<br>
+
+<pre>   (&lt;1) { m
+4 5 6 7</pre>
+This is more interesting with a higher rank array.<br>
+
+<pre>   d =. i.2 3 4
+   d
+ 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+
+12 13 14 15
+16 17 18 19
+20 21 22 23
+   (&lt;1 2 3) { d	NB. plane 1, row 2, column 3
+23
+   (&lt;1 2) { d	NB. plane 1, row 2, all columns
+20 21 22 23</pre>
+So far the items in the list of indexes for each axis has been an atom and selects only one index. What if you want more than one index?<br>
+<br>
+If an item in the list of indexes is boxed, then it is a list of indexes for that axis.<br>
+<br>
+Suppose you want to select from <font face=courier size=-1>m</font> the table of atoms that are in rows <font face=courier size=-1>0 2</font>, and columns <font face=courier size=-1>0 2 3</font>. That is, the table:<br>
+<br>
+
+<pre>      col-0 col-2  col-3
+row-0   0     2      3
+row-2   8    10     11</pre>
+The indexes for the axes are the list:<br>
+
+<pre>   0 2 ; 0 2 3
++---+-----+
+¦0 2¦0 2 3¦
++---+-----+</pre>
+That list of indexes needs to be boxed so that each item will be treated as indexes into the successive axes. The <font face=courier size=-1>0 2</font> selects rows (1st axis) and the <font face=courier size=-1>0 2 3</font> selects columns (2nd axis).<br>
+
+<pre>   &lt; 0 2 ; 0 2 3
++-----------+
+¦+---+-----+¦
+¦¦0 2¦0 2 3¦¦
+¦+---+-----+¦
++-----------+
+   (&lt; 0 2 ; 0 2 3) { m
+0  2  3
+8 10 11
+   (&lt; 0 1 ; 0 2 ; 2 3) { d
+ 2  3
+10 11
+
+14 15
+22 23</pre>
+Again, if there are fewer items than axes, then all of the trailing axes are selected.<br>
+
+<pre>   (&lt; 0 1 ; 0 2) { d
+ 0  1  2  3
+ 8  9 10 11
+
+12 13 14 15
+20 21 22 23</pre>
+Frequently the desired subarray includes all of an axis that is not a trailing axis. This could be done by giving all indexes for that axis.<br>
+
+<pre>   (&lt; 0 1 2 ; 2 3) { m
+ 2  3
+ 6  7
+10 11</pre>
+This may be inconvenient in a real application where it would necessary to calculate the indexes. For this reason, a boxed empty list, &lt;'', indicates that all indexes in the axis are selected.<br>
+
+<pre>      &lt; (&lt;'') ; 2 3
++--------+
+|+--+---+|
+||++|2 3||
+|||||   ||
+||++|   ||
+|+--+---+|
++--------+</pre>
+The above, used as the left argument will select all indexes along the first axis because the first item is a boxed empty list, and indexes <font face=courier size=-1>2</font> and <font face=courier size=-1>3</font> along the 2nd axis.<br>
+
+<pre>     (&lt; (&lt;'');2 3) { m
+ 2  3
+ 6  7
+10 11</pre>
+The boxed empty list is so useful that the primitive a: is defined as &lt;'' . So, the above can be simplified.<br>
+
+<pre>  (&lt; a: ; 2 3) { m
+ 2  3
+ 6  7
+10 11
+</pre>
+ The above can be even more easily expressed with the rank conjunction.<br>
+
+<pre>   2 3 {"1 m
+ 2  3
+ 6  7
+10 11</pre>
+<!--bottom jump start--><hr><a href="from_scattered_index.htm">&gt;&gt;</a>&nbsp;
+<a href="from_dyad.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

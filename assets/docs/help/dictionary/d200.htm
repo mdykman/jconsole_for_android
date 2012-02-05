@@ -1,0 +1,119 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>^ Exponential  -  Power</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d201.htm">&gt;&gt;</a>&nbsp;
+<a href="d132.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Exponential</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>^ &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Power</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>^y </tt>is equivalent to<tt> e^y</tt>,<tt> </tt>where
+<tt> e </tt>is <i>Euler&rsquo;s number</i><tt> ^1 </tt>
+(approximately 2.71828). The <i>natural logarithm</i><tt> </tt>
+(<tt>^.</tt>)<tt> </tt>is inverse to<tt> ^ </tt>(that is,<tt> y=^.^y </tt>
+and <tt>y=^^.y</tt>).<br><br>
+
+The monad<tt> x&amp;^ </tt>is inverse to the monad <tt>x&amp;^.</tt> .<tt> </tt>  
+For example:<br>
+
+<pre>
+   10&amp;^ 10&amp;^. 1 2 3 4 5
+1 2 3 4 5
+          
+   10&amp;^. 10&amp;^ 1 2 3 4 5
+1 2 3 4 5
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x^2 </tt>and<tt> x^3</tt> and<tt> x^0.5</tt> are the <i>square</i>, 
+<i>cube</i>, and <i>square root</i> of<tt> x</tt> .<br><br>
+
+In general,<tt> x^y </tt>is<tt> ^y*^.x</tt>,<tt> </tt>applying for 
+complex numbers as well as real. <br><br>
+
+For a non-negative integer<tt> y</tt>,<tt> </tt>the phrase<tt>x ^ y </tt>
+is equivalent to<tt> */y # x</tt>;<tt> </tt>in particular,<tt> */ </tt>on 
+an empty list is<tt> 1</tt>,<tt> </tt>and<tt> x^0 </tt>is<tt> 1 </tt>for 
+any<tt> x</tt>,<tt> </tt>including<tt> 0</tt> .<br><br>
+
+The fit conjunction applies to<tt> ^ </tt>to yield a stope defined 
+as follows:<tt> x^!.k n </tt>is<tt> */x + k*i. n</tt> .<tt> </tt>
+In particular,<tt> ^!._1 </tt>is the <i>falling factorial</i> function.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+The last result in the first example below illustrates the 
+falling factorial function, formed by the fit conjunction.  
+See <a href="ref.htm#14">Chapter 5 of [14]</a>
+for the use of stope functions, stope polynomials, 
+and Stirling numbers in the difference calculus:<br>
+
+<pre>
+   e=: ^ 1 [ x=: 4 [ y=: 0 1 2 3
+   ,.&amp;.&gt; x (e&quot;_ ; e&amp;^@] ; ^ ; ^@(] * ^.@]) ; (]^]) ; ^!._1) y
++-------+-------+--+--+--+--+
+|2.71828|      1| 1| _| 1| 1|
+|       |2.71828| 4| 1| 1| 4|
+|       |7.38906|16| 4| 4|12|
+|       |20.0855|64|27|27|24|
++-------+-------+--+--+--+--+
+
+   S2=: %.@S1=: (^!._1/~ %. ^/~) @ i. @ x:
+   (S1;S2) 8
++---------------------------+-------------------+
+|1 0  0  0  0   0    0     0|1 0 0 0 0  0  0   0|
+|0 1 _1  2 _6  24 _120   720|0 1 1 1 1  1  1   1|
+|0 0  1 _3 11 _50  274 _1764|0 0 1 3 7 15 31  63|
+|0 0  0  1 _6  35 _225  1624|0 0 0 1 6 25 90 301|
+|0 0  0  0  1 _10   85  _735|0 0 0 0 1 10 65 350|
+|0 0  0  0  0   1  _15   175|0 0 0 0 0  1 15 140|
+|0 0  0  0  0   0    1   _21|0 0 0 0 0  0  1  21|
+|0 0  0  0  0   0    0     1|0 0 0 0 0  0  0   1|
++---------------------------+-------------------+
+</pre>
+
+<tt>S1 </tt>gives (signed) Stirling numbers of the first kind 
+and<tt> S2 </tt>gives Stirling numbers of the second kind.  
+They can be used to transform between ordinary and stope polynomials.  
+Note that<tt> <a href="dxco.htm">x:</a> </tt>gives 
+<a href="dictg.htm">extended precision</a>.<br>
+
+<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d201.htm">&gt;&gt;</a>&nbsp;
+<a href="d132.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

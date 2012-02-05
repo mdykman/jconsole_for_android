@@ -1,0 +1,34 @@
+ZLARTG generates a plane rotation so that
+   [ -SN  CS  ]     [ G ]     [ 0 ]
+   [  __      ]  .  [   ]  =  [   ]   where CS**2 + |SN|**2 = 1.
+   [ -SN  CS  ]     [ G ]     [ 0 ]
+
+
+This is a faster version of the BLAS1 routine ZROTG, except for the
+following differences:
+
+   F and G are unchanged on return.
+
+   If G=0, then CS=1 and SN=0.
+
+   If F=0 and (G .ne. 0), then CS=0 and SN=1 without doing any
+      floating point operations.
+
+
+Arguments
+=========
+
+F       (input) COMPLEX*16
+        The first component of vector to be rotated.
+
+G       (input) COMPLEX*16
+        The second component of vector to be rotated.
+
+CS      (output) DOUBLE PRECISION
+        The cosine of the rotation.
+
+SN      (output) COMPLEX*16
+        The sine of the rotation.
+
+R       (output) COMPLEX*16
+        The nonzero component of the rotated vector.

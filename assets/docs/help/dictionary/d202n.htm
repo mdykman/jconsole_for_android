@@ -1,0 +1,303 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>^: Power</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d202v.htm">&gt;&gt;</a>&nbsp;
+<a href="d201.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Power</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u^:n &nbsp;_ _ _</font></td>
+<td align=right  width=33%>&nbsp;</td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<p><tt>n </tt>may be integer, boxed, or a gerund.</p>
+<p><b>Integer.</b>  The verb<tt> u </tt>is applied<tt> n </tt>times.
+An infinite power<tt> n </tt>produces the limit of the application 
+of<tt> u</tt> .<tt> </tt>For example,<tt> (2&amp;o.^:_)1 </tt>is<tt> 0.73908</tt> ,<tt> </tt>
+the solution of the equation<tt> y=Cos y</tt> .<tt> </tt>If<tt> n </tt>is negative, 
+the <i>obverse</i><tt> u^:_1 </tt>(see below) is applied<tt> |n </tt>times.
+Finally,<tt> u^:n y </tt>for an array<tt> n </tt>is produced by assembling<tt> u^:a y </tt>
+(for all the atoms<tt> a </tt>in<tt> n</tt>)<tt> </tt>into an overall result.</p>
+
+<p>The obverse is used in<tt> <a href="d631.htm">u&amp;.v</a> </tt>and is
+produced by<tt> <a href="dbdotu.htm">v b. _1</a></tt> .
+Repeated application of a verb is also provided by 
+<a href="d630n.htm">Bond (<tt>&amp;</tt>)</a>.</p>
+
+<p><b>Boxed.</b> If<tt> n </tt>is boxed it must be an atom, and<tt> u^:(&lt;m)</tt>
+<table>
+<tr><td valign=top nowrap>&nbsp;<font size=+1>&harr;</font><tt> u^:(i.m) y</tt></td>       <td>&nbsp;&nbsp;</td>
+ <td>if<tt> m </tt>is a non-negative integer</td></tr>
+<tr><td valign=top nowrap>&nbsp;<font size=+1>&harr;</font><tt> u^:(i.k) y</tt></td>     <td>&nbsp;</td>
+ <td>if<tt> m </tt>is<tt> _ </tt>or<tt> '' </tt>,<tt> </tt>where<tt> k </tt>is the smallest 
+ positive integer such that<tt> (u^:(k-1) y) -: u^:k y</tt></td></tr>
+<tr><td valign=top nowrap>&nbsp;<font size=+1>&harr;</font><tt> u^:_1^:(&lt;|m) y</tt></td><td>&nbsp;</td>
+ <td>if<tt> m </tt>is negative</td></tr>
+</table>
+
+<p><b>Gerund.</b> See on the right.<br>&nbsp;</p>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<p><tt>n </tt>may be integer, boxed, or a gerund.</p>
+
+<p><b>Integer or Boxed.</b><tt> x u^:n y </tt><font size=+1>&harr;</font><tt> x&amp;u^:n y </tt></p>
+
+<p><b>Gerund.</b> (Compare with the gerund cases of the <a href="d530n.htm">merge adverb<tt> }</tt></a>)<br>
+<tt> x u^:(v0`v1`v2)y </tt><font size=+1>&harr;</font><tt> (x v0 y)u^:(x v1 y) (x v2 y) </tt><br>
+<tt> x u^:(&nbsp;&nbsp;&nbsp;v1`v2)y </tt><font size=+1>&harr;</font><tt> x u^:([`v1`v2) y </tt><br>
+<tt> &nbsp;&nbsp;u^:(&nbsp;&nbsp;&nbsp;v1`v2)y </tt><font size=+1>&harr;</font><tt> u^:(v1 y) (v2 y)</tt></p>
+</td>
+</tr></table><br>
+
+<p>The obverse (which is normally the inverse) is specified for six cases:</p>
+
+<table>
+<tr><td valign=top>1.</td><td>&nbsp;</td><td>
+The self-inverse functions<tt> + - -. % %. |. |: /: [ ] C. p.</tt><br><br>
+</td></tr>
+
+<tr><td valign=top>2.</td><td>&nbsp;</td><td>
+The pairs in the following tables:<br>
+
+<table><tr>
+<td>&nbsp;</td>
+<td valign=top><table>
+<tr><td><tt>&lt;</tt></td>  <td>&nbsp;</td> <td><tt>&gt;</tt></td></tr>
+<tr><td><tt>&lt;:</tt></td> <td>&nbsp;</td> <td><tt>&gt;:</tt></td></tr>
+<tr><td><tt>+.</tt></td>    <td>&nbsp;</td> <td><tt>j./&quot;1&quot;_</tt></td></tr>
+<tr><td><tt>+:</tt></td>    <td>&nbsp;</td> <td><tt>-:</tt></td></tr>
+<tr><td><tt>*.</tt></td>    <td>&nbsp;</td> <td><tt>r./&quot;1&quot;_</tt></td></tr>
+<tr><td><tt>*:</tt></td>    <td>&nbsp;</td> <td><tt>%:</tt></td></tr>
+<tr><td><tt>^</tt></td>     <td>&nbsp;</td> <td><tt>^.</tt></td></tr>
+<tr><td><tt>$.</tt></td>    <td>&nbsp;</td> <td><tt>$.^:_1</tt></td></tr>
+<tr><td><tt>,:</tt></td>    <td>&nbsp;</td> <td><tt>{.</tt></td></tr>
+<tr><td><tt>;:</tt></td>    <td>&nbsp;</td> <td><tt>;@(,&amp;' '&amp;.&gt;&quot;1)</tt></td></tr>
+<tr><td><tt>#.</tt></td>    <td>&nbsp;</td> <td><tt>#:</tt></td></tr>
+</table></td>
+<td>&nbsp;</td>
+<td valign=top><table>
+<tr><td><tt>!</tt></td>     <td>&nbsp;</td> <td><tt>3 : '(-(!-y&quot;_)%1e_3&amp;* !&quot;0 D:1 ])^:_^.y'</tt></td></tr>
+<tr><td><tt>3!:1</tt></td>  <td>&nbsp;</td> <td><tt>3!:2</tt></td></tr>
+<tr><td><tt>3!:3</tt></td>  <td>&nbsp;</td> <td><tt>3!:2</tt></td></tr>
+<tr><td><tt>\:</tt></td>    <td>&nbsp;</td> <td><tt>/:@|.</tt></td></tr>
+<tr><td><tt>&quot;.</tt></td>    <td>&nbsp;</td> <td><tt>&quot;:</tt></td></tr>
+<tr><td><tt>j.</tt></td>    <td>&nbsp;</td> <td><tt>%&amp;0j1</tt></td></tr>
+<tr><td><tt>o.</tt></td>    <td>&nbsp;</td> <td><tt>%&amp;1p1</tt></td></tr>
+<tr><td><tt>p:</tt></td>    <td>&nbsp;</td> <td>&pi;<tt>(n)</tt></td></tr>
+<tr><td><tt>q:</tt></td>    <td>&nbsp;</td> <td><tt>*/</tt></td></tr>
+<tr><td><tt>r.</tt></td>    <td>&nbsp;</td> <td><tt>%&amp;0j1@^.</tt></td></tr>
+<tr><td><tt>s:</tt></td>    <td>&nbsp;</td> <td><tt>5&amp;s:</tt></td></tr>
+<tr><td><tt>u:</tt></td>    <td>&nbsp;</td> <td><tt>3&amp;u:</tt></td></tr>
+<tr><td><tt>x:</tt></td>    <td>&nbsp;</td> <td><tt>_1&amp;x:</tt></td></tr>
+</table></td>
+</tr></table>
+
+<table><tr>
+<td>&nbsp;</td>
+<td><table>
+<tr><td><tt>+~</tt></td>    <td>&nbsp;</td> <td><tt>-:</tt></td></tr>
+<tr><td><tt>*~</tt></td>    <td>&nbsp;</td> <td><tt>%:</tt></td></tr>
+<tr><td><tt>^~</tt></td>    <td>&nbsp;</td> <td><tt>3 : '(- -&amp;b@(*^.) % &gt;:@^.)^:_ b=.^.y'&quot;0</tt></td></tr>
+<tr><td><tt>,~</tt></td>    <td>&nbsp;</td> <td><tt>&lt;.@-:@# {. ]</tt></td></tr>
+<tr><td><tt>,:~</tt></td>   <td>&nbsp;</td> <td><tt>{.</tt></td></tr>
+<tr><td><tt>;~</tt></td>    <td>&nbsp;</td> <td><tt>&gt;@{.</tt></td></tr>
+<tr><td><tt>j.~</tt></td>   <td>&nbsp;</td> <td><tt>%&amp;1j1</tt></td></tr>
+</table></td>
+</tr></table>
+<br>
+</td></tr>
+
+<tr><td valign=top>3.</td><td>&nbsp;</td><td>
+Obviously invertible bonded dyads such 
+as<tt> -&amp;3 </tt>and<tt> 10&amp;^. </tt>
+and<tt> 1 0 2&amp;|: </tt>and<tt> 3&amp;|. </tt>and<tt> 1&amp;o. </tt>
+and<tt> a.&amp;i. </tt>as well as<tt> u@v </tt>and<tt> u&amp;v </tt>
+if<tt> u </tt>and<tt> v </tt>are invertible.<br><br>
+</td></tr>
+
+<tr><td valign=top>4.</td><td>&nbsp;</td><td>
+Monads of the form<tt> v/\ </tt>and<tt> v/\. </tt>where<tt> v </tt>
+is one of<tt> +  * -  %  =  ~:</tt><br><br>
+</td></tr>
+
+<tr><td valign=top>5.</td><td>&nbsp;</td><td>
+Obverses specified by the conjunction<tt> :.</tt><br><br>
+</td></tr>
+
+<tr><td valign=top>6.</td><td>&nbsp;</td><td>
+The following cases merit special mention:<br>
+
+<tt>p:^:_1 n </tt>gives the number of primes less than<tt> n</tt>,<tt> </tt>
+denoted by<tt> </tt>&pi;<tt>(n) </tt>in math<br>
+
+<tt>q:^:_1 </tt>is<tt> */</tt><br>
+
+<tt>b&amp;#^:_1 </tt>where<tt> b </tt>is a boolean list is <i>Expand</i> 
+(whose fill atom<tt> f </tt>can be specified by 
+<i>fit</i>,<tt> b&amp;#^:_1!.f </tt>or<tt> #^:_1!.f</tt> )<br>
+
+<tt>a&amp;#.^:_1 </tt>produces the base-<tt>a </tt>representation<br>
+
+<tt>!^:_1 </tt>and<tt> !&amp;n^:_1 </tt>and<tt> n&amp;!^:_1 </tt>
+produce the appropriate results<br>
+
+<tt>{= </tt>and<tt> i.&quot;1&amp;1 </tt>are inverses of each other;
+these convert between integer permutation vectors and boolean permutation matrices<br>
+
+</td></tr>
+</table>
+
+<br>
+
+<b>Example 1:</b>
+
+<pre>
+   (] ; +/\ ; +/\^:2 ; +/\^:0 1 2 3 _1 _2 _3 _4) 1 2 3 4 5
++---------+-----------+------------+-------------+
+|1 2 3 4 5|1 3 6 10 15|1 4 10 20 35|1  2  3  4  5|
+|         |           |            |1  3  6 10 15|
+|         |           |            |1  4 10 20 35|
+|         |           |            |1  5 15 35 70|
+|         |           |            |1  1  1  1  1|
+|         |           |            |1  0  0  0  0|
+|         |           |            |1 _1  0  0  0|
+|         |           |            |1 _2  1  0  0|
++---------+-----------+------------+-------------+
+</pre>
+
+<p><b>Example 2:</b> Fibonacci Sequence</p>
+<pre>
+   +/\@|.^:(i.10) 0 1
+ 0  1
+ 1  1
+ 1  2
+ 2  3
+ 3  5
+ 5  8
+ 8 13
+13 21
+21 34
+34 55
+   {. +/\@|.^:n 0 1x [ n=:128       NB. n-th term of the Fibonacci sequence
+251728825683549488150424261
+   {.{: +/ .*~^:k 0 1,:1 1x [ k=:7  NB. (2^k)-th term of the Fibonacci sequence
+251728825683549488150424261
+</pre>
+
+<p><b>Example 3:</b> Newton Iteration</p>
+<pre>
+   -:@(+2&amp;%)^:(0 1 2 3) 1
+1 1.5 1.41667 1.41422
+   -:@(+2&amp;%)^:(_) 1
+1.41421
+   -:@(+2&amp;%)^:a: 1
+1 1.5 1.41667 1.41422 1.41421 1.41421
+   %: 2
+1.41421
+</pre>
+
+<p><b>Example 4:</b> Subgroup Generated by a Set of Permutations</p>
+<pre>
+   sg=: ~. @ (,/) @ ({&quot;1/~) ^: _ @ (i.@{:@$ , ])
+   sg ,: 1 2 3 0 4
+0 1 2 3 4
+1 2 3 0 4
+2 3 0 1 4
+3 0 1 2 4
+   # sg 1 2 3 4 5 0 ,: 1 0 2 3 4 5
+720
+</pre>
+
+<p><b>Example 5:</b> Transitive Closure</p>
+<pre>
+   x=: (#x)&lt;. (#x),~x=: (i.20)+1+20 ?.@# 3
+   (i.#x) ,: x
+0 1 2 3 4 5 6 7  8  9 10 11 12 13 14 15 16 17 18 19 20
+1 4 5 5 7 6 9 9 10 12 11 14 14 15 16 18 18 18 20 20 20
+   {&amp;x^:(&lt;15) 0
+0 1 4 7 9 12 14 16 18 20 20 20 20 20 20
+   {&amp;x^:a: 0
+0 1 4 7 9 12 14 16 18 20
+   x {~^:a: 0
+0 1 4 7 9 12 14 16 18 20
+</pre>
+<p>Interpretation:<tt> x </tt>specifies a directed graph
+with nodes numbered<tt> i.#x </tt>and links from<tt> i </tt>
+to <tt> i{x</tt> .<tt> </tt>For example, the
+links are:<tt> 0 1</tt> ,<tt> 1 4</tt> ,<tt> 2 5</tt> ,<tt> 3 5 </tt>
+and so on.  Then<tt> {&amp;x^:a:0 </tt>or<tt> x{~^:a:0 </tt>computes 
+all the nodes reachable from node<tt> 0</tt>.</p>
+
+<p><b>Example 6:</b> Transitive Closure</p>
+
+<p>Each record of a file begins with a byte indicating the record length
+(excluding the record length byte itself), followed by
+the record contents.  Given a file, the verb<tt> rec </tt>below produces
+the list of boxed records.</p>
+
+<pre>
+rec=: 3 : 0
+ n=. #y
+ d=. _1 ,~ n&lt;.1+(i.n)+a.i.y
+ m=. d {~^:a: 0
+ ((i.n) e. m) &lt;;._1 y
+)
+
+randomfile=: 3 : 0
+ c  =. 1+y ?@$ 255           NB. record lengths
+ rec=. {&amp;a.&amp;.&gt; c ?@$&amp;.&gt; 256  NB. record contents
+ (c{a.),&amp;.&gt; rec              NB. records with lengths
+)
+
+   boxed_rec=: randomfile 1000
+   $ boxed_rec
+1000
+
+   file=: ; boxed_rec
+   $ file
+132045
+
+   r=: rec file
+   $r
+1000
+
+   r -: }.&amp;.&gt; boxed_rec
+1
+</pre>
+<p>The last phrase verifies that the result of<tt> rec </tt>
+are the records without the leading length bytes.</p>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d202v.htm">&gt;&gt;</a>&nbsp;
+<a href="d201.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

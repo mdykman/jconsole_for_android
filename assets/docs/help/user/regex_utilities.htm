@@ -1,0 +1,299 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Utilities</title>
+
+</head><body><!--top jump start--><a href="emacs.htm">&gt;&gt;</a>&nbsp;
+<a href="regex_verbs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Regular Expression Utilities</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+The script <code>system\packages\regex\regbuild.ijs</code> contains definitions to for building regular expression patterns.
+
+<P>
+Many of the verbs below may enclose its argument in parentheses (to make it a subexpression).  For example,<br>
+   <code>anyof 'abc' </code> returns  <code>'(abc)*'</code>.
+
+<P>
+The argument is only put in parentheses if necessary.
+<br>
+  <code> anyof set 'abc'</code> is <code>'[abc]*'</code>.  
+
+<P>
+The following verbs correspond directly to a feature of the regular expression notation:
+<p>
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>set chars</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+returns set construction for chars
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   set 'abc'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>[abc]</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>not chars</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+set of non-matching chars
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   set not 'abc'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>[^abc]</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>sub pat</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+make a subexpression
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   set 'abc'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>(abc)</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>someof pat</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching 1 or more pat
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   someof 'abc'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>(abc)+</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>(min,max) of pat</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matchin min up to max of pat
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   2 4 of 'abc'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>(abc){2,4}</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>pat1 or pat2 </PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching either pat1 or pat2
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   'abc' or 'd'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>abc|x</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>pat1 or pat2 </PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching pat1 immediately followed by pat2
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   'action=' by 'move' or 'copy'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>action=(move|copy)</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>sub pat</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+makes pat a subexpression
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   sub 'abc'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>(abc)</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>bkref refnum</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+back-reference to a previous subexpression
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   bkref 1</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>\1</PRE>
+</TR></table>
+
+<P>Some nouns can be used as parts of regular expressions:</P>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>white</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching one or more whitespace characters
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>owhite</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching optional whitespace
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>sol</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching the start of a line
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>eol</PRE>       
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching the end of a line
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>any</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+pattern matching any character
+</TR></table>
+
+<P>
+<B>Finally, some miscellaneous verbs</B>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>plain text</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+returns a regular expression matching the plain text
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   plain 'dir j.*'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>dir j\.\*</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>pat1 between y</PRE>
+<TD VALIGN="TOP" WIDTH=400>
+result is elements of y catenated together with pat1 between each
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   ' *' between 'abc'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>a *b *c</PRE>
+<pre>   ' *' between 'p1';'p2';'p3|p4'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>p1 *p2 *(p3|p4)</PRE>
+</TR></table>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>comment nb pattern</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+add comment to pattern
+</TR></table>  
+
+<P>
+Interpretation of a pattern always stops at the first null character (<code>0{a.</code>).  The <code>nb</code> verb makes use of this by catenating a null character and comment at the end of a pattern.
+
+<pre>
+   p=. rxcomp 'some digits' nb '[[:digit:]]+'
+   rxinfo p
++-+----------------------------+
+|1|[[:digit:]]+ NB. some digits|
++-+----------------------------+
+</pre>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>setchars setpat</PRE>
+<TD VALIGN="TOP" WIDTH=900>
+returns list of characters matching a set pattern
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>   setchars '[a-d[:digit:]]'</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>0123456789abcd</PRE>
+</TR></table>
+
+<P>
+<B>Character classes</B><br><br>
+The following nouns are strings which are used <B>within</B> sets to specify a character class:
+
+<pre>   alnum, alpha, blank, cntrl, digit, graph,
+   lower, print, punct, space, upper, xdigit</pre>
+
+<P>
+For example,
+
+<pre>   alpha=. '[:alpha:]'</pre>
+
+<P>
+Corresponding nouns, named with a leading uppercase, are patterns specifying a <B>set</B> of the character class, for example,
+
+<pre>   Alpha=. '[[:alpha:]]'    NB.  (same as    set alpha)</pre>
+
+<P>
+<B>J patterns</B><br><br>
+The following nouns, <code>defined in packages\regex\regj.ijs</code> , are patterns which match elements of J code:
+<TABLE>
+<tr>
+<TD VALIGN="TOP" WIDTH=700><P>
+<pre>Jname</pre>
+<TD VALIGN="TOP" WIDTH=800><P>
+matches a J name
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+<pre>Jnumitem, Jnum</pre>
+<TD VALIGN="TOP" WIDTH=400><P>
+matches a J numeric item or array (constant)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+<pre>Jchar</pre>
+<TD VALIGN="TOP" WIDTH=400><P>
+matches a J character string
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+<pre>Jconst</pre>
+<TD VALIGN="TOP" WIDTH=400><P>
+matches a J numeric or character constant, include a. and a:
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+<pre>Jgassign, Jlassign, Jassign</pre>
+<TD VALIGN="TOP" WIDTH=400><P>
+matches J global, local, or either assignment
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+<pre>Jlpar, Jrpar</pre>
+<TD VALIGN="TOP" WIDTH=400><P>
+match J's left and right parentheses
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+<pre>Jsol, Jeol</pre>
+<TD VALIGN="TOP" WIDTH=400><P>
+match the start or end of a J sentence<br>
+(ignores leading blanks and trailing blanks/comments)
+</TR></table>
+
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="emacs.htm">&gt;&gt;</a>&nbsp;
+<a href="regex_verbs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

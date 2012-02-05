@@ -1,0 +1,369 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Empty Operands</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="loopless_code_iii--adverbs__.htm">&gt;&gt;</a>&nbsp;
+<a href="compound_verbs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734375"></a><a name="_Toc5414579"></a><a name="_Toc1896210"><span
+style='mso-bookmark:_Toc5414579'><span style='mso-bookmark:_Toc191734375'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>13. </span></span><![endif]>Empty Operands</span></span></a></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;empty operands&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Every programmer knows that
+errors lurk near boundaries: for example, at the beginning and end of arrays,
+or at the point in execution where an array becomes empty.<span
+style='mso-spacerun:yes'>&nbsp; </span>Our discussion of verb rank omitted one
+important situation: suppose there are no cells?<span
+style='mso-spacerun:yes'>&nbsp; </span>An operand with no cells is said to be <span
+class=Definition>empty</span>, and it gets special treatment in J.</p>
+
+<p class=MsoBodyText>The definition of an empty operand is not as obvious as
+you might think.&nbsp; An <i>array</i> is
+empty if it has no atoms (i.&nbsp;e. has a <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> in its shape),
+but whether an <i>operand</i> is empty depends on the rank of its cells: it is
+empty if there is a <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+in the frame <b>with respect to the cells operated on by the verb</b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Consider an array with shape <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0&nbsp;4&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is an empty array, because it has no
+atoms.&nbsp; As an operand of a verb with rank
+0, it has frame <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0&nbsp;4</span></span>,
+so there are no cells and the array is an empty operand.<span
+style='mso-spacerun:yes'>&nbsp; </span>As an operand of a verb with rank 1, it has
+frame <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0</span></span>
+and again is empty.&nbsp; As an operand of a
+verb with rank 2, though, it has frame <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3</span></span> and is not
+empty: there are 3 cells, each of which has shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;4&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In this case each <i>cell</i> is an empty
+array, but the <i>operand</i> is not empty.&nbsp;
+As an operand of a verb with rank 3 or higher, the frame is empty and
+each cell has shape <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0&nbsp;4</span></span>,
+so there is one cell and the operand is not empty, though each cell is an empty
+array.&nbsp; You can see that an operand may
+have items and yet be an empty operand, if the verb operates on cells smaller
+than items, as is the case in this example for a verb of rank 0 or 1.</p>
+
+<p class=MsoBodyText>We are left with the question, What is executed when an
+operand is empty?&nbsp; For <i>something</i>
+must be executed.&nbsp; It is fundamental in J
+that if a verb produces a result with shape <i>s</i> when applied to a single
+cell, executing that verb over an array of that cell--even an array of none of
+them--produces an array of results each with shape <i>s</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The only way to find out what shape a verb is
+going to produce is to execute it and see--and that is what J does.</p>
+
+<p class=Section><a name="_Toc191734376"></a><a name="_Toc5414580"></a><a
+name="_Toc5414427"><span style='mso-bookmark:_Toc5414580'><span
+style='mso-bookmark:_Toc191734376'>Execution On a Cell Of Fills</span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;fill:with empty operands&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->If an operand is empty,
+i.&nbsp;e. its frame contains a <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0</span></span> and it therefore has no cells, the verb is
+executed on a cell <i>c</i> of fills.&nbsp;
+The shape of <i>c</i> is the shape of a cell of the corresponding
+operand, and the value of each atom is the appropriate fill for that operand: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+for numeric operands, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&nbsp;'</span></span>
+for characters, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a:</span></span>
+for boxes.&nbsp; The shape <i>s</i> and type <i>t</i>
+of the result of executing the verb on <i>c</i> are noted.<span
+style='mso-spacerun:yes'>&nbsp; </span>Then, the shape of the overall result is the
+frame of the operand (the longer frame, for dyads) concatenated with <i>s</i>,
+and the result is given type <i>t</i>.&nbsp;
+The result will necessarily be empty, because it will have a <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+in its shape (from the frame, which contained a <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ +/&quot;2 (3
+0 3 4 $ 100)</p>
+
+<p class=Jcodemultiline>3 0 4</p>
+
+<p class=BodyTextnoleader>Remember that a cell has a shape, even if there are
+none of them!&nbsp; Here the verb monad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/&quot;2</span></span>
+is applied to 2-cells, each with shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;4&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The frame <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0</span></span> contains
+a <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+so the verb is executed on the fill cell <i>c</i> which is (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;4&nbsp;$&nbsp;0</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+/</span></span> adds the items
+of the cell, producing a list with shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The frame <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0</span></span> is
+concatenated with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4</span></span>
+to give the shape of the result, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3&nbsp;0&nbsp;4&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3!:0 +/&quot;2
+(3 0 3 4 $ 100)</p>
+
+<p class=Jcodemultiline>4</p>
+
+<p class=BodyTextnoleader>The verb <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3!:0</span></span> (one of dozens of special goodies
+provided by the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>!:</span></span>
+conjunction and documented under <u>Foreigns</u>) tells you the type of its
+operand.&nbsp; Here, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>4</span></span> means numeric
+type: the result has shape <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3&nbsp;0&nbsp;4</span></span> and numeric type.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ &lt;&quot;2
+(3 0 3 4 $ 100)</p>
+
+<p class=Jcodemultiline>3 0</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3!:0 &lt;&quot;2
+(3 0 3 4 $ 100)</p>
+
+<p class=Jcodemultiline>32</p>
+
+<p class=BodyTextnoleader>Here the verb monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&lt;</span></span> was applied
+to the same fill-cell <i>c</i> (<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3&nbsp;4&nbsp;$&nbsp;0</span></span>) but it produced as<span
+style='mso-spacerun:yes'>&nbsp; </span>result a scalar box (shape empty), so the
+shape of the overall result is the frame <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0</span></span>
+concatenated with an empty list, i.&nbsp;e. shape <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;0</span></span> and type
+boxed (as indicated by the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>32</span></span> returned by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3!:0</span></span>).</p>
+
+<p class=MsoBodyText><b>Note</b> that in an empty array of boxes, each box is
+itself empty (of course, the number of such boxes is 0, since the array is
+empty, but by now you know that empty nouns can still have a shape--the point
+here is that they cannot have nonempty contents).<span
+style='mso-spacerun:yes'>&nbsp; </span>The contents of a box are lost when the box
+becomes part of an empty array.&nbsp; In the
+example <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;&quot;2&nbsp;(3&nbsp;0&nbsp;3&nbsp;4&nbsp;$&nbsp;100)</span></span>,
+execution on the fill-cell produced (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&lt;3&nbsp;4&nbsp;$&nbsp;0</span></span>),
+and if the frame weren't empty the box would contain an array; but when the
+frame is empty, the value of the result is discarded; all that remains is its
+type.</p>
+
+<p class=MsoBodyText>If executing the verb on a cell of fills results in an
+error, execution continues as if the verb had returned the scalar <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 + '&nbsp;'</p>
+
+<p class=Jcodemultiline>|domain error</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; 5<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>+'&nbsp;'</p>
+
+<p class=BodyTextnoleader>Trying to add 5 to a space is nonsense...</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 + ''</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ 5 + ''</p>
+
+<p class=Jcodemultiline>0</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (3!:0) 5 + ''</p>
+
+<p class=Jcodemultiline>4</p>
+
+<p class=BodyTextnoleader>...but adding 5 to an empty list of characters produces
+an empty numeric list.&nbsp; The addition is
+attempted with a cell of fills for the empty operand (the values added are <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>
+on the left, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&nbsp;'</span></span>
+on the right), the addition fails, and the error-fallback result of scalar <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+is used; the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+being a scalar, has a shape which is an empty list; appending the longer frame
+(<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>)
+gives shape <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+numeric.&nbsp; Note that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> here is an empty
+operand, but it nonetheless has the longer frame (the scalar <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> has empty shape
+and perforce empty frame).</p>
+
+<p class=MsoBodyText><b>Note:</b> there is much special code in the interpreter
+to handle the cases of empty operands.&nbsp;
+To improve performance, the interpreter recognizes a great many
+combinations of verb, operand shape, and type, handling each with separate
+code.&nbsp; In most cases the interpreter
+produces its result in accordance with the rules given above, but in a few
+exotic cases it deviates.&nbsp; You are quite
+unlikely to encounter these cases in practice; the most important one is</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ &gt; 0$a:</p>
+
+<p class=Jcodemultiline>0</p>
+
+<p class=BodyTextnoleader>where the rules given above would predict a shape of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;0&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Enough applications rely on shape <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+to keep this deviation in the system, at least as of J6.01.</p>
+
+<p class=Section><a name="_Toc191734377"></a><a name="_Toc5414581"></a><a
+name="_Toc5414428"></a><a name="_Toc1896211"><span style='mso-bookmark:_Toc5414428'><span
+style='mso-bookmark:_Toc5414581'><span style='mso-bookmark:_Toc191734377'>Empty
+cells</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;empty cells&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->As we discussed above, a cell,
+like any array, is called empty if it has a <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> in its
+shape.&nbsp; Whether the cells of an operand
+are empty is independent of whether the operand itself is empty.</p>
+
+<p class=MsoBodyText>How a verb handles an empty cell is entirely up to the
+verb; the fill-cell processing we discussed above does not apply.<span
+style='mso-spacerun:yes'>&nbsp; </span>The J primitives generally preserve the type
+of empty lists that are 'data' but ignore the type of empty lists that are 'control
+information'.&nbsp; So, even though characters
+are not allowable left operands of dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>|.</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>''&nbsp;|.&nbsp;i.&nbsp;5</span></span>
+produces the same result as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(0$0)&nbsp;|.&nbsp;i.&nbsp;5</span></span>, because the
+rotation count is 'control information'.&nbsp;
+In contrast, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;{.&nbsp;''</span></span>
+produces a 3-character string, while <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;{.&nbsp;(0$0)</span></span>
+produces a 3-item numeric list, because the right operand of dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span>
+is 'data'.&nbsp; The distinction between 'control
+information' and 'data' is not clear-cut, but in all cases the interpreter does
+what you'd want it to, and you should experiment if you need reassurance.</p>
+
+<p class=Section><a name="_Toc191734378"></a><a name="_Toc5414582"></a><a
+name="_Toc5414429"></a><a name="_Toc1896212"><span style='mso-bookmark:_Toc5414429'><span
+style='mso-bookmark:_Toc5414582'><span style='mso-bookmark:_Toc191734378'>If
+Fill-Cells Are Not Enough</span></span></span></a></p>
+
+<p class=MsoBodyText>Sometimes executing a verb on a cell of fills simply won't
+do: maybe your verb produces a side effect, or maybe it will go berserk if its
+operand is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In those cases, you must take steps to ensure
+that it is not executed on an empty list.&nbsp;
+To help you out with the most common case, in which the only way a list
+can be empty is to have no items (that is another way of saying that the first
+item of the shape is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>),
+I offer you a set of adverbs and conjunctions which you can have by executing</p>
+
+<p class=Jcodemultiline>load 'system\packages\misc\jforc.ijs'</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;Ifany</span></span>
+applies the verb <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+(which may be monadic or dyadic) provided <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> has items; if <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+has 0 items, the result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;Ifany</span></span> is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ (,/) i. 0 4</p>
+
+<p class=Jcodemultiline>0</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ (,/) Ifany
+i. 0 4</p>
+
+<p class=Jcodemultiline>0 4</p>
+
+<p class=BodyTextnoleader>Since <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.&nbsp;0&nbsp;4</span></span> has no items, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Ifany</span></span>
+caused it to be passed through unchanged.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;Ifanyx&nbsp;y</span></span>
+produces <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+has items, or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+has no items.</p>
+
+<p class=MsoBodyText>The conjunction <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;Butifnull&nbsp;n</span></span> can be monadic or
+dyadic; it applies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+has items; if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+has no items it produces a result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 + Butifnull
+6 (0)</p>
+
+<p class=Jcodemultiline>5</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5 + Butifnull
+6 (0$0)</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;Butifxnull&nbsp;n&nbsp;y</span></span>
+produces <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+has items, or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+has no items.</p>
+
+</div><!--bottom jump start--><hr><a href="loopless_code_iii--adverbs__.htm">&gt;&gt;</a>&nbsp;
+<a href="compound_verbs.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

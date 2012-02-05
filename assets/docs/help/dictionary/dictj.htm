@@ -1,0 +1,117 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>J. Errors and Suspensions</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dict3.htm">&gt;&gt;</a>&nbsp;
+<a href="dicti.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>J. Errors and Suspension</b></font><br><br>
+
+Execution of a sentence <i>suspends</i> when an error occurs, 
+and an error message and context information are then displayed.  
+Four blanks indicate where parsing stopped.  
+Suspension may occur in immediate execution, 
+in the execution of a script file, 
+or in the execution of a user-defined named verb, adverb, or conjunction, 
+as illustrated by the following examples:<br><br>
+
+<b>Immediate execution</b><br><br>
+
+<pre>
+   2+'a'
+|domain error
+|   2    +'a'
+</pre>
+<br>
+
+<b>Execution of a script file</b><br><br>
+
+<pre>
+   t=: '2*3',(10{a.),'2+''a''',(10{a.),'2+3'
+   t                          <font face=Times size=+1>A script</font>
+2*3
+2+'a'
+2+3
+
+   t 1!:2 &lt;'test'             <font face=Times size=+1>Write script file</font>
+
+   0!:011 &lt;'test'             <font face=Times size=+1>Execute file, continue on error, display (011)</font>
+2*3
+6
+
+   2+'a'
+   2+3
+5
+
+   0!:001 &lt;'test'             <font face=Times size=+1>Execute file, stop on error, display (001)</font>
+   2*3
+6
+
+   2+'a'
+|domain error
+|   2    +'a'
+|[-2]
+</pre>
+<br>
+
+<b>User-Defined Verb</b><br><br>
+
+<pre>
+   g=: 3 : ('1+y' ;  ':' ; '2+x+y')
+
+   3+g 'a'
+|domain error: g
+|   1    +y
+
+   13!:0 (1)                  <font face=Times size=+1>Enable suspension</font>
+   3+g 'a'
+|domain error: g
+|   1    +y
+|g[0]
+
+      y                       <font face=Times size=+1>Six-space indent indicates suspension</font>
+a
+
+      y=. 12                  <font face=Times size=+1>Redefine local value of</font> y
+
+      13!:4 ''                <font face=Times size=+1>Resume execution at the current line</font>
+16                            <font face=Times size=+1>Result using redefined value of</font> y
+</pre>
+
+Sentences can be executed in the suspended environment, 
+local values can be accessed, and execution can be resumed.  
+Errors cause suspension <i>only</i> if suspension is enabled 
+(by the phrase<tt> 13!:0]1</tt>).<tt> </tt>
+When suspension is in effect, the input prompt is six spaces.<br><br>
+
+<p>Suspension and debugging facilities are controlled by 
+the<tt> </tt><a href="dx013.htm"><tt>13!:</tt></a><tt> </tt>family 
+as described in Appendix A.
+A complete list of errors is shown in <a href="errors.htm">Appendix D</a>.</p>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dict3.htm">&gt;&gt;</a>&nbsp;
+<a href="dicti.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

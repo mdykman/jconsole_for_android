@@ -1,0 +1,70 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 5.  Bordering a Table</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp06.htm">&gt;&gt;</a>&nbsp;
+<a href="samp04.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>5. Bordering a Table</b></font><br><br>
+
+<pre>
+   over=: ({.;}.)@&quot;:@,                  NB. <i>Utility</i> functions, intended for use
+   by=:  ' '&amp;;@,.@[,.]                  NB. rather than for immediate study
+
+   primes=: 2 3 5
+   i=: 0 1 2 3 4
+
+   primes by i over primes */ i
++-+------------+
+| |0 1  2  3  4|
++-+------------+
+|2|0 2  4  6  8|
+|3|0 3  6  9 12|
+|5|0 5 10 15 20|
++-+------------+
+
+   tba=: 1 : '[ by ] over x/'           NB. Table adverb
+
+   primes * tba i
++-+------------+
+| |0 1  2  3  4|
++-+------------+
+|2|0 2  4  6  8|
+|3|0 3  6  9 12|
+|5|0 5 10 15 20|
++-+------------+
+   7 11 ^ tba i
++--+-------------------+
+|  |0  1   2    3     4|
++--+-------------------+
+| 7|1  7  49  343  2401|
+|11|1 11 121 1331 14641|
++--+-------------------+
+
+</pre>
+
+
+<!--bottom jump start--><hr><a href="samp06.htm">&gt;&gt;</a>&nbsp;
+<a href="samp04.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

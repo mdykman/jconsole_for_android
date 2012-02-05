@@ -1,0 +1,97 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Duality</title>
+
+</head><body><!--top jump start--><a href="transformations.htm">&gt;&gt;</a>&nbsp;
+<a href="inverse.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>11B. Duality</h1>
+
+
+
+<P><tt>h -: f&amp;.g</tt> asserts that h is the dual of f under (or <I>with respect to</I>) g
+</P>
+
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0 =: A=: +/ % #   </tt></TD><TD width=60%>Arithmetic mean</TD></TR>
+  <TR><TD><tt>m1 =: H=: A &amp;. (%&quot;_) </tt></TD>                	 <TD>Harmonic mean</TD></TR>
+
+<TR><TD><tt>m2 =: M=: A &amp;. (^&amp;p) </tt></TD><TD>Generalized mean</TD></TR>
+
+<TR><TD><tt>a3 =: N=: (^&amp;) (A&amp;.) </tt></TD> <TD>L-x norm; 3-norm is 3 N y</TD></TR>
+<TR><TD><tt>m4 =: +/ &amp;. (*:&quot;_) @ +. </tt></TD> <TD>Magnitude | e.g. m4 3j4</TD></TR>
+<TR><TD><tt>a5 =: each=: &amp;.&gt;  </tt></TD><TD>Each (f each applies f to each box)</TD></TR>
+<TR><TD><tt>m6 =: ^    .: -&amp;.j.   </tt></TD>   <TD>Sine</TD></TR>
+<TR><TD><tt>m7 =: sin  -: sinh&amp;.j.</tt></TD>         	 <TD>Tautology</TD></TR>
+<TR><TD><tt>m8 =: tan  -: tanh&amp;.j. </tt></TD>        	    <TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</TD></TR>
+<TR><TD><tt>m9 =: sinh -: sin&amp;.j. </tt></TD>         	    <TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</TD></TR>
+<TR><TD><tt>m10=: cosh -: cos&amp; j.  </tt></TD>        	    <TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</TD></TR>
+<TR><TD><tt>m11=: tanh -: tan&amp;.j. </tt></TD>         	    <TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"</TD></TR>
+<TR><TD><tt>v12=: &lt;.   -: &gt;.&amp;.-</tt></TD>            	 <TD>Tautology</TD></TR>
+<TR><TD><tt>v13=: &gt;.   -: &lt;.&amp;.- </tt></TD>           	 <TD>Tautology</TD></TR>
+<TR><TD><tt>d14=: *    -: +&amp;.^.    </tt></TD>        	 <TD>Tautology</TD></TR>
+<TR><TD><tt>d15=: *    -: +&amp;.(10&amp;^.)</tt></TD>       	 <TD>Tautology</TD></TR>
+<TR><TD><tt>v16=: %    -: -&amp;.^. </tt></TD>           	 <TD>Tautology</TD></TR>
+<TR><TD><tt>d17=: +    -: *&amp;.^ </tt></TD>            	 <TD>Tautology</TD></TR>
+<TR><TD><tt>d18=: +    -: *&amp;.(10&amp;^)</tt></TD>        	 <TD>Tautology</TD></TR>
+<TR><TD><tt>v19=: -    -: %&amp;.^  </tt></TD>           	 <TD>Tautology</TD></TR>
+<TR><TD><tt>v20=: %.   -: %.&amp;.|:</tt></TD>           	 <TD>Tautology</TD></TR>
+<TR><TD><tt>v21=: %.   -: %.&amp;.(+@|:) </tt></TD>      	 <TD>Tautology</TD></TR>
+<TR><TD><tt>m22=: +/\  -: +/\.&amp;.|.</tt></TD>         	 <TD>Tautology</TD></TR>
+<TR><TD><tt>m23=: +/\. -: +/\ &amp;.|. </tt></TD>        	 <TD>Tautology</TD></TR>
+<TR><TD><tt>a24=: BW=: 1 : 'u./&amp;.#:' </tt></TD>              	<TD> Bitwise adverb</TD></TR>
+<TR><TD><tt>m25=: *. BW  </tt></TD>                  	 <TD>Bitwise AND.  e.g. m25 _1 100 200</TD></TR>
+<TR><TD><tt>m26=: +. BW </tt></TD>                   	 <TD>Bitwise OR    e.g. m26 100 200</TD></TR>
+<TR><TD><tt>m27=: ~: BW   </tt></TD>                 	<TD>Bitwise XOR   e.g. m27 100 200</TD></TR>
+<TR><TD><tt>m28=: i.&amp;.(p:^:_1) </tt></TD>            	 <TD>The primes less than n</TD></TR>
+<TR><TD><tt>m29=: totient=: * -.@%@~.&amp;.q:</tt></TD>  	<TD>Euler's totient function</TD></TR>
+<TR><TD><tt>m30=: |.&amp;.;: </tt></TD>	<TD>Reverse the words;  e.g. m30 'three score and ten years'</TD></TR>
+<TR><TD><tt>n31=: a=: ' abcdefghijklmnopqrstuvwxyz'</tt></TD>	<TD>Space and alphabet</TD></TR>
+<TR><TD><tt>m32=: encrypt=: (#a)&amp;|@&gt;: &amp;. (a&amp;i.)</tt></TD>	<TD>Julius Caesar's cypher. e.g.</TD></TR>
+<TR><TD><tt>m33=: decrypt=: (#a)&amp;|@&lt;: &amp;. (a&amp;i.)</tt></TD>	<TD>decrypt encrypt x=:'from sea to sea'</TD></TR>
+<TR><TD><tt>m34=: J=: 1&amp;|.&amp;.#:</tt></TD>	<TD>Survivor number in the Josephus problem of order n</TD></TR>
+<TR><TD><tt>d35=: ack=: c1`c1`c2`c3 @. (#.@(,&amp;*))</tt></TD>	<TD>Ackermann's function</TD></TR>
+<tr><td><tt>d36=: c1=: &gt;:@]                  </tt></td> <td>&nbsp;</td></tr>
+<tr><td><tt>d37=: c2=: &lt;:@[ ack 1:           </tt></td> <td>&nbsp;</td></tr>
+<tr><td><tt>d38=: c3=: &lt;:@[ ack [ ack &lt;:@]</tt></td> <td>&nbsp;</td></tr>
+<TR><TD><tt>m39=: 0&amp;ack -:  &gt;:&amp;.(3&amp;+)</tt></TD>	<TD>Tautology</TD></TR>
+<TR><TD><tt>m40=: 1&amp;ack -: 2&amp;+&amp;.(3&amp;+) </tt></TD>	<TD>Tautology</TD></TR>
+<TR><TD><tt>m41=: 2&amp;ack -: 2&amp;*&amp;.(3&amp;+)</tt></TD>	<TD>Tautology</TD></TR>
+<TR><TD><tt>m42=: 3&amp;ack -: 2&amp;^&amp;.(3&amp;+)</tt></TD><TD>Tautology</TD></TR>
+<TR><TD><tt>m43=: 4&amp;ack -: ^/@#&amp;2&amp;.(3&amp;+)</tt></TD>	<TD>Tautology</TD></TR>
+<TR><TD NOWRAP><tt>m44=: 5&amp;ack -: 3 : '^/@#&amp;2^:(1+y.)&amp;.(3&amp;+) 1'</tt></TD> 	<TD>Tautology</TD></TR>
+
+</TABLE>
+<br><br>
+
+
+
+<!--bottom jump start--><hr><a href="transformations.htm">&gt;&gt;</a>&nbsp;
+<a href="inverse.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

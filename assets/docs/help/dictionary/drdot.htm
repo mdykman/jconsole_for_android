@@ -1,0 +1,86 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>r. Angle  -  Polar</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dsco.htm">&gt;&gt;</a>&nbsp;
+<a href="dqco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Angle</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>r. &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Polar</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>r.y </tt><font size=+1>&harr;</font><tt> ^j.y</tt>
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x r. y </tt><font size=+1>&harr;</font><tt> x*r. y</tt>
+<br>&nbsp;</td>
+</tr></table><br>
+
+The result of<tt> r. y </tt>is a complex number of magnitude<tt> 1</tt>,<tt> </tt>
+whose real and imaginary parts are coordinates of the point 
+on the unit circle at an angle of<tt> y </tt>radians. For example:<br>
+
+<pre>
+   r. 2
+_0.416147j0.909297
+
+   +. r. 2
+_0.416147 0.909297
+
+   | r. 2
+1
+
+   y=: 1r4 * o. i.7            NB. Multiples of one-quarter &pi;
+   format=: 8j3&amp;&quot;:
+   (format ,.y);(format +. r.y);(format +. 2 r.y)
++--------+----------------+----------------+
+|   0.000|   1.000   0.000|   2.000   0.000|
+|   0.785|   0.707   0.707|   1.414   1.414|
+|   1.571|   0.000   1.000|   0.000   2.000|
+|   2.356|  _0.707   0.707|  _1.414   1.414|
+|   3.142|  _1.000   0.000|  _2.000   0.000|
+|   3.927|  _0.707  _0.707|  _1.414  _1.414|
+|   4.712|   0.000  _1.000|   0.000  _2.000|
++--------+----------------+----------------+
+
+   3 r. _2
+_1.24844j_2.72789
+
+   *. 3 r. _2
+3 _2
+
+</pre>
+
+<!--bottom jump start--><hr><a href="dsco.htm">&gt;&gt;</a>&nbsp;
+<a href="dqco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,82 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>N0 V1 V2 Implemented</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="notmatch.htm">&gt;&gt;</a>&nbsp;
+<a href="bxref.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">N0 V1 V2 </font><font size=+3>Implemented</font>
+</td><td align=right>
+initial writing: 2005-03-22<br>last updated: 2006-02-02
+</td></tr></table>
+<br>
+
+<p>The isolated sequence<tt> N0 V1 V2 </tt>(noun verb verb) was previously 
+uninterpreted (it signalled syntax error).  It is now interpreted to
+mean<tt> N0&quot;_ V1 V2</tt> .<tt> </tt>The following examples illustrate
+uses of this new train.</p>
+
+<p>0. Translate from upper to lower case.</p>
+<pre>
+   U  =: a. {~ (i.26)+a.i.'A'
+   L  =: a. {~ (i.26)+a.i.'a'
+   lfu=: (L,a.) {~ (U,a.) i. ]
+
+   lfu 'ONOMATOPOEIA metonymic'
+onomatopoeia metonymic
+</pre>
+
+<p>1. Select directories in a path.</p>
+<pre>
+   dirs=: (] #~ 'd'=4{&quot;1 [: > 4{&quot;1 ]) @: (1!:0)
+
+   dirs 'c:\j504\*.*'
++------+------------------+-+---+------+
+|addons|2005 3 11 18 20 42|0|rw-|----d-|
++------+------------------+-+---+------+
+|system|2005 3 9 15 44 48 |0|rw-|----d-|
++------+------------------+-+---+------+
+|temp  |2005 3 9 15 44 49 |0|rw-|----d-|
++------+------------------+-+---+------+
+|user  |2005 3 9 15 44 49 |0|rw-|----d-|
++------+------------------+-+---+------+
+</pre>
+
+<p>2. An identity from math.</p>
+<pre>
+   sin=: 1 o. ]
+   cos=: 2 o. ]
+   (^@j. = cos + 0j1 * sin) 1 2 3 0.1j_0.2
+1 1 1 1
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="notmatch.htm">&gt;&gt;</a>&nbsp;
+<a href="bxref.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

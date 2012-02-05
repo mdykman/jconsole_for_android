@@ -1,0 +1,43 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Checkpoint C</title>
+
+</head><body><!--top jump start--><a href="basic_list_adding.htm">&gt;&gt;</a>&nbsp;
+<a href="control_structure.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Checkpoint C</h1>
+At this point you should understand:<br>
+<br>
+<ul> <li>that load <font face=courier size=-1>'debug'</font> loads debug utilities</li> <li>the general idea of verb debugging</li> <li>how control words create control structures by grouping sentences into blocks</li> <li>what the T block test result is</li> <li>how the test result determines which B block to execute</li> <li>how the test result determines when control structure execution is finished</li></ul>Check your understanding by doing the following exercises:<br>
+<br>
+<ul> <li>debug step through your convert verb</li> <li>create a temporary script file and define a verb called <font face=courier size=-1>conv </font>that is similar to <font face=courier size=-1>convert</font>, but insists on a <font face=courier size=-1>'f'</font> argument to do the conversion to Fahrenheit and gives a string result indicating there was an error if the left argument is neither <font face=courier size=-1>'c'</font> nor <font face=courier size=-1>'f'</font>. Hint: use the control structure sketched out here:</li>
+<pre>if. x = 'c' do. ...
+  elseif. x = 'f' do. ...
+  elseif. 1 do. 'left arg not c or f'
+end.</pre>
+or try a <font face=courier size=-1>select.</font> structure.<br>
+<br>
+<li>create a temporary script file and define a dyad called plus that adds its left argument to its right. But, if there is an error, it should give a string result. Hints: use dyad : <font face=courier size=-1>0; 4 plus 9</font> should return 13;<font face=courier size=-1> 'a' plus 9</font> should return your error string (perhaps, <font face=courier size=-1>'there was an error'</font>); use a <font face=courier size=-1>try.</font> control structure to catch the error and give the string result.</li></ul> <!--bottom jump start--><hr><a href="basic_list_adding.htm">&gt;&gt;</a>&nbsp;
+<a href="control_structure.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

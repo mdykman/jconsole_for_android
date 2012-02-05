@@ -1,0 +1,321 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>SQL Statements</title>
+
+</head><body><!--top jump start--><a href="sql_elements.htm">&gt;&gt;</a>&nbsp;
+<a href="create_new_file.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>SQL Statements</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+The following SQL statements define the base ODBC SQL grammar.
+<P>
+<TABLE>
+<tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+<B>Statement</B>  
+<TD VALIGN="TOP" WIDTH=37><P>
+<B>Min</B>
+<TD VALIGN="TOP" WIDTH=42><P>
+<B>Core</B>
+<TD VALIGN="TOP" WIDTH=34><P>
+<B>Ext</B>
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+alter-table-statement ::=<br>
+        ALTER TABLE base-table-name<br>
+        {ADD column-identifier data-type<br>
+        |ADD (column-identifier data-type [, column-identifier data-type]... )        }
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+create-index-statement ::=<br>
+       CREATE [UNIQUE] INDEX index-name<br>
+       ON base-table-name<br>
+       ( column-identifier [ASC | DESC]<br>
+       [, column-identifier [ASC | DESC] ]... )
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+create-table-statement ::=<br>
+       CREATE TABLE base-table-name-1<br>
+       (column-element [, column-element] ...)<br>
+       column-element ::= column-definition | table-constraint-definition<br>
+       column-definition ::=<br>
+               column-identifier data-type<br>
+                DEFAULT default-value<br>
+               [column-constraint-definition [,column-constraint-definition]...]<br>
+       column-constraint-definition ::=<br>
+               NOT NULL<br>
+               | UNIQUE | PRIMARY KEY )<br>
+               | REFERENCES base-table-name-2 referenced-columns<br>
+               | CHECK (search-condition)<br>
+              default-value ::= literal | NULL | USER<br>
+       table-constraint-definition ::=<br>
+               UNIQUE (column-identifier [, column-identifier] ...)<br>
+               | PRIMARY KEY (column-identifier<br>
+                      [, column-identifier] ...)<br>
+               | CHECK (search-condition)<br>
+               | FOREIGN KEY referencing-columns REFERENCES<br>
+                      base-table-name-2 referenced-columns<br>
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+create-view-statement ::=<br>
+       CREATE VIEW viewed-table-name<br>
+      [( column-identifier [, column-identifier]... )]      AS<br>
+       query-specification
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+delete-statement-positioned ::=<br>
+       DELETE FROM table-name WHERE CURRENT OF cursor-name<br>
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=43>
+<P ALIGN=CENTER>(v2)X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+delete-statement-searched ::=<br>
+       DELETE FROM table-name [WHERE search-condition]
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+drop-index-statement ::=<br>
+       DROP INDEX index-name
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+drop-table-statement ::=<br>
+       DROP TABLE base-table-name<br>
+               [ CASCADE | RESTRICT ]<br>
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+drop-view-statement ::=<br>
+       DROP VIEW viewed-table-name<br>
+               [ CASCADE | RESTRICT ]<br>
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+grant-statement ::=<br>
+       GRANT {ALL | grant-privilege [, grant-privilege]... }<br>
+       ON table-name<br>
+       TO {PUBLIC | user-name [, user-name]... }<br>
+       grant-privilege ::=<br>
+               DELETE<br>
+               | INSERT<br>
+               | SELECT<br>
+               | UPDATE [( column-identifier [, column-identifier]... )]<br>
+               | REFERENCES [( column-identifier<br>
+                      [, column-identifier]... )]<br>
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+insert-statement ::=<br>
+       INSERT INTO table-name [( column-identifier [, column-identifier]...)]<br>
+       VALUES (insert-value[,insert-value]... )<br>
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+insert-statement ::=<br>
+   INSERT INTO table-name [( column-identifier [, column-identifier]... )]<br>
+       { query-specification | VALUES (insert-value [, insert-value]...}<br>
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+ODBC-procedure-extension ::=<br>
+       ODBC-std-esc-initiator [?=]call procedure ODBC-std-esc-terminator<br>
+       | ODBC-ext-esc-initiator [?=]call procedure ODBC-ext-esc-terminator
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+revoke-statement ::=<br>
+       REVOKE {ALL | revoke-privilege [, revoke-privilege]... }<br>
+       ON table-name<br>
+       FROM {PUBLIC | user-name [, user-name]... }<br>
+       [ CASCADE | RESTRICT ]<br>
+        revoke-privilege ::=<br>
+               DELETE<br>
+               | INSERT<br>
+               | SELECT<br>
+               | UPDATE  | REFERENCES<br>
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+select-statement ::=<br>
+       SELECT [ALL | DISTINCT] select-list<br>
+       FROM table-reference-list[<br>
+       [WHERE  search-condition]<br>
+       [order-by-clause]
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+select-statement ::=<br>
+       SELECT [ALL | DISTINCT] select-list<br>
+       FROM table-reference-list<br>
+       [WHERE search-condition]<br>
+       [GROUP BY column-name [, column-name]... ]<br>
+       [HAVING search-condition]<br>
+       [UNION select-statement]...<br>
+       [order-by-clause]
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+select-for-update-statement ::=<br>
+       SELECT [ALL | DISTINCT] select-list<br>
+       FROM table-reference-list<br>
+       [WHERE  search-condition]<br>
+       FOR UPDATE OF [column-name [, column-name]...]
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<P ALIGN=CENTER>(v1)
+<TD VALIGN="TOP" WIDTH=34><P ALIGN=CENTER>X
+<P ALIGN=CENTER>(v2)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+statement ::= create-table-statement<br>
+       | delete-statement-searched     | drop-table-statement<br>
+       | insert-statement     | select-statement<br>
+       | update-statement-searched
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+statement ::= alter-table-statement<br>
+       | create-index-statement<br>
+       | create-table-statement<br>
+       | create-view-statement<br>
+       | delete-statement-positioned<br>
+       | delete-statement-searched<br>
+       | drop-index-statement<br>
+       | drop-table-statement<br>
+       | drop-view-statement<br>
+       | grant-statement<br>
+       | insert-statement<br>
+       | revoke-statement<br>
+       | select-statement<br>
+       | select-for-update-statement<br>
+       | update-statement-positioned<br>
+       | update-statement-searched
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+statement ::= alter-table-statement<br>
+       | create-index-statement<br>
+       | create-table-statement<br>
+       | create-view-statement<br>
+       | delete-statement-positioned<br>
+       | delete-statement-searched<br>
+       | drop-index-statement<br>
+       | drop-table-statement<br>
+       | drop-view-statement<br>
+       | grant-statement<br>
+       | insert-statement<br>
+       | ODBC-procedure-extension<br>
+       | revoke-statement<br>
+       | select-statement<br>
+       | select-for-update-statement<br>
+       | statement-list<br>
+       | update-statement-positioned<br>
+       | update-statement-searched
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+statement-list ::= statement | statement;statement-list 
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34><P ALIGN=CENTER>X
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+update-statement-positioned ::=<br>
+       UPDATE table-name<br>
+       SET column-identifier = {expression | NULL}<br>
+               [, column-identifier = {expression | NULL}]...<br>
+       WHERE CURRENT OF cursor-name
+<TD VALIGN="TOP" WIDTH=37>&#160;
+<TD VALIGN="TOP" WIDTH=42><P ALIGN=CENTER>X
+<P ALIGN=CENTER>(v1)
+<TD VALIGN="TOP" WIDTH=34><P ALIGN=CENTER>X
+<P ALIGN=CENTER>(v2)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=522><P>
+update-statement-searched<br>
+       UPDATE table-name<br>
+       SET column-identifier = {expression | NULL }<br>
+              [, column-identifier = {expression | NULL}]...<br>
+       [WHERE search-condition]
+<TD VALIGN="TOP" WIDTH=37><P ALIGN=CENTER>X
+<TD VALIGN="TOP" WIDTH=42>&#160;
+<TD VALIGN="TOP" WIDTH=34>&#160;
+</tr></table>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="sql_elements.htm">&gt;&gt;</a>&nbsp;
+<a href="create_new_file.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

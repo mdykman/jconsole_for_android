@@ -1,0 +1,248 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Explicit-To-Tacit Converter</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="common_mistakes.htm">&gt;&gt;</a>&nbsp;
+<a href="readable_tacit_definitions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734596"></a><a name="_Toc5414686"></a><a name="_Toc1896304"><span
+style='mso-bookmark:_Toc5414686'><span style='mso-bookmark:_Toc191734596'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>42. </span></span><![endif]>Explicit-To-Tacit Converter</span></span></a></h1>
+
+<p class=MsoBodyText>Q: What's the most common cause of blindness among J
+programmers?</p>
+
+<p class=MsoBodyText>A: Conjunctivitis.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:explicit-to-tacit
+converter&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->In the early weeks, complex tacit definitions are
+torturous to write and next-to-impossible to read; blurred vision and sleepless
+nights are the occupational hazard of the programmer who dives into tacit
+J.&nbsp; If a co-worker is banging into doors
+as he stumbles to refill his tankard of coffee, here's how to check him out:
+hold up three fingers and ask him how many he sees.<span
+style='mso-spacerun:yes'>&nbsp; </span>If he says &quot;three&quot;, he's merely
+fallen in love or is working to a deadline, and he will recover.<span
+style='mso-spacerun:yes'>&nbsp; </span>But if he replies &quot;I see a list of 3
+items each of which is a finger&quot;, you can expect to start receiving emails
+that look like they've been encrypted.</p>
+
+<p class=MsoBodyText>You can offer as a temporary palliative J's mechanism for
+converting an explicit verb-definition to a tacit one.<span
+style='mso-spacerun:yes'>&nbsp; </span>You request the conversion by using a left
+operand to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>13&nbsp;</span></span>
+instead of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 9!:3 (5)<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. Do this once to select simplified display</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 : 'x -
+y'</p>
+
+<p class=Jcodemultiline>3 : 'x-y'</p>
+
+<p class=BodyTextnoleader>We defined a verb, and since we didn't assign it to
+anything, we see its value, which is just what we defined it to be.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 13 : 'x -
+y'</p>
+
+<p class=Jcodemultiline>-</p>
+
+<p class=BodyTextnoleader>by using <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>13</span></span> instead of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3</span></span>, we ask the
+interpreter to try to find a tacit equivalent,&nbsp;
+which it did.</p>
+
+<p class=MsoBodyText>Here is another way to define the verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>enclose</span></span> from the
+previous chapter:</p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>13 : '(&gt;{.x) , y , (&gt;{:x)'<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>([:
+&gt; [: {. [) , ] , [: &gt; [: {: [<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader>The interpreter likes to use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>[:</span></span> in its tacit
+definitions.&nbsp; Note that you use <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>13&nbsp;:</span></span>
+to get an equivalent for both monadic and dyadic verbs; there is no <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>14&nbsp;:&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>I recommend that you use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>13&nbsp;:</span></span> as your
+first choice for defining tacit verbs.&nbsp;
+It will find all tacit equivalents that can be generated systematically,
+and the explicit definition is much easier to read than a tacit definition. <span
+style='mso-spacerun:yes'>&nbsp;</span>You will still have to use your
+tacit-definition skills for irregular cases, such as</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 13 : '+:^:x y'</p>
+
+<p class=Jcodemultiline>4 : '+:^:x y'</p>
+
+<p class=BodyTextnoleader>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> or <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is used as an operand to a conjunction, as
+in this example, the tacit converter is not going to be able to make a tacit
+equivalent.&nbsp; The result of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>13&nbsp;:</span></span>
+is still a verb performing the requested function, but it is an explicit
+definition rather than a tacit one.&nbsp; Note
+that the interpreter saw that the definition contained a reference to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+so it made the verb a dyad.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 (13 : '+:^:x
+y') 3 </p>
+
+<p class=Jcodemultiline>12</p>
+
+<p class=BodyTextnoleader>This verb applies monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+:</span></span> to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+times.&nbsp; Knowing about <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u^:v</span></span>, you might
+find the tacit equivalent <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+:@]^:[&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 (+:@]^:[) 3</p>
+
+<p class=Jcodemultiline>12</p>
+
+<p class=Section><a name="_Toc191734597">Assignments in </a><span
+style='mso-bookmark:_Toc191734597'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>13&nbsp;:</span></span> Tacit Definitions</span></p>
+
+<p class=MsoBodyText>The verb in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>13&nbsp;:</span></span> must be only one line long, and
+tacit definitions cannot include assignments; but for a special form the
+interpreter will allow a use of assignment to give the effect of a multi-line
+verb.&nbsp; An example is our old friend <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mean&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 13 : '(s % t)
+[ s =. +/ y [ t =. #y'</p>
+
+<p class=Jcodemultiline>+/ % #</p>
+
+<p class=BodyTextnoleader>Clever, eh?&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;[&nbsp;t</span></span>
+has the result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+no matter what <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>t</span></span>
+is, so the interpreter recognizes the assignment to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>t</span></span> as the creation
+of a temporary variable, and it substitutes the definition later in the
+expression when <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>t</span></span>
+is encountered.&nbsp; You may have any number
+of assigments lined up like this.</p>
+
+<p class=Section><a name="_Toc191734598">Special Verb-Forms Used in Tacit
+Definitions</a></p>
+
+<p class=MsoBodyText>It is impossible for a tacitly-defined verb to route one
+of its operands to an operand of a modifier inside the verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, if we want a verb to set element
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>,
+we can try</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 13 : '0 x} y'</p>
+
+<p class=Jcodemultiline>4 : '0 x}y'</p>
+
+<p class=BodyTextnoleader>but we see that the converter was unable to find a
+tacit form.</p>
+
+<p class=MsoBodyText>Some modifiers have exotic forms that circumvent this
+problem.&nbsp; One such is the adverb <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}</span></span>
+which supports the <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;x f`g`h} y&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->form <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;value`selector`operand}&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This produces the same result as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(x&nbsp;value&nbsp;y)&nbsp;(x&nbsp;selector&nbsp;y)}&nbsp;(x&nbsp;operand&nbsp;y)</span></span>
+so we could write</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. 13 : 'x
+0:`[`]} y'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a</p>
+
+<p class=Jcodemultiline>0:`[`]}</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 a 9 7 5 3 1</p>
+
+<p class=Jcodemultiline>9 7 5 0 1</p>
+
+<p class=MsoBodyText>Other such forms <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u&amp;n dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m&amp;v dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->are <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;m&amp;v&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&amp;n&nbsp;y</span></span>
+which are equivalent to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&amp;v^:x&nbsp;y</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&amp;n^:x&nbsp;y</span></span>
+respectively.</p>
+
+</div><!--bottom jump start--><hr><a href="common_mistakes.htm">&gt;&gt;</a>&nbsp;
+<a href="readable_tacit_definitions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

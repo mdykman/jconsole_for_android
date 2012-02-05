@@ -1,0 +1,83 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>#^:_1  Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="sploc.htm">&gt;&gt;</a>&nbsp;
+<a href="ifb.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">#^:_1 </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2003-03-19<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The dyad<tt> #^:_1 </tt><i>expand</i> has been made more efficient
+in time and space.  For example:
+<br><br>
+<pre>
+   b=: ?1e6$2
+   c=: (+/b)$'abcde'
+   i=: ?(+/b)$1e6
+   x=: ((+/b),10)$'abc'
+
+   ts=: 6!:2 , 7!:2@]  NB. time and space
+   ts 'expression'
+</pre>
+<table>
+<tr>
+<td><b>Expression</b></td>         <td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>J 5.02</b></td><td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>J 5.01</b></td><td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>Ratio</b></td>
+</tr>
+
+<tr><td><tt>b #^:_1 c</tt></td> <td>&nbsp;</td>
+<td>0.0356981 &nbsp; 1.04966e6</td><td>&nbsp;</td>
+<td>0.1568434 &nbsp; 1.10112e7</td><td>&nbsp;</td>
+<td align=right> 4.39 &nbsp; 10.49</td>
+</tr>
+
+<tr><td><tt>b #^:_1 i</tt></td><td>&nbsp;</td>
+<td>0.0523209 &nbsp; 4.19539e6</td><td>&nbsp;</td>
+<td>0.1987772 &nbsp; 1.57298e7</td><td>&nbsp;</td>
+<td align=right> 3.80 &nbsp;&nbsp;&nbsp; 3.75</td>
+</tr>
+
+<tr><td><tt>b #^:_1 x</tt></td> <td>&nbsp;</td>
+<td>0.1566205 &nbsp; 1.67783e7</td><td>&nbsp;</td>
+<td>0.3405053 &nbsp; 3.46042e7</td><td>&nbsp;</td>
+<td align=right>2.17 &nbsp;&nbsp;&nbsp; 2.06</td>
+</tr>
+</table>
+<br><br>
+
+<!--bottom jump start--><hr><a href="sploc.htm">&gt;&gt;</a>&nbsp;
+<a href="ifb.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

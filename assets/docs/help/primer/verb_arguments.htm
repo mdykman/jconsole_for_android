@@ -1,0 +1,60 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Verb arguments</title>
+
+</head><body><!--top jump start--><a href="frame_and_cell.htm">&gt;&gt;</a>&nbsp;
+<a href="single_atom_array.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Verb arguments</h1>
+Much of the power of J lies in the ability of a verb to treat its arguments as a series of parts. The verb applies itself to each of the parts, creating a series of partial results, and then assembles the partial results into the final result. Exactly how this works and what you can do with it is described in the next several sections.<br>
+<br>
+Let's look at a few examples to get an idea of where you are heading.<br>
+
+<pre>   m =. i. 2 2
+   m
+0 1
+2 3</pre>
+You can add arrays together that have the same rank and shape.<br>
+
+<pre>   m + 2 2 $ 10 11 12 13
+10 12
+14 16</pre>
+You can add a single number to an array.<br>
+
+<pre>  10 + m
+10 11
+12 13</pre>
+What if you wanted to add one number to the first row and a different number to the second row?<br>
+
+<pre>   10 20 + m
+10 11
+22 23</pre>
+But what if you wanted to add those numbers to the columns instead? You have to indicate that you want to add to the columns not the rows.<br>
+
+<pre>   10 20 +"1 m
+10 21
+12 23</pre>
+<!--bottom jump start--><hr><a href="frame_and_cell.htm">&gt;&gt;</a>&nbsp;
+<a href="single_atom_array.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

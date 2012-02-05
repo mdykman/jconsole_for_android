@@ -1,0 +1,269 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 27. Identity Functions and Neutrals</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro28.htm">&gt;&gt;</a>&nbsp;
+<a href="intro26.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>27. Identity Functions and Neutral</b></font><br><br>
+
+The monads<tt> 0&amp;+</tt> and<tt> 1&amp;* </tt>are <i>identity</i> 
+functions, and<tt> 0 </tt>and<tt> 1 </tt>are said to be 
+<i>identity elements</i> or <i>neutrals</i> of the dyads<tt> + </tt>
+and<tt> * </tt>respectively.  Insertion on an empty 
+list yields the neutral of the dyad inserted.  For example:<br>
+
+<pre>
+   +/ i.0         +/''           +/0{. 2 3 5
+0              0              0
+
+   */i.0          */''           */0{. 2 3 5
+1              1              1
+</pre>
+
+These results are useful in partitioning lists; 
+they ensure that certain obvious relations continue 
+to hold even when one of the partitions is empty.  For example:<br>
+
+<pre>
+   +/ a=: 2 3 5 7 11
+28
+
+   (+/4{.a)+(+/4}.a)
+28
+
+   (+/0{.a)+(+/0}.a)
+28
+
+   */a
+2310
+
+   (*/4{.a)*(*/4}.a)
+2310
+
+   (*/0{.a)*(*/0}.a)
+2310
+</pre>
+
+The identity functions and other basic characteristics of 
+functions (such as <i>rank</i>) are given by the adverb<tt> b.</tt> ,<tt> </tt>
+as illustrated below:<br>
+
+<pre>
+   ^ b. _1     <font face=Times size=+1>Inverse</font>
+^.
+
+   ^ b. 0      <font face=Times size=+1>Ranks</font>
+_ 0 0
+
+   ^ b. 1      <font face=Times size=+1>Identity function</font>
+$&amp;1@(}.@$)
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>27.1 &nbsp;</td>
+<td>Predict and test the results of the following expressions: <br>
+
+<pre>
+*/''
+&lt;./''
+&gt;./''
+&gt;./0 4 4 $ 0
++/ . */ 0 4 4 $ 0
+1 2 3 4 +&amp;.^./ 5 6 7 8
+</pre>
+</td></tr>
+
+<tr><td valign=top>27.2 &nbsp;</td>
+<td>Experiment with the dyad<tt> {@; </tt>and 
+give the term used to describe it in mathematics. <br><br>
+
+Answer: Cartesian product
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>27.3 &nbsp;</td>
+<td>Test the assertion that the monads<tt> (%:@~. +/ . * =) </tt>
+and<tt> %: </tt>are equivalent, and state the utility of the 
+former when applied to a list such as<tt> 1 4 1 4 2 </tt>that has 
+repeated elements. <br><br>
+
+Answer: The function<tt> %: </tt>(which could be a function 
+costly to execute) is applied only to the distinct elements 
+the argument (as selected by the <i>nub</i> function<tt> ~.</tt>).
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>27.4 &nbsp;</td>
+<td>Comment on the following experiments before reading the 
+comments on the right: <br><br>
+
+<table>
+<tr><td valign=top width=250><tt>a=: 2 3 5 [ b=: 1 2 4</tt></td></tr>
+<tr><td valign=top><tt>a (f=: *:@+) b</tt></td>
+ <td>Square of sum</td></tr>
+<tr><td valign=top><tt>a (g=: +&amp;*: + +:@*) b &nbsp;</tt></td>
+ <td>Sum of squares plus double product</td></tr>
+<tr><td valign=top><tt>a (f=g) b</tt></td>
+ <td>Expression of the identity of the functions</td></tr>
+<tr><td valign=top><tt>a (f-:g) b</tt></td>
+ <td><tt>f </tt>and<tt> g </tt>in a<i> tautology </i>(whose result is</td></tr>
+<tr><td valign=top><tt>taut=: f-:g</tt></td>
+ <td><i>always </i>true; that is,<tt> 1</tt>).</td></tr>
+</table>
+
+<br></td></tr>
+
+<tr><td valign=top>27.5 &nbsp;</td>
+<td>A phrase such as<tt> f-:g </tt>may be a tautology 
+for the dyadic case only, for the monadic case only, or for both.  
+Use the following tautologies as reading and writing exercises, 
+including statements of applicability (Dyad only, etc.): <br><br>
+
+<table>
+
+<tr><td valign=top width=250><tt>t1=: &gt;: -: &gt; +. =</tt></td>
+ <td>(Dyad only) The primitive<tt> &gt;: </tt>is 
+identical to greater than <i>or</i> equal</td><tr>
+
+<tr><td valign=top><tt>t2=: &lt;. -: -@&gt;.&amp;-</tt></td>
+ <td>(Both) Lesser-of is neg on greater-of on neg; Floor is neg 
+on ceiling on neg</td><tr>
+
+<tr><td valign=top><tt>t3=: &lt;. -: &gt;.&amp;.-</tt></td>
+ <td>Same as<tt> t2 </tt>but uses <i>under</i></td><tr>
+
+<tr><td valign=top><tt>t4=: *:@&gt;: -: *: + +: + 1:</tt></td>
+ <td>(Monad) Square of<tt> a+1 </tt>is square of<tt> a </tt>plus 
+twice<tt> a </tt>plus<tt> 1</tt></td><tr>
+
+<tr><td valign=top><tt>t5=: *:@&gt;: -: #.&amp;1 2 1&quot;0</tt></td>
+ <td>Same as<tt> t4 </tt>using polynomial</td><tr>
+
+<tr><td valign=top><tt>t6=: ^&amp;3@&gt;: -: #.&amp;1 3 3 1&quot;0</tt></td>
+ <td>Like<tt> t5 </tt>for cube</td><tr>
+
+<tr><td valign=top><tt>bc=: i.@&gt;: ! ]</tt></td>
+ <td>Binomial coefficients</td><tr>
+
+<tr><td valign=top><tt>t7=: (&gt;:@]^[) -: (]#.bc@[)&quot;0</tt></td>
+ <td>Like<tt> t6 </tt>with<tt> k&amp;t7 </tt>for<tt> k</tt>th power</td><tr>
+
+<tr><td valign=top><tt>s=: 1&amp;o.</tt></td>
+ <td>Sine</td><tr>
+
+<tr><td valign=top><tt>c=: 2&amp;o.</tt></td>
+ <td>Cosine</td><tr>
+
+<tr><td valign=top><tt>t8=: s@+-:(s@[*c@])+(c@[*s@]) &nbsp;</tt></td>
+ <td>(Dyad) Addition and Subtraction</td><tr>
+
+<tr><td valign=top><tt>t9=: s@--:(s@[*c@])-(c@[*s@])</tt></td>
+ <td>Formulas for sine</td><tr>
+
+<tr><td valign=top><tt>det=: -/ . *</tt></td>
+ <td>Determinant</td><tr>
+
+<tr><td valign=top><tt>perm=: +/ . *</tt></td>
+ <td>Permanent</td><tr>
+
+<tr><td valign=top><tt>sct=: 1 2&amp;o.&quot;0@(,&quot;0)</tt></td>
+ <td>Sine and cosine tables</td><tr>
+
+<tr><td valign=top><tt>t10=: s@- -: det@sct</tt></td>
+ <td>Same as<tt> t9 </tt>but using the determinant of 
+the sin and cos table</td><tr>
+
+<tr><td valign=top><tt>t11=: s@+ -: perm@sct</tt></td>
+ <td>Like<tt> t8 </tt>using the permanent</td><tr>
+
+<tr><td valign=top><tt>S=: 5&amp;o.</tt></td>
+ <td>Hyperbolic sine</td><tr>
+
+<tr><td valign=top><tt>C=: 6&amp;o.</tt></td>
+ <td>Hyperbolic cosine</td><tr>
+
+<tr><td valign=top><tt>SCT=: 5 6&amp;o.&quot;0@(,&quot;0)</tt></td>
+ <td>Sinh and Cosh table</td><tr>
+
+<tr><td valign=top><tt>t12=: S@+ -: perm@SCT</tt></td>
+ <td>Addition theorem for sinh</td><tr>
+
+<tr><td valign=top><tt>SINH=: ^ .: -</tt></td>
+ <td>Odd part of exponential</td><tr>
+
+<tr><td valign=top><tt>COSH=: ^ .. -</tt></td>
+ <td>Even part of exponential</td><tr>
+
+<tr><td valign=top><tt>t13=: SINH -: S</tt></td>
+ <td>Sinh is odd part of exponential</td><tr>
+
+<tr><td valign=top><tt>t14=: COSH -: C</tt></td>
+ <td>Cosh is the even part of exponential</td><tr>
+
+<tr><td valign=top><tt>sine=: ^&amp;.j. .: -</tt></td>
+ <td>Sine is the odd part of exponential</td><tr>
+
+<tr><td valign=top><tt>t15=: sine -: s</tt></td>
+ <td>under multiplication by<tt> 0j1</tt></td><tr>
+</table>
+
+<br></td></tr>
+
+<tr><td valign=top>27.6 &nbsp;</td>
+<td>Comment on the following expressions before 
+reading the comments on the right:<br><br>
+
+<table>
+<tr><td valign=top width=250><tt>g=: + &gt; &gt;.</tt></td>
+ <td>Test if sum exceeds maximum</td></tr>
+
+<tr><td valign=top><tt>5 g 2</tt></td>
+ <td>True for positive arguments </td></tr>
+
+<tr><td valign=top><tt>5 g _2 _1 0 1 2</tt></td>
+ <td>but not true in general</td></tr>
+
+<tr><td valign=top><tt>f=: *.&amp;(0&amp;&lt;)</tt></td>
+ <td>Test if both arguments exceed<tt> 0</tt></td></tr>
+
+<tr><td valign=top nowrap><tt>theorem=: f &lt;: g</tt></td>
+<td>The truth value of the result of<tt> f </tt>does not exceed that 
+of<tt> g</tt> .<tt> </tt>This may also be stated as &ldquo;if<tt> f </tt>
+(is true) then<tt> g </tt>(is true)&rdquo; or as &ldquo;<tt>f </tt>implies<tt> g</tt>&rdquo;
+</td></tr>
+
+<tr><td valign=top><tt>5 theorem _2 _1 0 1 2</tt></td></tr>
+</table>
+
+</td></tr>
+</table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro28.htm">&gt;&gt;</a>&nbsp;
+<a href="intro26.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

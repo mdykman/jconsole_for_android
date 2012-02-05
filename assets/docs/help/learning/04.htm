@@ -1,0 +1,494 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 4: Scripts and Explicit Functions</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="05.htm">&gt;&gt;</a>&nbsp;
+<a href="03.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <A NAME="01"></A>
+<H1>Chapter 4: Scripts and Explicit Functions</H1>
+What is called a "script" is a sequence of lines of J 
+where the whole sequence can be replayed on demand to perform
+a computation.   
+The themes of this chapter are scripts, functions defined by scripts, 
+and scripts in files.
+<A NAME="02"></A>
+<H2>4.1  Text</H2>
+Here is an assignment to the variable <TT>txt</TT>:
+<PRE>
+   txt =: 0 : 0
+What is called a "script" is
+a sequence of lines of J.
+)
+</PRE>
+The expression <TT>0 : 0</TT> means "as follows", that is, <TT>0 : 0</TT> is a verb
+which takes as its argument, and delivers as its result, whatever lines
+are typed following it, down to the line beginning with the solo right-
+parenthesis.
+<p>
+The value of <TT>txt</TT> is these two lines, in a single character string.
+The string contains line-feed (<TT>LF</TT>) characters, 
+which cause <TT>txt</TT> to be displayed as several lines.
+<TT>txt</TT> has a certain length, it is rank 1, that is, just a list, and it
+ contains 2 line-feed characters.
+<PRE>
+   txt
+What is called a "script" is
+a sequence of lines of J.
+
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>$ txt</TT></TD>
+<TD><TT># $ txt</TT></TD>
+<TD><TT>+/ txt = LF</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>55</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>2</TT></TD>
+</TABLE>
+<p>
+Let us say that <TT>txt</TT> is a "text" variable, that is,
+a character string with zero or more line-feed characters.
+<A NAME="03"></A>
+<H2>4.2  Scripts for Procedures</H2>
+Here we look at computations described as step-by-step procedures to be 
+followed.
+For a very simple example, the Fahrenheit-to-Celsius conversion can be 
+described in two steps.
+Given some temperature <TT>T</TT> say in degrees Fahrenheit:
+<PRE>
+   T =: 212
+</PRE>
+then the first step is subtracting 32. Call the result <TT>t</TT>, say
+<PRE>
+   t =: T - 32
+</PRE>
+The second step is multiplying <TT>t</TT> by <TT>5%9</TT> to give the temperature in 
+degrees Celsius.
+<PRE>
+   t * 5 % 9
+100
+</PRE>
+Suppose we intend to perform this computation several times with different
+ values of <TT>T</TT>. 
+We could record this two-line procedure 
+as a script which can be replayed on demand.  The script
+consists of the lines of J stored in a text variable, thus:
+<PRE>
+   script =: 0 : 0
+t =: T - 32
+t * 5 % 9
+)
+</PRE>
+Scripts like this can be executed with the built-in J verb given 
+by the expression <TT>0 !: 111</TT> which we can call, say, <TT>do</TT>.
+<PRE>
+   do =: 0 !: 111
+   
+</PRE>
+<PRE>
+       do  script
+</PRE>
+We should now see the lines on the screen just as though they had been 
+typed in from the keyboard:
+<PRE>
+   t =: T - 32
+   t * 5 % 9
+100
+   
+</PRE>
+We can run the script again with a different value for <TT>T</TT>
+<PRE>
+   T =: 32
+   do script
+   t =: T - 32
+   t * 5 % 9
+0
+</PRE>
+<A NAME="04"></A>
+<H2>4.3  Explicitly-Defined Functions</H2>
+Functions can be defined by scripts.
+Here is an example, the Fahrenheit-to-Celsius conversion as a verb.
+<PRE>
+   Celsius =: 3 : 0
+t =: y - 32
+t * 5 % 9
+)
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>Celsius 32 212</TT></TD>
+<TD><TT>1 + Celsius 32 212</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 100</TT></TD>
+<TD><TT>1 101</TT></TD>
+</TABLE>
+<p>
+Let us look at this definition more closely
+<H3>4.3.1  Heading</H3>
+The function is introduced with the expression <TT>3 : 0</TT> which means: "a 
+verb as follows".
+(By contrast, recall that <TT>0 : 0</TT> means "a character string as follows").
+<p>
+The colon in <TT>3 : 0</TT> is a conjunction. Its left argument <TT>(3)</TT> means 
+"verb". Its right argument <TT>(0)</TT>
+means "lines following". 
+For more details, see <A HREF="12.htm">Chapter 12</A>.  A function introduced in this way
+is called "explicitly-defined", or just "explicit".
+<H3>4.3.2  Meaning</H3>
+The expression <TT>(Celsius 32 212)</TT> applies the verb <TT>Celsius</TT>
+to the argument <TT>32 212</TT>, 
+by carrying out a computation which can be described, or modelled, like 
+this:
+<PRE>
+   y =: 32 212
+   t =: y - 32
+   t * 5 % 9
+0 100
+</PRE>
+Notice that, after the first line, 
+the computation proceeds according to the script.
+<H3>4.3.3  Argument Variable(s)</H3>
+The value of the argument <TT>(32 212)</TT> is supplied to the script as a 
+variable named <TT>y</TT> . 
+This "argument variable" is named <TT>y</TT> in a monadic function. (In a
+ dyadic function, as we shall see below,
+the left argument is named <TT>x</TT> and the right is <TT>y</TT>)
+<A NAME="05"></A>
+<H3>4.3.4  Local Variables</H3>
+Here is our definition of <TT>Celsius</TT> repeated:
+<PRE>
+   Celsius =: 3 : 0
+t =: y - 32
+t * 5 % 9
+)
+</PRE>
+We see it contains an assignment to a variable <TT>t</TT>.
+This variable is used only during the execution of <TT>Celsius</TT>. 
+Unfortunately this assignment to <TT>t</TT> interferes with the value of any other
+variable also called <TT>t</TT>, defined outside <TT>Celsius</TT>, which we happen to be
+ using at the time. 
+To demonstrate:
+<PRE>
+   t =: 'hello' 
+   
+   Celsius 212
+100
+   
+   t
+180
+</PRE>
+We see that the variable <TT>t</TT> with original value (<TT>'hello'</TT>) has been
+ changed in executing <TT>Celsius</TT>.
+To avoid this undesirable effect, we declare that <TT>t</TT> inside <TT>Celsius</TT> is
+ to be a strictly private affair, 
+distinct from any other variable called <TT>t</TT>.
+<p>
+For this purpose there is a special form of assignment,  with the symbol
+ <TT>=.</TT> (equal dot).
+Our revised definition becomes: 
+<PRE>
+   Celsius =: 3 : 0
+t =. y - 32
+t * 5 % 9
+)
+</PRE>
+and we say that <TT>t</TT> in <TT>Celsius</TT> is a local variable, or that <TT>t</TT> is local
+ to <TT>Celsius</TT>. 
+By contrast, a variable defined outside
+a function is said to be global.
+Now we can demonstrate that in <TT>Celsius</TT> assignment to local variable <TT>t</TT>
+ does not affect 
+any global variable <TT>t</TT>
+<PRE>
+   t =: 'hello'
+    
+   Celsius 212
+100
+   
+   t
+hello
+</PRE>
+The argument-variable <TT>y</TT> is also a local variable. Hence the evaluation
+ of 
+<TT>(Celsius 32 212)</TT> is more accurately modelled by the computation:
+<PRE>
+   y =. 32 212
+   t  =. y - 32
+   t * 5 % 9
+0 100
+</PRE>
+<H3>4.3.5  Dyadic Verbs</H3>
+<TT>Celsius</TT> is a monadic verb, introduced with <TT>3 : 0</TT> and defined in terms 
+of the single argument <TT>y</TT>.  By contrast, a dyadic verb 
+is introduced with <TT>4 : 0</TT>. The left and right arguments 
+are always named <TT>x</TT> and <TT>y</TT> respectively
+Here is an example. The "positive difference" of two numbers is the larger
+ minus the smaller.
+<PRE>
+   posdiff =: 4 : 0
+larger  =. x >. y
+smaller =. x <. y
+larger - smaller 
+)
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>3 posdiff 4</TT></TD>
+<TD><TT>4 posdiff 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+<H3>4.3.6  One-Liners</H3>
+A one-line script can be written as a character string, and given as the 
+right argument
+of the colon conjunction. 
+<PRE>
+   PosDiff =: 4 : '(x >. y) - (x <. y)'
+   4 PosDiff 3
+1
+</PRE>
+<A NAME="06"></A>
+<H3>4.3.7  Control Structures</H3>
+In the examples we have seen so far of functions defined by scripts, 
+execution begins with the expression on the first line, 
+proceeds to the next line,  and so on to  the last. 
+<p>
+This straight-through path is not the only path possible.
+A choice can be made as to which expression to execute next.
+<p>
+For an example, here is a function to compute a volume from given length,
+ width and height. Suppose the function is to check that 
+its argument is given correctly as a list of 3 items (length, width and height). 
+If so, a volume is computed. If not,  the result is to be the character-string 
+<TT>'ERROR'</TT>.
+<PRE>
+   volume =: 3 : 0
+if.   3 = # y
+do.   * / y
+else. 'ERROR'
+end.
+)
+</PRE>
+We see:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>volume 2 3 4</TT></TD>
+<TD><TT>volume 2 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>24</TT></TD>
+<TD><TT>ERROR</TT></TD>
+</TABLE>
+<p>
+Everything from <TT>if.</TT> to <TT>end.</TT> together forms what is called a "control structure".
+Within it <TT>if.</TT> <TT>do.</TT> <TT>else.</TT> and <TT>end.</TT> are called "control words".
+See <A HREF="12.htm">Chapter 12</A> for more on control structures.
+<H2>4.4  Tacit and Explicit Compared</H2>
+We have now seen two different styles of function definition.  
+The explicit style, introduced in this chapter, is so called because it
+explicitly mentions variables standing for arguments. Thus in <TT>volume</TT>
+ above,
+the variable <TT>y</TT> is an explicit mention of an argument.
+<p>
+By contrast, the style we looked at in the previous chapter is called 
+ "tacit", because there is no
+mention of variables standing for arguments. 
+For example, compare explicit and tacit
+definitions of the positive-difference function:
+<PRE>
+   epd =: 4 : '(x >. y) - (x <. y)'
+   
+   tpd =: >. - <.
+</PRE>
+Many functions defined in the tacit style
+can also be defined explicitly, and vice versa.  
+Which style is preferable depends on what seems most natural,  in
+the light of however we conceive the function to be defined. 
+The choice lies between
+breaking down the problem into, on the one hand, a scripted sequence of 
+ steps or,  on the other hand, 
+a collection of smaller functions.
+<p>
+The tacit style allows a compact definition.  For this reason, tacit 
+functions lend themselves well to systematic analysis and transformation.
+Indeed, the J system can, for a broad class of tacit functions, 
+automatically compute such transformations as inverses
+and derivatives. 
+<A NAME="07"></A>
+<H2>4.5  Functions as Values</H2>
+A function is a value, and a value can be displayed by entering an 
+expression.  An expression can be 
+as simple as a name.  Here are some values of tacit and explicit functions:
+<PRE>
+   - & 32
++-+-+--+
+|-|&|32|
++-+-+--+
+   
+   epd
++-+-+-------------------+
+|4|:|(x >. y) - (x <. y)|
++-+-+-------------------+
+   
+   Celsius
++-+-+-----------+
+|3|:|t =. y - 32|
+| | |t * 5 % 9  |
++-+-+-----------+
+</PRE>
+<A NAME="08"></A>
+The value of each function is here represented as a 
+boxed structure. This is the default, but we can choose 
+from several other possibilities:  see <A HREF="27.htm">Chapter 27</A>.  For now I 
+will mention only the
+"linear representation", 
+which shows a function as a sequence of characters which could be 
+typed in again to produce the function.  We can switch the session to 
+to show functions in the linear representation by entering:
+<PRE>
+   (9!:3) 5
+
+</PRE>
+and we see for example:
+<PRE>
+   epd
+4 : '(x >. y) - (x <. y)'
+</PRE>
+In the following chapters, values of functions will often be shown 
+in this linear representation.
+<A NAME="09"></A>
+<H2>4.6  Script Files</H2>
+We have seen scripts (lines of J) used for definitions of single variables:
+ text variables
+or functions. 
+ By contrast, a file holding lines of J as text can store many definitions.
+Such a file is called a script file, and its usefulness is that 
+all its definitions together can be executed by reading the file.
+<p>
+Here is an example. 
+Using a text-editor of your choice, create a file on your computer, 
+containing 2 lines of text like the following.
+<PRE>
+                 squareroot =: %:
+</PRE>
+<PRE>
+                 z =: 1 , (2+2) , (4+5)
+</PRE>
+A J script file has a filename ending with <TT>.ijs</TT> by convention, 
+so suppose the file is created (in Windows) with the full pathname 
+ <TT>c:\temp\myscript.ijs</TT> for example.
+<p>
+Then in the J session it will be convenient
+to identify the file by defining a variable <TT>F</TT> say 
+to hold this filename as a string.
+<PRE>
+   F =: 'c:\temp\myscript.ijs'   
+   
+</PRE>
+Having created this 2-line script file, 
+we can execute it by typing at the keyboard:
+<PRE>
+       0!:1 < F
+</PRE>
+and we should now see the lines on the screen just as though they had been
+ typed from the keyboard.
+<PRE>
+   squareroot =: %:
+   z =: 1 ,(2+2), (4+5)
+</PRE>
+We can now compute with the definitions we have just loaded in from the 
+file:
+<PRE>
+   z
+1 4 9
+   
+   squareroot z
+1 2 3
+</PRE>
+The activities in a J session will be typically a mixture of editing script
+ files,
+loading or reloading the definitions from script files, and initiating
+ computations
+at the keyboard.  
+What carries over from one session to another is only the script files.
+The state, or memory,  of the J system itself 
+disappears at the end of the session, along with all the definitions 
+entered during the session.
+Hence it is a good idea to ensure, before ending a J session, that any 
+script file is up to date, that is,
+it contains all the definitions you wish to preserve.
+<p>
+At the beginning of a session the J system will automatically load a 
+designated script file,
+called the "profile". (See <A HREF="26.htm">Chapter 26</A> for more details). 
+The profile can be edited, and is a good place to record any definitions 
+of your own 
+which you find generally useful.
+We have now come to the end of Chapter 4 and of Part 1.
+The following chapters will treat, in more
+depth and detail, the themes we have
+touched upon in Part 1.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="05.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="05.htm">&gt;&gt;</a>&nbsp;
+<a href="03.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

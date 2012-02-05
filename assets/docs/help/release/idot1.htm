@@ -1,0 +1,112 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>i. and i: Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="idotsp.htm">&gt;&gt;</a>&nbsp;
+<a href="edotsp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">i. </font>
+<font size=+3>and</font><font size=+3 face="Courier New"> i: </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2000-09-07<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The dyads<tt> i. </tt>and<tt> i: </tt>now perform better on 2-byte items.
+Timing comparisons are as follows:<br><br>
+
+<pre>   timer=: 6!:2
+
+   x=: a.{~ ?(m,2)$#a.
+   y=: a.{~ ?(n,2)$#a.
+
+   timer 'x i. y'
+
+<b>  m      n          J 4.06      J 4.05</b>
+
+ 50e3  0.2e6      0.0154528   44.4957517
+ 50e3  0.4e6      0.0265048   88.4189361
+ 50e3  0.6e6      0.0372575  133.1981282
+ 50e3  0.8e6      0.0543974  174.9362201
+ 50e3  1.0e6      0.0669739  220.2604263
+
+100e3  0.2e6      0.0223838    0.0542809
+100e3  0.4e6      0.0335774    0.0875835
+100e3  0.6e6      0.0457131    0.1226720
+100e3  0.8e6      0.0588443    0.1561371
+100e3  1.0e6      0.0711710    0.1892570
+
+150e3  0.2e6      0.0248805    0.0683701
+150e3  0.4e6      0.0373640    0.1023264
+150e3  0.6e6      0.0499153    0.1356423
+150e3  0.8e6      0.0629233    0.1713201
+150e3  1.0e6      0.0748855    0.2048698
+
+200e3  0.2e6      0.0288456    0.0739032
+200e3  0.4e6      0.0420858    0.1108959
+200e3  0.6e6      0.0535643    0.1459794
+200e3  0.8e6      0.0664509    0.1799809
+200e3  1.0e6      0.0783569    0.2143956
+
+250e3  0.2e6      0.0327544    0.0810555
+250e3  0.4e6      0.0454164    0.1190137
+250e3  0.6e6      0.0573341    0.1511932
+250e3  0.8e6      0.0700455    0.1887692
+250e3  1.0e6      0.0821040    0.2294093
+
+300e3  0.2e6      0.0365066    0.1043462
+300e3  0.4e6      0.0490369    0.1405653
+300e3  0.6e6      0.0615740    0.1756094
+300e3  0.8e6      0.0740457    0.2131410
+300e3  1.0e6      0.0863883    0.2496350
+</pre>
+
+As well, the hash function on integer vector arguments has been changed.
+On &ldquo;average&rdquo; arguments, the time remains linear but is slower by 
+a factor of 1.5 to 2, but the chance of &ldquo;bad&rdquo; arguments with
+quadratic time is reduced.<br>
+
+<pre>
+   a=: 100000 ? 100000
+   b=:  50000 ? 50000
+   c=: , (i.1000)+&quot;1 0 ] 1e8 * 1+i.4
+   e=:   c ,a
+   f=: (-c),a
+
+<b>                    J 4.06      J 4.05</b>
+
+e i. b             0.112724    0.0714972
+f i. b             0.108505   14.2669
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="idotsp.htm">&gt;&gt;</a>&nbsp;
+<a href="edotsp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

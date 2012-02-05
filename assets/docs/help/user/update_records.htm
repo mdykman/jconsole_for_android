@@ -1,0 +1,75 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Updating a record</title>
+
+</head><body><!--top jump start--><a href="create_new_file.htm">&gt;&gt;</a>&nbsp;
+<a href="select_and_read_data.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Updating a record</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+To update a record, you process an SQL update statement. Here we update the salary field for ABBOTT K. 
+
+<P>
+First read the record to see the current value (the salary is 50817):
+
+<pre>
+   sel=. 'select * from tdata where name=''ABBOTT K'''
+   ddfet sel ddsel ch
++--------------+-+----+--------+---------+-----+
+|ABBOTT K      |M|D103|1.9631e7|1.98309e7|50817|
++--------------+-+----+--------+---------+-----+
+</pre>
+
+<P>
+Next we process an update statement:
+
+<pre>
+   us=. 'update tdata set salary=45000 where name=''ABBOTT K'''
+   us ddsql ch
+</pre>
+
+<P>
+Finally, we read the record again, to ensure the update was successful:
+
+<pre>
+   sel=. 'select * from tdata where name=''ABBOTT K'''
+   ddfet sel ddsel ch
++--------------+-+----+--------+---------+-----+
+|ABBOTT K      |M|D101|1.9631e7|1.98309e7|45000|
++--------------+-+----+--------+---------+-----+
+</pre>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="create_new_file.htm">&gt;&gt;</a>&nbsp;
+<a href="select_and_read_data.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

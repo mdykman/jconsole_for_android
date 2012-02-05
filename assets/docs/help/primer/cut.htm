@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Cut ;.</title>
+
+</head><body><!--top jump start--><a href="each.htm">&gt;&gt;</a>&nbsp;
+<a href="select_without_from.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Cut ;.</h1>
+The cut conjunction applies a verb to partitions of its argument. In discussing cut we will use the expression <font face=courier size=-1>f =: u ;. n</font> to give names to the various elements. The left argument of cut is the verb <font face=courier size=-1>u</font> that will be applied to partitions of the right argument of the derived verb<font face=courier size=-1> </font>f . The right argument of cut is the noun n that indicates the kind of partitions.<br>
+<br>
+Let's consider cases where <font face=courier size=-1>n</font> is <font face=courier size=-1>1</font>, <font face=courier size=-1>_1</font>, <font face=courier size=-1>2</font>, or <font face=courier size=-1>_2</font> and where the derived verb is used monadically.<br>
+<br>
+If <font face=courier size=-1>n</font> is <font face=courier size=-1>2</font> or <font face=courier size=-1>_2</font>, the items of the right argument are partitioned into arguments that end with the last item in the argument. The item that is used to mark the partitions is called the fret. A negative <font face=courier size=-1>n</font> indicates that the fret is not included in the partition. Each partition is passed to the verb <font face=courier size=-1>u</font> and the partial results are assembled into the final result.<br>
+
+<pre>   cut2  =. &lt; ;. 2</pre>
+The definition of <font face=courier size=-1>cut2 </font>could be read as: box cut last.<br>
+
+<pre>   cut2 'how now brown cow '
++----+----+------+----+
+¦how ¦now ¦brown ¦cow ¦
++----+----+------+----+ </pre>
+In this example the items of the right argument are characters. The fret is the last character, which is a blank. The fret is used to break the entire argument into a series of arguments to which the verb &lt; is applied. Visually:<br>
+
+<pre>&lt; 'how '  (first partition)  gives  first partial result
+&lt; 'now '  (next partition)   gives  next partial result
+&lt; 'brown '
+&lt; 'cow '</pre>
+The partial results are assembled into the final result.<br>
+
+<pre>   &lt;;._2 'how now brown cow '
++---+---+-----+---+
+¦how¦now¦brown¦cow¦
++---+---+-----+---+</pre>
+The <font face=courier size=-1>cut2 </font>boxed results include the fret and the <font face=courier size=-1>&lt;;._2</font> boxed results do not include the fret.<br>
+<br>
+The following applies to the same partitions of the right argument, but applies the dyad <font face=courier size=-1>#</font> (tally) instead. This gives us the count of each partition.<br>
+
+<pre>   #;._2 'how now brown cow '
+3 3 5 3</pre>
+This applies in the same way to numeric data. In the following <font face=courier size=-1>_1</font> is the fret.<br>
+
+<pre>   a =. 2 3 4 _1 5 3 2 _1 23 45 65 132 _1
+   &lt;;._2 a
++-----+-----+------------+
+¦2 3 4¦5 3 2¦23 45 65 132¦
++-----+-----+------------+
+   #;._2 a
+3 3 4
+   +/;._2 a
+9 10 265</pre>
+A <font face=courier size=-1>1</font> or <font face=courier size=-1>_1</font> uses the first item as the fret. If positive, the fret is included in the result, if negative it is not included.<br>
+
+<pre>   &lt;;._1 'madam i''m adam'
++---+---+----++
+¦ada¦ i'¦ ada¦¦
++---+---+----++</pre>
+Sometimes the partition information is separate from the data. Instead of frets in the data, the partition information can be provided in a left argument to the derived verb. The partition information is boolean data where a <font face=courier size=-1>1</font> indicates the start (with <font face=courier size=-1>1</font> or <font face=courier size=-1>_1</font>) or end (with <font face=courier size=-1>2</font> or <font face=courier size=-1>_2</font>) of the partitions.<br>
+
+<pre>   1 0 0 0 1 0 0 &lt;;.1 'abcdefg'
++----+---+
+¦abcd¦efg¦
++----+---+
+   d =.  'the test is the thing'
+   'the' E. d
+1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+   ('the' E. d) &lt;;.1 d
++------------+---------+
+¦the test is ¦the thing¦
++------------+---------+</pre>
+The example above uses a new primitive <font face=courier size=-1>E.</font> that you can look up in the J Dictionary if you want additional information at this time. However, without worrying about the details you should get the idea of what is happening.<br>
+<br>
+Chopping up character lists into boxes is so useful that there is a standard utility called cutopen that handles many of the common cases. For example:<br>
+
+<pre>   cutopen 'testing testing 1 2 3'
++-------+-------+-+-+-+
+¦testing¦testing¦1¦2¦3¦
++-------+-------+-+-+-+</pre>
+<!--bottom jump start--><hr><a href="each.htm">&gt;&gt;</a>&nbsp;
+<a href="select_without_from.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

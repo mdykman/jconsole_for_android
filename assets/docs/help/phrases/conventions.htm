@@ -1,0 +1,321 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Conventions</title>
+
+</head><body><!--top jump start--><a href="locales_loading_sf.htm">&gt;&gt;</a>&nbsp;
+<a href="title.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+<H1>1A. Conventions</h1>
+
+<P>J is an executable mathematical language available on a wide range of computers.  
+This book presents a collection of J phrases, useful to beginners in learning the language, 
+and of continuing use to practical programmers.</P>
+
+<P>Each phrase is executable and includes assignment to a name whose numeric part 
+is unique within the section.  
+The literal part of the name indicates the class of the phrase as follows:</P>
+
+<TABLE ALIGN=center><TR><TD align=left>a	adverb</TD><TD align="left">m	monad</TD></TR>
+<TR ALIGN="center"><TD align="left">c	conjunction&nbsp;&nbsp;&nbsp;</TD><TD align="left">n	noun</TD></TR>
+<TR ALIGN="center"><TD align="left">d	dyad</TD><TD align="left">v	ambivalent verb</TD></TR>
+                
+    </TABLE>
+    
+
+<P>Some phrases include assignment of a mnemonic name that is not necessarily unique. 
+Each is accompanied by a brief statement of its purpose. Thus:</P>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0">
+  <TR><TD><tt>n0=:  i. 6</tt></TD><TD ALIGN="left">List of first six non-negative integers</TD></TR>
+<TR><TD><tt>m1=: ^&amp;3</tt></TD><TD ALIGN="left">Cube</TD></TR>
+
+<TR><TD><tt>m2=: mean=: +/ % #</tt></TD><TD ALIGN="left">Arithmetic mean</TD></TR>
+
+<TR><TD><tt>d3=:  $,:</tt></TD><TD ALIGN="left">x copies of y</TD></TR>
+<TR><TD><tt>m4=: &lt;.@(0.5&amp;+)</tt></TD><TD ALIGN="left">Round</TD></TR>
+
+<TR><TD><tt>m5=: =+</tt></TD><TD ALIGN="left">Test for real number</TD></TR>
+<TR><TD><tt>m6=: (&lt;0 _1)&amp;C.</tt></TD><TD ALIGN="left">Swap leading and final items</TD></TR>
+<TR><TD><tt>m7=: +/\  -: +/\.&amp;.|.</tt></TD><TD ALIGN="left">Prefix sum scan is suffix under reversal</TD></TR>
+</TABLE>
+
+
+
+<P>A beginner may find it useful to simply browse through, 
+and enter, various portions of the phrase lists. 
+In so doing, she may best skip those whose purpose is described by unfamiliar terms, 
+and concentrate first on those phrases described by words that are familiar, 
+or at least to be found in an English dictionary.</P>
+
+<P>Complete definitions of the primitives used (such as<tt> &amp; </tt>
+in<tt> m1</tt>) may be found in <a href="references.htm#5">[5]</a>, 
+but it is probably more fruitful and more fun to first experiment 
+by entering a phrase together with a suitable argument to see it in action, 
+and then experiment further by entering what may appear to be meaningful variants. 
+You may also wish to annotate these experiments 
+(but do not enter the annotation on the computer unless you preface it 
+by<tt> NB.</tt>). For example:</P>
+
+
+<pre>
+   n0=: i. 6
+   n0	      NB. Enter name of noun to display it
+0 1 2 3 4 5
+
+   m1=:    n0=: i. 6
+   n0	      NB. Enter name of noun to display it
+0 1 2 3 4 5
+
+   m1=: ^&amp;3
+   m1 n0
+0 1 8 27 64 125
+
+   m2=: mean=: +/ % #
+   m2 n0
+2.5
+
+   mean m1 n0
+37.53
+   m1 n0
+0 1 8 27 64 125
+</pre>
+
+<P>Experimenting with an unfamiliar language is bound to lead to 
+some puzzling results:</P>
+
+<pre>
+   ^&amp;3 y=: 0 1 2 3 4            NB. Power with 3 is the cube
+0 1 8 27 64
+
+   ^&amp;3 0 1 2 3 4                NB. A puzzling result
+^&amp;3 0 1 2 3 4
+
+   ^&amp;3 (0 1 2 3 4)              NB. The list must be isolated from the 3 of the phrase
+0 1 8 27 64	                NB. so that it does not attach to it to form a longer list</pre> 
+
+
+<P>Spend a little time trying to understand such problems, 
+but do not let them deter you from further experiments or detain you very long; 
+it is better to forge ahead and return to them, or perhaps forget them as they 
+will probably clear up in the course of further work. </P>
+
+<P>In experimenting with phrases, 
+begin with the simplest arguments that occur to you, 
+but progress to more complex ones to explore the potential of the phrase. 
+For example,<tt> m4 </tt>appears useless when applied to an integer, 
+useful when applied to a fraction, 
+and perhaps more interesting when applied to a negative fraction. 
+Similarly,<tt> m5 </tt>is uninteresting when applied to real numbers, 
+but it (as well as the primitive <tt>+)</tt> is useful 
+on complex numbers such as<tt> 2j3 </tt>and<tt> %:_1 </tt>
+(the square root of negative one).</P>
+
+<P>Phrases such as<tt> m2 </tt>and<tt> m6 </tt>begin to show interesting 
+results only when applied to lists, such as in  <tt>m6 'ABCDabcd'</tt>. 
+They should also be tried on tables (matrices) and reports (higher-rank arrays) 
+such as<tt> i. 3 4 </tt>and<tt> i.3 4 5 </tt>
+and<tt> 2 3 4$'ABCDEFG'</tt> .<tt> </tt>
+Also try expressions such 
+as<tt> m6&quot;2 i.3 4 5</tt> .<tt> </tt>For example:</P>
+
+<pre>
+   report=: ? 2 4 3 $ 10	NB. Report for two years of four 
+ 			        NB. quarters of three months
+   report
+1 7 4
+5 2 0
+6 6 9
+3 5 8
+
+0 0 5
+6 0 3
+0 4 6
+5 9 8
+
+   mean report
+0.5 3.5 4.5
+5.5   1 1.5
+  3   5 7.5
+4	7   8
+
+   (mean ; mean&quot;2 ; mean&quot;1) report
++-----------+--------------+-------------------------------+
+|0.5 3.5 4.5|3.75    5 5.25|      4 2.33333       7 5.33333|
+|5.5   1 1.5|2.75 3.25  5.5|1.66667       3 3.33333 7.33333|
+|  3   5 7.5|              |                               |
+|  4   7   8|              |                               |
++-----------+--------------+-------------------------------+
+</pre>
+
+<P>Parameters that occur in phrases (such as the <tt>3</tt> in <tt>m1</tt>) 
+invite further experiments. Substitute both positive and negative integers 
+for the parameter in <tt>m1</tt>; experiment to determine the range of 
+permissible values, 
+and try to state in English the general definition of the 
+primitive <tt>^</tt>. Also see the relevant section on permutations. </P>
+
+<P>Although the d in the name of the phrase <tt>d3 </tt>indicated that it was for dyadic use only, it will also be found to give a (perhaps unintelligible) result on a single argument as well. For example, try 3<tt> d3 2 3</tt> and <tt>d3 2 3</tt>. Thus the <tt>d</tt> in the name of the phrase merely suggests its intended use, and does nothing to prevent its use as a monad. However, a verb so restricted can be defined by <tt>f=: [: : d3</tt>.</P>
+
+<P>The definition of a verb, adverb, or conjunction may be displayed in any of three forms: 
+box, tree, or linear (the form mainly used herein). 
+The form may be chosen from the view menu, 
+or by the foreign conjunction <tt>9!:3</tt> as illustrated below:</P>
+
+<pre>
+   9!:3 (5)	  NB. Linear display
+   m7
++/\ -: +/\.&amp;.|.
+ 
+
+   9!:3 (2 4 5)	  NB. Box, tree, and linear display
+   m7
++---------+--+------------------+
+|+-----+-+|-:|+----------+--+--+|
+||+-+-+|\||  ||+-----+--+|&amp;.||.||
+|||+|/|| ||  |||+-+-+|\.||  |  ||
+||+-+-+| ||  ||||+|/||  ||  |  ||
+|+-----+-+|  |||+-+-+|  ||  |  ||
+|         |  ||+-----+--+|  |  ||
+|         |  |+----------+--+--+|
++---------+--+------------------+
+  +- \ ---- / ---- +      
+  +- -:                   
+--|      +- \. --- / --- +
+  +- &amp;. --- |.            
++/\ -: +/\.&amp;.|.
+</pre>
+
+
+<P>It is sometimes helpful to define and experiment with parts of a phrase. 
+For example, the tautology<tt> m7 </tt>asserts the equivalence of the 
+prefix sum scan<tt> +/\ </tt>and 
+the suffix sum scan<tt> +/\. </tt>under reversal. 
+Thus:</P>
+
+<pre>
+   pss=: +/\
+   x=: 1 2 3 4 5 6
+   pss x	  NB. Subtotals, or partial sums
+1 3 6 10 15 21
+
+   sss=: +/\.
+   sss x
+21 20 18 15 11 6
+
+   sss |. x
+21 15 10 6 3 1
+
+   |. sss |. x
+1 3 6 10 15 21
+
+   sss&amp;.|. x
+1 3 6 10 15 21
+
+   &lt;\x	  NB. Box prefix scan
++-----+-----+-------+---------+-----------+
+|1|1 2|1 2 3|1 2 3 4|1 2 3 4 5|1 2 3 4 5 6|
++-----+-----+-------+---------+-----------+
+ 
+   &lt;\.x	  NB. Box suffix scan
++-----------+---------+-------+-----+---+-+
+|1 2 3 4 5 6|2 3 4 5 6|3 4 5 6|4 5 6|5 6|6|
++-----------+---------+-------+-----+---+-+
+</pre>
+
+<P>Although an unfamiliar function should first be applied in simple cases, 
+complex cases should be tried as well. For example:</P>
+
+<pre>
+   s=: sort=: /:~
+   numb=: 3 1 4 1 [ char=: 'cage'
+   poem=: 'i sing','of olaf',:'glad and big'
+   (,.s numb);(,.s char);poem;(s poem);s&quot;1 poem
++------------------------------------------+
+|1|a|i sing      |glad and big|       giins|
+|1|c|of olaf     |i sing      |      affloo|
+|3|e|glad and big|of olaf     |  aabddggiln|
+|4|g|            |            |            |
++------------------------------------------+
+</pre>
+
+<P>Certain utilities included in a J system are normally loaded automatically; 
+if not, they can be invoked by entering<tt> 0!:0 &lt;'profile.ijs'</tt> . 
+For example:</P>
+
+<pre>
+   names ''
+d3   m1   m2   m4   m5   m6   m7   mean n0
+</pre>
+
+<P>The response should include all names defined by your experiments.</P>
+<P>Presence of these utilities is assumed throughout. </P>
+
+<B><P>Fixing Definitions</P></B>
+
+<P>The use of one or more phrases as components in the definition 
+of another phrase may simplify and clarify the latter definition. 
+For example, 
+<A HREF="parity_symmetry.htm">Parity &amp; Symmetry</A> includes:</P>
+
+<TABLE ALIGN=center BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH=60%>
+<TR><TD align="left"><tt>n16=: m=: 3 1 4,2 0 5,:1 4 1</tt></TD><TD align="left">A 3-by-3 matrix</TD></TR>
+<TR ALIGN="center"><TD align="left"><tt>d17=: ip=: +/ . *</tt></TD><TD align="left">Inner (matrix) product</TD></TR>
+<TR ALIGN="center"><TD align="left"><tt>m18=: L=: m&amp;ip</tt></TD><TD align="left">A linear function</TD></TR>
+                
+    </TABLE>
+ 
+<P>However, re-definition of a component phrase may inadvertently 
+alter the definition of the phrase in which it is used. 
+This may be avoided by using the adverb f. to fix a definition, 
+perhaps assigning a new name to it. Thus  
+(assuming the foregoing three definitions to have been made): </P>
+
+<pre>
+   L
+(3 3$3 1 4 2 0 5 1 4 1)&amp;ip
+
+   L x=: 1 2 5
+25 27 14
+
+   h=: 'L' f.
+   h x
+25 27 14
+
+   ip=: -/ . *
+   L x
+21 27 _2
+
+   h x
+25 27 14
+</pre>
+
+<P>If, as in the present example, the entity being fixed is a verb, 
+the enclosing quotes may be omitted, as in<tt> L f.</tt> .</P>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="locales_loading_sf.htm">&gt;&gt;</a>&nbsp;
+<a href="title.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

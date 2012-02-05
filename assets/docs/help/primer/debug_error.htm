@@ -1,0 +1,74 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Debug - an error</title>
+
+</head><body><!--top jump start--><a href="comparative.htm">&gt;&gt;</a>&nbsp;
+<a href="debug_verb.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Debug - an error</h1>
+Let's introduce an error into your <font face=courier size=-1>centigrade </font>verb to see how that looks and how you would find and fix it.<br>
+<br>
+Open your cf.ijs script and edit the first line to have an error by adding quotes around the expression to the right of the copula.<br>
+
+<pre>t1 =. 'y - 32'
+</pre>
+Instead of <font face=courier size=-1>t1 </font>being defined as the result of <font face=courier size=-1>y - 32 </font>, it will be defined as the string. <br>
+<br>
+Run the script to make the new definition. Turn off debug suspension and request no stops and then run your buggy <font face=courier size=-1>centigrade</font>. Be sure to load the debug utilities if they are not already loaded.<br>
+
+<pre>   dbr 0	NB. disable suspension
+   dbss ''
+   centigrade 212
+¦domain error
+¦   t2=.t1    *5
+</pre>
+You are executing with suspension disabled (<font face=courier size=-1>dbr 0</font>) so execution did not suspend in centigrade and you have the normal 3 space indent.<br>
+<br>
+If you look at the line in error it is clear that the 5 is a valid argument to times, so there must be something wrong with <font face=courier size=-1>t1</font>. But you don't know the value of <font face=courier size=-1>t1</font>. You could stare at the source for the error, but, in a complex situation, it might be quicker to use debug. <br>
+<br>
+Enable suspension and rerun.<br>
+
+<pre>   dbr 1	NB. enable suspension
+   centigrade 212
+¦domain error
+¦   t2=.t1    *5
+¦centigrade[1]
+</pre>
+There is a 6 space indent indicating suspension, and because <font face=courier size=-1>centigrade </font>is suspended you can look at the value of t1.<br>
+
+<pre>      t1
+y - 32</pre>
+From the display of t1 it is clear that it is a string, not the number from the desired calculation. You can now look at the source to see where <font face=courier size=-1>t1 </font>was defined and see that the quotes should not be there.<br>
+<br>
+Edit the source to fix the definition by removing the quotes and run the script to redefine <font face=courier size=-1>centigrade</font>.<br>
+<br>
+You want to run line 0 again to properly define <font face=courier size=-1>t1</font>. You can do this by using <font face=courier size=-1>dbjmp </font>to continue execution at line 0.<br>
+<br>
+
+<pre>      dbjmp 0
+100</pre>
+Since no stops are set and there are no other errors, line 0 of <font face=courier size=-1>centigrade </font>is executed, which sets a proper value into local <font face=courier size=-1>t1 </font>and execution continues until finished.<br>
+ <!--bottom jump start--><hr><a href="comparative.htm">&gt;&gt;</a>&nbsp;
+<a href="debug_verb.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

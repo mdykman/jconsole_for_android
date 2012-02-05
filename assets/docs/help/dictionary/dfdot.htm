@@ -1,0 +1,97 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>f. Fix</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dhcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="decapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Fix</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>m f. &nbsp;u f.</font></td>
+<td align=right  width=33%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+If<tt> x </tt>is a proverb, then<tt> y=: x f. </tt>is equivalent to it, 
+except that any names that occur in the definition of<tt> x </tt>
+are (recursively) replaced by their referents.  
+Consequently, any subsequent change in these referents that might 
+change the definition of<tt> x </tt>will not affect the definition 
+of<tt> y</tt> .<br><br>
+
+If<tt> x </tt>is the name of any entity (that is, a pronoun, 
+proverb, pro-adverb, or pro-conjunction), then<tt> 'x' f. </tt>is equivalent, 
+but with all names in its definition recursively replaced 
+by their referents.<br><br>
+
+<tt>x f. </tt>will not fix any part of<tt> x </tt>that contains<tt> <a href="d212.htm">$:</a></tt> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   sum=: +/
+   mean=: sum % #
+   norm=: - mean
+   norm a=: 2 3 4 5
+_1.5 _0.5 0.5 1.5
+
+   N=: norm f.
+   N a
+_1.5 _0.5 0.5 1.5
+
+   norm
+- mean
+
+   N
+- (+/ % #)
+
+   sum=: -/
+   norm a
+2.5 3.5 4.5 5.5
+
+   N a
+_1.5 _0.5 0.5 1.5
+
+   adv=: norm@
+   *: adv
+norm@*:
+   adv
+norm@
+
+   'adv' f.
+(- (-/ % #))@
+
+   'a' f.
+2 3 4 5
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dhcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="decapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

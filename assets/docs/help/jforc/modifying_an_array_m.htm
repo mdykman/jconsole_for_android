@@ -1,0 +1,384 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Modifying an array: m}</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="control_structures.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_vii_sequential.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><a
+name="_Toc191734471"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>27. </span></span><![endif]>Modifying an array: </a></span></span><span
+style='mso-bookmark:_Toc1896267'><span style='mso-bookmark:_Toc5414639'><span
+style='mso-bookmark:_Toc191734471'><span class=Jcode><span style='mso-bidi-font-family:
+Arial;mso-bidi-font-weight:normal'>m}</span></span></span></span></span></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Amend adverb }&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Modify adverb }&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m} dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Modification of a portion of
+an array, performed in C by the simple expression <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>x[m]&nbsp;=&nbsp;y</span></span>,
+fits uneasily into J.&nbsp; To begin with, 3
+pieces of information are needed: the array <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>, the index <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>,
+and the replacement data <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.&nbsp;
+Since J verbs take only 2 operands, that means the primitive to modify
+the array will be an adverb so that its left operand can hold one of the 3; the
+verb derived from the adverb and its operand will perform the modification.</p>
+
+<p class=MsoBodyText>Moreover, the adverb cannot be a modifier of the array's
+name as <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>[m]</span></span>
+is a modifier of <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+in <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>x[m]&nbsp;=&nbsp;y</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In J, the array <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> may not have a
+name.&nbsp; While in C every array is declared
+and named, in J we summon up anonymous arrays in the blink of an <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>,
+use them, and let them disappear.&nbsp; We
+expect modification of a subarray to be like other primitives in this regard,
+which means that it must <b>not</b> be a form of assignment to a name using a
+copula (<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=.</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=:</span></span>),
+but instead a (derived) verb operating on an array to produce a result.</p>
+
+<p class=MsoBodyText>What will the result of the assignment be?<span
+style='mso-spacerun:yes'>&nbsp; </span>This is not much of an issue in C.<span
+style='mso-spacerun:yes'>&nbsp; </span>There the result of the assignment is <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+but it is seldom used: in C, after we have employed <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>x[m]&nbsp;=&nbsp;<i>expression</i>;</span></span>
+we are usually content to put down the pencil, satisfied that we have described
+a statement's worth of computation.&nbsp; In J
+we routinely use weapons of larger bore: after we have modified the array we
+expect to be able to sort it, or add it to another array, or the like.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is clear that the result of the
+modification of the array must be the entire modified array.</p>
+
+<p class=MsoBodyText>This reasoning justifies J's design.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>}</span></span> is an adverb.<span
+style='mso-spacerun:yes'>&nbsp; </span>Modification of an array is performed by
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m}</span></span>
+which produces a derived verb of infinite rank.&nbsp;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;m}&nbsp;y</span></span>
+creates a copy of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and installs the atoms of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> into the positions selected by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> specifies portions of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> in the same way
+as the left operand of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m{y </span></span>.&nbsp;
+Even though dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{</span></span> has left rank <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+may have any shape: the atoms of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> are processed to accumulate a list of
+selected portions of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.
+&nbsp;The shape of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> must be a <b
+style='mso-bidi-font-weight:normal'>suffix</b> of the shape of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m{y</span></span>,
+in other words <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+must either have the same shape as the selected portion(s) <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m{y</span></span> or have the
+same shape as some cell of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m{y</span></span> in which case <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is replicated to
+come up to the shape of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m{y&nbsp;</span></span>.&nbsp;
+Examples are a recap of the forms of the left operand of dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{</span></span>,
+with a couple of twists:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 (&lt;1 1)} 4
+4 $ 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 0 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=BodyTextnoleader>The simplest example.&nbsp;
+We select an atom and modify it.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 1 2 3 (0)} 4
+4 $ 5</p>
+
+<p class=Jcodemultiline>0 1 2 3</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=BodyTextnoleader>Here we are modifying a selected row.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 (0)} 4 4 $ 5</p>
+
+<p class=Jcodemultiline>0 0 0 0</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is shorter than <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m{y</span></span> but <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+can be replicated to match the shape of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m{y&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 1 (0)} 4 4 $
+5</p>
+
+<p class=Jcodemultiline>|length error</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; 0 1<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>(0)}4 4$5</p>
+
+<p class=BodyTextnoleader>Here the shape of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>
+while the shape of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m{y</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4</span></span>,
+so the operands do not agree.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 1 2 (1
+1;2 2)} 4 4 $ 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 1 5 5</p>
+
+<p class=Jcodemultiline>5 5 2 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=BodyTextnoleader>Here <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> has 2 atoms, each selecting a single atom of
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> has two atoms and they are stored into the
+selected positions.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 (1 1;1 1)}
+4 4 $ 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 2 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=Jcodemultiline>5 5 5 5</p>
+
+<p class=BodyTextnoleader>The same element is modified twice.<span
+style='mso-spacerun:yes'>&nbsp; </span>As it happens, the modifications are
+performed in order, and the last one survives in the result.<span
+style='mso-spacerun:yes'>&nbsp; </span><b>Do not rely on this behavior!</b><span
+style='mso-spacerun:yes'>&nbsp; </span>As a general rule in J, the order in which a
+parallel operation is performed is undefined and may change from release to
+release or from machine to machine.</p>
+
+<p class=MsoBodyText>The portions of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> selected by each atom of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m</span></span> must have the
+same shape.</p>
+
+<p class=Section><a name="_Toc5414640"></a><a name="_Toc5414474"></a><a
+name="_Toc1896268"></a><a name="_Toc191734472"><span style='mso-bookmark:_Toc1896268'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc5414640'>Monad </span></span></span></a><span style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:
+ _Toc5414474'><span style='mso-bookmark:_Toc1896268'><span style='mso-bookmark:
+ _Toc191734472'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman";
+ mso-bidi-font-weight:bold'>I.</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'><span style='mso-bookmark:_Toc191734472'>--Indexes
+of the 1s in a Boolean Vector</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;I.
+monad&quot; </span></span></span><![endif]--><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Indexes verb I.&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'>If you
+have a Boolean list with 1s representing items to be modified, you will need to
+create the list of indexes of the 1s (for selection you would just use </span></span></span><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;#&nbsp;y</span></span>, but for modification you must
+use </span></span></span><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m}</span></span>
+which needs the indexes rather than the Boolean list).</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc5414640'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc1896268'><st2:Sn w:st="on">Monad</st2:Sn> <st2:Sn w:st="on"><span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>I.</span></span></st2:Sn>
+(rank 1) performs this function.&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896268'><span style='mso-bookmark:
+ _Toc5414474'><span style='mso-bookmark:_Toc5414640'><span class=Jcode><span
+ style='mso-bidi-font-family:"Times New Roman"'>I.</span></span></span></span></span><span
+style='mso-bookmark:_Toc1896268'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc5414640'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&nbsp;y</span></span> produces </span></span></span><span
+style='mso-bookmark:_Toc1896268'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc5414640'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;#&nbsp;i.&nbsp;#&nbsp;y</span></span>, for example:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896268'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc5414640'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>I. 1 0 0 1 0 1 1</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896268'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc5414640'>0 3 5 6</span></span></span></p>
+
+<p class=MsoListBullet style='margin-left:0in;text-indent:0in;mso-list:none;
+tab-stops:.5in .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span style='mso-bookmark:
+_Toc1896268'><span style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:
+_Toc5414640'>indicating where the 1s are.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896268'><span
+style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:_Toc5414640'>You
+should use </span></span></span><span style='mso-bookmark:
+ _Toc5414640'><span style='mso-bookmark:_Toc5414474'><span style='mso-bookmark:
+ _Toc1896268'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>I.</span></span></span></span></span><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'>, rather than any equivalent phrase, to
+perform this function, because the interpreter recognizes compounds such as </span></span></span><span
+style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:_Toc5414474'><span
+style='mso-bookmark:_Toc1896268'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>I.@:&gt;</span></span> and handles them with special fast
+code.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc5414640'><span style='mso-bookmark:
+_Toc5414474'><span style='mso-bookmark:_Toc1896268'><a name="_Toc191734473">Modification
+In Place</a></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;modification in place&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->It is fundamental to the
+design of J that, in general, verbs produce output in a separate memory block
+from the inputs.&nbsp; Thus, if I execute <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;:&nbsp;y</span></span>,
+the result will be in a different memory area from <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This takes more <i>space</i> than
+incrementing <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+in place, but not much additional <i>computation</i>, since every atom of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+must be visited and incremented either way.&nbsp;
+Usually the extra memory usage is immaterial to overall
+performance.&nbsp; Sometimes we regret having
+to make a new copy for the output, for example when we just remove the end of a
+long list with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}:&nbsp;y</span></span>
+or add a single character to the end of a long string with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,&nbsp;'&nbsp;'&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>Profligacy with memory bandwidth reaches an extreme with
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m}&nbsp;</span></span>:
+even if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is huge and only one atom is modified, the whole <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> must be copied
+to produce the result.&nbsp; Sometimes this
+can be a noticeable drag on performance.&nbsp;
+To help out in those cases, the interpreter recognizes the specific
+forms</p>
+
+<p class=Jcodemultiline><i>name</i> =. x m} <i>name</i></p>
+
+<p class=Jcodemultiline><i>name</i> =: x m} <i>name<o:p></o:p></i></p>
+
+<p class=Jcodemultiline><i>name</i> =. <i>name</i> , x</p>
+
+<p class=Jcodemultiline><i>name</i> =: <i>name</i> , x</p>
+
+<p class=BodyTextnoleader>and executes the modification in place, i.&nbsp;e. without
+creating a new copy of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>name&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For the modification to be in-place, there
+must be nothing else in the sentence either before or after the form shown
+above, and the two appearances of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>name</span></i></span> must be identical.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m</span></span> may be any
+expressions that evaluate to nouns.</p>
+
+</div><!--bottom jump start--><hr><a href="control_structures.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_vii_sequential.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

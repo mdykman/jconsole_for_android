@@ -1,0 +1,85 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&amp;: Appose</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d640.htm">&gt;&gt;</a>&nbsp;
+<a href="d631c.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Appose</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u&amp;:v &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+<tt>&amp;: </tt>is equivalent to<tt> &amp; </tt>except that 
+the ranks of the resulting function are infinite; the relation 
+is similar to that between<tt> @: </tt>and<tt> @ </tt>.
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   a=: 'abcd' ; 'efgh'
+   b=: 'ABCD' ; 'EFGH'
+                
+   a
++----+----+
+|abcd|efgh|
++----+----+
+
+   b
++----+----+
+|ABCD|EFGH|
++----+----+
+
+   a ,&amp;:&gt; b
+abcd
+efgh
+ABCD
+EFGH
+
+   a ,&amp;&gt; b
+abcdABCD
+efghEFGH
+
+   &gt; b. 0
+0 0 0
+
+   , &amp; &gt; b. 0
+0 0 0
+
+   , &amp;: &gt; b. 0
+_ _ _
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d640.htm">&gt;&gt;</a>&nbsp;
+<a href="d631c.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

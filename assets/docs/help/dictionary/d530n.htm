@@ -1,0 +1,138 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>} Item Amend  -  Amend</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d530v.htm">&gt;&gt;</a>&nbsp;
+<a href="d523.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Item Amend</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>m} &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Amend</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> m </tt>is numeric and<tt> z=: m} y</tt> ,<tt> </tt>
+then<tt> $z </tt>equals<tt> $m</tt> ,<tt> </tt>which equals 
+the shape of an <i>item</i> of<tt> y</tt> .<tt> </tt>
+The atom<tt> j{z </tt>is<tt> j{(j{m){y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   y=: a.{~(a.i.'A')+i.4 5
+   m=: 3 1 0 2 1
+   y ; m ; m}y
++-----+---------+-----+
+|ABCDE|3 1 0 2 1|PGCNJ|
+|FGHIJ|         |     |
+|KLMNO|         |     |
+|PQRST|         |     |
++-----+---------+-----+
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> m </tt>is not a gerund,<tt> x m} y </tt>is formed by replacing 
+by<tt> x </tt>those parts of<tt> y</tt> selected by<tt> m&amp;{ </tt> 
+(an error is signalled if such selection requires fill).
+Thus:<br>
+
+<pre>
+   y; '%*'(1 3;2 _1)} y
++-----+-----+
+|ABCDE|ABCDE|
+|FGHIJ|FGH%J|
+|KLMNO|KLMN*|
+|PQRST|PQRST|
++-----+-----+
+</pre>
+
+<tt>$x </tt>must be a suffix of<tt> $m{y</tt> ,<tt> </tt>
+and<tt> x </tt>has the same effect as<tt> ($m{y)$,x</tt> .<tt> </tt>Thus:<br>
+
+<pre>
+   y; 'think' 1 2} y
++-----+-----+
+|ABCDE|ABCDE|
+|FGHIJ|think|
+|KLMNO|think|
+|PQRST|PQRST|
++-----+-----+
+</pre>
+</td>                                                         
+</tr></table><br>
+
+If<tt> m </tt>is a gerund, one of its elements determines 
+the index argument to the adverb<tt> } </tt>,<tt> </tt>and the others 
+modify the arguments<tt> x </tt>and<tt> y</tt> :<br>
+
+<table>
+<tr>
+<td><tt>x (v0`v1`v2)} y&nbsp;</tt></td>
+<td><font size=+1>&harr;</font><tt>&nbsp;</tt></td>
+<td><tt>(x v0 y) (x v1 y)} (x v2 y)</tt></td>
+</tr>
+
+<tr>
+<td><tt>(v0`v1`v2)} y</tt></td>
+<td><font size=+1>&harr;</font></td>
+<td><tt>(v1 y)} (v2 y)</tt></td>
+</tr>
+
+<tr>
+<td><tt>(v1`v2)} y</tt></td>
+<td><font size=+1>&harr;</font></td>
+<td><tt>(v1 y)} (v2 y)</tt></td>
+</tr>
+</table><br>
+
+For example, the following functions<tt> E1</tt>,<tt> E2</tt>,<tt> </tt>
+and<tt> E3 </tt>interchange two rows of a matrix, multiply a row by 
+a constant, and add a multiple of one row to another:<br>
+
+<pre>
+   E1=: &lt;@] C. [  
+   E2=: f`g`[}  
+   E3=: F`g`[}
+   f=: {:@] * {.@] { [
+   F=: [: +/ (1:,{:@]) * (}:@] { [)
+   g=: {.@]
+   M=: i. 4 5
+   M;(M E1 1 3);(M E2 1 10);(M E3 1 3 10)
++--------------+--------------+--------------+-------------------+
+| 0  1  2  3  4| 0  1  2  3  4| 0  1  2  3  4|  0   1   2   3   4|
+| 5  6  7  8  9|15 16 17 18 19|50 60 70 80 90|155 166 177 188 199|
+|10 11 12 13 14|10 11 12 13 14|10 11 12 13 14| 10  11  12  13  14|
+|15 16 17 18 19| 5  6  7  8  9|15 16 17 18 19| 15  16  17  18  19|
++--------------+--------------+--------------+-------------------+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d530v.htm">&gt;&gt;</a>&nbsp;
+<a href="d523.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

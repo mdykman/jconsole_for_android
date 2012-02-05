@@ -1,0 +1,118 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Adding lists</title>
+
+</head><body><!--top jump start--><a href="j_list_adding.htm">&gt;&gt;</a>&nbsp;
+<a href="checkpoint_c.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Basic way of adding lists</h1>
+You can have lists of numbers.<br>
+
+<pre>   a =. 12 24 47
+   b =. 12 34 45
+</pre>
+If you wanted to add two lists of numbers in a language like Basic you would have to get each number in turn from each list, add them together, and then stick this new result at the end of the result list.<br>
+<br>
+To add two lists of numbers together in this way you need a few new primitives. You need a way to get one number from a list. The verb { (from) can do this.<br>
+
+<pre>   0 { 7 9 2 4	NB. index 0 value 
+7
+   1 { 7 9 2 4	NB. index 1 
+9
+   2 { 7 9 2 4	NB. index 2 
+2
+   3 { 7 9 2 4	NB. index 3
+4
+</pre>
+You need to be able to append a new result value to the result list. The verb <font face=courier size=-1>,</font> can do this.<br>
+
+<pre>   7 9 2 , 4	NB. append 4 to the list
+7 9 2 4
+   7 9 2 4 , 7	NB. append 7 to the list
+7 9 2 4 7
+   a =. 7 9 2 4
+   a =. a , 23
+   a
+7 9 2 4 23
+</pre>
+You need to know how many numbers there are in the list so that you will know when you are done. The monad # (tally) tells us how many numbers are in the list.<br>
+
+<pre>   # 7 9 2 4
+4
+   # 7 9 2 4 7
+5
+</pre>
+You also need a way to create an empty result to which you will add each new result. An empty string will do this.<br>
+
+<pre>   r =. '' 	  NB. an empty string
+</pre>
+With these new verbs, combined with what you already know, you can write a Basic or Java style program that adds two lists.<br>
+<br>
+Create a temporary script file and add the addlists definition.<br>
+
+<pre>addlists =: dyad : 0
+r =. ''
+count =. # x
+i =. 0
+while. i &lt; count do.
+ left =. i { x
+ right =. i { y
+ sum =. left + right
+ r =. r , sum
+ i =. i + 1
+end.
+r
+)</pre>
+The local i is the index to select numbers from each list. It starts with 0 to select the first number from the left and right arguments. At the end of the <font face=courier size=-1>while.</font> control structure the i is incremented by 1 so that the next time the block is executed it will select the next number. The <font face=courier size=-1>while.</font> structure tests to see if i is less than the count of the argument. The control structure is finished when i is equal to the count of numbers to be added together. The <font face=courier size=-1>left </font>and <font face=courier size=-1>right </font>locals are defined as the next pair of numbers. They are added together and are appended to the end of the result <font face=courier size=-1>r</font>. The final line in the definition is <font face=courier size=-1>r</font> and that is the result.<br>
+<br>
+Run the script and test your definition of addlists.<br>
+
+<pre>   2 3 4 addlists 4 5 6
+6 8 10</pre>
+If you made a typo in the definition you will get an error or a wrong answer. In that case, you should check carefully that you have typed the definition in correctly.<br>
+<br>
+Certain errors (such as omitting the line that incremented the value of i) give you a <font face=courier size=-1>while.</font> that runs forever. This is because the<font face=courier size=-1> while.</font> never ends and the program keeps adding the first element of the left and right arguments and never steps to the next element. If you are in a loop like this, you need to run the jbreak program to interrupt J execution. This is the yellow J icon in Windows and jbreak shell script in Unix.<br>
+<br>
+In fact, it is worthwhile seeing how this looks. First be sure you know how to run the jbreak program to signal the interrupt (in Windows: find the yellow J icon, and in Unix have a command window ready to run the jbreak shell script in the J directory). Running jbreak while J is idle doesn't do anything. Edit the <font face=courier size=-1>addlists </font>definition so that i is not incremented. The easiest way to do this is to add <font face=courier size=-1>NB.</font> in front of the <font face=courier size=-1>i =. i + 1</font> sentence. Run the script and test the verb. This will run until to use jbreak to interrupt execution (or cancel the J task).<br>
+<br>
+For such a simple thing, this definition seems overly verbose in taking eleven lines. The definition can be compacted a bit by combining sentences. In the temporary script file create a second version of the definition.<br>
+
+<pre>adda =: dyad : 0
+r =. ''
+count =. # x
+i =. 0
+while. i &lt; count do.
+ r =. r , (i { x) + (i { y)
+ i =. i + 1
+end.
+r
+)</pre>
+Run the script and test this new version.<br>
+
+<pre>   2 3 4 adda 4 5 6
+6 8 10</pre>
+This is essentially how programmers in most languages add two lists of numbers. The program could be further streamlined, but it would still have to be a control structure that dealt with each number, one at a time. Most languages only know how to add a single number to a single number, and to add lists of numbers, you need to write a control structure that loops and explicitly adds each element of the list in turn.<br>
+<!--bottom jump start--><hr><a href="j_list_adding.htm">&gt;&gt;</a>&nbsp;
+<a href="checkpoint_c.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

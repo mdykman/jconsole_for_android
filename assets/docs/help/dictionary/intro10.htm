@@ -1,0 +1,135 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 10. Housekeeping</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro11.htm">&gt;&gt;</a>&nbsp;
+<a href="intro09.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>10. Housekeeping</b></font><br><br>
+
+In an extended session it may be difficult to remember the 
+names assigned to verbs and nouns; the <i>foreign</i> 
+conjunction<tt> !: </tt>(detailed in 
+<a href="xmain.htm">Appendix A</a>) 
+provides facilities for displaying and erasing them.  For example:<br>
+
+<pre>
+   b=: 3* a=: i. 6
+   sum=: +/
+   tri=: sum\ a
+   names=: 4!:1
+
+   names 0
++-+-+---+
+|a|b|tri|
++-+-+---+
+
+   names 3
++-----+---+
+|names|sum|
++-----+---+
+
+   erase=: 4!:55
+   erase &lt;'tri'
+1
+
+   names 0 3
++-+-+-----+-----+---+
+|a|b|erase|names|sum|
++-+-+-----+-----+---+
+
+   erase names 0
+1 1
+
+   names 0 3
++-----+-----+---+
+|erase|names|sum|
++-----+-----+---+
+</pre>
+
+The Windows drop-down menus can be used to save, retrieve, 
+and print sessions.  They can also be used to open <i>script windows</i>, 
+in which any number of sentences may be entered and edited, 
+and from which they can be <i>executed</i> so as to appear 
+in the normal execution window.<br><br>
+
+The script and execution windows can also be displayed 
+side-by-side, so that the effect of executing scripts 
+can be directly observed.<br><br>
+
+These matters are treated in detail in the help files, 
+as are the housekeeping facilities provided by the script 
+file <i>profile.ijs</i>. The menus may be used to execute 
+this file explicitly so as to make its facilities available.  
+If, however, its name is included in the <i>command line</i> 
+(as described in the user manual) it is executed automatically 
+at the beginning of a session.<br><br>
+
+<br>
+<p align=center><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>10.1 &nbsp;</td>
+<td>Enter and experiment with the programs defined in this section.
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>10.2 &nbsp;</td>
+<td>Type in the sentence<tt> +/ 2 3 5 * i. 3 </tt>and press the 
+Enter key to execute it.
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>10.3 &nbsp;</td>
+<td>Use the Up-arrow cursor key to move the cursor back up 
+the line entered in Exercise 10.2, and then:<br><br>
+
+Press Enter to bring the line down to the input area.<br><br>
+
+Use the Left-arrow key to move the cursor back to the<tt> * </tt>symbol, 
+and the backspace key to erase it.<br><br>
+
+Enter<tt> - </tt>to replace the multiplication by subtraction, 
+and press the Enter key to execute the revised sentence.
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>10.4 &nbsp;</td>
+<td>Use cursor keys to move the cursor to the immediate 
+left of the<tt> i </tt>in the sentence executed in Exercise 10.3.  
+Then hold down the Control key and press the F1 key to display 
+Dictionary definition of the primitive<tt> i.</tt>
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>10.5 &nbsp;</td>
+<td>Press the Escape key to close the display invoked in 
+Exercise 10.4.  Then move the cursor to the left so that it is 
+separated from the line by one or more spaces, and again 
+perform Ctrl F1 to display the individually boxed words in the sentence.
+<br>&nbsp;</td></tr>
+</table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro11.htm">&gt;&gt;</a>&nbsp;
+<a href="intro09.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 15: Tacit Operators</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="16.htm">&gt;&gt;</a>&nbsp;
+<a href="14.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <A NAME="01"></A>
+<H1>Chapter 15: Tacit Operators</H1>
+<H2>15.1  Introduction</H2>
+J provides a number of built-in operators - adverbs
+and conjunctions.  
+In <A HREF="13.htm">Chapter 13</A> we looked at defining our own operators explicitly.
+In this chapter we look at defining adverbs tacitly.
+<A NAME="02"></A>
+<H2>15.2  Adverbs from Conjunctions</H2>
+Recall from <A HREF="07.htm">Chapter 07</A> the Rank conjunction, <TT>(")</TT>. 
+For example, the verb <TT>(< " 0)</TT>  applies Box <TT>(<)</TT>
+to each rank-0 (scalar) item of the argument. 
+<PRE>
+   < " 0  'abc'
++-+-+-+
+|a|b|c|
++-+-+-+
+</PRE>
+A conjunction takes two arguments. If we supply
+only one, the result is an adverb. For example,
+an adverb to apply a given verb to each scalar can be 
+written as <TT>(" 0)</TT>
+<A NAME="03"></A>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>each =: " 0</TT></TD>
+<TD><TT>< each </TT></TD>
+<TD><TT>z =: < each 'abc'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>"0</TT></TD>
+<TD><TT><"0</TT></TD>
+<TD><TT>+-+-+-+<BR>
+|a|b|c|<BR>
++-+-+-+</TT></TD>
+</TABLE>
+<p>
+The scheme is, that for a conjunction <TT>C</TT> and 
+a noun <TT>N</TT>, the expression <TT>(C N)</TT> denotes an adverb 
+such that:
+<PRE>
+        x (C N)  means  x C N
+</PRE>
+The argument to be supplied to the conjunction
+can be a noun or a verb, and on the left or on the right.
+Altogether there are four similar schemes:
+<PRE>
+        x (C N)  means  x C N
+</PRE>
+<PRE>
+        x (C V)  means  x C V
+</PRE>
+<PRE>
+        x (N C)  means  N C x
+</PRE>
+<PRE>
+        x (V C)  means  V C x
+</PRE>
+<A NAME="04"></A>
+The sequences <TT>CN CV NC</TT> and <TT>CV</TT> are called
+"bidents". They are a form of bonding 
+whereby we take a two-argument function 
+and fix the value of one of its arguments to get a 
+one-argument function. 
+However,  there is a difference between bonding a dyadic 
+verb 
+(as in <TT>+ & 2</TT> for example) and bonding a conjunction. 
+With the conjunction, there is no need for a bonding 
+operator
+such as <TT>&</TT>. We just write <TT>(" 0)</TT> with no intervening 
+operator.  
+The reason is that in the case of <TT>+ & 2</TT>,
+omitting the <TT>&</TT> would give <TT>+ 2</TT> which means: apply the 
+monadic case of <TT>+</TT> to 2, giving <TT>2</TT>. However,
+conjunctions don't have monadic cases, so the
+ bident <TT>(" 0)</TT> is recognised as a bonding.
+ <p>
+<A NAME="05"></A>
+Recall the "Under" conjunction <TT>&.</TT> from <A HREF="08.htm">Chapter 08</A>
+whereby 
+<TT>f&.g</TT> is a verb which applies <TT>g</TT> to
+its argument, then <TT>f</TT> then the inverse of <TT>g</TT>.
+If we take <TT>f</TT> and <TT>g</TT> to be:
+<PRE>
+   f =: 'f' & ,
+   g =: >
+</PRE>
+then we see that <TT>f</TT> is applied inside each box:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>z </TT></TD>
+<TD><TT>(f &. g) z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+-+-+<BR>
+|a|b|c|<BR>
++-+-+-+</TT></TD>
+<TD><TT>+--+--+--+<BR>
+|fa|fb|fc|<BR>
++--+--+--+</TT></TD>
+</TABLE>
+<p>
+Now, using the form <TT>CV</TT>,  we can define an adverb <TT>EACH</TT> 
+to mean 
+"inside each box":
+<A NAME="06"></A>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>EACH =: &. ></TT></TD>
+<TD><TT>f EACH</TT></TD>
+<TD><TT>z</TT></TD>
+<TD><TT>f EACH z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>&.></TT></TD>
+<TD><TT>f&.></TT></TD>
+<TD><TT>+-+-+-+<BR>
+|a|b|c|<BR>
++-+-+-+</TT></TD>
+<TD><TT>+--+--+--+<BR>
+|fa|fb|fc|<BR>
++--+--+--+</TT></TD>
+</TABLE>
+<p>
+<A NAME="07"></A>
+<H2>15.3  Compositions of Adverbs</H2>
+If <TT>A</TT> and <TT>B</TT> are
+adverbs, then the bident <TT>(A B)</TT> denotes an adverb 
+which applies <TT>A</TT> and then <TT>B</TT>. The scheme is:
+<PRE>
+         x (A B)   means (x  A) B
+</PRE>
+<A NAME="08"></A>
+<A NAME="09"></A>
+<H3>15.3.1  Example: Cumulative Sums and Products</H3>
+There is a built-in adverb <TT>\</TT> (backslash, called Prefix). In the expression
+<TT>f \ y</TT> the verb <TT>f</TT> is applied to successively
+longer leading segments of <TT>y</TT>. For example:
+<PRE>
+   < \ 'abc'
++-+--+---+
+|a|ab|abc|
++-+--+---+
+</PRE>
+The expression <TT>+/ \ y</TT> produces cumulative 
+sums of <TT>y</TT>:
+<PRE>
+   +/ \ 1 2 3
+1 3 6
+</PRE>
+An adverb to produce cumulative sums, products,
+and so on can be written as a bident of two adverbs:
+<PRE>
+   cum =: / \   NB. adverb adverb
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>z =: 2 3 4</TT></TD>
+<TD><TT> + cum z</TT></TD>
+<TD><TT> * cum z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 3 4</TT></TD>
+<TD><TT>2 5 9</TT></TD>
+<TD><TT>2 6 24</TT></TD>
+</TABLE>
+<p>
+<A NAME="10"></A>
+<H3>15.3.2  Generating Trains</H3>
+Now we look at defining adverbs to generate trains of 
+verbs, that is, hooks or forks.  
+<p>
+First recall from <A HREF="14.htm">Chapter 14</A>
+the Tie conjunction (<TT>`</TT>), which makes gerunds,
+and the Evoke Gerund adverb (<TT>`: 6</TT>) which makes trains
+from gerunds.
+<p>
+Now suppose that <TT>A</TT> and <TT>B</TT> are the adverbs:
+<PRE>
+   A =: * `    NB. verb conjunction
+   B =: `: 6   NB. conjunction noun
+   
+</PRE>
+Then the  compound adverb 
+<PRE>
+   H =: A B
+</PRE>
+is a hook-maker. 
+Thus <TT><: H</TT> generates the hook <TT>* <:</TT> , that is 
+"x times x-1" 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT><: A</TT></TD>
+<TD><TT><: A B</TT></TD>
+<TD><TT>h =: <: H</TT></TD>
+<TD><TT>h 5</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+--+<BR>
+|*|<:|<BR>
++-+--+</TT></TD>
+<TD><TT>* <:</TT></TD>
+<TD><TT>* <:</TT></TD>
+<TD><TT>20</TT></TD>
+</TABLE>
+<p>
+<A NAME="11"></A>
+<H3>15.3.3  Rewriting</H3>
+It is possible to rewrite the definition of a verb
+to an equivalent form, by rearranging its terms.
+Suppose we start with a definition of the factorial 
+function <TT>f</TT>. Factorial 5 is 120. 
+<PRE>
+   f =: (* ($: @: <:)) ` 1:  @. (= 0:)
+   f 5
+120
+</PRE>
+The idea now is to rewrite <TT>f</TT> to the form 
+<TT>$: adverb</TT>, by a sequence of steps. 
+Each step introduces a new adverb. 
+The first new adverb is <TT>A1</TT>, which has the form
+<TT>conj verb</TT>.
+<PRE>
+   A1 =: @. (= 0:)      
+   g  =: (* ($: @: <:)) ` 1: A1
+   g 5
+120
+</PRE>
+Adverb <TT>A2</TT> has the form <TT>conj verb</TT>
+<PRE>
+   A2 =: ` 1:          
+   h  =: (* ($: @: <:)) A2 A1
+   h 5
+120
+</PRE>
+Adverb <TT>A3</TT> has the form <TT>adv adv</TT>
+<PRE>
+   A3 =: (* `) (`: 6)   
+   i  =: ($: @: <:) A3 A2 A1 
+   i 5
+120
+</PRE>
+Adverb <TT>A4</TT> has the form <TT>conj verb</TT>
+<PRE>
+   A4=: @: <:  
+   j  =: $: A4 A3 A2 A1 
+   j 5
+120
+</PRE>
+Combining <TT>A1</TT> to <TT>A4</TT>:
+<PRE>
+   A =: A4 A3 A2 A1 
+   k =: $:  A
+   k 5
+120
+</PRE>
+Expanding <TT>A</TT>:
+<PRE>
+   m =: $: (@: <:) (* `) (`: 6) (` 1:) (@. (= 0:))
+   m 5
+120
+</PRE>
+We see that <TT>m</TT> and <TT>f</TT> are the same verb:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>f</TT></TD>
+<TD><TT>m</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>(* $:@:<:)`1:@.(= 0:)</TT></TD>
+<TD><TT>(* $:@:<:)`1:@.(= 0:)</TT></TD>
+</TABLE>
+<p>
+This is the end of Chapter 15.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="16.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 31 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="16.htm">&gt;&gt;</a>&nbsp;
+<a href="14.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

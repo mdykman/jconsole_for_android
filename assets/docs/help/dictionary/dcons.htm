@@ -1,0 +1,116 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Constants</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="ctrl.htm">&gt;&gt;</a>&nbsp;
+<a href="dconsf.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font size=+2>Constants</font></b><br><br>
+
+The form of a numeric constant defined and illustrated in 
+<a href="dict1.htm">Part I</a>
+is elaborated by the use of further letters, as in<tt> 2r3 </tt>
+for two-thirds,<tt> 2p1 </tt>for two &pi;, and<tt> 2e3p1 </tt>
+for<tt> 2000</tt> &pi;.  
+The complete scheme of numeric constants obeys the following hierarchy:<br>
+
+<table>
+<tr>
+<td align=center><tt>.</tt></td>
+<td>The decimal point is obeyed first</td>
+</tr>
+
+<tr>
+<td align=center><tt>_</tt></td>
+<td>The negative sign is obeyed next</td>
+</tr>
+
+<tr>
+<td align=center><tt>e</tt></td>
+<td>Exponential (scientific) notation</td>
+</tr>
+
+<tr>
+<td align=center><tt>ad ar j</tt> &nbsp; &nbsp;</td>
+<td>Complex (magnitude and <b>a</b>ngle) in <b>d</b>egrees or <b>r</b>adians; 
+Complex number</td>
+</tr>
+
+<tr>
+<td align=center><tt>p x</tt></td>
+<td>Numbers based on <b>p</b>i (<tt>o.1</tt>) and on Euler&rsquo;s number 
+(the e<b>x</b>ponential<tt> ^1</tt>)</td>
+</tr>
+
+<tr>
+<td align=center><tt>b</tt></td>
+<td>Base value (using<tt> a </tt>to<tt> z </tt>
+for<tt> 10 </tt>to<tt> 35</tt>)</td>
+</tr>
+</table>
+
+Moreover, digits with a trailing<tt> x </tt>denote an extended 
+precision integer, and digits followed by an<tt> r </tt>followed by 
+further digits denote a rational number.  
+See <a href="dictg.htm">Section II G</a>. <br><br>
+
+For example,<tt> 2.3 </tt>denotes two and three-tenths and<tt> _2.3 </tt>
+denotes its negation; but<tt> _2j3 </tt>denotes a complex number with 
+real part<tt> _2 </tt>and imaginary part<tt> 3</tt> ,<tt> </tt><i>not</i> 
+the negation of the complex number<tt> 2j3</tt> .<tt> </tt>
+Furthermore, symbols at the same level of the hierarchy cannot be 
+used together:<tt> 1p2x3 </tt>is an ill-formed number.<br><br>
+
+The following lists illustrate the main points:<br>
+
+<pre>
+   2.3e2 2.3e_2 2j3
+230 0.023 2j3
+
+   2p1 1p_1
+6.28319 0.31831
+
+   1x2 2x1 1x_1
+7.38906 5.43656 0.367879
+
+   2e2j_2e2 2e2j2p1 2ad45 2ar0.785398
+200j_200 628.319j6.28319 1.41421j1.41421 1.41421j1.41421
+
+   16b1f 10b23 _10b23 1e2b23 2b111.111
+31 23 _17 203 7.875
+</pre>
+
+Negative integers following<tt> p </tt>and<tt> x </tt>indicate the use 
+of reciprocals.  For example,<tt> 2p_2 </tt>is two divided 
+by &pi; squared, 
+and<tt> 2x_2 </tt>is two divided by the square of Euler's number.<br>
+
+<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="ctrl.htm">&gt;&gt;</a>&nbsp;
+<a href="dconsf.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

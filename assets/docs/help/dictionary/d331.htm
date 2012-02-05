@@ -1,0 +1,190 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>;. Cut</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d332.htm">&gt;&gt;</a>&nbsp;
+<a href="d330.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=20%><b><font size=+2>Cut</font></b></td>
+<td align=center width=60%><font face="Courier New" size=+3>m;.n &nbsp;u;.n  &nbsp;_ 1/2 _</font></td>
+<td align=right  width=20%><b><font size=+2>Cut</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>u;.0 y </tt>applies<tt> u </tt>to<tt> y </tt>after reversing<tt> y </tt>
+along each axis; it is equivalent to<tt> (0 _1 */$y) u;.0 y</tt> .<br><br>
+
+The <i>fret</i><tt> 0{y </tt>(the leading item of<tt> y</tt>)<tt> </tt>marks 
+the start of an interval of items of<tt> y</tt> ;<tt> </tt>
+the phrase<tt> u;.1 y </tt>applies<tt> u </tt>to each such interval.  
+The phrase<tt> u;._1 y </tt>differs only in that frets are 
+excluded from the result.  
+In<tt> u;.2 </tt>and<tt> u;._2 </tt>the fret is the <i>last</i> item, 
+and marks the <i>ends</i> of intervals.<br><br>
+
+The monads<tt> u;.3 </tt>and<tt> u;._3 </tt>apply<tt> u </tt>to 
+tesselation by &ldquo;maximal cubes&rdquo;, that is, they are defined by 
+their dyadic cases using the left argument<tt> ($$y)$&lt;./$y</tt> . <br><br>
+
+<tt>m;.n y </tt>applies successive verbs from the gerund<tt> m </tt>
+to the cuts of<tt> y</tt> ,<tt> </tt>extending<tt> m </tt>cyclically
+as required.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x u;.0 y </tt>applies<tt> u </tt>to a rectangle or cuboid 
+of<tt> y </tt>with one vertex at the point in<tt> y </tt>
+indexed by<tt> v=:0{x</tt> ,<tt> </tt>and with the opposite vertex 
+determined as follows: the dimension is<tt> |1{x</tt> ,<tt> </tt>
+but the rectangle extends <i>back</i> from<tt> v </tt>along any 
+axis<tt> j </tt>for which the index<tt> j{v </tt>is negative. 
+Finally, the order of the selected items is reversed along each 
+axis<tt> k </tt>for which<tt> k{1{x </tt>is negative.  
+If<tt> x </tt>is a vector, it is treated as the matrix<tt> 0,:x</tt> .<br><br>
+
+The frets in the dyadic cases<tt> 1</tt> ,<tt> _1</tt> ,<tt> 2</tt> ,<tt> </tt>
+and<tt> _2 </tt>are determined by the<tt> 1</tt>s<tt> </tt>in boolean 
+vector<tt> x</tt> ;<tt> </tt>
+an empty vector<tt> x </tt>and non-zero<tt> #y </tt>
+indicates the entire of<tt> y</tt> .<tt> </tt>
+If<tt> x </tt>is the atom<tt> 0 </tt>or<tt> 1 </tt>it is treated 
+as<tt> (#y)#x</tt> .<tt> </tt>
+In general, boolean vector<tt> &gt;j{x </tt>
+specifies how axis<tt> j </tt>is to be cut, with an atom treated as
+<tt> (j{$y)#&gt;j{x</tt> .<br><br>
+
+<tt>u;.3 </tt>and<tt> u;._3 </tt>yield (possibly overlapping) 
+tesselations.<tt> x&nbsp;u;._3&nbsp;y </tt>applies<tt> u </tt>to each 
+<i>complete</i> rectangle of size<tt> |1{x </tt>beginning at 
+integer multiples of (each item of) the movement 
+vector<tt> 0{x</tt> ,<tt> </tt>with an infinite size being replaced
+by the signed length of the corresponding axis.
+As in<tt> u;.0</tt> ,<tt> </tt>reversal occurs along each axis for which 
+the size<tt> 1{x </tt>is negative.  The case of a list<tt> x </tt>
+is equivalent to<tt> 1,:x</tt> ,<tt> </tt>and therefore provides 
+a complete tesselation of size<tt> x</tt> .<tt> </tt>The case<tt> u;.3 </tt>
+differs in that shards of length less than<tt> |1{x </tt>are included.<br><br>
+
+<tt>x m;.n y </tt>applies successive verbs from the gerund<tt> m </tt>
+to the cuts of<tt> y</tt> ,<tt> </tt>extending<tt> m </tt>cyclically 
+as required.<br><br>
+
+The 0- and 3-cuts have a left rank of 2; the 1- and 2-cuts have a 
+left rank of 1.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   y=: 'worlds on worlds '
+   (&lt;;.2 y) ; ($;._2 y) ; (3 5$i.10) ; (+/ ;.1 (3 5$i.10))
++---------------------+-+---------+-----------+
+|+-------+---+-------+|6|0 1 2 3 4|5 7 9 11 13|
+||worlds |on |worlds ||2|5 6 7 8 9|0 1 2  3  4|
+|+-------+---+-------+|6|0 1 2 3 4|           |
++---------------------+-+---------+-----------+
+
+   1 0 1 0 0 &lt;;.1 i.5 7
++--------------------+
+|0 1 2  3  4  5  6   |
+|7 8 9 10 11 12 13   |
++--------------------+
+|14 15 16 17 18 19 20|
+|21 22 23 24 25 26 27|
+|28 29 30 31 32 33 34|
++--------------------+
+   ('';1 0 0 0 1 0 1) &lt;;.1 i.5 7
++-----------+-----+--+
+| 0  1  2  3| 4  5| 6|
+| 7  8  9 10|11 12|13|
+|14 15 16 17|18 19|20|
+|21 22 23 24|25 26|27|
+|28 29 30 31|32 33|34|
++-----------+-----+--+
+   ('';1) &lt;;.1 i.5 7
++--+--+--+--+--+--+--+
+| 0| 1| 2| 3| 4| 5| 6|
+| 7| 8| 9|10|11|12|13|
+|14|15|16|17|18|19|20|
+|21|22|23|24|25|26|27|
+|28|29|30|31|32|33|34|
++--+--+--+--+--+--+--+
+   (1 0 1 0 0;1 0 0 0 1 0 1) &lt;;.1 i.5 7
++-----------+-----+--+
+|0 1 2  3   | 4  5| 6|
+|7 8 9 10   |11 12|13|
++-----------+-----+--+
+|14 15 16 17|18 19|20|
+|21 22 23 24|25 26|27|
+|28 29 30 31|32 33|34|
++-----------+-----+--+
+
+   x=:1 _2,:_2 3 [ z=: i. 5 5
+   x ; (x ];.0 z) ; z
++-----+--------+--------------+
+| 1 _2|11 12 13| 0  1  2  3  4|
+|_2  3| 6  7  8| 5  6  7  8  9|
+|     |        |10 11 12 13 14|
+|     |        |15 16 17 18 19|
+|     |        |20 21 22 23 24|
++-----+--------+--------------+
+
+   (y=: a. {~ (a. i. 'a') + i. 4 4);(a=: 1 1 ,: 2 2)
++----+---+
+|abcd|1 1|
+|efgh|2 2|
+|ijkl|   |
+|mnop|   |
++----+---+
+
+   (&lt;;.3 y) ; ((($$y)$&lt;./$y)&lt;;.3 y) ; (a &lt;;.3 y) ; &lt;(a &lt;;._3 y)
++---------------+---------------+------------+----------+
+|+----+---+--+-+|+----+---+--+-+|+--+--+--+-+|+--+--+--+|
+||abcd|bcd|cd|d|||abcd|bcd|cd|d|||ab|bc|cd|d|||ab|bc|cd||
+||efgh|fgh|gh|h|||efgh|fgh|gh|h|||ef|fg|gh|h|||ef|fg|gh||
+||ijkl|jkl|kl|l|||ijkl|jkl|kl|l||+--+--+--+-+|+--+--+--+|
+||mnop|nop|op|p|||mnop|nop|op|p|||ef|fg|gh|h|||ef|fg|gh||
+|+----+---+--+-+|+----+---+--+-+||ij|jk|kl|l|||ij|jk|kl||
+||efgh|fgh|gh|h|||efgh|fgh|gh|h||+--+--+--+-+|+--+--+--+|
+||ijkl|jkl|kl|l|||ijkl|jkl|kl|l|||ij|jk|kl|l|||ij|jk|kl||
+||mnop|nop|op|p|||mnop|nop|op|p|||mn|no|op|p|||mn|no|op||
+|+----+---+--+-+|+----+---+--+-+|+--+--+--+-+|+--+--+--+|
+||ijkl|jkl|kl|l|||ijkl|jkl|kl|l|||mn|no|op|p||          |
+||mnop|nop|op|p|||mnop|nop|op|p||+--+--+--+-+|          |
+|+----+---+--+-+|+----+---+--+-+|            |          |
+||mnop|nop|op|p|||mnop|nop|op|p||            |          |
+|+----+---+--+-+|+----+---+--+-+|            |          |
++---------------+---------------+------------+----------+
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d332.htm">&gt;&gt;</a>&nbsp;
+<a href="d330.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,137 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Case Statements</title>
+
+</head><body><!--top jump start--><a href="miscellaneous.htm">&gt;&gt;</a>&nbsp;
+<a href="date_time.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>15A. Case Statements</h1>
+
+<P>If<tt> ag </tt>generates indices for a gerund<tt> ger</tt> ,<tt> </tt> 
+we will call<tt> ag </tt>an <I>agenda</I> function, 
+and the function<tt> ger@.ag </tt> a <I>case statement</I>. For example:</P>
+
+<pre>
+   ger=: f`g`h
+   ag=: #@$
+   case=: ger@.ag
+   f=: -: 
+   g=: +:
+   h=: *:
+   (case 3);(case 2 3 4 5);(case i.3 4)
++--------------------------+
+|1.5|4 6 8 10| 0  1   4   9|
+|   |        |16 25  36  49|
+|   |        |64 81 100 121|
++--------------------------+
+
+   f=: *:
+   (case 3);(case 2 3 4 5);(case i.3 4)
++------------------------+
+|9|4 6 8 10| 0  1   4   9|
+| |        |16 25  36  49|
+| |        |64 81 100 121|
++------------------------+</pre>
+
+<P>Certain agendas prove to be useful with a variety of gerunds: 
+for example, the <I>rank </I>used above, as well as various classifications 
+such as negative, zero, and positive; integral or fractional; 
+real or complex; numeric or character; boxed or open; and 
+the <I>depth </I>of boxing. Since indices may be negative, 
+the result of an agenda may be negative; thus the 
+case <tt>f`g`h@.*</tt> applies <tt>f</tt> 
+if the argument is zero, <tt>g</tt> if it is positive, 
+and <tt>h</tt> if it is negative.  </P>
+
+<P>Since an agenda such as the hook <tt>=&lt;.</tt> 
+(which tests for fractional or integral) might invoke a 
+domain error (when the argument is character or boxed), 
+it is often useful to extend an agenda to produce a result in such a case. 
+If this result is <tt>_1</tt>, the corresponding function in the gerund 
+(perhaps <tt>h=: 'ERROR'&quot;_</tt>) may be simply appended to the normal cases. 
+Thus, the test for integral may be defined 
+(using <I>adverse</I>) as <tt>(=&lt;.) :: _1:</tt> 
+For example:</P>
+
+<pre>
+   F=: (=&lt;.) :: _1:
+   F&quot;0 x=: 0.5 _2 2
+0 1 1
+ 
+   F 'abcd'
+_1</pre>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0=: ~. ,. #/.~ </tt></TD><TD width=60%>Nub and count</TD></TR>
+  <TR><TD><tt>m1=: ({.,#)/.~</tt></TD>	<TD>Nub and count</TD></TR>
+  <TR><TD><tt>a2=: et=: :: _1:</tt></TD>	<TD>Error in tail position</TD></TR>
+  <TR><TD><tt>m3=: I=: (-:&lt;.)et</tt></TD>	<TD>Integral</TD></TR>
+  <TR><TD><tt>m4=: C=: -.@(-:+) et</tt></TD>	<TD>Complex</TD></TR>
+  <TR><TD><tt>a5=: ep=: :: _2:</tt></TD>	<TD>Error in penultimate position</TD></TR>
+  <TR><TD><tt>m6=: S=: *ep</tt></TD>	<TD>Signum test with error in penultimate</TD></TR>
+  <TR><TD><tt>m7=: B=: -.@(-:&gt;) :: 0:</tt></TD>	<TD>Boxed </TD></TR>
+  <TR><TD><tt>m8=: R=: #@$</tt></TD>	<TD>Rank</TD></TR>
+</TABLE>
+
+
+<P>An &ldquo;or&rdquo; over an agenda (that is, 
+applying a given function for any one of several 
+cases distinguished by the agenda) can be achieved by placing 
+the same function in several places in the gerund. 
+Moreover, agendas may be used in combination, 
+as illustrated below:</P>
+
+<pre>   c=: co`cb@.B			Executes co if open; cb if boxed
+     co=: -@|`+@.C			Minus magnitude if real; conjugate 
+     cb=: ]`(|.&amp;.&gt;)`(|:&amp;.&gt;)@.(R@&gt;)	Reverse if opened is list; transpose
+
+   c &lt;i. 2 4			if opened is a table
+   cb &lt;i.2 4			The case chosen by the agenda B
++---+
+|0 4|
+|1 5|
+|2 6|
+|3 7|
++---+
+
+   c 3j4 5 6j7			(Open) complex argument
+3j_4 5 6j_7			Conjugate
+
+   co 3j4 5 6j7			The case chosen by the agenda B
+3j_4 5 6j_7</pre>
+
+<P>The complete definition of<tt> c </tt>can be seen by <i>fixing</i> it:</P>
+
+<pre>   c f.
+-@|`+@.(-.@(-: +) ::(_1:))`(]`(|.&amp;.&gt;)`(|:&amp;.&gt;)@.(#@$@&gt;))@.(-.@(-: &gt;) ::0:)</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="miscellaneous.htm">&gt;&gt;</a>&nbsp;
+<a href="date_time.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

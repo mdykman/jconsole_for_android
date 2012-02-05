@@ -1,0 +1,50 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Single atom array</title>
+
+</head><body><!--top jump start--><a href="verb_arguments.htm">&gt;&gt;</a>&nbsp;
+<a href="empty_array.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Single atom array</h1>
+An array with a single atom is referred to as a singleton. All singletons with the same atom display the same way. However, the fact that they have different ranks affects how verbs act on them. This can be a pitfall for beginners. It is important to remember that if it displays like an atom, but does not behave like one, then check its rank.<br>
+
+<pre>
+   atom =. 5
+   list =. 1 $ 5
+   atom
+5
+   list	NB. list looks like atom
+5
+   atom + 23 23 23
+28 28 28
+   list + 23 23 23	NB. but does not behave like atom
+¦length error
+¦   list    +23 23 23
+   # $ atom	NB. rank of atom is 0
+0
+   # $ list	NB. rank of list is 1
+1</pre>
+<!--bottom jump start--><hr><a href="verb_arguments.htm">&gt;&gt;</a>&nbsp;
+<a href="empty_array.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

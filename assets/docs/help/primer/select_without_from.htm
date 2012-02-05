@@ -1,0 +1,107 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Selecting without from</title>
+
+</head><body><!--top jump start--><a href="cut.htm">&gt;&gt;</a>&nbsp;
+<a href="amend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Selecting without from</h1>
+Some situations where you could use <font face=courier size=-1>{</font> (from) are so common that they have their own primitives. These primitives are not dealt with in any detail here, and are mentioned so that you are aware of them and can look up their definitions and make use of them in your own work. They are shown here by example.<br>
+<br>
+The monad <font face=courier size=-1>{.</font> (head) takes the first item of its argument and is similar to <font face=courier size=-1>{</font> with a left argument of <font face=courier size=-1>0</font>.<br>
+
+<pre>   {. 5 6 7
+5
+   {. i. 3 4
+0 1 2 3</pre>
+The monad <font face=courier size=-1>{:</font> (tail) takes the last item of its argument and is similar to <font face=courier size=-1>{</font> with a left of <font face=courier size=-1>_1</font> (oh yes, forgot to mention earlier that negative indexes simply index from the end of the axis).<br>
+
+<pre>   {: 5 6 7
+7
+   {: i. 3 4
+8 9 10 11</pre>
+The monad <font face=courier size=-1>}.</font> (behead) drops the first item of its argument.<br>
+
+<pre>   }. 5 6 7
+6 7
+   }. i. 3 4
+4 5  6  7
+8 9 10 11</pre>
+The monad <font face=courier size=-1>}:</font> (curtail) drops the last item of its argument.<br>
+
+<pre>   }: 5 6 7
+5 6
+   }: i. 3 4
+0 1 2 3
+4 5 6 7</pre>
+The dyad <font face=courier size=-1>{.</font> (take) takes the indexes from axes as indicated by the left argument.<br>
+
+<pre>   3 {. i. 8
+0 1 2
+   2 3 {. i. 3 4
+0 1 2
+4 5 6
+   2 {. i. 3 4
+0 1 2 3
+4 5 6 7</pre>
+The dyad <font face=courier size=-1>}.</font> (drop) drops the indexes from axes as indicated by the left argument.<br>
+
+<pre>   1 }. 2 3 4
+3 4
+   1 2 }. i. 3 4
+ 6  7
+10 11</pre>
+An interesting way to think of <font face=courier size=-1>{. {: }.</font> and <font face=courier size=-1>}:</font> is that they are indexing corners of the array.<br>
+<br>
+One capability that the dyad <font face=courier size=-1>{.</font> has that is not so directly related to from is it can create an array that is larger than the selected corner. It does this by filling in with 0, ' ', or a: as appropriate.<br>
+
+<pre>
+   5 {. 5 6 7
+5 6 7 0 0
+   4 5 {. i. 2 3
+0 1 2 0 0
+3 4 5 0 0
+0 0 0 0 0
+0 0 0 0 0
+   5 {. 'abc'   
+abc  
+   &lt;"0 [ 5 {. 'abc'	NB. make sure they are there
++-+-+-+-+-+
+¦a¦b¦c¦ ¦ ¦
++-+-+-+-+-+
+   7 {. (&lt;"0) 5 {. 'abc'	NB. fill with a:
++-+-+-+-+-+++
+¦a¦b¦c¦ ¦ ¦¦¦
++-+-+-+-+-+++ </pre>
+The dyad <font face=courier size=-1>#</font> (copy) is also fairly directly related to from. Its left argument is a list of how many times to repeat the corresponding item from the right argument.<br>
+
+<pre>   3 2 1 2 3 # 'abcde'
+aaabbcddeee</pre>
+The above is equivalent to the following:<br>
+
+<pre>   0 0 0 1 1 2 3 3 4 4 4 { 'abcde'
+aaabbcddeee</pre>
+<!--bottom jump start--><hr><a href="cut.htm">&gt;&gt;</a>&nbsp;
+<a href="amend.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

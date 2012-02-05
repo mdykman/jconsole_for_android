@@ -1,0 +1,53 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Scattered indexing</title>
+
+</head><body><!--top jump start--><a href="amend.htm">&gt;&gt;</a>&nbsp;
+<a href="from_boxed_indexes.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>From (scattered indexing)</h1>
+If the left argument is a singleton, it is opened and its items are indexes along successive axes. <br>
+
+<pre>      (&lt;0 2 ; 2 3) { m
+ 2  3
+10 11</pre>
+What if the left argument wasn't a singleton?<br>
+
+<pre>   (0 2 ; 2 3) { m
+2 11</pre>
+What is going on here? Nothing special, as this is just your old friend rank. The dyad <font face=courier size=-1>{</font> has a left rank of <font face=courier size=-1>0</font> and a right rank of <font face=courier size=-1>_</font> . This means that the left argument is taken as 0-cells and the right argument is taken in its entirety. Visually:<br>
+<br>
+
+<pre>(&lt;0 2)  (first left cell)  { m   gives 2
+(&lt;2 3)  (next left cell)   { m   gives 11</pre>
+The result is assembled from the <font face=courier size=-1>2</font> and <font face=courier size=-1>11 </font>partial results.<br>
+<br>
+This is called scattered indexing.<br>
+
+<pre>   (0 0 ; 1 1 ; 2 2) { m	   NB. scatter index a diagonal
+0 5 10  
+</pre>
+<!--bottom jump start--><hr><a href="amend.htm">&gt;&gt;</a>&nbsp;
+<a href="from_boxed_indexes.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

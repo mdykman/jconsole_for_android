@@ -1,0 +1,81 @@
+ZGGGLM solves a general Gauss-Markov linear model (GLM) problem:
+
+        minimize || y ||_2   subject to   d = A*x + B*y
+
+            x
+
+
+where A is an N-by-M matrix, B is an N-by-P matrix, and d is a given
+N-vector. It is assumed that M <= N <= M+P, and
+
+
+           rank(A) = M    and    rank( A B ) = N.
+
+
+Under these assumptions, the constrained equation is always
+consistent, and there is a unique solution x and a minimal 2-norm
+solution y, which is obtained using a generalized QR factorization of
+A and B.
+
+
+In particular, if matrix B is square nonsingular, then the problem GLM
+is equivalent to the following weighted linear least squares problem
+
+
+             minimize || inv(B)*(d-A*x) ||_2
+
+                 x
+
+
+where inv(B) denotes the inverse of B.
+
+
+Arguments
+=========
+
+N       (input) INTEGER
+        The number of rows of the matrices A and B.  N >= 0.
+
+M       (input) INTEGER
+        The number of columns of the matrix A.  0 <= M <= N.
+
+P       (input) INTEGER
+        The number of columns of the matrix B.  P >= N-M.
+
+A       (input/output) COMPLEX*16 array, dimension (LDA,M)
+        On entry, the N-by-M matrix A.
+        On exit, A is destroyed.
+
+LDA     (input) INTEGER
+        The leading dimension of the array A. LDA >= max(1,N).
+
+B       (input/output) COMPLEX*16 array, dimension (LDB,P)
+        On entry, the N-by-P matrix B.
+        On exit, B is destroyed.
+
+LDB     (input) INTEGER
+        The leading dimension of the array B. LDB >= max(1,N).
+
+D       (input/output) COMPLEX*16 array, dimension (N)
+        On entry, D is the left hand side of the GLM equation.
+        On exit, D is destroyed.
+
+X       (output) COMPLEX*16 array, dimension (M)
+
+
+Y       (output) COMPLEX*16 array, dimension (P)
+        On exit, X and Y are the solutions of the GLM problem.
+
+WORK    (workspace/output) COMPLEX*16 array, dimension (LWORK)
+        On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+
+LWORK   (input) INTEGER
+        The dimension of the array WORK. LWORK >= max(1,N+M+P).
+        For optimum performance, LWORK >= M+min(N,P)+max(N,P)*NB,
+        where NB is an upper bound for the optimal blocksizes for
+        ZGEQRF, CGERQF, ZUNMQR and CUNMRQ.
+
+INFO    (output) INTEGER
+        = 0:  successful exit.
+
+        < 0:  if INFO = -i, the i-th argument had an illegal value.

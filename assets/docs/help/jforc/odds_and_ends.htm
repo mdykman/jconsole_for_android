@@ -1,0 +1,2437 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Odds And Ends</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="performance_measurement__tip.htm">&gt;&gt;</a>&nbsp;
+<a href="graphics.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><a
+name="_Toc191734547"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>34. </span></span><![endif]>Odds And Ends</a></span></span></h1>
+
+<p class=MsoBodyText>To keep my discussion from wandering too far afield I left
+out a number of useful features of J.&nbsp; I
+will discuss some of them briefly here.</p>
+
+<p class=Section><a name="_Toc5414658"></a><a name="_Toc5414488"></a><a
+name="_Toc1896279"></a><a name="_Toc191734548"><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>Startup
+and Configuration</span></span></span></a><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>The
+Edit|Configure menu allows you to change the interpreter's settings.<span
+style='mso-spacerun:yes'>&nbsp; </span>Look through the tabs to see what is
+available.&nbsp; Note especially the Folders
+tab, which lets you specify the folders Project Manager and Find In Files will
+use to organize your work.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>In
+addition to the configuration variables, you can have startup commands executed
+whenever J starts, or you can specify a script in the command line that will
+run after J has been initialized.&nbsp; The
+startup sequence is described in detail here.&nbsp;
+If you just want to run some startup commands, jump to section 4.4.2
+which describes the user startup file.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l4 level1 lfo17;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>The command line is parsed into words.<span
+style='mso-spacerun:yes'>&nbsp; </span>The words are assigned to the variable </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>ARGV_z_</span></span>.&nbsp;
+The first word is the name of the <span class=Definition>J executable</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The subsequent words, the <span
+class=Definition>parameters</span>, tell J what to do.<span
+style='mso-spacerun:yes'>&nbsp; </span>The first parameter that is not a <span
+class=Definition>switch</span> is the name of the <span class=Definition>command
+script</span> which is the J script you want to execute.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l4 level1 lfo17;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>If the first parameter is the </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-jijx</span></span> switch, the normal J IDE window, where
+you type commands and see them executed, will not be created.<span
+style='mso-spacerun:yes'>&nbsp; </span>You must have a fully standalone
+application.&nbsp; Except for creating the IDE
+window, the J startup sequence will be followed as described below, and the </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-jprofile</span></span> switch will be honored.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l4 level1 lfo17;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>If the command line contains the </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-jprofile</span></span> switch, you are taking full control
+of J's startup. Your command script will be executed <b style='mso-bidi-font-weight:
+normal'>instead of</b> J's normal start sequence.<span
+style='mso-spacerun:yes'>&nbsp; </span>Make sure you get it right!<span
+style='mso-spacerun:yes'>&nbsp; </span>If the command script is omitted, J will run </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~system\extras\util\minijx.ijs</span></span> which will give
+you something to start with.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l4 level1 lfo17;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>If you don't specify the </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-jprofile</span></span> switch, you get J's <span
+class=Definition>normal startup sequence</span> which winds up by executing the
+command script. &nbsp;The normal startup
+sequence is contained in the script </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~bin\profile.ijs</span></span>, which goes through the
+following steps:</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.55in;text-indent:-.3in;mso-list:l4 level2 lfo17;
+tab-stops:.25in list .55in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><![endif]>The
+variable </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>SYSTEMFOLDERS_j_</span></span>
+is created, containing the paths J uses to get to your home directory, the
+system, etc.&nbsp; You can look at this
+variable after J has started to see what folders are defined.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want to change these directories, you
+do so by creating the script </span></span></span><span style='mso-bookmark:
+_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:
+_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~bin\profilex.ijs</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Use </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~bin\profilex_template.ijs</span></span> as the template for
+creating your custom script.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.55in;text-indent:-.3in;mso-list:l4 level2 lfo17;
+tab-stops:.25in list .55in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><![endif]>Normal startup continues
+by running </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~system\extras\util\boot.ijs</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This file begins by creating any missing
+directories referred to in </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>SYSTEMFOLDERS</span></span>;
+then it loads the J system files </span></span></span><span style='mso-bookmark:
+_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:
+_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sysenv.ijs</span></span>,</span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span style='font-size:10.0pt;font-family:
+"Courier New"'> </span></span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>stdlib.ijs</span></span>,</span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span style='font-size:10.0pt;font-family:
+"Courier New"'> </span></span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>colib.ijs</span></span>,</span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span style='font-size:10.0pt;font-family:
+"Courier New"'> </span>and </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>break.ijs</span></span>
+from</span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+style='font-size:10.0pt;font-family:"Courier New"'> </span></span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~system\main</span></span>.&nbsp;
+See below under &quot;Seeing What Scripts Have Been Loaded&quot; for how
+to get the complete list of scripts that are executed.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.55in;text-indent:-.3in;mso-list:l4 level2 lfo17;
+tab-stops:.25in list .55in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><![endif]>Next,
+if the J executable was Jconsole, the console window is created and the console
+startup file </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~config/startup_console.ijs</span></span>
+is executed.&nbsp; User customization is not
+performed.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.55in;text-indent:-.3in;mso-list:l4 level2 lfo17;
+tab-stops:.25in list .55in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><![endif]>If
+the J executable was not Jconsole, the user customization steps are performed:</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.85in;text-indent:-.35in;mso-list:
+l4 level3 lfo17;tab-stops:.25in .75in list 1.0in left 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.4.1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>The J IDE is loaded and the <span class=Definition>configuration
+files</span> are executed.&nbsp; The
+configuration files are: (1) the system configuration file </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~system\extras\config\stdcfg.ijs</span></span>, (2) the user
+configuration file </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~config\config.ijs</span></span>,
+(3) the addons configuration file </span></span></span><span style='mso-bookmark:
+_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:
+_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~addons\config\config.ijs</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>These files are applied in order, with a
+later file's setting overriding any one from an earlier file.<span
+style='mso-spacerun:yes'>&nbsp; </span>The user configuration file is the one that
+holds the settings from the Edit|Configure menu.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.85in;text-indent:-.35in;mso-list:
+l4 level3 lfo17;tab-stops:.25in .75in list 1.0in left 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.4.2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>After configuration, the <span class=Definition>user
+startup file</span> is executed.&nbsp; This
+file is named in the Edit|Configure|Startup menu, where a default is given that
+you may override.&nbsp; This file is where you
+put the definitions that you want executed every time J starts.<span
+style='mso-spacerun:yes'>&nbsp; </span>The file is executed in the </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>base</span></span> locale.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.55in;text-indent:-.3in;mso-list:l4 level2 lfo17;
+tab-stops:.25in list .55in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>4.5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><![endif]>Finally,
+the command script is </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>load</span></span>ed
+if there is one.&nbsp; Normally this is a
+file, but if the <span class=Definition>inline script indicator</span> </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-js</span></span> is given in place of the name of the
+command script, the words of </span></span></span><span style='mso-bookmark:
+_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:
+_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>ARGV_z_</span></span>
+following the </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-js</span></span>
+are taken to be lines of J code, and they are put into the verb </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>ARGVVERB</span></span> which is used as the command script.<span
+style='mso-spacerun:yes'>&nbsp; </span>The command script is executed in the </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>base</span></span> locale.&nbsp;
+If the command script is omitted, nothing is run.</span></span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l4 level1 lfo17;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><![if !supportLists]><span style='mso-list:
+Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>When the startup sequence finishes, J may wait for user
+input.&nbsp; This input may come from a form,
+or, if </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-jijx</span></span>
+was not specified, from the IDE window; but if neither of these sources of
+input exists, the interpreter will exit with no prompt.<span
+style='mso-spacerun:yes'>&nbsp; </span>If your program expects input from another
+source, such as a timer or socket interrupt, you need to display a dummy form
+to keep J from terminating.</span></span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><a
+name="_Toc191734549">Public </a><span
+  style='mso-bookmark:_Toc191734549'>Nam</span><span
+style='mso-bookmark:_Toc191734549'>es</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>The noun
+</span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>PUBLIC_j_</span></span>
+defines short names and the corresponding full form.<span
+style='mso-spacerun:yes'>&nbsp; </span>The short names may be used in </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>open</span></span> or </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>load</span></span> verbs.&nbsp;
+Items of </span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>PUBLIC_j_</span></span>
+are lines of a table:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 {. PUBLIC_j_</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>+--------+-----------------------------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>|afm<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp; </span>|~system\classes\plot\afm.ijs<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>+--------+-----------------------------------+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>|bigfiles|~system\packages\files\bigfiles.ijs|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>+--------+-----------------------------------+</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>If you
+want to define your own names, you may add them to </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>PUBLIC_j_</span></span> in your startup file.<span
+style='mso-spacerun:yes'>&nbsp; </span>The easiest way to do this is to use the </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>buildpublic_j_</span></span> verb:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>buildpublic_j_ 0 : 0</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>langexten<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>C:\myfiles\langexten</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>utils<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>C:\myfiles\utils</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>)</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>After
+executing the lines above, I can open one of my files simply by typing</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>open 'langexten'</span></span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><a
+name="_Toc191734550">Seeing What Scripts Have Been Loaded</a></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>The foreign
+</span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4!:3</span></span>
+gives you a log of all the scripts that have been loaded since startup.<span
+style='mso-spacerun:yes'>&nbsp; </span>You can use this at any time.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you run </span></span></span><span
+style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:_Toc5414488'><span
+style='mso-bookmark:_Toc5414658'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4!:3</span></span> immediately after startup, it will show
+you the sequence of scripts run at startup:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>4!:3''</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>+-----------------------+---------------------------...</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>|C:\j602\bin\profile.ijs|C:\j602\system\extras\util\...</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>+-----------------------+---------------------------...</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>That's
+a lot of files.&nbsp; If we open the boxes we
+can see the list more easily:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&gt; 4!:3''</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\bin\profile.ijs
+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\extras\util\boot.ijs
+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\main\sysenv.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\main\stdlib.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\main\colib.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\main\break.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\main\winlib.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\extras\util\jadefull.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\Documents
+\Henry Rich\j602-user\config\winpos.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\extras\config\scripts.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\extras\util\jijs.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\extras\util\cfgread.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\extras\config\colordef.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\j602\system\extras\config\stdcfg.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>C:\Documents
+\Henry Rich\j602-user\config\config.ijs</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'>...</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896279'><span style='mso-bookmark:
+_Toc5414488'><span style='mso-bookmark:_Toc5414658'><a name="_Toc191734551">Dyad
+</a></span></span></span><span style='mso-bookmark:_Toc1896279'><span
+style='mso-bookmark:_Toc5414488'><span style='mso-bookmark:_Toc5414658'><span
+style='mso-bookmark:_Toc191734551'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>#</span></span> Revisited</span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;# dyad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;#&nbsp;y</span></span>
+does not require that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+be a Boolean list.&nbsp; The items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+actually tell how many copies of the corresponding item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> to include in
+the result:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 0 2 # 5 6
+7 8</p>
+
+<p class=Jcodemultiline>5 6 6 8 8</p>
+
+<p class=BodyTextnoleader>Boolean <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, used for simple selection, is a special
+case.&nbsp; If an item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is complex, the
+imaginary part tells how many cells of fill to insert after making the copies
+of the item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The fill atom is the usual <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'&nbsp;'</span></span>,
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a:</span></span>
+depending on the type of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, but the fit conjunction <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>!.f</span></span> may be used to
+specify <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+as the fill:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1j2 1 0j1 2 #
+5 6 7 8</p>
+
+<p class=Jcodemultiline>5 0 0 6 0 8 8</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1j2 1 0j1 2
+(#!.99) 5 6 7 8</p>
+
+<p class=Jcodemultiline>5 99 99 6 99 8 8</p>
+
+<p class=MsoBodyText>Finally, a scalar <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is replicated to
+the length of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is a good way to take all items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>,
+or no items if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734552"></a><a name="_Toc5414659"></a><a
+name="_Toc5414489"></a><a name="_Toc1896280"><span style='mso-bookmark:_Toc5414489'><span
+style='mso-bookmark:_Toc5414659'><span style='mso-bookmark:_Toc191734552'>Boxed
+words to string: Monad </span></span></span></a><span style='mso-bookmark:_Toc1896280'><span
+style='mso-bookmark:_Toc5414489'><span style='mso-bookmark:_Toc5414659'><span
+style='mso-bookmark:_Toc191734552'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>;:^:_1</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;;\:^\:_1 monad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;:^:_1&nbsp;y</span></span>
+converts <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+from a list of boxed strings to a single character string with spaces between
+the boxed strings.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ;:^:_1 ('a';'list';'of';'words')</p>
+
+<p class=Jcodemultiline>a list of words</p>
+
+<p class=Section><a name="_Toc191734553"></a><a name="_Toc5414660"></a><a
+name="_Toc5414490"></a><a name="_Toc1896281"><span style='mso-bookmark:_Toc5414490'><span
+style='mso-bookmark:_Toc5414660'><span style='mso-bookmark:_Toc191734553'>Spread:
+</span></span></span></a><span style='mso-bookmark:_Toc1896281'><span
+style='mso-bookmark:_Toc5414490'><span style='mso-bookmark:_Toc5414660'><span
+style='mso-bookmark:_Toc191734553'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>#^:_1</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Spread verb #^\:_1&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;#^\:_1 dyad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;#^:_1&nbsp;y</span></span>
+creates an array with the items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> in the positions corresponding to nonzero
+items of the Boolean vector <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, and fills in the other items.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/x</span></span> must equal <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#y&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 1 0 0 1
+#^:_1 'abc'</p>
+
+<p class=Jcodemultiline>ab&nbsp; c</p>
+
+<p class=MsoBodyText>You can specify a fill atom with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>!.&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 1 0 0 1 #^:_1!.'x'&nbsp;'abc'</p>
+
+<p class=Jcodemultiline>abxxc</p>
+
+<p class=Section><a name="_Toc191734554"></a><a name="_Toc5414661"></a><a
+name="_Toc5414491"></a><a name="_Toc1896282"><span style='mso-bookmark:_Toc5414491'><span
+style='mso-bookmark:_Toc5414661'><span style='mso-bookmark:_Toc191734554'>Choose
+From Lists Item-By-Item: monad </span></span></span></a><span style='mso-bookmark:
+_Toc1896282'><span style='mso-bookmark:_Toc5414491'><span style='mso-bookmark:
+_Toc5414661'><span style='mso-bookmark:_Toc191734554'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>m}</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;modification in place&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m} monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Suppose you have two arrays <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+and a Boolean list <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>,
+and you want to create a composite list from <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+using each item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+to select the corresponding item of either <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> (if the item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>)
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+(if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>You could simply write</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; m {&quot;_1 a
+,. b</p>
+
+<p class=BodyTextnoleader>and have the answer.&nbsp;
+There's nothing wrong with that, but J has a little doodad that is
+faster and uses less space, as long as you want to assign the result to a
+name.&nbsp; You write</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; <i>name</i> =.
+m} a ,: b</p>
+
+<p class=BodyTextnoleader>(assignment with <span class=Jcode><span
+style='font-family:"Times New Roman";mso-bidi-font-weight:bold'>=:</span></span>
+works too).&nbsp; This form does not create
+the intermediate result from dyad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>,:&nbsp;</span></span>.&nbsp;
+If <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>name</span></i></span>
+is the same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>,
+the whole operation is done in-place.</p>
+
+<p class=MsoBodyText>More than two arrays may be merged this way, using the
+form</p>
+
+<p class=Jcodemultiline><i>name</i> =. m} a , b , ... ,: c</p>
+
+<p class=BodyTextnoleader>in which each item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m</span></span> selects from one
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>,
+..., <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>c&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The operation is not done in-place but it
+avoids forming the intermediate result.</p>
+
+<p class=Section><a name="_Toc191734555"></a><a name="_Toc5414663"></a><a
+name="_Toc5414493"></a><a name="_Toc1896284"><span style='mso-bookmark:_Toc5414493'><span
+style='mso-bookmark:_Toc5414663'><span style='mso-bookmark:_Toc191734555'>Recursion
+with </span></span></span></a><span style='mso-bookmark:_Toc1896284'><span
+style='mso-bookmark:_Toc5414493'><span style='mso-bookmark:_Toc5414663'><span
+style='mso-bookmark:_Toc191734555'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>$:</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc191734555'> and Memoization with </span><span
+style='mso-bookmark:_Toc191734555'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>M.</span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;recursion&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;$\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->In tacit verbs, recursion can
+be performed elegantly using the verb <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$:</span></span>, which stands for the longest verb-phrase
+it appears in (that is, the largest anonymous verb, created by parsing the
+sentence containing the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$:</span></span>, whose execution resulted in executing the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$:</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Recursion is customarily demonstrated with
+the factorial function, which we can write as:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; factorial =:
+(* factorial@&lt;:) ^: (1&amp;&lt;)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; factorial 4</p>
+
+<p class=Jcodemultiline>24</p>
+
+<p class=BodyTextnoleader><i>factorial</i>(<i>n</i>) is defined as <i>n</i>*<i>factorial</i>(<i>n</i>-1),
+except that <i>factorial</i>(1) is 1.&nbsp;
+Here we just wrote out the recursion by referring to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>factorial</span></span> by
+name.&nbsp; Using <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>$:</span></span>, we can recur
+without a name:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (* $:@&lt;:)
+^: (1&amp;&lt;) 4</p>
+
+<p class=Jcodemultiline>24</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$:</span></span> stands for the whole verb containing the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$:</span></span>,
+namely <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(*&nbsp;$:@&lt;:)&nbsp;^:&nbsp;(1&amp;&lt;)&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>Recursive verbs often benefit from <span class=Definition>memoization</span>,
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;memoization&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot; M\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->which is the technique of
+remembering the operands to a function and the results they produced, and then,
+if the function is later invoked with identical operands, returning the saved
+results rather than recomputing them.&nbsp;
+The technique is obviously applicable only to pure functions that have
+no side effects and whose result is completely specified by the operands.<span
+style='mso-spacerun:yes'>&nbsp; </span>(In the cave paintings associated with the
+ancient culture known to archaeologists as <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>PL/I</span></span>, such a
+function was indicated
+with the rune <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>reducible</span></span>).</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;M.</span></span>
+is a verb identical to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span>, but memoized.<span
+style='mso-spacerun:yes'>&nbsp; </span>When the memoized verb is executed, the
+result of a previous evaluation with the same operands may be returned.<span
+style='mso-spacerun:yes'>&nbsp; </span>Whether a previous result will in fact be
+returned depends on the implementation of the interpreter.<span
+style='mso-spacerun:yes'>&nbsp; </span>As of J6.02, the interpreter remembers only
+small nonnegative integral operands.</p>
+
+<p class=MsoBodyText>The memoization table is initialized when the phrase <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;M.</span></span>
+is parsed.&nbsp; This means that memoization
+is ineffective if a sentence is parsed more than once:</p>
+
+<p class=Jcodemultiline>for_i. 3 2 1 do. u&nbsp;M. i&nbsp;end.</p>
+
+<p class=BodyTextnoleader>will not be memoized because <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;M.</span></span> is
+parsed each time it is executed.&nbsp;
+However, in each of the forms</p>
+
+<p class=Jcodemultiline><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>mu =: u&nbsp;M.<o:p></o:p></span></span></p>
+
+<p class=Jcodemultiline><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>for_i. 3 2 1 do. mu i end.<o:p></o:p></span></span></p>
+
+<p class=BodyTextnoleader>and</p>
+
+<p class=Jcodemultiline>u&quot;0 M. 3 2 1</p>
+
+<p class=BodyTextnoleader>the verb will be memoized.</p>
+
+<p class=Section><a name="_Toc191734556"></a><a name="_Toc5414664"></a><a
+name="_Toc5414494"></a><a name="_Toc1896285"><span style='mso-bookmark:_Toc5414494'><span
+style='mso-bookmark:_Toc5414664'><span style='mso-bookmark:_Toc191734556'>Make
+a Table: Adverb dyad </span></span></span></a><span style='mso-bookmark:_Toc1896285'><span
+style='mso-bookmark:_Toc5414494'><span style='mso-bookmark:_Toc5414664'><span
+style='mso-bookmark:_Toc191734556'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u/</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Table adverb /&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u/ dyad&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u/&nbsp;y</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&quot;(lu,_)&nbsp;y</span></span>
+where <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>lu</span></span>
+is the left rank of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Thus, each cell of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> individually,
+and the entire <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+are supplied as operands to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>The definition is simplicity itself, and yet many J
+programmers stumble learning it.&nbsp; I think
+the problem comes from learning dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u/</span></span> by the example
+of a multiplication table.</p>
+
+<p class=MsoBodyText>The key is to note that each <b>cell</b> of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is applied to the entire <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>: cell, not item or atom.<span
+style='mso-spacerun:yes'>&nbsp; </span>The rank of a cell depends on the left rank
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The multiplication table comes from a verb
+with rank 0:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 2 3 */ 1 2 3</p>
+
+<p class=Jcodemultiline>1 2 3</p>
+
+<p class=Jcodemultiline>2 4 6</p>
+
+<p class=Jcodemultiline>3 6 9</p>
+
+<p class=MsoBodyText>You can control the result by specifying the rank of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (i. 2 2) ,&quot;1/
+8 9</p>
+
+<p class=Jcodemultiline>0 1 8 9</p>
+
+<p class=Jcodemultiline>2 3 8 9</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (i. 2 2) ,&quot;0
+_/ 8 9</p>
+
+<p class=Jcodemultiline>0 8 9</p>
+
+<p class=Jcodemultiline>1 8 9</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>2 8 9</p>
+
+<p class=Jcodemultiline>3 8 9</p>
+
+<p class=MsoBodyText>These results follow directly from the definition of
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>fndisplay</span></span> shows the details:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defverbs 'comma'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (i. 2 2) comma&quot;1/
+8 9</p>
+
+<p class=Jcodemultiline>+---------------+---------------+</p>
+
+<p class=Jcodemultiline>|(0 1) comma 8 9|(2 3) comma 8 9|</p>
+
+<p class=Jcodemultiline>+---------------+---------------+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (i. 2 2) comma&quot;0
+_/ 8 9</p>
+
+<p class=Jcodemultiline>+-----------+-----------+</p>
+
+<p class=Jcodemultiline>|0 comma 8 9|1 comma 8 9|</p>
+
+<p class=Jcodemultiline>+-----------+-----------+</p>
+
+<p class=Jcodemultiline>|2 comma 8 9|3 comma 8 9|</p>
+
+<p class=Jcodemultiline>+-----------+-----------+</p>
+
+<p class=Section><a name="_Toc5414665"></a><a name="_Toc5414495"></a><a
+name="_Toc1896286"></a><a name="_Toc191734557"><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>Cartesian
+Product: Monad </span></span></span></a><span style='mso-bookmark:_Toc191734557'><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>{</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Cartesian product&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;{ monad&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>The <span
+class=Definition>cartesian product</span> </span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>x</span></span></span><span style='mso-bookmark:
+_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:
+_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+of two sets </span></span></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span></span></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is the set of all combinations (<i>a,b</i>) where <i>a</i> is an element of </span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <i>b</i> is an element of </span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>&nbsp;.&nbsp;
+The cartesian product can be written in elementary J as </span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>,&quot;_1&nbsp;_<span style='mso-bidi-font-style:italic'>&quot;<i>_</i></span>&nbsp;_1</span></span>
+(or, if the items have rank 0, by the table adverb </span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>,&quot;0/</span></span>), as seen in this example where we
+box each result:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>'io' <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&lt;@,&quot;_1&nbsp;_&quot;_&nbsp;_1</span></span></span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";font-weight:normal'> </span></span>'nfd'</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>+--+--+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>|in|on|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>+--+--+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>|if|of|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>+--+--+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>|id|od|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>+--+--+</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'>J has a
+verb to produce the cartesian product of any number of sets.<span
+style='mso-spacerun:yes'>&nbsp; </span>Monad</span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&nbsp;{</span></span> takes a list of boxes </span></span></span><span
+style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:_Toc5414495'><span
+style='mso-bookmark:_Toc5414665'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, where each box contains a set, and produces
+the cartesian product of the <b>atoms</b> of all the sets, with each
+combination boxed.&nbsp; The leading atom of
+the first set is concatenated with each atom of the second set in turn, each
+combination being boxed, and then the next atom of the first set is concatenated
+with each item of the second set, and so on until the first set is
+exhausted.&nbsp; Then, if there are more sets,
+each is processed in turn, with each atom of the new set being appended, inside
+the box, to each atom of the previous product.&nbsp;
+If you follow this description, you will see that the shape of the
+result will be </span></span></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;&nbsp;$&amp;.&gt;&nbsp;y</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>To make sure you understand, verify for
+yourself the results of </span></span></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{&nbsp;'pl';'aio';'ntp'</span></span>
+and </span></span></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{&nbsp;(i.&nbsp;2&nbsp;3);(i.&nbsp;3&nbsp;2)</span></span>&nbsp;.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896286'><span style='mso-bookmark:
+_Toc5414495'><span style='mso-bookmark:_Toc5414665'><a name="_Toc191734558">Boolean
+Functions: Dyad </a></span></span></span><span style='mso-bookmark:_Toc1896286'><span
+style='mso-bookmark:_Toc5414495'><span style='mso-bookmark:_Toc5414665'><span
+style='mso-bookmark:_Toc191734558'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>m b.</span></span></span></span></span></span></p>
+
+<p class=Subsection><a name="_Toc191734559">Functions on Boolean operands</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Boolean Functions verb m b.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m b.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->I will just illustrate Boolean
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;b.</span></span>
+by example.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;b.</span></span> is a
+verb with rank 0.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m</span></span>, when in the
+range 0-15, selects the Boolean function:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 9 b./~ 0 1</p>
+
+<p class=Jcodemultiline>1 0</p>
+
+<p class=Jcodemultiline>0 1</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u/~&nbsp;0&nbsp;1</span></span> is the function table with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+values running down the left and <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> values running along the top.<span
+style='mso-spacerun:yes'>&nbsp; </span>9 is 1001 binary (in J, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2b1001</span></span>), and the
+function table of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9&nbsp;b.</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;0&nbsp;0&nbsp;1</span></span>
+if you enfile it into a vector.&nbsp;
+Similarly:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; , 14 b./~ 0 1</p>
+
+<p class=Jcodemultiline>1 1 1 0</p>
+
+<p class=MsoBodyText>You can use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&nbsp;b.</span></span> in place of combinations of Boolean
+verbs.&nbsp; Unfortunately, comparison verbs
+like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;:</span></span>
+have better performance than <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&nbsp;b.</span></span>, so you may have to pay a
+performance penalty if you write, for example, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;b.</span></span> instead
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>,
+even though they give the same results on Booleans:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &gt;/~ 0 1</p>
+
+<p class=Jcodemultiline>0 0</p>
+
+<p class=Jcodemultiline>1 0</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<div align=center>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td colspan=16 style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center;page-break-after:
+  avoid'>Equivalent J verbs for <span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>m b.</span></span> for different values of <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>0<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>1<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>2<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>3<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>4<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>5<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>6<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>7<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>8<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>9<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>10<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>11<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>12<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>13<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>14<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>15<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;mso-border-top-alt:
+  solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>0&quot;0<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>*.<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>&gt;<o:p>&nbsp;</o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>[&quot;0<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>&lt;<o:p>&nbsp;</o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>]&quot;0<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>~:<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>+.<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>+:<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>=<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>]&amp;-.<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>&gt;:<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>[&amp;-.<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>&lt;:<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>*:<o:p></o:p></span></span></p>
+  </td>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>1&quot;0<o:p></o:p></span></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=Subsection><a name="_Toc5414666"></a><a name="_Toc5414496"></a><a
+name="_Toc1896287"></a><a name="_Toc191734560"><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>Bitwise
+Boolean Operations on Integers and Characters</span></span></span></a><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;bitwise Boolean functions&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>When </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> is in the range 16-31, dyad </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&nbsp;b</span></span>. specifies a <span class=Definition>bitwise
+Boolean operation</span> in which the operation </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(m-16)&nbsp;b.</span></span> is applied to
+corresponding bits of </span></span></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span></span></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The operands may be integers or literal
+(either 8- or 16-bit).</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>For
+example, since </span></span></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>6&nbsp;b.</span></span>
+is exclusive OR, </span></span></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>22&nbsp;b.</span></span>
+is bitwise exclusive OR:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5 (22 b.) 7</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>2</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>The XOR
+operation is performed bit-by-bit.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;bitwise left rotate&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>Dyad&nbsp;</span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>32&nbsp;b.</span></span> is <span class=Definition>bitwise
+left rotate</span>: bits shifted off the end of the word are shifted into
+vacated positions at the other end.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;bitwise unsigned left shift&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>Dyad&nbsp;</span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>33&nbsp;b.</span></span> is <span class=Definition>bitwise
+unsigned left shift</span>.&nbsp; </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is the number of bits to shift </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> (positive </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> shifts left; negative </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> shifts right; in both cases zeros are
+shifted into vacated bit positions):</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2 (33 b.) 5</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>20</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>Dyad&nbsp;</span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>34&nbsp;b.</span></span> is</span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'> XE &quot;bitwise
+signed left shift&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-spacerun:yes'>&nbsp;</span><span class=Definition>bitwise signed left
+shift</span>: it differs from the unsigned shift only when </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> are both negative (i.&nbsp;e. right shift of
+a negative number), in which case the vacated bit positions are filled with 1.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>If you
+use shift and rotate, you may need to know the word-size of your machine.<span
+style='mso-spacerun:yes'>&nbsp; </span>One way to do that is </span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&gt;: 2 ^. | _1 (32 b.) 1</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'>32</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:
+_Toc5414496'><span style='mso-bookmark:_Toc5414666'><a name="_Toc191734561">Operations
+Inside Boxes: </a></span></span></span><span style='mso-bookmark:_Toc1896287'><span
+style='mso-bookmark:_Toc5414496'><span style='mso-bookmark:_Toc5414666'><span
+style='mso-bookmark:_Toc191734561'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u&nbsp;L:&nbsp;n</span></span>, </span></span></span></span><span
+style='mso-bookmark:_Toc1896287'><span style='mso-bookmark:_Toc5414496'><span
+style='mso-bookmark:_Toc5414666'><span style='mso-bookmark:_Toc191734561'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>u&nbsp;S:&nbsp;n</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Apply At Level conjunction L\:&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;S\:&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;L\:&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;</span></span>
+is the recommended way to perform an operation on the contents of a box, leaving
+the result boxed.&nbsp; It is the idiom used
+most often by J coders and the first one to be supported by special code when
+performance improvements are made in the interpreter.</p>
+
+<p class=MsoBodyText>Sometimes your operations inside boxes require greater
+control than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;</span></span>
+can provide.&nbsp; For example, you may need
+to operate on the innermost boxes where the boxing level varies from box to
+box.&nbsp; In these cases consider using <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;L:&nbsp;n</span></span>
+which has infinite rank.&nbsp; It goes inside
+the operands and applies <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> to contents at boxing level <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>The monadic case <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;L:&nbsp;n&nbsp;y</span></span> is the simpler
+one.&nbsp; It is defined recursively.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the boxing level of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is no more than <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>,
+the result is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;y&nbsp;</span></span>
+.&nbsp; Otherwise, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;L:&nbsp;n</span></span>
+is applied to each opened atom of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, and the result of that is boxed.<span
+style='mso-spacerun:yes'>&nbsp; </span>The effect is that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> is applied on
+each level-<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+subbox and the result replaces that subbox, with outer levels of boxing
+intact.&nbsp; For example,</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =. 0;(1 2;3
+4 5);&lt;&lt;6;7 8;9</p>
+
+<p class=Jcodemultiline>+-+-----------+-----------+</p>
+
+<p class=Jcodemultiline>|0|+---+-----+|+---------+|</p>
+
+<p class=Jcodemultiline>| ||1 2|3 4 5|||+-+---+-+||</p>
+
+<p class=Jcodemultiline>| |+---+-----+|||6|7
+8|9|||</p>
+
+<p class=Jcodemultiline>| |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ||+-+---+-+||</p>
+
+<p class=Jcodemultiline>| |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |+---------+|</p>
+
+<p class=Jcodemultiline>+-+-----------+-----------+</p>
+
+<p class=BodyTextnoleader>A boxed noun.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; L. a</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=BodyTextnoleader>Its boxing level is 3.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; # L:0 a</p>
+
+<p class=Jcodemultiline>+-+-----+---------+</p>
+
+<p class=Jcodemultiline>|1|+-+-+|+-------+|</p>
+
+<p class=Jcodemultiline>| ||2|3|||+-+-+-+||</p>
+
+<p class=Jcodemultiline>| |+-+-+|||1|2|1|||</p>
+
+<p class=Jcodemultiline>| |&nbsp;&nbsp;&nbsp;&nbsp; ||+-+-+-+||</p>
+
+<p class=Jcodemultiline>| |&nbsp;&nbsp;&nbsp;&nbsp; |+-------+|</p>
+
+<p class=Jcodemultiline>+-+-----+---------+</p>
+
+<p class=BodyTextnoleader>The contents of each innermost box (where boxing
+level is 0) is replaced by the number of items there.</p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>2&amp;# L:1 a<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>+---+---------------------+-------------------+<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|0
+0|+---+---+-----+-----+|+-----------------+|<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>||1 2|1 2|3 4 5|3 4 5|||+-+-+---+---+-+-+||<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>|+---+---+-----+-----+|||6|6|7 8|7 8|9|9|||<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>||+-+-+---+---+-+-+||<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>|+-----------------+|<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>+---+---------------------+-------------------+<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader>The atoms of each level-1 box are
+duplicated.&nbsp; Note that in the first box
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+the scalar contents were duplicated, while in the second box it is the boxes
+that were duplicated.&nbsp; This behavior
+follows from the definition.&nbsp; The boxing
+level of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+is 3, so each item</p>
+
+<p class=BodyTextnoleader>is opened and examined.<span
+style='mso-spacerun:yes'>&nbsp; </span>The contents of the first two boxes have
+boxing level 0 and 1, so <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&amp;#</span></span> is applied to them; but in the first
+box those contents are the numbers while in the second box they are boxes.<span
+style='mso-spacerun:yes'>&nbsp; </span>You must not think that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>L:1</span></span> operates only
+on boxes; what it does depends on the levels of the other boxes in the operand.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; # L:2 a</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=Jcodemultiline>|1|2|1|</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=BodyTextnoleader>Similarly for level-2 entities.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; # L:3 a</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=BodyTextnoleader>Since <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span> has boxing level 3, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#&nbsp;L:3&nbsp;a</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#&nbsp;a&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; # L:_2 a</p>
+
+<p class=Jcodemultiline>+-+-+---+</p>
+
+<p class=Jcodemultiline>|1|2|+-+|</p>
+
+<p class=Jcodemultiline>| | ||3||</p>
+
+<p class=Jcodemultiline>| | |+-+|</p>
+
+<p class=Jcodemultiline>+-+-+---+<span
+style='font-weight:normal'><o:p></o:p></span></p>
+
+<p class=BodyTextnoleader>Negative level -<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span> means ((level of
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>)
+minus <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that this does <b>not</b> mean '<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+levels up from the bottom of each branch of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>'.<span
+style='mso-spacerun:yes'>&nbsp; </span>That would result in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span>'s being applied
+at different levels in the different items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>; instead, the
+level at which <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+is to be applied is calculated using the level of the entire <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>The dyadic case <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;u&nbsp;L:&nbsp;n&nbsp;y</span></span> is similar, but
+you need to know how the items of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> correspond.<span
+style='mso-spacerun:yes'>&nbsp; </span>During the recursion, as long as both <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+have a higher boxing level than the one specified in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n</span></span>, the atoms of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are matched as they would be matched in processing a verb with rank <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0 0</span></span>
+(with replication of cells if necessary).&nbsp;
+If either operand is at the specified level, it is not changed as the
+items of the other operand only are opened.&nbsp;
+When both operands are at or below the specified boxing level, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+is applied between them.&nbsp; The results of
+each recursion are boxed; this will give each the deeper boxing level of the
+two operands at each application of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;</span></span>.An example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (0 1;&lt;2;3)
++L:0 (10 20)</p>
+
+<p class=Jcodemultiline>+-----+-------------+</p>
+
+<p class=Jcodemultiline>|10 21|+-----+-----+|</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp;&nbsp;&nbsp; ||12 22|13
+23||</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp;&nbsp;&nbsp; |+-----+-----+|</p>
+
+<p class=Jcodemultiline>+-----+-------------+</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> was passed through and applied to each
+level-0 entity.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (0 1;&lt;2;3)
++L:0 (&lt;&lt;10 20)</p>
+
+<p class=Jcodemultiline>+-------+-------------+</p>
+
+<p class=Jcodemultiline>|+-----+|+-----+-----+|</p>
+
+<p class=Jcodemultiline>||10 21|||12 22|13 23||</p>
+
+<p class=Jcodemultiline>|+-----+|+-----+-----+|</p>
+
+<p class=Jcodemultiline>+-------+-------------+</p>
+
+<p class=BodyTextnoleader>Once again <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> was applied to each entity, but because it
+has boxing level 2, all the results have boxing level 2.</p>
+
+<p class=MsoBodyText>The conjunction <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>S:</span></span> is like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>L:</span></span>, but instead of
+preserving the boxing of the operands it accumulates all results into a list:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (0 1;&lt;2;3)
++S:0 (&lt;&lt;10 20)</p>
+
+<p class=Jcodemultiline>10 21</p>
+
+<p class=Jcodemultiline>12 22</p>
+
+<p class=Jcodemultiline>13 23</p>
+
+<p class=Section><a name="_Toc191734562"></a><a name="_Toc5414667"></a><a
+name="_Toc5414497"></a><a name="_Toc1896288"><span style='mso-bookmark:_Toc5414497'><span
+style='mso-bookmark:_Toc5414667'><span style='mso-bookmark:_Toc191734562'>Comparison
+Tolerance </span></span></span></a><span style='mso-bookmark:_Toc1896288'><span
+style='mso-bookmark:_Toc5414497'><span style='mso-bookmark:_Toc5414667'><span
+style='mso-bookmark:_Toc191734562'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>!.f</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;comparison tolerance !.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;!.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Like a diamond earring that
+adds a sparkle to any outfit, the fit conjunction <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>!.</span></span> is a
+general-purpose modifier whose interpretation is up to the verb it
+modifies.&nbsp; We have seen <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>!.f</span></span>
+used to specify the fill atom for a verb, and to alter the formatting of
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;:</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Its other important use is in specifying the <span
+class=Definition>comparison tolerance</span> for comparisons.<span
+style='mso-spacerun:yes'>&nbsp; </span>A comparison like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;=&nbsp;y</span></span>
+calls two operands equal if they are close, where close is defined as differing
+by no more than the comparison tolerance times the magnitude of the larger
+number.&nbsp; If you want exact comparison,
+you can set the comparison tolerance to 0 using <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>!.0&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 (=!.0)
+1.000000000000001</p>
+
+<p class=Jcodemultiline>0</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 =
+1.000000000000001</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;i. dyad:i.!.0&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Tolerant comparison is used in
+the obvious places--verbs like dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>=</span></span>, dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>,
+and dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>--and
+also in some unobvious ones, like the verbs monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>~.</span></span>, monad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~:</span></span>,
+and dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>,
+and the adverb <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For all of these you can specify comparison
+tolerance with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>!.f&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You may wonder whether an exact comparison
+using <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>!.0</span></span>
+is faster than a tolerant comparison.&nbsp;
+The answer is yes, but often not by much.<span
+style='mso-spacerun:yes'>&nbsp; </span>There is one important exception: if the
+comparison is used for finding equal items whose rank is greater than 0 (or are
+complex numbers), exact comparison can be much faster.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, if <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> has rank 2 or
+higher, it's worth the trouble to write <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u/.!.0&nbsp;y</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.!.0&nbsp;y</span></span>;
+similarly use <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~.!.0&nbsp;y</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~:!.0&nbsp;y</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;e.!.0&nbsp;y</span></span>
+if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+has rank greater than 0.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.!.0</span></span>
+uses a completely different algorithm from dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>If performance analysis shows that dyad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>
+is taking a lot of time, you might get an improvement by using <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.!.0</span></span>,
+even if what you are comparing is not numeric.</p>
+
+<p class=MsoBodyText>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f</span></span> in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>!.f</span></span> can be no larger than about <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2^_34&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The reason for this is that there is much
+special code in J for handling integer operands, and for speed it assumes that
+comparison tolerance cannot affect integer comparisons.</p>
+
+<p class=MsoBodyText>The foreign <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>9!:19</span></span><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span>
+XE &quot;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9!</span></span>\<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:19</span></span>&quot;
+<![endif]--><!--[if supportFields]><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;y</span></span>
+can be used to change the default comparison tolerance, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>9!:18</span></span><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-begin'></span></span></span> XE &quot;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>9!</span></span>\<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:18</span></span>&quot;
+<![endif]--><!--[if supportFields]><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;''</span></span>
+will return the current setting.</p>
+
+<p class=Section><a name="_Toc191734563"></a><a name="_Toc5414668"></a><a
+name="_Toc5414498"></a><a name="_Toc1896289"><span style='mso-bookmark:_Toc5414498'><span
+style='mso-bookmark:_Toc5414668'><span style='mso-bookmark:_Toc191734563'>Right
+Shift: Monad </span></span></span></a><span style='mso-bookmark:_Toc1896289'><span
+style='mso-bookmark:_Toc5414498'><span style='mso-bookmark:_Toc5414668'><span
+style='mso-bookmark:_Toc191734563'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>|.!.f</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Right Shift verb |.!.f&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;|.!.f monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->One of my personal favorites
+is the infinite-rank verb monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>|.!.f</span></span> , defined as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>_1&amp;(|.!.f)</span></span>; in
+other words it shifts <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+right one place, discarding the last item and shifting an item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>s
+into the first position.</p>
+
+<p class=Section><a name="_Toc191734564"></a><a name="_Toc5414669"></a><a
+name="_Toc5414499"></a><a name="_Toc1896290"><span style='mso-bookmark:_Toc5414499'><span
+style='mso-bookmark:_Toc5414669'><span style='mso-bookmark:_Toc191734564'>Generalized
+Transpose: Dyad </span></span></span></a><span style='mso-bookmark:_Toc1896290'><span
+style='mso-bookmark:_Toc5414499'><span style='mso-bookmark:_Toc5414669'><span
+style='mso-bookmark:_Toc191734564'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>|:</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Transpose verb |\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;|\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>|:</span></span> has rank <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;_&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;|:&nbsp;y</span></span> rearranges <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> so that the axes
+given in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+become the last axes of the result.&nbsp; So,
+if y has rank 3, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;|:&nbsp;y</span></span>
+puts the axes of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+into the order <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3&nbsp;0</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;2&nbsp;|:&nbsp;y</span></span>
+puts them into the order <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;3&nbsp;0&nbsp;2&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; i. 2 3 4</p>
+
+<p class=Jcodemultiline>&nbsp;0<span
+style='mso-spacerun:yes'>&nbsp; </span>1&nbsp;
+2&nbsp; 3</p>
+
+<p class=Jcodemultiline>&nbsp;4<span
+style='mso-spacerun:yes'>&nbsp; </span>5&nbsp;
+6&nbsp; 7</p>
+
+<p class=Jcodemultiline>&nbsp;8<span
+style='mso-spacerun:yes'>&nbsp; </span>9 10 11</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>12 13 14 15</p>
+
+<p class=Jcodemultiline>16 17 18 19</p>
+
+<p class=Jcodemultiline>20 21 22 23</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 |: i. 2 3 4</p>
+
+<p class=Jcodemultiline>&nbsp;0 12</p>
+
+<p class=Jcodemultiline>&nbsp;1 13</p>
+
+<p class=Jcodemultiline>&nbsp;2 14</p>
+
+<p class=Jcodemultiline>&nbsp;3 15</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;4 16</p>
+
+<p class=Jcodemultiline>&nbsp;5 17</p>
+
+<p class=Jcodemultiline>&nbsp;6 18</p>
+
+<p class=Jcodemultiline>&nbsp;7 19</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;8 20</p>
+
+<p class=Jcodemultiline>&nbsp;9 21</p>
+
+<p class=Jcodemultiline>10 22</p>
+
+<p class=Jcodemultiline>11 23</p>
+
+<p class=MsoBodyText>Formally, putting the axes into an order <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p</span></span>
+means that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;p{x)&nbsp;{&nbsp;p&nbsp;|:&nbsp;y</span></span>
+is the same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;x)&nbsp;{&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>I wish I could give you an intuitive
+definition but I can't.</p>
+
+<p class=MsoBodyText>An item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> can be negative to count axes from the
+end.&nbsp; The Dictionary shows how you can
+use boxed <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+to take elements along diagonals of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734565"></a><a name="_Toc5414670"></a><a
+name="_Toc5414500"></a><a name="_Toc1896291"><span style='mso-bookmark:_Toc5414500'><span
+style='mso-bookmark:_Toc5414670'><span style='mso-bookmark:_Toc191734565'>Monad
+</span></span></span></a><span style='mso-bookmark:_Toc1896291'><span
+style='mso-bookmark:_Toc5414500'><span style='mso-bookmark:_Toc5414670'><span
+style='mso-bookmark:_Toc191734565'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>i:</span></span> and Dyad </span></span></span></span><span
+style='mso-bookmark:_Toc1896291'><span style='mso-bookmark:_Toc5414500'><span
+style='mso-bookmark:_Toc5414670'><span style='mso-bookmark:_Toc191734565'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>i:</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;i\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i:</span></span> is like monad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>,
+but its interval is centered on 0 rather than starting at 0:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; i: 5</p>
+
+<p class=Jcodemultiline>_5 _4 _3 _2 _1 0 1 2 3 4 5</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; i: _5</p>
+
+<p class=Jcodemultiline>5 4 3 2 1 0 _1 _2 _3 _4 _5</p>
+
+<p class=BodyTextnoleader>Monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i:</span></span> can also take a complex operand to specify
+a different spacing between items of the result.</p>
+
+<p class=MsoBodyText>Dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i:</span></span> is like dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>, but it gives
+the index of the <i>last</i> occurrence (or <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#x</span></span> if there is
+none).</p>
+
+<p class=Section><a name="_Toc5414671"></a><a name="_Toc5414501"></a><a
+name="_Toc1896292"></a><a name="_Toc191734566"><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>Fast
+String Searching: </span></span></span></a><span style='mso-bookmark:_Toc191734566'><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>s:</span></span> (Symbols)</span></span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;s: monad and dyad&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;symbols&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;string matching&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>If you
+find your program taking a lot of time matching strings, you can create <span
+class=Definition>symbols</span> representing the strings and then match the
+symbols rather than the strings themselves.&nbsp;
+The interpreter uses special code to make symbol-matching very fast.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Definition>Symbol</span> is an atomic data type (like numeric, literal,
+and box).&nbsp; In a noun of the symbol type,
+each atom represents a boxed character string.&nbsp;
+You create a symbol with monad&nbsp;</span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>s:</span></span> which has infinite rank.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></span><span style='mso-bookmark:
+_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:
+_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s:&nbsp;y</span></span>
+takes an array of boxed strings </span></span></span><span style='mso-bookmark:
+_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:
+_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and creates an array of symbols of the same shape as </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>]sym =. s: 2 2$'abc';'def';'ghi';'jk'</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>`abc `def</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>`ghi `jk
+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>$sym</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>2 2</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>The </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'`'</span></span> characters are a clue that </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sym</span></span> is an array of symbols.<span
+style='mso-spacerun:yes'>&nbsp; </span>The value of the top-left atom of </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sym</span></span> is <b>not</b> </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'`abc'</span></span> or </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'abc'</span></span>; it is a value understood only by the
+interpreter.&nbsp; The interpreter chooses to
+display the text associated with the symbol, but that text is actually stored
+in the interpreter's private memory.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+in </span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s:&nbsp;y</span></span>
+can be a character string which is chopped into pieces using the leading
+character as a separator; each piece is then converted to a symbol.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is a handy way of creating a short list
+of symbols:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>s: '`abc`ghi'</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>`abc `ghi</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>Symbols
+can be operands of any verb that does not perform arithmetic; in addition,
+comparison between symbols is allowed with 'less than' defined to mean 'earlier
+in alphabetical order'.</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>&nbsp; a =.
+s: '`abc`def`ghi`jk'</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>defines
+a list of 4 symbols.</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>a i. s:&lt;'ghi'</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>2</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>We
+create a symbol to represent </span></span></span><span style='mso-bookmark:
+_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:
+_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'ghi'</span></span>
+and find that in the list.</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>a i. &lt;'ghi'</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>4</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>Note:
+the boxed string </span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;'ghi'</span></span>
+is not a symbol, so it is not found in the list.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>Dyad&nbsp;</span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>s:</span></span> has a number of forms for operating on
+symbols.&nbsp; The only one of interest to us
+here is </span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;s:&nbsp;y</span></span>
+which converts each symbol in </span></span></span><span style='mso-bookmark:
+_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:
+_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+to its corresponding boxed string:</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5 s: 3 1 { a</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>+--+---+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>|jk|def|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>+--+---+</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>When a
+string is converted to a symbol, the interpreter allocates internal resources
+to hold the string's value and other information.<span
+style='mso-spacerun:yes'>&nbsp; </span>There is no way to tell the interpreter to
+free the resources for a single string; this can be a problem if your symbol
+table is large and changes dynamically.&nbsp;
+It is possible to clear the entire symbol table (using </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y=.0&nbsp;s:&nbsp;10</span></span> and </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>10&nbsp;s:&nbsp;y</span></span>), but doing so invalidates
+any symbols previously created by </span></span></span><span style='mso-bookmark:
+_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:
+_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s:&nbsp;y&nbsp;</span></span>.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>If you
+would like to do high-speed matching but what you want to match is not a
+string, consider converting to strings using </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>5!:5&nbsp;&lt;'y'</span></span> which converts the variable
+named </span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+to string form.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:
+_Toc5414501'><span style='mso-bookmark:_Toc5414671'><a name="_Toc191734567">Fast
+Searching: </a></span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-bookmark:_Toc191734567'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&amp;i.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;fast searches&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m&amp;i.&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;i.&nbsp;y</span></span> usually starts by creating a
+hash table of </span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and then looks for matches in the hash.&nbsp;
+If you repeatedly use the same </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, in other words if you are doing many
+lookups into the same table, the hash of </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is recomputed at each invocation of </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.</span></span>&nbsp;.&nbsp;
+You can have the hash computed once by defining a search verb for the
+table with</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>search =: x&amp;i.</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>The
+hash is computed when the verb is defined, and subsequent lookup via </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>search&nbsp;y</span></span> will be faster.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:
+_Toc5414501'><span style='mso-bookmark:_Toc5414671'><a name="_Toc191734568">CRC
+Calculation</a></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;CRC calculation&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;128!\:3&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;128!:3&nbsp;y</span></span> computes the CRC of the
+string </span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></span><span style='mso-bookmark:
+_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:
+_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is the CRC polynomial, a Boolean list.&nbsp;
+Normally the initial CRC is </span></span></span><span style='mso-bookmark:
+_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:
+_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>
+but you can specify a different initial value by making </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> a 2-element list of boxes of </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>polynomial</span></i></span></span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;<i style='mso-bidi-font-style:normal'>initial_value</i></span></span>&nbsp;.</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>If you
+define a CRC verb as</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>crc =: x&amp;(128!:3)</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>then
+the interpreter will precompile the CRC polynomial for </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, making subsequent CRC calculations faster.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:
+_Toc5414501'><span style='mso-bookmark:_Toc5414671'><a name="_Toc191734569">Unicode
+Characters: </a></span></span></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-bookmark:_Toc191734569'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u:</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'><o:p></o:p></span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Unicode verb u\:&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896292'><span
+style='mso-bookmark:_Toc5414501'><span style='mso-bookmark:_Toc5414671'>2-byte
+unicode characters can be represented by variables that have the <span
+class=Definition>unicode</span> atomic data type.<span
+style='mso-spacerun:yes'>&nbsp; </span>Such variables are created by the verb </span></span></span><span
+style='mso-bookmark:_Toc1896292'><span style='mso-bookmark:_Toc5414501'><span
+style='mso-bookmark:_Toc5414671'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u:&nbsp;</span></span>.&nbsp;
+Its use is described in the Dictionary.</span></span></span></p>
+
+<span style='mso-bookmark:_Toc5414671'></span><span style='mso-bookmark:_Toc5414501'></span><span
+style='mso-bookmark:_Toc1896292'></span>
+
+<p class=Section><a name="_Toc191734570"></a><a name="_Toc5414672"></a><a
+name="_Toc5414502"></a><a name="_Toc1896293"><span style='mso-bookmark:_Toc5414502'><span
+style='mso-bookmark:_Toc5414672'><span style='mso-bookmark:_Toc191734570'>Window
+Driver And Form Editor</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;form editor&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;window driver&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Designing user interfaces is
+quick and painless with J's Form Editor.&nbsp;
+The Lab named Form Editor will show you how.</p>
+
+</div><!--bottom jump start--><hr><a href="performance_measurement__tip.htm">&gt;&gt;</a>&nbsp;
+<a href="graphics.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

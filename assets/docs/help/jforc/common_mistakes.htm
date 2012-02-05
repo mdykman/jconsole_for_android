@@ -1,0 +1,666 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Common Mistakes</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="valedictory.htm">&gt;&gt;</a>&nbsp;
+<a href="explicit-to-tacit_converter.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc5414694"></a><a name="_Toc1896306"></a><a name="_Toc191734599"><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>43. </span></span><![endif]>Common Mistakes</span></span></a><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'></span></span></h1>
+
+<p class=Section><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><a name="_Toc191734600">Mechanics</a></span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Watch out for Adjacent Numbers</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; &gt;:&quot;0<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>1{y</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>fails because the 0 and the 1 are considered
+part of the same list.&nbsp; Use </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;:&quot;0&nbsp;&nbsp;&nbsp;(1{y)</span></span>
+or </span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;:&quot;0&nbsp;]&nbsp;1{y&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Names in Sequence Do Not Form a List</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;1</span></span> is a 2-element list, but </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;y</span></span>
+is an error even if </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> has the value </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Use </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0,y&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Remember Right-to-Left Evaluation When You Use
+J as a Desk Calculator</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>J makes a great desk calculator, but you have
+to remember to translate from mathematical notation to J correctly.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>5&nbsp;-&nbsp;2&nbsp;+&nbsp;1</span></span> is </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>,
+not </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>How to Remember the Monads </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>{. {: }. }:</span></span></span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='font-family:
+"Times New Roman";font-weight:normal'><o:p></o:p></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Remember that </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{</span></span>
+means <i>take</i> (</span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> takes from </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>),
+so </span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>}</span></span>
+must be <i>drop</i>.&nbsp; The single-dot
+means <i>beginning</i>, and the double-dot means <i>end</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>}.</span></span> means 'drop the
+first item'.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>How to Remember</span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";font-weight:
+normal'> </span></span></span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>#.</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>#:</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>The single-dot produces a single (atomic)
+result; the multiple-dot produces a list.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Remember the Operand Order in </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>e.</span></span> </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>i.</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>|</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>The normal J convention is that a dyad's </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operand is the one that is more 'data-like' and its </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+operand is more 'control-like'.&nbsp; Thus, in
+</span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&nbsp;y</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is a table and </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is one or more values to be looked up in the
+table.&nbsp; By this convention, </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;e.&nbsp;y</span></span>
+is backwards: </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is the table and </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is the values.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Similarly, </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;|&nbsp;y</span></span>
+seems backwards from </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;%&nbsp;y&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Leave a Space Before </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>:</span></span> When Used Alone</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>When you use </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+or </span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>.</span></span>
+as a conjunction, you must remember to leave a space before the</span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'> :</span></span>
+or </span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>.</span></span>
+so it will not be interpreted as an inflection.&nbsp;
+The following are all errors: </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3:0</span></span>, </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(+/&nbsp;%&nbsp;#):*&nbsp;</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/.*&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Use </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>=:</span></span>
+for Assignments Within Scripts</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Code that runs perfectly well from the
+keyboard may not work if you put it into a script (.ijs) file.<span
+style='mso-spacerun:yes'>&nbsp; </span>The problem is usually that you have used </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=.</span></span>
+for some assignments.&nbsp; Entered from the
+keyboard, </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>=</span></span>. gives a public assignment, but to get the
+same effect in a script, you need to use </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>=:&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Pasting Into an .ijx Window Does Not Execute</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Remember that when you paste a block of text
+into an .ijx window, that text shows up in the window but it is not
+executed.&nbsp; To execute the text, you need
+to select it and then use Run|Selection.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Don't Mix </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>elseif.</span></span> and </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>else.</span></span> in the Same
+Structure</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>The control structure </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>if./do./elseif./do./else./end</span></span>.
+is not legal.&nbsp; Once you have used an </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>elseif.</span></span>
+you are not allowed to code </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>else.</span></span>; use </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>elseif.&nbsp;do.</span></span>
+instead of </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>else.</span></span> (the omitted condition always tests
+true).</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><a name="_Toc191734601">Programming Errors</a></span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Remember the Asymmetry of Dyad </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>;</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;;&nbsp;y</span></span> always boxes </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+but it boxes </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> only if </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is unboxed.&nbsp; This gives you what you want
+when the operands are unboxed:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; 1 ; 2
+; 3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>+-+-+-+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>|1|2|3|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>+-+-+-+</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>But when the operands are boxed, you may be
+surprised at the result:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp;
+(&lt;1) ; (&lt;2) ; (&lt;3)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>+---+---+-+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>|+-+|+-+|3|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>||1|||2|| |</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>|+-+|+-+| |</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>+---+---+-+</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>To have the last operand boxed, you should box
+it explicitly:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp;
+(&lt;1) ; (&lt;2) ;&lt; (&lt;3)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>+---+---+---+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>|+-+|+-+|+-+|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>||1|||2|||3||</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>|+-+|+-+|+-+|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>+---+---+---+</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Don't Give Two Operands to a Monadic Verb</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>When you start writing long tacit programs,
+you are likely to have trouble keeping track of whether a verb is being
+executed monadically or dyadically.&nbsp;
+Suppose that </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is a set of observations and </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is a set of weights, and you want to weight each observation and divide by the
+total weight.&nbsp; You might try</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp;
+x&nbsp;(* % +/)&nbsp;y</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>but that isn't right--the sum of the weights is
+</span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/&nbsp;y</span></span>
+and this is going to execute </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;+/&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>What you meant was</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp;
+x&nbsp;(* % +/@:])&nbsp;y</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Some rules to remember: a train comprising an <b>odd</b>
+number of verbs is a <b>fork</b>, which can be invoked monadically or
+dyadically.&nbsp; The first, third, etc....
+verbs, including the last, are all executed with the same valence as the fork
+itself, and their operands are all the same, namely the operands of the fork itself.<span
+style='mso-spacerun:yes'>&nbsp; </span>The second, fourth, etc.... verbs are all
+executed dyadically, with operands that are results of other verbs in the
+train.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>A train comprising an <b>even</b> number of
+verbs is a <b>hook</b>.&nbsp; The first verb
+in the hook is always executed dyadically; the rest, taken as a train, are
+executed monadically on the </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> operand of the hook.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>If any part of your train requires
+simultaneous access to the </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> operands of the
+train, you must make the train a fork rather than a hook.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Use </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>@:</span></span>
+Unless </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>@</span></span> Is Necessary</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u@:v</span></span> has infinite rank, while </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u@v</span></span>
+has the rank of </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v&nbsp;</span></span>.&nbsp;
+If you don't see what difference this makes, you should drop what you
+are doing and read the chapter on &quot;Compound Verbs&quot;.<span
+style='mso-spacerun:yes'>&nbsp; </span>For practical programming, you should be in
+the habit of using </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@:</span></span> unless you need </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+to be executed on each individual result-cell of </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+in which case you may use </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@&nbsp;</span></span>.&nbsp;
+The most common uses of </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@</span></span> are </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u@&gt;</span></span> to execute </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+on the contents of each box in a list, and </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;@v</span></span>
+to box each individual result-cell of </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Put Parentheses Around Compounds Inside Other
+Compounds</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>A modifier is greedy about what it takes for
+its left operand, hoovering up everything until it hits a left parenthesis or
+unmodified verb.&nbsp; For example, if you
+want to add 2 to </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> and then double the result,</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; +: @:
+2&amp;+ y</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>is going to disappoint you, because it is
+executed as </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(+:@:2)&amp;+&nbsp;y</span></span> which isn't even
+legal.&nbsp; You meant </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+:&nbsp;@:&nbsp;(2&amp;+)</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Be liberal in your use of parentheses inside
+compounds.&nbsp; You may omit the parentheses
+around the leftmost compound--another way to write the above would have been </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&amp;*&nbsp;@:&nbsp;(2&amp;+)</span></span>--but
+you won't regret putting parentheses around all compounds, especially when you
+go to change your code.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>I find it easy to forget the parentheses when
+one of the verbs is something like </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+/</span></span> that I use so
+much that I think of it as a primitive.&nbsp;
+When something like </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;:&nbsp;@:&nbsp;+/</span></span> fails I am brought back
+to reality and I remember to write </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&gt;:&nbsp;@:&nbsp;(+/)</span></span>&nbsp;.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>A Verb Is Always Executed, Even If Its Operand
+is Empty</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>J's primitives are defined to produce
+reasonable results when given empty operands.&nbsp;
+You should do as well with the verbs you write.<span
+style='mso-spacerun:yes'>&nbsp; </span>Remember that if a verb has an operand with
+no cells, the verb is still executed once, on a cell of fills.<span
+style='mso-spacerun:yes'>&nbsp; </span>The chapter &quot;Empty Operands&quot;
+explains what happens.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Dyad </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>-:</span></span>
+Does Not Check the Type of Empty Operands</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Be aware that getting a result of </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+from </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;-:&nbsp;y</span></span> does not guarantee that </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> are equivalent.<span
+style='mso-spacerun:yes'>&nbsp; </span>If they have the same shape and are empty,
+they are considered to match even if they have different types.<span
+style='mso-spacerun:yes'>&nbsp; </span>Subsequent operations such as </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.</span></span>
+would reveal the fact that the values are different, even though they 'match'.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>x&nbsp;u/&nbsp;y</span></span>
+Applies </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>u</span></span> to Cells of </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>x</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>To get </span></span><span style='mso-bookmark:
+_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u/&nbsp;y</span></span>
+right, remember that it applies </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> to <b>cells</b> of </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and the entire </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.&nbsp;
+The rank of the cells of </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is given by the left rank of </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>;
+use </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&quot;n/</span></span> to set the cell-rank of </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Modifiers That Refer To </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>y</span></span> Have Monadic and Dyadic Valences</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>If your modifier contains </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+or </span></span><span style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:
+_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+its text defines a <b>verb</b> which is executed when its noun operands are
+known.&nbsp; This verb, like any explicit
+verb, can have both monadic and dyadic versions, separated by a line containing
+just a </span></span><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>':'</span></span> character.&nbsp;
+If you want the modifier to have a dyadic form, you must code one (by
+default the verb will be monadic only).</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>Tacit Code Does Not Simply Replace a Name By
+Its Definition</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>It is easy to develop an incorrect mental
+picture of how tacit programs are executed.&nbsp;
+One common error is to think that names are replaced by their
+definitions before a sentence is executed, in other words that if you have</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; plus
+=: +</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>then a sentence</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; 1
+plus 2</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>is converted to </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;+&nbsp;2</span></span>
+and then executed.&nbsp; This notion
+immediately leads to confusion when you encounter</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; mean
+=: +/ % #</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>and you expect</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; mean
+1 2 3 4 5</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>to be executed like</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; +/ %
+# 1 2 3 4 5</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>which is not how it works.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you find yourself making this error, read
+the chapters on Tacit Programming to learn what really happens.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>As a stopgap, you can imagine that each name's
+value is enclosed in parentheses before it is substituted.<span
+style='mso-spacerun:yes'>&nbsp; </span>This still isn't exactly right but it gets
+you the right result in all situations you are likely to encounter.<span
+style='mso-spacerun:yes'>&nbsp; </span>You would imagine that the sentence above is
+executed as</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>&nbsp;&nbsp; (+/ %
+#) 1 2 3 4 5</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896306'><span
+style='mso-bookmark:_Toc5414694'>which gives the correct answer.<span
+style='mso-spacerun:yes'>&nbsp; </span>You must realize that </span></span><span
+style='mso-bookmark:_Toc1896306'><span style='mso-bookmark:_Toc5414694'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(+/&nbsp;%&nbsp;#)</span></span>
+is a <i>fork</i>, with its own rules for processing its operands.</span></span></p>
+
+</div><!--bottom jump start--><hr><a href="valedictory.htm">&gt;&gt;</a>&nbsp;
+<a href="explicit-to-tacit_converter.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

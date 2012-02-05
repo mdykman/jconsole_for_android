@@ -1,0 +1,90 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Monad-Dyad</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d311.htm">&gt;&gt;</a>&nbsp;
+<a href="d310n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=40%><b><font size=+2>Monad / Dyad</font></b></td>
+<td align=center width=40%><font face="Courier New" size=+3>u : v &nbsp;mu lv rv</font></td>
+<td align=right  width=20%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr>
+<td valign=top bgcolor=#eeeeee>
+The first argument specifies the monadic case and the second 
+argument the dyadic case. 
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   y=: 10 64 100
+   ^. y                        NB. Natural logarithm
+2.30259 4.15888 4.60517
+
+   10&amp;^. y                     NB. Base ten logarithm
+1 1.80618 2
+
+   log=: 10&amp;^. : ^.
+   log y
+1 1.80618 2
+
+   8 log y
+1.10731 2 2.21462
+
+   (^1) log y
+2.30259 4.15888 4.60517
+
+   LOG=: 10&amp;$: : ^.            NB. Use of <a href="d212.htm">self-reference</a>
+   LOG y
+1 1.80618 2
+
+   f=: %: : ($:@-)
+
+   (f y),: 100 f y
+3.16228 8 10
+9.48683 6  0
+
+   ABS=: | : [:
+
+   ABS _4
+4
+
+   3 ABS _4
+|valence error: ABS
+|   3     ABS _4
+</pre>
+
+<p>The domain of the dyad<tt> ABS </tt>is empty because 
+the domain of<tt> [: </tt>is empty.</p>
+<br>
+
+<!--bottom jump start--><hr><a href="d311.htm">&gt;&gt;</a>&nbsp;
+<a href="d310n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

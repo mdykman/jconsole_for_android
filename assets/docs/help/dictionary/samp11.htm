@@ -1,0 +1,88 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 11. Classification II</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp12.htm">&gt;&gt;</a>&nbsp;
+<a href="samp10.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>11. Classification (Sets and Propositions)</b></font><br><br>
+
+The list<tt> -.+./t </tt>appended to any classification 
+table<tt> t </tt>will yield a complete classification table, 
+and the function defined below therefore completes a classification table.  
+The function<tt> tab </tt>ensures that a scalar or 
+vector argument is treated as a one-rowed table.<br>
+
+<pre>
+   c=: complete=: (] , (+./ {. ,:)@:-.@:(+./))@:tab
+   tab=: ,:^:(0:&gt;.2:-#@$)
+
+   c 0 0 1,:0 1 0
+0 0 1
+0 1 0
+1 0 0
+
+   c 1 0 1,:0 1 0
+1 0 1
+0 1 0
+
+   (c 1 0 1);(c c 1 0 1);(c 0);(c 1)
++-----+-----+-+-+
+|1 0 1|1 0 1|0|1|
+|0 1 0|0 1 0|1| |
++-----+-----+-+-+
+</pre>
+
+A function that yields a single boolean list is called a 
+<i>proposition</i>; its result is a one-way classification 
+called a <i>set</i>.  The classification can, of course, 
+be completed by the complementary set.  For example:<br>
+
+<pre>
+   p1=: 2&amp;&lt;: *. &lt;&amp;5           <font face=Times size=+1>Set defined by interval</font>
+   p1a=: (2:&lt;:]) *. (]&lt;5:)    <font face=Times size=+1>Alternative definition</font>
+   p2=: = &lt;.                  <font face=Times size=+1>Set of integers</font>
+   a=: 2 %~ i. 11
+   (],p1,p1a,p2,(p1+.p2),:(p1*.p2)) a
+0 0.5 1 1.5 2 2.5 3 3.5 4 4.5 5
+0   0 0   0 1   1 1   1 1   1 0
+0   0 0   0 1   1 1   1 1   1 0
+1   0 1   0 1   0 1   0 1   0 1
+1   0 1   0 1   1 1   1 1   1 1
+0   0 0   0 1   0 1   0 1   0 0
+                    
+   list=: 1 : 'x # ]'         <font face=Times size=+1>Adverb to list elements of set</font>
+
+   ((p1 list);(p2 list);((p1*.p2)list)) a
++-----------------+-----------+-----+
+|2 2.5 3 3.5 4 4.5|0 1 2 3 4 5|2 3 4|
++-----------------+-----------+-----+
+</pre>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="samp12.htm">&gt;&gt;</a>&nbsp;
+<a href="samp10.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

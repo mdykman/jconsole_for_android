@@ -1,0 +1,94 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>.. Even</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d310n.htm">&gt;&gt;</a>&nbsp;
+<a href="d300.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=43%><b><font size=+2>Even , Odd</font></b></td>
+<td align=center width=43%><font face="Courier New" size=+3>u .. v &nbsp;u .: v</font></td>
+<td align=right  width=16%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr>
+<td valign=top bgcolor=#eeeeee>
+<tt>u .. v &nbsp;</tt><font size=+1>&harr;</font><tt> &nbsp;(u + u&amp;v) % 2:</tt><br>
+<tt>u .: v &nbsp;</tt><font size=+1>&harr;</font><tt> &nbsp;(u - u&amp;v) % 2:</tt>
+<br>&nbsp;</td>
+</tr></table><br>
+
+In the most commonly used case,<tt> v </tt>is arithmetic negation, 
+and<tt> f=: u .. v </tt>is therefore<tt> f=: (u + u&amp;-) % 2:</tt> ;<tt> </tt> 
+that is, one-half the sum of<tt> u y </tt>and<tt> u -y</tt> .<tt> </tt> 
+The resulting function is therefore <i>even</i> in the sense 
+that<tt> f y </tt><font size=+1>&harr;</font><tt> f -y </tt>for any<tt> y</tt> ;<tt> </tt>
+its graph is reflected in the vertical axis.  Similarly,<tt> u .: - </tt>
+is <i>odd</i><tt> </tt>(<tt>f y </tt><font size=+1>&harr;</font><tt> -f-y</tt>),<tt> </tt>and its 
+graph is reflected in the origin.  Less commonly,<tt> v </tt>is 
+matrix transpose<tt> </tt>(<tt>|:</tt>),<tt> </tt>and may 
+be any monadic function.<br>
+
+<pre>
+   y=: _2 _1 0 1 2
+   1 2 3 4 5 &amp; p. y            NB. Polynomial with odd and even terms
+57 3 1 15 129
+ 
+   1 2 3 4 5 &amp; p. .. - y       NB. Even part of polynomial
+93 9 1 9 93
+   
+   1 0 3 0 5 &amp; p. y            NB. Polynomial with even terms only
+93 9 1 9 93
+
+   E=: .. -                    NB. Even adverb
+   O=: .: -                    NB. Odd adverb
+   d=: 5j2&amp;&quot;:@,.&amp;.&gt;            NB. Display as columns with two digits
+
+   d (5&amp;o. ; ^O ; 6&amp;o. ; ^E ; ^ ; (^E + ^O) ; 2&amp;o. ; ^@j.E) y
++-----+-----+-----+-----+-----+-----+-----+-----+
+|_3.63|_3.63| 3.76| 3.76| 0.14| 0.14|_0.42|_0.42|
+|_1.18|_1.18| 1.54| 1.54| 0.37| 0.37| 0.54| 0.54|
+| 0.00| 0.00| 1.00| 1.00| 1.00| 1.00| 1.00| 1.00|
+| 1.18| 1.18| 1.54| 1.54| 2.72| 2.72| 0.54| 0.54|
+| 3.63| 3.63| 3.76| 3.76| 7.39| 7.39|_0.42|_0.42|
++-----+-----+-----+-----+-----+-----+-----+-----+
+
+   m=: ?. 4 4 $ 9
+   (] ; (] .. |:) ; (] .: |:)) m
++-------+-----------+-------------+
+|3 8 8 4|  3 5 6 2.5|   0  3 2 1.5|
+|2 0 2 7|  5 0 2   4|  _3  0 0   3|
+|4 2 3 5|  6 2 3   6|  _2  0 0  _1|
+|1 1 7 2|2.5 4 6   2|_1.5 _3 1   0|
++-------+-----------+-------------+
+</pre>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="d310n.htm">&gt;&gt;</a>&nbsp;
+<a href="d300.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

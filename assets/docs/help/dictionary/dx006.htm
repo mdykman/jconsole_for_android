@@ -1,0 +1,388 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>6!: Time</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx007.htm">&gt;&gt;</a>&nbsp;
+<a href="dx005.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Time</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>6!:</font></b></td>
+</tr></table>
+<br>
+
+See also<tt> <a href="dx009.htm#32">9!:32</a> </tt>
+and<tt> <a href="dx009.htm#32">9!:33</a></tt> .<br><br>
+
+<TABLE>
+<tr><td VALIGN=TOP WIDTH=120><a name="0"></a><tt><tt>6!:0 y </tt></td>
+<td>
+<b>Current</b>.  The current time in the order year, month, day, hour, minute, second. 
+The argument may be an empty vector, producing a 6-element numeric list; or 
+a string of the letters<tt> Y M D h m s </tt>and other characters, producing a formatted string. 
+For example:
+
+<pre>
+   6!:0 ''
+2007 10 30 13 10 45.312
+
+   6!:0 'YYYY-MM-DD hh:mm:ss.sss'
+2007-10-30 13:10:46.875
+
+   6!:0 'hh:mm:ss MM/DD/YY'
+13:10:48 10/30/07
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="1"></a><tt><tt>6!:1 y </tt></td>
+<td>
+<b>Session</b>.  Seconds since start of session
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="2"></a><tt><tt>[x] 6!:2 y </tt></td>
+<td>
+<b>Execute</b>.  Seconds to execute sentence<tt> y </tt>
+(mean of<tt> x </tt>times with default once).  For example: <br>
+
+<pre>
+   a=:?50 50$100
+   6!:2 '%.a'
+0.091
+   10 (6!:2) '%.a'          NB. Mean time of 10 executions
+0.0771
+   ts=: 6!:2 , 7!:2@]       NB. Time and space
+   ts '%.a'
+0.08 369920
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="3"></a><tt><tt>6!:3 y</tt></td>
+<td>
+<b>Delay</b>.  Delay execution for<tt> y </tt>seconds.  For example,<tt> 6!:3 (2.5)</tt>
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="4"></a><tt><tt>6!:4 y</tt></td>
+<td>
+<b>Parser Calls</b>.  The number of times the <a href="dicte.htm">J parser</a> 
+has been called since the start of the session.  
+The counter is a machine-word integer
+which is incremented without regard to overflow.
+<br><br>
+
+For example:
+
+<pre>
+   6!:4 '' NB. 0
+2081
+   t=:3+5
+   6!:4 '' NB. 1
+2083
+   (3 : 'z=.0 for. i.y do. z=.>:z end. *:z') 100
+10000
+   6!:4 '' NB. 2
+2188
+   $".100$,:'0+1'
+100
+   6!:4 '' NB. 3
+2290
+</pre>
+
+<p>Between<tt> NB. 0 </tt>and<tt> NB. 1</tt> ,<tt> </tt>the 
+parser was called twice, once for<tt> t=:3+5 </tt>and 
+once for<tt> 6!:4 '' NB. 1</tt> .</p>
+
+<p>Between<tt> NB. 1 </tt>and<tt> NB. 2</tt> ,<tt> </tt>the 
+parser was called 105 times:
+<table>
+<tr><td align=right>1</td><td>&nbsp;</td><td><tt>(3 : 'z=.0 for. i.y do. z=.>:z end. *:z') 100</tt></td></tr>
+<tr><td align=right>1</td><td>&nbsp; &nbsp;</td><td><tt>z=.0</tt></td></tr>
+<tr><td align=right>1</td><td>&nbsp;</td><td><tt>i.y</tt></td></tr>
+<tr><td align=right>&nbsp; 100</td><td>&nbsp;</td><td><tt>z=.>:z</tt></td></tr>
+<tr><td align=right>1</td><td>&nbsp;</td><td><tt>*:z</tt></td></tr>
+<tr><td align=right>1</td><td>&nbsp;</td><td><tt>6!:4 '' NB. 2</tt></td></tr>
+</table>
+
+<p>Between<tt> NB. 2 </tt>and<tt> NB. 3</tt> ,<tt> </tt>the 
+parser was called 102 times: once for<tt> $".100$,:'0+1' </tt>, 100 times
+for each instance of<tt> 0+1 </tt>, and once for<tt> 6!:4 '' NB. 3</tt> .
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="8"></a><tt><tt>6!:8 y</tt></td>
+<td><b>Query Clock Frequency</b>. Return the clock frequency, 
+the number of clock counter values per second.  (In Windows, the result
+of<tt> QueryPerformanceFrequency</tt>.)<tt> </tt> 
+The argument<tt>  y </tt>is ignored.<br>
+
+<pre>
+   6!:8 ''
+1.19318e6
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="9"></a><tt><tt>6!:9 y</tt></td>
+<td><b>Query Clock Counter</b>. Return the current clock counter 
+(elapsed time) value.  (In Windows, the result 
+of<tt> QueryPerformanceCounter</tt>.)<tt> </tt>  
+The argument<tt> y </tt>is ignored.<br>
+
+<pre>
+   6!:9 ''
+4.08486e9
+   _10 [\ 2 -~/\ 6!:9&quot;1 (101 0)$0
+9 7 7 6 7 5 7 6 6 7
+6 7 6 6 6 6 8 6 6 7
+6 6 7 6 6 7 6 6 6 6
+6 7 6 6 6 6 7 6 6 8
+6 7 6 6 6 7 6 6 6 7
+6 6 6 7 7 6 7 6 7 6
+6 6 6 7 6 6 6 6 7 6
+6 6 6 7 6 7 7 6 7 6
+6 6 6 6 7 6 6 6 7 6
+6 6 6 6 6 6 6 6 6 8
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="10"></a><tt><tt>[x] 6!:10 y</tt></td>
+<td><b>Performance Monitor Data Area</b>. Literal (character) vector<tt> y </tt>
+is to hold the fixed-sized 
+records of &ldquo;packed&rdquo; performance monitor data; the old PM data 
+area (if any) is released.  The PM counter 
+(see<tt> 6!:12</tt>)<tt> </tt>is set to 0.  If<tt> y </tt>is an empty vector, 
+no PM data will be collected.<br><br>
+
+<tt> x </tt>is a 2-element vector of 
+control parameters;<tt> 0 0 </tt>is 
+assumed if it is elided.<br><br>
+
+<tt>0{x </tt>- what to record<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 - entry and exit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 - entry and exit and all lines<br>
+<tt>1{x </tt>- action on running out of space in<tt> y</tt><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 - &ldquo;wrap&rdquo;, discard the oldest record<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 - &ldquo;truncate&rdquo;, discard the newest record<br><br>
+
+The result is the number of records that will be held 
+in<tt> y</tt>.
+<br><br>
+
+<tr><td valign=top><a name="11"></a><tt><tt>6!:11 y</tt></td>
+<td><b>Unpack PM Data</b>. Unpack the PM data, resulting in a boxed vector 
+of data columns:<br><br>
+
+0 &nbsp;name<br>
+1 &nbsp;locale where name is found<br>
+2 &nbsp;valence<br>
+3 &nbsp;line number<tt> </tt>(<tt>_1 </tt>for entry;<tt> _2 </tt>for exit)<br>
+4 &nbsp;space in use (bytes)<br>
+5 &nbsp;time (seconds)<br>
+6 &nbsp;list of names<br><br>
+
+Columns 0 and 1 are indices into column 6.  Columns 0
+to 5 have the same number of (corresponding) elements.<br><br>
+
+<tt>y </tt>are indices of 
+the rows to be unpacked, where 0 is 
+the oldest row (and<tt> _1 </tt>is the newest row). All rows are 
+selected if<tt> y </tt>is the empty vector.  
+Rows in the result are 
+always arranged from oldest to newest and no row is selected
+more than once.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="12"></a><tt><tt>6!:12 y</tt></td>
+<td><b>Add y to the PM Counter</b>. PM data is recorded if the PM 
+counter is greater than 0 
+and a PM data area is extant.  (A non-empty PM data area 
+must be specified before the PM counter can be changed.)  
+The result is the value of the PM counter after the operation.<br>
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="13"></a><tt><tt>6!:13 y</tt></td>
+<td><b>PM Statistics</b>.
+
+Produces a 6-element vector of the following information:<br><br>
+
+0 - what to record<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 - entry and exit<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 - entry and exit and all lines<br>
+1 - action on insufficient space<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 - wrap<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 - truncate<br>
+2 - the maximum number of records<br>
+3 - current number of records<br>
+4 - whether records have been lost<br>
+5 - current value of the PM counter<br><br>
+
+If no PM data area has been specified the result 
+is<tt> 6$0</tt>.<tt> </tt>The argument<tt> y </tt>is ignored.
+</td></tr>
+</table>
+
+<br>
+<hr width=75%>
+<br>
+
+Further Examples:<br>
+<pre>
+   sum=: +/
+
+   avg=: 3 : 0
+n=. #y
+s=. sum y
+s % n
+)
+
+   1 (6!:10) 1e5$'x'
+3570
+   (6!:12) 1
+1
+   avg&quot;1 ? 3 10$100
+65 64.4 64.3
+   (6!:12) _1
+0
+
+   x=. 6!:11 ''
+   $&amp;.&gt; x
++--+--+--+--+--+--+-+
+|21|21|21|21|21|21|3|
++--+--+--+--+--+--+-+
+   |: &gt; 6{. x
+0 2 1 _1 1152 22582.5
+0 2 1  0 4224 22582.5
+0 2 1  1  576 22582.5
+1 2 1 _1  128 22582.5
+1 2 1 _2   64 22582.5
+0 2 1  2  128 22582.5
+0 2 1 _2    0 22582.5
+0 2 1 _1  128 22582.5
+0 2 1  0 4224 22582.5
+0 2 1  1  576 22582.5
+1 2 1 _1  128 22582.5
+1 2 1 _2   64 22582.5
+0 2 1  2  128 22582.5
+0 2 1 _2    0 22582.5
+0 2 1 _1    0 22582.5
+0 2 1  0 4224 22582.5
+0 2 1  1  576 22582.5
+1 2 1 _1  128 22582.5
+1 2 1 _2   64 22582.5
+0 2 1  2  128 22582.5
+0 2 1 _2    0 22582.5
+   
+   _5[\ 2 - ~/\ &gt; 5{x
+4.52571e_5 2.09524e_5 1.50857e_5 1.67619e_5 9.21905e_6
+6.28571e_5 9.21905e_6 1.59238e_5 1.59238e_5 1.34095e_5
+1.00571e_5 1.00571e_5 5.61524e_5 7.54286e_6 1.59238e_5
+1.50857e_5 1.42476e_5 1.00571e_5 8.38095e_6 5.61524e_5
+   
+   &gt; {: x
++---+---+----+
+|avg|sum|base|
++---+---+----+
+   
+   (6!:10) 1e5$'x'   NB. entry and exit only
+3570
+   (6!:12) 1
+1
+   avg&quot;1 ? 3 10$100
+38.8 61.9 61.7
+   (6!:12) _1
+0
+
+   x=. 6!:11 ''
+   |: &gt; 6{.x
+0 2 1 _1  832 22681.5
+1 2 1 _1 4928 22681.5
+1 2 1 _2   64 22681.5
+0 2 1 _2  128 22681.5
+0 2 1 _1  128 22681.5
+1 2 1 _1 4928 22681.5
+1 2 1 _2   64 22681.5
+0 2 1 _2  128 22681.5
+0 2 1 _1    0 22681.5
+1 2 1 _1 4928 22681.5
+1 2 1 _2   64 22681.5
+0 2 1 _2  128 22681.5
+
+   _5[\ 2 - ~/\ &gt; 5{x
+7.12381e_5  1.50857e_5 6.70476e_5 9.21905e_6    3.52e_5
+1.00571e_5 0.000108952 7.54286e_6 3.93905e_5 1.08952e_5
+6.03428e_5           0          0          0          0
+
+   6!:13 ''
+0 0 3570 12 0 0
+   
+   sum_ab_ =: +/
+
+   sum_z_ =: sum_ab_
+
+   avg_q_ =: 3 : 0
+tally=. #
+s=. sum y
+n=. tally y
+s % n
+)
+
+   (6!:10) 1e5$'x'
+3570
+   (6!:12) 1
+1
+   avg_q_ i.12
+5.5
+
+   (6!:12) _1
+0
+
+   x=: 6!:11 ''
+   (&gt;{&amp;&gt;/0 6{x) ,. ' ' ,. (&gt;{&amp;&gt;/1 6{x) ,. ' ' ,. &quot;: ,. &gt;3{x
+avg_q_  q  _1
+sum     q  _1
+sum_ab_ ab _1
+sum_ab_ ab _2
+sum     q  _2
+tally   q  _1
+tally   q  _2
+avg_q_  q  _2
+   
+   &gt; 6{x
++------+---+-------+-----+-+--+
+|avg_q_|sum|sum_ab_|tally|q|ab|
++------+---+-------+-----+-+--+
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="dx007.htm">&gt;&gt;</a>&nbsp;
+<a href="dx005.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

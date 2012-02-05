@@ -1,0 +1,112 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>D. Derivative</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="ddcapco.htm">&gt;&gt;</a>&nbsp;
+<a href="dddot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=25%><b><font size=+2>Derivative</font></b></td>
+<td align=center width=60%><font face="Courier New" size=+3>m D. n &nbsp;u D. n &nbsp;mu</font></td>
+<td align=right  width=15%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr>
+<td bgcolor=#eeeeee>
+<tt>u D. n </tt>is the <tt>n</tt>-th derivative of<tt> u</tt>,<tt> </tt>
+and<tt> u`v D. n </tt>is<tt> u </tt>with an assigned<tt> n</tt>-th 
+derivative<tt> v</tt> .<tt> </tt>For example:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+<pre>
+   (cube D.1;cube D.2; (cube=: ^&amp;3&quot;0) D.3)y=: 2 3 4
++--------+--------+-----+
+|12 27 48|12 18 24|6 6 6|
++--------+--------+-----+
+</pre>
+</td></tr></table><br>
+
+The derivative applies to constant functions, polynomials, 
+the exponential<tt> ^</tt>,<tt> </tt>the integral 
+powers<tt> ^&amp;n</tt>,<tt> </tt>and those assigned by<tt> u`v D. n</tt> .<tt> </tt>
+It also applies to functions derived from these by addition, 
+subtraction, multiplication, and division<tt> </tt>(<tt>u+v</tt>, etc.); 
+by the composition<tt> u@v</tt>;<tt> </tt>and by the 
+inverse<tt> u^:_1</tt> .<tt> </tt>Since functions such as<tt> j. </tt>
+and<tt> - </tt>(negation) and<tt> %: </tt>(square root) and<tt> 1&amp;o. </tt>
+(sin) and<tt> 6&amp;o. </tt>(cosh) may all be so derived, 
+they are also in the domain of the derivative.  
+Others are treated by approximation. 
+The derivative of an arbitrary function may also be treated by 
+a polynomial approximation, (provided by the matrix divide), 
+or by approximations using the secant slope<tt> D: </tt>.<br><br>
+
+If the argument rank of<tt> u </tt>is<tt> a </tt>and the result 
+rank is<tt> r</tt>,<tt> </tt>then the argument rank of<tt> u D.1 </tt>
+is also<tt> a</tt>,<tt> </tt>but its result rank is<tt> r+a</tt> :<tt> </tt>
+the result of<tt> u D.1 </tt>is the derivative of each atom of the 
+result of <tt>u</tt> with respect to each element of its argument, 
+giving what is commonly referred to as the <i>partial derivatives</i>.  
+For example:<br>
+
+<pre>
+   volume=: */&quot;1 
+   VOLUMES=: */\&quot;1
+   (volume;volume D.1;VOLUMES;VOLUMES D.1) y
++--+------+------+------+
+|24|12 8 6|2 6 24|1 3 12|
+|  |      |      |0 2  8|
+|  |      |      |0 0  6|
++--+------+------+------+
+
+   determinant=: -/ . * 
+   permanent=: +/ . * 
+   (];(determinant D.1);(permanent D.1))m=:*:i.3 3
++--------+--------------+--------------+
+| 0  1  4|_201  324 _135|2249 1476 1017|
+| 9 16 25| 132 _144   36| 260  144   36|
+|36 49 64| _39   36   _9|  89   36    9|
++--------+--------------+--------------+
+</pre>
+
+The adverbs<tt> D=: 1 : 'u&quot;0 D.1' </tt>
+and<tt> VD=: 1 : 'u&quot;1 D.1' </tt>assign ranks to their arguments, 
+then take the first derivative; they are convenient for use 
+in scalar and vector calculus:<br>
+
+<pre>
+   sin=: 1&amp;o. 
+   x=: 0.5p1 _0.25p1
+   (*/\ VD y);(sin x);(sin D x);(sin D D x)
++------+-----------+----------+-----------+
+|1 3 12|1 _0.707107|0 0.707107|_1 0.707107|
+|0 2  8|           |          |           |
+|0 0  6|           |          |           |
++------+-----------+----------+-----------+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="ddcapco.htm">&gt;&gt;</a>&nbsp;
+<a href="dddot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

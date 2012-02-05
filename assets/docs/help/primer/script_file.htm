@@ -1,0 +1,137 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Script file</title>
+
+</head><body><!--top jump start--><a href="local.htm">&gt;&gt;</a>&nbsp;
+<a href="monad_dyad_def.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Script file</h1>
+When you close J you lose the definitions of all the names. What you execute in the ijx window affects the current session, but is not permanent. This is fine when experimenting, but when you start defining things like your centigrade verb you want to record the definition so that you can use it in another session.<br>
+<br>
+Close J and restart it.<br>
+
+<pre>   centigrade
+¦value error</pre>
+You have a clean slate. The definition of centigrade, and all the other names you defined, in the previous session are lost.<br>
+<br>
+At least the primitives are still there!<br>
+
+<pre>   2 + 5
+7</pre>
+As you would expect, to maintain a permanent record of your definitions, you save them in files. Files with J sentences and definitions are called script files and you can edit them just as you would edit any other text file. Script files typically have a suffix of .ijs.<br>
+<br>
+Remember: a script file is a source file for definitions.<br>
+<br>
+Although you can use any text editor to work with script files, the J system provides a simple editor that is integrated in ways that make it convenient.<br>
+<br>
+The <b>File|New ijs</b> menu command creates a new script file and a window for editing it. Do this now and you will see that your J session has both an ijx window and a new ijs window.<br>
+<br>
+The ijs window is an edit window on the file with the name in its titlebar. Enter in an ijs window does not execute the line, it just moves to the start of a new line.<br>
+<br>
+Type your centigrade definition into the ijs window.<br>
+<br>
+
+<pre>centigrade =: 3 : 0
+t1 =. y - 32
+t2 =. t1 * 5
+t3 =. t2 % 9
+)</pre>
+<b>Be sure to use <font face=courier size=-1>=:</font> instead of <font face=courier size=-1>=.</font> in the first line.</b> The <font face=courier size=-1>=:</font> makes a global definition. If you use <font face=courier size=-1>=.</font> it is a local definition. This important difference is explained shortly.<br>
+<br>
+So far you have just edited changes into the window. The file has not been changed and the verb is still not defined. You have to run the script in order to execute the sentences.<br>
+<br>
+Do menu command <b>Run|Window</b> in the ijs window to save the changes to the file and then execute each of the sentences in the file. This is similar to your typing the contents of the file into the ijx window, except the sentences and results are not displayed. The only display in the ijx window is the system generated sentence that causes the file sentences to be executed. This sentence will be something like:
+<pre>   load'c:\j601\temp\1.ijs'</pre>
+ If an error is reported (output in the ijx window with a vertical bar on the left) then you have a typo in your script. Correct the text in the ijs window and run it again.<br>
+<br>
+The sentences in the script file have been executed and centigrade is now defined. In the ijx window try using centigrade.<br>
+<br>
+
+<pre>   centigrade 32
+0</pre>
+The file created with <b>File|New ijs</b> is in the J temp directory and has a temporary format name (a number with an ijs suffix). If you close J now, it will ask if you want to delete that temporary file. If you replied no, you could restart and open that temporary file and run it to define centigrade. However, it would be better to resave it now with a more appropriate name in the J user directory. Use <b>File|Save As...</b>, go up one directory level and then to the the user directory, and set the file name as cf.ijs. The file name in the ijs window titlebar will change to the new name.<br>
+<br>
+Close the cf.ijs window and erase your centigrade definition. You erase the definition of a name by using the utility verb erase with an argument that is the string of the name you want to erase. The result of 1 indicates the erase was successful.<br>
+
+<pre>   erase 'centigrade'
+1
+   centigrade 212
+¦value error
+¦       centigrade 212</pre>
+Use <b>File|Open</b> to open the cf.ijs window and use <b>Run|Window</b> to run the script to define centigrade.<br>
+<br>
+
+<pre>   centigrade 212
+100</pre>
+Let's add a definition for fahrenheit to the cf.ijs window. Type in the following after your centigrade definition. Again, be sure to use <font face=courier size=-1>=:</font> .<br>
+<br>
+
+<pre>fahrenheit =: 3 : 0
+t1 =. y * 9
+t2 =. t1 % 5
+t3 =. t2 + 32
+)</pre>
+Use <b>Run|Window</b> to run the sentences in the cf.ijs script. Because these are the first changes to a permanent (non-temporary) file you are prompted to see if you want to save the changes to file. Reply yes, and then test your new verb.<br>
+<br>
+
+<pre>   fahrenheit 0
+32
+   fahrenheit 451
+843.8</pre>
+Close J and restart it.<br>
+
+<pre>   centigrade
+¦value error
+   fahrenheit
+¦value error</pre>
+You can run the sentences in the cf.ijs file without opening the file for editing. Use <b>Run|File</b> and select your cf.ijs file. A line similar to<br>
+
+<pre>   load'c:\j601\user\cf.ijs'</pre>
+appears in the ijx window to run the sentences in the file and your verbs are now defined.<br>
+
+<pre>   centigrade 32
+0
+   fahrenheit 100
+212</pre>
+The line that starts with load that appears in the ijx window is in fact the sentence that causes the sentences in the file to be executed. The menu command is just a short cut way of executing this sentence. The string is the full path name to the file to run. You can shorten this full path name to a relative path name when you type it manually.<br>
+<br>
+To check this, close J, restart it, and verify that centigrade is undefined. In the ijx window execute the following sentence.<br>
+
+<pre>   load'user\cf.ijs'</pre>
+Now check that your verbs are defined.<br>
+<br>
+Use File|Open to open your cf.ijs file for editing.<br>
+<br>
+What if there is an error in the script? Let's add an intentional error to the script to see what happens. Add the line <font face=courier size=-1>foo 123</font> at the end of the script and run the script again.<br>
+
+<pre>   load'c:\j601\user\cf.ijs'
+¦value error
+¦       foo 123
+¦[-13]</pre>
+An error is reported and the execution of the sentences in the script stops. The number at the end of the error report is the line number in the script that had the error. <br>
+<br>
+Remove the error from the script and run it again.<br>
+<!--bottom jump start--><hr><a href="local.htm">&gt;&gt;</a>&nbsp;
+<a href="monad_dyad_def.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

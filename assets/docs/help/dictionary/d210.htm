@@ -1,0 +1,125 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>$ Shape Of  -  Shape</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d211.htm">&gt;&gt;</a>&nbsp;
+<a href="d202v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Shape Of</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>$ &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Shape</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>$ y </tt>yields the shape of<tt> y </tt>as defined 
+in <a href="dicta.htm">Section II A</a>. For example, 
+the shape of a 2-by-3 matrix is<tt> 2 3</tt>,<tt> </tt>and the shape of 
+the scalar<tt> 3 </tt>is an empty list 
+(whose shape is<tt> 0</tt>).<tt> </tt><br><br>
+
+The rank of an argument<tt> y </tt>is<tt> #@$ y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   rank=: #@$
+   (rank 3) , (rank ,3)
+0 1
+
+   (rank 3 4),(rank i. 2 3 4)
+1 3
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+The shape of<tt> x$y </tt>is<tt> x,siy </tt>where<tt> siy </tt>is 
+the shape of an item of<tt> y</tt>;<tt> x$y </tt>gives a length error 
+if<tt> y </tt>is empty and<tt> x,siy </tt>does not contain a zero.  
+For example:<br>
+
+<pre>
+   y=: 3 4$'abcdefghijkl'
+   y ; 2 2$ y
++----+----+
+|abcd|abcd|
+|efgh|efgh|
+|ijkl|    |
+|    |ijkl|
+|    |abcd|
++----+----+
+</pre>
+
+<p>This example shows how the result is formed from the <i>items</i> 
+of<tt> y</tt> ,<tt> </tt>the last 1-cell<tt> </tt>(<tt>abcd</tt>)<tt> </tt>
+showing that the selection is cyclic.</p>
+
+<p>The fit 
+conjunction<tt> </tt>(<tt>$!.f</tt>)<tt> </tt>
+provides fill specified by the atom<tt> f</tt> ,<tt> </tt>or 
+the normal fill defined under <a href="d521.htm">Take (<tt>{.</tt>)</a>
+if<tt> f </tt>is an empty vector.
+</p>&nbsp;</td>                                                         
+</tr></table><br>
+
+Since<tt> x $ y </tt>uses <i>items</i> from<tt> y</tt>,<tt> </tt>it 
+is sometimes useful to ravel the right argument, as in<tt> x $ ,y</tt>.<tt> </tt>
+For example (using the<tt> y </tt>defined above):<br>
+
+<pre>
+   2 3 $ ,y
+abc
+def
+</pre>
+
+The fit conjunction is often useful for appending zeros or spaces.  
+For example:<br>
+
+<pre>
+   8 $!.0 (2 3 4)
+2 3 4 0 0 0 0 0
+
+   ]z=: 8$!.'*' 'abc'
+abc*****
+            
+   |. z
+*****cba
+
+   2 5$!.a: ;: 'zero one two three four five six'
++----+---+---+-----+----+
+|zero|one|two|three|four|
++----+---+---+-----+----+
+|five|six|   |     |    |
++----+---+---+-----+----+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d211.htm">&gt;&gt;</a>&nbsp;
+<a href="d202v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

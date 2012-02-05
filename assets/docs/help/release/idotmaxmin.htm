@@ -1,0 +1,76 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>i.&lt;./ Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="qco.htm">&gt;&gt;</a>&nbsp;
+<a href="midot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">i.&lt;./ </font>
+<font size=+3>Improved</font>
+</td><td align=right>
+initial writing: 2004-11-02<br>last updated: 2005-02-11
+</td></tr></table>
+<br>
+
+<p>The following monads on integer or floating point lists are now implemented
+by special code:</p>
+
+<table>
+<tr><td><tt>i.&lt;./</tt></td> <td>&nbsp;&nbsp;&nbsp;</td> <td>index where the minimum &nbsp;first occurs</td></tr>
+<tr><td><tt>i.&gt;./</tt></td> <td>&nbsp;&nbsp;&nbsp;</td> <td>index where the maximum first occurs</td></tr>
+<tr><td><tt>i:&lt;./</tt></td> <td>&nbsp;&nbsp;&nbsp;</td> <td>index where the minimum &nbsp;last occurs</td></tr>
+<tr><td><tt>i:&gt;./</tt></td> <td>&nbsp;&nbsp;&nbsp;</td> <td>index where the maximum last occurs</td></tr>
+</table>
+ 
+<p>The following benchmarks demonstrate the improvement:</p>
+
+
+<pre>
+i=: 1e6 ?@$ 2e9
+d=: 1e6 ?@$ 0
+ts=: 6!:2 , 7!:2@]   NB. time and space
+ts 'Expr'
+</pre>
+
+<table>
+<tr>
+<td align=center><b>Expr</b></td><td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>J 5.04</b></td><td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>J 5.03</b></td><td>&nbsp;&nbsp;&nbsp;</td>
+<td align=center><b>Ratio</b></td></tr>
+
+<tr><td><tt>(i.&lt;./)i</tt></td><td>&nbsp;</td><td>0.00244686 &nbsp; 1216</td><td>&nbsp;</td><td>0.00791307 &nbsp; 1280</td><td>&nbsp;</td><td>3.23 &nbsp; 1.05</td></tr>
+<tr><td><tt>(i.&lt;./)d</tt></td><td>&nbsp;</td><td>0.00353955 &nbsp; 1216</td><td>&nbsp;</td><td>0.02330960 &nbsp; 1280</td><td>&nbsp;</td><td>6.56 &nbsp; 1.05</td></tr>
+
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="qco.htm">&gt;&gt;</a>&nbsp;
+<a href="midot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

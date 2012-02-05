@@ -1,0 +1,175 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>u: Unicode</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dxco.htm">&gt;&gt;</a>&nbsp;
+<a href="dtcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Unicode</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u: &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Unicode</font></b></td>
+</tr></table>
+<br>
+
+<table>
+<tr><td>J datatypes:</td><td>&nbsp;</td><td><i>char</i> (1-byte char) &mdash; an 8-bit value from 0 to 255</td></tr>
+<tr><td colspan=2>&nbsp;</td>           <td><i>wchar</i> (2-byte char, wide char) &mdash; a 16-bit value from 0 to 65535</td></tr>
+<tr><td>Encodings:</td><td>&nbsp;</td>  <td>ASCII &mdash; 0 to 127, a subset of U8</td></tr>
+<tr><td colspan=2>&nbsp;</td>           <td>U8 &mdash; Unicode code point value in multibyte encoding</td></tr>
+</table>
+
+<p>Most<tt> u: </tt>dyads work with values, not encodings. 
+ASCII and U8 encoding are used in<tt> 7&u: </tt>and<tt> 8&u:</tt> .</p> 
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+The monad<tt> u: </tt>applies to several kinds of arguments:<br><br>
+
+<table>
+<tr valign=top>
+<td><b>Argument</b></td>
+<td><b>&nbsp; Result</b></td>
+</tr>
+
+<tr valign=top>
+<td>char &nbsp;&nbsp;</td>
+<td>same as<tt> 2&amp;u:</tt></td>
+</tr>
+
+<tr valign=top>
+<td>wchar</td>
+<td>copy of argument</td>
+</tr>
+
+<tr valign=top>
+<td>integers</td>
+<td>same as<tt> 4&amp;u:</tt></td>
+</tr>
+</table>
+<br>
+The inverse of the monad<tt> u: </tt>is<tt> 3&amp;u:</tt>
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+The dyad<tt> u: </tt>takes a scalar integer left argument
+and applies to several kinds of right arguments.<br><br>
+
+<table>
+<tr>
+<td valign=top><b>Left</b>&nbsp;&nbsp;&nbsp;</td>
+<td valign=top><b>Result</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+<td>&nbsp; </td>
+<td valign=top> &nbsp; <b>Right</b></td>
+</tr>
+
+<tr valign=top><td><tt>1</tt></td><td>char</td><td> </td>
+<td><table>
+<tr><td>char </td><td>&nbsp;</td><td>as is</td></tr>
+<tr><td>wchar</td><td>&nbsp;</td><td>high-order 8 bits discarded</td></tr>
+</table></td></tr>
+
+<tr valign=top><td><tt>2</tt></td><td>wchar</td><td> </td>
+<td><table>
+<tr><td>char </td><td>&nbsp;</td><td>high-order 8 bits are 0</td></tr>
+<tr><td>wchar</td><td>&nbsp;</td><td>as is</td></tr>
+</table></td></tr>
+
+<tr valign=top><td><tt>3</tt></td><td>integers</td><td> </td>
+<td>char or wchar</td></tr>
+
+<tr valign=top><td><tt>4</tt></td><td>wchar</td><td> </td>
+<td>integers in the range -65536 to 65535</td>
+</tr>
+
+<tr valign=top><td><tt>5</tt></td><td>char</td><td> </td>
+<td>wchar in the range 0 to 255</td>
+</tr>
+
+<tr valign=top><td><tt>6</tt></td><td>wchar</td><td> </td>
+<td>pairs of chars are converted to wchars</td>
+</tr>
+
+<tr valign=top><td><tt>7</tt></td><td>char or<br>wchar</td><td> </td>
+<td><table>
+<tr><td>U8</td>   <td>&nbsp;</td><td>converted to wchar</td></tr>
+<tr><td>ASCII</td><td>&nbsp;</td><td>as is</td></tr>
+<tr><td valign=top>wchar</td><td>&nbsp;</td><td>if all values &lt;128, convert to ASCII, otherwise as is</td></tr>
+</table>
+an empty right argument produces an empty char result
+</td></tr>
+
+<tr valign=top><td><tt>8</tt></td><td>U8</td><td> </td>
+<td><table>
+<tr><td>wchar</td><td>&nbsp;</td><td>converted to U8</td></tr>
+<tr><td>char</td> <td>&nbsp;</td><td>as is</td></tr>
+</table>
+an empty right argument produces an empty char result
+</td></tr>
+</table>
+
+
+<br>
+<tt>1&amp;u: </tt>and<tt> 2&amp;u:</tt> 
+,<tt> 3&amp;u: </tt>and<tt> 4&amp;u:</tt> 
+,<tt> </tt>and<tt> 7&amp;u: </tt>and<tt> 8&amp;u: </tt>
+are inverse pairs.
+<br>&nbsp;</td>
+</tr></table><br>
+
+<!-- 2-byte characters can not be entered the keyboard. 
+The display of an array<tt> x </tt>of 2-byte characters is that 
+of<tt> 1 u: x</tt> ,<tt> </tt>that is, discarding the high-order byte 
+of each 2-byte character.<br><br> -->
+
+Examples:<br>
+<pre>
+   ] t=: u: 'We the people' 
+We the people
+   3!:0 t
+131072                         NB. the unicode datatype numeric code is 131072
+
+   u: 97 98 99 +/ 0 256 512 1024
+aaaa                           NB. 2-byte characters have the same
+bbbb                           NB. display as 1-byte characters
+cccc 
+
+   'a' = u: 97 + 0 256 512 1024
+1 0 0 0
+
+   ] t=: (2 4$'abcdefgh') , u: 'wxyz'
+abcd                           NB. 1- and 2-byte characters can be catenated together.
+efgh                           NB. The 1-byte characters are <i>promoted</i>.
+wxyz
+   3!:0 t
+131072
+
+</pre>
+
+<!--bottom jump start--><hr><a href="dxco.htm">&gt;&gt;</a>&nbsp;
+<a href="dtcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,109 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 27. Polynomial Roots II</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp28.htm">&gt;&gt;</a>&nbsp;
+<a href="samp26.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>27. Polynomials: Roots from Coefficients (Kerner&rsquo;s Method)</b></font><br><br>
+
+Newton&rsquo;s method applies to one root at a time and 
+requires a good starting approximation.  Kerner&rsquo;s method is a 
+generalization that gives all the roots, starting from a 
+<i>list</i><tt> a </tt>and dividing each element 
+of the residual<tt> f a </tt>by the derivative 
+with respect to the corresponding root.  
+It applies only to a polynomial whose highest order coefficient 
+is 1, and we first normalize 
+the coefficients by dividing by the last, yielding a polynomial 
+having the same roots.  The method converges to complex roots only 
+if at least one of the initial approximations is complex.  
+We will use the Taylor series approximation to the 
+exponential function, because the corresponding polynomial 
+has complex roots:<br>
+
+<pre>
+   ]d=: ^ t. i.6
+1 1 0.5 0.166667 0.0416667 0.00833333
+
+   ]c=: (norm=: % {:) d
+120 120 60 20 5 1
+
+   +. a=: (init=: r.@}.@i.@#) c |a
+ 0.540302  0.841471 1 1 1 1 1
+_0.416147  0.909297
+_0.989992  0.14112
+_0.653644 _0.756802
+ 0.283662 _0.958924
+
+   deriv=: [: */ 0&amp;=@{.}@(-/~ ,: 1:)
+
+   kerner=: 1 : '] - x&amp;p. % deriv@]'
+
+   r=: c kerner ^:_ a
+   +.(/:|) r                  NB. Real and imaginary parts of roots sorted by magnitude
+_2.18061 4.57601e_31
+ _1.6495     1.69393
+ _1.6495    _1.69393
+0.239806     3.12834
+0.239806    _3.12834
+
+   &gt;./|c p. r
+1.04488e_13
+</pre>
+
+These results may be compared with the use of the primitive<tt> p. </tt>
+on the un-normalized coefficients<tt> d</tt> .<tt> </tt>Thus:<br>
+
+<pre>
+   p. 2 4 2
++-+-----+
+|2|_1 _1|
++-+-----+
+
+   ,.;}.p. d
+ 0.2398064j3.12834
+0.2398064j_3.12834
+   _1.6495j1.69393
+  _1.6495j_1.69393
+          _2.18061
+</pre>
+
+Newton&rsquo;s method may also be used for a complex root:<br>
+
+<pre>
+   +. d NEWTON ^:0 1 2 3 _ a=: 1j1
+        1        1
+0.0166065  0.99639
+_0.990523 0.992532
+ _1.95338  1.10685
+  _1.6495   1.6939
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp28.htm">&gt;&gt;</a>&nbsp;
+<a href="samp26.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A few more primitives</title>
+
+</head><body><!--top jump start--><a href="plot.htm">&gt;&gt;</a>&nbsp;
+<a href="j_list_adding.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>A few more primitives</h1>
+The monad <font face=courier size=-1>i.</font> (integers) result is the list of integers from 0 up to its right argument.<br>
+
+<pre>   i. 2
+0 1
+   i. 4
+0 1 2 3 
+   i. 6
+0 1 2 3 4 5</pre>
+The dyad <font face=courier size=-1>$</font> is called shape.<br>
+
+<pre>   5 $ 7	NB. a list of 5 7's
+7 7 7 7 7
+   8 $ 23	NB. a list of 8 23's
+23 23 23 23 23 23 23 23</pre>
+The monad <font face=courier size=-1>?</font> (roll) generates a random number in the range 0 up to 1 less than the argument. An argument of 0 gives a random floating point number greater than or egual to 0 and less than 1. The answers vary depending on how the die rolls.<br>
+
+<pre>   ? 10
+6
+   ? 10
+0
+   ? 10 10 10 10  NB. 4 numbers in range 0 to 9
+3 0 4 6
+   ? 5 $ 100	  NB. 5 numbers in range 0 to 99	
+58 93 84 52 9
+   ? 0 0 0
+0.708477 0.553165 0.00766673</pre>
+The dyad <font face=courier size=-1>^ </font>(power) result is the left argument multiplied by itself the number of times given by the right argument.<br>
+
+<pre>   3 ^ 2	NB. 3 * 3
+9
+   2 ^  3	NB. 2 * 2 * 2
+8
+   2 ^ 4	NB. 2 * 2 * 2 * 2
+16
+   2 2 2 2 2 2 ^ 0 1 2 3 4 5
+1 2 4 8 16 32
+   2 ^ 0 1 2 3 4 5
+1 2 4 8 16 32
+   2 ^ i. 6
+1 2 4 8 16 32</pre>
+The dyad <font face=courier size=-1>o.</font> (circle) is the letter <font face=courier size=-1>o</font> inflected with a dot, and it provides the circular (trigonometric) functions. In particular, the <font face=courier size=-1>o.</font> verb with a left argument of 1 gives the sine of the right argument.<br>
+
+<pre>   1 o. i.7   
+0 0.841471 0.909297 0.14112 _0.756802 _0.958924 _0.279415 
+</pre>
+It is hard to tell whether this makes sense or not and it would be better to see this data with a plot.<br>
+<!--bottom jump start--><hr><a href="plot.htm">&gt;&gt;</a>&nbsp;
+<a href="j_list_adding.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

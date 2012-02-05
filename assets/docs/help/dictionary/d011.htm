@@ -1,0 +1,141 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&lt;. Floor  -  Lesser Of (Min)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d012.htm">&gt;&gt;</a>&nbsp;
+<a href="d010.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Floor</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>&lt;. &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Lesser Of (Min)</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>&lt;.y </tt>gives the <i>floor</i> of<tt> y</tt> ,<tt> </tt>that is, 
+the largest integer less than or equal to<tt> y</tt> .<tt> </tt>Thus:<br>
+
+<pre>
+   &lt;. 4.6 4 _4 _4.6
+4 4 _4 _5
+</pre>
+
+The implied comparison with integers is tolerant, 
+as discussed under <a href="d000.htm">Equal (<tt>=</tt>)</a>, and is controlled 
+by<tt> &lt;.!.t</tt> .<tt> </tt> 
+See below for complex arguments.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x&lt;.y </tt>is the lesser of<tt> x </tt>and<tt> y</tt> .<tt> </tt>
+For example:<br>
+
+<pre>
+   3 &lt;. 4 _4
+3 _4
+
+   &lt;./7 8 5 9 2
+2
+
+   &lt;./\7 8 5 9 2
+7 7 5 5 2
+</pre>
+</td>
+</tr></table><br>
+
+For a complex argument, the definition of<tt> &lt;. </tt>is modelled by:<br>
+
+<pre>
+   floor=: j./@(ip+(c2&gt;c1),c1+:c2)
+   '`c1 c2 fp ip'=:(1:&gt;+/@fp)`(&gt;:/@fp)`(+.-ip)`(&lt;.@+.)
+</pre>
+
+As developed by <a href="ref.htm#10">McDonnell [10]</a>, 
+this function has the following properties:<br><br>
+
+<table>
+<tr><td>Convexity:</td>
+<td>If<tt> (&lt;.z1)=(&lt;.z2) </tt>and<tt> z3 </tt>lies on the line 
+between<tt> z1 </tt>to<tt> z2</tt>,<tt> </tt>
+then<tt> (&lt;.z3)=(&lt;.z1)</tt> .
+</td></tr>
+
+<tr><td>Translatability:&nbsp;</td>
+<td>If<tt> z4 </tt>is a Gaussian integer, 
+then<tt> (z4+&lt;.z5)=(&lt;.z4+z5)</tt> .
+</td></tr>
+
+<tr><td>Compatibility:</td>
+<td><tt> (&lt;.x j.0)=((&lt;.x)j.0) </tt>
+and<tt> (&lt;.0 j.x)=(0 j.(&lt;.x))</tt>
+</td></tr>
+</table>
+<br>
+
+The function<tt> &lt;. </tt>can be viewed as a tiling by rectangles 
+of unit area, all arguments within a rectangle sharing the same floor.  
+One rectangle has vertices at<tt> 1j0 </tt>and<tt> 0j1</tt>,<tt> </tt>
+with the other side passing through the origin.  
+Rectangles along successive diagonals are displaced by one-half 
+the length.<br><br>
+
+The phrase<tt> j./@ip </tt>&ldquo;floors&rdquo; the individual parts 
+of a complex argument. Moreover, the floor<tt> &lt;.y </tt>
+is equivalent to<tt> -&gt;.-y</tt> . In other words, 
+it is the dual of <i>ceiling</i> with respect to 
+(that is, <i>under</i>) arithmetic 
+negation:<tt> &lt;. </tt><font size=+1>&harr;</font><tt> &gt;.&amp;.- </tt>
+and<tt> &gt;. </tt><font size=+1>&harr;</font><tt> &lt;.&amp;.-</tt> .<tt> </tt>Thus:<br>
+
+<pre>
+   (&gt;.&amp;.- ; &lt;.) 4.6 4 _4 _4.6
++---------+---------+
+|4 4 _4 _5|4 4 _4 _5|
++---------+---------+
+</pre>
+
+The expression<tt> &lt;.x+0.5 </tt>gives the integer 
+<i>nearest </i>to the real argument<tt> x</tt> .<tt> </tt> 
+The number of digits needed to represent a positive integer is given 
+by one plus the floor of its base ten logarithm:<br>
+
+<pre>
+   a ,. (,. 1:+&lt;.) 10^. a=: 9 10 11 99 100 101
+  9 0.954243 1
+ 10        1 2
+ 11  1.04139 2
+ 99  1.99564 2
+100        2 3
+101  2.00432 3
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="d012.htm">&gt;&gt;</a>&nbsp;
+<a href="d010.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

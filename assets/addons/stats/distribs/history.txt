@@ -1,0 +1,15 @@
+stats/distribs - change history
+
+== 1.0.2/3 ==
+ * chg: update for j701
+ * fix: typo in test_normal 
+
+== 1.0.1 ==
+ * add: Uniform distribution script
+ * chg: locale for Normal verbs
+ * fix: bug in dyadic dnorm
+
+== 1.0.0 ==
+ * First published in JAL
+ * Normal distribution script 
+

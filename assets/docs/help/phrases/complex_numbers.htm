@@ -1,0 +1,85 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>E. Complex Numbers</title>
+
+</head><body><!--top jump start--><a href="matrix_algebra.htm">&gt;&gt;</a>&nbsp;
+<a href="arithmetic.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>8E. Complex Numbers</h1>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0=: cnj=: +</tt></TD> <TD width=60%>Conjugate</TD>
+  </TR><TR><TD><tt>m1=: mag=: |</tt></TD> <TD>Magnitude</TD>
+  </TR><TR><TD><tt>m2=: %:@(cnj*])</tt></TD>  <TD ALIGN="center">"</TD>
+  </TR><TR><TD><tt>m3=: rai=: +.</tt></TD> <TD>Real and imaginary parts</TD>
+  </TR><TR><TD><tt>m4=: maa=: *.</tt></TD> <TD>Magnitude and angle</TD>
+  </TR><TR><TD><tt>m5=: irai=: rai^:_1  </tt></TD> <TD>Inverse <tt>rai</tt></TD>
+  </TR><TR><TD><tt>m6=: imaa=: maa^:_1</tt></TD> <TD>Inverse <tt>maa</tt></TD>
+  </TR><TR><TD><tt>m7=: rou=: [:^ 0j2p1&amp;% * i. </tt></TD><TD>Roots of unity</TD>
+  </TR><TR><TD><tt>m8=: rpg=: rai@rou</tt></TD> <TD>Regular polygon</TD>
+  </TR><TR><TD><tt>d9=: zero=: ] * 10&amp;^@-@[ &lt; |</tt></TD> <TD>Zero any real y less than 10^-x in mag</TD></TR>
+  <TR><TD><tt>m10=: z=:({.,{:*1e_6&quot;_&lt;%~/@:|)&amp;.rai</tt></TD> <TD>Zero imaginary if relatively small</TD></TR>
+  <TR><TD NOWRAP><tt>m11=: (1e_10&amp;$:) : (j./&quot;1@((] * (&lt;:|)) +.))</tt></TD> <TD>Clean y</TD></TR>
+</TABLE>
+
+
+<P>The function <tt>z</tt> may be used to zero any imaginary part that is relatively small compared to the corresponding real part. For example:</P>
+
+<pre>   (] ,: z) a=:3+j.10^-2*i. 5
+3j1 3j0.01 3j0.0001 3j1e_6 3j1e_8
+3j1 3j0.01 3j0.0001      3      3
+
+   z a
+3j1 3j0.01 3j0.0001 3 3</pre>
+
+<P>Complex numbers can be scaled by multiplication by a real number, and shifted and rotated by addition and multiplication by complex numbers. For example:</P>
+
+<pre>   ]a=: rou 3 Third roots of unity
+1 _0.5j0.866025 _0.5j_0.866025
+
+   |a Lie on the unit circle
+1 1 1
+
+   1ad30 Complex of mag 1 and angle of 30 degrees
+0.866025j0.5
+
+   6&amp;zero@rai&amp;.&gt; (] ; 3j4&amp;+ ; 1ad30&amp;* ; 2ad60&amp;*) a
++---------------------------------------------------+
+|   1        0|  4       4| 0.866025 0.5| 1  1.73205|
+| 0.5 0.866025|2.5 4.86603|_0.866025 0.5|_2        0|
+|_0.5 0.866025|2.5 3.13397|        0  _1| 1 _1.73205|
++---------------------------------------------------+
+ Coordinates  Shift by 3,4   Rotate by   Rotate by
+ of triangle                 30 degrees   60 degrees
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="matrix_algebra.htm">&gt;&gt;</a>&nbsp;
+<a href="arithmetic.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

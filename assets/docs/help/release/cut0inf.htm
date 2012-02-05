@@ -1,0 +1,135 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>v;.0 Extended</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="cut0.htm">&gt;&gt;</a>&nbsp;
+<a href="shapex.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">v;.0 </font>
+<font size=+3>Extended</font></b>
+</td><td align=right>
+initial writing: 2002-01-29<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The dyad 0-cut<tt> v;.0 </tt>is extended to accept infinite 
+sizes<tt> </tt>(<tt>1{x</tt>).<tt> </tt>For example:<br>
+
+<pre>
+   y=: 7 8$ '0123456789',a.{~ ,65 97+/i.26
+   y
+01234567
+89ABCDEF
+GHIJKLMN
+OPQRSTUV
+WXYZabcd
+efghijkl
+mnopqrst
+
+   (1 2 ,: 3 999) [;.0 y
+ABCDEF
+IJKLMN
+QRSTUV
+   (1 2 ,: 3 _) [;.0 y
+ABCDEF
+IJKLMN
+QRSTUV
+
+   (1 2 ,: _999 3) [;.0 y
+opq
+ghi
+YZa
+QRS
+IJK
+ABC
+   (1 2 ,: _ 3) [;.0 y
+ABC
+IJK
+QRS
+YZa
+ghi
+opq
+
+   &lt;&quot;2 x=: 1 2 ,:&quot;1 &gt; ,&quot;2 { ;~&quot;1 ] _ __ ,. 3
++-----+----+----+---+
+|1 2  |1 2 |1 2 |1 2|
+|_ _  |_ 3 |3 _ |3 3|
++-----+----+----+---+
+| 1  2| 1 2|1  2|1 2|
+|__ __|__ 3|3 __|3 3|
++-----+----+----+---+
+   x &lt;;.0 y
++------+---+------+---+
+|ABCDEF|ABC|ABCDEF|ABC|
+|IJKLMN|IJK|IJKLMN|IJK|
+|QRSTUV|QRS|QRSTUV|QRS|
+|YZabcd|YZa|      |   |
+|ghijkl|ghi|      |   |
+|opqrst|opq|      |   |
++------+---+------+---+
+|tsrqpo|opq|FEDCBA|ABC|
+|lkjihg|ghi|NMLKJI|IJK|
+|dcbaZY|YZa|VUTSRQ|QRS|
+|VUTSRQ|QRS|      |   |
+|NMLKJI|IJK|      |   |
+|FEDCBA|ABC|      |   |
++------+---+------+---+
+
+   &lt;&quot;2 x=: _1 2 ,:&quot;1 &gt; ,&quot;2 { ;~&quot;1 ] _ __ ,. 3
++-----+----+-----+----+
+|_1 2 |_1 2|_1 2 |_1 2|
+| _ _ | _ 3| 3 _ | 3 3|
++-----+----+-----+----+
+|_1  2|_1 2|_1  2|_1 2|
+|__ __|__ 3| 3 __| 3 3|
++-----+----+-----+----+
+   x &lt;;.0 y
++------+---+------+---+
+|234567|234|YZabcd|YZa|
+|ABCDEF|ABC|ghijkl|ghi|
+|IJKLMN|IJK|opqrst|opq|
+|QRSTUV|QRS|      |   |
+|YZabcd|YZa|      |   |
+|ghijkl|ghi|      |   |
+|opqrst|opq|      |   |
++------+---+------+---+
+|tsrqpo|opq|dcbaZY|YZa|
+|lkjihg|ghi|lkjihg|ghi|
+|dcbaZY|YZa|tsrqpo|opq|
+|VUTSRQ|QRS|      |   |
+|NMLKJI|IJK|      |   |
+|FEDCBA|ABC|      |   |
+|765432|234|      |   |
++------+---+------+---+
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="cut0.htm">&gt;&gt;</a>&nbsp;
+<a href="shapex.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

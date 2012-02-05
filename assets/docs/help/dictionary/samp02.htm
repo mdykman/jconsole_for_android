@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 2.  Alphabet and Numbers</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp03.htm">&gt;&gt;</a>&nbsp;
+<a href="samp01.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>2. Alphabet and Numbers</b></font><br><br>
+
+<pre>
+   (a. {~ j +/ i.26) ; (j +/ i.6) ; (j=: a. i. 'aA') ; ($ a.)
++--------------------------+--------------------+-----+---+
+|abcdefghijklmnopqrstuvwxyz|97 98 99 100 101 102|97 65|256|
+|ABCDEFGHIJKLMNOPQRSTUVWXYZ|65 66 67  68  69  70|     |   |
++--------------------------+--------------------+-----+---+
+
+   1 2 3{ t=: 8 32$a.         NB. The major alphabet
+ !&quot;#$%&amp;'()*+,-./0123456789:;&lt;=&gt;?
+@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_
+`abcdefghijklmnopqrstuvwxyz{|}~
+</pre>
+
+The table<tt> t </tt>arranges the alphabet in eight rows, 
+but its complete display would look odd because of the effects 
+of various control characters such as the carriage return.  
+A boxed display<tt> &lt;t </tt>is more readable because spaces
+are substituted for them.<br>
+
+<pre>
+   i. 2 5                     NB. Table of integers
+0 1 2 3 4
+5 6 7 8 9
+
+   r=: 0j1 _1 0j_1 1          NB. Square roots of plus and minus 1
+   + r                        NB. (Complex) conjugates
+0j_1 _1 0j1 1
+
+   r * +r
+1 1 1 1
+                    
+   r */ r                     NB. Multiplication table of roots of unity
+  _1 0j_1    1  0j1
+0j_1    1  0j1   _1
+   1  0j1   _1 0j_1
+ 0j1   _1 0j_1    1
+                    
+   ! 45x                      NB. &ldquo;x&rdquo; denotes extended precision
+119622220865480194561963161495657715064383733760000000000
+</pre>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="samp03.htm">&gt;&gt;</a>&nbsp;
+<a href="samp01.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

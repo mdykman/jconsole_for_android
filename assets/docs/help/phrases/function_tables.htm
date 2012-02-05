@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>D. Function Tables</title>
+
+</head><body><!--top jump start--><a href="bond_curry.htm">&gt;&gt;</a>&nbsp;
+<a href="specimens.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>1D. Function Tables</h1>
+
+<TABLE BORDER=1 CELLSPACING=0 width="100%">
+<TR><TD width=40%><tt>d0=: +/</tt></TD><TD width=60%>Addition table</TD></TR>
+
+<TR><TD><tt>d1=: */</tt></TD><TD>Multiplication table</TD></TR>
+
+<TR><TD><tt>d2=: &gt;./</tt></TD><TD>Maximum table</TD></TR>
+
+<TR><TD><tt>d3=: [ by ] over +/</tt></TD><TD>Bordered addition table</TD></TR>
+
+<TR><TD><tt>d4=: by=: ' '&amp;;@,.@[,.]</tt></TD><TD>Format function</TD></TR>
+
+<TR><TD><tt>d5=: over=: ({.;}.)@&quot;:@,</tt></TD><TD>Format function</TD></TR>
+
+<TR><TD><tt>m6=: +/~@i.</tt></TD><TD>Addition table on first <tt>y</tt> integers</TD></TR>
+
+<TR><TD><tt>m7=: bc=: !/~@i.</tt></TD><TD>Binomial coefficients of order <tt>y</tt></TD></TR>
+
+<TR><TD><tt>a8=: ft=: 1 : 'x./~@i.'</tt></TD><TD>Function table</TD></TR>
+
+<TR><TD nowrap><tt>a9=: bft=: 1 : 'i. by i. over x./~@i.'</tt></TD><TD>Bordered function table (Explicit definition)</TD></TR>
+</TABLE>
+	
+
+<P>The first three phrases produce function tables as illustrated below:
+</P>
+<pre>
+   2 3 5 (d0 ; d1 ; d2) 0 1 2 3 4 5
++----------------------------------------+
+|2 3 4 5 6  7|0 2  4  6  8 10|2 2 2 3 4 5|
+|3 4 5 6 7  8|0 3  6  9 12 15|3 3 3 3 4 5|
+|5 6 7 8 9 10|0 5 10 15 20 25|5 5 5 5 5 5|
++----------------------------------------+
+</pre>
+
+<P>The next produces an addition table bordered by its arguments for easy reading; <tt>m6 </tt>and <tt>m7 </tt>produce tables on lists of integers, and the adverb <tt>a9 </tt>produces a bordered function table:</P>
+
+<pre>   2 3 5 d3 0 1 2 3 4 5
++--------------+
+| |0 1 2 3 4  5|
++-+------------+
+|2|2 3 4 5 6  7|
+|3|3 4 5 6 7  8|
+|5|5 6 7 8 9 10|
++--------------+
+
+  (m6 ; m7) 5
++-------------------+
+|0 1 2 3 4|1 1 1 1 1|
+|1 2 3 4 5|0 1 2 3 4|
+|2 3 4 5 6|0 0 1 3 6|
+|3 4 5 6 7|0 0 0 1 4|
+|4 5 6 7 8|0 0 0 0 1|
++-------------------+
+
+   % a9 5
++------------------------+
+| |0 1   2         3    4|
++-+----------------------+
+|0|0 0   0         0    0|
+|1|_ 1 0.5 0.3333333 0.25|
+|2|_ 2   1 0.6666667  0.5|
+|3|_ 3 1.5         1 0.75|
+|4|_ 4   2   1.33333    1|
++-+----------------------+
+</pre>
+<br>
+
+<!--bottom jump start--><hr><a href="bond_curry.htm">&gt;&gt;</a>&nbsp;
+<a href="specimens.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

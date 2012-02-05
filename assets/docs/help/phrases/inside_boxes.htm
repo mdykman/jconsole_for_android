@@ -1,0 +1,204 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Inside Boxes</title>
+
+</head><body><!--top jump start--><a href="character.htm">&gt;&gt;</a>&nbsp;
+<a href="finance.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>13A. Inside Boxes</h1>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>a0=: each=: &amp;.&gt;</tt></TD>	<TD width=60%>Apply  verb to each box</TD></TR>
+  <TR><TD><tt>m1=: open=: -:&gt; :: 1:</tt></TD>	<TD>Test if open (not boxed)</TD></TR>
+  <TR><TD><tt>v2=: fmt=: &quot;:</tt></TD>	<TD>Format</TD></TR>
+  <TR><TD><tt>m3=: just=: 3 : '9!:3 (2) [ 9!:17 y.'
+  </tt></TD>	<TD valign="top">Set function display to boxed form, and set justification within boxes to y</TD></TR>
+  <TR><TD><tt>m4=: L. = 0:</tt></TD>           	<TD>Test if open</TD></TR>
+  <TR><TD><tt>m5=: &lt; -: {:@;~ </tt></TD>    	<TD>Test if open</TD></TR>
+  <TR><TD><tt>m6=: 32&amp;&gt;@(3!:0)</tt></TD>	<TD>Test if open</TD></TR>
+  <TR><TD><tt>m7=: &lt;^:(L. = 0:)</tt></TD>   	<TD>Box if open
+  </TD></TR>
+  
+</TABLE>
+
+
+<P>The adverb each applies its verb argument to the "inside" 
+of each box of the argument of the resulting function, 
+as illustrated below:</P>
+
+<pre>   ]c=: &lt;&quot;1 &lt;&quot;2 i.3 3 3 2
++---------------------------------------------------------+
+|+---------------+|+-----------------+|+-----------------+|
+||0 1| 6  7|12 13|||18 19|24 25|30 31|||36 37|42 43|48 49||
+||2 3| 8  9|14 15|||20 21|26 27|32 33|||38 39|44 45|50 51||
+||4 5|10 11|16 17|||22 23|28 29|34 35|||40 41|46 47|52 53||
+|+---------------+|+-----------------+|+-----------------+|
++---------------------------------------------------------+
+
+   |. each c
++---------------------------------------------------------+
+|+---------------+|+-----------------+|+-----------------+|
+||12 13| 6  7|0 1|||30 31|24 25|18 19|||48 49|42 43|36 37||
+||14 15| 8  9|2 3|||32 33|26 27|20 21|||50 51|44 45|38 39||
+||16 17|10 11|4 5|||34 35|28 29|22 23|||52 53|46 47|40 41||
+|+---------------+|+-----------------+|+-----------------+|
++---------------------------------------------------------+
+
+ 
+   |. each each c
++---------------------------------------------------------+
+|+---------------+|+-----------------+|+-----------------+|
+||4 5|10 11|16 17|||22 23|28 29|34 35|||40 41|46 47|52 53||
+||2 3| 8  9|14 15|||20 21|26 27|32 33|||38 39|44 45|50 51||
+||0 1| 6  7|12 13|||18 19|24 25|30 31|||36 37|42 43|48 49||
+|+---------------+|+-----------------+|+-----------------+|
++---------------------------------------------------------+
+
+    |. each each each c
++---------------------------------------------------------------------------+
+|+---------------------+|+-----------------------+|+-----------------------+|
+||+---+|+-----+|+-----+|||+-----+|+-----+|+-----+|||+-----+|+-----+|+-----+||
+|||0|1|||6 |7 |||12|13|||||18|19|||24|25|||30|31|||||36|37|||42|43|||48|49|||
+||+-+-||+--+--||+--+--||||+--+--||+--+--||+--+--||||+--+--||+--+--||+--+--|||
+|||2|3|||8 |9 |||14|15|||||20|21|||26|27|||32|33|||||38|39|||44|45|||50|51|||
+||+-+-||+--+--||+--+--||||+--+--||+--+--||+--+--||||+--+--||+--+--||+--+--|||
+|||4|5|||10|11|||16|17|||||22|23|||28|29|||34|35|||||40|41|||46|47|||52|53|||
+||+---+|+-----+|+-----+|||+-----+|+-----+|+-----+|||+-----+|+-----+|+-----+||
+|+---------------------+|+-----------------------+|+-----------------------+|
++---------------------------------------------------------------------------+</pre>
+
+<P>The display of a non-uniform boxed array illustrates the fact that
+ boxed elements are normally justified to the top left. 
+For example:</P>
+
+<pre>
+   ]a=: 2 2$'Baker';'John';('Apt 316','Temple St',:'York, Pa');617 204 4567
++----------------------+
+|Baker    |John        |
++---------+------------|
+|Apt 316  |617 204 4567|
+|Temple St|            |
+|York, Pa |            |
++----------------------+
+</pre>
+
+<P>When applied to a boxed right argument, 
+the left argument of the format function specifies the 
+justification within a display, using 0, 1, and 2 for top, 
+centre, bottom, and for left, centre, right:</P>
+
+<pre>
+   fmt=: &quot;:
+   1 1 fmt a	Centred rows and columns
++----------------------+
+|  Baker  |    John    |
++---------+------------|
+|Apt 316  |            |
+|Temple St|617 204 4567|
+|York, Pa |            |
++----------------------+
+   ;/all=: 3 3 #: i. 3 3
++-----------+
+|0 0|1 0|2 0|
+|0 1|1 1|2 1|
+|0 2|1 2|2 2|
++-----------+
+
+   $ all fmt a
+3 3 7 25
+
+   &lt;&quot;2 all fmt a
++--------------------------------------------------------------------------+
+|+----------------------+|+----------------------+|+----------------------+|
+||Baker    |John        |||  Baker  |    John    |||    Baker|        John||
+|+---------+------------||+---------+------------||+---------+------------||
+||Apt 316  |617 204 4567|||Apt 316  |617 204 4567|||Apt 316  |617 204 4567||
+||Temple St|            |||Temple St|            |||Temple St|            ||
+||York, Pa |            |||York, Pa |            |||York, Pa |            ||
+|+----------------------+|+----------------------+|+----------------------+|
++------------------------+------------------------+------------------------|
+|+----------------------+|+----------------------+|+----------------------+|
+||Baker    |John        |||  Baker  |    John    |||    Baker|        John||
+|+---------+------------||+---------+------------||+---------+------------||
+||Apt 316  |            |||Apt 316  |            |||Apt 316  |            ||
+||Temple St|617 204 4567|||Temple St|617 204 4567|||Temple St|617 204 4567||
+||York, Pa |            |||York, Pa |            |||York, Pa |            ||
+|+----------------------+|+----------------------+|+----------------------+|
++------------------------+------------------------+------------------------|
+|+----------------------+|+----------------------+|+----------------------+|
+||Baker    |John        |||  Baker  |    John    |||    Baker|        John||
+|+---------+------------||+---------+------------||+---------+------------||
+||Apt 316  |            |||Apt 316  |            |||Apt 316  |            ||
+||Temple St|            |||Temple St|            |||Temple St|            ||
+||York, Pa |617 204 4567|||York, Pa |617 204 4567|||York, Pa |617 204 4567||
+|+----------------------+|+----------------------+|+----------------------+|
++--------------------------------------------------------------------------+
+</pre>
+
+<P>The diagonal elements of this display are also given by 
+the scalar left arguments <tt>0, 1, </tt>and <tt>2</tt>. 
+Moreover, <tt>9!:16</tt> can be used to set the default 
+justification of boxed displays, as it is in the function <tt>just</tt>, 
+which first sets the function display to the boxed form. 
+For example:</P>
+
+<pre>
+   totient=: * -.@%@~.&amp;.q:
+   just 1 
+ 
+   totient
++-------------------------+
+| |+---------------------+|
+| ||+-------------+|  |  ||
+| |||+------+| |  ||  |  ||
+|*||||-.|@|%||@|~.||&amp;.|q:||
+| |||+------+| |  ||  |  ||
+| ||+-------------+|  |  ||
+| |+---------------------+|
++-------------------------+
+
+   just 2
+
+   totient
++-------------------------+
+| |+---------------------+|
+| ||+-------------+|  |  ||
+| |||+------+| |  ||  |  ||
+| ||||-.|@|%|| |  ||  |  ||
+| |||+------+|@|~.||  |  ||
+| ||+-------------+|&amp;.|q:||
+|*|+---------------------+|
++-------------------------+
+</pre>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="character.htm">&gt;&gt;</a>&nbsp;
+<a href="finance.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

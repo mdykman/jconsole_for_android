@@ -1,0 +1,1213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 28: Data Files</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="29.htm">&gt;&gt;</a>&nbsp;
+<a href="27.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <A NAME="01"></A>
+<H1>Chapter 28: Data Files</H1>
+The subject of file-handling in general, and how data is
+organized in files, is a major topic in itself.
+In this chapter we will cover only a selection of the facilities
+available in J.
+<p>
+J functions to read files produce results in the form
+of character-strings, and similarly functions to write files take strings 
+as arguments.
+Such a string can be the whole data content of a file when the available 
+memory of the computer
+is sufficient.  
+<p>
+Our approach here will be 
+to look first at some J functions for input
+and output of strings. Then we look at a few examples of dealing with  
+strings as representing data in various formats. Finally 
+we look at mapped files as an alternative to conventional
+file-handling.
+<A NAME="02"></A>
+<H2>28.1  Reading and Writing Files</H2>
+<H3>28.1.1  Built-in Verbs</H3>
+In the following, a filename is a string which is valid as a filename
+for the operating-system of the computer where we are running J.
+For example:
+<PRE>
+   F =: 'c:\temp\demofile.xyz'       NB. a filename
+</PRE>
+The built-in verb <TT>1!:2</TT> writes data to a 
+file. The right argument is a boxed filename. The left argument is a 
+character-string, the data to be written.
+The effect is that the file is created if it does not already exist, and 
+the data becomes the whole content of the file.
+The result is null. 
+<PRE>
+   'some data' 1!:2 < F    NB. write to file F
+</PRE>
+The built-in verb <TT>1!:1</TT> reads data from a file. 
+The right argument is a boxed filename. The result
+is a character-string, the data read. 
+<PRE>
+   data =: 1!:1 < F     NB.  read from file F
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>data</TT></TD>
+<TD><TT>$ data</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>some data</TT></TD>
+<TD><TT>9</TT></TD>
+</TABLE>
+<p>
+<H3>28.1.2  Screen and Keyboard As Files</H3>
+Screen and keyboard can be treated as files, to provide
+a simple facility for user-interaction with
+a running program.
+<p>
+The expression <TT>x (1!:2) 2</TT> writes the value of <TT>x</TT> to "file 2",
+that is, to the screen. 
+A verb to display to the screen can be written as
+<PRE>
+   display =: (1!:2) & 2
+</PRE>
+<A NAME="03"></A>
+For example, here is a verb to display the stages 
+in the computation of least-common-denominator by Euclid's
+algorithm.
+<PRE>
+   E =: 4 : 0
+display x , y
+if. y = 0 do. x else. (x | y) E x end.
+)
+   
+   12 E 15
+12 15
+3 12
+0 3
+3 0
+3
+</PRE>
+<A NAME="04"></A>
+The value to be displayed by <TT>(1!:2) &2</TT> is not limited to strings:
+in the example above a list of numbers was displayed.
+<p>
+User-input can be requested from the keyboard by reading "file 1", that is,
+by evaluating  <TT>(1!:1) 1</TT>. 
+The result is a character-string containing the user's keystrokes.
+For example, a function for user-interaction might be:
+<PRE>
+   ui =: 3 : 0
+display 'please type your name:' 
+n  =.  (1!:1) 1
+display 'thank you ', n
+''
+)
+</PRE>
+and then after executing
+<PRE>
+         ui ''
+</PRE>
+a dialogue appears on the screen,  like this:
+<PRE>
+       please type your name:
+</PRE>
+<PRE>
+       Waldo
+</PRE>
+<PRE>
+       thank you Waldo
+</PRE>
+<A NAME="05"></A>
+<H3>28.1.3  Library Verbs</H3>
+There are a number of useful verbs for file-handling in the "standard library" (<A HREF="26.htm">Chapter 26</A>). 
+Here is a brief summary of a selection:
+<p>
+<TABLE BORDER=1 CELLPADDING=4>
+<TR><TD ALIGN=RIGHT><TT> s fwrite  F</TT> </TD>
+    <TD> write string s to file F</TD></TR>
+<TR><TD ALIGN=RIGHT><TT>   fread   F</TT></TD>
+    <TD> read string from  file F</TD></TR>
+<TR><TD ALIGN=RIGHT><TT> s fappend F</TT></TD >
+    <TD> append string s to file F </TD></TR>
+<TR><TD ALIGN=RIGHT><TT>   fread F;B,L</TT></TD>
+    <TD> read slice from file F, starting at B, length L</TD></TR>
+<TR><TD ALIGN=RIGHT><TT> s fwrites F </TT></TD>
+    <TD> write text s to file F</TD></TR>
+<TR><TD ALIGN=RIGHT><TT>   freads  F</TT></TD>
+    <TD> read text from file F</TD></TR>
+<TR><TD ALIGN=RIGHT><TT>   fexist  F</TT></TD> 
+    <TD> true if file F exists</TD></TR>
+<TR><TD ALIGN=RIGHT><TT>   ferase  F</TT></TD>
+    <TD> delete file F</TD></TR>
+</TABLE>
+<p>
+From now on we will use these library verbs for our file-handling.
+<p>
+The library verb <TT>fwrite</TT> writes data to a 
+file. The right argument is a filename. The left argument is a 
+character-string, the data to be written.
+The effect is that the file is created if it does not already exist, and 
+the data becomes the whole content of the file.
+<PRE>
+   'some data' fwrite F    NB. file write
+9
+</PRE>
+The result shows the number of characters written.
+A result of <TT>_1</TT> shows an error: either 
+the left argument is not a string or 
+the right argument
+is not valid as a filename, or
+the specified file exists but is read-only.
+<PRE>
+   (3;4) fwrite F
+_1
+</PRE>
+The library verb <TT>fread</TT> reads data from  
+file. 
+The argument is a filename and the result
+is a character-string. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>z =: fread F</TT></TD>
+<TD><TT>$z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>some data</TT></TD>
+<TD><TT>9</TT></TD>
+</TABLE>
+<p>
+A result of <TT>_1</TT> shows an error: the specified
+file does not exist, or is locked.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>fread 'qwerty'</TT></TD>
+<TD><TT>fexist 'qwerty'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+<p>
+<A NAME="06"></A>
+<H2>28.2  Large Files</H2>
+For large files, the memory of the computer may not be sufficient to 
+allow the file
+to be treated as a single string. We look at this case very briefly. 
+<p>
+Write a file with some initial content:
+<PRE>
+   'abcdefgh' fwrite F
+8
+</PRE>
+<A NAME="07"></A>
+We can append some data to the file with library verb <TT>fappend</TT>.
+<PRE>
+   'MORE' fappend F
+4
+</PRE>
+To see the effect of <TT>fappend</TT> (just for this demonstration, but not of
+ course for a large file)
+we can read the whole file again :
+<PRE>
+   fread F
+abcdefghMORE
+</PRE>
+We can read a selected slice of the file, say 8 bytes starting from byte 
+<TT>4</TT>. In this case
+we use <TT>fread</TT> with a right argument of the form <TT>filename;start,size</TT>.
+<PRE>
+   start =: 4
+   size  =: 8
+   fread F ; start, size
+efghMORE
+</PRE>
+<A NAME="08"></A>
+<H2>28.3  Data Formats</H2>
+We look now at a few examples of how data may be organized 
+in a file, that is, represented by a string. Hence we look at converting
+ between character strings, 
+with various internal structures, and J variables. 
+<p>
+We take it that files are read and written for the purpose of exchanging 
+data between 
+programs. Two such programs we can call "writer" and "reader". Questions 
+which arise
+include:
+<OL>
+<LI> Are writer and reader both to be J programs? 
+    If so, then there is a convenient J-only format, the "binary representation" covered below.
+    If not, then we expect to work from a programming-language-independent
+ description
+    of the data. 
+<p>
+<LI> Are writer and reader to run on computers with the same architecture? 
+    If not, then even in the J-to-J situation, some finesse may be needed.
+<p>
+<LI>Is the data organized entirely as a repetition of some structure 
+    (for example, "fixed length records").
+    If so then we may usefully be able to treat it as one or more J 
+arrays. 
+    If not, we may need some ad-hoc programming.
+</OL>
+<p>
+<A NAME="09"></A>
+<H3>28.3.1  The Binary Representation for J-0nly Files</H3>
+Suppose we aim to handle certain files 
+only in J programs, so that 
+we are free to choose any file format convenient for
+the J programmer. The "binary representation" is particularly
+convenient.
+<p>
+For any array <TT>A</TT>,
+<PRE>
+   A =:  'Thurs'; 19 4 2001 
+</PRE>
+the binary representation of <TT>A</TT> is a character string.
+There are built-in verbs to convert between
+arrays and binary representations of arrays.
+<PRE>
+   arrbin  =: 3!:1   NB. array to binary rep.
+   binarr  =: 3!:2   NB. binary rep. to array
+</PRE>
+If <TT>B</TT> is the binary representation of <TT>A</TT>, we see that <TT>B</TT> is
+a character string, with a certain length.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>$ B =: arrbin A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-----+---------+<BR>
+|Thurs|19 4 2001|<BR>
++-----+---------+</TT></TD>
+<TD><TT>88</TT></TD>
+</TABLE>
+<p>
+We can write <TT>B</TT> to a file, read it back, 
+and do the inverse conversion to recover the value of <TT>A</TT> :
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>B fwrite F </TT></TD>
+<TD><TT>$ Z =: fread F</TT></TD>
+<TD><TT>binarr Z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>88</TT></TD>
+<TD><TT>88</TT></TD>
+<TD><TT>+-----+---------+<BR>
+|Thurs|19 4 2001|<BR>
++-----+---------+</TT></TD>
+</TABLE>
+<p>
+From J4.06 on, there are variations
+of the binary representation verbs above
+to allow for different machine architectures: 
+see the Dictionary under <TT>3!:1</TT>.
+<A NAME="10"></A>
+<H3>28.3.2  Text Files</H3>
+The expression <TT>a.</TT> (lower-case a dot)
+is a built-in noun, a character-string 
+containing all 256 ASCII characters in sequence.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>65 66 67 { a.</TT></TD>
+<TD><TT>$ a.</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC</TT></TD>
+<TD><TT>256</TT></TD>
+</TABLE>
+<p>
+In the ASCII character set, that is, in <TT>a.</TT>,  
+the character at position 0 is the null,
+at position 10 is line-feed and at position 13
+is carriage return . In J, the names <TT>CR</TT> and <TT>LF</TT> 
+are predefined in the standard profile to mean
+the carriage-return and linefeed characters.
+<PRE>
+   a. i. CR,LF
+13 10
+</PRE>
+We saw <TT>fread</TT> and <TT>fwrite</TT> used for reading and writing
+character files. 
+Text files are a special kind
+of character file, in that lines are delimited by <TT>CR</TT> and/or <TT>LF</TT> 
+characters.
+<p>
+On some systems the convention is that
+lines of text are delimited by a single <TT>LF</TT>
+and on other systems a <TT>CR,LF</TT> pair is expected.
+Regardless of the system on which J is running, for J text variables, 
+the convention is always followed of delimiting a line
+with single <TT>LF</TT> and no <TT>CR</TT>. 
+<p>
+Here is an example of a text variable. 
+<PRE>
+   t =: 0 : 0
+There is physics
+and there is 
+stamp-collecting.
+)
+</PRE>
+Evidently it is a string 
+(that is, a 1-dimensional character list) 
+with 3 <TT>LF</TT> characters and no <TT>CR</TT> characters.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>$ t</TT></TD>
+<TD><TT>+/t=LF</TT></TD>
+<TD><TT>+/t=CR</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>49</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+If we aim to write this text variable <TT>t</TT> to
+a text file, we must choose between the
+ single-<TT>LF</TT> or <TT>CRLF</TT> conventions. 
+There are two useful library verbs, <TT>fwrites</TT> and <TT>freads</TT>
+to deal with this situation.
+<p>
+<UL>
+<LI>
+Under Windows, <TT>x fwrites y</TT>  
+writes text-variable <TT>x</TT> to file <TT>y</TT>,
+in the process converting each <TT>LF</TT> 
+in <TT>x</TT> to a <TT>CRLF</TT> pair
+in <TT>y</TT>. 
+<LI>
+Under Linux, <TT>x fwrites y</TT> 
+writes text-variable <TT>x</TT> to file <TT>y</TT>,
+with no conversion. 
+<LI>
+Under Windows or Linux
+ <TT>z =: freads y</TT>
+reads file <TT>y</TT>, converting any <TT>CRLF</TT>
+pair in <TT>y</TT> to a single <TT>LF</TT> in text-variable <TT>z</TT>.
+</UL>
+<p>
+For convenience in dealing with a text variable such as <TT>t</TT>, 
+we can cut it into lines. A verb for this purpose
+is <TT>cut</TT> (described more fully in <A HREF="17.htm">Chapter 17</A> ). 
+<PRE>
+   cut =: < ;. _2
+</PRE>
+<TT>cut</TT> produces a boxed list of lines, removing the <TT>LF</TT> 
+at the end of each line.
+<PRE>
+   lines =: cut t
+   lines
++----------------+-------------+-----------------+
+|There is physics|and there is |stamp-collecting.|
++----------------+-------------+-----------------+
+</PRE>
+The inverse of <TT>cut</TT> we can call <TT>uncut</TT>. It restores the <TT>LF</TT>
+at the end of each box and then razes to make a string.
+<PRE>
+   uncut =: ; @: (,&LF &. >)
+   uncut lines
+There is physics
+and there is 
+stamp-collecting.
+
+</PRE>
+<p>
+<A NAME="11"></A>
+<A NAME="12"></A>
+<H3>28.3.3  Fixed Length Records with Binary Data</H3>
+Suppose our data is in two J variables: a table <TT>cnames</TT>, of customer-names,
+and a list <TT>amts</TT> in customer order with for each customer an amount, a balance say.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>cnames =: 'Mr Rochester' ,: 'Jane'</TT></TD>
+<TD><TT>,. amts =: _10000 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>Mr Rochester<BR>
+Jane</TT></TD>
+<TD><TT>_10000<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3</TT></TD>
+</TABLE>
+<p>
+Now suppose the aim is to write this data to a file, 
+formatted in 16-byte records. 
+Each record is to have two fields: customer-name in 12 bytes
+followed by amount in 4 bytes, as a signed integer. 
+Here is a possible approach.
+<p>
+The plan is to construct, from <TT>cnames</TT> and <TT>amts</TT>,
+an n-by-16 character table, to be called <TT>records</TT>.
+For this example, <TT>n=2</TT>, and <TT>records</TT> will look like this:
+<PRE>
+Mr Rochester####
+Jane        ####
+   
+</PRE>
+where <TT>####</TT> represents the 4 characters of
+an integer in binary form.
+<p>
+We build the <TT>records</TT> table by stitching together side by
+side an n-by-12 table for the customer names field, and an 
+n-by-4 table for the amounts field.
+<p>
+For the customer-names field we already have <TT>cnames</TT> which is suitable, 
+since it is 12 bytes wide:
+<PRE>
+   $ cnames
+2 12
+</PRE>
+For the amounts field we convert <TT>amts</TT> to 
+characters, using <TT>ci4</TT> from <A HREF="27.htm">Chapter 27</A>. 
+The result is a single string,
+which is reshaped to be n-by-4.
+<PRE>
+   ci4 =:  2 & (3!:4)  NB. integer to 4 char
+   
+   amtsfield =: ((# amts) , 4) $ ci4 amts
+</PRE>
+Now we build the n-by-16 <TT>records</TT> table by stitching together
+side-by-side the two "field" tables:
+<PRE>
+   records =: cnames ,. amtsfield
+</PRE>
+To inspect <TT>records</TT>,
+here is a utility verb which shows a non-printing
+character as <TT>#</TT>
+<PRE>
+   inspect =: 3 : ('A=.a.{~32+i.96';'(A i.y) { A,''#''')
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>inspect records</TT></TD>
+<TD><TT>$ records</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>Mr Rochester####<BR>
+Jane&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####</TT></TD>
+<TD><TT>2 16</TT></TD>
+</TABLE>
+<p>
+The outgoing string to be written to the file is the ravel of the records.
+<PRE>
+   (, records) fwrite F
+32
+</PRE>
+The inverse of the process is to recover J variables from the file. We 
+read the file to get the incoming
+string. 
+<PRE>
+   instr =: fread F
+</PRE>
+Since the record-length is known to be 16, the number of records is
+<PRE>
+   NR =: (# instr) % 16
+</PRE>
+Reshape the incoming string to get the <TT>records</TT> table.
+<PRE>
+   inspect records =: (NR,16) $ instr
+Mr Rochester####
+Jane        ####
+</PRE>
+and extract the data. The customer-names are obtained directly, as columns
+ 0-11 of <TT>records</TT>.
+<PRE>
+   cnames =: (i.12) {"1 records
+</PRE>
+For the amounts, we extract columns 12-15, ravel into a single string and 
+convert to integers with <TT>c4i</TT>.
+<PRE>
+   c4i =: _2 & (3!:4)  NB. 4 char  to integer
+   
+   amts   =: c4i  , (12+i.4) {"1  records
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>cnames </TT></TD>
+<TD><TT>,. amts</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>Mr Rochester<BR>
+Jane</TT></TD>
+<TD><TT>_10000<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3</TT></TD>
+</TABLE>
+<p>
+<A NAME="13"></A>
+<H2>28.4  Mapped Files</H2>
+A file is said to be mapped when 
+the file is temporarily incorporated
+into the virtual-address-translation mechanism 
+of an executing program. 
+The data in a mapped file 
+appears to the J programmer directly as the value of a 
+J variable - an array. 
+Changes to the value of the variable
+ are changes to the data in the file. 
+<p>
+In such a case, we can say, for present purposes, 
+that the file is mapped to the variable or, 
+equivalently, that the variable is mapped to the file. 
+<p>
+Mapped files offer the following
+advantages: 
+<UL><LI>
+ Convenience. Data in a file is handled
+    just like data in any J array. There is no
+    reading or writing of the file.
+<p>
+<LI> Persistent variables. A variable mapped to  
+    a file lives in the file, and
+    can persist from one J session to another.
+</UL>
+<p>
+There are two cases.
+In the first case, any kind of existing file 
+can be mapped to a variable. 
+We take as given the structure of the data
+in the file, and then 
+ the J program
+must supply a description of the desired mapping.
+For example, a file with fixed-length records
+could be mapped to a character table. 
+<p>
+In the second case, a file can be
+created in J in a special format (called "jmf")
+specifically for the purpose
+of mapping to a variable.  In this case,
+the description is automatically derived
+from the variable and stored in the file along with the
+data. Thus a "jmf" file is self-describing.
+<p>
+We look first at creating jmf files, and then at mapping given files..
+<H3>28.4.1   Library Script for Mapped Files</H3>
+There is a library script, <TT>jmf.ijs</TT>, for handling mapped files.
+For present purposes it is simplest to download it directly from the
+J Application Library. Here is a 
+<A HREF="http://www.jsoftware.com/svn/addons/trunk/data/jmf/jmf.ijs"> link to jmf.ijs </A>.
+<p>
+Assuming we have downloaded it into say, directory <TT>C:\temp</TT> for example, 
+we can load it into our J session with:
+<PRE>
+   load 'c:\temp\jmf.ijs'
+   
+</PRE>
+The script will load itself into the locale <TT>jmf</TT> .
+<A NAME="14"></A>
+<H3>28.4.2  jmf Files and Persistent Variables</H3>
+Suppose we have constructed 
+an array <TT>V</TT> with some
+valuable data, 
+which from now on we aim to use and maintain
+over a number of J sessions. Perhaps <TT>V</TT> is valuable
+now, or perhaps it will become valuable over subsequent
+sessions as it is modified and added-to.
+<p>
+Our valuable data <TT>V</TT> can be an array of numbers,
+of characters, or of boxes.  For a simple example we 
+start with <TT>V</TT> as a table of numbers. 
+<PRE>
+   ] V =:  2 2 $ 1 2 3 4
+1 2
+3 4
+</PRE>
+We can make a persistent variable from <TT>V</TT> as follows.
+<p>
+Step 1 is to estimate the size, in bytes,
+of a file required for the value of <TT>V</TT>.
+Since we expect that over time
+<TT>V</TT> may grow from its present size
+ultimately to, say, 64 KB,
+then our estimate <TT>S</TT> is 
+<PRE>
+   S =: 64000
+</PRE>
+If in doubt, allow plenty.
+The size must be given as
+a positive integer (not a float) and therefore
+less than 2147483648 (2Gb) on a 32-bit machine.
+<p>
+Step 2 is to choose a file-name and, for convenience,
+ define a variable <TT>F</TT> to hold the the file name as a string. 
+For example: 
+<PRE>
+   F =: 'c:\temp\persis.jmf'
+</PRE>
+Step 3 is to create file <TT>F</TT> as a jmf file,
+large enough to hold <TT>S</TT> bytes of data.  For this purpose 
+the utility function <TT>createjmf</TT> is available (in locale <TT>jmf</TT>)
+so we can write: 
+<PRE>
+   createjmf_jmf_ F;S
+</PRE>
+(On your system, with a different version of J, 
+you may see a response different from what is shown here.)
+<p>
+At this point, file <TT>F</TT> exists.
+If we inspect it we see its actual size is 
+ a little larger than <TT>S</TT>, 
+to accommodate a header record which makes the file
+ self-describing.
+<PRE>
+   fdir F
++----------+----------------+-----+---+------+
+|persis.jmf|2011 1 8 9 38 32|64284|rw-|-----a|
++----------+----------------+-----+---+------+
+</PRE>
+The content of file <TT>F</TT> is initially set by 
+<TT>createjmf_jmf_</TT> to represent a J
+value, in fact a zero-length list.
+ The important point is
+that file <TT>F</TT> now contains a definite value.
+<p>
+Step 4 is to map the content of file <TT>F</TT>
+to a new variable, for which we choose the name <TT>P</TT>.
+<PRE>
+   map_jmf_ 'P'; F
+</PRE>
+This statement means, in effect:
+<PRE>
+               P =:  value-currently-in-file-F
+</PRE>
+and we can verify that <TT>P</TT> is now an empty list:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>P</TT></TD>
+<TD><TT>$ P</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+Notice particularly that
+the effect of mapping file <TT>F</TT> to variable <TT>P</TT>
+is to assign the value in <TT>F</TT> to <TT>P</TT> and not the
+ other way around.
+Hence we avoided mapping file <TT>F</TT> directly
+onto our valuable array <TT>V</TT> because <TT>V</TT> would be
+overwritten by the preset initial value in <TT>F</TT>, 
+and lost.
+<p>
+Step 5  is to assign to <TT>P</TT> the desired value, that of
+ <TT>V</TT>
+<PRE>
+   P =: V
+</PRE>
+Variable <TT>P</TT> is now a persistent variable, 
+since it is mapped to file <TT>F</TT>.  
+We can amend <TT>P</TT>, for example by changing the value
+at row 0 column 1 to <TT>99</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>P</TT></TD>
+<TD><TT>P =:  99 (<0 1) } P </TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 2<BR>
+3 4</TT></TD>
+<TD><TT>1 99<BR>
+3&nbsp;&nbsp;4</TT></TD>
+</TABLE>
+<p>
+or by appending a new row:
+<PRE>
+   ] P =: P ,  0 0
+1 99
+3  4
+0  0
+</PRE>
+Step 6 is needed before we finish the current session.
+We <TT>unmap</TT> variable <TT>P</TT>, to ensure file <TT>F</TT> 
+ is closed. 
+<PRE>
+   unmap_jmf_ 'P'
+0
+</PRE>
+The result of <TT>0</TT> indicates success. The variable <TT>P</TT>
+ no longer exists: 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>P</TT></TD>
+<TD><TT>$ P</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>error</TT></TD>
+<TD><TT>$ P</TT></TD>
+</TABLE>
+<p>
+To demonstrate that the value of <TT>P</TT> persists in file 
+ <TT>F</TT> we repeat
+the mapping, processing and unmapping in this or another session.
+The name <TT>P</TT> we chose for our persistent variable is
+only for this session. In another session,
+the persistent variable in file <TT>F</TT> can 
+be mapped to any name. 
+<p>
+This time we choose the name <TT>Q</TT> for the persistent 
+ variable. We map file <TT>F</TT> to <TT>Q</TT>: 
+<PRE>
+   map_jmf_ 'Q' ; F
+   
+   Q
+1 99
+3  4
+0  0
+</PRE>
+modify <TT>Q</TT>:
+<PRE>
+   ] Q =: Q , 7 8 
+1 99
+3  4
+0  0
+7  8
+</PRE>
+and unmap <TT>Q</TT> to close file <TT>F</TT>.
+<PRE>
+   unmap_jmf_ 'Q'
+0
+   
+</PRE>
+<H3>28.4.3  Mapped Files are of Fixed Size</H3>
+Recall that we created file <TT>F</TT> large enough for <TT>S</TT>
+bytes of data.  
+<PRE>
+   S
+64000
+   fdir F
++----------+----------------+-----+---+------+
+|persis.jmf|2011 1 8 9 38 32|64284|rw-|-----a|
++----------+----------------+-----+---+------+
+</PRE>
+The variable in file <TT>F</TT>  is 
+currently much smaller than this, and the unused trailing part of the file
+is filled with junk.
+However, if we continue to modify <TT>Q</TT> by appending to
+ it,
+we reach a limit, by filling the file, 
+ and encounter an error. To demonstrate, with a verb
+<TT>fill</TT> for the purpose:
+<PRE>
+   fill =: 3 : 0
+try.   while. 1 do. Q =: Q , 99 99 end.
+catch. 'full'
+end.
+)
+   
+   map_jmf_ 'Q'; F 
+   fill ''
+full
+   
+   
+</PRE>
+The amount of data now in <TT>Q</TT> can be estimated as 4 bytes per 
+integer (since <TT>Q</TT>
+is integer) 
+multiplied by the number of integers, that is, altogether <TT>4 * */$ Q</TT>.
+This result for the final size of <TT>Q</TT> accords with our
+original size estimate <TT>S</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>4 * */ $ Q </TT></TD>
+<TD><TT>S</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>64000</TT></TD>
+<TD><TT>64000</TT></TD>
+</TABLE>
+<p>
+<PRE>
+   unmap_jmf_ 'Q'
+0
+   
+</PRE>
+<A NAME="15"></A>
+<H3>28.4.4  Given Files</H3>
+Now we look at mapping ordinary data files (that is, files
+other than the special jmf-format files we considered above).
+<p>
+The way the data is laid out in the file
+we take as given, and our task is specify
+how this layout is to be represented by the type, rank and shape
+of a J variable, that is, to specify a suitable mapping. 
+<p>
+For example, suppose we aim to read a given file <TT>G</TT> with its data
+laid out in fixed-length records, each record
+being 8 characters.  Suppose file <TT>G</TT> was originally created
+by, say: 
+<PRE>
+        G =: 'c:\temp\data.xyz'
+</PRE>
+<PRE>
+   'ABCD0001EFGH0002IJKL0003MNOP0004' fwrite G
+32
+</PRE>
+The next step is to decide what kind of
+a variable will be suitable for mapping the data in
+file <TT>G</TT>.  
+We decide on an n-by-8 character table.
+The number of rows, <TT>n</TT>,  will be determined by the
+amount of data in the file, 
+so we do not specify <TT>n</TT> in advance.
+<p>
+It is convenient to start 
+with a small example of an n-by-8 character table,
+which we call a prototype. The choice of <TT>n</TT> is unimportant.
+<PRE>
+   prototype =: 1 8 $ 'a'
+</PRE>
+Now the mapping can be defined by: 
+<PRE>
+   ] mapping =: ((3!:0) ; (}. @: $)) prototype
++-+-+
+|2|8|
++-+-+
+</PRE>
+We see that <TT>mapping</TT> is a boxed list. The first item 
+is the data-type. Here <TT>2</TT>, meaning "character",  is produced
+by <TT>3!:0 prototype</TT>.  The second item is the trailing dimensions
+(that is, all but the first) of the prototype. 
+Here <TT>8</TT> is all but the first of <TT>1 8</TT>, 
+ produced by
+<TT>(}.@:$) prototype</TT>.  Thus <TT>mapping</TT> expresses or
+encodes "n-by-8 characters".
+<p>
+Now <TT>mapping</TT> is supplied as left argument to
+(dyadic) <TT>map_jmf_</TT>. We map file <TT>G</TT> onto a variable for which
+we choose the name <TT>W</TT> thus:
+<PRE>
+   mapping map_jmf_ 'W'; G
+</PRE>
+We see that <TT>W</TT> is now a variable. Its value is the data in the file.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>W</TT></TD>
+<TD><TT>$ W</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABCD0001<BR>
+EFGH0002<BR>
+IJKL0003<BR>
+MNOP0004</TT></TD>
+<TD><TT>4 8</TT></TD>
+</TABLE>
+<p>
+We can amend the data in the ususal way:
+<PRE>
+   ] W =: 'IJKL9999' 2 } W
+ABCD0001
+EFGH0002
+IJKL9999
+MNOP0004
+</PRE>
+What we cannot do is add another row to the data, 
+because all the space in file <TT>G</TT> is occupied 
+by the data we already have.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>W</TT></TD>
+<TD><TT>W =: W ,  'WXYZ0000'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABCD0001<BR>
+EFGH0002<BR>
+IJKL9999<BR>
+MNOP0004</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+We close file <TT>G</TT> by unmapping variable <TT>W</TT>: 
+<PRE>
+   unmap_jmf_ 'W'
+0
+</PRE>
+<A NAME="16"></A>
+<H3>28.4.5  Mapped Variables Are Special</H3>
+Mapping files to variables offers the programmer
+significant advantages in functionality and convenience.
+<p>
+The price to be paid for these advantages is
+that there are some considerations applying to mapped variables
+ which do not apply to ordinary variables. The programmer
+needs to be aware of, and to manage, these considerations.
+This is our topic in this section and the next.
+<p>
+If <TT>A</TT> is an ordinary variable, not mapped,
+then in the assignment <TT>B=: A</TT> the value of <TT>A</TT> is in effect
+copied to <TT>B</TT>. A subsequent change to <TT>A</TT> does not affect
+the value of <TT>B</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A =: 1</TT></TD>
+<TD><TT>B =: A</TT></TD>
+<TD><TT>B</TT></TD>
+<TD><TT>A =: 2</TT></TD>
+<TD><TT>B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>2</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+By contrast, consider a variable mapped to a file.
+If the file is very large, 
+there may not be
+enough space for another copy of the value.
+Hence copying is to be avoided. 
+<p>
+Compare the previous example with the case when
+<TT>A</TT> is a mapped variable. 
+<PRE>
+   map_jmf_ 'A';F
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A =: 1</TT></TD>
+<TD><TT>B =: A</TT></TD>
+<TD><TT>B</TT></TD>
+<TD><TT>A =: 2</TT></TD>
+<TD><TT>B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>2</TT></TD>
+<TD><TT>2</TT></TD>
+</TABLE>
+<p>
+We see that <TT>B</TT> changes with changes to <TT>A</TT>.
+In effect <TT>B =: A</TT> means that <TT>B</TT> is
+another name for <TT>A</TT>, not a copy of the value of <TT>A</TT>. That is,
+both <TT>A</TT> and <TT>B</TT> refer to the same thing - the value
+in the file.
+<p>
+Hence it is also the case that 
+<TT>A</TT> changes with changes to <TT>B</TT>. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>B =: 7</TT></TD>
+<TD><TT>A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>7</TT></TD>
+<TD><TT>7</TT></TD>
+</TABLE>
+<p>
+Consider now an explicit verb applied 
+to a mapped variable. 
+Here <TT>y</TT> becomes another name for the data 
+in the file.
+Hence assignment to <TT>y</TT> (even a local assignment)
+may cause an unintended change the mapped variable in the file.
+For example
+<PRE>
+   foo =: 3 : ' 3 * y =. y + 1'
+   
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>foo 2</TT></TD>
+<TD><TT>A</TT></TD>
+<TD><TT>foo A</TT></TD>
+<TD><TT>A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>9</TT></TD>
+<TD><TT>7</TT></TD>
+<TD><TT>24</TT></TD>
+<TD><TT>8</TT></TD>
+</TABLE>
+<p>
+<H3>28.4.6  Unmapping Revisited</H3>
+The current status of mapped files and variables
+is maintained by the J system in a 
+"mapping table".   The mapping table
+can be displayed by entering the expression
+<TT>showmap_jmf_ ''</TT> but for 
+present purposes here is a utility function
+to display only selected columns.
+<PRE>
+   status =: 0 1 9 & {"1  @: showmap_jmf_
+   status ''
++-------+------------------+----+
+|name   |fn                |refs|
++-------+------------------+----+
+|A_base_|c:\temp\persis.jmf|3   |
++-------+------------------+----+
+   
+</PRE>
+We see that currently variable 
+<TT>A</TT> in locale <TT>base</TT> is mapped to file <TT>F</TT> (persis.jmf). 
+<p>
+Under "refs", 
+the value <TT>3</TT> means that the data
+in file <TT>F</TT> is the target of 3 references.
+One of these is variable <TT>A</TT>, 
+a second is the variable <TT>B</TT> (which we know to
+be another name for <TT>A</TT>) and the third 
+is for the system itself.
+<p>
+Variables <TT>A</TT> and <TT>B</TT> are both in existence:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>8</TT></TD>
+<TD><TT>8</TT></TD>
+</TABLE>
+<p>
+For the sake of simplicity, a recommended procedure for closing the file 
+is first to 
+erase all variables such as <TT>B</TT> which are alternative names for the 
+originally-mapped
+variable <TT>A</TT>
+<PRE>
+   erase <'B' 
+1
+</PRE>
+The status shows the number of references is reduced.
+<PRE>
+   status ''
++-------+------------------+----+
+|name   |fn                |refs|
++-------+------------------+----+
+|A_base_|c:\temp\persis.jmf|2   |
++-------+------------------+----+
+</PRE>
+Now we can unmap <TT>A</TT>.  
+<PRE>
+   unmap_jmf_ 'A'
+0
+</PRE>
+The result of <TT>0</TT> means the file is closed 
+and <TT>A</TT> erased. The status table shows no entries, 
+that is, that no files are mapped.
+<PRE>
+   status ''
++----+--+----+
+|name|fn|refs|
++----+--+----+
+   
+</PRE>
+Let us recreate the situation 
+in which <TT>A</TT> is mapped to <TT>F</TT>
+and <TT>B</TT> is another name for <TT>A</TT>, 
+so there
+are 3 references to (the data in) 
+file <TT>F</TT>.
+<PRE>
+   map_jmf_ 'A'; F
+   B =: A
+   status ''
++-------+------------------+----+
+|name   |fn                |refs|
++-------+------------------+----+
+|A_base_|c:\temp\persis.jmf|3   |
++-------+------------------+----+
+</PRE>
+What happens if we erase all the 
+variables referring to <TT>F</TT> ?
+<PRE>
+   erase 'A';'B'
+1 1
+   status ''
++-------+------------------+----+
+|name   |fn                |refs|
++-------+------------------+----+
+|A_base_|c:\temp\persis.jmf|1   |
++-------+------------------+----+
+</PRE>
+We see there is still a single reference,
+under the name <TT>A</TT> even though there
+is no variable <TT>A</TT>.  This single
+reference reflects the fact that file <TT>F</TT>
+is not yet unmapped. 
+<p>
+Thus when we said
+earlier that file <TT>F</TT> gets mapped to
+variable <TT>A</TT>, it would be more accurate
+to say that file <TT>F</TT> gets mapped to the 
+name <TT>A</TT>, and a variable of that name is
+created.  
+Even though the variable is subsequently erased,
+the name <TT>A</TT> still identifies the mapped file,
+and can be used as an argument to <TT>unmap</TT>.
+<PRE>
+   unmap_jmf_ 'A'
+0
+   status ''
++----+--+----+
+|name|fn|refs|
++----+--+----+
+</PRE>
+For more information, see the "Mapped Files" lab.
+<p>
+This is the end of Chapter 28
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="29.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 08 Jan 2011<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="29.htm">&gt;&gt;</a>&nbsp;
+<a href="27.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

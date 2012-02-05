@@ -1,0 +1,94 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="ccapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="rank.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">A. </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2000-00-00<br>
+last updated: 2004-10-21<br>
+</td></tr></table>
+<br>
+
+The dyad<tt> A. </tt>is now faster and uses less space, 
+especially when the right argument is<tt> i.n</tt> .<tt> </tt>
+Time and space comparisons are as follows:
+<pre>
+   ts=: 6!:2 , 7!:2@]
+   ts '(i.!n) A. i.n'                  NB. all    permutations
+   ts 'i A. i.n' [ i=: ?(!1&gt;.n-1)$!n   NB. random permutations
+</pre>
+
+<b>All Permutations</b>
+<table>
+
+<tr>
+<td><b>n &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></td>
+<td><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; J 4.05</b></td>
+<td><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; J 4.04</b></td>
+</tr>
+
+<tr> <td>1</td> <td>4.441904e_5 &nbsp; 1.600000e3 &nbsp; &nbsp; &nbsp; &nbsp;</td> <td>4.693333e_5 &nbsp; 1.664000e3</td></tr>
+<tr> <td>2</td> <td>4.441904e_5 &nbsp; 1.600000e3</td> <td>4.860952e_5 &nbsp; 1.728000e3</td></tr>
+<tr> <td>3</td> <td>4.777142e_5 &nbsp; 1.792000e3</td> <td>5.699047e_5 &nbsp; 2.176000e3</td></tr>
+<tr> <td>4</td> <td>7.123808e_5 &nbsp; 2.816000e3</td> <td>9.638094e_5 &nbsp; 4.352000e3</td></tr>
+<tr> <td>5</td> <td>2.857904e_4 &nbsp; 1.100800e4</td> <td>3.595428e_4 &nbsp; 1.971200e4</td></tr>
+<tr> <td>6</td> <td>1.465828e_3 &nbsp; 7.315200e4</td> <td>2.392762e_3 &nbsp; 1.694080e5</td></tr>
+<tr> <td>7</td> <td>1.100838e_2 &nbsp; 5.749120e5</td> <td>2.038834e_2 &nbsp; 1.245632e6</td></tr>
+<tr> <td>8</td> <td>1.047242e_1 &nbsp; 4.588992e6</td> <td>2.015694e_1 &nbsp; 9.957824e6</td></tr>
+<tr> <td>9</td> <td>1.057751e0 &nbsp; &nbsp; 3.670163e7</td> <td>2.049871e0 &nbsp; &nbsp; 8.501805e7</td></tr>
+</table>
+<br>
+
+<b>Random Permutations</b></td>
+<table>
+<tr>
+<td><b>n &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></td>
+<td><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; J 4.05</b></td>
+<td><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; J 4.04</b></td>
+</tr>
+
+<tr> <td>1</td> <td>3.687618e_5 &nbsp; 1.408000e3 &nbsp; &nbsp; &nbsp; &nbsp; </td> <td>4.190476e_5 &nbsp; 1.536000e3 &nbsp; &nbsp; &nbsp; &nbsp; </td></tr>
+<tr> <td>2</td> <td>3.771428e_5 &nbsp; 1.472000e3</td> <td>4.190476e_5 &nbsp; 1.600000e3</td></tr>
+<tr> <td>3</td> <td>3.855238e_5 &nbsp; 1.536000e3</td> <td>4.441904e_5 &nbsp; 1.792000e3</td></tr>
+<tr> <td>4</td> <td>4.358095e_5 &nbsp; 1.792000e3</td> <td>5.363809e_5 &nbsp; 2.304000e3</td></tr>
+<tr> <td>5</td> <td>7.542856e_5 &nbsp; 3.456000e3</td> <td>9.805713e_5 &nbsp; 5.504000e3</td></tr>
+<tr> <td>6</td> <td>3.084190e_4 &nbsp; 1.004800e4</td> <td>4.064761e_4 &nbsp; 2.649600e4</td></tr>
+<tr> <td>7</td> <td>1.659428e_3 &nbsp; 6.892800e4</td> <td>2.639162e_3 &nbsp; 1.652480e5</td></tr>
+<tr> <td>8</td> <td>1.243733e_2 &nbsp; 5.420160e5</td> <td>2.290933e_2 &nbsp; 1.212800e6</td></tr>
+<tr> <td>9</td> <td>1.168506e_1 &nbsp; 4.326720e6</td> <td>2.214423e_1 &nbsp; 9.695616e6</td></tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="ccapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="rank.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

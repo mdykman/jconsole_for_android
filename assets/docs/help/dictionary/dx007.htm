@@ -1,0 +1,127 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>7!: Space</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx008.htm">&gt;&gt;</a>&nbsp;
+<a href="dx006.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Space</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>7!:</font></b></td>
+</tr></table>
+<br>
+
+See also<tt> <a href="dx009.htm#20">9!:20</a> </tt>
+and<tt> <a href="dx009.htm#20">9!:21</a></tt> .<br><br>
+
+<TABLE>
+<tr><td valign=top width=120><a name="0"></a><tt>7!:0 y</tt></td>
+<td><B>Current</B>. Space currently in use.</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="2"></a><tt>7!:2 y </tt></td>
+<td><B>Execute</B>. Space required to execute sentence<tt> y</tt>.<tt> </tt>  
+For example:<br>
+
+<pre>
+   7!:2 ',/x' [ x=: 3000 2 5$'kerygmatic'
+33888
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="3"></a><tt>7!:3 y</tt></td>
+<td><B>Free Space</B>. Information on the state of the J 
+memory manager, currently a 2-column table of the block sizes 
+and number of free blocks for each size.  For example:<br>
+
+<pre>
+   7!:3 ''
+   32  950
+   64 1135
+  128  554
+  256  157
+  512   74
+ 1024   40
+</pre>
+
+The definition and availability of<tt> 7!:3 </tt>
+are subject to change.
+<br><br>
+</td></tr>
+
+<tr><td valign=top><a name="5"></a><tt>7!:5 y </tt></td>
+<td><b>Space</b>. The space in bytes used by the named 
+objects<tt> y </tt>(noun, verb, adverb, or conjunction).
+For example:<br>
+
+<pre>
+   Hilbert=: % @: &gt;: @: (+/~) @: i.
+
+   7!:5 &lt;'Hilbert'
+896
+   7!:5 &lt;'name_without_value'
+|value error: name_without_value
+|       7!:5&lt;'name_without_value'
+
+   sp=: 3 : '7!:5 &lt;''y'''
+   sp 'chiaroscuro'
+64
+   sp i.1000
+4096
+   sp o.i.1000
+8192
+
+   x=: o.y=: i.1000
+   7!:5 ;:'x y Hilbert'
+8192 4096 896
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="6"></a><tt>7!:6 y </tt></td>
+<td><b>Locale Space</b>. The space in bytes used by the locales 
+named in<tt> y</tt> ,<tt> </tt>including the space for the names as well as values in the locale,
+locale name, path, hash table, and global symbol table entries.
+For example:<br>
+
+<pre>
+   7!:6 ;:'base z 0'
+8256 198880 2168
+   7!:6 &lt;'12345'
+|locale error
+|       7!:6&lt;'12345'
+   7!:6 &lt;'nonexistent'
+|locale error
+|       7!:6&lt;'nonexistent'
+</pre>
+</td></tr>
+
+</table>
+
+<br>
+
+<!--bottom jump start--><hr><a href="dx008.htm">&gt;&gt;</a>&nbsp;
+<a href="dx006.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

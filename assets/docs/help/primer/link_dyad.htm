@@ -1,0 +1,66 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Link - dyad ;</title>
+
+</head><body><!--top jump start--><a href="open_monad.htm">&gt;&gt;</a>&nbsp;
+<a href="box_monad.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Link - dyad ;</h1>
+The dyad <font face=courier size=-1>;</font> (link) makes it easy to create a list of boxed nouns.<br>
+
+<pre>   2 3 4 ; 4 7 9
++-----+-----+
+¦2 3 4¦4 7 9¦
++-----+-----+
+   'abc' ; 5 7 9
++---+-----+
+¦abc¦5 7 9¦
++---+-----+
+   (2 3 $ 'abcdef') ; (i. 3 4) ; 23
++---+---------+--+
+¦abc¦0 1  2  3¦23¦
+¦def¦4 5  6  7¦  ¦
+¦   ¦8 9 10 11¦  ¦
++---+---------+--+</pre>
+Look link up in the J Dictionary. Note that its dyad rank is <font face=courier size=-1>_ _</font> so it applies to its entire left and entire right argument. It always boxes its left argument, and its right argument is boxed only if not already boxed. Boxing its right argument only if not already boxed makes the following work:<br>
+
+<pre>   'abc' ; 'defg' ; 'hijkl'
++---+----+-----+
+¦abc¦defg¦hijkl¦
++---+----+-----+</pre>
+This is evaluated from right-to-left as:<br>
+
+<pre>   'abc' ; ('defg' ; 'hijkl')</pre>
+So the right argument to the leftmost link is already boxed, and will not be boxed again. Boxed again? What would that look like?<br>
+
+<pre>   'abc' ; &lt; 'defg' ; 'hijkl'
++---+------------+
+¦abc¦+----+-----+¦
+¦   ¦¦defg¦hijkl¦¦
+¦   ¦+----+-----+¦
++---+------------+</pre>
+Boxes can be nested!<br>
+<!--bottom jump start--><hr><a href="open_monad.htm">&gt;&gt;</a>&nbsp;
+<a href="box_monad.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

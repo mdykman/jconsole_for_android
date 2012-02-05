@@ -1,0 +1,70 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>,./ Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="key.htm">&gt;&gt;</a>&nbsp;
+<a href="slashcat.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">,./ </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2000-00-00<br>
+last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The monad<tt> ,./ </tt>has been improved to execute in linear time.
+Time and space comparisons are as follows:<br><br>
+
+<pre>   ts   =: 6!:2 , 7!:2@]
+   timer=: 6!:2
+
+   c=: a.{~ ? 8000 17 11 $ #a.
+
+</pre>
+<b>J 4.05</b>
+<pre>   ts ',./ c'
+0.0356291 2.09914e6
+
+   12j8 &quot;: &quot;. 'timer '',./ x'' [ x=: ? 1e6 $~ 17 11,~' ,&quot;1 &quot;: ,. 100*1 2 4 8 16 
+  0.00056907  0.00120267  0.00301630  0.00641981  0.01351596
+
+</pre>
+<b>J 4.04</b>
+<pre>   ts ',./ c'
+71.8343 4.19642e6
+
+   12j8 &quot;: &quot;. 'timer '',./ x'' [ x=: ? 1e6 $~ 17 11,~' ,&quot;1 &quot;: ,. 100*1 2 4 8 16 
+  0.02501630  0.09891282  0.41983872  2.34642494  9.69553932
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="key.htm">&gt;&gt;</a>&nbsp;
+<a href="slashcat.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

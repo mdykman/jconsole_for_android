@@ -1,0 +1,33 @@
+DPOTRI computes the inverse of a real symmetric positive definite
+matrix A using the Cholesky factorization A = U**T*U or A = L*L**T
+computed by DPOTRF.
+
+
+Arguments
+=========
+
+UPLO    (input) CHARACTER*1
+        = 'U':  Upper triangle of A is stored;
+
+        = 'L':  Lower triangle of A is stored.
+
+N       (input) INTEGER
+        The order of the matrix A.  N >= 0.
+
+A       (input/output) DOUBLE PRECISION array, dimension (LDA,N)
+        On entry, the triangular factor U or L from the Cholesky
+        factorization A = U**T*U or A = L*L**T, as computed by
+        DPOTRF.
+        On exit, the upper or lower triangle of the (symmetric)
+        inverse of A, overwriting the input factor U or L.
+
+LDA     (input) INTEGER
+        The leading dimension of the array A.  LDA >= max(1,N).
+
+INFO    (output) INTEGER
+        = 0:  successful exit
+
+        < 0:  if INFO = -i, the i-th argument had an illegal value
+
+        > 0:  if INFO = i, the (i,i) element of the factor U or L is
+        zero, and the inverse could not be computed.

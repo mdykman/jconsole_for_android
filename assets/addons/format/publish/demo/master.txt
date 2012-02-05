@@ -1,0 +1,12 @@
+NB. Publish example
+
+<title>Publish Demo</title>
+<author>Peter Simple</author>
+<include>front.txt</include>
+
+NB. <include>section1a.txt</include>
+
+<include>section1.txt</include>
+<include>section2.txt</include>
+<include>section3.txt</include>
+<include>section4.txt</include>

@@ -1,0 +1,637 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 5: Building Arrays</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="06.htm">&gt;&gt;</a>&nbsp;
+<a href="04.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <H1>Chapter 5: Building Arrays</H1>
+This chapter is about  building arrays.  First we look at building arrays from 
+lists, and then at joining arrays together in various ways to make larger arrays.
+<p>
+<p>
+<A NAME="01"></A>
+<H2>5.1  Building Arrays by Shaping Lists</H2>
+<H3>5.1.1  Review</H3>
+Recall from <A HREF="02.htm">Chapter 02</A> what we mean by the word "items". The items of
+a list of numbers are the numbers. The items of a table are its rows.
+The items of a 3-dimensional array are its planes.
+<p>
+Recall also that <TT>x $ y</TT> produces an array of the items of the list <TT>y</TT>,
+ with shape <TT>x</TT>, that is, 
+with dimensions given by the list <TT>x</TT>. For example:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>2 2 $ 0 1 2 3</TT></TD>
+<TD><TT>2 3 $ 'ABCDEF'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 1<BR>
+2 3</TT></TD>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+</TABLE>
+<p>
+If the list <TT>y</TT> contains fewer than the number of items needed, then 
+<TT>y</TT> is re-used in cyclical fashion to make up the number of items needed. 
+This means that 
+an array can be built to show some simple patterning, such as all elements being the same, for example. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>2 3 $ 'ABCD'</TT></TD>
+<TD><TT>2 2 $ 1</TT></TD>
+<TD><TT>3 3 $ 1 0 0 0</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DAB</TT></TD>
+<TD><TT>1 1<BR>
+1 1</TT></TD>
+<TD><TT>1 0 0<BR>
+0 1 0<BR>
+0 0 1</TT></TD>
+</TABLE>
+<p>
+<A NAME="02"></A>
+The "Shape" verb, dyadic <TT>$</TT>, 
+has a companion verb, "ShapeOf" (monadic <TT>$</TT>), which yields the list-of-dimensions, that is, shape, of its argument. 
+To illustrate: 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A =: 2 3 $ 'ABCDEF'</TT></TD>
+<TD><TT>$ A</TT></TD>
+<TD><TT>a =: 'pqr'</TT></TD>
+<TD><TT>$ a</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>2 3</TT></TD>
+<TD><TT>pqr</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+For any array <TT>A</TT>, its list-of-dimensions <TT>$ A</TT> is a 1-dimensional list (the shape).
+Hence <TT>$ $ A</TT> is a list of 1 item (the rank). Hence <TT>$ $ $ A</TT> is always a list containing just
+the number <TT>1</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>$ A</TT></TD>
+<TD><TT>$ $ A</TT></TD>
+<TD><TT>$ $ $ A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>2 3</TT></TD>
+<TD><TT>2</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+<H3>5.1.2  Empty Arrays</H3>
+An array can be of length zero in any of its dimensions. 
+A zero length, or empty, list can be built by writing <TT>0</TT> for its list of dimensions,
+and any value (doesn't matter what) for the value of the item(s).
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>E =: 0 $ 99</TT></TD>
+<TD><TT>$ E</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+If <TT>E</TT> is empty, then it has no items, and so, after appending an item to it, the result will have one item.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>E</TT></TD>
+<TD><TT>$ E </TT></TD>
+<TD><TT>w =: E ,98</TT></TD>
+<TD><TT>$ w</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>98</TT></TD>
+<TD><TT>1</TT></TD>
+</TABLE>
+<p>
+Similarly, if <TT>ET</TT> is an empty table with no rows, and say, 3 columns, then  
+after adding a row, the result will have one row.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>ET =: 0 3 $ 'x' </TT></TD>
+<TD><TT>$ ET</TT></TD>
+<TD><TT> $ ET , 'pqr' </TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>0 3</TT></TD>
+<TD><TT>1 3</TT></TD>
+</TABLE>
+<p>
+<H3>5.1.3  Building a Scalar</H3>
+Suppose we need to build a scalar. 
+A scalar has no dimensions, that is, its dimension-list is empty.  
+We can give an empty list as the  left argument of <TT>$</TT> to make a scalar:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>S =: (0$0) $ 17</TT></TD>
+<TD><TT>$ S</TT></TD>
+<TD><TT>$ $ S</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>17</TT></TD>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+<H3>5.1.4  Shape More Generally</H3>
+We said that <TT>(x $ y)</TT> produces an <TT>x</TT>-shaped array of the items of <TT>y</TT>. 
+That is, in general the shape of <TT>(x$y)</TT> will be not just <TT>x</TT>, 
+but rather <TT>x</TT> followed by the shape of an item of <TT>y</TT>.
+<p>
+If <TT>y</TT> is a table, then an item of <TT>y</TT> is a row, that is, a list. 
+In the following example, the shape of an item of <TT>Y</TT> 
+is the length of a row of <TT>Y</TT>, which is <TT>4</TT> . 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>X =: 2</TT></TD>
+<TD><TT>Y =: 3 4 $ 'A'</TT></TD>
+<TD><TT>Z =: X $ Y</TT></TD>
+<TD><TT>$ Z</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>AAAA<BR>
+AAAA<BR>
+AAAA</TT></TD>
+<TD><TT>AAAA<BR>
+AAAA</TT></TD>
+<TD><TT>2 4</TT></TD>
+</TABLE>
+<p>
+The next sections look at building new arrays by joining together arrays we already have.
+<A NAME="03"></A>
+<H2>5.2  Appending, or Joining End-to-End</H2>
+Recall that any array can be regarded as a list of items, 
+so that for example the items of a table are its rows.  
+The verb , (comma) is called "Append". 
+The expression <TT>(x,y)</TT> is a list of the items of <TT>x</TT> followed by the items of <TT>y</TT>.
+<PRE>
+   B =: 2 3 $ 'UVWXYZ'
+   b =:   3 $ 'uvw'
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a</TT></TD>
+<TD><TT>b</TT></TD>
+<TD><TT>a , b</TT></TD>
+<TD><TT>A</TT></TD>
+<TD><TT>B</TT></TD>
+<TD><TT>A , B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>pqr</TT></TD>
+<TD><TT>uvw</TT></TD>
+<TD><TT>pqruvw</TT></TD>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>UVW<BR>
+XYZ</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+UVW<BR>
+XYZ</TT></TD>
+</TABLE>
+<p>
+In the example of <TT>(A,B)</TT> above. the items of <TT>A</TT> are lists of length 3, 
+and so are the items of <TT>B</TT>. Hence items of <TT>A</TT> are compatible with, that is, 
+have the same rank and length as items of <TT>B</TT>.  What if they do not?  
+In this case the "Append" verb will helpfully try to stretch one argument to fit the other, 
+by bringing them to the same rank, padding to length, and replicating scalars as necessary. 
+This is shown the following examples.
+<H3>5.2.1  Bringing To Same Rank</H3>
+Suppose we want to append a row to a table. 
+For example, consider appending the 3-character list <TT>b</TT> (above) to the 2 by 3 table <TT>A</TT>
+(above) to form a new row. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A </TT></TD>
+<TD><TT>b </TT></TD>
+<TD><TT>A , b</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>uvw</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+uvw</TT></TD>
+</TABLE>
+<p>
+Notice that we want the two items of <TT>A</TT> to be followed by the single item of <TT>b</TT>, 
+but <TT>b</TT> is not a 1-item  affair.  
+We could do it by reshaping <TT>b</TT> into a 1 by 3 table, that is, by raising the rank of <TT>b</TT>.
+However, this is not necessary, because, as we see, the "Append" verb has automatically
+ stretched the low-rank argument into a 1-item array, by supplying leading dimension(s) of 1 as necessary. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>b</TT></TD>
+<TD><TT>A , (1 3 $ b)</TT></TD>
+<TD><TT>A , b</TT></TD>
+<TD><TT>b , A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>uvw</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+uvw</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+uvw</TT></TD>
+<TD><TT>uvw<BR>
+ABC<BR>
+DEF</TT></TD>
+</TABLE>
+<p>
+<H3>5.2.2  Padding To Length</H3>
+When the items of one argument are shorter than the items of the other, they will be padded out to length. 
+ Characters arrays are padded with the blank character, numerical arrays with zero. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>A , 'XY'</TT></TD>
+<TD><TT>(2 3 $ 1) , 9 9</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+XY</TT></TD>
+<TD><TT>1 1 1<BR>
+1 1 1<BR>
+9 9 0</TT></TD>
+</TABLE>
+<p>
+<H3>5.2.3  Replicating Scalars</H3>
+A scalar argument of "Append" is replicated as necessary to match the other argument.   
+ In the following example, notice how the scalar <TT>'*'</TT> is replicated, but the vector <TT>(1 $ '*')</TT> is padded. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>A , '*'</TT></TD>
+<TD><TT>A , 1 $ '*'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+***</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+*</TT></TD>
+</TABLE>
+<p>
+<A NAME="04"></A>
+<H2>5.3  Stitching, or Joining Side-to-Side</H2>
+The dyadic verb <TT>,.</TT> (comma dot) is called "Stitch". 
+In the expression <TT>(x ,. y)</TT> each item of <TT>x</TT> has the corresponding item of <TT>y</TT> appended to produce an item of the result.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a</TT></TD>
+<TD><TT>b</TT></TD>
+<TD><TT>a ,. b</TT></TD>
+<TD><TT>A</TT></TD>
+<TD><TT>B</TT></TD>
+<TD><TT>A ,. B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>pqr</TT></TD>
+<TD><TT>uvw</TT></TD>
+<TD><TT>pu<BR>
+qv<BR>
+rw</TT></TD>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>UVW<BR>
+XYZ</TT></TD>
+<TD><TT>ABCUVW<BR>
+DEFXYZ</TT></TD>
+</TABLE>
+<p>
+<A NAME="05"></A>
+<H2>5.4  Laminating, or Joining Face-to-Face</H2>
+The verb <TT>,:</TT> (comma colon) is called "Laminate".  The result of <TT>(x ,: y)</TT>
+is always an array with 
+two items, of which the first is <TT>x</TT> and the second is <TT>y</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a</TT></TD>
+<TD><TT>b</TT></TD>
+<TD><TT>a ,: b</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>pqr</TT></TD>
+<TD><TT>uvw</TT></TD>
+<TD><TT>pqr<BR>
+uvw</TT></TD>
+</TABLE>
+<p>
+If <TT>x</TT> and <TT>y</TT> are tables, then we can imagine the result as one table laid on top of the other to 
+form a 3-dimensional array, of length 2 along its first dimension.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A</TT></TD>
+<TD><TT>B</TT></TD>
+<TD><TT>A ,: B</TT></TD>
+<TD><TT>$ A ,: B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>UVW<BR>
+XYZ</TT></TD>
+<TD><TT>ABC<BR>
+DEF<BR>
+<BR>
+UVW<BR>
+XYZ</TT></TD>
+<TD><TT>2 2 3</TT></TD>
+</TABLE>
+<p>
+<A NAME="06"></A>
+<H2>5.5  Linking</H2>
+The verb ; (semicolon) is called "Link".  It is  convenient for building lists of boxes.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>'good' ; 'morning'</TT></TD>
+<TD><TT>5 ; 12 ; 1995</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+----+-------+<BR>
+|good|morning|<BR>
++----+-------+</TT></TD>
+<TD><TT>+-+--+----+<BR>
+|5|12|1995|<BR>
++-+--+----+</TT></TD>
+</TABLE>
+<p>
+Notice how the example of <TT>5;12;1995</TT> shows that <TT>(x;y)</TT> is not invariably 
+just <TT>(< x),(< y)</TT> .
+Since "Link" is intended for building lists of boxes, it recognises when its right argument is 
+already a list of boxes.  If we define a verb which does produce <TT>(< x),(< y)</TT>
+<PRE>
+   foo =: 4 : '(< x) , (< y)'
+</PRE>
+we can compare these two:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>1 ; 2 ; 3</TT></TD>
+<TD><TT>1 foo 2 foo 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+-+-+<BR>
+|1|2|3|<BR>
++-+-+-+</TT></TD>
+<TD><TT>+-+-----+<BR>
+|1|+-+-+|<BR>
+| ||2|3||<BR>
+| |+-+-+|<BR>
++-+-----+</TT></TD>
+</TABLE>
+<p>
+<A NAME="07"></A>
+<H2>5.6  Unbuilding Arrays</H2>
+We have looked at four dyadic verbs: "Append" <TT>(,)</TT>,  "Stitch" <TT>(,.)</TT>,  "Laminate" <TT>(,:)</TT> and "Link" <TT>(;)</TT>.
+Each of these has a monadic case, which we now look at.
+<A NAME="08"></A>
+<H3>5.6.1  Razing</H3>
+Monadic <TT>;</TT> is called "Raze". It unboxes elements of the argument and assembles them into a list.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>B =: 2 2 $ 1;2;3;4</TT></TD>
+<TD><TT>; B</TT></TD>
+<TD><TT>$ ; B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+-+<BR>
+|1|2|<BR>
++-+-+<BR>
+|3|4|<BR>
++-+-+</TT></TD>
+<TD><TT>1 2 3 4</TT></TD>
+<TD><TT>4</TT></TD>
+</TABLE>
+<p>
+<A NAME="09"></A>
+<H3>5.6.2  Ravelling</H3>
+Monadic <TT>,</TT> is called "Ravel". It assembles elements of the argument into a list.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>B</TT></TD>
+<TD><TT>, B</TT></TD>
+<TD><TT> $ , B</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+-+<BR>
+|1|2|<BR>
++-+-+<BR>
+|3|4|<BR>
++-+-+</TT></TD>
+<TD><TT>+-+-+-+-+<BR>
+|1|2|3|4|<BR>
++-+-+-+-+</TT></TD>
+<TD><TT>4</TT></TD>
+</TABLE>
+<p>
+<A NAME="10"></A>
+<H3>5.6.3  Ravelling Items</H3>
+Monadic <TT>,.</TT> is called "Ravel Items". It separately ravels each item of the argument to form a table. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>k =: 2 2 3 $ i. 12</TT></TD>
+<TD><TT>,. k</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0&nbsp;&nbsp;1&nbsp;&nbsp;2<BR>
+3&nbsp;&nbsp;4&nbsp;&nbsp;5<BR>
+<BR>
+6&nbsp;&nbsp;7&nbsp;&nbsp;8<BR>
+9 10 11</TT></TD>
+<TD><TT>0 1 2 3&nbsp;&nbsp;4&nbsp;&nbsp;5<BR>
+6 7 8 9 10 11</TT></TD>
+</TABLE>
+<p>
+"Ravel Items" is useful for making a 1-column table out of a list. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>b   </TT></TD>
+<TD><TT>,. b</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>uvw</TT></TD>
+<TD><TT>u<BR>
+v<BR>
+w</TT></TD>
+</TABLE>
+<p>
+<A NAME="11"></A>
+<H3>5.6.4  Itemizing</H3>
+Monadic <TT>,:</TT> is called "Itemize". It makes a 1-item array out of any array, by adding a leading dimension of <TT>1</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>A </TT></TD>
+<TD><TT>,: A</TT></TD>
+<TD><TT>$ ,: A</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>ABC<BR>
+DEF</TT></TD>
+<TD><TT>1 2 3</TT></TD>
+</TABLE>
+<p>
+<H2>5.7  Arrays Large and Small</H2>
+<A NAME="12"></A>
+As we have seen, an array can be built with the <TT>$</TT> verb.
+<PRE>
+   3 2 $ 1 2 3 4 5 6
+1 2
+3 4
+5 6
+</PRE>
+For small arrays, where the contents can be listed on a single line, 
+there are alternatives to using <TT>$</TT>, 
+which avoid the need to give the dimensions explicitly. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT> > 1 2 ; 3 4 ; 5 6</TT></TD>
+<TD><TT> 1 2 , 3 4 ,: 5 6</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 2<BR>
+3 4<BR>
+5 6</TT></TD>
+<TD><TT>1 2<BR>
+3 4<BR>
+5 6</TT></TD>
+</TABLE>
+<p>
+<A NAME="13"></A>
+To build large tables, a convenient method is as follows.
+First, here is a "utility" verb 
+(that is, a verb which is useful for present purposes,
+but we don't need to study its definition now.)
+<PRE>
+   ArrayMaker =: ". ;. _2
+</PRE>
+The purpose of <TT>ArrayMaker</TT> is to build a numeric table row by row from 
+ the lines of a script.
+<PRE>
+   table =: ArrayMaker 0 : 0
+1 2 3
+4 5 6
+7 8 9
+)
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>table</TT></TD>
+<TD><TT>$ table</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 2 3<BR>
+4 5 6<BR>
+7 8 9</TT></TD>
+<TD><TT>3 3</TT></TD>
+</TABLE>
+<p>
+(See <A HREF="17.htm">Chapter 17</A> for an explanation of how <TT>ArrayMaker</TT> works).
+Arrays of boxes can also be entered from a script in the same way:
+<PRE>
+   X =:  ArrayMaker  0 : 0
+'hello' ; 1 2 3 ; 8
+'Waldo' ; 4 5 6 ; 9
+)
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>X</TT></TD>
+<TD><TT>$ X</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-----+-----+-+<BR>
+|hello|1 2 3|8|<BR>
++-----+-----+-+<BR>
+|Waldo|4 5 6|9|<BR>
++-----+-----+-+</TT></TD>
+<TD><TT>2 3</TT></TD>
+</TABLE>
+<p>
+We have reached the end of Chapter 5.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="06.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="06.htm">&gt;&gt;</a>&nbsp;
+<a href="04.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

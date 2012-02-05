@@ -1,0 +1,105 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 8.  Atop Conjunction</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro09.htm">&gt;&gt;</a>&nbsp;
+<a href="intro07.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>8. Atop Conjunction</b></font><br><br>
+
+The conjunction<tt> @ </tt>applies to two verbs to produce a verb 
+that is equivalent to applying the first <i>atop</i> the second.  
+For example:<br>
+
+<pre>
+   TriplePowersOf2=: (3&amp;*)@(2&amp;^)
+   TriplePowersOf2 0 1 2 3 4
+3 6 12 24 48
+
+   CubeOfDiff=: (^&amp;3)@-
+   3 4 5 6 CubeOfDiff 6 5 4 3
+_27 _1 1 27
+
+   f=: ^@-                    <font face=Times size=+1>The rightmost function is first applied dyadically</font> 
+                              <font face=Times size=+1>if possible; the second is applied monadically.</font>
+   5 f 3
+7.38906
+
+   f 3
+0.0497871
+
+   g=: -@^
+   5 g 3
+_125
+
+   g 3
+_20.0855
+</pre>
+
+A conjunction, like an adverb, is executed before verbs; 
+the <i>left</i> argument of either is the entire verb phrase that precedes it.  
+Consequently, some (but not all) of the parentheses in the foregoing 
+definitions can be omitted.  For example:<br>
+
+<pre>
+   COD=: ^&amp;3@-
+   3 4 5 6 COD 6 5 4 3
+_27 _1 1 27
+
+   TPO2=: 3&amp;*@(2&amp;^)
+
+   TPO2 0 1 2 3 4
+3 6 12 24 48
+
+   tpo2=: 3&amp;*@2&amp;^             <font face=Times size=+1>An error because the conjunction</font> @ <font face=Times size=+1>is defined</font>
+|domain error                 <font face=Times size=+1>only for a verb right argument</font>
+|   tpo2=:    3&amp;*@2&amp;^
+</pre>
+<br>
+
+<p align=center><b>Exercises</b></p>
+
+<table><tr>
+<td valign=top>8.1 &nbsp;</td>
+<td>Cover the comments on the right, and state the effects of the programs.  
+Then cover the programs and rewrite them from the English statements: <br>
+
+<pre>
+mc=: (+/%#)@|:                <font face=Times size=+1>Means of columns of table</font>
+f=: +/@(^&amp;2)                  <font face=Times size=+1>Sum of squares of list</font>
+g=: %:@f                      <font face=Times size=+1>Geometric length of list</font>
+h=:{&amp;' *'@(&lt;/)                <font face=Times size=+1>Map of comparison (dyad)</font>
+k=: i. h i.                   <font face=Times size=+1>Map (monad)</font>
+map=: {&amp;'+-* %#$'             <font face=Times size=+1>7-character map</font>
+MAP=: map@(6&amp;&lt;.)              <font face=Times size=+1>Extended domain of</font> map
+add=: MAP@ (i.+/i.)           <font face=Times size=+1>Addition table map</font>
+</pre>
+</td></tr></table>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="intro09.htm">&gt;&gt;</a>&nbsp;
+<a href="intro07.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>_9: to 9: Constant Functions</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dcons.htm">&gt;&gt;</a>&nbsp;
+<a href="dxco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Constant Functions</font></b></td>
+<td align=center width=67%><font face="Courier New" size=+3>_9: </font><font size=+2>to</font><font face="Courier New" size=+3> 9: &nbsp;_ _ _</font></td>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+The results are<tt> _9 </tt>and<tt> _8 </tt>and<tt> _7 </tt>and so 
+on to<tt> 9</tt> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   x=: 1 2 3 [ y=: 4 5 6
+   2: y
+2
+
+   x 9: y
+9
+</pre>
+
+The rank conjunction<tt> &quot; </tt>applies to any noun to make a 
+constant function of specified rank.  The particular constant functions 
+illustrated above are therefore special cases of the 
+form<tt> i&quot;_ </tt>.<tt> </tt>For example:<br>
+
+<pre>
+   2&quot;_ y
+2
+             
+   2&quot;0 y
+2 2 2
+
+   2&quot;1 i. 2 3 4
+2 2 2
+2 2 2
+
+   2p1&quot;0 y
+6.28319 6.28319 6.28319
+
+   1p1 1p_1 1x1&quot;0 y           NB. A constant function with a vector result
+3.14159 0.3183099 2.71828
+3.14159 0.3183099 2.71828
+3.14159 0.3183099 2.71828
+
+   0 0 0&quot;1 y                  NB. The zero vector in a space of three dimensions
+0 0 0
+
+   a=:'abcdefghijklmnopqrstuvwxyz'&quot;_
+   A=:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'&quot;_ 
+   s=: ' '&quot;_
+
+   f=: { a
+   f 5 8 6
+fig
+
+   g=: { a,:A
+   g 1 5;0 8;0 6
+Fig
+
+</pre>
+
+<!--bottom jump start--><hr><a href="dcons.htm">&gt;&gt;</a>&nbsp;
+<a href="dxco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

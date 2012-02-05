@@ -1,0 +1,94 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>}. Behead  -  Drop</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d532.htm">&gt;&gt;</a>&nbsp;
+<a href="d530v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Behead</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>}. &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Drop</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>}. </tt>drops the leading item of its argument.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x }. y </tt>drops (at most)<tt> |x </tt>items from<tt> y</tt>,<tt> </tt>
+dropping from the front if<tt> x </tt>is positive and from the tail 
+if negative.<br><br>
+
+In general, if<tt> y </tt>is not an atom,<tt> x </tt>may be a 
+list of length at most<tt> r=:$$y</tt>,<tt> </tt>and the effect 
+of element<tt> k </tt>is<tt> (k{x) }.&quot;(r-k) y</tt>;<tt> </tt>
+if<tt> y </tt>is an atom, the result is<tt> (0=x)$y</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   ]y=: a. {~ (a. i. 'A') + i. 4 5
+ABCDE
+FGHIJ
+KLMNO
+PQRST
+
+   f=: }. ; {.
+   f y
++-----+-----+
+|FGHIJ|ABCDE|
+|KLMNO|     |
+|PQRST|     |
++-----+-----+
+
+   g=: }. ,.@; {.
+   g y
++-----+
+|FGHIJ|
+|KLMNO|
+|PQRST|
++-----+
+|ABCDE|
++-----+
+
+   (2}.y) ; (_2}.y) ; (6}.y) ; ($ 6}.y) ; (}.&quot;1 y) ; (3}.&quot;1 y)
++-----+-----+-----+---+----+--+
+|KLMNO|ABCDE|     |0 5|BCDE|DE|
+|PQRST|FGHIJ|     |   |GHIJ|IJ|
+|     |     |     |   |LMNO|NO|
+|     |     |     |   |QRST|ST|
++-----+-----+-----+---+----+--+
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d532.htm">&gt;&gt;</a>&nbsp;
+<a href="d530v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 9.  Disjoint Classification (Graphs)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp10.htm">&gt;&gt;</a>&nbsp;
+<a href="samp08.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>9. Disjoint Classification (Graphs)</b></font><br><br>
+
+If only the final element of a boolean list<tt> b </tt>is non-zero, 
+then (and only then) will the result of<tt> &lt;/b </tt>be non-zero.  
+Consequently,<tt> &lt;/\ </tt>applied to<tt> b </tt>suppresses all ones 
+after the first, and the result therefore represents 
+a disjoint classification.  For example:<br>
+
+<pre>
+   cct=: #:@i.@(2: ^ #)            NB. Complete classification table
+   b=: |: cct 2 3 5 7
+   b
+0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1
+0 0 0 0 1 1 1 1 0 0 0 0 1 1 1 1
+0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1
+0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1
+
+   &lt;/b
+0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+   &lt;/\b
+0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1
+0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0
+0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0
+0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+   y=: (x-3) * (x-5) [ x=: 1 2 3 4 5 6 7
+   range=: &gt;./ - i.@spread
+   spread=: 1: + &gt;./ - &lt;./
+   bc=: (range &lt;:/]) y
+   bc;(&lt;/\bc);({&amp;'.*' &lt;/\bc)       NB. Barchart and graphs
++-------------+-------------+-------+
+|1 0 0 0 0 0 1|1 0 0 0 0 0 1|*.....*|
+|1 0 0 0 0 0 1|0 0 0 0 0 0 0|.......|
+|1 0 0 0 0 0 1|0 0 0 0 0 0 0|.......|
+|1 0 0 0 0 0 1|0 0 0 0 0 0 0|.......|
+|1 0 0 0 0 0 1|0 0 0 0 0 0 0|.......|
+|1 1 0 0 0 1 1|0 1 0 0 0 1 0|.*...*.|
+|1 1 0 0 0 1 1|0 0 0 0 0 0 0|.......|
+|1 1 0 0 0 1 1|0 0 0 0 0 0 0|.......|
+|1 1 1 0 1 1 1|0 0 1 0 1 0 0|..*.*..|
+|1 1 1 1 1 1 1|0 0 0 1 0 0 0|...*...|
++-------------+-------------+-------+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="samp10.htm">&gt;&gt;</a>&nbsp;
+<a href="samp08.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

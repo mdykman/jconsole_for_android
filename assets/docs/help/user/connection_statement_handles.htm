@@ -1,0 +1,61 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Connection &amp; Statement Handles</title>
+
+</head><body><!--top jump start--><a href="data_driver.htm">&gt;&gt;</a>&nbsp;
+<a href="installing_odbc.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Connection and Statement Handles</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+You start accessing a database by first opening a connection to the data source. The result is a number, called the <I>connection handle</I>. Subsequent requests to the data source use this connection handle.
+
+<P>
+When you send a request to select some data, the result is also a number, called the <I>statement handle</I>. Again, subsequent requests that reference this selection use the statement handle. There may be more than one statement handle associated with a connection handle. You may also have a statement handle not associated with a connection handle, where the request made was not specific to a particular data file.
+
+<P>
+In both cases, you should close the handle to free up resources when you are finished with it. For example, to read records from a file, you typically:<br>
+<br>
+<li>open a connection to the data source, returning a connection handle<br>
+<li>make a selection on a specific file using the connection handle, returning a statement handle<br>
+<li>read the records, using the statement handle<br>
+<li>close the statement handle<br>
+<li>close the connection handle
+
+<P>
+You must always close a connection handle explicitly. However, a statement handle may be closed if you have fetched all records selected - see the discussion of <code>ddfet</code> below. In any case, it is good practice to always close the statement handle explicitly, as there is no harm done if you try to close a handle that had already been closed.
+
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="data_driver.htm">&gt;&gt;</a>&nbsp;
+<a href="installing_odbc.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

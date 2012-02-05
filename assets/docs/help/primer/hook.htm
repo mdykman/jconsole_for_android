@@ -1,0 +1,55 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Hook</title>
+
+</head><body><!--top jump start--><a href="fork.htm">&gt;&gt;</a>&nbsp;
+<a href="each.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Hook</h1>
+A train is a sequence of two or three words in a row that is given a special meaning. A train of two verbs is a hook and is evaluated as follows:<br>
+
+<pre>  (f g) y	evaluates as	y f g y
+x (f g) y	evaluates as	x f g y</pre>
+Suppose you wanted to scale a list of numbers such that the result was each number divided by the maximum number in the list. The maximum over a list is given by the verb derived by applying the adverb <font face=courier size=-1>/</font> to the verb <font face=courier size=-1>&gt;.</font> .<br>
+
+<pre>   a =. 3 5 8 2 7
+   maxover =. &gt;./
+   maxover a
+8</pre>
+To divide an argument by the maximum over the argument you can use:<br>
+
+<pre>   a % maxover a
+0.375 0.625 1 0.25 0.875</pre>
+The above can be written as a hook.<br>
+
+<pre>   (% maxover) a
+0.375 0.625 1 0.25 0.875</pre>
+You can now define scale as a hook with <font face=courier size=-1>% &gt;./</font> .<br>
+
+<pre>   scale =. % &gt;./
+   scale a
+0.375 0.625 1 0.25 0.875</pre>
+<!--bottom jump start--><hr><a href="fork.htm">&gt;&gt;</a>&nbsp;
+<a href="each.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

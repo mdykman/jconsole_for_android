@@ -1,0 +1,131 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>M. Memo</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dnb.htm">&gt;&gt;</a>&nbsp;
+<a href="dlcapco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Memo</font></b></td>
+<td align=center width=50%><font face="Courier New" size=+3>u M. &nbsp;mu lu ru</font></td>
+<td align=right  width=17%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table><tr>
+<td width=100% bgcolor=#eeeeee>
+<tt>u M. </tt>is the same as<tt> u </tt>but may keep a record of the
+arguments and results for reuse.  It is commonly used
+for multiply-recursive verbs. 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br>
+
+</td>                                                         
+</tr></table><br>
+
+The following examples illustrate the difference 
+that memoization can make.<tt> fib n </tt>is the<tt> n</tt>-th Fibonacci 
+number.<tt> pn </tt>finds the number of partitions of 
+an integer using a recurrence relation due to Euler, equation 11 in
+<a href="http://mathworld.wolfram.com/PartitionFunctionP.html">
+http://mathworld.wolfram.com/PartitionFunctionP.html</a> .
+
+<pre>
+fib=: 3 : 0 M.
+ if. 1&gt;:y do. y else. (fib y-1)+fib y-2 end.
+)
+
+fibx=: 3 : 0
+ if. 1&gt;:y do. y else. (fibx y-1)+fibx y-2 end.
+)
+
+   timer=: 6!:2
+
+   timer 'fib 32'
+0.000479377
+   timer 'fibx 32'
+43.696
+
+   fib&quot;0 i.18
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597
+
+pn =: -/@(+/)@:($:"0)@rec ` (x:@(0&amp;=)) @. (0>:]) M.
+pnx=: -/@(+/)@:($:"0)@rec ` (x:@(0&amp;=)) @. (0>:])
+rec=: - (-: (*&quot;1) _1 1 +/ 3 * ]) @ (>:@i.@>.@%:@((2%3)&amp;*))
+
+   timer 'pn 28'
+0.000675355
+   timer 'pnx 28'
+61.7146
+
+   pn&quot;0 i.18
+1 1 2 3 5 7 11 15 22 30 42 56 77 101 135 176 231 297
+   pn 1000
+24061467864032622473692149727991
+</pre>
+
+Subsequent applications of a memoized verb to a previously evaluated argument 
+produce the result quickly:
+
+<pre>
+   timer 'fib 32'
+2.62393e_5
+   timer 'pn 28'
+4.01456e_5
+</pre>
+
+<tt>M. </tt>is applicable to anonymous verbs and to verbs
+with non-atomic results.  Thus:
+
+<pre>
+   timer '+/@:($:&quot;0)@:(-&1 2)`]@.(1&gt;:]) M. 32'
+0.000186387
+   timer '+/@:($:&quot;0)@:(-&1 2)`]@.(1&gt;:])    32'
+8.61349
+
+comb=: 4 : 0 M.   NB. All size x combinations of i.y
+ if. (x&gt;:y)+.0=x do. i.(x&lt;:y),x else. (0,.x comb&.&lt;: y),1+x comb y-1 end.
+)
+
+   3 comb 5
+0 1 2
+0 1 3
+0 1 4
+0 2 3
+0 2 4
+0 3 4
+1 2 3
+1 2 4
+1 3 4
+2 3 4
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="dnb.htm">&gt;&gt;</a>&nbsp;
+<a href="dlcapco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

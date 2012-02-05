@@ -1,0 +1,92 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 20. Directed Graphs</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp21.htm">&gt;&gt;</a>&nbsp;
+<a href="samp19.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>20. Directed Graphs</b></font><br><br>
+
+A <i>directed graph</i> is a collection<b> </b>of <i>nodes</i> with 
+<i>connections</i> or <i>arcs</i> specified between certain pairs of nodes.  
+It can be used to specify matters such as the precedences 
+in a set of processes (stuffing of envelopes must precede sealing), 
+or the structure of a <i>tree</i>. <br><br>
+
+The connections can be specified by a boolean 
+<i>connection matrix</i> instead of by arcs, and the connection 
+matrix can be determined from the list of arcs.<br><br>
+
+The connection matrix is convenient for determining various 
+properties of the graph, such as the <i>in-degrees</i> 
+(number of arcs entering a node), the <i>out-degrees</i>, 
+immediate descendants, and the <i>closure</i>, or connection 
+to every node reachable through some path. For example:<br>
+
+<pre>
+   from=: 3 7 2 5 5 7 1 5 5 5 2 6 1 2 3 7 7 4 7 2 7 4
+     to=: 5 6 0 2 6 2 7 6 0 7 3 3 2 1 7 0 4 2 3 0 0 3
+
+   $ arcs=: from,.to
+22 2
+               
+   |: arcs { nodes=: 'ABCDEFGH'         <font face=Times size=+1>Transposed for display</font>
+DHCFFHBFFFCGBCDHHEHCHE
+FGACGCHGAHDDCBHAECDAAD
+
+   CM=: #. e.~ [: i. [ , [              <font face=Times size=+1>Connection matrix from arcs</font>
+   ]cm=: (&gt;:&gt;./,arcs) CM arcs
+0 0 0 0 0 0 0 0
+0 0 1 0 0 0 0 1
+1 1 0 1 0 0 0 0
+0 0 0 0 0 1 0 1
+0 0 1 1 0 0 0 0
+1 0 1 0 0 0 1 1
+0 0 0 1 0 0 0 0
+1 0 1 1 1 0 1 0
+
+   (+/cm);(+/&quot;1 cm);  (+/+/cm);(#arcs);(#~.arcs)
++---------------+---------------+--+--+--+
+|3 1 4 4 1 1 2 3|0 2 3 2 2 4 1 5|19|22|19|
++---------------+---------------+--+--+--+
+</pre>
+
+The foregoing results are the in, out, and total degrees; 
+followed by the number of arcs, and the number of distinct arcs.  
+A boolean vector<tt> b </tt>may be used to represent the nodes, 
+and the inner product<tt> b +./ . *. cm </tt>gives the 
+same representation of the nodes reachable from them.  
+The immediate family (which includes the original points themselves) 
+is therefore given by the function<tt> imfam</tt> :<br>
+
+<pre>
+   imfam=: [ +. +./ . *.
+   (b=: 1 0 0 0 0 0 0 1) imfam cm
+1 0 1 1 1 0 1 1
+
+</pre>
+
+<!--bottom jump start--><hr><a href="samp21.htm">&gt;&gt;</a>&nbsp;
+<a href="samp19.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

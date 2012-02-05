@@ -1,0 +1,326 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>C. Polynomials &amp; Rational Functions</title>
+
+</head><body><!--top jump start--><a href="trans_functions.htm">&gt;&gt;</a>&nbsp;
+<a href="linear_vector_func.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+<H1>9C. Polynomials &amp; Rational Functions</h1>
+
+
+<P>Sums, differences, products, quotients, derivatives, integrals, and compositions 
+of polynomials can be expressed as functions of their coefficients. For example:</P>
+
+<pre>
+   c=: 1 4 6 4 1 [ d=: 1 2 1  [ x=: i.6
+   ppr=: +//.@(*/)
+   c ppr d
+1 6 15 20 15 6 1
+
+   ((c ppr d)p. x) ; ((c p. x)*(d p. x))
++---------------------------------------------------+
+|1 64 729 4096 15625 46656|1 64 729 4096 15625 46656|
++---------------------------------------------------+</pre>
+
+ 
+<P>The polynomial function <tt>p.</tt> and related facilities such as the Taylor coefficients<tt> t. </tt>
+are all defined in terms of ascending powers, as is appropriate to power series. 
+The definition in terms of descending powers commonly used in high-school algebra 
+is discussed at the end of the section. </P>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  
+  <TR><TD width=40%><tt>d0=: sum=: +/@,:</tt></TD> <TD width=60%>Polynomial sum. Try <tt>1 2 sum 1 3 3 1</tt> </TD></TR>
+  <TR><TD><tt>d1=: dif=: -/@,:</tt></TD>          <TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      difference</TD></TR>
+  <TR><TD><tt>d2=: ppr=: +//.@(*/)</tt></TD>        <TD>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     product</TD></TR>
+  <TR><TD><tt>m3=: pdi=: 1: }. ] * i.@#</tt></TD>          <TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      derivative</TD></TR>
+  <TR><TD><tt>d4=: pin=: , ] % &gt;:@i.@#</tt></TD>        <TD> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     integral (left arg gives constant)</TD></TR>
+  <TR><TD><tt>m5=: piz=: 0&amp;pin</tt></TD>         <TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      integral 0 constant of integration</TD></TR>
+  <TR><TD nowrap><tt>m6=: atop=: [ +/ .* 1 0&quot;_ ,ppr/\@(&lt;:@#@[# ,:@])</tt></TD> <TD>Composition: <tt>(c atop d)&amp;p.</tt> is equivalent to <tt>(c&amp;p.) @ (d&amp;p.)</tt></TD></TR>
+</TABLE>
+
+
+<P>Binomial coefficients have an important property illustrated by the following:</P>
+
+<pre>
+   bc=: i.@&gt;: ! ]
+   bc n=: 4
+1 4 6 4 1
+   (bc n) p. x=: i. 6
+1 16 81 256 625 1296
+
+   (x+1) ^ n
+1 16 81 256 625 1296</pre>
+
+<P>This behaviour is extended to the coefficients of a polynomial as follows:</P>
+
+<pre>
+   bct=: !/~@i.
+   expand=: bct@# +/ . * ]
+   ]d=: expand c=: 3 1 4 2
+10 15 10 2
+
+   (c p. x+1) ,: (d p. x)
+10 37 96 199 358 585
+10 37 96 199 358 585
+</pre>
+
+<P>A polynomial with coefficients <tt>c</tt> may also be expressed as the product 
+over its roots multiplied by the coefficient of the highest-order term, 
+that is, <tt>{:c</tt>. 
+The self-inverse monad <tt>p.</tt> provides the transformations between coefficients and roots. 
+For example:</P>
+
+<pre>
+   c=: _126 _87 _6 3
+   ]r=: p. c
++---------+
+|3|7 _3 _2|
++---------+
+
+   p. r
+_126 _87 _6 3
+
+   (c p. x) ,: (r p. x)
+_126 _216 _300 _360 _378 _336
+_126 _216 _300 _360 _378 _336
+
+  p. 1 2 3
++--------------------------------------------+
+|3|_0.3333333j0.4714045 _0.3333333j_0.4714045|
++--------------------------------------------+</pre>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m7=: p.</tt></TD> <TD width=60%>Transformation between roots and coefficients</TD> </TR>
+  <TR><TD><tt>d8=: p.</tt></TD> <TD>Polynomial in terms of roots or coefficients</TD></TR>
+  <TR><TD><tt>c9=: FIT=: 2 :'x. %. ]^/(i.y.)&quot;_'</tt></TD> <TD><tt>f FIT d </tt>gives coeffs of pn fit of degree <tt>d-1</tt></TD></TR>
+</TABLE>
+
+
+<P>The <I>falling factorial</I> function <tt>ff=: ^!._1</tt>, and the corresponding falling polynomial <tt>fp=: p.!._1</tt> are useful in the finite calculus:</P></TD></TR></TABLE>
+
+<pre>
+   ff=: ^!._1 
+   fp=: p.!._1 &quot; 1 0
+   c=: 2 1 4 3 [ x=: 6 [ n=: 4
+   (x^n),(*/x+0*i.n)
+1296 1296
+
+   FIT=: 2 : 'x. %. ] ^/ (i.y.)&quot;_'
+   (x ff n),(*/x+_1*i.n)
+360 360
+
+   (c p. x),(+/c*x^i.#c)
+800 800
+
+   (c fp x),(+/c*x ff i.#c)
+488 488 
+</pre>
+
+<P>We will define a linear function to transform the coefficients of a polynomial 
+to the coefficients of an equivalent falling polynomial, 
+that is,<tt> (c p. x)-:(fcFc fp x)</tt> :</P>
+
+<pre>
+   VM=: ((/ ~) (@i.)) (@#)          NB. Vandermonde adverb
+   ^VM                              NB. Normal Vandermonde
+^/~@i.@#
+
+   ^VM c=: 3 1 4 2
+1 0 0  0
+1 1 1  1
+1 2 4  8
+1 3 9 27
+
+   fcFc=: ] +/ . *~ ^VM %. ff VM    NB. Falling coeffs from normal coeffs
+   fcFc c=: 3 1 4 2
+3 7 10 2
+
+   (c p. x) ,: (fcFc c) fp x=: 0 1 2 3 4 5
+3 10 37 96 199 358
+3 10 37 96 199 358</pre>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>d10=: ff=: ^!._1</tt></TD> <TD width=60%>Falling factorial (<tt>_1</tt>-stope)</TD></TR>
+  <TR><TD><tt>d11=: fp=: p.!._1 &quot; 1 0</tt></TD> <TD>Falling factorial polynomial</TD></TR>
+  <TR><TD><tt>a12=: VM=: ((/ ~)(@i.))(@#)</tt></TD> <TD>Vandermonde adverb </TD></TR>
+  <TR><TD><tt>m13=: fcFc=:]+/ .*~^VM%.ff VM</tt></TD> <TD>Falling coeffs From ordinary coeffs</TD></TR>
+  <TR><TD><tt>m14=: cFfc=: fcFc^:_1</tt></TD> <TD>Ordinary coeffs From falling coeffs</TD></TR>
+  <TR><TD><tt>d15=: taut=: p. -: fcFc@[ fp ]</tt></TD> <TD>Tautology</TD></TR>
+  <TR><TD><tt>d16=: rf=: ^!.1</tt></TD> <TD>Rising factorial</TD></TR>
+  <TR><TD><tt>a17=: S=: 1 : '^!.x.'</tt></TD>  <TD>Stope adverb (<tt>1 S</tt> is <tt>rf Try 0.1 S</tt>) </TD></TR>
+  <TR><TD><tt>d18=: mtn=:{.@[+/ .*]*/ .^}.@[</tt></TD> <TD>Multinomial e.g. <tt>(c,E) mtn x,y,z</tt></TD></TR>
+</TABLE>
+
+
+<P>If <tt>c</tt> is a list of coefficients equal in number to the columns of a three-rowed table of exponents <tt>E</tt>, and if <tt>v=: x,y,z,</tt> then <tt>c +/ . * v */ . ^ E</tt> is a <I>multinomial</I>, a weighted sum of powers of <tt>x</tt>, <tt>y</tt>, and <tt>z</tt>. For example:</P></TD></TR></TABLE>
+
+<pre>   v=: 'x y z'=: 2 3 5
+   c=: 3 1 4 2 [ E=: 1 0 2 3,1 1 0 0,:1 2 1 0
+   E ; (,.v*/ . ^ E) ; (c +/ . * v*/ . ^ E)
++--------------+
+|1 0 2 3|30|261|
+|1 1 0 0|75|   |
+|1 2 1 0|20|   |
+|       | 8|   |
++--------------+
+   mtn=: {.@[ +/ . * ] */ . ^ }.@[
+   (c,E) mtn v
+261</pre>
+
+<P>If<tt> f </tt>and<tt> g </tt>are polynomials, 
+then the function<tt> f % g </tt>is called a rational function. 
+The conjunction<tt> R=: 2 : 'x.&amp;p. % y.&amp;p.' </tt>
+produces a rational function defined by its coefficient arguments:
+
+<pre>
+   R=: 2 : 'x.&amp;p. % y.&amp;p.'
+   c=: 1 4 6 4 1 [ d=: 1 2 1  x=: i.6
+   c R d
+1 4 6 4 1&amp;p. % 1 2 1&amp;p.
+
+   c R d x
+1 4 9 16 25 36
+
+   d R c x
+1 0.25 0.1111111 0.0625 0.04 0.02777778</pre>
+
+<P>The Taylor coefficients of rational functions may provide interesting results. For example:</P>
+
+<pre>
+   c R d t. i. 10
+1 2 1 0 0 0 0 0 0 0
+
+   d R c t. i. 10
+1 _2 3 _4 5 _6 7 _8 9 _10
+
+   0 1 R 1 _1 _1 t. i. 10
+0 1 1 2 3 5 8 13 21 34 Fibonacci numbers</pre>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>c19=: R=: 2 : 'x.&amp;p. % y.&amp;p.'</tt></TD> <TD width=60%>Rational conjunction</TD></TR>
+  <TR><TD><tt>c20=: TR=: 2 : '(x.&amp;p. % y.&amp;p.) t.'</tt></TD> <TD>Taylor series of rational function</TD></TR>
+</TABLE>
+
+
+<P>The high-school definition of a polynomial in terms of  
+descending powers may be defined by reversing the order of the coefficients as follows:</P>
+
+<pre>
+   dp=: (|.@[ p. ])&quot;1 1 0
+   1 2 3 4 p. i. 7
+1 10 49 142 313 586 985
+
+   4 3 2 1 dp i. 7
+1 10 49 142 313 586 985</pre>
+
+<P>Corresponding definitions of some other functions such as sum, product, 
+and derivative are collected below:</P>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>d21=: dp=: (|.@[ p. ])&quot;1 1 0</tt></TD> <TD width=60%>Polynomial in descending powers</TD></TR>
+  <TR><TD><tt>d22=: dsum=: sum&amp;.|.</tt></TD> <TD>Polynomial sum in descending powers</TD></TR>
+  <TR><TD><tt>d23=: ddif=: dif&amp;.|.</tt></TD> <TD>Polynomial difference in descending powers</TD></TR>
+  <TR><TD><tt>d24=: dppr=: ppr</tt></TD> <TD>Polynomial product in descending powers</TD></TR>
+  <TR><TD><tt>m25=: dpdi=: pdi&amp;.|.</tt></TD> <TD>Polynomial derivative in descending powers</TD></TR>
+  <TR><TD><tt>m26=: &quot;.&amp;&gt; 'a=:2&amp;{'; 'b=:1&amp;{'; 'c=:0&amp;{'</tt></TD> <TD>Coefficients a, b, and c of quadratic </TD></TR>
+  <TR><TD><tt>m27=: dsc=: (b^2:) - 4:*a*c</tt></TD> <TD>Discriminant of quadratic</TD></TR>
+  <TR><TD><tt>m28=: r=:(-@b(+,-)%:@dsc)%+:@a</tt></TD> <TD>Roots of quadratic</TD></TR>
+  <TR><TD><tt>d29=: m28@(1: , ,)</tt></TD>  <TD><tt>b d29 c</tt> gives roots of  <tt>1,b,c</tt></TD></TR>
+  <TR><TD><tt>m30=: ] d29&quot;0 i.@&gt;.@(*: % 4:)</tt></TD> <TD>Arguments limited to real results</TD></TR>
+</TABLE>
+
+
+<P>For example:</P>
+
+<pre>   d=: 1 2 3 4 [ e=: 3 2 5  
+   d dsum e
+1 5 5 9 
+   ((d dsum e)dp y) ,: (d dp y) + (e dp y) [ y=: i.7
+9 20 47 96 173 284 435
+9 20 47 96 173 284 435
+
+   ((d dppr e)dp y) ,: (d dp y) * (e dp y)
+20 100 546 2204 6832 17460 38750
+20 100 546 2204 6832 17460 38750</pre>
+
+<P>Phrases <tt>m33-m35</tt> use the well-known expression from elementary algebra 
+to produce the roots of a quadratic as functions of a three-element list of coefficients 
+for a polynomial with exponents in ascending order. For example:</P></TD>
+
+<pre>   (a ; b ; c ; dsc ; r) abc=: 2 _7 3
++---------------------+
+|3|_7|2|25|2 0.3333333|
++---------------------+
+
+   abc dp r abc Test roots
+0 0
+
+   (a ; b ; c ; dsc ; r) abc=: 1 1 1
++-------------------------------------+
+|1|1|1|_3|_0.5j0.866025 _0.5j_0.866025|
++-------------------------------------+
+
+ 
+   abc dp r abc
+1.11022e_16 1.11022e_16</pre>
+
+<P>The expression <tt>b d36 c</tt> gives the roots of the "monic" polynomial with coeffieicnts 
+<tt>1,b,c,</tt> and <tt>m36 </tt>applies it to pairs of non-negative intgers that yield real roots. 
+For example:</P>
+
+<pre>   &lt;&quot;1 (i.6) d36&quot;0/ i.3
++--------------------------------------------------------------+
+|0 0 |0j1 0j_1                      |0j1.41421 0j_1.41421      |
++----+------------------------------+--------------------------|
+|0 _1|_0.5j0.8660254 _0.5j_0.8660254|_0.5j1.32288 _0.5j_1.32288|
++----+------------------------------+--------------------------|
+|0 _2|_1 _1                         |_1j1 _1j_1                |
++----+------------------------------+--------------------------|
+|0 _3|_0.381966 _2.61803            |_1 _2                     |
++----+------------------------------+--------------------------|
+|0 _4|_0.2679492 _3.73205           |_0.5857864 _3.41421       |
++----+------------------------------+--------------------------|
+|0 _5|_0.2087122 _4.79129           |_0.4384472 _4.56155       |
++--------------------------------------------------------------+
+
+   m37 6
+         0       _6
+_0.1715729 _5.82843
+_0.3542487 _5.64575
+_0.5505103 _5.44949
+ _0.763932 _5.23607
+        _1       _5
+  _1.26795 _4.73205
+  _1.58579 _4.41421
+        _2       _4
+</pre>
+
+
+<br>
+<!--bottom jump start--><hr><a href="trans_functions.htm">&gt;&gt;</a>&nbsp;
+<a href="linear_vector_func.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

@@ -1,0 +1,35 @@
+ZPTTRF computes the factorization of a complex Hermitian positive
+definite tridiagonal matrix A.
+
+If the subdiagonal elements of A are supplied in the array E, the
+factorization has the form A = L*D*L**H, where D is diagonal and L is
+unit lower bidiagonal; if the superdiagonal elements of A are
+supplied, it has the form A = U**H*D*U, where U is unit upper
+bidiagonal.
+
+
+Arguments
+=========
+
+N       (input) INTEGER
+        The order of the matrix A.  N >= 0.
+
+D       (input/output) DOUBLE PRECISION array, dimension (N)
+        On entry, the n diagonal elements of the tridiagonal matrix
+        A.  On exit, the n diagonal elements of the diagonal matrix
+        D from the L*D*L**H factorization of A.
+
+E       (input/output) COMPLEX*16 array, dimension (N-1)
+        On entry, the (n-1) off-diagonal elements of the tridiagonal
+        matrix A.  On exit, the (n-1) off-diagonal elements of the
+        unit bidiagonal factor L or U from the factorization of A.
+
+INFO    (output) INTEGER
+        = 0:  successful exit
+
+        < 0:  if INFO = -i, the i-th argument had an illegal value
+
+        > 0:  if INFO = i, the leading minor of order i is not
+        positive definite; if i < N, the factorization could
+        not be completed, while if i = N, the factorization was
+        completed, but D(N) = 0.

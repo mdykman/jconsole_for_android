@@ -1,0 +1,201 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Data processing</title>
+
+</head><body><!--top jump start--><a href="gui2.htm">&gt;&gt;</a>&nbsp;
+<a href="gui.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Data processing</h1>
+Applications typically have a GUI part and a data processing (DP) part. The DP part is the actual calculations and data manipulation. A good application implementation will be modular and this implies a clear distinction between the GUI and the DP parts.<br>
+<br>
+In this section you will develop the DP part of a simple application. In the next section you will develop the GUI part.<br>
+<br>
+The DP part of the application is specified as follows:
+<blockquote>The input is the name of a text file. The output is a string that displays as a table that contains: the file name, a count of lines, a count of characters, and a row for each distinct character in the file and a count of how many times it appears in the file. The rows of distinct characters should be sorted by their counts.</blockquote>
+You'll be working with files, so load the file utilities.
+<pre>   load 'files'</pre>
+Create a simple text file to use as test data.<br>
+
+<pre>   fn =. 'user\text.txt'
+   data =. 'abc' , LF, 'bc' , LF, 'b' , LF
+   data fwrite fn
+9
+   fread fn
+abc
+bc
+b</pre>
+You need to define a verb report that takes a filename as an argument and returns the specified result. You'll build pieces of the definition in the ijx window and then put them all together into the definition in a script.<br>
+<br>
+The input is a filename and in the report verb it will have the name <font face=courier size=-1>y.</font> , so start by working with <font face=courier size=-1>y</font> in the ijx window.<br>
+
+<pre>   y =. 'user\text.txt'</pre>
+Read the file.<br>
+
+<pre>   d =. fread y</pre>
+The report will have two columns. The first column will be the labels 'File:', 'Lines:', 'Chars:', and each distinct character in the file. The second column will be the value for that row. Since the data is a mixture of text and numbers it makes sense to build the result as boxed data.<br>
+<br>
+Create a noun with the fixed labels.<br>
+
+<pre>   r =. 'File:' ; 'Lines:' ; 'Chars:'
+   r
++-----+------+------+
+¦File:¦Lines:¦Chars:¦
++-----+------+------+</pre>
+The values for those labels are calculated as follows:<br>
+
+<pre>   y ; (+/ LF = d) ; #d
++-------------+-+-+
+¦user\text.txt¦3¦9¦
++-------------+-+-+</pre>
+The dyad <font face=courier size=-1>,.</font> (stitch) can connect these two lists into a table.<br>
+<br>
+
+<pre>   r =. r ,.  y ; (+/ LF = d) ; #d
+   r
++------+-------------+
+¦File: ¦user\text.txt¦
++------+-------------+
+¦Lines:¦3            ¦
++------+-------------+
+¦Chars:¦9            ¦
++------+-------------+</pre>
+The next thing is to add the rows with the characters and their frequency counts. The letter is the label and the count is the value, so it just adds more items to <font face=courier size=-1>r</font>. Let's postpone that part of the problem, and work instead on converting the boxed table to the string result required by the spec. Use a comment to mark the bit we are skipping over for now.<br>
+
+<pre>   NB. need to add frequency rows to r here</pre>
+The numbers in the second column need to be converted to characters. The easiest way to do this is to convert the contents of each box to characters. The characters are already characters and are not affected, but any numbers will be converted.<br>
+
+<pre>   r  =. ":each r
+   r
++------+-------------+
+¦File: ¦user\text.txt¦
++------+-------------+
+¦Lines:¦3            ¦
++------+-------------+
+¦Chars:¦9            ¦
++------+-------------+</pre>
+The display of <font face=courier size=-1>r</font> with all characters looks the same, but each box now contains characters.<br>
+<br>
+The next step is interesting and the details are left for you to puzzle out. It adds a TAB after each label and an LF after each value. In the final result the TAB separates the label from its value, and the LF causes a new line for the next label. The boxed display shows the TAB and LF as blanks, but they really are in there.<br>
+
+<pre>   r =. r ,each"1 1 TAB;LF
+   r
++-------+--------------+
+¦File:  ¦user\text.txt ¦
++-------+--------------+
+¦Lines: ¦3             ¦
++-------+--------------+
+¦Chars: ¦9             ¦
++-------+--------------+</pre>
+The monad <font face=courier size=-1>;</font> (raze) opens all the boxes and assembles a string result.<br>
+
+<pre>   ; r
+File: 	user\text.txt
+Lines:	3
+Chars:	9</pre>
+You are ready to define your verb report. Create a new script and save it as user\textdp.ijs. Putting together the ijx experiments, add the following definition for report to the script.<br>
+
+<pre>report =: 3 : 0
+d =. fread y
+r =. 'File:' ; 'Lines:' ; 'Chars:'
+r =. r ,. y ; (+/ LF = d) ; #d
+NB. need to add frequency rows to r here
+r =. ":each r
+r =. r ,each"1 1 TAB;LF
+; r
+)</pre>
+Run the script and test report.<br>
+
+<pre>   report fn
+File: 	user\text.txt
+Lines:	3
+Chars:	9</pre>
+Now calculate the frequency rows. You need a verb <font face=courier size=-1>freq </font>that returns a table of boxes where the first column is the distinct characters and the second column is the count of times they are in the file. The argument to <font face=courier size=-1>freq </font>is the file data and inside <font face=courier size=-1>freq </font>it will have the name <font face=courier size=-1>y</font> , so let's start with <font face=courier size=-1>y</font> defined as the file data.<br>
+
+<pre>   y =. fread fn</pre>
+The data can include TAB, CR, and LF characters and they should be removed. The dyad <font face=courier size=-1>-.</font> (less) can remove these unwanted characters.<br>
+
+<pre>   d =. y -. TAB,CR,LF
+   d
+abcbcb</pre>
+The utility <font face=courier size=-1>nubcount</font>, defined by script misc.ijs, returns a table of boxes with a first column containing the distinct items in its argument and the second column containing the counts.<br>
+
+<pre>   load 'misc'
+   nc =. nubcount d
+   nc
++-+-+
+¦a¦1¦
++-+-+
+¦b¦3¦
++-+-+
+¦c¦2¦
++-+-+</pre>
+To sort the items by the counts you need to get the counts into a list.<br>
+
+<pre>   &gt; 1 {"1 nc 
+1 3 2</pre>
+The dyad <font face=courier size=-1>\:</font> (sort down) sorts the items of its left argument based its right argument.<br>
+
+<pre>   nc \: &gt; 1 {"1 nc
++-+-+
+¦b¦3¦
++-+-+
+¦c¦2¦
++-+-+
+¦a¦1¦
++-+-+</pre>
+Put this all together and add the following definition to your script.<br>
+
+<pre>freq =: 3 : 0
+d =. y -. TAB,CR,LF
+nc =. nubcount d
+nc \: &gt; 1 {"1 nc
+)</pre>
+Run the script and test <font face=courier size=-1>freq</font>.<br>
+
+<pre>   freq fread fn
++-+-+
+¦b¦3¦
++-+-+
+¦c¦2¦
++-+-+
+¦a¦1¦
++-+-+</pre>
+You can now use <font face=courier size=-1>freq </font>in your <font face=courier size=-1>report </font>verb. Modify the <font face=courier size=-1>NB.</font> comment line in report to be:<br>
+
+<pre>r =. r , freq d</pre>
+Run the script and test report.<br>
+
+<pre>   report fn
+File:	user\text.txt
+Lines:	3
+Chars:	9
+b	3
+c	2
+a	1</pre>
+Try it on other text files.<br>
+<br>
+You have finished the data processing part.<br>
+<!--bottom jump start--><hr><a href="gui2.htm">&gt;&gt;</a>&nbsp;
+<a href="gui.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,153 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 6.  Programs</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro07.htm">&gt;&gt;</a>&nbsp;
+<a href="intro05.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>6. Programs</b></font><br><br>
+
+A <i>program</i> handed out at a musical evening describes the 
+sequence of musical pieces to be performed.  
+As suggested by its roots <i>gram</i> and <i>pro</i>, a program is 
+something written in advance of the events it prescribes.<br><br>
+
+Similarly, the fork<tt> +/ % # </tt>of the preceding section is 
+a program that prescribes the computation of the mean of 
+its argument when it is applied, as in the 
+sentence<tt> (+/%#)b</tt>.<tt> </tt>However, we would not normally 
+call the procedure a program until we assign a name to it, 
+as illustrated below:<br>
+
+<pre>
+   mean=: +/ % #
+   mean 2 3 4 5 6
+4
+
+   (geomean=: # %: */) 2 3 4 5 6
+3.72792
+</pre>
+
+Since the program<tt> mean </tt>is a new <i>verb</i>, 
+we also refer to a sentence such as<tt> mean=: +/ % # </tt>
+as <i>verb definition</i> (or <i>definition</i>), 
+and to the resulting verb as a <i>defined</i> verb or function.<br><br>
+
+Defined verbs can be used in the definition of further verbs 
+in a manner sometimes referred to as <i>structured programming</i>.  
+For example:<br>
+
+<pre>
+   MEAN=: sum % #
+   sum=: +/
+   MEAN 2 3 4 5 6
+4
+</pre>
+
+Entry of a verb alone (without an argument) displays its definition, 
+and the foreign conjunction (<tt>!:</tt>) can be used to specify 
+the form of the display: boxed, tree, linear, or parens.  
+(The session can also be configured to specify the form of verb display, 
+under the menu item Edit|Configure...|View.)  Thus:<br>
+
+<pre>
+   mean
++/ % #
+
+   9!:3 (2 4 5)
+   mean
++-----+-+-+
+|+-+-+|%|#|
+||+|/|| | |
+|+-+-+| | |
++-----+-+-+
+  +- / --- +
+--+- %      
+  +- #    
++/ % #
+</pre>
+<br>
+
+<p align=center><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>6.1 &nbsp;</td>
+<td>Enter<tt> AT=: i. +/ i. </tt>and use expressions such 
+as<tt> AT 5 </tt>to determine the behaviour of the program<tt> AT</tt> .<br><br>
+</td></tr>
+
+<tr><td valign=top>6.2 &nbsp;</td>
+<td>Define and use similar function tables for other dyadic functions.<br><br>
+</td></tr>
+
+<tr><td valign=top>6.3 &nbsp;</td>
+<td>Define the programs:
+<pre>
+   tab=: +/
+   ft=: i. tab i.
+   test1=: ft = AT
+</pre>
+
+Then apply<tt> test1 </tt>to various integer arguments to test the 
+proposition that<tt> ft </tt>is equivalent to<tt> AT </tt>of Exercise 6.1, 
+and enter<tt> ft </tt>and<tt> AT </tt>alone to display 
+their definitions.<br><br>
+</td></tr>
+
+<tr><td valign=top>6.4 &nbsp;</td>
+<td>Define<tt> aft=: ft f. </tt>and use<tt> test2=: aft = ft </tt>to test 
+their equivalence.  Then display their definitions and state the effect 
+of the adverb<tt> f.</tt> .<br><br>
+
+Answer: The adverb<tt> f. </tt><i>fixes</i> the verb to which it applies, 
+replacing each name used by its definition. <br><br>
+</td></tr>
+
+<tr><td valign=top>6.5 &nbsp;</td>
+<td>Redefine<tt> tab </tt>of Exercise 6.3 by 
+entering<tt> tab=: */ </tt>and observe the effects on<tt> ft </tt>
+and its <i>fixed</i> alternative<tt> aft</tt> .<br><br>
+</td></tr>
+
+<tr><td valign=top>6.6 &nbsp;</td>
+<td>Define<tt> mean=: +/ % # </tt>and state its behaviour when applied 
+to a <i>table</i>, as in<tt> mean t=: (i. !/ i.) 5</tt> .<br><br>
+
+Answer: The result is the average <i>of</i>, not <i>over</i>, the rows of 
+a table argument. <br><br>
+
+<tr><td valign=top>6.7 &nbsp;</td>
+<td>Write an expression for the mean of the <i>columns</i> 
+of<tt> t</tt> .<br><br>
+    
+Answer:<tt> mean |: t  </tt>or<tt>  mean&quot;1 t</tt><br><br>
+</td></tr>
+</table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro07.htm">&gt;&gt;</a>&nbsp;
+<a href="intro05.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

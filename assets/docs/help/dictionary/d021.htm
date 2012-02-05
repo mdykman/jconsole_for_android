@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&gt;. Ceiling  -  Larger of (Max)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d022.htm">&gt;&gt;</a>&nbsp;
+<a href="d020.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Ceiling</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>&gt;. 0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Larger Of (Max)</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>&gt;.y </tt>gives the <i>ceiling</i> of<tt> y</tt> ,<tt> </tt>that is, 
+the smallest integer greater than or equal to <tt>y</tt> .<tt> </tt>Thus:<br>
+
+<pre>
+   &gt;. 4.6 4 _4 _4.6
+5 4 _4 _4
+</pre>
+
+The implied comparison with integers is tolerant, as discussed under 
+<a href="d000.htm">Equal<tt> </tt>(<tt>=</tt>)</a>,<tt> </tt>and is controlled 
+by<tt> &gt;.!.t</tt> .<tt> </tt>
+See <a href="d011.htm">Floor<tt> </tt>(<tt>&lt;.</tt>)</a><tt> </tt>and 
+<a href="ref.htm#10">McDonnell [10]</a> for complex arguments.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x&gt;.y </tt>is the larger of<tt> x </tt>and<tt> y</tt> .<tt> </tt>
+For example:<br>
+
+<pre>
+   3&gt;.4 _4
+4 3
+
+   &gt;./7 8 5 9 2
+9
+    
+   &gt;./\7 8 5 9 2
+7 8 8 9 9
+</pre>
+</td>                                                         
+</tr></table><br>
+
+The comparison<tt> x = &gt;. x </tt>determines whether<tt> x </tt>is an integer.  
+Thus:<br>
+
+<pre>
+   Integer_test=: ] = &gt;.      NB. See the definition of fork in <a href="dictf.htm">Section II F</a>.
+   Integer_test 3 3.14 _5
+1 0 1
+
+   f=: = &gt;.                   NB. The same function may be defined by a hook.
+   f 3 3.14 _5
+1 0 1
+</pre>
+
+The <i>ceiling</i><tt> &gt;. y </tt>is equivalent to<tt> -&lt;.-y</tt> .<tt> </tt> 
+In other words, it is the dual of <i>floor</i> with respect to 
+(that is, <i>under</i>) arithmetic 
+negation:<tt> &gt;. </tt><font size=+1>&harr;</font><tt> &lt;.&amp;.- </tt>
+and<tt> &lt;. </tt><font size=+1>&harr;</font><tt> &gt;.&amp;.- </tt> .<tt> </tt>For example:<br>
+
+<pre>
+   (&lt;.&amp;.- ; &gt;.) 4.6 4 _4 _4.6
++---------+---------+
+|5 4 _4 _4|5 4 _4 _4|
++---------+---------+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d022.htm">&gt;&gt;</a>&nbsp;
+<a href="d020.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

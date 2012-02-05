@@ -1,0 +1,54 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Debug global</title>
+
+</head><body><!--top jump start--><a href="when_same.htm">&gt;&gt;</a>&nbsp;
+<a href="global.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Debug global</h1>
+Sometimes when trying to debug or better understand a verb it is useful to see the values of its local names or other intermediate results. A quick way of doing this is to add a line to the verb definition that does a global definition.<br>
+<br>
+Open the cf.ijs file and add a line to centigrade to define global <font face=courier size=-1>gt1 </font>as <font face=courier size=-1>t1</font>.<br>
+
+<pre>centigrade =: 3 : 0   NB. =:
+t1 =. y - 32
+gt1 =: t1             NB. temp line for debugging info
+t2 =. t1 * 5
+t3 =. t2 % 9
+)</pre>
+Run the script and in the ijx window:<br>
+<br>
+
+<pre>   centigrade 124
+51.1111
+   t1
+¦value error
+   gt1
+92</pre>
+After centigrade finished execution you can't see what value the local <font face=courier size=-1>t1 </font>had, but you can see a copy of the value in <font face=courier size=-1>gt1</font>.<br>
+<br>
+Remove the line from the script and run the script to redefine centigrade without the debug line.<br>
+<!--bottom jump start--><hr><a href="when_same.htm">&gt;&gt;</a>&nbsp;
+<a href="global.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

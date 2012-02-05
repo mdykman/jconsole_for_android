@@ -1,0 +1,105 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&amp;. </title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d631c.htm">&gt;&gt;</a>&nbsp;
+<a href="d630v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=35%><b><font size=+2>Under</font></b></td>
+<td align=center width=45%><font face="Courier New" size=+3>u&amp;.v &nbsp;mv mv mv</font></td>
+<td align=right  width=20%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table><tr>
+<td valign=top width=100% bgcolor=#eeeeee>
+<p>The verb<tt> u &amp;.v </tt>is equivalent to the 
+composition<tt> <a href="d630v.htm">u &amp; v</a> </tt>
+except that the verb obverse to<tt> v </tt>is applied to the result 
+for each cell.  That is (subject to the monadic rank of<tt> v</tt>),</p>
+
+<p>
+<tt> &nbsp; &nbsp;&nbsp;u&amp;.v y </tt><font size=+1>&harr;</font><tt> vi u v y</tt><br>
+<tt> &nbsp; x u&amp;.v y </tt><font size=+1>&harr;</font><tt> vi (v x) u (v y)</tt>
+</p>
+
+<p>where<tt> vi </tt>is the obverse of<tt> v</tt> .<tt> </tt>
+The obverse is normally the inverse, as discussed 
+more fully under the <a href="d202n.htm">power conjunction<tt> ^:</tt></a> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+<pre>
+   3 +&amp;.^. 4                   <font face=Times size=+1>Inverse of natural log is the exponential</font>
+12
+              
+   (^.^:_1) (^.3)+(^.4)
+12
+
+   (&lt;b), &lt;|. b=: 1 2 3 ; 2 3 5 7 ; 'abcde'
++---------------------+---------------------+
+|+-----+-------+-----+|+-----+-------+-----+|
+||1 2 3|2 3 5 7|abcde|||abcde|2 3 5 7|1 2 3||
+|+-----+-------+-----+|+-----+-------+-----+|
++---------------------+---------------------+
+
+   each=: &amp;.&gt;                  <font face=Times size=+1>An adverb</font>
+   (&lt;|. &amp;. &gt; b),(&lt;|. each b)   <font face=Times size=+1>Reversal under open</font>
++---------------------+---------------------+
+|+-----+-------+-----+|+-----+-------+-----+|
+||3 2 1|7 5 3 2|edcba|||3 2 1|7 5 3 2|edcba||
+|+-----+-------+-----+|+-----+-------+-----+|
++---------------------+---------------------+
+</pre>
+
+In mathematics, certain cases of <i>under</i> are called 
+<i>dual</i> or, <i>dual with respect to</i>:<br>
+
+<pre>
+   f=: +. &amp;. -.                <font face=Times size=+1>Dual with respect to boolean negation</font>
+   f/~ d=: 0 1
+0 0
+0 1
+
+   D=: &amp;. -.                   <font face=Times size=+1>The adverb dual with respect to negation</font>
+   (+.D/~d);(*./~d);(=D/~d);(~:/~d)
++---+---+---+---+
+|0 0|0 0|0 1|0 1|
+|0 1|0 1|1 0|1 0|
++---+---+---+---+
+
+   DWL=: &amp;.^.                  <font face=Times size=+1>Dual with respect to natural logarithm</font>
+   DAN=: &amp;. -                  <font face=Times size=+1>Dual with respect to arithmetic negation</font>
+   (3 + DWL 4),(3*4),(3 &lt;. DAN 4) , (3 &gt;. 4)
+12 12 4 4
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d631c.htm">&gt;&gt;</a>&nbsp;
+<a href="d630v.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

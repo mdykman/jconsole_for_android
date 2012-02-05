@@ -1,0 +1,116 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>E. Quadrature &amp; Simpson&#146;s Rule</title>
+
+</head><body><!--top jump start--><a href="geometry.htm">&gt;&gt;</a>&nbsp;
+<a href="trans_functions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>9E. Quadrature &amp; Simpson&#146;s Rule</h1>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0=: W=: integ p. +: &gt;. 1:</tt></TD>	<TD width=60%>Weights for 1+2*y points; try m0 3x</TD></TR>
+  <TR><TD><tt>m1=: integ=: pint&quot;1@%.@vm</tt></TD>	<TD>Integral of inverse of Vandermonde</TD></TR>
+  <TR><TD><tt>m2=: vm=: ^~/~@i.@&gt;:@+:</tt></TD>	<TD>Transposed Vm of order 1+2*y</TD></TR>
+  <TR><TD><tt>m3=: pint=: 0: , ] % &gt;:@i.@#</tt></TD>	<TD>Polynomial integral of coefficients y</TD></TR>
+  <TR><TD><tt>m4=: pder=: 1: }. ] * i.@#</tt></TD>	<TD>Polynomial derivative of coefficients y</TD></TR>
+  <TR><TD><tt>d5=: EW=: +/@(-@take {.&quot;0 1 ])</tt></TD>	<TD>Extended weights (x groups of #y points)</TD></TR>
+  <TR><TD><tt>d6=: take=:i.@[ (] + &lt;:@] * [) #@]</tt></TD>	<TD>Amounts of overtake</TD></TR>
+</TABLE>
+
+
+<P>The integral of a function<tt> f </tt>from<tt> a </tt>to<tt> b </tt>
+is called its <I>quadrature</I>. Quadrature can be approximated by 
+a weighted sum of the values 
+of the function on a uniform grid 
+from<tt> a </tt>to<tt> b</tt> .<tt> </tt> 
+Use of the weights<tt> (1 4 1)%3 </tt>on a grid of three 
+points is equivalent to 
+integrating the parabola (polynomial of order 2) fitted 
+to the function at the points. 
+Use of these weights is referred to as an application 
+of <I>Simpson&rsquo;s Rule</I>.</P>
+
+<P>The foregoing phrases  
+(based on the development in 
+<a href="references.htm#7"><I>Calculus </I>[6]</a>) provide 
+the weights for Simpson&rsquo;s Rule and for higher-order 
+polynomial approximations 
+as illustrated below:</P>
+
+ 
+<pre>
+   ,.(W 1x);(W 2x);(W 3x)
++---------------------------------------------+
+|1r3 4r3 1r3                                  |
++---------------------------------------------|
+|14r45 64r45 8r15 64r45 14r45                 |
++---------------------------------------------|
+|41r140 54r35 27r140 68r35 27r140 54r35 41r140|
++---------------------------------------------+
+
+   ,.(3*W 1x);(45*W 2x);(140*W 3x)
++-----------------------+
+|1 4 1                  |
++-----------------------|
+|14 64 24 64 14         |
++-----------------------|
+|41 216 27 272 27 216 41|
++-----------------------+
+</pre>
+
+<P>If weights for <tt>n </tt>points are applied by dividing the grid into groups of n points, 
+the weights are applied as illustrated below for four groups of Simpson&#146;s Rule:</P>
+
+<pre>
+   (-3 5 7 9) {.&quot;0 1 w=: 1 4 1
+1 4 1 0 0 0 0 0 0
+0 0 1 4 1 0 0 0 0
+0 0 0 0 1 4 1 0 0
+0 0 0 0 0 0 1 4 1
+
+   +/(-3 5 7 9) {.&quot;0 1 w
+1 4 2 4 2 4 2 4 1
+</pre>
+
+<P>The function<tt> EW </tt>provides such extended weights 
+as illustrated below:</P>
+
+<pre>
+   3 * 5 EW W 1
+1 4 2 4 2 4 2 4 2 4 1
+
+   45 * 4 EW W 2
+14 64 24 64 28 64 24 64 28 64 24 64 28 64 24 64 14
+</pre>
+
+
+<br>
+
+<!--bottom jump start--><hr><a href="geometry.htm">&gt;&gt;</a>&nbsp;
+<a href="trans_functions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

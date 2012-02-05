@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 19. Tacit Equivalents</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro20.htm">&gt;&gt;</a>&nbsp;
+<a href="intro18.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>19. Tacit Equivalents</b></font><br><br>
+
+Verbs may be defined either explicitly or tacitly.  
+In the case of a one-sentence explicit definition, 
+of either a monadic or dyadic case, the corresponding 
+tacit definition may be obtained by using the adverb<tt> 13 : </tt>
+as illustrated below.  First enter<tt> 9!:3 ] 2 5 </tt>so as to 
+obtain both the boxed and linear displays of verbs:<br>
+
+<pre>
+   s=: 0 : 0
+(+/y) % (#y)
+)
+
+   mean=: 3 : s
+   MEAN=: 13 : s
+
+   mean                           MEAN
++-+-+------------+           +-----+-+-+
+|3|:|(+/y) % (#y)|           |+-+-+|%|#|
++-+-+------------+           ||+|/|| | |
+3 : '(+/y) % (#y)'           |+-+-+| | |
+                             +-----+-+-+
+                             +/ % #
+</pre>
+
+The explicit form of definition is likely to be more 
+familiar to computer programmers than the tacit form.  
+Translations provided by the adverb<tt> 13 : </tt>may 
+therefore be helpful in learning tacit programming.  
+
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>19.1 &nbsp;
+<td>Use the display of the tacit definition of<tt> MEAN </tt>
+to define an equivalent function called<tt> M</tt> .<br><br>
+
+Answer:<tt> M=: +/ % #</tt>
+</td></tr>
+</table>
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro20.htm">&gt;&gt;</a>&nbsp;
+<a href="intro18.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

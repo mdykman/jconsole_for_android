@@ -1,0 +1,173 @@
+LABTITLE=: 'LAPACK'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section LAPACK
+LAPACK (Linear Algebra Package) is a set of routines for solving systems of simultaneous linear equations, least-squares solutions of linear systems of equations, eigenvalue problems, and singular value problems.
+
+The associated matrix factorizations, LU, Cholesky, QR, SVD, Schur, generalized Schur, are also provided, as are related computations such as reordering of the Schur factorizations and estimating condition numbers.
+)
+
+NB. =========================================================
+Lab Section
+The LAPACK routines are accessed through the dll call mechanism as documented in User Manual chapter "Dlls and Memory Management".
+)
+
+NB. =========================================================
+Lab Section
+All definitions for LAPACK are in locale jlapack.
+
+The scripts and other files for LAPACK are in directory:
+)
+jpath '~addons/math/lapack'
+
+NB. =========================================================
+Lab Section
+The first step in using LAPACK is to load the lapack.ijs script to define the jlapack locale.
+)
+load 'math/lapack'
+
+NB. =========================================================
+Lab Section
+There are hundreds of LAPACK routines but you only load interfaces for the ones you need. The interface is defined in a script with the name of the routine.
+
+geev is a LAPACK routine for computing eigenvalues of a real or complex matrix.
+
+If you want to use geev you need to load the geev script to make the necessary definitions in the jlapack locale.
+)
+load 'math/lapack/geev'
+
+NB. =========================================================
+Lab Section
+)
+m=: ?4 4$100
+geev_jlapack_ m  NB. compute eigenvalues and eigenvectors
+
+NB. =========================================================
+Lab Section
+)
+>1{geev_jlapack_ m  NB. just the eigenvalues
+
+NB. =========================================================
+Lab Section
+If you are going to be using geev a lot, you could define it in the base locale so that you do not have to use the full name.
+)
+geev=: geev_jlapack_
+>1{geev m
+
+NB. =========================================================
+Lab Section
+The LAPACK routines are documented in the doc subdirectory with a file with the same name, but a "lap" suffix.
+
+This documentation is directly from the LAPACK library and is for both the mathematician and the programmer. Unfortunately the programmer is assumed to be a Fortran programmer. This means you will have to put in some extra effort to understand the programming interface details.
+
+docs_jlapack_ shows a window with a list of the lap files.
+)
+PREPARE
+3 : 0''
+if. 0 e. $ 1!:0 <jpath '~addons/math/lapack/doc' do.
+  smoutput 'Note: on this machine, the LAPACK documentation has not'
+  smoutput 'been found in the doc subdirectory.'
+end.
+)
+PREPARE
+
+NB. =========================================================
+Lab Section
+)
+docs_jlapack_ ''  NB. display list of lap files
+
+NB. =========================================================
+Lab Section
+)
+load 'math/lapack/geev'
+>1{geev_jlapack_ 1j3+m        NB. eigenvalues of complex array
+
+NB. =========================================================
+Lab Section
+gesvd computes the singular value decomposition (SVD) and left and right singular vectors of a real or complex matrix,
+)
+load 'math/lapack/gesvd'
+gesvd_jlapack_ m           NB. SVD
+
+NB. =========================================================
+Lab Section
+The LAPACK routines are quite fast. For example:
+)
+PREPARE
+3 : 0''
+if. IFWINCE_j_ do.
+  smoutput '   mat=: ?20 20$1000'
+  mat__=: ?20 20$1000
+else.
+  smoutput '   mat=: ?100 100$1000'
+  mat__=: ?100 100$1000
+end.
+)
+PREPARE
+
+time=: 6!:2
+
+NB. time in seconds to compute SVD:
+time 'gesvd_jlapack_ mat'
+
+NB. =========================================================
+Lab Section
+)
+load 'math/lapack/potrf'
+mp=: +/ . *
+potrf_jlapack_ m mp |: m   NB. Cholesky decomposition
+
+NB. =========================================================
+Lab Section
+)
+load 'math/lapack/geqrf'
+geqrf_jlapack_ m           NB. QR factorization
+
+NB. =========================================================
+Lab Section
+)
+load 'math/lapack/gesv'
+m1=: ?.4 3$30
+gesv_jlapack_ m;m1         NB. solves m * x = m1
+
+NB. =========================================================
+Lab Section
+)
+load 'math/lapack/getrf'
+getrf_jlapack_ m           NB. LU decomposition
+
+NB. =========================================================
+Lab Section
+routines_jlapack_ lists all the scripts in the lapack directory.
+)
+
+NB. =========================================================
+Lab Section
+)
+routines_jlapack_ ''
+
+NB. =========================================================
+Lab Section
+As you can see, interfaces are defined for only a few LAPACK routines.
+
+Compare the list of available routines in docs_jlapack_ with the list of implemented interfaces in routines_jlapack_ .
+
+With a little effort you should be able to add an interface for the LAPACK routine you require. You need to study the lap documentation for interfaces already provided, and by following the pattern in their interfaces, write a script for the interface you want.
+
+If you write LAPACK interfaces, please send them to us so they can be included in the package.
+)
+
+NB. =========================================================
+Lab Section
+The calculation of eigenvalues using LAPACK is an integral part of a new demo of eigenpictures. These show the action of a matrix on unit vectors, and highlight the eigenvalues, which appear as a scaling factor times the eigenvectors.
+
+Access this demo from the menu Studio|Demos|eigenpictures, or by loading it directly:
+
+load '~system\examples\graphics\isigraph\eigenpic.ijs'
+)
+
+NB. =========================================================
+Lab Section
+For more information on LAPACK: http://www.netlib.org
+)

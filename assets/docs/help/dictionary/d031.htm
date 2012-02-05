@@ -1,0 +1,107 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>_. Indeterminate</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d032.htm">&gt;&gt;</a>&nbsp;
+<a href="d030.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Indeterminate</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>_.</font></td>
+<td align=right  width=33%>&nbsp;</td>
+</tr></table>
+<br>
+
+<table>
+<tr>
+<td valign=top bgcolor=#eeeeee>
+<p>The indeterminate<tt> _. </tt>is a numeric atom. 
+It is provided to aid in dealing 
+with NaN (not a number) in data from external sources, 
+and should be removed from such data as soon as possible. 
+The verb<tt> </tt><a href="dx128.htm#5"><tt>128!:5</tt></a><tt> </tt>
+tests for<tt> _. </tt>.</p>
+
+<a name="create"></a>
+<p>The only ways to create<tt> _. </tt>are as follows:
+<table>
+ <tr><td>&nbsp; &nbsp;</td><td>direct entry of<tt> _. </tt></td></tr>
+ <tr><td>&nbsp; &nbsp;</td><td><tt> &quot;.</tt></td></tr>
+ <tr><td>&nbsp; &nbsp;</td><td><tt>3!:n</tt></td></tr>
+ <tr><td>&nbsp; &nbsp;</td><td>DLL call (database, LAPACK, etc.)</td></tr>
+</table></p>
+
+<a name="containing"></a>
+<p></p>
+
+<a name="correct"></a>
+<p>Primitives on arguments containing<tt> _.</tt> ,<tt> </tt>that 
+move data without interpreting the value, 
+produce correct and consistent results.
+These include<tt> $ |. |: # , ,. [ ] { {. {: } }. }:</tt> .<tt> </tt>
+Other primitives on arguments containing<tt> _. </tt>
+may not produce correct or consistent results.  In particular,
+the dyads<tt> &lt; &lt;: = &gt;: &gt; ~: -: &lt;. &gt;. </tt>do not
+produce consistent results on arguments containing<tt> _.</tt> ,<tt> </tt>
+nor the verbs<tt> /: \:</tt> ,<tt> </tt>nor 
+the dyads<tt> i. i: e. -.</tt> ,<tt> </tt>nor the monads<tt> ~. ~:</tt> ,<tt> </tt>nor
+verbs defined in terms of these.</p>
+
+<a name="error"></a>
+<p>Primitives on arguments not containing<tt> _. </tt> 
+signal<tt> NaN error </tt>instead of producing<tt> _.</tt> .
+<table>
+<tr><td>&nbsp; &nbsp;</td><td><tt>x+y</tt>&nbsp;</td><td>&nbsp; &nbsp;</td>
+ <td><tt>x </tt>and<tt> y </tt>are infinite with different signs</td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>x-y</tt>&nbsp;</td><td>&nbsp;</td>
+ <td><tt>x </tt>and<tt> y </tt>are infinite with the same sign</td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>*y</tt>&nbsp;</td><td>&nbsp;</td>
+ <td>the real and imaginary parts of<tt> y </tt>are infinite</td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>x%y</tt>&nbsp;</td><td>&nbsp;</td>
+ <td><tt>x </tt>and<tt> y </tt>are infinite</td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>x^.y</tt>&nbsp;</td><td>&nbsp;</td>
+ <td><tt>x </tt>and<tt> y </tt>are infinite or 0</td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>x!y</tt>&nbsp;</td><td>&nbsp;</td>
+ <td><tt>x </tt>and<tt> y </tt>are infinite</td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>m H. n</tt>&nbsp;</td><td>&nbsp;</td>
+ <td>similar to the dyad<tt> p. </tt></td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>x p. y</tt>&nbsp;</td><td>&nbsp;</td>
+ <td><tt>x </tt>and<tt> y </tt>that cause addition of infinities with opposite signs; for example<tt> 1 _ _ p. _1</tt></td></tr>
+<tr><td>&nbsp; &nbsp;</td><td><tt>u T. n y</tt>&nbsp;</td><td>&nbsp;</td>
+ <td>similar to the dyad<tt> p. </tt></td></tr>
+</table>
+<p><tt>0*_</tt> ,<tt> 0*__</tt> ,<tt> </tt>and<tt> 0%0 </tt>are
+all defined to be<tt> 0</tt> .</p>
+&nbsp;
+</td></tr>
+</table>
+</td></tr></table>
+
+&nbsp;
+<br>
+
+<!--bottom jump start--><hr><a href="d032.htm">&gt;&gt;</a>&nbsp;
+<a href="d030.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

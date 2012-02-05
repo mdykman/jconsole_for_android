@@ -1,0 +1,646 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 9: Trains of Verbs</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="10.htm">&gt;&gt;</a>&nbsp;
+<a href="08.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <A NAME="01"></A>
+<H1>Chapter 9: Trains of Verbs</H1>
+In this chapter we continue the topic of trains of verbs begun in <A HREF="03.htm">Chapter 03</A>. 
+Recall that a train is an isolated sequence of functions, written one after the 
+other, such as <TT>(+ * -)</TT>. 
+<A NAME="02"></A>
+<A NAME="03"></A>
+<H2>9.1  Review: Monadic Hooks and Forks</H2>
+Recall from <A HREF="03.htm">Chapter 03</A> the monadic hook, with the scheme:
+<PRE>
+               (f g) y   means    y f (g y)
+</PRE>
+Here is an example, as a brief reminder: a whole number
+is equal to its floor:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y =: 2.1 3</TT></TD>
+<TD><TT><. y</TT></TD>
+<TD><TT>y = <. y</TT></TD>
+<TD><TT>(= <.) y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2.1 3</TT></TD>
+<TD><TT>2 3</TT></TD>
+<TD><TT>0 1</TT></TD>
+<TD><TT>0 1</TT></TD>
+</TABLE>
+<p>
+Recall also the monadic fork, with the scheme:
+<PRE>
+               (f g h) y   means    (f y) g (h y)
+</PRE>
+For example: the mean of a list of numbers is the sum divided by the number-of-items:
+<PRE>
+   sum  =: +/
+   mean =: sum % #
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y =: 1 2 3 4</TT></TD>
+<TD><TT>sum y</TT></TD>
+<TD><TT># y</TT></TD>
+<TD><TT>(sum y) % (# y)</TT></TD>
+<TD><TT>mean y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1 2 3 4</TT></TD>
+<TD><TT>10</TT></TD>
+<TD><TT>4</TT></TD>
+<TD><TT>2.5</TT></TD>
+<TD><TT>2.5</TT></TD>
+</TABLE>
+<p>
+Now we look at some further variations.
+<A NAME="04"></A>
+<H2>9.2  Dyadic Hooks</H2>
+3 hours and 15 minutes is 3.25 hours. A verb <TT>hr</TT>, such that <TT>(3 hr 15)</TT> is <TT>3.25</TT>,  
+can be written as
+a hook. We want <TT>x hr y</TT> to be <TT>x + (y%60)</TT> and so the hook is:
+<PRE>
+   hr =: + (%&60)
+   3 hr 15
+3.25
+</PRE>
+The scheme for dyadic hook is:
+<PRE>
+           x (f g) y   means   x f (g y)
+</PRE>
+with the diagram:
+<p>
+<IMG SRC="diag07.gif" ALT="diagram 07" WIDTH=246 HEIGHT=225>
+<A NAME="05"></A>
+<H2>9.3  Dyadic Forks</H2>
+Suppose we say that the expression "10 plus or minus 2" is to mean the list <TT>12 8</TT>.
+A verb to compute <TT>x</TT> plus-or-minus <TT>y</TT> can be written as the fork <TT>(+,-)</TT>:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT> (10+2) , (10-2)</TT></TD>
+<TD><TT> 10 (+,-) 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>12 8</TT></TD>
+<TD><TT>12 8</TT></TD>
+</TABLE>
+<p>
+The scheme for a dyadic fork is:
+<PRE>
+              x (f g h) y   means    (x f y) g (x h y)
+</PRE>
+Here is a diagram for this scheme:
+<p>
+<IMG SRC="diag09.gif" ALT="diagram 09" WIDTH=363 HEIGHT=242>
+<H2>9.4  Review</H2>
+There are four basic schemes for trains of verbs. 
+<PRE>
+           (f g h) y    =    (f y) g (h y)       monadic fork 
+</PRE>
+<PRE>
+       
+</PRE>
+<PRE>
+         x (f g h) y    =  (x f y) g (x h y)     dyadic  fork
+</PRE>
+<PRE>
+       
+</PRE>
+<PRE>
+           (f g)   y    =       y  f (g y)       monadic hook 
+</PRE>
+<PRE>
+       
+</PRE>
+<PRE>
+         x (f g)   y    =       x  f (g y)       dyadic  hook
+</PRE>
+<H2>9.5  Longer Trains</H2>
+Now we begin to look at ways to broaden the class of 
+functions which can be defined as trains.
+<p>
+In general a train of any length can be analysed into hooks and forks.  
+For a train of 4 verbs, <TT>e f g h</TT>,  the scheme is that
+<PRE>
+                    e f g h    means   e (f g h)
+</PRE>
+that is, a 4-train <TT>(e f g h)</TT> is a hook, where the first verb is <TT>e</TT> and the 
+second is the fork <TT>(f g h)</TT>.  
+For example, Suppose that <TT>y</TT> is a list of numbers: 
+<PRE>
+   y =: 2 3 4
+</PRE>
+Then the "norm" of <TT>y</TT> is defined as <TT>(y - mean y)</TT>, where <TT>mean</TT> is defined above as 
+<TT>(sum % #)</TT>. 
+We see that the following expressions for the norm of <TT>y</TT> are all equivalent:
+<PRE>
+   y - mean y
+_1 0 1
+   
+   (- mean) y       NB. as a hook
+_1 0 1
+   
+   (- (sum % #)) y  NB. by definition of mean
+_1 0 1
+   
+   (- sum % #) y    NB. as 4-train
+_1 0 1
+</PRE>
+A certain amount of artistic judgement is called for with long trains. This last
+formulation as the 4-train <TT>(- sum % #)</TT> does not bring out as clearly as it might 
+that the key idea is subtracting the mean.  The formulation <TT>( - mean)</TT> is clearer. 
+<p>
+For a train of 5 verbs <TT>d e f g h</TT> the scheme is:
+<PRE>
+                 d e f g h   means  d e (f g h)
+</PRE>
+That is, a 5-train <TT>(d e f g h)</TT> is a fork with first verb <TT>d</TT>, second verb <TT>e</TT> and 
+third verb the fork <TT>(f g h)</TT>
+For example, if we write a calendar date in the form day month year:
+<PRE>
+   date =: 28 2 1999
+</PRE>
+and define verbs to extract the day month and year separately:
+<PRE>
+   Da =: 0 & {
+   Mo =: 1 & {
+   Yr =: 2 & {
+</PRE>
+the date can be presented in different ways by  5-trains:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>(Da , Mo , Yr) date </TT></TD>
+<TD><TT>(Mo ; Da ; Yr) date</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>28 2 1999</TT></TD>
+<TD><TT>+-+--+----+<BR>
+|2|28|1999|<BR>
++-+--+----+</TT></TD>
+</TABLE>
+<p>
+The general scheme for a train of verbs <TT>(a b c ...)</TT> depends upon whether
+the number of verbs is even or odd:
+<PRE>
+            even:  (a b c ...)    means   hook (a (b c ...))  
+</PRE>
+<PRE>
+            odd :  (a b c ...)    means   fork (a b (c ...))
+</PRE>
+<A NAME="06"></A>
+<A NAME="07"></A>
+<A NAME="08"></A>
+<A NAME="09"></A>
+<A NAME="10"></A>
+<H2>9.6  Identity Functions</H2>
+There is a built-in verb, monadic <TT>[</TT> (left bracket, called "Same"). 
+It gives a result identical to its argument.  
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>[ 99</TT></TD>
+<TD><TT>[ 'a b c'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>99</TT></TD>
+<TD><TT>a b c</TT></TD>
+</TABLE>
+<p>
+There is a dyadic case, and also a similar verb <TT> ] </TT>. Altogether we have these 
+schemes:
+<PRE>
+            [ y   means y 
+</PRE>
+<PRE>
+       
+</PRE>
+<PRE>
+          x [ y   means x
+</PRE>
+<PRE>
+       
+</PRE>
+<PRE>
+            ] y   means y
+</PRE>
+<PRE>
+       
+</PRE>
+<PRE>
+          x ] y   means y
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>[ 3</TT></TD>
+<TD><TT>2 [ 3</TT></TD>
+<TD><TT>] 3</TT></TD>
+<TD><TT>2 ] 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>2</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+Monadic <TT>[</TT> and monadic <TT> ] </TT> are both called "Same". 
+Dyadic <TT> [ </TT> is called "Left". 
+Dyadic <TT> ] </TT> is "Right".
+<p>
+The expression <TT>(+ % ])</TT> is a fork; for arguments <TT>x</TT> and <TT>y</TT>
+it computes:
+<PRE>
+                 (x+y) % (x ] y)
+</PRE>
+that is, 
+<PRE>
+                 (x+y) % y
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>2 ] 3</TT></TD>
+<TD><TT>(2 + 3) % (2 ] 3)</TT></TD>
+<TD><TT> 2 (+ % ]) 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>1.66667</TT></TD>
+<TD><TT>1.66667</TT></TD>
+</TABLE>
+<p>
+Another use for the identity function <TT>[</TT> is
+to cause the result of an assignment to be displayed.
+The expression <TT>foo =: 42</TT> is an assignment
+while the expression <TT>[ foo =: 42</TT>
+is not: it merely contains an assignment.
+<PRE>
+       foo =: 42       NB.  nothing displayed
+       [ foo =: 42
+42
+</PRE>
+Yet another use for the <TT>[</TT> verb is to allow several assignments to be combined 
+on one line.  
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>a =: 3  [  b =: 4  [  c =: 5</TT></TD>
+<TD><TT>a,b,c</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>3 4 5</TT></TD>
+</TABLE>
+<p>
+Since <TT>[</TT> is a verb, its arguments must be nouns, (that is, not functions). 
+Hence the assignments combined with <TT>[</TT> must all evaluate to nouns.
+<H3>9.6.1  Example: Hook as Abbreviation</H3>
+The monadic hook <TT>(g h)</TT> is an abbreviation for
+the monadic fork <TT>([ g h)</TT>. 
+To demonstrate, suppose we have:
+<PRE>
+   g =: ,
+   h =: *:
+   y =: 3
+</PRE>
+Then each of the following expressions is equivalent.
+<PRE>
+   ([ g h) y       NB. a fork
+3 9
+   ([ y) g (h y)   NB. by defn of fork
+3 9
+   y g (h y)       NB. by defn of [
+3 9
+   (g h) y         NB. by defn of hook
+3 9
+   
+</PRE>
+<H3>9.6.2  Example: Left Hook</H3>
+Recall that the monadic hook has the general scheme
+<PRE>
+             (f g) y    =   y f (g y)
+</PRE>
+How can we write, as a train, a function with the scheme  
+<PRE>
+             (  ?   ) y  =   (f y) g y
+</PRE>
+There are two possibilities. One is the fork <TT>(f g ])</TT>: 
+<PRE>
+   f =: *:
+   g =: ,
+    
+   (f g ]) y        NB. a fork
+9 3
+   (f y) g (] y)    NB. by meaning of fork  
+9 3
+   (f y) g y        NB. by meaning of ]
+9 3
+</PRE>
+For another possibility,  recall the <TT>~</TT> adverb with its scheme:
+<PRE>
+             (x f~ y) means   y f x
+</PRE>
+Our train can be written as the hook <TT>(g~ f)</TT>.
+<PRE>
+   (g~ f) y      NB. a hook
+9 3
+   y (g~) (f y)  NB. by meaning of hook
+9 3
+   (f y) g y     NB. by meaning of ~
+9 3
+   
+</PRE>
+<H3>9.6.3  Example: Dyad</H3>
+There is a sense in which <TT>[</TT> and <TT> ] </TT>
+can be regarded as standing for left and right arguments.
+<PRE>
+   f =: 'f' & ,
+   g =: 'g' & ,
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>foo =: (f @: [) , (g @: ])</TT></TD>
+<TD><TT>'a' foo 'b'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>f@:[ , g@:]</TT></TD>
+<TD><TT>fagb</TT></TD>
+</TABLE>
+<p>
+<A NAME="11"></A>
+<A NAME="12"></A>
+<H2>9.7  The Capped Fork</H2>
+The class of functions which can be written as
+unbroken trains can be widened with the aid of 
+the "Cap" verb <TT>[:</TT>  (leftbracket colon)
+<p>
+The scheme is: for verbs <TT>f</TT> and <TT>g</TT>, the fork:
+<PRE>
+             [: f g     means   f @: g
+</PRE>
+For example, with <TT>f</TT> and <TT>g</TT> as above, we have 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>y=:'y'</TT></TD>
+<TD><TT>f g y</TT></TD>
+<TD><TT>(f @: g) y</TT></TD>
+<TD><TT>([: f g) y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>y</TT></TD>
+<TD><TT>fgy</TT></TD>
+<TD><TT>fgy</TT></TD>
+<TD><TT>fgy</TT></TD>
+</TABLE>
+<p>
+Notice how the sequence of three verbs 
+<TT>([: f g)</TT> looks like a fork,
+but with this "capped fork" it is the MONADIC 
+case of the middle verb <TT>f</TT> which is applied. 
+<p>
+The <TT>[:</TT> verb is  valid ONLY as the left-hand verb of a fork.
+It has no other purpose: as a verb it has an empty
+domain, that is, it cannot be applied to any argument.
+Its usefulness lies in building long trains.
+Suppose for example that:
+<PRE>
+   h =: 'h'&,
+</PRE>
+then the expression <TT>(f , [: g h)</TT> is a 5-train
+which denotes a verb: 
+<PRE>
+   (f , [: g h) y        NB. a 5-train
+fyghy
+   
+   (f y) , (([: g h) y)  NB. by meaning of 5-train
+fyghy
+   
+   (f y) , (g @: h y)    NB. by meaning of [:
+fyghy
+   
+   (f y) , (g h y)       NB. by meaning of @:
+fyghy
+   
+   'fy'  , 'ghy'         NB. by meaning of f g h 
+fyghy
+</PRE>
+<A NAME="13"></A>
+<H2>9.8  Constant Functions</H2>
+Here we continue looking at ways of broadening the class of functions that we can
+write as trains of verbs. 
+There is a built-in verb <TT>0:</TT> (zero colon) which delivers a value of zero 
+regardless of its argument. There is a monadic and a dyadic case:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT> 0: 99</TT></TD>
+<TD><TT>0: 2 3 4</TT></TD>
+<TD><TT>0: 'hello'</TT></TD>
+<TD><TT>88 0: 99</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+As well as <TT>0:</TT> there are similar functions <TT>1:</TT> <TT>2:</TT> <TT>3:</TT> and so on up to <TT>9:</TT> 
+and also the negative values: <TT>_9:</TT> to <TT>_1:</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>1: 2 3 4</TT></TD>
+<TD><TT>_3: 'hello'</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1</TT></TD>
+<TD><TT>_3</TT></TD>
+</TABLE>
+<p>
+<TT>0:</TT> is said to be a constant function, because its result is constant. 
+Constant functions are useful because they can occur in trains at places where
+we want a constant but must write a verb, (because trains of verbs, naturally, 
+contain only verbs). 
+<p>
+For example, a verb to test whether its argument is 
+negative (less than zero) can be written as
+<TT>(< & 0)</TT> but alternatively it can be written as a hook:
+<PRE>
+   negative =:  < 0:
+   
+</PRE>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>x =: _1 0 2</TT></TD>
+<TD><TT>0: x</TT></TD>
+<TD><TT>x < (0: x)</TT></TD>
+<TD><TT>negative x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1 0 2</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>1 0 0</TT></TD>
+<TD><TT>1 0 0</TT></TD>
+</TABLE>
+<p>
+<A NAME="14"></A>
+<H2>9.9  Constant Functions with the Rank Conjunction</H2>
+The constant functions <TT>_9:</TT> to <TT>9:</TT> offer more choices for ways of defining trains. 
+Neverthless they are limited to single-digit scalar constants. 
+We look now at at a more general way of writing constant functions.
+Suppose that <TT>k</TT> is the constant in question:
+<PRE>
+   k =: 'hello'
+</PRE>
+An explicit verb written as <TT>(3 : 'k')</TT> will give a constant result of <TT>k</TT>:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>k</TT></TD>
+<TD><TT>(3 : 'k') 1</TT></TD>
+<TD><TT>(3 : 'k') 1 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>hello</TT></TD>
+<TD><TT>hello</TT></TD>
+<TD><TT>hello</TT></TD>
+</TABLE>
+<p>
+Since the verb <TT>(3 : 'k')</TT> is explicit, its rank is infinite. To apply it
+separately to scalars then (as we saw in <A HREF="07.htm">Chapter 07</A>) we need  
+to specify a rank <TT>R</TT> of <TT>0</TT>, with the aid of 
+the Rank conjunction <TT>"</TT> :
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>k</TT></TD>
+<TD><TT>R =: 0</TT></TD>
+<TD><TT>((3 : 'k') " R) 1 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>hello</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>hello<BR>
+hello</TT></TD>
+</TABLE>
+<p>
+The expression <TT>((3 : 'k') " R)</TT> can 
+be abbreviated as <TT>(k " R)</TT>, because <TT>"</TT> can take, as its left argument,
+a verb, as above, or a noun: 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>k</TT></TD>
+<TD><TT>R</TT></TD>
+<TD><TT>((3 : 'k') " R) 1 2</TT></TD>
+<TD><TT>('hello' " R) 1 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>hello</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>hello<BR>
+hello</TT></TD>
+<TD><TT>hello<BR>
+hello</TT></TD>
+</TABLE>
+<p>
+Note that if <TT>k</TT> is a noun,
+then the verb <TT>(k"R)</TT> means: the constant value <TT>k</TT>
+produced for each rank-R cell of the argument. By contrast, if
+<TT>v</TT> is a verb, then the verb <TT>(v"R)</TT> means: the verb <TT>v</TT> applied
+to each rank-R cell of the argument. 
+<p>
+The general scheme for constant functions with <TT>"</TT> is:
+<PRE>
+                 k " R   means   (3 : 'k') " R
+</PRE>
+<H3>9.9.1  A Special Case</H3>
+<A NAME="15"></A>
+Given a temperature in degrees Fahrenheit, the equivalent in Celsius
+is computed by subtracting <TT>32</TT> and multiplying by five-ninths.
+<PRE>
+   Celsius =: ((5%9) & *) @: (- &32)
+   
+   Celsius 32 212
+0 100
+   
+</PRE>
+Another way to define <TT>Celsius</TT> is as a fork - a train of three verbs. 
+<PRE>
+   Celsius =: (5%9 "_ ) * (-&32)
+   
+   Celsius 32 212
+0 100
+   
+</PRE>
+Notice that the fork in <TT>Celsius</TT> above has its left verb as a constant 
+function. Here we have a special case of 
+a fork which can be abbreviated in the form (noun verb verb).
+<PRE>
+   Celsius =: (5%9) * (-&32) 
+   
+   Celsius 32 212
+0 100
+   
+</PRE>
+The general scheme (new in J6) for this abbreviation for a fork is:
+if <TT>n</TT> is a noun, <TT>u</TT> and <TT>v</TT> are verbs, then 
+<PRE>
+           n u v  means the fork  (n"_) u v
+</PRE>
+We have come to the end of of Chapter 9.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="10.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="10.htm">&gt;&gt;</a>&nbsp;
+<a href="08.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

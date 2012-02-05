@@ -1,0 +1,108 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&quot;. Do  -  Numbers</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d602.htm">&gt;&gt;</a>&nbsp;
+<a href="d600xv.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Do</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>&quot;. &nbsp;1 _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Numbers</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>&quot;.y </tt>executes the sentence<tt> y</tt> .<tt> </tt>
+If the execution results in a noun, the result of<tt> &quot;.y </tt>
+is that noun; if the execution result is a verb, adverb, or conjunction, 
+or if there is no execution result, 
+the result of<tt> &quot;.y </tt>is an empty vector.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x&quot;.y </tt>converts character array<tt> y </tt>into numbers.  
+The shape of the result is<tt> (}:$y),(1=n)}.n </tt>where<tt> n </tt>is 
+the maximum number of numbers in any row.<tt> x </tt>is a scalar number 
+used to replace illegal numbers and to pad narrow rows.  
+In the conversion, the normal rules for numeric constants are 
+relaxed as follows:<br>
+
+<ul>
+<li>the negative sign can be<tt> - </tt>or<tt> _</tt></li>
+<li>commas within numbers are ignored</li>
+<li>fractions need not have a digit 0 before the decimal point</li>
+<li>a number may be preceded by a<tt> + </tt>sign; 
+the exponent of a number in exponential format 
+may be preceded by a<tt> + </tt>sign</li>
+</li>
+</ul>
+</td>                                                         
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   &quot;. s=: '5 * a=: 3 + i. 6'
+15 20 25 30 35 40
+
+   a
+3 4 5 6 7 8
+
+   do=: &quot;.
+   do t=: '3 % 5'
+0.6
+   do |. t
+1.66667
+   $ do ''
+0
+
+   ]program=: 'a=: 2^3' ,: '5*a'
+a=: 2^3
+5*a
+
+   do program
+8 40
+
+   do 'sum=: +/'
+
+   sum 1 2 3 4
+10
+
+   s ; _999&quot;. s=: '1 2 3','-4 .5',:'bad 3,141'
++---------+--------------+
+|1 2 3    |   1    2    3|
+|-4 .5    |  _4  0.5 _999|
+|bad 3,141|_999 3141 _999|
++---------+--------------+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d602.htm">&gt;&gt;</a>&nbsp;
+<a href="d600xv.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

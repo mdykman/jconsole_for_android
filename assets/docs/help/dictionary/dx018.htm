@@ -1,0 +1,174 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>18!: Locales</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx128.htm">&gt;&gt;</a>&nbsp;
+<a href="dx015.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Locales</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>18!:</font></b></td>
+</tr></table>
+<br>
+
+See also <a href="dicti.htm">Section II.I</a> 
+and the &ldquo;Locales&rdquo; lab under menu 
+item<tt> Studio|Labs</tt>... <tt>|Locales</tt>.<br><br>
+
+<table>
+<tr><td valign=top width=120><a name="0"></a><tt>18!:0 y</tt></td>
+<td>
+<B>Name Class</B>. Give the name class of the locale named<tt> y</tt>,<tt> </tt>
+with<tt> 0 </tt>for named,<tt> 1 </tt>for numbered,<tt> _1 </tt>
+for non-existent, and<tt> _2 </tt>for illegal name.  Thus: <br><br>
+
+<pre>
+   18!:0 ;:'base j z 45bad asdf 0'
+0 0 0 _2 _1 1
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="1"></a><tt>[x] 18!:1 y</tt></td>
+<td>
+<B>Name List</B>. Give the names of named (0) or numbered (1) locales.  
+The optional left argument specifies the initial letters of names. Thus:<br><br>
+
+<pre>
+   18!:1 [0         <font face=Times size=+1>All named locales</font>
++----+-+----+--------+-------+-+
+|base|j|jcfg|jnewuser|newuser|z|
++----+-+----+--------+-------+-+
+
+   asdf_bb_=: 'sesquipedalian'
+
+   'jb' 18!:1 [0    <font face=Times size=+1>All named locales beginning in</font> j <font face=Times size=+1>or</font> b
++----+--+-+----+--------+
+|base|bb|j|jcfg|jnewuser|
++----+--+-+----+--------+
+
+   18!:3 ''         <font face=Times size=+1>Create a numbered locale</font>
++-+
+|0|
++-+
+
+   18!:1 i.2        <font face=Times size=+1>All named and numbered locales</font>
++-+----+-+----+--------+-------+-+
+|0|base|j|jcfg|jnewuser|newuser|z|
++-+----+-+----+--------+-------+-+
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="2"></a><tt> [x] 18!:2 y</tt></td>
+<td>
+<B>Path</B>.<B>  </B>The monad gives the (search) path 
+for locale<tt> y</tt> ;<tt> </tt>the dyad sets the path for 
+locale<tt> y </tt>to<tt> x</tt> .<tt> </tt>
+The path of a locale is initially<tt> ,&lt;,'z'</tt> ,<tt> </tt>
+except that the path of locale<tt> z </tt>is empty initially.  
+If a name sought in locale<tt> f </tt>is not found in<tt> f</tt> ,<tt> </tt>
+then it is sought in the locales in the path of<tt> f </tt>
+(but not searching <I>their</I> paths).  For example:<br>
+
+<pre>
+   (;:'a cd b') 18!:2 &lt;'f'
+   18!:2 &lt;'f'
++-+--+-+
+|a|cd|b|
++-+--+-+
+</pre>
+
+The path of locale<tt> f </tt>is set to<tt> a</tt> ,<tt> cd</tt> ,<tt> </tt>
+and<tt> b</tt> .
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="3"></a><tt>[x] 18!:3 y</tt></td>
+<td>
+<B>Create</B>. If<tt> y </tt>is the empty string, then create a 
+previously-unused numbered locale. 
+If<tt> y </tt>is a name, then (re-)create the named locale; 
+an error is signalled if the named locale already exists and is non-empty.  
+The result is the name of the created locale.<br><br>
+
+<tt>x </tt>specifies the size of the hash table
+for the locale, requiring<tt> w*2^6+x </tt>bytes where<tt> w </tt>is the
+number of bytes in a word. If<tt> x </tt>is elided, then
+the defaults specified 
+in<tt> </tt><a href="dx009.htm#38"><tt>9!:38 </tt>and<tt> 9!:39</tt></a><tt> </tt>are used.
+A larger hash table size improves performance;  
+regardless of the hash table size, a locale may contain an 
+effectively unlimited number of names.<br>
+
+<pre>
+   18!:3 ''        <font face=Times size=+1>Create a numbered locale</font>
++-+
+|0|
++-+
+   18!:3 ''        <font face=Times size=+1>Create another one</font>
++-+
+|1|
++-+
+   18!:1 [1        <font face=Times size=+1>Names of numbered locales</font>
++-+-+
+|0|1|
++-+-+
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="4"></a><tt>18!:4 y</tt></td>
+<td>
+<B>Switch Current</B>.  Switch the current locale to<tt> y </tt>at the
+end of the currently executing named verb. 
+Initially the current locale is<tt> base</tt> .
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td valign=top><a name="5"></a><tt>18!:5 y</tt></td>
+<td>
+<B>Current</B>. The name of the current locale.  For example:<br>
+
+<pre>
+   18!:5 ''
++----+
+|base|
++----+
+</pre>
+</td></tr>
+
+<tr><td valign=top><a name="55"></a><tt>18!:55 y</tt></td>
+<td>
+<B>Erase</B>. Erase locale<tt> y </tt>(once it finishes execution).  
+A numbered locale, once erased, may not be reused; 
+a named locale may be reused at will.
+</td></tr>
+</table>
+
+<br>
+
+<!--bottom jump start--><hr><a href="dx128.htm">&gt;&gt;</a>&nbsp;
+<a href="dx015.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

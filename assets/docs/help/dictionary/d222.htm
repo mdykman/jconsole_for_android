@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>~: Nub Sieve  -  Not-Equal</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d230.htm">&gt;&gt;</a>&nbsp;
+<a href="d221.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Nub Sieve</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>~: &nbsp;_ 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Not Equal</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>~:y </tt>is the boolean list<tt> b </tt>such that<tt> b#y </tt>
+is the nub of<tt> y</tt> .<tt> </tt>For example:<br>
+    
+<pre>
+   ~: 'Mississippi'
+1 1 1 0 0 0 0 0 1 0 0
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x~:y </tt>is<tt> 1 </tt>if<tt> x </tt>is tolerantly unequal 
+to<tt> y</tt> .<tt> </tt>See <a href="d000.htm">Equal<tt> </tt>(<tt>=</tt>)</a>. <br><br>
+
+The fit conjunction may be used to specify tolerance, as in<tt> ~:!.t</tt> .
+<br>&nbsp;</td> 
+</tr></table><br>
+
+The result of nub-sieve can be used to select the nub as follows:<br>
+
+<pre>
+   y=: 8 1 8 2 8 1 7 2
+   ~. y
+8 1 2 7
+
+   ~: y 
+1 1 0 1 0 0 1 0
+
+   (~: y) # y
+8 1 2 7
+
+   y #~ ~: y
+8 1 2 7
+</pre>
+
+The dyad<tt> ~: </tt>applies to any argument, but for booleans 
+it is called <i>exclusive-or</i>.  For example:<br>
+
+<pre>
+   d=: 0 1
+   d ~:/ d
+0 1
+1 0
+</pre>
+
+Not-equal, not equal, and the dual of equal with respect to not, 
+all agree as illustrated below.<br>
+
+<pre>
+   (~:/ ; -.@=/ ; =&amp;.-./)~ d
++---+---+---+
+|0 1|0 1|0 1|
+|1 0|1 0|1 0|
++---+---+---+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d230.htm">&gt;&gt;</a>&nbsp;
+<a href="d221.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

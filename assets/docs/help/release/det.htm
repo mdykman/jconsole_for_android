@@ -1,0 +1,115 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>-/ . * Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="cut.htm">&gt;&gt;</a>&nbsp;
+<a href="rev.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">-/ .* </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+last updated: 2000-06-30
+</td></tr></table>
+<br>
+
+The monad<tt> -/ . * </tt>(determinant) on square matrices
+is now implemented by Gaussian elimination with full pivoting.
+(Previously, it used the general code for<tt> u . v </tt>
+that worked for all verbs.)
+The result is improved efficiency in time and space,
+as the following comparisons illustrate:<br><br>
+<pre>
+   ts=: 6!:2 , 7!:2@]
+   x=: 0.01 * _5e4+?(n,n)$1e5
+   ts '-/ .* x' 
+</pre>
+<table>
+<tr>
+<td><tt><b>n &nbsp; &nbsp; &nbsp; </b></tt></td>
+<td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J 4.05</b></td>
+<td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;J 4.04</b></td>
+</tr>
+
+<tr>
+<td><tt>1 </tt></td>
+<td><tt>0.000155048 6720 &nbsp; &nbsp; &nbsp;</tt></td>
+<td><tt>0.000150857 6784</tt></td>
+</tr>
+
+<td><tt>2 </tt></td>
+<td><tt>0.000163429 6912</tt></td>
+<td><tt>0.000163429 6976</tt></td>
+</tr>
+
+<td><tt>3 </tt></td>
+<td><tt>0.000150857 6720</tt></td>
+<td><tt>0.000236343 9024</tt></td>
+</tr>
+
+<td><tt>4 </tt></td>
+<td><tt>0.000153371 6848</tt></td>
+<td><tt>0.000542248 16384</tt></td>
+</tr>
+
+<td><tt>5 </tt></td>
+<td><tt>0.000155048 6848</tt></td>
+<td><tt>0.00213714 25472</tt></td>
+</tr>
+
+
+<td><tt>6 </tt></td>
+<td><tt>0.000190248 7104</tt></td>
+<td><tt>0.0120828 43328</tt></td>
+</tr>
+
+<td><tt>7 </tt></td>
+<td><tt>0.000165943 7104</tt></td>
+<td><tt>0.0837802 80448</tt></td>
+</tr>
+
+<td><tt>8 </tt></td>
+<td><tt>0.000175162 7616</tt></td>
+<td><tt>0.66968 151936</tt></td>
+</tr>
+
+<td><tt>9 </tt></td>
+<td><tt>0.000183543 7616</tt></td>
+<td><tt>6.08026 239872</tt></td>
+</tr>
+
+<td><tt>10 </tt></td>
+<td><tt>0.000196114 7616</tt></td>
+<td><tt>60.9625 410304</tt></td>
+</tr>
+</table>
+
+<br><br>
+<!--bottom jump start--><hr><a href="cut.htm">&gt;&gt;</a>&nbsp;
+<a href="rev.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

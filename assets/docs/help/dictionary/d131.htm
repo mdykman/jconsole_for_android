@@ -1,0 +1,124 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>%. Matrix Inverse  -  Matrix Divide</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d132.htm">&gt;&gt;</a>&nbsp;
+<a href="d130.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Matrix Inverse</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>%. &nbsp;2 _ 2</font></td>
+<td align=right  width=33%><b><font size=+2>Matrix Divide</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> y </tt>is a non-singular matrix, then<tt> %.y </tt>is 
+the inverse of<tt> y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   mp=: +/ . *         NB. <a href="d300.htm">Matrix product</a>
+   (%. ; ] ; %. mp ]) i. 2 2
++--------+---+---+
+|_1.5 0.5|0 1|1 0|
+|   1   0|2 3|0 1|
++--------+---+---+
+</pre>
+
+More generally,<tt> %.y </tt>is defined in terms of the dyadic case, 
+with the left argument<tt> =i.{:$y </tt>(an identity matrix) or, 
+equally, by the relation<tt> (%.y)mp&nbsp;x </tt><font size=+1>&harr;</font><tt> x %. y</tt> .<br><br>
+
+The shape of<tt> %.y </tt>is<tt> |.$y</tt> .<br><br>
+
+The vector and scalar cases are defined by using the 
+matrix<tt> ,.y</tt>,<tt> </tt>but the shape of the result 
+is<tt> $y</tt> .<br><br>
+
+For a non-zero vector<tt> y</tt>,<tt> </tt>the result of<tt> %.y </tt>
+is a vector collinear with<tt> y </tt>whose length is the reciprocal 
+of that of<tt> y</tt>;<tt> </tt>it is called the reflection of<tt> y </tt>
+in the unit circle (or sphere). Thus:<br><br>
+
+<pre>
+   (%. ,: ] % %.) 2 3 4
+0.0689655 0.103448 0.137931
+       29       29       29
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> y </tt>is non-singular, then<tt> x%.y </tt>
+is<tt> (%.y) mp x</tt> .<tt> </tt>  
+More generally, if the columns of<tt> y </tt>are linearly independent and 
+if<tt> #x </tt>and<tt> #y </tt>agree, then<tt> x%.y </tt>minimizes 
+the difference:<br>
+
+<pre>
+   d=: x - y mp x %. y
+</pre>
+
+in the sense that the magnitudes<tt> +/d*+d </tt>are minimized.  
+Scalar and vector cases of<tt> y </tt>are treated as the one-column 
+matrix<tt> ,.y</tt> .<br><br>
+  
+Geometrically,<tt> y mp x%.y </tt>is the <i>projection</i> of the 
+vector<tt> x</tt> on the column space of<tt> y</tt>,<tt> </tt>the point 
+nearest to<tt> x </tt>in the space spanned by the columns of<tt> y</tt> .<br><br>
+  
+Common uses of<tt> %. </tt>are in the solution of linear equations 
+and in the approximation of functions by polynomials, as 
+in<tt> c=: (f x)%. x ^ / i.4</tt> .
+</td>                                                         
+</tr></table><br>
+
+We will illustrate the use of<tt> %. </tt>in function fitting by 
+the sine function, showing, in particular, the maximum over the 
+magnitudes of the differences from the function being approximated:<br>
+
+<pre>
+   sin=: 1&amp;o.                      NB. Function to be approximated
+   x=: 5 %~ i. 6     
+   c=: (sin x) %. x ^/ i.4         NB. Use of matrix divide
+   ,.&amp;.&gt;@(] ; c&quot;_ ; sin ; c&amp;p. ; &gt;./@:|@(sin-c&amp;p.)) x
++---+-----------+--------+-----------+-----------+
+|  0|_5.30503e_5|       0|_5.30503e_5|0.000167992|
+|0.2|    1.00384|0.198669|   0.198826|           |
+|0.4|  _0.018453|0.389418|   0.389321|           |
+|0.6|  _0.143922|0.564642|   0.564523|           |
+|0.8|           |0.717356|   0.717524|           |
+|  1|           |0.841471|   0.841416|           |
++---+-----------+--------+-----------+-----------+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d132.htm">&gt;&gt;</a>&nbsp;
+<a href="d130.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

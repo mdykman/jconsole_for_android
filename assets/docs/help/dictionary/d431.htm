@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>\. Suffix  -  Outfix</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d432.htm">&gt;&gt;</a>&nbsp;
+<a href="d430.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=25%><b><font size=+2>Suffix</font></b></td>
+<td align=center width=50%><font face="Courier New" size=+3>m\. &nbsp;u\. &nbsp;_ 0 _</font></td>
+<td align=right  width=25%><b><font size=+2>Outfix</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>u\.y </tt>has<tt> #y </tt>items resulting from applying<tt> u </tt>
+to suffixes of<tt> y</tt> ,<tt> </tt>beginning with one of 
+length<tt> #y </tt>(that is,<tt> y </tt>itself), and continuing 
+through a suffix of length <tt>1</tt> .<br><br>
+
+<tt>m\.y </tt>applies successive verbs from the gerund<tt> m </tt>to 
+the suffixes of<tt> y</tt> ,<tt> </tt>extending<tt> m </tt>cyclically 
+as required.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> x&gt;:0 </tt>in<tt> x u\. y</tt> ,<tt> </tt>then<tt> u </tt>
+applies to outfixes of<tt> y </tt>obtained by suppressing successive 
+infixes of length<tt> x</tt> .<tt> </tt>If<tt> x&lt;0</tt> ,<tt> </tt>
+the outfixes result from suppressing non-overlapping infixes, 
+the last of which may be a shard.<br><br>
+
+<tt>x m\.y </tt>applies successive verbs from the 
+gerund<tt> m </tt>to the outfixes of<tt> y</tt>,<tt> </tt>
+extending<tt> m </tt>cyclically as required.
+<br>&nbsp;</td>
+</tr></table><br>
+
+<pre>
+   */\. y=: 1 2 3 4 5
+120 120 60 20 5
+
+   &lt;\. y
++---------+-------+-----+---+-+
+|1 2 3 4 5|2 3 4 5|3 4 5|4 5|5|
++---------+-------+-----+---+-+
+
+   3 &lt;\. 'abcdefgh'
++-----+-----+-----+-----+-----+-----+
+|defgh|aefgh|abfgh|abcgh|abcdh|abcde|
++-----+-----+-----+-----+-----+-----+
+
+   _3 &lt;\. 'abcdefgh'
++-----+-----+------+
+|defgh|abcgh|abcdef|
++-----+-----+------+
+
+   ]m=: i.3 3
+0 1 2
+3 4 5
+6 7 8
+
+   &lt;&quot;_2 (minors=: 1&amp;(|:\.)&quot;2^:2) m
++---+---+---+
+|4 5|3 5|3 4|
+|7 8|6 8|6 7|
++---+---+---+
+|1 2|0 2|0 1|
+|7 8|6 8|6 7|
++---+---+---+
+|1 2|0 2|0 1|
+|4 5|3 5|3 4|
++---+---+---+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d432.htm">&gt;&gt;</a>&nbsp;
+<a href="d430.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

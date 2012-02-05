@@ -1,0 +1,88 @@
+ZGBBRD reduces a complex general m-by-n band matrix A to real upper
+bidiagonal form B by a unitary transformation: Q' * A * P = B.
+
+The routine computes B, and optionally forms Q or P', or computes Q'*C
+for a given matrix C.
+
+
+Arguments
+=========
+
+VECT    (input) CHARACTER*1
+        Specifies whether or not the matrices Q and P' are to be
+        formed.
+        = 'N': do not form Q or P';
+
+        = 'Q': form Q only;
+
+        = 'P': form P' only;
+
+        = 'B': form both.
+
+M       (input) INTEGER
+        The number of rows of the matrix A.  M >= 0.
+
+N       (input) INTEGER
+        The number of columns of the matrix A.  N >= 0.
+
+NCC     (input) INTEGER
+        The number of columns of the matrix C.  NCC >= 0.
+
+KL      (input) INTEGER
+        The number of subdiagonals of the matrix A. KL >= 0.
+
+KU      (input) INTEGER
+        The number of superdiagonals of the matrix A. KU >= 0.
+
+AB      (input/output) COMPLEX*16 array, dimension (LDAB,N)
+        On entry, the m-by-n band matrix A, stored in rows 1 to
+        KL+KU+1. The j-th column of A is stored in the j-th column of
+        the array AB as follows:
+        AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl).
+        On exit, A is overwritten by values generated during the
+        reduction.
+
+LDAB    (input) INTEGER
+        The leading dimension of the array A. LDAB >= KL+KU+1.
+
+D       (output) DOUBLE PRECISION array, dimension (min(M,N))
+        The diagonal elements of the bidiagonal matrix B.
+
+E       (output) DOUBLE PRECISION array, dimension (min(M,N)-1)
+        The superdiagonal elements of the bidiagonal matrix B.
+
+Q       (output) COMPLEX*16 array, dimension (LDQ,M)
+        If VECT = 'Q' or 'B', the m-by-m unitary matrix Q.
+        If VECT = 'N' or 'P', the array Q is not referenced.
+
+LDQ     (input) INTEGER
+        The leading dimension of the array Q.
+        LDQ >= max(1,M) if VECT = 'Q' or 'B'; LDQ >= 1 otherwise.
+
+PT      (output) COMPLEX*16 array, dimension (LDPT,N)
+        If VECT = 'P' or 'B', the n-by-n unitary matrix P'.
+        If VECT = 'N' or 'Q', the array PT is not referenced.
+
+LDPT    (input) INTEGER
+        The leading dimension of the array PT.
+        LDPT >= max(1,N) if VECT = 'P' or 'B'; LDPT >= 1 otherwise.
+
+C       (input/output) COMPLEX*16 array, dimension (LDC,NCC)
+        On entry, an m-by-ncc matrix C.
+        On exit, C is overwritten by Q'*C.
+        C is not referenced if NCC = 0.
+
+LDC     (input) INTEGER
+        The leading dimension of the array C.
+        LDC >= max(1,M) if NCC > 0; LDC >= 1 if NCC = 0.
+
+WORK    (workspace) COMPLEX*16 array, dimension (max(M,N))
+
+
+RWORK   (workspace) DOUBLE PRECISION array, dimension (max(M,N))
+
+
+INFO    (output) INTEGER
+        = 0:  successful exit.
+
+        < 0:  if INFO = -i, the i-th argument had an illegal value.

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Symbols that are commonly considered word separators in this language -->
+    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
+    
+    <string name="hello">Hello World, JActivity!</string>
+    <string name="app_name">J Console</string>
+    <string name="help_name">J Help</string>
+        <string name="label_go_key">Go</string>
+    <string name="label_send_key">Send</string>
+    <string name="label_next_key">Next</string>
+    
+    <string name="help_start">docs/help/dictionary/volcabul.htm</string>
+        
+</resources>

@@ -1,0 +1,92 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>$: Self-Reference</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d220v.htm">&gt;&gt;</a>&nbsp;
+<a href="d211.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Self Reference</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>$: &nbsp;_ _ _</font></td>
+<td align=right  width=33%>&nbsp;</td>
+</tr></table>
+<br>
+
+<table>
+<tr><td valign=top width=100% bgcolor=#eeeeee>
+<tt>$: </tt>denotes the longest verb that contains it. 
+<tt>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </tt>
+<tt>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </tt>
+<tt>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </tt>
+<tt>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </tt>
+<tt>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </tt>
+</td></tr></table><br>
+
+<b>Example 1:</b><br>
+
+<pre>
+   1:`(] * $:@&lt;:)@.* 5
+120
+</pre>
+
+In the foregoing expression, the agenda<tt> </tt>(<tt>@.</tt>)<tt> </tt>
+chooses the verb<tt> ] * $:@&lt;: </tt>as long as the argument 
+(reduced by one each time by the application of the decrement) 
+remains non-zero.  When the argument becomes zero, the result of 
+the right argument of<tt> @. </tt>is zero, and the constant 
+function<tt> 1: </tt>is chosen.<br><br>
+
+If<tt> $:@ </tt>were omitted from the expression, 
+it would execute once only as follows:<br>
+
+<pre>
+   1:`(] * &lt;:)@.* 5
+20
+</pre>
+
+The inclusion of self-reference ensures that the entire 
+function is re-executed after decrementing the argument.<br><br>
+
+<p><b>Example 2:</b>
+In quicksort, a &ldquo;pivot&rdquo; is chosen at random 
+from the list to be sorted.  The overall result is the sorted
+result of the part less than the pivot, catenated to the
+part equal to the pivot, catenated to the sorted result
+of the part greater than the pivot.</p>
+
+<pre>
+   quicksort=: (($:@(<#[) , (=#[) , $:@(>#[)) ({~ ?@#)) ^: (1<#)
+
+   ] v=: 20 ?.@$ 13
+10 3 3 6 11 11 4 0 10 2 5 6 2 0 1 3 12 10 11 5
+   quicksort v
+0 0 1 2 2 3 3 3 4 5 5 6 6 10 10 10 11 11 11 12
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d220v.htm">&gt;&gt;</a>&nbsp;
+<a href="d211.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

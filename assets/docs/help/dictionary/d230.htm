@@ -1,0 +1,120 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>| Magnitude  -  Residue</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d231.htm">&gt;&gt;</a>&nbsp;
+<a href="d222.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Magnitude</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>| &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Residue</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>|y </tt><font size=+1>&harr;</font><tt> %:y*+y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   | 6 _6 3j4
+6 6 5
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+The familiar use of residue is in determining the remainder 
+on dividing a non-negative integer by a positive:<br>
+
+<pre>
+   3 | 0 1 2 3 4 5 6 7
+0 1 2 0 1 2 0 1
+</pre>
+</td>                                                         
+</tr></table><br>
+
+The definition<tt> y-x*&lt;. y % x+0=x </tt>extends the residue 
+to a zero left argument, and to negative and fractional finite arguments.  
+For example:<br>
+
+<pre>
+   over =: ({. ,.@; }.)@&quot;:@,
+   by   =: ' '&amp;;@,.@[ ,. ]
+
+   x=: 3 2 1 0 _1 _2 _3 
+   y=: 0 1 2 3 4 5 6 7 8
+
+   x by y over x |/ y
++--+------------------------+
+|  |0  1  2  3  4  5 6  7  8|
++--+------------------------+
+| 3|0  1  2  0  1  2 0  1  2|
+| 2|0  1  0  1  0  1 0  1  0|
+| 1|0  0  0  0  0  0 0  0  0|
+| 0|0  1  2  3  4  5 6  7  8|
+|_1|0  0  0  0  0  0 0  0  0|
+|_2|0 _1  0 _1  0 _1 0 _1  0|
+|_3|0 _2 _1  0 _2 _1 0 _2 _1|
++--+------------------------+
+</pre>
+
+To produce a true zero for cases such as<tt> (%3)|(2%3) </tt>the residue 
+is made tolerant as shown in the definition of<tt> res </tt>below:<br>
+
+<pre>
+   res=: f`g@.agenda&quot;0
+      agenda=: ([ = 0:) +. (&lt;. = &gt;.)@S
+         S=: ] % [ + [ = 0:
+      f=: ] - [ * &lt;.@S 
+      g=: ] * [ = 0:
+
+   0.1 res 2.5 3.64 2 _1.6
+0 0.04 0 0
+
+   (,. ; res/~ ; |/~) a=: 2 -~ i.5
++--+------------+------------+
+|_2| 0 _1 0 _1 0| 0 _1 0 _1 0|
+|_1| 0  0 0  0 0| 0  0 0  0 0|
+| 0|_2 _1 0  1 2|_2 _1 0  1 2|
+| 1| 0  0 0  0 0| 0  0 0  0 0|
+| 2| 0  1 0  1 0| 0  1 0  1 0|
++--+------------+------------+
+</pre>
+
+The dyad<tt> | </tt>applies to complex numbers.  
+Moreover, the fit conjunction may be applied to control the tolerance used.  
+The dyad<tt> m&amp;|@^ </tt>on integer arguments is computed in 
+a way that avoids large intermediate numbers.  
+For example:<tt> 2 (1e6&amp;|@^) 10^100x</tt><br>
+
+<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d231.htm">&gt;&gt;</a>&nbsp;
+<a href="d222.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

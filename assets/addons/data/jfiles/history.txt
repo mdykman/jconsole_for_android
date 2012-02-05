@@ -1,0 +1,4 @@
+data/jfiles - change history
+
+== 1.0.0 ==
+ * moved to addons

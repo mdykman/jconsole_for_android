@@ -1,0 +1,78 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>return.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="csel.htm">&gt;&gt;</a>&nbsp;
+<a href="cif.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font face="Courier New" size=+3>return.</font></b><br><br>
+
+<table width=100%><tr><td valign=top bgcolor=#eeeeee>
+<tt>return. </tt>exits a verb, adverb, or conjunction.<br><br>
+
+The result of an explicit definition is the result of the last 
+executed sentence that was not in a test block.  
+If there is no such executed sentence, the result is<tt> i. 0 0</tt> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+f=: 3 : 0
+ try.
+  if. 0&lt;:y do. 'positive' return. else. t=.'negative' end.
+ catch.
+  t=.'caught'
+ end.
+ 'it is ',t
+)
+
+   f 7
+positive
+
+   f _12
+it is negative
+
+   f 'deipnosophist'
+it is caught
+
+   (i.0 0) -: 3 : 'return.' 999
+1
+
+   g=: 3 : 'if. 13=|y do. ''triskaidekaphobia'' end.'
+
+   g 13
+triskaidekaphobia
+
+   g 5
+   (i.0 0) -: g 5
+1
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="csel.htm">&gt;&gt;</a>&nbsp;
+<a href="cif.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

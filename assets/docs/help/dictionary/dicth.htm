@@ -1,0 +1,104 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>H. Frets and Scripts</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dicti.htm">&gt;&gt;</a>&nbsp;
+<a href="dictg.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>H. Frets and Scripts</b></font><br><br>
+
+Host systems commonly use the &ldquo;line-feed&rdquo; or &ldquo;carriage return&rdquo; 
+characters<tt> 10{a. </tt>or<tt> 13{a. </tt>(or both together) 
+as <i>frets</i> to mark divisions into individual <i>lines</i>.  
+A character list provided with zero or more frets will be called 
+a <i>script</i>.<br><br>
+
+As detailed in <a href="xmain.htm">Appendix A</a>, 
+a script<tt> t </tt>may be filed 
+and retrieved by expressions of the form<tt> t 1!:2 &lt;'abc' </tt>
+and<tt> t=: 1!:1 &lt;'abc'</tt>,<tt> </tt>and may be <i>executed</i> 
+by the expression<tt> 0!:11 &lt;'abc'</tt>.<br><br>
+
+Convenient entry of scripts is provided by the 
+phrase<tt> 0 : 0</tt>;<tt> </tt>succeeding keystrokes are accepted 
+as literal characters; the <i>enter </i>key that would normally 
+terminate the entry is accepted as a fret; and the entry is 
+terminated by a lone right parenthesis that is accepted as a final fret.  
+For example:<br>
+
+<pre>
+   s=: 0 : 0
+y*%:y
+:
+x*!y
+)
+
+   a. i. s                    <font face=Times size=+1>The character with index 10 marks the end of each line</font>
+121 46 42 37 58 121 46 10 58 10 120 46 42 33 121 46 10
+</pre>
+
+Boxed and table representations of a script<tt> s </tt>may be obtained 
+as follows:<br>
+
+<pre>
+   ]b=: &lt;;._2 s               <font face=Times size=+1>Cut on the final fret and exclude the frets</font>
++-----+-+----+
+|y*%:y|:|x*!y|
++-----+-+----+
+
+   ]t=: &gt;b
+y*%:y
+:      
+x*!y
+</pre>
+
+Any one of these representations<tt> r </tt>may be used as the 
+right argument to the explicit definition conjunction to produce 
+an adverb<tt> </tt>(<tt>1 : r</tt>),<tt> </tt>conjunction
+(<tt>2 : r</tt>),<tt> </tt>or verb (<tt>3 : r </tt>or<tt> 4 : r</tt>).  
+For example:<br>
+
+<pre>
+   f=: 3 : s
+   f 9                        <font face=Times size=+1>The colon in the script separates the monadic and dyadic cases</font>
+27
+
+   3 f 4                      <font face=Times size=+1>The</font> x <font face=Times size=+1>and</font> y <font face=Times size=+1>refer to the left and right arguments</font>
+72
+</pre>
+
+The phrases<tt> a=: 1 : 0 </tt>and<tt> c=: 2 : 0 </tt>
+and<tt> v=: 3 : 0 </tt>provide direct entry of adverbs, 
+conjunctions, and verbs.<br><br>
+
+Files of scripts may define functions and other entities 
+that can serve to supplement the primaries of <b>J</b>.  
+They are commonly refered to as <i>secondary</i> or <i>tertiary</i> 
+functions according to their relative generality.<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dicti.htm">&gt;&gt;</a>&nbsp;
+<a href="dictg.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

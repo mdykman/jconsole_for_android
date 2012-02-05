@@ -1,0 +1,313 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Verbs for Arithmetic</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="loopless_code_iv_irregular_o.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_iii--adverbs__.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734381"></a><a name="_Toc5414584"></a><a name="_Toc1896214"><span
+style='mso-bookmark:_Toc5414584'><span style='mso-bookmark:_Toc191734381'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>15. </span></span><![endif]>Verbs</span></span></a><span
+style='mso-bookmark:_Toc191734381'> for Arithmetic</span></h1>
+
+<p class=MsoBodyText>It's time to build your J vocabulary with a few more
+verbs.</p>
+
+<p class=Section><a name="_Toc191734382"></a><a name="_Toc5414585"></a><a
+name="_Toc5414430"></a><a name="_Toc1896215"><span style='mso-bookmark:_Toc5414430'><span
+style='mso-bookmark:_Toc5414585'><span style='mso-bookmark:_Toc191734382'>Dyads</span></span></span></a></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;!&nbsp;y</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>(rank <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0 0</span></span>) <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;! dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Number Of Combinations verb !&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->number of ways to choose <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+things from a population of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> things.&nbsp;
+More generally, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(!y)&nbsp;%&nbsp;(!x)&nbsp;*&nbsp;(!y-x)</span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;%:&nbsp;y</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>(rank <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0 0</span></span>) <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;%\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Root verb %\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>th root of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y<o:p></o:p></span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;#.&nbsp;y</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>(rank <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1 1</span></span>) <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;#. dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> evaluated in
+base <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+i.&nbsp;e. the atoms of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> are digits in the base-<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+representation.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+must have the same length, unless <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is a scalar in which case it is replicated
+to the length of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>A place-value list <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>p</span></span> is calculated,
+in which each item is the product of all the subsequent corresponding items of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>;
+formally, this is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p=.*/\.}.x,1</span></span>
+(the last item of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p</span></span>
+is always 1 and the first item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is immaterial).<span
+style='mso-spacerun:yes'>&nbsp; </span>Then each item in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is multiplied by
+its place value and the results are summed to give the result (formally this is
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/&nbsp;y&nbsp;*&nbsp;p</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>In the simplest case <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is a scalar:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>10 #. 2 3 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>234</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The digits <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;3&nbsp;4</span></span>
+interpreted as base-ten digits.</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>16 #. 2 3 4</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>564</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The same interpreted as
+base-sixteen digits.</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>16b234</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>564</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>as expected (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>16b234</span></span>
+is 234 in base 16, equivalent to <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>0x234</span></span>).</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>Here is an example where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is a list, converting time in hours/minutes/seconds to seconds since midnight:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>24 60 60 #. 12 30 0</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>45000</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The list <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>p</span></span> was <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3600 60
+1&nbsp;</span></span>.&nbsp; The first item in
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+has no effect on the result.</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;#:&nbsp;y</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>(rank <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1 0</span></span>) <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;#\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>This is the inverse of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;#.&nbsp;y</span></span>
+except that if the first digit of the result is not between <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{.x</span></span>,
+it is changed (modulo <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>)
+to lie within that range.&nbsp; For example,</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>24 60 60 #: 45000</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>12 30 0</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>The normal case, converting
+the number of seconds since midnight back to hours/minutes/seconds.</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>24 60 60 #. 36 30 0</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>131400</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>24 60 60 #: 131400</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>12 30 0</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Here the result would have
+been <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>36
+30 0</span></span>, but <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>36</span></span> is outside the range <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>24</span></span>,
+so it is replaced by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>24|36</span></span>,
+which is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>12&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want the first item of the result to
+be unconstrained, make the first item of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> either <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>0 60 60 #: 131400</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>36 30 0</p>
+
+<p class=MsoBodyText>Note that monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#:</span></span> and monad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#.</span></span>
+are similar to the dyadic forms with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> set to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>To keep <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#:</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#.</span></span>
+straight in your mind, remember that the one with a single dot (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#.</span></span>)
+produces a single scalar result, while the one with multiple dots (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#:</span></span>)
+produces a list result.</p>
+
+<p class=Section><a name="_Toc191734383"></a><a name="_Toc5414586"></a><a
+name="_Toc5414431"></a><a name="_Toc1896216"><span style='mso-bookmark:_Toc5414431'><span
+style='mso-bookmark:_Toc5414586'><span style='mso-bookmark:_Toc191734383'>Monads
+(all rank 0)</span></span></span></a></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>! y</span></span>&nbsp;
+factorial of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;! monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Factorial verb !&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->(more generally, the gamma
+function <span style='font-family:"Courier New"'>&#915;</span>(1+<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>))</p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>^ y</span></span>&nbsp; exponential:
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;^ monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span>&nbsp;XE
+&quot;Antilog verb ^&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->same as (the base of natural
+logarithms <i>e</i>)<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>
+^ y</span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>^. y</span></span> <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;^. monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Log verb ^.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>natural logarithm: same as (the base of
+natural logarithms <i>e</i>)<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'> ^. y</span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+: y</span></span> <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;+\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>same as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y * 2</span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-: y</span></span>&nbsp;
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;-\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->same as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y % 2</span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>*: y</span></span> <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;*\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>same as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y ^ 2</span></span></p>
+
+<p class=BodyTextVerbdef><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>%: y</span></span>&nbsp; <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;%\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Square Root verb %\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->same as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2 %: y</span></span></p>
+
+<p class=MsoBodyText>You can see the common feature in the arithmetic
+primitives ending in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+.</p>
+
+</div><!--bottom jump start--><hr><a href="loopless_code_iv_irregular_o.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_iii--adverbs__.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

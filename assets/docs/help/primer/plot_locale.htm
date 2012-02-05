@@ -1,0 +1,51 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Plot locale</title>
+
+</head><body><!--top jump start--><a href="print_precision.htm">&gt;&gt;</a>&nbsp;
+<a href="plot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Plot locale</h1>
+Plot also illustrates a common technique in the use of locales. Close J and restart it to get a clean slate. The <font face=courier size=-1>names </font>in the base locale is empty and there are just the two standard locales that are populated by the profile.ijs script.<br>
+
+<pre>   names 3	NB. verbs
+   names 6	NB. locales
+base j    jcfg z</pre>
+The load verb (defined in the <font face=courier size=-1>z</font> locale) loads the plot.ijs script into the <font face=courier size=-1>plot </font>locale.<br>
+
+<pre>   load 'plot'
+   plot ? 5 $ 100	
+   names 3
+   names 6
+base  j     jcfg  jplot z
+   plot
++----------+
+¦plot_plot_¦
++----------+</pre>
+The verb <font face=courier size=-1>plot </font>is not defined in the base locale, but is defined in the <font face=courier size=-1>z</font> locale. When it is executed in the base locale the definition from the <font face=courier size=-1>z</font> locale is executed as if it were in the base locale. Entering the name <font face=courier size=-1>plot </font>displays its definition. The interesting thing about the definition of <font face=courier size=-1>plot </font>is that it executes the <font face=courier size=-1>plot </font>verb in the <font face=courier size=-1>plot </font>locale. So the <font face=courier size=-1>plot </font>in the <font face=courier size=-1>z</font> locale is a cover that works in all locales and has the result of executing <font face=courier size=-1>plot </font>in the <font face=courier size=-1>plot </font>locale.<br>
+<br>
+This technique of loading a facility like the plot package into its own locale, and then defining cover verbs in the <font face=courier size=-1>z</font> locale so that plain name references invoke the desired verb in the facility locale is common. The definitions in the plot locale can be viewed as the private implementation of the facility and the names that are exposed by being defined in the <font face=courier size=-1>z</font> locale are the public or published interface.<br>
+<!--bottom jump start--><hr><a href="print_precision.htm">&gt;&gt;</a>&nbsp;
+<a href="plot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

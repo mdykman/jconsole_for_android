@@ -1,0 +1,88 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>j. Imaginary  -  Complex</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dlcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dicapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Imaginary</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>j. &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Complex</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>j. y &nbsp;</tt><font size=+1>&harr;</font><tt>&nbsp; 0j1 * y</tt>
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x j. y &nbsp;</tt><font size=+1>&harr;</font><tt>&nbsp; x + j. y</tt>
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   j. 4
+0j4
+
+   3 j. 4
+3j4
+
+   a=: i. 3 3
+   a;(j. 2*a);(a j. 2*a)
++-----+--------------+--------------+
+|0 1 2|   0  0j2  0j4|   0  1j2  2j4|
+|3 4 5| 0j6  0j8 0j10| 3j6  4j8 5j10|
+|6 7 8|0j12 0j14 0j16|6j12 7j14 8j16|
++-----+--------------+--------------+
+
+   (+ a j. 2*a);(|a j. 2*a)
++-----------------+-----------------------+
+|    0  1j_2  2j_4|      0 2.23607 4.47214|
+| 3j_6  4j_8 5j_10| 6.7082 8.94427 11.1803|
+|6j_12 7j_14 8j_16|13.4164 15.6525 17.8885|
++-----------------+-----------------------+
+
+   1 2 3 j./ 4 5 6 7
+1j4 1j5 1j6 1j7
+2j4 2j5 2j6 2j7
+3j4 3j5 3j6 3j7
+
+   j./?. 2 3 4$1000            <font face=Times size=+1>A table of random complex numbers</font>
+146j713 755j318  79j151  852j92
+854j178 439j260  660j90 257j862
+ 60j631 594j116 246j960 478j564
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="dlcapdot.htm">&gt;&gt;</a>&nbsp;
+<a href="dicapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

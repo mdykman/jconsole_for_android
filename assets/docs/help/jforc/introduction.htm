@@ -1,0 +1,116 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Introduction</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="culture_shock.htm">&gt;&gt;</a>&nbsp;
+<a href="foreword.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc1896158"></a><a name="_Toc191734289"></a><a name="_Toc5414518"><span
+style='mso-bookmark:_Toc191734289'><span style='mso-bookmark:_Toc1896158'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>1. <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Introduction</span></span></a></h1>
+
+<p class=MsoBodyText>This book will tell you enough about J for you to use it
+as a language for developing serious applications, but it is about more than
+learning the J language: it is also about 'thinking big' in programming, and how
+programming in J is fundamentally different from programming in C.<span
+style='mso-spacerun:yes'>&nbsp; </span>C programs deal intimately with scalars
+(single numbers and characters), and even when they combine those scalars into
+arrays and structures, the operations on the arrays and structures are defined
+by operations on the scalars.&nbsp; To ensure
+that each item of an array is operated on, loops are created that visit each
+element of the array and perform a scalar operation on the element.</p>
+
+<p class=MsoBodyText>Writing code in a scalar language makes you rather like a
+general who gives orders to his troops by visiting each one and whispering in
+his ear.&nbsp; That touch-of-Harry kind of
+generalling can achieve victorious results, and it has the advantage that the
+orders can be tailored to the man, but its disadvantages are significant: the
+general spends much mental energy in formulating individual orders and much
+breath in communicating them individually; more significant, his limited
+attention is drawn toward individuals and away from the army as a whole.<span
+style='mso-spacerun:yes'>&nbsp; </span>Even the great Rommel was overtaxed at times.</p>
+
+<p class=MsoBodyText>The J programmer is, in contrast, a general who stands
+before his army and snaps out orders to the army as a whole.<span
+style='mso-spacerun:yes'>&nbsp; </span>Every man receives the same order, but the
+order itself contains enough detail for the individual men to act
+appropriately.&nbsp; Such a general can
+command a corps as easily as a platoon, and always has the 'big picture' in
+mind.</p>
+
+<p class=MsoBodyText>OK, maybe you're not Rommel, but you are a working
+programmer, and you suspect that very few practical programs can be represented
+as array operations--matrix multiplication maybe, or adding a list of
+numbers--and that, even if a wide range of programs were possible, the set of
+operations supported must be too vast to be practical: wouldn't we need an
+array operation for every possible program?</p>
+
+<p class=MsoBodyText>The first half of this book is devoted to showing you that
+it is indeed possible to write meaningful programs with array operations.<span
+style='mso-spacerun:yes'>&nbsp; </span>We take the approach of looking at the
+different ways loops are used, and seeing what facilities J has for producing
+the same result using array operations.&nbsp;
+We will find that J contains a couple of dozen array-processing
+primitives and a dozen or so very cleverly chosen pipe-fittings that allow
+those primitives to be connected together to provide the limitless supply of array-processing
+functions needed for practical programming.</p>
+
+<p class=MsoBodyText>Interspersed with the elaboration of more and more
+intricate array operations are treatments of other matters of use in practical
+programming: structure definition, input and output, performance measurement,
+calling DLLs, modular programming.&nbsp;
+Eventually we will see how to use if-then-else and do-while in J, though
+you will have learned more elegant ways to get the same results.</p>
+
+<p class=MsoBodyText>The last portion of the book is devoted to the optional
+topic of <i>tacit programming</i>, J's language for functional
+programming.&nbsp; Tacit programming is an
+extremely terse way of expressing algorithms, one that allows programs that
+have been compressed from a page of C into a few lines of J to be compressed
+still further.</p>
+
+</div><!--bottom jump start--><hr><a href="culture_shock.htm">&gt;&gt;</a>&nbsp;
+<a href="foreword.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

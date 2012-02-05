@@ -1,0 +1,186 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>3!:1, 3!:2, and 3!:3 Ext</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="5x7.htm">&gt;&gt;</a>&nbsp;
+<a href="odom.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">3!:1</font><font size=+3>,</font><font size=+3 face="Courier New"> 
+3!:2</font><font size=+3>,</font><font size=+3 face="Courier New"> 
+</font><font size=+3>and</font><font size=+3 face="Courier New"> 3!:3 </font>
+<font size=+3>Extended</font></b>
+</td><td align=right>
+initial writing: 2000-00-00<br>
+last updated: 2004-10-26<br>
+</td></tr></table>
+<br>
+
+In <i>standard byte order</i>, the bytes of a word are listed 
+from most significant to least significant; in <i>reverse byte order</i>, 
+the bytes are listed from least significant to most significant.
+For example, the 4-byte integer 265358979 is<tt> 0fd10e83 </tt>in 
+standard byte-order and<tt> 830ed10f </tt>in reverse byte-order.
+The PC is a reverse byte order machine.<br><br>
+
+The dyad<tt> x 3!:1 y </tt>applies to an array<tt> y </tt>and produces its
+binary representation, according to the atom<tt> x</tt>:
+
+<table>
+<tr><td>&nbsp;</td> <td><tt><u>x</u> &nbsp; &nbsp;</tt></td> <td><u>word size</u> &nbsp; &nbsp;</td> <td><u>byte order</u></td></tr>
+<tr><td> </td>      <td>00</td>         <td>32 bits</td>   <td>standard</td></tr>
+<tr><td> </td>      <td>01</td>         <td>32 bits</td>   <td>reverse</td></tr>
+<tr><td> </td>      <td>10</td>         <td>64 bits</td>   <td>standard</td></tr>
+<tr><td> </td>      <td>11</td>         <td>64 bits</td>   <td>reverse</td></tr>
+</table>
+<br>
+
+The monad<tt> 3!:1 </tt>produces the binary representation 
+in the word size and byte order of the current machine.<tt> 3!:3 </tt>
+produces the hexadecimal representation of an array, 
+analoguous to<tt> 3!:1</tt>.<tt> </tt>
+The monad<tt> 3!:2 </tt>is the inverse of<tt> 3!:1 </tt>
+and<tt> 3!:3</tt>,<tt> </tt>and works on an argument in 
+either word size and in either byte order.<br><br>
+
+The following examples were executed on a 32-bit, reverse byte order machine.
+<pre>
+   bin  =: 3!:1
+   hex  =: 3!:3
+   unbin=: 3!:2
+   
+   x -: unbin bin x=: 3 1 4 1 5 _9 265358979
+1
+   x -: unbin hex x
+1
+   x -: unbin 0 bin x
+1
+   x -: unbin 1 bin x
+1
+   x -: unbin 10 bin x
+1
+   x -: unbin 11 bin x
+1
+   $ bin x
+48
+   _4 [\ a.i.bin x
+  4   0   0   0
+  0   0   0   0
+  7   0   0   0
+  1   0   0   0
+  7   0   0   0
+  3   0   0   0
+  1   0   0   0
+  4   0   0   0
+  1   0   0   0
+  5   0   0   0
+247 255 255 255
+131  14 209  15
+   _4 [\ a.i.0 bin x
+  0   0   0   4
+  0   0   0   0
+  0   0   0   7
+  0   0   0   1
+  0   0   0   7
+  0   0   0   3
+  0   0   0   1
+  0   0   0   4
+  0   0   0   1
+  0   0   0   5
+255 255 255 247
+ 15 209  14 131
+   (hex x),.' ',.(0 hex x),.' ',.(1 hex x),.' ',.(10 hex x),.' ',.(11 hex x)
+04000000 00000004 04000000 0000000000000004 0400000000000000
+00000000 00000000 00000000 ffffffffffffffff ffffffffffffffff
+07000000 00000007 07000000 0000000000000007 0700000000000000
+01000000 00000001 01000000 0000000000000001 0100000000000000
+07000000 00000007 07000000 0000000000000007 0700000000000000
+03000000 00000003 03000000 0000000000000003 0300000000000000
+01000000 00000001 01000000 0000000000000001 0100000000000000
+04000000 00000004 04000000 0000000000000004 0400000000000000
+01000000 00000001 01000000 0000000000000001 0100000000000000
+05000000 00000005 05000000 0000000000000005 0500000000000000
+f7ffffff fffffff7 f7ffffff fffffffffffffff7 f7ffffffffffffff
+830ed10f 0fd10e83 830ed10f 000000000fd10e83 830ed10f00000000
+   (hex -: 1&amp;hex) x
+1
+
+   (0 hex y) ,. ' ' ,. 1 hex y=: o. i. 2 3
+00000008 08000000
+00000000 00000000
+00000006 06000000
+00000002 02000000
+00000002 02000000
+00000003 03000000
+00000000 00000000
+00000000 00000000
+400921fb 182d4454
+54442d18 fb210940
+401921fb 182d4454
+54442d18 fb211940
+4022d97c d221337f
+7f3321d2 7cd92240
+402921fb 182d4454
+54442d18 fb212940
+402f6a7a 5e385529
+2955385e 7a6a2f40
+
+   (0 hex y) ,. ' ' ,. 1 hex y=: ;:'We the people'
+00000020 20000000
+00000000 00000000
+00000003 03000000
+00000001 01000000
+00000003 03000000
+00000020 20000000
+00000038 38000000
+00000050 50000000
+00000002 02000000
+00000000 00000000
+00000002 02000000
+00000001 01000000
+00000002 02000000
+57650000 57650000
+00000002 02000000
+00000000 00000000
+00000003 03000000
+00000001 01000000
+00000003 03000000
+74686500 74686500
+00000002 02000000
+00000000 00000000
+00000006 06000000
+00000001 01000000
+00000006 06000000
+70656f70 70656f70
+6c650000 6c650000
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="5x7.htm">&gt;&gt;</a>&nbsp;
+<a href="odom.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

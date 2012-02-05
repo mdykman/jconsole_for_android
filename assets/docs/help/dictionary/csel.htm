@@ -1,0 +1,118 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>select.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="cthrow.htm">&gt;&gt;</a>&nbsp;
+<a href="cret.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font face="Courier New" size=+3>select.</font></b><br><br>
+
+<table><tr><td valign=top width=100% bgcolor=#eeeeee>
+<pre>
+select. T
+ case.  T0 do. B0
+ case.  T1 do. B1
+ fcase. T2 do. B2
+ case.  T3 do. B3
+end.
+</pre>
+
+The result<tt> R </tt>of<tt> T </tt>is compared to the elements 
+of the result<tt> Ri </tt>of<tt> Ti </tt>, and the<tt> Bi </tt>block 
+of the first<tt> case. </tt>or<tt> fcase. </tt>with a match is evaluated.  
+Evaluation of the<tt> select. </tt>control structure then terminates 
+for a<tt> case.</tt> , or continues with the next<tt> B(i+1) </tt>block 
+for an<tt> fcase. </tt>(and further continues if <i>it</i> is 
+an<tt> fcase.</tt>).<br><br>
+
+The comparison is<tt> R e.&amp;boxifopen Ri </tt>
+where<tt> boxifopen=:&lt;^:(L.=0:)</tt> , and a case with an 
+omitted<tt> Ti </tt>is considered to match.
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+f0=: 3 : 0
+ select. y
+  case. 1;2 do. 'one two'
+  case. 3   do. 'three'
+  case. 4;5 do. 'four five'
+  case. 6   do. 666
+ end.
+)
+
+   f0&amp;.&gt; 1 2 3 4 5 6
++-------+-------+-----+---------+---------+---+
+|one two|one two|three|four five|four five|666|
++-------+-------+-----+---------+---------+---+
+
+   (i.0 0) -: f0 7
+1
+
+f1=: 3 : 0
+ select. y
+  case. 'a' do. i.1
+  case. 'b' do. i.2
+  case.     do. i.3
+ end.
+)
+
+   f1&amp;.&gt; 'a' ; ('a';'b') ; 'b' ; 'x'
++-+-+---+-----+
+|0|0|0 1|0 1 2|
++-+-+---+-----+
+
+f2=: 3 : 0
+ t=. ''
+ select. y
+  case.  1 do. t=.t,'one '
+  fcase. 2 do. t=.t,'two '
+  case.  3 do. t=.t,'three '
+  fcase. 4 do. t=.t,'four '
+ end.
+)
+
+   f2 1
+one 
+
+   f2 2
+two three 
+
+   f2 3
+three 
+
+   f2 4
+four 
+
+   '' -: f2 5
+1
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="cthrow.htm">&gt;&gt;</a>&nbsp;
+<a href="cret.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

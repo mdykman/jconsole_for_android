@@ -1,0 +1,135 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 7.  Bond Conjunction</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro08.htm">&gt;&gt;</a>&nbsp;
+<a href="intro06.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>7. Bond Conjunction</b></font><br><br>
+
+A dyad such as<tt> ^ </tt>can be used to provide a family 
+of monadic functions:<br>
+
+<pre>
+   ]b=: i.7
+0 1 2 3 4 5 6
+
+   b^2                        <font face=Times size=+1>Squares</font>
+0 1 4 9 16 25 36
+
+   b^3                        <font face=Times size=+1>Cubes</font>
+0 1 8 27 64 125 216
+
+   b^0.5                      <font face=Times size=+1>Square roots</font>
+0 1 1.41421 1.73205 2 2.23607 2.44949
+</pre>
+
+The <i>bond</i> conjunction<tt> &amp; </tt>can be used to bind an 
+argument to a dyad in order to produce a corresponding defined verb.  
+For example:<br>
+
+<pre>
+   square=: ^&amp;2               <font face=Times size=+1>Square (power <i>and</i> 2)</font>
+   square b
+0 1 4 9 16 25 36
+  
+   (sqrt=: ^&amp;0.5) b           <font face=Times size=+1>Square root function</font>
+0 1 1.41421 1.73205 2 2.23607 2.44949
+</pre>
+
+A left argument can be similarly bound:<br>
+
+<pre>
+   Log=: 10&amp;^.                <font face=Times size=+1>Base-10 logarithm</font>
+   Log 2 4 6 8 10 100 1000
+0.30103 0.60206 0.778151 0.90309 1 2 3
+</pre>
+
+Such defined verbs can of course be used in forks.  For example:<br>
+
+<pre>
+   in29=: 2&amp;&lt; *. &lt;&amp;9          <font face=Times size=+1>Interval test</font>
+   in29 0 1 2 5 8 13 21
+0 0 0 1 1 0 0
+
+   IN29=: in29 # ]            <font face=Times size=+1>Interval selection</font>
+   IN29 0 1 2 5 8 13 21
+5 8
+
+   LOE=: &lt;+.=
+   5 LOE 3 4 5 6 7
+0 0 1 1 1
+
+   integertest=: &lt;. = ]       <font face=Times size=+1>The monad</font> &lt;. <font face=Times size=+1>is <i>floor</i></font>
+   integertest 0 0.5 1 1.5 2 2.5 3
+1 0 1 0 1 0 1
+  
+   int=: integertest
+   int (i.13)%3
+1 0 0 1 0 0 1 0 0 1 0 0 1
+</pre>
+<br>
+
+<p align=center><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>7.1 &nbsp;</td>
+<td>The verb<tt> # </tt>is used dyadically in the 
+program<tt> IN29</tt> .<tt>  </tt>Enter expressions such 
+as<tt>(j=: 3 0 4 0 1) # i.5 </tt>to determine the behaviour 
+of<tt> #</tt>,<tt> </tt>and state the result of<tt> #j#i.5</tt> .<tt> </tt>
+(Also try<tt> 1j1#i.5 </tt>.)<br><br>
+
+Answer:<tt> +/j</tt><br><br>
+</td></tr>
+
+<tr><td valign=top>7.2 &nbsp;</td>
+<td>Cover the answers on the right and apply the following programs 
+to lists to determine (and state in English) the purpose of each: <br>
+
+<pre>
+   test1=: &gt;&amp;10 *. &lt;&amp;100      <font face=Times size=+1>Test if in 10 to 100</font>
+   int=: ] = &lt;.               <font face=Times size=+1>Test if integer</font>
+   test2=: int *. test1       <font face=Times size=+1>Test if integer and in 10 to 100</font>
+   test3=: int +. test1       <font face=Times size=+1>Test if integer or in 10 to 100</font>
+   sel=: test2 # ]            <font face=Times size=+1>Select integers in 10 to 100</font>
+</pre>
+</td></tr>
+
+<tr><td valign=top>7.3 &nbsp;</td>
+<td>Cover the program definitions on the left of the 
+preceding exercise, and make new programs for the stated effects. <br><br>
+</td></tr>
+
+<tr><td valign=top>7.4 &nbsp;</td>
+<td>Review the use of the <i>fix</i> adverb in Exercises 6.4-5, and 
+experiment with its use on the programs of Exercise 7.2. <br>
+</td></tr>
+</table>
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro08.htm">&gt;&gt;</a>&nbsp;
+<a href="intro06.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

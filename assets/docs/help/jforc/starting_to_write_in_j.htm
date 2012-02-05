@@ -1,0 +1,299 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Starting To Write In J</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="more_verbs.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_i_verbs_have_r.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734347"></a><a name="_Toc5414557"></a><a name="_Toc1896192"><span
+style='mso-bookmark:_Toc5414557'><span style='mso-bookmark:_Toc191734347'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>7. <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>Starting
+To Write In J</span></span></a></h1>
+
+<p class=MsoBodyText>It's time to write some simple J programs.<span
+style='mso-spacerun:yes'>&nbsp; </span>Writing code without loops will be a shock at
+first.&nbsp; Many accomplished C programmers
+give up because they find that writing every program is a struggle, and they
+remember how easy it was in C.&nbsp; I hope
+you will have more persistence.&nbsp; If you
+do, you will soon stop thinking in loops, translating each one into J; instead,
+you will think directly about operand cells, and the code will flow
+effortlessly.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;C:derided&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->In C, when you are going to
+operate on some array, say <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>x[3][4][5]</span></span>, you write the code from the
+outside in.&nbsp; You know you are going to
+need 3 nested loops to touch all the cells; you write the control structure for
+each loop (possibly after thinking a bit about the order of nesting); finally,
+you fill in code at whatever nesting level it fits.<span
+style='mso-spacerun:yes'>&nbsp; </span>Even if all your work is in the innermost
+loop, you have to write all the enclosing layers just to be able to index the
+array.&nbsp; When I was writing in C, I made
+sure my output was measured in lines of code, so that I could call this 'productivity'.</p>
+
+<p class=MsoBodyText>In J, you grab the heart of the watermelon rather than
+munching your way in starting at the rind.&nbsp;
+You decide what rank of operand cell you are going to work on, and you
+write the verb to operate on a cell.&nbsp; You
+give the verb the rank of the cells it operates on, and then you don't care
+about the shape of the operand, because J's implicit looping will apply the
+verb to all the cells, no matter how many there are.<span
+style='mso-spacerun:yes'>&nbsp; </span>A pleasant side effect of this way of coding
+is that the verbs you write can be applied to operands of any shape: write a
+verb to calculate the current value of a loan, and you can use that very verb
+to calculate the current value of all loans at a branch, or at all branches in
+the city, or all over the state.</p>
+
+<p class=MsoBodyText>We will write a number of J verbs starting from their C
+counterparts so you can see how you need to change your thinking.<span
+style='mso-spacerun:yes'>&nbsp; </span>For these examples, we will imagine we are in
+the payroll department of a small consulting business, and we will answer
+certain questions concerning some arrays defined as follows:</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>empno[nemp]</span></span>
+(in J, just <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>empno</span></span>)
+- employee number for each member of the staff.&nbsp;
+The number of employees is <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>nemp</span></span>.</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>payrate[nemp]</span></span>
+- number of dollars per hour the employee is paid</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>billrate[nemp]</span></span>
+- number of dollars per hour the customer is billed for the services of this
+employee</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>clientlist[nclients]</span></span>
+- every client has a number; this is the list of all of them.<span
+style='mso-spacerun:yes'>&nbsp; </span>The number of clients is <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>nclients</span></span>.</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>emp_client[nemp]</span></span>
+- number of the client this employee is billed to</p>
+
+<p class=Textexamples><span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>hoursworked[nemp][31]
+</span></span>- for each employee, and for each day of the month, the number of
+hours worked</p>
+
+<p class=MsoBodyText>To get you started thinking about cells rather than loops,
+I am going to suggest that you use C-style pseudocode written in a way that is
+easily translatable into J.&nbsp; Your
+progress in J will be measured by how little you have to use this crutch.</p>
+
+<p class=MsoBodyText>Problem 1: How many hours did each employee work?<span
+style='mso-spacerun:yes'>&nbsp; </span>The C code for this is:</p>
+
+<p class=Ccodemultiline>// result: hrs[i] is hours for employee i</p>
+
+<p class=Ccodemultiline>void emphours(int hrs[])</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int i, j;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(i =
+0;i&lt;nemp;++i)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(j
+= 0,hrs[i] = 0;j&lt;31;++j)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>hrs[i]
++= hoursworked[i][j];</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoBodyText>The first step in translating this into J is to write the
+loops, but without loop indexes: instead, indicate what elements will be
+operated on:</p>
+
+<p class=Ccodemultiline>for (each employee)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(each
+day)take the sum of hoursworked</p>
+
+<p class=MsoBodyText>Now, figure out what ranks the operands have.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>hoursworked</span></span> values that are being added are
+scalars; we will be looping over a list of them; that means we want the sum of
+items of a rank-1 list.&nbsp; So the
+inner loop is going to be <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/&quot;1</span></span><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>What about the outer loop?<span
+style='mso-spacerun:yes'>&nbsp; </span>The information for each employee has rank 1
+(each employee is represented in <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>hoursworked</span></span> by a single row), so a verb
+applied to each employee should have rank 1.&nbsp;
+Note that we don't worry about the actual shape of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>hoursworked</span></span>--once
+we figure out that our verb is going to operate on 1-cells, we let J's
+implicit looping handle any additional axes.&nbsp;
+We build up the loops by applying the rank conjunction for each one, so
+we have the inner loop <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/&quot;1</span></span><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>and the outer loop of rank
+1; combined, they are <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/&quot;1&quot;1</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&quot;1&quot;1</span></span> can be changed to a single <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;1</span></span>,
+and we get the final program: </p>
+
+<p class=Jcodemultiline>emphours =: monad : '+/&quot;1 hoursworked'</p>
+
+<p class=MsoBodyText>Problem 2: How much did each employee earn in wages? <span
+style='mso-spacerun:yes'>&nbsp;</span>The C code is:</p>
+
+<p class=Ccodemultiline>// result: earns[i] is wages for employee i </p>
+
+<p class=Ccodemultiline>void empearnings(int earns[])</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int i, j;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(i =
+0;i&lt;nemp;++i) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(j
+= 0,earns[i] = 0;j&lt;31;++j)earns[i] += hoursworked[i][j];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>earns[i]
+*= payrate[i];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoBodyText>When we write the pseudocode, we will change the algorithm
+just a bit: rather than multiplying each total by the billing rate just after
+the total is calculated, we will make one loop to calculate the totals, and
+then a second pass to multiply by the billing rate.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is a case where good J practice differs
+from good C practice.&nbsp; Because of the
+implicit looping that is performed on all verbs, you get better performance if
+you let each verb operate on as much data as possible.<span
+style='mso-spacerun:yes'>&nbsp; </span>You may at first worry that you're using too
+much memory, or that you might misuse the processor's caches; get over it.<span
+style='mso-spacerun:yes'>&nbsp; </span>Apply verbs to large operands.<span
+style='mso-spacerun:yes'>&nbsp; </span>The pseudocode is:</p>
+
+<p class=Ccodemultiline>for (each employee)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(each
+day)take the sum of hoursworked</p>
+
+<p class=Ccodemultiline>for(each pair of wage_rate and sum)multiply the pair</p>
+
+<p class=MsoBodyText>The first two loops are just <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+/&quot;1&nbsp;hoursworked</span></span>
+as before.&nbsp; The last loop clearly
+multiplies scalars, so it is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>*&quot;0</span></span><span style='font-family:"Courier New";
+mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>We note that dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> has rank 0, so
+we don't need to specify the rank, and we get the final program:</p>
+
+<p class=Jcodemultiline>empearnings =: monad : 'payrate * +/&quot;1 hoursworked'</p>
+
+<p class=MsoBodyText>Problem 3: How much profit did each employee bring
+in?&nbsp; C code:</p>
+
+<p class=Ccodemultiline>// result: profit[i] is profit from employee i </p>
+
+<p class=Ccodemultiline>void empprofit(int profit[])</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int i, j,
+temp;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(i =
+0;i&lt;nemp;++i) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(j
+= 0, temp = 0;j&lt;31;++j)temp += hoursworked[i][j];</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>profit[i]
+= temp * (billrate[i] - payrate[i]);</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=Ccodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=MsoBodyText>Again, we create a new loop to calculate the list of
+profit for each employee:</p>
+
+<p class=Ccodemultiline>for (each employee)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(each
+day)take the sum of hoursworked</p>
+
+<p class=Ccodemultiline>for (each employee)take billing_rate - wage_rate;</p>
+
+<p class=Ccodemultiline>for(each pair of profit and sum)multiply the pair</p>
+
+<p class=MsoBodyText>The profit is clearly a difference of scalars applied to
+two lists, therefore it will be <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-&quot;0</span></span> or equivalently simply <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-</span></span><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>&nbsp;</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The program then is </p>
+
+<p class=Jcodemultiline>empprofit =: monad define</p>
+
+<p class=Jcodemultiline>(billrate - payrate) * +/&quot;1 hoursworked</p>
+
+<p class=Jcodemultiline>)</p>
+
+</div><!--bottom jump start--><hr><a href="more_verbs.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_i_verbs_have_r.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

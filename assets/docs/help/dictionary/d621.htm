@@ -1,0 +1,91 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>@. Agenda</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d622.htm">&gt;&gt;</a>&nbsp;
+<a href="d620.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=25%><b><font size=+2>Agenda</font></b></td>
+<td align=center width=65%><font face="Courier New" size=+3>m@.n &nbsp;m@.v &nbsp;mv lv rv</font></td>
+<td align=right  width=10%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+<tt>m@.n </tt>is a verb defined by the gerund<tt> m </tt>
+with an <i>agenda</i> specified by<tt> n</tt> ;<tt> </tt>
+that is, the verb represented by the train selected from<tt> m </tt>
+by the indices<tt> n</tt> .<tt> </tt>If<tt> n </tt>is boxed, the train 
+is parenthesized accordingly.  The case<tt> m@.v </tt>
+uses the result of the verb<tt> v </tt>to perform the selection.
+<br>&nbsp;</td>
+</tr></table><br>
+
+For  example:<br>
+
+<pre>
+   dorh=: +: ` -: @. (]&gt;9:)           <font face=Times size=+1>Double or halve (Case statement)</font>
+   dorh &quot; 0 primes=: 2 3 5 7 11 13 17 19
+4 6 10 14 5.5 6.5 8.5 9.5
+
+   _:`%:`*: @. * &quot;0 a=: 2 1 0 _1 _2
+1.41421 1 _ 1 4
+
+   g=: +`-`* 
+   x=: 1 2 3 [ y=: 6 5 4
+   (x g@.2: y)
+6 10 12
+         
+   (] * &lt;:) y=: 5 4 3 2 1 0           <font face=Times size=+1>Basis of factorial</font>
+20 12 6 2 0 0
+                    
+   1:`(] * &lt;:) @. (1: &lt; ]) &quot;0 y       <font face=Times size=+1>Case statement</font>
+20 12 6 2 1 1
+      
+   1:`(] * $:@&lt;:)@.(1: &lt; ])&quot;0 y       <font face=Times size=+1><a href="d212.htm">Self-reference</a> for recursion</font>
+120 24 6 2 1 1
+
+   +`-`*`% @. (1 0 3;2 0)
+(- + %) (* +)
+
+   3 +`-`*`% @. (1 0 3;2 0) 4
+_12.8125
+
+   perm=: i.@i.@_2: ` ([: ,/ (0: ,. $:&amp;.&lt;:) {&quot;2 1 \:&quot;1@=@i.) @. *
+   perm 3
+0 1 2
+0 2 1
+1 0 2
+1 2 0
+2 0 1
+2 1 0
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d622.htm">&gt;&gt;</a>&nbsp;
+<a href="d620.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

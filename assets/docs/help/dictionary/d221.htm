@@ -1,0 +1,106 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>~. Nub  - </title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d222.htm">&gt;&gt;</a>&nbsp;
+<a href="d220n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Nub</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>~. &nbsp;_</font></td>
+<td align=right  width=33%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>~.y </tt>selects the <i>nub</i> of<tt> y</tt> ,<tt> </tt>
+that is, all of its distinct items.  For example:<br>
+
+<pre>
+   y=: 3 3 $ 'ABCABCDEF'
+   y;(~.y);(~.3);($~.3)
++---+---+-+-+
+|ABC|ABC|3|1|
+|ABC|DEF| | |
+|DEF|   | | |
++---+---+-+-+
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+&nbsp;
+</td>                                                         
+</tr></table><br>
+
+More precisely, the nub is found by selecting the leading item, 
+suppressing from the argument all items tolerantly equal to it, 
+selecting the next remaining item, and so on.  The fit conjunction 
+applies to nub to specify the tolerance used.<br><br>
+
+If<tt> f </tt>is a costly function, it may be quicker to 
+evaluate<tt> f y </tt>by first evaluating<tt> f~. y </tt>
+(which yields all of the distinct results required), 
+and then distributing them to their appropriate positions.  
+The inner product with the self-classification table 
+(produced by<tt> =</tt>)<tt> </tt>can be used to effect this distribution.  
+For example:<br>
+
+<pre>
+   f=: *:
+   f y=: 2 7 1 8 2 8 1 8
+4 49 1 64 4 64 1 64
+
+   ,.&amp;.&gt;(~. ; f@~. ; = ; (f@~.(+/ .*)=) ; f)y
++-+--+---------------+--+--+
+|2| 4|1 0 0 0 1 0 0 0| 4| 4|
+|7|49|0 1 0 0 0 0 0 0|49|49|
+|1| 1|0 0 1 0 0 0 1 0| 1| 1|
+|8|64|0 0 0 1 0 1 0 1|64|64|
+| |  |               | 4| 4|
+| |  |               |64|64|
+| |  |               | 1| 1|
+| |  |               |64|64|
++-+--+---------------+--+--+
+
+   NUB=: 1 : 'x@~. +/ . * ='           NB. Adverb
+   *: NUB y
+4 49 1 64 4 64 1 64
+
+   nubindex=: ~. i. ]
+   (nubindex ; (nubindex { ~.)) y
++---------------+---------------+
+|0 1 2 3 0 3 2 3|2 7 1 8 2 8 1 8|
++---------------+---------------+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d222.htm">&gt;&gt;</a>&nbsp;
+<a href="d220n.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

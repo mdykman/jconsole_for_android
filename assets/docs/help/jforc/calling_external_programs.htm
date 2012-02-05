@@ -1,0 +1,633 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Calling External Programs</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="socket_programming.htm">&gt;&gt;</a>&nbsp;
+<a href="input_and_output.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734429"></a><a name="_Toc5414622"></a><a name="_Toc1896251"><span
+style='mso-bookmark:_Toc5414622'><span style='mso-bookmark:_Toc191734429'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>21. </span></span><![endif]>Calling </span></span></a><span
+style='mso-bookmark:_Toc191734429'>External Programs</span></h1>
+
+<p class=Section><a name="_Toc191734430"></a><span style='mso-bookmark:_Toc191734430'>Cal</span><span
+style='mso-bookmark:_Toc191734430'>ling a DLL</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;calling a DLL&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Interfacing to an external
+program is one thing you can do the old-fashioned way: by getting a copy of a
+working program and editing it.&nbsp; You can
+find starter programs in the J distribution. A good one to start with is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>\system\packages\winapi\registry.ijs</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You can glance through this program to see
+what it does.&nbsp; It starts with</p>
+
+<p class=Jcodemultiline>require 'dll'</p>
+
+<p class=BodyTextnoleader>which defines the verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>cd&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Calls to the DLL appear in lines like</p>
+
+<p class=Jcodemultiline>rc =. 'Advapi32 RegCreateKeyExA i<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>i *c i *c i i i *i *i'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cd<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>root;key;0;&quot;;0;sam;0;(,_1);(,_1)</p>
+
+<p class=BodyTextnoleader>(this is a single line in the program; I have shown
+it here as two lines because it won't fit on the page as a single line)</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;cd verb&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->This example exhibits the
+elements of a call to a DLL.&nbsp; The left
+operand of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cd</span></span>
+is a character list describing the function to be called and what arguments it
+is expecting.&nbsp; Here we are calling the
+entry point <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>RegCreateKeyExA</span></span>
+in the library <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>Advapi32</span></span>
+(the library has a file extension of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>.dll</span></span> under Windows, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>.so</span></span> on Linux, and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>.dylib</span></span>
+on the Mac).&nbsp; The sequence of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i</span></span>s
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>*c</span></span>s
+are <span class=Definition>descriptors</span> that describe the interface to
+the function.&nbsp; The first item in that
+sequence describes the type of value returned by the function; the other items
+are the arguments to the function and are a one-for-one rendering of the
+argument list that would be passed in C.&nbsp;
+So, the line above is appropriate for calling a function defined with
+the prototype</p>
+
+<p class=Ccodemultiline>int RegCreateKeyExA(int, char *, int , char *, int,
+int, int, int *, int *);</p>
+
+<p class=Subsection><a name="_Toc191734431"></a><span style='mso-bookmark:_Toc191734431'>Nam</span><span
+style='mso-bookmark:_Toc191734431'>ing the Procedure</span></p>
+
+<p class=MsoBodyText>The first two words passed in to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>cd</span></span> are the <span
+class=Definition>library name</span> and the <span class=Definition>procedure
+name</span>.&nbsp; The library name is the
+name of the DLL file and follows the search path for your system.<span
+style='mso-spacerun:yes'>&nbsp; </span>The procedure name is the name of a function
+found in that library.</p>
+
+<p class=MsoBodyText>There are two special library names: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Using these names allows you to call
+procedure by address of by function number.&nbsp;
+When the library name is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0</span></span>, the procedure name is actually the integer
+address of the procedure.&nbsp; For example,
+library name/procedure of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'0&nbsp;559038737'</span></span> would be a call to the
+procedure at memory address <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>0xdeadbeef</span></span>.</p>
+
+<p class=MsoBodyText><span style='color:black'>When the library name is </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span><span
+style='color:black'>, it indicates
+that the procedure name gives the integer address of the object being called
+(actually it gives the address of the address of the vtable for the
+object).&nbsp; The first parameter gives the index of the procedure
+in the vtable, and its descriptor (which is the <b style='mso-bidi-font-weight:
+normal'>second</b> descriptor, since the first one describes the result of the
+procedure) must be </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span><span style='color:black'> or </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>*</span></span><span
+style='color:black'>.<o:p></o:p></span></p>
+
+<p class=Subsection><a name="_Toc191734432">Describing the Operands and Result</a></p>
+
+<p class=MsoBodyText>The <span class=Definition>descriptors</span> come
+next.&nbsp; They can be <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>c</span></span> (<span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>char</span></span>),
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>short</span></span>)
+, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i</span></span>
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>int</span></span>),
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>float</span></span>),
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>d</span></span>
+(<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>double</span></span>),
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>j</span></span>
+(complex), <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>w</span></span>
+(Unicode), <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>l</span></span>
+(64-bit integer), <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+(J integer, either 32 or 64 bits) or <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> (placeholder--a value of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> is used and the
+result is ignored); all but <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> can be preceded by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> to indicate a non-atomic
+array of that type.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>*</span></span> by itself
+indicates a non-atomic array of unspecified type.</p>
+
+<p class=MsoBodyText>The first descriptor describes the result of the
+procedure.&nbsp; Subsequent descriptors
+describe the operands to the procedure.</p>
+
+<p class=Subsection><a name="_Toc191734433">Supplying the Operand Data</a></p>
+
+<p class=MsoBodyText>The right operand of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>cd</span></span> is the actual
+arguments to be passed to the called function.&nbsp;
+It is a list, with one item for each argument to the called
+function.&nbsp; The arguments correspond to
+the argument descriptors one for one (remember that the first descriptor
+describes the result, so there will be one more descriptor than
+arguments).&nbsp; Normally the items are boxed,
+with the contents of each box containing one argument, but if all the operands
+are scalars of the same type you can save some time by leaving the array of
+operands unboxed.</p>
+
+<p class=MsoBodyText>An argument whose descriptor does not include <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>*</span></span>
+must correspond to a scalar which can be converted to the appropriate type.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, a descriptor of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>d</span></span>
+can have an argument value of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0</span></span> or <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4.5</span></span>, but not <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'a'</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>An argument whose descriptor includes <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>*</span></span>
+must be either a non-atomic array or a scalar memory address (see below).<span
+style='mso-spacerun:yes'>&nbsp; </span>The address of the array or memory area is
+passed to the DLL and the DLL may modify the array or memory area; this is how
+you return an array from the function.&nbsp;
+If the type of an array does not match the descriptor, the interpreter
+makes of copy in the correct format and passes its address to the DLL.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+are not native J types.&nbsp; The interpreter always
+has to convert the argument to the correct format for the DLL; in addition, it
+converts the result back to J format.&nbsp;
+Arguments for <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+descriptors can also be character strings, 2 bytes per number for <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>s</span></span>
+and 4 bytes per number for <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f</span></span>, that contain the byte sequence for the
+argument.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3!:4</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3!:5</span></span>
+can be used to convert numbers into character-string form (see below under
+'Filling a Structure: Conversions' for details).</p>
+
+<p class=MsoBodyText>Note that if you get things wrong and the function
+scribbles outside the bounds of an array, J may crash.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note also that a vector of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span>s and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>s
+is held inside J as a vector of Booleans, which are <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>char</span></span>s.<span
+style='mso-spacerun:yes'>&nbsp; </span>When the function calls for a vector of <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>int</span></span>s,
+J will convert any Boolean to <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>int</span></span>.&nbsp; In
+the example above, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(,_1)</span></span>
+reserved space for an <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>int</span></span>;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(,0)</span></span>
+would have worked too but would require a conversion.</p>
+
+<p class=MsoBodyText>When the function returns, its returned value will be
+boxed and appended to the front of the list of boxed operands that were passed
+to the DLL, to produce the result of the execution of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>cd&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You may use this returned value as you see
+fit.&nbsp; Any box that contained a non-atomic
+array may have had its contents modified by the function; you may open the box
+to get the changed value.</p>
+
+<p class=Subsection><a name="_Toc191734434">Options</a></p>
+
+<p class=MsoBodyText><span class=Definition>Flag characters</span> that control
+the call to DLL may be included just before the first descriptor.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>%</span></span> flags control
+technical details of the calling convention and will not be discussed
+here.&nbsp; The <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span> flag
+indicates that you are not interested in anything but the result from the
+DLL.&nbsp; When <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span> is given, the
+result of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cd</span></span>
+is an unboxed scalar rather than a list of boxes, which can be much faster.</p>
+
+<p class=MsoBodyText>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>cd</span></span> verb has rank <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;1</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you have to call the same entry point many
+times, it may be faster to have an array of arguments and use <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cd</span></span>
+once (preferably with the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;</span></span> flag).</p>
+
+<p class=Subsection><a name="_Toc191734435">Errors</a></p>
+
+<p class=MsoBodyText>If J was unable to call the DLL, the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>cd</span></span> verb fails with
+a domain error.&nbsp; You can then execute the
+sentence <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cder&nbsp;''</span></span>
+which will return a 2-element list indicating what went wrong.<span
+style='mso-spacerun:yes'>&nbsp; </span>The User Guide gives a complete list of
+errors; the most likely ones are <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>4&nbsp;0</span></span> (the number of arguments did not
+match the number of declarations), <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>5&nbsp;x</span></span> (declaration number <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+was invalid--the count starts with the declaration of the returned value which
+is number 0), and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>6&nbsp;x</span></span>
+(argument number <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+did not match its declaration--the count starts with the first argument which is
+number 0 and must match the <i>second</i> declaration).</p>
+
+<p class=Section><a name="_Toc191734436"></a><a name="_Toc5414623"></a><a
+name="_Toc5414461"></a><a name="_Toc1896252"><span style='mso-bookmark:_Toc5414461'><span
+style='mso-bookmark:_Toc5414623'><span style='mso-bookmark:_Toc191734436'>Memory
+Management</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;memory management&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Passing arrays into the called
+function is adequate only for simple functions.&nbsp;
+If the function expects an argument to be a structure, possibly
+containing pointers to other structures, you will have to allocate memory for
+the structures, fill the structures appropriately, and free the memory when it
+is no longer needed. &nbsp;J provides a set of
+verbs to support such memory management.</p>
+
+<p class=Subsubsection>Allocate memory: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>mema</span></span> (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>15!:3</span></span>)</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;memory management:mema&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mema&nbsp;<i>length
+</i></span></span>allocates a memory area of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>length</span></i></span>
+bytes.&nbsp; The result is the address of the
+memory area, as an integer.&nbsp; It is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+if the allocation failed.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mema</span></span>
+has infinite rank.</p>
+
+<p class=MsoBodyText>You must box the memory address before using it as an
+operand to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cd&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Do not box the address for use as an operand
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>memf</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>memw</span></span>,
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>memr&nbsp;</span></span>.</p>
+
+<p class=Subsubsection>Free memory: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>memf</span></span> (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>15!:4</span></span>)</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;memory management:memf&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>memf&nbsp;<i>address
+</i></span></span>frees the memory area pointed to by <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>address&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>address</span></i></span> must be a value that was returned
+by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mema&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0</span></span> means success, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+means failure.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>memf</span></span> has infinite
+rank.</p>
+
+<p class=Subsubsection>Write Into a Memory Area: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>memw</span></span> (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>15!:2</span></span>)</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></i></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;memory management:memw&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></i></span><![endif]--><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>data</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;memw&nbsp;<i>address</i>,<i>byteoffset</i>,<i>count</i>,<i>type<br>
+</i></span></span>causes <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>data</span></i></span> to be written, starting at an offset
+of <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>byteoffset</span></i></span>
+from the area pointed to by <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>address</span></i></span>, for a length of <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>count</span></i></span>
+items whose type is given by <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>type&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>type</span></i></span> is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2</span></span> for characters, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4</span></span>
+for integers, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8</span></span>
+for floating-point numbers, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>16</span></span> for complex numbers; if omitted, the
+default is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>type</span></i></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>,
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>count</span></i></span>
+may be one more than the length of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>data</span></i></span> to cause a string-terminating NUL (<span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>\0</span></span>)
+to be written after the <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>data</span></i></span><i>&nbsp;</i>.</p>
+
+<p class=Subsubsection>Read From a Memory Area: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>memr</span></span> (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>15!:1</span></span>)</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;memory management:memr&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>memr&nbsp;<i>address</i>,<i>byteoffset</i>,<i>count</i>,<i>type<br>
+</i></span></span>produces as its result the information starting at an offset
+of <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>byteoffset</span></i></span>
+from the area pointed to by <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>address</span></i></span>, for a length of <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>count</span></i></span>
+items whose type is given by <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>type&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>type</span></i></span> is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2</span></span> for characters, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4</span></span>
+for integers, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>8</span></span>
+for floating-point numbers, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>16</span></span> for complex numbers; if omitted, the
+default is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is a list with <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>count</span></i></span> items of
+the type given by <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>type&nbsp;</span></i></span>.If
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>type</span></i></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>,
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>count</span></i></span>
+may be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_1</span></span>
+which causes the read to be terminated before the first NUL (<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>\0</span></span>) character
+encountered.</p>
+
+<p class=Subsection><a name="_Toc191734437">Filling a Structure: Conversions</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;conversions&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->To create a structure to pass
+into a DLL, you must ensure that every byte is in the right place.<span
+style='mso-spacerun:yes'>&nbsp; </span>The way to do this is to convert your nouns
+to character strings so that you have complete control over how the bytes are
+packed.&nbsp; J gives you a set of foreigns
+that will convert your numbers to character strings.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;(3!:4)&nbsp;y</span></span>
+converts the atom or list <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, which must be integer to within the
+comparison tolerance, to a character string in which each atom of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+occupies <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2^x</span></span>
+bytes.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> may be 1 (2-byte
+<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>short</span></span>
+result), 2 (4-byte <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>long</span></span> result), or 3 (8-byte result if you
+have J64).&nbsp; The 'conversion' is merely a
+change of type: for example, when an integer is converted to 4-byte
+character, the 32-bit binary code for the integer is not changed, but it
+is viewed as 4 characters.</p>
+
+<p class=MsoBodyText>To go in the other direction, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is negative: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(-x)&nbsp;(3!:4)&nbsp;y</span></span>
+splits a string into <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2^x</span></span>-character
+pieces and calls each piece an integer.&nbsp;
+If <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is 0, the string is split into 2-byte pieces which are construed as
+representing an <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>unsigned
+short</span></span> which is converted to a J number.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3!:5</span></span>
+does a similar job for floating-point values.&nbsp;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;(3!:5)&nbsp;y</span></span>,
+where <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is 1 or 2, produces a string in which each atom of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> occupies <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2^1+x</span></span>
+bytes.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is first
+converted to a floating-point value of the correct size.<span
+style='mso-spacerun:yes'>&nbsp; </span>Negative values of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> convert from
+string to numeric representation.</p>
+
+<p class=Section><a name="_Toc191734438">Aliasing of Variables</a></p>
+
+<p class=MsoBodyText>When <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;aliasing&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->a noun is assigned the value
+of another noun, as in</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. b =. 5</p>
+
+<p class=BodyTextnoleader>a single memory area is used to hold the value common
+to both nouns, and the two nouns are said to be <span class=Definition>aliases</span>
+of each other.&nbsp; Aliasing obviously
+reduces the time and space used by a computation.<span
+style='mso-spacerun:yes'>&nbsp; </span>The interpreter takes care to ensure that
+aliasing is invisible to the programmer; if after the statement above we
+execute</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; b =. 6</p>
+
+<p class=BodyTextnoleader>the interpreter will assign the new value to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+only, leaving <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+unchanged.&nbsp; What actually happens is that
+the new value is created in a data block of its own and the descriptor for the
+noun <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+is changed to point to the new block.&nbsp;
+(Almost all verbs create their outputs in newly-allocated data
+blocks.&nbsp; As of J6.01 the exceptions are <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u}</span></span>
+when used in one of the forms that produces in-place modification.<span
+style='mso-spacerun:yes'>&nbsp; </span>Increasing the number of cases recognized for
+in-place execution is a continuing activity of the J developers).</p>
+
+<p class=MsoBodyText>If there were nothing more to say about aliasing, I would
+not single it out for mention from among the dozens of performance-improving
+tricks used by the interpreter.&nbsp; What
+makes it worth considering is the effect aliasing has when elements outside the
+J language touch J's nouns.&nbsp; This can
+occur in two ways: when a noun is mapped to a file and when a noun is modified
+by a DLL.</p>
+
+<p class=Subsection><a name="_Toc191734439">Aliasing of Mapped Nouns</a></p>
+
+<p class=MsoBodyText>When a noun is mapped to a file, the descriptor for the noun
+points to the file's data and that pointer is <i>never changed</i> even if a
+value is assigned to the variable: the whole point of mapping the noun to the
+file is to cause changes in the noun to be reflected in the file, so any
+assignment to the noun causes the data to be copied into the area that is
+mapped to the file.</p>
+
+<p class=MsoBodyText>In addition, when <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>b</span></span> is a noun mapped
+to a file and is assigned to another noun as with</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. b</p>
+
+<p class=BodyTextnoleader>the noun <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span>, which is aliased to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>b</span></span>, also inherits
+the 'mapped-to-file' attribute.&nbsp; This
+behavior is necessary to make mapped files useful, because assignments to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+are implicit whenever a verb is invoked and it would defeat the whole purpose
+of mapping if the data of the file had to be copied every time the mapped noun
+was passed to a verb.&nbsp; The combination of
+aliasing and mapping means that any assignment to a mapped noun also changes
+the values of all other nouns which share the same mapping: for example, if you
+pass a mapped noun <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+as the right operand of a verb that modifies its <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>,
+and the data in the file will all be modified.</p>
+
+<p class=MsoBodyText>Keeping track of the aliasing is the price you pay for
+using mapped files.&nbsp; If you need to copy
+a noun making sure you get a fresh, unmapped data block, you must not assign
+the mapped noun directly, but instead assign the result of some verb that
+creates its output in a new data block.&nbsp;
+For example, as of J6.01 the assignment</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. a:{b</p>
+
+<p class=BodyTextnoleader>will create a new data block containing the data of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+will point to that new block.</p>
+
+<p class=Subsection><a name="_Toc191734440">Aliasing of DLL Operands</a></p>
+
+<p class=MsoBodyText>The J interpreter uses aliasing for boxed cells of an
+array, so that if you execute</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; b =. i. 10000
+10000</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. b;5</p>
+
+<p class=BodyTextnoleader>item 0 of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span> simply contains a pointer to the data block
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>
+rather than a fresh copy of the 800MB array.&nbsp;
+In addition, when a list of boxes is used as the right operand of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cd</span></span>,
+as in</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; '<i>dll-spec</i>'
+cd&nbsp;&nbsp; root;key;0;'';0;sam;0;(,_1);(,_1)</p>
+
+<p class=BodyTextnoleader>any array operands to the DLL function are passed via
+a pointer to the data in the list of boxes, with no separate copy of the data
+being made.&nbsp; This means that if the DLL
+modifies one of its arguments, any nouns aliased to that argument will also be
+modified: if the DLL function called above modifies its argument 1, the noun <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>key</span></span>
+and any noun aliased to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>key</span></span> (possibly including private nouns in
+suspended verbs) will be changed.&nbsp; To
+protect yourself from such side-effects, you can use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(a:{key)</span></span> in place
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>key</span></span>
+in the invocation of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cd&nbsp;</span></span>,
+which will make a temporary copy before calling the DLL.</p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'>Note</b> that if
+your named argument has to be converted before it is passed to the DLL, any
+change made by the DLL will be in the copy and will not be reflected in your
+copy of the named argument.&nbsp; Since
+aliasing is usually considered a pernicious side-effect, this uncertainty will
+seldom trouble you.&nbsp; If for some reason
+you rely on the aliasing, you will need to ensure that the argument has the
+correct type.&nbsp; There is no
+officially-sanctioned way to do this, but as of J6.01 you can use monad <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;.</span></span>
+to ensure that a value is an integer (for<span class=Definition> </span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i</span></span>
+descriptors) and monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>_&amp;&lt;.</span></span> to ensure that a value is floating-point
+(for <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>d</span></span>
+descriptors).</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+</div><!--bottom jump start--><hr><a href="socket_programming.htm">&gt;&gt;</a>&nbsp;
+<a href="input_and_output.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

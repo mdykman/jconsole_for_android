@@ -1,0 +1,178 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Merge &amp; Amend</title>
+
+</head><body><!--top jump start--><a href="intervals.htm">&gt;&gt;</a>&nbsp;
+<a href="indexing.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+<H1>3B. Merge &amp; Amend</h1>
+
+<P>Two arguments <tt>x</tt> and <tt>y</tt> can be merged by interleaving their items 
+(necessarily of a common shape) as determined by a Boolean list of shape <tt>x +&amp;# y</tt>. 
+For example: </P></TD>
+
+
+<pre>
+   x=: &gt;;:'That they hunted from hill'
+   y=: &gt;;:'second time me to plain'
+   b=: 0 1 1 0 0 1 0 0 1 1
+   mrg=: 1 : '/:@/:@(x.&quot;_) { ,'
+   x([ ; ] ; (,.b)&quot;_ ; b mrg)y
++----------------------+
+|That  |second|0|That  |
+|they  |time  |1|second|
+|hunted|me    |1|time  |
+|from  |to    |0|they  |
+|hill  |plain |0|hunted|
+|      |      |1|me    |
+|      |      |0|from  |
+|      |      |0|hill  |
+|      |      |1|to    |
+|      |      |1|plain |
++----------------------+</pre>
+
+<P>The form of the function <tt>b mrg</tt> obtained by applying the 
+adverb <tt>mrg </tt>suggests the form of a function <tt>MRG </tt>
+to be applied to a Boolean left argument and a right argument formed 
+as the catenation of the original arguments. Thus:</P>
+
+<pre>
+   b mrg
+/:@/:@(0 1 1 0 0 1 0 0 1 1&quot;_) { ,
+
+   MRG=: /:@/:@[ { ]
+   b MRG x,y
+That  
+second
+time  
+they  
+hunted
+me    
+from  
+hill  
+to    
+plain 
+</pre>
+
+<P>The argument b need not be Boolean, but may be anything of the requisite 
+number of items that is in the domain of <tt>/:</tt>. For example:</P>
+
+<pre>
+   b=: 0 2 2 1 0 2 2 2 0 0 1 1 2 1 2 1 1 1 1 1
+   y0=: 'abcd' [ y1=: '123456789' [ y2=: 'zzzzzzz'
+   b MRG y0,y1,y2
+azz1bzzzcd23z4z56789
+</pre>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>a0=: mrg=: 1 : '/:@/:@(x.&quot;_) { ,'</tt></TD> <TD width=60%><tt>x b mrg y</tt> merges x and y</TD> 
+  </TR>
+  <TR><TD><tt>m1=: MRG=: /:@/:@[ { ]</tt></TD> <TD><tt>b MRG x,y</tt> is equivalent to above</TD>
+  </TR><TR><TD><tt>d2=: alt=: ,@,. </tt></TD><TD>Merge items from x and y alternately</TD>
+  </TR>
+</TABLE>
+
+
+
+<P>For example:</P>
+<pre>
+   x=: 'temr rtes'
+   y=: 'h axbohr '
+   x alt y
+the marx brothers</pre>
+
+<P>An argument can be amended by replacing those cells selected by an index, 
+by the cells of another argument. For example:</P>
+
+ 
+<pre>
+   x=: 'ABCD' [ y=: 'abcdefghij'
+   i=: 4 2 8 6
+   i{y
+ecig
+
+   ]z=: x i} y
+abBdAfDhCj
+
+   m=: a.{~(a. i. 'A')+i.5 5
+   ]i=: 2 # &amp;.&gt; i. # m
++-------------------+
+|0 0|1 1|2 2|3 3|4 4|
++-------------------+
+
+   x=: '+-*%^'
+   m ; (i{m) ; x ; x i} m
++-----------------------+
+|ABCDE|AGMSY|+-*%^|+BCDE|
+|FGHIJ|     |     |F-HIJ|
+|KLMNO|     |     |KL*NO|
+|PQRST|     |     |PQR%T|
+|UVWXY|     |     |UVWX^|
++-----------------------+
+</pre>
+
+<P>Amendment can also be made by using a function that selects a portion of its argument. 
+For example:</P>
+
+<pre>
+   IR=: @(i.@$@])     NB. Adverb to select indices of (ravelled) table right argument
+   A=: IR }           NB. Adverb to amend selected portion of right argument
+   d=: (&lt;0 1)&amp;|:      NB. Function to select diagonal of a table
+   '+-*%^' (] ; d@] ; ]IR ; d IR ; d IR } ; d A) m
++---------------------------------------------------+
+|ABCDE|AGMSY| 0  1  2  3  4|0 6 12 18 24|+BCDE|+BCDE|
+|FGHIJ|     | 5  6  7  8  9|            |F-HIJ|F-HIJ|
+|KLMNO|     |10 11 12 13 14|            |KL*NO|KL*NO|
+|PQRST|     |15 16 17 18 19|            |PQR%T|PQR%T|
+|UVWXY|     |20 21 22 23 24|            |UVWX^|UVWX^|
++---------------------------------------------------+
+   NB. m; diag m; Indices of ravelled m; Indices of diagonal; Amendments 
+
+ 
+   ur=: 2 _3&amp;{.      NB. Select upper right corner
+   (2 3$'+-*%^!') (] ; ur@] ; ]IR ; ur IR ; ur IR } ; ur A) m
++------------------------------------------+
+|ABCDE|CDE| 0  1  2  3  4|2 3 4|AB+-*|AB+-*|
+|FGHIJ|HIJ| 5  6  7  8  9|7 8 9|FG%^!|FG%^!|
+|KLMNO|   |10 11 12 13 14|     |KLMNO|KLMNO|
+|PQRST|   |15 16 17 18 19|     |PQRST|PQRST|
+|UVWXY|   |20 21 22 23 24|     |UVWXY|UVWXY|
++------------------------------------------+
+</pre>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>a3=: IR=: @(i.@$@])</tt></TD> <TD width=60%><tt>f IR</tt> selects indices of ravelled rgt arg</TD>
+  </TR><TR><TD><tt>m4=: d=: (&lt;0 1)&amp;|:</tt></TD> <TD>Function to select diagonal of table</TD>
+  </TR><TR><TD><tt>m5=: ur=: 2 _3&amp;{.</tt></TD> <TD>Function to select upper right corner</TD>
+  </TR>
+</TABLE>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intervals.htm">&gt;&gt;</a>&nbsp;
+<a href="indexing.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

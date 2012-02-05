@@ -1,0 +1,132 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>A. Sorting</title>
+
+</head><body><!--top jump start--><a href="rank_class.htm">&gt;&gt;</a>&nbsp;
+<a href="special_matrices.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>6A. Sorting</h1>
+
+
+<P>Sorting means the rearrangement of an array into 
+an order based on some key, 
+which may be either implicit or explicit. 
+The implicit keys are the integer or real number fields, 
+and the standard alphabet. 
+Explicit keys may be any arbitrary set. 
+Note that sorting applies equally well to character data and to Boolean, 
+integer, real numbers, complex numbers, or to boxed data. 
+When applied to real numbers, comparisons are exact. 
+No tolerance is used. 
+Verbs defined to sort in ascending order can be converted 
+to give descending order by changing<tt> /: </tt>to<tt> \: </tt>, 
+as in<tt> m0 </tt>and<tt> m1 </tt>. 
+Note also that these verbs apply 
+(unless they use the rank operator to prevent it) 
+to arrays of arbitrary ranks, where the items are treated 
+as if they were raveled.</P>
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0=: /:~</tt></TD>	<TD width=60%>Sort the array y in ascending order</TD>
+  </TR><TR><TD><tt>m1=: \:~</tt></TD>	<TD>Sort the array y in descending order</TD>
+  </TR><TR><TD><tt>m2=: /:~&quot;_1</tt></TD>	<TD>Sort the items of array y ascending</TD>
+  </TR><TR><TD><tt>d3=: /:@:{ { [</tt></TD>	<TD>Sort indices x according to y</TD>
+  </TR><TR><TD><tt>d4=: ]/:{&quot;1</tt></TD>	<TD>Sort table y according to column x</TD>
+  </TR><TR><TD><tt>d5=: \:@[`(/:@[) @. ]</tt></TD>	<TD>Grade x up if y is 1 and down if y is 0</TD></TR>
+  <TR><TD><tt>d6=: \:~@[`(/:~@[) @. ]</tt></TD>	<TD>Sort up or down  (Try literal argument)</TD></TR>
+  <TR><TD><tt>d7=: /:~</tt></TD>	<TD>Sort y according to x</TD>
+  </TR>
+</TABLE></TD></TR></TABLE>
+
+<pre>
+   y=:'leap','note',:'file'
+   m1 y
+note
+leap
+file
+
+   m1&quot;1 y
+plea
+tone
+life
+
+   z=:&gt; ;: 'to be or not to be that is the question'
+ 
+   (] ; m0 ; m1 ; m2) z
++-----------------------------------+
+|to      |be      |to      |      ot|
+|be      |be      |to      |      be|
+|or      |is      |the     |      or|
+|not     |not     |that    |     not|
+|to      |or      |question|      ot|
+|be      |question|or      |      be|
+|that    |that    |not     |    ahtt|
+|is      |the     |is      |      is|
+|the     |to      |be      |     eht|
+|question|to      |be      |einoqstu|
++-----------------------------------+
+
+   q=: ?.15#9
+   (] , m0 ,: m1) q
+1 6 4 4 1 0 6 6 8 3 4 7 0 0 4
+0 0 0 1 1 3 4 4 4 4 6 6 6 7 8
+8 7 6 6 6 4 4 4 4 3 1 1 0 0 0
+
+   x=: 2 3 4 5 0 1 9 8 7 6
+   y=:100+10 4 8 6 7 9 5 3 2 1
+   x ([ , ] ,: d3) y
+  2   3   4   5   0   1   9   8   7   6
+110 104 108 106 107 109 105 103 102 101
+  9   8   7   1   6   3   4   2   5   0
+
+   y=: ?.5 6$100
+   d4=: ]/:{&quot;1
+   (0&amp;d4 ; 2&amp;d4 ; 5&amp;d4) y
++-----------------------------------------------------+
+| 3  5 52 67  0 38|13 75 45 53 21  4|13 75 45 53 21  4|
+| 6 41 68 58 93 84| 3  5 52 67  0 38| 3  5 52 67  0 38|
+|13 75 45 53 21  4|52  9 65 41 70 91|67 67 93 38 51 83|
+|52  9 65 41 70 91| 6 41 68 58 93 84| 6 41 68 58 93 84|
+|67 67 93 38 51 83|67 67 93 38 51 83|52  9 65 41 70 91|
++-----------------------------------------------------+</pre>
+
+<P>The random number generator<tt> ?. </tt>used here produces repeatable experiments, 
+but<tt> ? </tt>can also be used. For example:</P>
+
+<pre>
+   ? 9 # 9
+1 6 4 4 1 0 6 6 8
+   ?. 9 # 9
+3 8 8 4 2 0 2 7 4
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="rank_class.htm">&gt;&gt;</a>&nbsp;
+<a href="special_matrices.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

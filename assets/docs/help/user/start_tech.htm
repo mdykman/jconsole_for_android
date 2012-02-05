@@ -1,0 +1,74 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Starting J - Details</title>
+
+</head><body><!--top jump start--><a href="start_errors.htm">&gt;&gt;</a>&nbsp;
+<a href="dirpaths.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end--> 
+<h1>Starting J -  Details</h1>
+
+<h2>profile sequence</h2>
+JFE loads profile which in turn loads several other files to initialize your J session. Foreign 4!:3 returns script names in the order they were loaded. This can be a powerful tool in understanding the initialization process.<br><br>
+
+Start Jconsole and see what scripts are loaded.
+<pre>
+   >4!:3''
+C:\Users\Eric\j701\bin\profile.ijs
+C:\Users\Eric\j701\system\util\boot.ijs
+C:\Users\Eric\j701\system\main\stdlib.ijs
+C:\Users\Eric\j701\system\util\scripts.ijs
+C:\Users\Eric\j701\system\main\regex.ijs
+C:\Users\Eric\j701\system\main\task.ijs
+C:\Users\Eric\j701\system\util\configure.ijs
+C:\Users\Eric\j701\system\main\ctag.ijs
+</pre>
+
+<h2>J Front End initialization sentence</h2>
+
+JFE runs a first sentence that defines BINPATH_z_ and ARGV_z and performs other required initialization (such as loading J profile).<br><br>
+
+BINPATH_z_ is set as the full path to the J bin folder.<br><br>
+
+ARGV_z_ is set as list of boxed string parameters from the command line.<br><br>
+
+The load of a script is done with an unamed verb (3 : '0!:0 y') so that =. is local to the verb.<br><br>
+
+The sentence always ends with:<br>
+<tt>[ARGV_z_=:...[BINPATH_z_=:...</tt><br><br>
+
+[A[B indicates this standard ending in the following examples.<br><br>
+
+Without -jprofile the first sentence has the form:<br>
+<tt>(3 : '0!:0 y')&ltBINPATH,'\profile.ijs'[A[B</tt><br><br>
+
+With -jprofile F:<br>
+<tt>(3 : '0!:0 y')2{ARGV[A[B</tt><br><br>
+
+Jconsole with just -jprofile:<br>
+<tt>i.0 0[A[B</tt><br><br>
+
+<!--bottom jump start--><hr><a href="start_errors.htm">&gt;&gt;</a>&nbsp;
+<a href="dirpaths.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--><br>
+</body>
+</html>

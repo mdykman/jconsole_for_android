@@ -1,0 +1,114 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>&lt; Box  -  Less Than</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d011.htm">&gt;&gt;</a>&nbsp;
+<a href="d001.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Box</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>&lt; &nbsp;_ 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Less Than&nbsp;&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>&lt;y </tt>is an <i>atomic encoding</i> of<tt> y</tt> ,<tt> </tt>
+as discussed in <a href="dicta.htm">Section II A</a>.  
+The result has rank<tt> 0</tt>,<tt> </tt>and is <i>decoded</i> 
+by<tt> &gt;</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x&lt;y </tt>is<tt> 1 </tt>if<tt> x </tt>is tolerantly 
+less than<tt> y</tt> .<tt> </tt>See <a href="d000.htm">Equal (<tt>=</tt>)</a> for a definition of 
+tolerance.<tt> &lt;!.t </tt>uses tolerance<tt> t</tt> . 
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+Boxing is also effected by verbs such as Link (<tt>;</tt>) and 
+Word Formation<tt> </tt>(<tt>;:</tt>):<br>
+
+<pre>
+   (&lt;'abc'),(&lt;5 7),(&lt;i.2 3)
++---+---+-----+
+|abc|5 7|0 1 2|
+|   |   |3 4 5|
++---+---+-----+
+
+   ;: 'Now is the time'
++---+--+---+----+
+|Now|is|the|time|
++---+--+---+----+
+ 
+   ] a=: 2;3 5;7 11 13
++-+---+-------+
+|2|3 5|7 11 13|
++-+---+-------+
+
+   &gt;a
+2  0  0
+3  5  0
+7 11 13
+</pre>
+
+<a href="d331.htm">Cut<tt> </tt>(<tt>;.</tt>)</a><tt> </tt>with<tt> &lt; </tt>has several uses 
+(chosen by the right argument); the phrase<tt> &lt;@v </tt>avoids 
+the padding (and some domain errors) that may result from 
+applying<tt> v </tt>alone:<br>
+
+<pre>
+   &lt;;._1 '/i sing/of olaf/'
++------+-------++
+|i sing|of olaf||
++------+-------++
+
+   i.&quot;(0) 2 3 4
+0 1 0 0
+0 1 2 0
+0 1 2 3
+                
+   &lt;@i.&quot;(0) 2 3 4
++---+-----+-------+
+|0 1|0 1 2|0 1 2 3|
++---+-----+-------+
+</pre>
+
+If<tt> y </tt>is a high-rank array,<tt> &lt;&quot;_1 y </tt>
+or<tt> &lt;&quot;_2 y </tt>often gives a more intelligible 
+display than<tt> y </tt>itself.
+The display of a boxed array would normally be corrupted by 
+control characters (such as carriage returns and linefeeds) 
+occurring therein; in the display such characters are replaced by spaces.  
+For example, try<tt> &lt; 8 32 $ a.</tt><br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d011.htm">&gt;&gt;</a>&nbsp;
+<a href="d001.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

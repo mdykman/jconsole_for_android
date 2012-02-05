@@ -1,0 +1,139 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>E. Explicit Definitions</title>
+
+</head><body><!--top jump start--><a href="hooks.htm">&gt;&gt;</a>&nbsp;
+<a href="adverbs_conjunctions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+<H1>2E. Explicit Definitions</h1>
+
+<P>Explicit definition is convenient for anyone more familiar 
+with conventional programming, particularly that using if-then-else forms. 
+It is also convenient for anyone engaged in extending their mastery of 
+tacit programming: the automatic translation of a one-line 
+explicit definition to tacit form can provide instruction 
+in the reading and writing of tacit expressions. 
+For example: </P>
+
+<pre>
+   log=: 3 : '10 ^. y.'
+   log 1 10 20 40 100
+0 1 1.30103 1.60206 2
+
+   log			NB. Display of the definition of log
+3 : '10 ^. y.'
+
+   log=: 13 : '10 ^. y.'
+   log 1 10 20 40 100
+0 1 1.30103 1.60206 2
+   log			NB. Display of the (tacit) definition of log
+10&quot;_ ^. ]
+</pre> 
+
+
+<table ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+<tr><td width=40%><tt>a0=: def=: : 0</tt></td><td width=60%>Adverb for entering explicit definitions</td></tr></table>
+  
+<p>The phrases <tt>1 : 0</tt> and <tt>2 : 0</tt> and <tt>3 : 0</tt> 
+may be used for entering explicit definitions of adverbs, conjunctions, 
+and functions, without entering enclosing quotes. 
+The adverb <tt>def </tt>defined above makes their use somewhat more convenient. 
+For example:</P>
+
+<pre>
+   LOG=: 3 def
+10 ^. y.
+:
+x. ^. y.
+)
+
+ 
+   LOG 10
+1
+   2 LOG 32
+5
+
+   rat=: 2 def
+x.&amp;p. % y.&amp;p.
+)
+
+   1 4 6 4 1 rat 1 2 1
+1 4 6 4 1&amp;p. % 1 2 1&amp;p.
+
+   (1 4 6 4 1 rat 1 2 1) i. 6
+1 4 9 16 25 36
+</pre>
+
+<P>It is important to recognize that explicit definitions 
+are ordinary J statements (using the conjunction <tt>:)</tt> , 
+and can be used with other expressions. For example:</P>
+
+<pre>
+   mat=: [;._2 (0 : 0)	        NB. Define matrix
+one
+two
+three
+)
+
+   boxed=: &lt;;._2 (0 : 0)	NB. Define boxed list
+one
+two
+three
+)
+
+   fn=: 3 : 0&quot;1                 NB. Assign rank to an explicitly defined function
+&lt; +/ y.
+)
+
+   x=: 3
+   3 : 0 x	                NB. Execute unnamed explicit definition
+if. 2|y. do. 'odd' else. 'even' end.
+)
+odd
+ 
+   mat
+one  
+two  
+three
+
+   $mat
+3 5
+
+   boxed
++-------------+
+|one|two|three|
++-------------+
+
+   fn i. 3 4
++-------+
+|6|22|38|
++-------+
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="hooks.htm">&gt;&gt;</a>&nbsp;
+<a href="adverbs_conjunctions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

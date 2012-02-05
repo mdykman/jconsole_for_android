@@ -1,0 +1,45 @@
+ZPTTRS solves a system of linear equations A * X = B with a Hermitian
+positive definite tridiagonal matrix A using the factorization A =
+U**H*D*U or A = L*D*L**H computed by ZPTTRF.
+
+
+Arguments
+=========
+
+UPLO    (input) CHARACTER*1
+        Specifies whether the superdiagonal or the subdiagonal
+        of the tridiagonal matrix A is stored and the form of the
+        factorization:
+
+        = 'U':  E is the superdiagonal of U, and A = U'*D*U;
+
+        = 'L':  E is the subdiagonal of L, and A = L*D*L'.
+        (The two forms are equivalent if A is real.)
+
+N       (input) INTEGER
+        The order of the tridiagonal matrix A.  N >= 0.
+
+NRHS    (input) INTEGER
+        The number of right hand sides, i.e., the number of columns
+        of the matrix B.  NRHS >= 0.
+
+D       (input) DOUBLE PRECISION array, dimension (N)
+        The n diagonal elements of the diagonal matrix D from the
+        factorization computed by ZPTTRF.
+
+E       (input) COMPLEX*16 array, dimension (N-1)
+        The (n-1) off-diagonal elements of the unit bidiagonal
+        factor U or L from the factorization computed by ZPTTRF
+        (see UPLO).
+
+B       (input/output) DOUBLE PRECISION array, dimension (LDB,NRHS)
+        On entry, the right hand side matrix B.
+        On exit, the solution matrix X.
+
+LDB     (input) INTEGER
+        The leading dimension of the array B.  LDB >= max(1,N).
+
+INFO    (output) INTEGER
+        = 0:  successful exit
+
+        < 0:  if INFO = -i, the i-th argument had an illegal value

@@ -1,0 +1,324 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Error Messages</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="error_messages.htm">&gt;&gt;</a>&nbsp;
+<a href="glossary.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734604"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>46. </span></span><![endif]>Error Messages</a></h1>
+
+<p class=MsoBodyText>When J encounters an error executing a sentence it stops
+and displays the sentence.&nbsp; The
+interpreter removes any excess spaces from the sentence and then adds three
+spaces before the word whose execution triggered the error.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 3 + 0 1 2 *
+3 4 5</p>
+
+<p class=Jcodemultiline>|length error</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; 2 3<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>+0 1 2*3 4 5</p>
+
+<p class=BodyTextnoleader>The error occurred during the execution of the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+</span></span>
+verb.</p>
+
+<p class=MsoBodyText>The errors you are most likely to encounter are:</p>
+
+<p class=Gloss><b>control error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->If the error is detected
+when a script is <b style='mso-bidi-font-weight:normal'>loaded</b>, you have an
+incomplete control structure, for example an <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>if.</span></span> without
+matching <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>do.</span></span>/<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>else.</span></span>/<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>elseif.</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>end.</span></span>
+or, notoriously, the sequence <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>if./elseif./else.</span></span>, which is not allowed (use <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>elseif.</span></span>
+instead of that last <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>else.</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>If the error is detected when a script is <b
+style='mso-bidi-font-weight:normal'>executed</b>, you have an <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>if.</span></span>
+block whose last line does not produce a noun result, like <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>if.&nbsp;undefname&nbsp;do.</span></span>&nbsp;.</p>
+
+<p class=Gloss><b>domain error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;domain error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->An operand has a value
+that is not allowed, for example a string operand to an arithmetic operation,
+or an out-of-range numeric left operand to dyad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>o.</span></span> .<span
+style='mso-spacerun:yes'>&nbsp; </span>One common source of domain error is trying
+to execute a verb when no definition exists for the valence (monadic or dyadic)
+that you are trying to execute.</p>
+
+<p class=Gloss><b><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b>Errors
+encountered during execution of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>wd</span></span> are reported as domain errors.</p>
+
+<p class=Gloss><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Assignment to a
+global name, when the same name is defined locally, is considered a domain
+error.</p>
+
+<p class=Gloss><b>file name error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;file name error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You specified a file name
+that is invalid, or attempted to read a nonexistent file.</p>
+
+<p class=Gloss><b>file number error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;file number error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You specified a number
+that is not the number of an open file.</p>
+
+<p class=Gloss><b>ill-formed name&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;ill-formed name&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You used an illegal name,
+such as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>name_1ff_</span></span>
+(illegal because <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1ff</span></span>
+is not a valid locale name)</p>
+
+<p class=Gloss><b>ill-formed number&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;ill-formed number&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You used an illegal number
+such as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>14h&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>A word that starts with a numeric character
+must be a valid number, and vice versa.</p>
+
+<p class=Gloss><b>index error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;index error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You attempted to access an
+element outside the bounds of an array.</p>
+
+<p class=Gloss><b>length error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;length error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You used a dyadic verb
+with operands that did not agree (i.&nbsp;e. one frame was not a prefix of the
+other).&nbsp; Or, a verb expected an operand
+of a certain length and you gave an incorrect length (for example <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3&nbsp;{.&nbsp;5&nbsp;5</span></span>)</p>
+
+<p class=Gloss><b>limit error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;limit error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You exceeded one of J's
+limits, for example by specifying a comparison tolerance greater than <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2^_34&nbsp;</span></span>.
+</p>
+
+<p class=Gloss><b>NaN error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;NaN
+error&quot; <![endif]--><!--[if supportFields]><b><span style='mso-element:
+field-end'></span></b><![endif]-->You performed an operation whose result is indeterminate, such as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>_&nbsp;%&nbsp;_</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_&nbsp;-&nbsp;_</span></span>,
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;^.&nbsp;0</span></span>
+.&nbsp; This is akin to a domain error. </p>
+
+<p class=Gloss><b>nonce error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;nonce error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You tried to do something
+reasonable, but the system doesn't support it yet.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, for the nonce, find another way to do it.</p>
+
+<p class=Gloss><b>open quote&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;open quote error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->Your sentence contains an
+unmatched single-quote.</p>
+
+<p class=Gloss><b>out of memory&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;out of memory error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->The interpreter asked the
+operating system for enough memory to fulfill your request, but the operating
+system refused.&nbsp; You need to use smaller
+nouns, or have a bigger virtual-memory swap file, or close other programs that
+are competing for virtual memory space.</p>
+
+<p class=Gloss><b>rank error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;rank error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You specified an operand
+with an invalid rank.</p>
+
+<p class=Gloss><b>spelling error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;spelling error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You typed an erroneous <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>.</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+to produce a meaningless word like <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+..</span></span> or <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>fred.&nbsp;</span></span>.</p>
+
+<p class=Gloss><b>stack error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;stack error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->J's execution stack was
+exhausted, probably because of an infinite recursion.<b><o:p></o:p></b></p>
+
+<p class=Gloss><b>syntax error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;syntax error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->Your sentence contains an
+invalid sequence of parts of speech, as in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;+&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Or, you have an explicitly-defined verb whose
+last-executed sentence gives a result that is not a noun: that would make the
+verb have a non-noun result, which is intolerable.</p>
+
+<p class=Gloss style='margin-bottom:0in;margin-bottom:.0001pt'><b>value
+error&nbsp; </b><!--[if supportFields]><b><span
+style='mso-element:field-begin'></span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;value error&quot; <![endif]--><!--[if supportFields]><b><span
+style='mso-element:field-end'></span></b><![endif]-->You have asked the
+interpreter to evaluate a name that has not been defined.<span
+style='mso-spacerun:yes'>&nbsp; </span>There is more to this definition than meets
+the eye.&nbsp; A noun, adverb, or conjunction
+is evaluated when it is encountered during the right-to-left execution of a
+sentence.&nbsp; A verb is evaluated when (<i
+style='mso-bidi-font-style:normal'>a</i>) it is executed with its noun
+operand(s) or (<i style='mso-bidi-font-style:normal'>b</i>) when the name of
+the verb is typed as the only word in a sentence, at which time the verb is
+evaluated for display purposes.&nbsp; For
+example, the sentence</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>undefname</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>will result in a value
+error, because you are asking the interpreter to display the value of the
+undefined name.&nbsp; However, the sentence</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>name =: undefname</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>will not fail, because <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>name</span></span>
+is defined to be a reference to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>undefname</span></span>, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>undefname</span></span> does not
+have to be evaluated (the undefined name is assumed to refer to a verb of
+infinite rank that will be defined later).&nbsp;
+Subsequently,</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>name</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>undefname</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>name</span></span> is defined,
+but if we force the interpreter to use it:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>name 5</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>|value error: undefname</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name 5</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>the underlying undefined
+name is exposed.</p>
+
+<p class=MsoBodyText style='margin-left:.25in'>An important case is:</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>undefname1 undefname2</p>
+
+<p class=Jcodemultiline style='margin-left:.25in'>undefname1 undefname2</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'>Note that this did not
+result in a value error.&nbsp; Recall that
+undefined names are assumed to be verbs; we defined a hook from the two
+presumed verbs and then asked the interpreter to display the hook.<span
+style='mso-spacerun:yes'>&nbsp; </span>The interpreter was able to do that without
+evaluating either name.&nbsp; Either name by
+itself would produce a value error.</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+</div>
+
+<span style='font-size:12.0pt;font-family:"Times New Roman";mso-fareast-font-family:
+"Times New Roman";mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span>
+
+<div class=Section3>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><o:p>&nbsp;</o:p></p>
+
+</div>
+
+<b><span style='font-size:24.0pt;mso-bidi-font-size:16.0pt;font-family:"Times New Roman";
+mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:Arial;
+mso-font-kerning:16.0pt;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA'><br clear=all style='page-break-before:auto;
+mso-break-type:section-break'>
+</span></b>
+
+<div class=Section4>
+
+</div><!--bottom jump start--><hr><a href="error_messages.htm">&gt;&gt;</a>&nbsp;
+<a href="glossary.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

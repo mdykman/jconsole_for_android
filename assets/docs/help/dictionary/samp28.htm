@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 28. Polynomials: Stopes</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dict.htm">&gt;&gt;</a>&nbsp;
+<a href="samp27.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>28. Polynomials: Stopes</b></font><br><br>
+
+The expression<tt> */ x + s * i. n </tt>
+is often called a <i>factorial function</i> but, 
+to avoid confusion with the function<tt> !</tt> , 
+we will call it a <i>stope</i>; the factors occurring 
+in its definition differ by steps of size<tt> s</tt>,<tt> </tt>
+like the steps in a mine stope.  Stopes are useful in actuarial work and 
+in the difference calculus.<br><br>
+
+The stope is a variant of the power<tt> ^ </tt>
+(being equivalent for the case<tt> s=:0</tt>),
+and is provided by the fit conjunction in the variant<tt> ^!.s</tt>.  
+For example:<br>
+
+<pre>
+   x + s * i. n  [ x=: 7 [ n=: 5 [ s=: _1
+7 6 5 4 3
+
+   (*/x + s * i. n);(x ^!.s n);(x ^!.0 n);(x^n)
++----+----+-----+-----+
+|2520|2520|16807|16807|
++----+----+-----+-----+
+</pre>
+
+The phrase<tt> +/c * x^!.s i.#c </tt>
+is called a <i>stope</i> polynomial, just as<tt> +/c*x^i.#c </tt>
+may be called a <i>power</i> polynomial.  We define an 
+adverb<tt> P </tt>that applies to any step size<tt> s </tt>to provide 
+the corresponding stope polynomial:<br>
+
+<pre>
+   P=: 1 : '+/@([ * ] ^!. x i.@#@[)&quot;1 0'
+   c=: 1 3 3 1 [ d=: 1 7 6 1 [ x=: 0 1 2 3 4
+   (c p. x);(c 0 P x);(d _1 P x);(d p.!._1 x)
++-------------+-------------+-------------+-------------+
+|1 8 27 64 125|1 8 27 64 125|1 8 27 64 125|1 8 27 64 125|
++-------------+-------------+-------------+-------------+
+</pre>
+
+As illustrated above, stope polynomials are (for a suitable 
+choice of coefficients) equivalent to ordinary polynomials.  
+Moreover, the transformations between them are provided by 
+a matrix product as follows:<br>
+
+<pre>
+   VM=: 1 : '[ ^!.x/ i.@#@]'
+   TO=: 2 : '(x VM %. y VM)~ @i.@#'
+   (0 TO _1 c) +/ . * c
+1 7 6 1
+</pre>
+
+The matrices<tt> 0 TO _1 </tt>and<tt> _1 TO 0 </tt>are 
+mutually inverse, and are simply related to <i>Stirling</i> numbers:<br>
+
+<pre>
+   (0 TO _1 i.5);(_1 TO 0 i.5)
++---------+------------+
+|1 0 0 0 0|1 0  0  0  0|
+|0 1 1 1 1|0 1 _1  2 _6|
+|0 0 1 3 7|0 0  1 _3 11|
+|0 0 0 1 6|0 0  0  1 _6|
+|0 0 0 0 1|0 0  0  0  1|
++---------+------------+
+</pre>
+
+The stope polynomial is also provided by the variant<tt> p.!.s</tt> .<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dict.htm">&gt;&gt;</a>&nbsp;
+<a href="samp27.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,60 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>C. Representations</title>
+
+</head><body><!--top jump start--><a href="arithmetic.htm">&gt;&gt;</a>&nbsp;
+<a href="grids.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>8C. Representations</h1>
+
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>d0=: &gt;:@&lt;.@^.</tt></TD>	<TD width=60%>Length to represent y in base x</TD>
+  </TR><TR><TD><tt>d1=: d0 # [</tt></TD>	<TD>Base to represent integer y in base x</TD>
+  </TR><TR><TD><tt>d2=: d1 #:]</tt></TD>	<TD>Base x rep of decimal integer y</TD>
+  </TR><TR><TD><tt>m3=: #:@i.@&gt;:</tt></TD>	<TD>Binary reps of integers from 0 to y</TD>
+  </TR><TR><TD><tt>m4=: 10&quot;_ d2 ]</tt></TD>	<TD>Base 10 rep of decimal integer y</TD>
+  </TR><TR><TD><tt>m5=: 16&quot;_ d2 ]</tt></TD>	<TD>Base 16 rep of decimal integer y</TD>
+  </TR><TR><TD><tt>d6=: (&gt;:@&lt;.@^. # [) #: ]</tt></TD>	<TD>Base x rep of decimal integer y</TD></TR>
+  <TR><TD><tt>d7=: ] #:~ &gt;:@&lt;.@^. # [</tt></TD>	<TD>Base x rep of decimal integer y</TD></TR>
+  <TR><TD><tt>m8=: 100&quot;_ d2 ]</tt></TD>	<TD>Base 100 rep of decimal integer y</TD>
+  </TR><TR><TD><tt>m9=: 0 1&amp;#:</tt></TD>	<TD>Whole and fractional parts of y</TD>
+  </TR><TR><TD><tt>m10=: 10 100 1000&quot;_ #: ]</tt></TD>	<TD>Mixed base 10 ^ 1 2 3 rep of y</TD></TR>
+  <TR><TD><tt>m11=: #.</tt></TD>	<TD>Integer from Boolean list y</TD></TR>
+  <TR><TD NOWRAP><tt>m12=: &lt;.@(10&amp;^.)@(('.'&amp;~: # ])<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     &amp;.&quot;: % ])</tt></TD>	<TD>Number of decimal places in y</TD></TR>
+  <TR><TD><tt>m14=: ]&amp;__</tt></TD>	<TD>Negative infinity</TD>
+  </TR><TR><TD><tt>m15=: _:</tt></TD>	<TD>Positive infinity</TD>
+  </TR><TR><TD><tt>a16=: (&amp;#.) (^:_1)</tt></TD>	<TD>Base x rep of decimal integer y</TD>
+  </TR><TR><TD><tt>m17=: [: (%&quot;1 [: ,:~ +./) ,:&amp;1</tt></TD>	<TD>Fraction equivalent to y</TD></TR>
+</TABLE>
+
+
+<br><br>
+<!--bottom jump start--><hr><a href="arithmetic.htm">&gt;&gt;</a>&nbsp;
+<a href="grids.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

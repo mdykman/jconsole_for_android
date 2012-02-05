@@ -1,0 +1,457 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 21: Factors and Polynomials</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="22.htm">&gt;&gt;</a>&nbsp;
+<a href="20.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <H1>Chapter 21: Factors and Polynomials</H1>
+In this chapter we look at the built-in functions:
+<UL>
+<LI> monadic <TT>q:</TT> which computes the prime factors of a number</LI>
+<LI> dyadic <TT>q:</TT>  which represents a number as powers of primes</LI>
+<LI> monadic <TT>p:</TT> which generates prime numbers</LI>
+<LI> dyadic <TT>p.</TT>  which evaluates polynomials</LI>
+<LI> monadic <TT>p.</TT> which finds roots of polynomials</LI>
+</UL>
+<A NAME="01"></A>
+<H2>21.1  Primes and Factors</H2>
+The built-in function monadic <TT>q:</TT>
+computes the prime factors of a given number.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>q: 6</TT></TD>
+<TD><TT>q: 8</TT></TD>
+<TD><TT>q: 17 * 31</TT></TD>
+<TD><TT>q: 1 + 2^30</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 3</TT></TD>
+<TD><TT>2 2 2</TT></TD>
+<TD><TT>17 31</TT></TD>
+<TD><TT>5 5 13 41 61 1321</TT></TD>
+</TABLE>
+<p>
+The number <TT>0</TT> is not in the domain
+of <TT>q:</TT> The number <TT>1</TT> is in the domain of <TT>q:</TT>,
+but is regarded as having no factors, that is, 
+its list of factors is empty. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>q: 0</TT></TD>
+<TD><TT>q: 1</TT></TD>
+<TD><TT># q: 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>error</TT></TD>
+<TD><TT>&nbsp;</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+For a large number (greater than about <TT>2^53</TT>), its value 
+should be specified as an extended integer
+to ensure all its significant digits are supplied to <TT>q:</TT> ..
+<PRE>
+   q: 1 + 2 ^ 53x
+3 107 28059810762433
+   
+</PRE>
+<A NAME="02"></A>
+A prime number is the one and only
+member of its list of factors. 
+Hence a test for primality 
+can readily be written as the hook:  
+member-of-its-factors
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>pr =: e. q:</TT></TD>
+<TD><TT>pr 8</TT></TD>
+<TD><TT>pr 17</TT></TD>
+<TD><TT>pr 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>e. q:</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>1</TT></TD>
+<TD><TT>0</TT></TD>
+</TABLE>
+<p>
+Any positive integer can be written
+as the product of powers of successive primes. Some of the powers will
+be zero. For example we have: 
+<PRE>
+     9  =  (2^0) * (3^2) * (5^0)  * (7^0) 
+1
+</PRE>
+The list of powers, here <TT>0 2 0 0 ...</TT>
+can be generated with dyadic <TT>q:</TT>.  The left argument
+<TT>x</TT> specifies how many powers we choose to generate.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>4 q: 9</TT></TD>
+<TD><TT>3 q: 9</TT></TD>
+<TD><TT>2 q: 9</TT></TD>
+<TD><TT>1 q: 9</TT></TD>
+<TD><TT>6 q: 9</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 2 0 0</TT></TD>
+<TD><TT>0 2 0</TT></TD>
+<TD><TT>0 2</TT></TD>
+<TD><TT>0</TT></TD>
+<TD><TT>0 2 0 0 0 0</TT></TD>
+</TABLE>
+<p>
+Giving a left argument of "infinity" <TT>(_)</TT> means that
+the number of powers generated is just enough,
+in which case the last will be non-zero.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>_ q: 9</TT></TD>
+<TD><TT>_ q: 17 * 31</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 2</TT></TD>
+<TD><TT>0 0 0 0 0 0 1 0 0 0 1</TT></TD>
+</TABLE>
+<p>
+<A NAME="03"></A>
+There is a built-in function, monadic <TT>p:</TT> (lowercase p colon)
+which generates prime numbers.
+For example <TT>(p: 17)</TT> is the 18th prime.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>p: 0 1 2 3 4 5 6</TT></TD>
+<TD><TT>p: 17</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 3 5 7 11 13 17</TT></TD>
+<TD><TT>61</TT></TD>
+</TABLE>
+<p>
+On my computer the largest
+prime which can be so generated is between <TT>p: 2^26</TT>
+and <TT>p: 2^27</TT>. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>p: 2^26</TT></TD>
+<TD><TT>p: 2^27</TT></TD>
+<TD><TT>p: 2^27x </TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1339484207</TT></TD>
+<TD><TT>error</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+<A NAME="04"></A>
+<A NAME="05"></A>
+<H2>21.2  Polynomials</H2>
+<H3>21.2.1  Coefficients</H3>
+If <TT>x</TT> is a variable, then an expression in conventional notation
+such as
+<p>
+<P ALIGN=CENTER>a + bx + cx<sup>2</sup> + dx<sup>3</sup> + ...</P>
+<p>
+is said to be a polynomial in <TT>x</TT>. If we write <TT>C</TT>
+for the list of coefficients <TT>a,b,c,d ...</TT>, for example,
+<PRE>
+   C =: _1 0 1
+</PRE>
+and assign a value to <TT>x</TT>, for example,
+<PRE>
+   x=:2
+</PRE>
+then the polynomial expression
+can be written in J in the form <TT>+/ C * x ^ i. # C</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>C</TT></TD>
+<TD><TT>#C</TT></TD>
+<TD><TT>i.#C</TT></TD>
+<TD><TT>x</TT></TD>
+<TD><TT>x^i.#C</TT></TD>
+<TD><TT>C*x^i.#C</TT></TD>
+<TD><TT>+/C*x^i.# C</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1 0 1</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>0 1 2</TT></TD>
+<TD><TT>2</TT></TD>
+<TD><TT>1 2 4</TT></TD>
+<TD><TT>_1 0 4</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+The dyadic verb <TT>p.</TT> allows us to abbreviate
+this expression to <TT>C p. x</TT>, 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>+/C*x^i.# C</TT></TD>
+<TD><TT>C p. x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+The scheme is that, for a list of coefficients <TT>C</TT>:
+<PRE>
+           C p. x   means   +/ C * x ^ i. # C
+</PRE>
+A polynomial function is conveniently written
+in the form <TT>C&p.</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>p =: _1 0 1 & p.</TT></TD>
+<TD><TT>p x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1 0 1&p.</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+This form has a number of advantages: compact to write,
+efficient to evaluate and (as we will see) easy to differentiate.
+<A NAME="06"></A>
+<H3>21.2.2  Roots</H3>
+Given a list of coefficients <TT>C</TT>, we can compute
+the roots of the polynomial function <TT>C&p.</TT> by applying
+monadic <TT>p.</TT> to <TT>C</TT>. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>C</TT></TD>
+<TD><TT>p =: C & p.</TT></TD>
+<TD><TT>Z =: p. C</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1 0 1</TT></TD>
+<TD><TT>_1 0 1&p.</TT></TD>
+<TD><TT>+-+----+<BR>
+|1|1 _1|<BR>
++-+----+</TT></TD>
+</TABLE>
+<p>
+We see that the result <TT>Z</TT> is a boxed structure,
+of the form <TT>M;R</TT>, that is, multiplier <TT>M</TT>
+ followed by list-of-roots <TT>R</TT>.
+We expect to see that <TT>p</TT> applied to
+each root in <TT>R</TT> gives zero.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>'M R' =: Z</TT></TD>
+<TD><TT>R</TT></TD>
+<TD><TT>p R</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>+-+----+<BR>
+|1|1 _1|<BR>
++-+----+</TT></TD>
+<TD><TT>1 _1</TT></TD>
+<TD><TT>0 0</TT></TD>
+</TABLE>
+<p>
+The significance of the multiplier <TT>M</TT>
+is as follows. If we write <TT>r,s,t...</TT> for the 
+list of roots <TT>R</TT>,  
+<PRE>
+   'r s' =: R
+</PRE>
+then <TT>M</TT> is such that the polynomial <TT>C p. x</TT> 
+can be written equivalently  as
+<PRE>
+   M * (x-r)*(x-s)
+3
+</PRE>
+or more compactly as
+<PRE>
+   M * */x-R
+3
+</PRE>
+We saw that monadic <TT>p.</TT>, given coefficients <TT>C</TT>
+computes multiplier-and-roots <TT>M;R</TT>.  Furthermore,
+given <TT>M;R</TT> then monadic <TT>p.</TT> computes coefficients <TT>C</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>C</TT></TD>
+<TD><TT>MR =: p.  C</TT></TD>
+<TD><TT>p. MR</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1 0 1</TT></TD>
+<TD><TT>+-+----+<BR>
+|1|1 _1|<BR>
++-+----+</TT></TD>
+<TD><TT>_1 0 1</TT></TD>
+</TABLE>
+<p>
+<H3>21.2.3  Multiplier and Roots</H3>
+We saw above that the left argument of <TT>p.</TT>
+can be a list of coefficents, with the scheme
+<PRE>
+          C p. x   is   +/ C * x ^ i. # C
+</PRE>
+The left argument of <TT>p.</TT> can also be 
+of the form <TT>multiplier;list-of-roots</TT>. 
+In this way we can generate a polynomial
+function with specified roots. Suppose the roots are to be <TT>2 3</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>p =: (1; 2 3) & p.</TT></TD>
+<TD><TT>p 2 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>(1;2 3)&p.</TT></TD>
+<TD><TT>0 0</TT></TD>
+</TABLE>
+<p>
+The scheme is that
+<PRE>
+          (M;R) p. x   means   M * */ x - R 
+</PRE>
+When <TT>M;R</TT> is <TT>p. C</TT> then we expect <TT>(M;R) p. x </TT> to be 
+the same as <TT>C p. x</TT> 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>C</TT></TD>
+<TD><TT>MR=: p.C</TT></TD>
+<TD><TT>MR p. x</TT></TD>
+<TD><TT>C p. x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1 0 1</TT></TD>
+<TD><TT>+-+----+<BR>
+|1|1 _1|<BR>
++-+----+</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+<A NAME="07"></A>
+<H3>21.2.4  Multinomials</H3>
+Where there are many zero coefficients in a polynomial,
+it may be more convenient to write functions in the
+"multinomial" form, that is, omitting terms
+with zero coefficents and instead specifying
+a list of coefficient-exponent pairs. 
+Here is an example. With the polynomial <TT>_1 0 1 & p.</TT>,
+the nonzero coefficents are the first and third, <TT>_1 1</TT>, 
+ and the corresponding
+exponents are <TT>0 2</TT>. We form the pairs thus: 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>coeffs =: _1 1</TT></TD>
+<TD><TT>exps=: 0 2</TT></TD>
+<TD><TT>pairs =: coeffs ,. exps</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_1 1</TT></TD>
+<TD><TT>0 2</TT></TD>
+<TD><TT>_1 0<BR>
+ 1 2</TT></TD>
+</TABLE>
+<p>
+Now the pairs can be supplied as boxed left argument to <TT>p.</TT>
+We expect the results to be the same as for the original polynomial.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>x</TT></TD>
+<TD><TT>pairs</TT></TD>
+<TD><TT>(< pairs) p. x</TT></TD>
+<TD><TT>_1 0 1  p. x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>_1 0<BR>
+ 1 2</TT></TD>
+<TD><TT>3</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+With the multinomial form, exponents are not limited to
+non-negative integers. For example, with exponents and coefficients
+given by:
+<PRE>
+   E =: 0.5 _1 2j3
+   C =: 1 1 1
+   
+</PRE>
+then the multinomial form of the function is:
+<PRE>
+   f =: (< C,.E) & p.
+</PRE>
+and for comparison, an equivalent function:
+<PRE>
+   g =: 3 : '+/ C * y ^ E'
+</PRE>
+We see
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>x=: 2</TT></TD>
+<TD><TT>f x</TT></TD>
+<TD><TT>g x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2</TT></TD>
+<TD><TT>_0.0337641j3.49362</TT></TD>
+<TD><TT>_0.0337641j3.49362</TT></TD>
+</TABLE>
+<p>
+This is the end of Chapter 21.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="22.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="22.htm">&gt;&gt;</a>&nbsp;
+<a href="20.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

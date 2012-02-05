@@ -1,0 +1,149 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 5.  Forks</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro06.htm">&gt;&gt;</a>&nbsp;
+<a href="intro04.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>5. Forks</b></font><br><br>
+
+<p>As illustrated above, an isolated sequence of three verbs is called
+a <i>fork</i>; its monadic and dyadic cases are defined by:</p>
+
+<table>
+<tr><td><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td>
+<tt>&nbsp;&nbsp;g<br>
+&nbsp;/ \<br>
+f&nbsp;&nbsp;&nbsp;h<br>
+|&nbsp;&nbsp;&nbsp;|<br>
+y&nbsp;&nbsp;&nbsp;y</tt>
+</td>
+<td><tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td><tt>&nbsp;&nbsp;&nbsp;&nbsp;g<br>
+&nbsp;&nbsp;&nbsp;/&nbsp;\<br>
+&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;h<br>
+&nbsp;/&nbsp;\&nbsp;/&nbsp;\<br>
+x&nbsp;&nbsp;y x&nbsp;&nbsp;y</tt>
+</td>
+</tr></table>
+
+<br>
+
+The diagrams above provide visual images of the fork.<br><br>
+
+Before reading the notes at the right (and by using the facts 
+that<tt> %: </tt>denotes the <i>root</i> function and<tt> ] </tt>denotes 
+the <i>identity</i> function), try to state in English the significance 
+of each of the following sentences:<br><br>
+
+<pre>
+   a=: 8 7 6 5 4 3
+   b=: 4 5 6 7 8 9
+   2 %: b                     <font face=Times size=+1>Square root of</font> b
+2 2.23607 2.44949 2.64575 2.82843 3
+                
+   3 %: b                     <font face=Times size=+1>Cube root of</font> b
+1.5874 1.70998 1.81712 1.91293 2 2.08008
+                
+   (+/ % #) b                 <font face=Times size=+1>Arithmetic mean or average</font>
+6.5
+           
+   (# %: */) b                <font face=Times size=+1>Geometric mean</font>
+6.26521
+
+   (] - (+/ % #)) b           <font face=Times size=+1>Centre on mean (two forks)</font>
+_2.5 _1.5 _0.5 0.5 1.5 2.5
+
+   (] - +/ % #) b             <font face=Times size=+1>Two forks (fewer parentheses)</font>
+_2.5 _1.5 _0.5 0.5 1.5 2.5
+
+  
+   a (+ * -) b                <font face=Times size=+1>Dyadic case of fork</font>
+48 24 0 _24 _48 _72
+
+   (a^2)-(b^2)
+48 24 0 _24 _48 _72
+                
+   a (&lt; +. =) b               <font face=Times size=+1>Less than or equal</font>
+0 0 1 1 1 1
+  
+   a&lt;b
+0 0 0 1 1 1
+
+   a=b
+0 0 1 0 0 0
+
+   a (&lt;: = &lt; +. =) b          <font face=Times size=+1>A tautology (</font>&lt;: <font face=Times size=+1>is <i>less than or equal</i>)</font>
+1 1 1 1 1 1
+  
+   2 ([: ^ -) 0 1 2           <font face=Times size=+1><i>Cap</i> yields monadic case</font>
+7.38906 2.71828 1 
+
+   evens=: [: +: i.           +: <font face=Times size=+1>is <i>double</i></font>
+   evens 7
+0 2 4 6 8 10 12
+
+   odds=: [: &gt;: evens         &gt;: <font face=Times size=+1>is <i>increment</i></font>
+   odds 7
+1 3 5 7 9 11 13
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>5.1 &nbsp;</td>
+<td>Enter<tt> 5#3 </tt>and similar expressions to determine 
+the definition of the dyad<tt> # </tt>and then state the meaning 
+of the following sentence: <br>
+
+<pre>
+(# # &gt;./) b=: 2 7 1 8 2
+</pre>
+
+Answer:<tt> #b </tt>repetitions of the maximum over<tt> b</tt><br><br>
+</td></tr>
+
+<tr><td valign=top>5.2 &nbsp;</td>
+<td>Cover the comments on the right, write your own 
+interpretation of each sentence, and then compare your statements 
+with those on the right:<br>
+
+<pre>
+(+/ % #) b                    <font face=Times size=+1>Mean of</font> b
+(# # +/ % #) b                (n=:#b) <font face=Times size=+1>repetitions of mean</font>
++/(##+/%#) b                  <font face=Times size=+1>Sum of</font> n <font face=Times size=+1>means</font>
+(+/b)=+/(##+/%#) b            <font face=Times size=+1>Tautology</font>
+(*/b)= */(###%:*/) b          <font face=Times size=+1>The product over</font> b <font face=Times size=+1>is the product over</font> n
+                              <font face=Times size=+1>repetitions of the geometric mean of</font> b
+</pre>
+</td></tr>
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro06.htm">&gt;&gt;</a>&nbsp;
+<a href="intro04.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

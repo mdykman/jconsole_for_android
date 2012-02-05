@@ -1,0 +1,28 @@
+general/inifiles - change history
+
+== 1.0.7 ==
+ * chg: J701 compatibility
+
+== 1.0.6 ==
+ * fix: error in test
+ * chg: minor code improvements
+ * chg: standardize testing methodology
+ * chg: split up source
+
+== 1.0.5 ==
+ * fix: regex search for section title more robust
+
+== 1.0.4 ==
+ * More documentation edits
+ 
+== 1.0.3 ==
+ * Improved documentation of verbs
+
+== 1.0.2 ==
+ * an empty key name never matches existing key
+
+== 1.0.1 ==
+ * remove writePPString verb
+
+== 1.0.0 ==
+ * publish in JAL

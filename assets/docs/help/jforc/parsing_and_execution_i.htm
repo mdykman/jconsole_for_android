@@ -1,0 +1,425 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Parsing and Execution I</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="parsing_and_execution_ii.htm">&gt;&gt;</a>&nbsp;
+<a href="introduction_to_forks.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734584"></a><a name="_Toc5414676"></a><a name="_Toc1896297"><span
+style='mso-bookmark:_Toc5414676'><span style='mso-bookmark:_Toc191734584'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>38. </span></span><![endif]>Parsing and Execution I</span></span></a></h1>
+
+<p class=MsoBodyText>I hope your hunger for understanding will be enough to
+motivate you to read a couple of difficult chapters.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you do, you will learn something few J
+programmers know--what really happens when J executes a sentence.<span
+style='mso-spacerun:yes'>&nbsp; </span>In this chapter we will analyze sentences
+from the top down, to get an idea for the order of execution.<span
+style='mso-spacerun:yes'>&nbsp; </span>In the next chapter we will follow the
+interpreter as it alternately parses and executes sentences from the bottom up.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:parsing and
+execution&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->Since the understanding of parsing and execution
+that you have developed during your work so far is probably a bit inaccurate,
+we will work through examples of increasing complexity.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 9!:3 (5)<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. Do this once to select simplified display</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &amp;.</p>
+
+<p class=Jcodemultiline>&amp;.</p>
+
+<p class=BodyTextnoleader>With only one word, there are no operands and nothing
+to execute, so the result of the sentence is the word itself: the conjunction <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.&nbsp;</span></span>.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; -:&amp;.^.</p>
+
+<p class=Jcodemultiline>-:&amp;.^.</p>
+
+<p class=BodyTextnoleader><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:anonymous verb&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->The
+result of executing <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:&amp;.^.</span></span>,
+i.&nbsp;e. executing <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.</span></span>
+with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>^.</span></span>
+as operands, is an <span class=Definition>anonymous verb</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This anonymous verb will execute according to
+the definition of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.</span></span>,
+given its operands <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>^.</span></span>
+(i.&nbsp;e. <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:&amp;.^.&nbsp;y</span></span>
+will be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>^&nbsp;-:&nbsp;^.&nbsp;y&nbsp;</span></span>).</p>
+
+<p class=BodyTextnoleader><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Note that
+the conjunction <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.</span></span>
+is executed without reference to the operand of the anonymous verb (indeed, in
+this case there is no such operand and the anonymous verb is the result of the
+sentence).&nbsp; We could assign the anonymous
+verb to a name, in which case it would no longer be anonymous (e.&nbsp;g. <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sqrt&nbsp;=:&nbsp;-:&amp;.^.</span></span>);
+without such an assignment we will refer to it here by the nickname <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The value of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>av</span></i></span> is the verb
+described by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:&amp;.^.&nbsp;</span></span>.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; -:&amp;.^.
+16</p>
+
+<p class=Jcodemultiline>4</p>
+
+<p class=BodyTextnoleader>We know that this is executed as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>^&nbsp;-:&nbsp;^.&nbsp;16</span></span>;
+let's see how that happens.&nbsp; Conjunctions
+are executed before verbs, so first <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-:&amp;.^.</span></span> will be executed to produce
+the anonymous verb we called <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>av&nbsp;</span></i></span>.&nbsp;
+Then <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av</span></i></span>
+is executed with the operand <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>16&nbsp;</span></span>.&nbsp;
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av</span></i></span>
+operates according to the definition of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&amp;.&nbsp;</span></span>: it
+produces the same result as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>^&nbsp;-:&nbsp;^.&nbsp;16&nbsp;</span></span>(but it
+may use a different algorithm than executing <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>^&nbsp;-:&nbsp;^.&nbsp;16</span></span>
+directly).</p>
+
+<p class=BodyTextnoleader><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>It appears
+that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.</span></span>
+was executed twice: once to create <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>av</span></i></span> and then again during the execution of <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>No, it was executed only once, to create <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>av</span></i></span> operates according to the definition of
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.</span></span>,
+but it is <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av</span></i></span>
+that is executing, not <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&amp;.&nbsp;</span></span>.&nbsp;
+The confusion arises because of the way the interpreter displays <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>There is no better way to show a verb that
+performs the function <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:&amp;.^.</span></span>
+than to show the way the verb was created, i.&nbsp;e. with the characters '<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:&amp;.^.</span></span>',
+but you should think of this as an exhibition of the pedigree of <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av</span></i></span>,
+and an assurance of its good behavior, rather than a list of functions to be
+executed.&nbsp; In fact, part of the reason
+for J's good performance comes from its recognizing functions that can be
+combined efficiently and providing customized routines to handle anonymous
+verbs that call for those combinations.</p>
+
+<p class=MsoBodyText>Confusion between a conjunction and the anonymous verb it
+produces is most likely when the conjunction is one you wrote using <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>conjunction
+define&nbsp;</span></span>or <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;:n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In most cases the text of the conjunction
+actually describes a derived verb, and it is natural for you to say 'the
+conjunction <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>C</span></span>
+is executed with operands <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span>, and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>' rather than the
+more accurate 'the anonymous verb created by the application of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>C</span></span>
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is executed, with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+available during the interpretation of the text of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>C</span></span> and with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+as the operand'.&nbsp; Such confusion is
+almost always harmless, but let's go through a few examples so you can see the
+layers of execution:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 : 'u'</p>
+
+<p class=Jcodemultiline>2 : 'u'</p>
+
+<p class=BodyTextnoleader>We execute <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;:&nbsp;'u'</span></span> and the result is an
+anonymous conjunction that we'll call <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac1&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The display of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac1</span></i></span> shows
+where it came from.&nbsp; When <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac1</span></i></span>
+is executed, its result will be its left operand.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +: (2 : 'u') -:</p>
+
+<p class=Jcodemultiline>+:</p>
+
+<p class=BodyTextnoleader>Here <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;:&nbsp;'u'</span></span> is executed first to produce
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac1</span></i></span>;
+then <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac1</span></i></span>
+is executed with left operand of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+:</span></span> and right operand of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-:&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is an anonymous verb that we'll
+call <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av1</span></i></span>;
+its value is the verb <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+:</span></span>
+which was the left operand to <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac1</span></i></span>&nbsp;.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +: (2 : 'u') -:<span
+style='mso-spacerun:yes'>&nbsp; </span>5</p>
+
+<p class=Jcodemultiline>10</p>
+
+<p class=BodyTextnoleader>Remember, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(2&nbsp;:&nbsp;'u')</span></span> is a conjunction (the
+conjunction we have called <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac1</span></i></span>), and conjunctions are executed before
+verbs, so this is executed as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(+:&nbsp;(2&nbsp;:&nbsp;'u')&nbsp;-:)&nbsp;5</span></span>,
+which becomes <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av1</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;5&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>We execute <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>av1</span></i></span> with the
+operand <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+:</span></span> doubles its
+operand, and the result is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>10&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>We know that a conjunction can produce a conjunction
+result.&nbsp; That's how explicit conjunctions
+are formed: executing the conjunction <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>:</span></span> with left operand <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>2</span></span>, as in <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;:n</span></span>,
+produces a conjunction.&nbsp; There is nothing
+special about <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&nbsp;:n&nbsp;</span></span>:
+any conjunction is allowed to produce a conjunction result:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 : '&amp;'</p>
+
+<p class=Jcodemultiline>2 : (,'&amp;')</p>
+
+<p class=BodyTextnoleader>We execute <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;:&nbsp;'&amp;'</span></span> and the result is an
+anonymous conjunction that we'll call <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac2&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The display of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac2</span></i></span> shows
+where it came from. (the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>,</span></span> in the display of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac2</span></i></span> is harmless,
+a reminder that internally the anonymous entity resulting from <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;:n</span></span>
+stores <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+as a list of characters.)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +: (2 : '&amp;')
+-:</p>
+
+<p class=Jcodemultiline>&amp;</p>
+
+<p class=BodyTextnoleader>We execute <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac2</span></i></span> with left
+operand of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+:</span></span>
+and right operand of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is an anonymous conjunction that
+we'll call <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac3&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac3</span></i></span> is a conjunction because its value <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;</span></span>
+(the last sentence executed by <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac2</span></i></span>) is a conjunction.<span
+style='mso-spacerun:yes'>&nbsp; </span>Yes, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&amp;</span></span> by itself
+can be a result: modifiers can return any primary part of speech (but try to
+return a conjunction from a verb and you will get an error).</p>
+
+<p class=BodyTextnoleader><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b>Note</b>
+that this is <b>not</b> the same as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&amp;v&nbsp;</span></span>: that would also be a valid
+return value from a conjunction, but <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> would be
+substituted and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;</span></span>
+would be executed to make the returned value an anonymous verb with the
+description <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;v</span></span>&nbsp;.</p>
+
+<p class=BodyTextnoleader><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Make sure
+you see why the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+:</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>
+disappeared.&nbsp; First, the conjunction <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+was executed with operands <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2 </span></span>and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'&amp;'</span></span>; that
+produced a conjunction <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac2</span></i></span> which was then executed with operands <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+:</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-:</span></span>;
+but the defining text of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac2</span></i></span> does not look at its operands; it
+simply produces the value <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&amp;&nbsp;</span></span>.&nbsp;
+So, the operands to <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac2</span></i></span> disappear without a trace, and the
+result of the whole phrase is a conjunction with the value <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&amp;&nbsp;</span></span>.<span
+style='font-size:14.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; 2 (+: (2
+: '&amp;') -:) *</p>
+
+<p class=Jcodemultiline>2&amp;*</p>
+
+<p class=BodyTextnoleader>Continuing the example, we execute <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac3</span></i></span><span
+style='mso-spacerun:yes'>&nbsp; </span>(which was just the conjunction <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;</span></span>)
+with left operand <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2</span></span>
+and right operand <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>*&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is the anonymous verb <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av2</span></i></span>
+which will execute as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&amp;*&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 (+: (2 : '&amp;')
+-:) *&nbsp;&nbsp; 5</p>
+
+<p class=Jcodemultiline>10</p>
+
+<p class=BodyTextnoleader>Finally, we execute <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>av2</span></i></span> with the
+operand <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>,
+and get the result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>10&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734585">Definitions That Refer To </a><span
+style='mso-bookmark:_Toc191734585'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> or </span><span style='mso-bookmark:_Toc191734585'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span></span></p>
+
+<p class=MsoBodyText>Explicit modifiers that refer to the <b>operands</b> of
+their derived verb (as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> or <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>) come in for special treatment.<span
+style='mso-spacerun:yes'>&nbsp; </span>A simple example is the conjunction defined
+by</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 2 : 'u v y'</p>
+
+<p class=Jcodemultiline>2 : 'u v y'</p>
+
+<p class=BodyTextnoleader>We execute <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2&nbsp;:&nbsp;'u&nbsp;v&nbsp;y'</span></span> and the result
+is an anonymous conjunction that we'll call <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac4&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You can't tell it from the display, but <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac4</span></i></span>
+is a special kind of conjunction.&nbsp;
+Because it refers to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, the <i>text</i> of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac4</span></i></span> can be
+executed only as a verb (only then are <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+meaningful).&nbsp; The stored <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac4</span></i></span>
+makes note of this fact.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +: (2 : 'u v y')
+-&nbsp;&nbsp; 5</p>
+
+<p class=Jcodemultiline>_10</p>
+
+<p class=BodyTextnoleader>When <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac4</span></i></span> itself is executed (as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+:&nbsp;(2&nbsp;:&nbsp;'u&nbsp;v&nbsp;y')&nbsp;-</span></span>
+here--since <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac4</span></i></span>
+is a conjunction it is executed before its result is applied to the noun
+operand <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>),
+the text of <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac4</span></i></span>
+is not interpreted, as it was in our previous examples.<span
+style='mso-spacerun:yes'>&nbsp; </span>Instead, the new anonymous verb <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>av3</span></i></span>
+is created.&nbsp; <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>av3</span></i></span> contains
+the defining text of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac4</span></i></span>, along with the operands that were
+given to <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>ac4</span></i></span>
+(<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+:</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-</span></span>
+here).&nbsp; When the verb <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>av3</span></i></span> is
+executed as in the line above, the text of <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>ac4</span></i></span> is finally
+interpreted, with the operands of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>ac4</span></i></span> (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+:</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-</span></span>
+here) available as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+and the noun operands of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>av3</span></i></span> (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5</span></span> here) available
+as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+if the invocation is dyadic); the result is the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+:&nbsp;-&nbsp;5&nbsp;</span></span>.</p>
+
+</div><!--bottom jump start--><hr><a href="parsing_and_execution_ii.htm">&gt;&gt;</a>&nbsp;
+<a href="introduction_to_forks.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

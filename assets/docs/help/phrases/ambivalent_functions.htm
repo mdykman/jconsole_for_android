@@ -1,0 +1,56 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>C. Ambivalent Functions</title>
+
+</head><body><!--top jump start--><a href="adverbs_conjunctions.htm">&gt;&gt;</a>&nbsp;
+<a href="rank.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>2C. Ambivalent Functions</h1>
+
+
+<P>The phrase<tt> h=: f : g </tt>defines<tt> h </tt>as the function 
+whose monadic case is<tt> f </tt>and whose dyadic case is<tt> g</tt> .<tt> </tt>
+The components<tt> f </tt>and<tt> g </tt>may be functions already 
+defined and named, or they may be tacit or explicit phrases. 
+Moreover, either (but not both) may be defined in terms of 
+the other by using<tt> $: </tt>for self-reference in a tacit definition.</P>
+
+
+<TABLE BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%" align="center">
+  <TR><TD width=40%><tt>v0=: 10&amp;^. : ^.</tt></TD>	<TD width=60%>Base 10 log for monadic case</TD>
+  </TR><TR><TD><tt>v1=: 10&amp;$: : ^.</tt></TD>	<TD>Same using self-reference to dyad</TD>
+  </TR><TR><TD><tt>v2=: 10&amp;^. : ($:@] * ^.@(10&quot;0) % ^.@[)</tt></TD>	<TD>Same using self-reference to monad</TD>
+  </TR><TR><TD><tt>d3=: res=: [: : |</tt></TD>	<TD>Domain of monad is empty (dyadic only)</TD>
+  </TR><TR><TD><tt>m4=: abs=: | : [:</tt></TD>	<TD>Domain of dyad is empty (monadic only)</TD>
+  </TR>
+</TABLE>
+<br><br>
+
+<!--bottom jump start--><hr><a href="adverbs_conjunctions.htm">&gt;&gt;</a>&nbsp;
+<a href="rank.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

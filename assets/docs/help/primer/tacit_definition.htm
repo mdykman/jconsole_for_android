@@ -1,0 +1,143 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Tacit definition</title>
+
+</head><body><!--top jump start--><a href="explicit_tacit_trans.htm">&gt;&gt;</a>&nbsp;
+<a href="fork.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Tacit definition</h1>
+The centigrade verb was defined explicitly with the <font face=courier size=-1>:</font> conjunction. The term explicit indicates that the arguments to the verb in the definition are referred to explicitly by their names of <font face=courier size=-1>x.</font> and<font face=courier size=-1> y.</font> .<br>
+<br>
+In a tacit definition the arguments are not named and do not appear explicitly in the definition. The arguments are referred to implicitly by the syntactic requirements of the definition. You have already used several tacit definitions.<br>
+
+<pre>   plus =. +
+   sumover =. +/
+   maxover =. &gt;./
+   scale =. % &gt;./
+   mean =. +/ % #</pre>
+The above are all tacit definitions. They do not use <font face=courier size=-1>:</font> and do not refer to arguments by name. In some cases the tacit form of definition is much simpler and more obvious than the equivalent explicit definition. In more complicated situations, it may take a bit of experience before you are comfortable with a tacit definition. This is partly because you probably have experience with explicit forms of definitions and very little with tacit definitions. In addition, tacit definitions tend to be more concise and mathematical expressions of a definition, and it may be necessary to go through the more detailed steps of creating an explicit definition before the equivalent tacit definition becomes clear.<br>
+<br>
+Let's revisit fahrenheit to see how it could be defined tacitly. Open the cf.ijs script and look at the fahrenheit definition.<br>
+
+<pre>fahrenheit =: 3 : 0
+t1 =. y. * 9
+t2 =. t1 % 5
+t3 =. t2 + 32
+)</pre>
+You can start by cleaning up the explicit definition. Now that you are more comfortable with J you can combine these calculations into a single line.<br>
+
+<pre>fa =: 3 : '(y. * 9 % 5) + 32'
+</pre>
+The parentheses are required because the calculation inside them must be done before the 32 is added.<br>
+<br>
+Let's shuffle the definition a bit to make the steps in building a tacit definition a bit clearer.<br>
+
+<pre>fb =: 3 : '32 + ((9%5) * y.)'
+</pre>
+The above could be read as: add 32 to nine-fifths times the argument.<br>
+<br>
+So, you need an <font face=courier size=-1>add32 </font>verb and a <font face=courier size=-1>ninefifthstimes </font>verb. You can use the bond conjunction <font face=courier size=-1>&</font> to build these verbs tacitly. The bond conjunction with a constant left argument returns a derived monad that is the verb in its right argument with the constant left argument.<br>
+
+<pre>   add32 =: 32 & +
+</pre>
+This defines <font face=courier size=-1>add32 </font>as a monad that adds 32 to its argument.<br>
+
+<pre>   add32 12
+44
+   ninefifthstimes =: (9%5) & *</pre>
+This gives a monad which multiplies its argument by <font face=courier size=-1>9%5</font>.<br>
+
+<pre>   ninefifthstimes 20
+36</pre>
+Combining these you have:<br>
+
+<pre>   add32 ninefifthstimes 100
+212</pre>
+The atop conjunction <font face=courier size=-1>@</font> combines two verbs into a derived verb that applies the right verb to its argument and then applies the left verb to that result.<br>
+
+<pre>	(u @ v) y	evaluates as	u v y</pre>
+Use the atop conjunction to combine your two verbs to create the final definition.<br>
+
+<pre>   fc =: add32 @ ninefifthstimes
+   fc 100
+212
+   fc _40
+_40
+   fc 0
+32</pre>
+Display the verb <font face=courier size=-1>fc </font>and note that its definition is dependent on the other two definitions.<br>
+
+<pre>   fc
++-----+-----------------+
+¦add32¦@¦ninefifthstimes¦
++-----+-----------------+</pre>
+Sometimes after you have built up a tacit definition from smaller building blocks you realize you really don't want all those smaller definitions hanging around. The <font face=courier size=-1>f.</font> adverb takes a tacit definition and replaces names with their definitions.<br>
+
+<pre>   fz =. fc f.</pre>
+The adverb <font face=courier size=-1>f.</font> , like all adverbs, takes its argument on its left.<br>
+<br>
+Look at <font face=courier size=-1>fz </font>to see the final definition.<br>
+
+<pre>   fz
++--------+-+---------+
+¦+--+-+-+¦@¦+---+-+-+¦
+¦¦32¦&¦+¦¦ ¦¦1.8¦&¦*¦¦
+¦+--+-+-+¦ ¦+---+-+-+¦
++--------+-+---------+</pre>
+The system can display tacit definitions in several different forms. These options can be selected with Edit|Configure|Display.&nbsp;&nbsp;With box display you get the preceding display. The <i>Box Display</i> can be very useful in understanding tacit definitions. However, for now select <i>Linear Display</i> so that you will see the following:<br>
+
+<pre>   fz
+32&+@(1.8&*)</pre>
+In comparing something as simple as a verb defined as <font face=courier size=-1>+</font>, the tacit definition is much simpler than the equivalent explicit definition. In the fahrenheit example it could be argued that the explicit definition was simpler, especially if you used the <font face=courier size=-1>1.8</font> directly instead of the <font face=courier size=-1>9%5</font> as does the tacit definition.<br>
+
+<pre>fx =: 3 : '32+1.8*y.'
+vs.
+fz =: 32&+@(1.8&*)</pre>
+The real strength in tacit programming comes in more complicated transformations of the arguments, particularly when the arguments must be referenced several times. The following illustrates another use of tacit definition.<br>
+
+<pre>   xmean =: 3 : '(+/y.) % #y.'</pre>
+This is the mean that you ran across in the <a class="small" href="fork.htm">Fork</a> section.<br>
+
+<pre>   mean =: +/ % #</pre>
+The tacit definition just uses the fork directly.<br>
+<br>
+The fork could also have been used in the explicit definition, but would have required parentheses around the fork.<br>
+
+<pre>   xmean =: 3 : '(+/ % #)y.'</pre>
+One advantage of tacit definitions is that they are more easily manipulated in formal ways than are explicit definitions. For example, J can automatically derive the inverse of many tacit definitions. Let's try this with the fz tacit definition. The inverse of the Fahrenheit conversion is the centigrade conversion. The standard profile defines an adverb inverse.<br>
+
+<pre>   fz =: 32&+@(1.8&*)
+   cz =: fz inverse
+   fz 100
+212
+   cz 212
+100
+   fz 0
+32
+   cz 32
+0</pre>
+Tacit programming is very powerful, but there is no need to leap into it. It is important to know what it is and to start using it in simple cases as this is the best way to become more familiar with it.<br>
+<!--bottom jump start--><hr><a href="explicit_tacit_trans.htm">&gt;&gt;</a>&nbsp;
+<a href="fork.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,60 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Array</title>
+
+</head><body><!--top jump start--><a href="axis.htm">&gt;&gt;</a>&nbsp;
+<a href="table.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Array</h1>
+Atoms, lists, and tables are all arrays. All nouns in J are arrays. Atoms have 0 dimensions, lists have 1 dimension, and tables have 2 dimensions. This extends to higher dimension arrays.<br>
+<br>
+The primitive <font face=courier size=-1>$</font>, discussed earlier with lists and tables also works with higher dimension arrays.<br>
+
+<pre>   2 3 4 $ i. 24
+ 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+
+12 13 14 15
+16 17 18 19
+20 21 22 23</pre>
+The above is a 3-dimensional array. The blank line indicates the break between the 1st dimension and the 2nd and 3rd.<br>
+
+<pre>   b =. 2 3 4 $ 'abcdef'
+   $ b
+2 3 4</pre>
+The monad <font face=courier size=-1>i.</font> also works with higher dimension arrays.<br>
+
+<pre>   i. 2 3 4
+ 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+
+12 13 14 15
+16 17 18 19
+20 21 22 23</pre>
+The J terms atom, list, and table are analogous to the math terms of scalar, vector, and matrix.<br>
+<!--bottom jump start--><hr><a href="axis.htm">&gt;&gt;</a>&nbsp;
+<a href="table.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,1002 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>More Verbs For Boxes</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="verb-definition_revisited.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_iv_irregular_o.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734394"></a><a name="_Toc5414592"></a><a name="_Toc1896222"><span
+style='mso-bookmark:_Toc5414592'><span style='mso-bookmark:_Toc191734394'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>17. </span></span><![endif]>More Verbs For Boxes</span></span></a></h1>
+
+<p class=Section><a name="_Toc191734395"></a><a name="_Toc5414593"></a><a
+name="_Toc5414436"></a><a name="_Toc1896223"><span style='mso-bookmark:_Toc5414436'><span
+style='mso-bookmark:_Toc5414593'><span style='mso-bookmark:_Toc191734395'>Box
+and Join: Dyad </span></span></span></a><span style='mso-bookmark:_Toc1896223'><span
+style='mso-bookmark:_Toc5414436'><span style='mso-bookmark:_Toc5414593'><span
+style='mso-bookmark:_Toc191734395'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>;</span></span> (Link</span></span></span></span><span
+style='mso-bookmark:_Toc191734395'>)</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Link verb ;&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;; dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span> has infinite
+rank.&nbsp; It boxes its operands and
+concatenates the boxes:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 'abc' ; 1 2 3</p>
+
+<p class=Jcodemultiline>+---+-----+</p>
+
+<p class=Jcodemultiline>|abc|1 2 3|</p>
+
+<p class=Jcodemultiline>+---+-----+</p>
+
+<p class=BodyTextnoleader>Dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;</span></span> is the easiest way to create a list of
+boxes:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 'abc' ; 1 2 3
+; (i. 2 2)</p>
+
+<p class=Jcodemultiline>+---+-----+---+</p>
+
+<p class=Jcodemultiline>|abc|1 2 3|0 1|</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; |<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp; </span>|2 3|</p>
+
+<p class=Jcodemultiline>+---+-----+---+</p>
+
+<p class=MsoBodyText>Did you notice that I gave you an inaccurate
+definition?&nbsp; If dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;</span></span>
+just boxed the operands and concatenated, its result would be like</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; dyadsemicolon
+=: dyad : '(&lt;x) , (&lt;y)'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 'abc'
+dyadsemicolon 1 2 3 dyadsemicolon (i. 2 2)</p>
+
+<p class=Jcodemultiline>+---+-----------+</p>
+
+<p class=Jcodemultiline>|abc|+-----+---+|</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; ||1 2 3|0 1||</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; ||<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp; </span>|2 3||</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; |+-----+---+|</p>
+
+<p class=Jcodemultiline>+---+-----------+</p>
+
+<p class=MsoBodyText>That's not the list of boxes we wanted!<span
+style='mso-spacerun:yes'>&nbsp; </span>Actually dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span> is more subtle: <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;;&nbsp;y</span></span>
+always boxes <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+but it boxes <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+<i>only if </i><span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>y</span></i></span><i>
+is unboxed</i>.&nbsp; That produces the
+behavior we want most of the time; the exception is when the last item in the
+list is boxed already:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;'abc');(&lt;'def');(&lt;'ghi')</p>
+
+<p class=Jcodemultiline>+-----+-----+---+</p>
+
+<p class=Jcodemultiline>|+---+|+---+|ghi|</p>
+
+<p class=Jcodemultiline>||abc|||def||&nbsp;&nbsp; |</p>
+
+<p class=Jcodemultiline>|+---+|+---+|&nbsp;&nbsp; |</p>
+
+<p class=Jcodemultiline>+-----+-----+---+</p>
+
+<p class=BodyTextnoleader>If we expected all the items to be boxed the same, we
+are disappointed.&nbsp; We must develop the
+habit that when we use a sequence of dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span>s we box the last
+operand (unless we are sure it is unboxed, and even then we might do it to
+reinforce our habit):</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;'abc');(&lt;'def');&lt;(&lt;'ghi')</p>
+
+<p class=Jcodemultiline>+-----+-----+-----+</p>
+
+<p class=Jcodemultiline>|+---+|+---+|+---+|</p>
+
+<p class=Jcodemultiline>||abc|||def|||ghi||</p>
+
+<p class=Jcodemultiline>|+---+|+---+|+---+|</p>
+
+<p class=Jcodemultiline>+-----+-----+-----+</p>
+
+<p class=Section><a name="_Toc191734396">Unbox and Join: Monad </a><span
+style='mso-bookmark:_Toc191734396'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>;</span></span> (Raze)</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Raze verb ;&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;; monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span> (infinite rank)
+removes one level of boxing from an array of boxes, concatenating the contents
+of all the boxes into one long array.&nbsp; </p>
+
+<p class=MsoBodyText>The shape of the operand of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span> is
+immaterial.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span> looks inside the
+boxes of its operand, and works with <b style='mso-bidi-font-weight:normal'>the
+contents of each box</b>.&nbsp; If the
+contents do not have the same rank, contents of lower rank are brought up to
+the rank of the highest-rank contents, by treating the lower-rank contents as
+the sole item of a higher-rank array. <span
+style='mso-spacerun:yes'>&nbsp;</span>For example, if one box contains <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.&nbsp;2&nbsp;3</span></span>
+(rank 2) and another contains <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;2</span></span> (rank 1), the second contents will re
+converted to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;$&nbsp;1&nbsp;2</span></span>,
+which is a rank-2 array whose only item is <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If some other box contained <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.&nbsp;2&nbsp;3&nbsp;4</span></span>
+(rank 3), the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2</span></span>
+would be converted to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;1&nbsp;2&nbsp;$&nbsp;1&nbsp;2</span></span>.</p>
+
+<p class=MsoBodyText>Once the contents have been brought up to common rank, the
+items of the contents are examined.&nbsp; If
+these items do not have a common shape--the <i>items</i> of the <i>contents</i>
+of the operand boxes, mind you, not the contents themselves--they are brought up
+to a common shape as described below.&nbsp;
+Examples:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 'abc';'d';'ef'</p>
+
+<p class=Jcodemultiline>+---+-+--+</p>
+
+<p class=Jcodemultiline>|abc|d|ef|</p>
+
+<p class=Jcodemultiline>+---+-+--+</p>
+
+<p class=BodyTextnoleader>A list of boxes.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ; 'abc';'d';'ef'</p>
+
+<p class=Jcodemultiline>abcdef</p>
+
+<p class=BodyTextnoleader>The items, which are scalars, are joined into one
+long list.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ; 1 ; 2 3 4</p>
+
+<p class=Jcodemultiline>1 2 3 4</p>
+
+<p class=BodyTextnoleader>It works for numbers too.</p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>; (i. 2 3) ; (i. 2 3) <o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0 1 2<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>3 4 5<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0 1 2<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>3 4 5<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader>The items are lists, so the lists are concatenated
+into a rank-2 array.</p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>; 1 2 ; i. 2 3<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>1 2 0<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0 1 2<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>3 4 5<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader>Here the second box contains a rank-2 array,
+while the first box contains a rank-1 array.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <i>items</i> of highest rank have rank 1,
+which means that rank-1 items are going to be lined up as the items of a
+rank-2 result.&nbsp; Any contents of
+lower rank are brought up to the rank of the highest-rank contents, by adding
+single-length leading axes; after that operation, the items of all the modified
+contents have the same rank (but not necessarily the same shape).<span
+style='mso-spacerun:yes'>&nbsp; </span>If the shapes of any of those items differ,
+verb fills are added to bring each axis up to the length of the longest axis;
+then the items are assembled into a list whose rank is 1 higher than the rank
+of an item.&nbsp; In this example the
+concatenated items have rank 1, and verb fill was added to bring the single
+item of the first box up to a length of 3.</p>
+
+<p class=Subsubsection>The Atomic Exception</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ; 1 ; ,: 2 3 4</p>
+
+<p class=Jcodemultiline>1 1 1</p>
+
+<p class=Jcodemultiline>2 3 4</p>
+
+<p class=BodyTextnoleader>There is one amendment to the processing as described
+above: if any of the contents is an atom, it is <i>replicated,</i> rather than
+padded with fills, to bring it up to the shape of an item of the result before
+items are concatenated.&nbsp; Here the atom <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+was replicated to become <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;1&nbsp;1&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ; (,1) ; ,: 2
+3 4</p>
+
+<p class=Jcodemultiline>1 0 0</p>
+
+<p class=Jcodemultiline>2 3 4</p>
+
+<p class=BodyTextnoleader>Here the first box was a 1-item list rather than an
+atom, so it was padded with fills rather than replicated.</p>
+
+<p class=MsoBodyText>When you have an array of boxes, the difference between
+opening it with monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&gt;</span></span> and with monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span> is that
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&gt;</span></span>
+keeps the frame of the array of boxes, and brings every opened box up to the
+same shape, while monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;</span></span> just runs the items of the contents together
+into one long list with no regard for the shape of the array of boxes.</p>
+
+<p class=Subsection><a name="_Toc191734397">Dyad </a><span style='mso-bookmark:
+_Toc191734397'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman";
+mso-bidi-font-weight:bold'>,</span></span> Revisited--the Case of Dissimilar
+Items</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;, dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Append verb ,&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->When we discussed dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,</span></span>
+we glossed over the treatment of operands with items of different shapes.<span
+style='mso-spacerun:yes'>&nbsp; </span>Now we can reveal that the padding and
+replication for dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>,</span></span> is just like what monad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;</span></span>
+does on the contents of boxes.&nbsp; In fact, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;,&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;&nbsp;(&lt;x),(&lt;y)&nbsp;</span></span>.<span
+style='font-size:11.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=Section><a name="_Toc191734398"></a><a name="_Toc5414594"></a><a
+name="_Toc5414437"></a><a name="_Toc1896224"><span style='mso-bookmark:_Toc5414437'><span
+style='mso-bookmark:_Toc5414594'><span style='mso-bookmark:_Toc191734398'>Verbs
+With Many Operands--Multiple Assignment</span></span></span></a></p>
+
+<p class=MsoBodyText>Dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;</span></span> is part of the standard J method of passing
+many operands to a verb.&nbsp; The invocation
+of the verb normally looks like this:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; <i>verbname</i>
+<i>op1</i> ; <i>op2</i> ... ;&lt; <i>opn</i></p>
+
+<p class=BodyTextnoleader>(the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;</span></span> is needed only if <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>opn</span></i></span> is boxed),
+and the verb that is so invoked looks like:</p>
+
+<p class=Jcodemultiline><i>verbname</i> =: monad define</p>
+
+<p class=Jcodemultiline>'op1 op2 ... opn' =. y</p>
+
+<p class=Jcodemultiline><i>remainder of verb<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;assignment:multiple&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The line <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'op1&nbsp;op2&nbsp;...&nbsp;opn'&nbsp;=.&nbsp;y</span></span>
+is J's handy <span class=Definition>multiple assignment</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>When the target of the assignment is a
+string, the string is broken into words and the words are matched with items of
+the value being assigned (they must match one-for-one or a length error
+results).&nbsp; Then, each word from the
+string is used as a name which is assigned the corresponding item of the
+value.&nbsp; If the value being assigned is
+boxed, each item is unboxed before it is assigned.</p>
+
+<p class=MsoBodyText>When defined and invoked as shown above, the variables <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>op1</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>op2</span></span>,
+etc. during execution of the called verb will hold the values of <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>op1</span></i></span>,
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>op2</span></i></span>,
+etc. in the calling verb.</p>
+
+<p class=MsoBodyText>Multiple assignment is not restricted to
+parameter-passing; you may use it as you see fit, if only to save typing.<span
+style='mso-spacerun:yes'>&nbsp; </span>I have found it very useful in loading
+configuration parameters from a file: the file contains both noun-names and the
+values, with the values being assigned to the names by multiple
+assignment.&nbsp; Such a design is easily
+portable from release to release of a product, since the file has no 'format'--it
+simply defines all the names it understands.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;assignment:atomic
+representation&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->A multiple assignment can produce verbs and
+modifiers as well as nouns.&nbsp; You put a <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'`'</span></span>
+character before your list of names:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; '`<i>name1
+name2...</i>' =. <i>list of atomic representations</i></p>
+
+<p class=BodyTextnoleader>and each <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>name</span></i></span> is assigned the entity described by
+the <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>atomic
+representation</span></i></span>.&nbsp; Each
+atomic representation is a noun, but it may describe any kind of entity.<span
+style='mso-spacerun:yes'>&nbsp; </span>Usually your entities will be verbs, and then
+they can be converted to atomic representations by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>`</span></span>, as in</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; '`add subtract
+mult div' =. +`-`*`%</p>
+
+<p class=MsoBodyText><a name="_Toc5414595"></a><a name="_Toc5414438"></a><a
+name="_Toc1896225"><span style='mso-bookmark:_Toc5414438'><span
+style='mso-bookmark:_Toc5414595'>Instead of a string as the left operand, you
+can have a list of boxes.&nbsp; This is
+convenient if the list of names has to be computed.<span
+style='mso-spacerun:yes'>&nbsp; </span>If </span></span></a><span style='mso-bookmark:
+_Toc1896225'><span style='mso-bookmark:_Toc5414438'><span style='mso-bookmark:
+_Toc5414595'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>nlist</span></span>
+has the list of names,</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896225'><span
+style='mso-bookmark:_Toc5414438'><span style='mso-bookmark:_Toc5414595'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(nlist) =. <i style='mso-bidi-font-style:
+normal'>list of values</i></span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896225'><span
+style='mso-bookmark:_Toc5414438'><span style='mso-bookmark:_Toc5414595'>will
+assign the values to the names.</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896225'><span style='mso-bookmark:
+_Toc5414438'><span style='mso-bookmark:_Toc5414595'><a name="_Toc191734399">Dyad
+</a></span></span></span><span style='mso-bookmark:_Toc1896225'><span
+style='mso-bookmark:_Toc5414438'><span style='mso-bookmark:_Toc5414595'><span
+style='mso-bookmark:_Toc191734399'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>{</span></span> Revisited</span></span></span></span><span
+style='mso-bookmark:_Toc191734399'>: The Full Story</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;{ dyad:details&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Now that we know about boxes,
+we can understand the full description of the selection verb dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In the general form, the left argument of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;{&nbsp;y</span></span>
+is a box whose contents is a list of boxes.&nbsp;
+Pictorially, it is</p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>+-----------------------------------------+<o:p></o:p></span></b></p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|+-----------------+-----------------+---+|<o:p></o:p></span></b></p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>||axis-0
+selections|axis-1 selections|...||<o:p></o:p></span></b></p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>|+-----------------+-----------------+---+|<o:p></o:p></span></b></p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>+-----------------------------------------+<o:p></o:p></span></b></p>
+
+<p class=MsoBodyText>We will call the inner boxes (i.&nbsp;e. the items of the
+contents of the box <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>)
+the <span class=Definition>selectors</span>.&nbsp;
+The first selector gives the indexes to be selected along the first axis
+(i.&nbsp;e. axis 0); the second selector gives the selections for axis 1; and
+so on.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; i. 2 2 3</p>
+
+<p class=Jcodemultiline>0&nbsp; 1<span
+style='mso-spacerun:yes'>&nbsp; </span>2</p>
+
+<p class=Jcodemultiline>3&nbsp; 4<span
+style='mso-spacerun:yes'>&nbsp; </span>5</p>
+
+<p class=Jcodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Jcodemultiline>6&nbsp; 7<span
+style='mso-spacerun:yes'>&nbsp; </span>8</p>
+
+<p class=Jcodemultiline>9 10 11</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &lt;0;1;1</p>
+
+<p class=Jcodemultiline>+-------+</p>
+
+<p class=Jcodemultiline>|+-+-+-+|</p>
+
+<p class=Jcodemultiline>||0|1|1||</p>
+
+<p class=Jcodemultiline>|+-+-+-+|</p>
+
+<p class=Jcodemultiline>+-------+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;0;1;1) {
+i. 2 2 3</p>
+
+<p class=Jcodemultiline>4</p>
+
+<p class=MsoBodyText>If not all axes are specified, the selectors are applied
+starting with the leading axis and any axes left over at the end are taken in
+full:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;0;1) { i.
+2 2 3</p>
+
+<p class=Jcodemultiline>3 4 5</p>
+
+<p class=MsoBodyText>Each of the selectors may contain either a scalar or a
+list.&nbsp; If a selector contains a scalar,
+the corresponding axis will disappear from the shape of the result, as in the
+examples above.&nbsp; If a selector contains a
+list, even a list with only one item, the corresponding axis will remain in the
+shape of the result (its length will be the length of the selection list):</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;0;1 0) {
+i. 2 2 3</p>
+
+<p class=Jcodemultiline>3 4 5</p>
+
+<p class=Jcodemultiline>0 1 2</p>
+
+<p class=BodyTextnoleader>We select two rows of item number 0.<span
+style='mso-spacerun:yes'>&nbsp; </span>The rows stay in the order we requested them,
+and the result has rank 2.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;0 1;1
+0;2) { i. 2 2 3</p>
+
+<p class=Jcodemultiline>&nbsp;5 2</p>
+
+<p class=Jcodemultiline>11 8</p>
+
+<p class=BodyTextnoleader>Understand where each number came from.<span
+style='mso-spacerun:yes'>&nbsp; </span>We are taking a 2x2 array of 1-cells,
+but only item 2 from each 1-cell.&nbsp;
+That leaves a 2x2 result.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;0;,1) {
+i. 2 2 3</p>
+
+<p class=Jcodemultiline>3 4 5</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ (&lt;0;1) {
+i. 2 2 3</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ (&lt;0;,1) {
+i. 2 2 3</p>
+
+<p class=Jcodemultiline>1 3</p>
+
+<p class=BodyTextnoleader>In the last example we are requesting a list of 1-cells;
+even though the list has only one item, its axis remains in the result.</p>
+
+<p class=MsoBodyText>If a selector contains a box (rather than the usual
+numeric), it calls for <span class=Definition>complementary selection</span>
+along that axis: the contents of that box (i.&nbsp;e. the contents of the
+contents of the selector) indicate the indexes to <i>exclude</i> from the
+selection, and all other indexes are selected.&nbsp;
+Such a selector is considered to be specifying the list of non-excluded
+indexes, so the corresponding axis remains in the result.<span
+style='mso-spacerun:yes'>&nbsp; </span>Example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(&lt;0;1;&lt;&lt;1)</p>
+
+<p class=Jcodemultiline>+---------+</p>
+
+<p class=Jcodemultiline>|+-+-+---+|</p>
+
+<p class=Jcodemultiline>||0|1|+-+||</p>
+
+<p class=Jcodemultiline>|| | ||1|||</p>
+
+<p class=Jcodemultiline>|| | |+-+||</p>
+
+<p class=Jcodemultiline>|+-+-+---+|</p>
+
+<p class=Jcodemultiline>+---------+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(&lt;0;1;&lt;&lt;1) { i. 2 2 3</p>
+
+<p class=Jcodemultiline>3 5</p>
+
+<p class=BodyTextnoleader>We select a single 2-cell, and from that a
+single 1-cell, and within that we select all except item 1.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is a 2-item list.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that we had to put an extra <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;</span></span>
+after the last <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;</span></span>
+to ensure that the contents of the last selector was boxed.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(&lt;0;(&lt;0$0);2)</p>
+
+<p class=Jcodemultiline>+--------+</p>
+
+<p class=Jcodemultiline>|+-+--+-+|</p>
+
+<p class=Jcodemultiline>||0|++|2||</p>
+
+<p class=Jcodemultiline>|| |||| ||</p>
+
+<p class=Jcodemultiline>|| |++| ||</p>
+
+<p class=Jcodemultiline>|+-+--+-+|</p>
+
+<p class=Jcodemultiline>+--------+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(&lt;0;(&lt;0$0);2) { i. 2 2 3</p>
+
+<p class=Jcodemultiline>2 5</p>
+
+<p class=BodyTextnoleader>Complementary indexing can be used to select all of
+an axis, as in this example.&nbsp; We request
+all of axis 1 except the named items, and then we name an empty list: we get
+all the items.&nbsp; This trick is called for
+when we need to specify a selector for some axis after the axis we want to take
+completely (trailing axes can be taken in full simply by omitting their
+selectors).&nbsp; Since <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a:</span></span> is equivalent
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;0$0</span></span>,
+the thrifty J idiom for the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> operand above would be <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(&lt;0;a:;2)</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>You may think of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a:</span></span> as 'all' in
+this context.</p>
+
+<p class=Subsection><a name="_Toc191734400">Simplification 1: Remove Inner
+Boxing If Selectors Are Scalars</a></p>
+
+<p class=MsoBodyText>If our use of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;{&nbsp;y</span></span> does not require any selector
+to specify a list (i.&nbsp;e. each selector is a scalar), we are allowed to
+omit the boxing of the selectors.&nbsp; This
+leaves <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+as a boxed numeric list (or scalar) in which the successive items indicate the
+single index to be selected from each axis.&nbsp;
+This form, in which <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;i,j,k...</span></span>, corresponds to C's <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>array[i][j][k]...&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &lt;0 1</p>
+
+<p class=Jcodemultiline>+---+</p>
+
+<p class=Jcodemultiline>|0 1|</p>
+
+<p class=Jcodemultiline>+---+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &lt;0;1</p>
+
+<p class=Jcodemultiline>+-----+</p>
+
+<p class=Jcodemultiline>|+-+-+|</p>
+
+<p class=Jcodemultiline>||0|1||</p>
+
+<p class=Jcodemultiline>|+-+-+|</p>
+
+<p class=Jcodemultiline>+-----+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;0 1) { i.
+2 2 3</p>
+
+<p class=Jcodemultiline>3 4 5</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;0;1) { i.
+2 2 3</p>
+
+<p class=Jcodemultiline>3 4 5</p>
+
+<p class=BodyTextnoleader>The results are identical.</p>
+
+<p class=Subsection><a name="_Toc191734401">Simplification 2: Remove All Boxing
+To Select Full Items</a></p>
+
+<p class=MsoBodyText>As a final simplification, if the selection is just a
+single item from axis 0, the left operand of dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{</span></span> may be left
+unboxed.&nbsp; This is the form in which we
+first met dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Now that you have learned dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{</span></span>
+completely, take this quiz: what is the difference between <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;1&nbsp;{&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;&lt;0&nbsp;1)&nbsp;{&nbsp;y</span></span>?</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 0 1 { i. 6</p>
+
+<p class=Jcodemultiline>0 1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (&lt;&lt;0 1)
+{ i. 6</p>
+
+<p class=Jcodemultiline>0 1</p>
+
+<p class=BodyTextnoleader>Answer: the results are identical, but because the
+left rank of dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{</span></span> is 0, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;1&nbsp;{&nbsp;y</span></span>
+applies dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{</span></span>
+twice, once for each atom of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;1</span></span>, and collects the results into an
+array, while <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;&lt;0&nbsp;1)&nbsp;{&nbsp;y</span></span>
+applies dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{</span></span>
+just once.&nbsp; The code for dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{</span></span>
+handles unboxed <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+efficiently, so which form you use is a matter of convenience.</p>
+
+<p class=Section><a name="_Toc191734402"></a><a name="_Toc5414596"></a><a
+name="_Toc5414439"></a><a name="_Toc1896226"></a><span style='mso-bookmark:_Toc1896226'><span style='mso-bookmark:
+  _Toc5414439'><span style='mso-bookmark:_Toc5414596'><span style='mso-bookmark:
+  _Toc191734402'>Split</span></span></span></span><span
+style='mso-bookmark:_Toc1896226'><span style='mso-bookmark:_Toc5414439'><span
+style='mso-bookmark:_Toc5414596'><span style='mso-bookmark:_Toc191734402'>
+String Into J Words: Monad </span></span></span></span><span style='mso-bookmark:
+_Toc1896226'><span style='mso-bookmark:_Toc5414439'><span style='mso-bookmark:
+_Toc5414596'><span style='mso-bookmark:_Toc191734402'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>;:</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;;\: monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;:</span></span> splits a string
+of characters into J words, putting each word into a box of its own.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each word is a list of characters, so the
+result of monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>;:</span></span>
+is a list of boxed lists:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ;: 'Words,
+words; and more words.'</p>
+
+<p class=Jcodemultiline>+-----+-+-----+-+---+----+------+</p>
+
+<p class=Jcodemultiline>|Words|,|words|;|and|more|words.|</p>
+
+<p class=Jcodemultiline>+-----+-+-----+-+---+----+------+</p>
+
+<p class=MsoBodyText>Monad <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>;:</span></span> is a handy way to get boxed character
+strings, or to break an input stream into words if your language has
+word-formation rules similar to J's.&nbsp; Be
+aware that if the operand has an unmatched quote, monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;:</span></span> will fail.</p>
+
+<p class=Section><a name="_Toc191734403"></a><a name="_Toc5414597"></a><a
+name="_Toc5414440"></a><a name="_Toc1896227"><span style='mso-bookmark:_Toc5414440'><span
+style='mso-bookmark:_Toc5414597'><span style='mso-bookmark:_Toc191734403'>Fetch
+From Structure: Dyad </span></span></span></a><span style='mso-bookmark:_Toc1896227'><span
+style='mso-bookmark:_Toc5414440'><span style='mso-bookmark:_Toc5414597'><span
+style='mso-bookmark:_Toc191734403'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>{::</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc191734403'></span><span style='mso-bookmark:_Toc5414597'></span><span
+style='mso-bookmark:_Toc5414440'></span><span style='mso-bookmark:_Toc1896227'></span><span
+class=Definition><span style='font-weight:normal;font-style:normal;mso-bidi-font-style:
+italic'><o:p></o:p></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Fetch verb {\:\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;{\:\: dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{::</span></span> (this is a
+single primitive) has left rank 1, right rank infinite.<span
+style='mso-spacerun:yes'>&nbsp; </span>It selects an atom from an array of boxes and
+opens it; it is therefore analogous to the&nbsp;<span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>. (class member)&nbsp;operator</span></span>
+in C:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 {:: 'abc';1
+2 3; i. 2 2</p>
+
+<p class=Jcodemultiline>1 2 3</p>
+
+<p class=BodyTextnoleader>Item 1 was selected and opened.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;{::&nbsp;y</span></span>
+can go through multiple levels of structure referencing at once.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is a list of boxes, the first box must be a
+valid left argument to dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{</span></span>; it is used to select an item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+which is then opened; the next box of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> selects an item from that opened box of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+which item is then opened; and so on till <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is exhausted:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; struct1 =: 'abc'
+; 1 2 3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]struct2 =: 'def';struct1;4
+5 6</p>
+
+<p class=Jcodemultiline>+---+-----------+-----+</p>
+
+<p class=Jcodemultiline>|def|+---+-----+|4
+5 6|</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; ||abc|1 2
+3||&nbsp;&nbsp;&nbsp;&nbsp; |</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; |+---+-----+|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>+---+-----------+-----+</p>
+
+<p class=BodyTextnoleader>Here we have a structure in which item 1 is another
+structure.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 {:: struct2</p>
+
+<p class=Jcodemultiline>+---+-----+</p>
+
+<p class=Jcodemultiline>|abc|1 2 3|</p>
+
+<p class=Jcodemultiline>+---+-----+</p>
+
+<p class=BodyTextnoleader>We select and open item 1, resulting in the enclosed
+structure.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (1;1) {::
+struct2</p>
+
+<p class=Jcodemultiline>1 2 3</p>
+
+<p class=BodyTextnoleader>We select and open item 1 of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>struct2</span></span>, and then
+open item 1 of the enclosed structure.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (1;&lt;&lt;1
+0) {:: struct2</p>
+
+<p class=Jcodemultiline>+-----+---+</p>
+
+<p class=Jcodemultiline>|1 2 3|abc|</p>
+
+<p class=Jcodemultiline>+-----+---+</p>
+
+<p class=BodyTextnoleader>If the last selection specifies a list of items, as
+in this example, the selected boxes are not opened.<span
+style='mso-spacerun:yes'>&nbsp; </span><b>Note</b> that the Dictionary's description
+of dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{::</span></span>
+incorrectly indicates that the boxes are opened.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (1;&lt;&lt;,1)
+{:: struct2</p>
+
+<p class=Jcodemultiline>+-----+</p>
+
+<p class=Jcodemultiline>|1 2 3|</p>
+
+<p class=Jcodemultiline>+-----+</p>
+
+<p class=BodyTextnoleader>Even if the list contains only one item, it is not
+opened.</p>
+
+<p class=MsoBodyText>Only the last box of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> may specify
+selection of a list of boxes:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ]a =. &lt;&quot;0
+i. 3 3</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=Jcodemultiline>|0|1|2|</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=Jcodemultiline>|3|4|5|</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=Jcodemultiline>|6|7|8|</p>
+
+<p class=Jcodemultiline>+-+-+-+</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span> is a 3x3 array of boxes.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (1;1) {:: a</p>
+
+<p class=Jcodemultiline>|rank error</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp; (1;1)<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>{::a</p>
+
+<p class=BodyTextnoleader>The first selection took item 1 of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This was a 3-item list of boxes, and it is
+inadmissible to open the list and perform further selections.</p>
+
+<p class=MsoBodyText><b>Note</b> that if <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is unboxed,
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{::</span></span>
+first boxes it and then uses it for selection.&nbsp;
+The Dictionary's description does not mention the boxing step.</p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'>Note</b> also that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;{::&nbsp;y</span></span>
+is not allowed if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is a scalar.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&gt;&nbsp;0&nbsp;{&nbsp;y</span></span>
+may be used instead.</p>
+
+<p class=Section><a name="_Toc191734404"></a><a name="_Toc5414598"></a><a
+name="_Toc5414441"></a><a name="_Toc1896228"><span style='mso-bookmark:_Toc5414441'><span
+style='mso-bookmark:_Toc5414598'><span style='mso-bookmark:_Toc191734404'>Report
+Boxing Level: Monad </span></span></span></a><span style='mso-bookmark:_Toc1896228'><span
+style='mso-bookmark:_Toc5414441'><span style='mso-bookmark:_Toc5414598'><span
+style='mso-bookmark:_Toc191734404'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>L.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Level verb L.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;L. monad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>L.</span></span> has infinite
+rank and tells you the <span class=Definition>boxing level</span> of its
+operand.&nbsp; Boxing level is defined
+recursively: if y is unboxed or empty, its boxing level is 0; otherwise its
+boxing level is one greater than the maximum of the boxing levels of its opened
+items:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1 ;&lt; 2
+;&lt; 3 ;&lt; 4</p>
+
+<p class=Jcodemultiline>+-+---------+</p>
+
+<p class=Jcodemultiline>|1|+-+-----+|</p>
+
+<p class=Jcodemultiline>| ||2|+-+-+||</p>
+
+<p class=Jcodemultiline>| || ||3|4|||</p>
+
+<p class=Jcodemultiline>| || |+-+-+||</p>
+
+<p class=Jcodemultiline>| |+-+-----+|</p>
+
+<p class=Jcodemultiline>+-+---------+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; L. 1 ;&lt; 2
+;&lt; 3 ;&lt; 4</p>
+
+<p class=Jcodemultiline>3</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; L. {. 1 ;&lt;
+2 ;&lt; 3 ;&lt; 4</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=MsoBodyText>You can use monad <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>L.</span></span> to decide how
+many levels of boxing to remove:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &gt;^:L.
+&lt;&lt;&lt;6</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=MsoBodyText>Note that an empty list of boxes shows boxing level of 0,
+but the type revealed by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3!:0</span></span> is 'boxed'.<span
+style='mso-spacerun:yes'>&nbsp; </span>Also, fill elements for an empty list of
+boxes are the boxed fill element a: :</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; L. 0$a:</p>
+
+<p class=Jcodemultiline>0</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3!:0 (0$a:)</p>
+
+<p class=Jcodemultiline>32</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 {. 0$a:</p>
+
+<p class=Jcodemultiline>++++</p>
+
+<p class=Jcodemultiline>||||</p>
+
+<p class=Jcodemultiline>++++</p>
+
+</div><!--bottom jump start--><hr><a href="verb-definition_revisited.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_iv_irregular_o.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

@@ -1,0 +1,136 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>p. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="pco2.htm">&gt;&gt;</a>&nbsp;
+<a href="binsearch.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">p. </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2006-02-27<br>last updated: 2006-02-28
+</td></tr></table>
+<br>
+
+
+<p>The performance of the monad<tt> p. </tt>on finding roots has long been 
+known to be not the best.  For example, see the article by Nakano, 
+Yamashita, and Nishikawa, in Vector 21.2, Spring 2005; or Kip 
+Murray&rsquo;s J forum msg from 2001-07-16 with subject &ldquo;repeated roots&rdquo;.  
+The problem lies in two main areas:<br>
+&nbsp; &#149; limit errors even on small-degree polynomials<br>
+&nbsp; &#149; inaccuracies on repeated roots<br>
+<tt>p. </tt>has been improved in both of these areas, as the following
+examples demonstrate:</p>
+
+<pre>
+   NB. repeated real roots
+
+   p. &lt;2,5$1
+2 _11 25 _30 20 _7 1
+   p. p. &lt;2,5$1
++-+-----------+
+|1|2 1 1 1 1 1|
++-+-----------+
+   &gt;{: p. p. &lt;2,5$1
+2 1 1 1 1 1
+   &gt;{: p. p. &lt;2,10$1
+2 1 1 1 1 1 1 1 1 1 1
+   &gt;{: p. p. &lt;5 4 # 1 2
+2 2 2 2 1 1 1 1 1
+   &gt; {: p. p. &lt;1r2,8$1r3
+1r2 1r3 1r3 1r3 1r3 1r3 1r3 1r3 1r3
+
+   p. &lt;3j4 3j_4
+25 _6 1
+   ptimes=: +//.@(*/)  NB. polynomial multiplication
+   25 _6 1 ptimes p. &lt;1r2,8$1r3
+_25r13122 328r6561 _7657r13122 26113r6561 _38291r2187 37660r729 _24983r243 ...
+   &gt; {: p. 25 _6 1 ptimes p. &lt;1r2,8$1r3
+3j4 3j_4 0.5 0.333333 0.333333 0.333333 0.333333 0.333333 0.333333 0.333333 0.333333
+
+   NB. Examples from Nakano, Yamashita, and Nishikawa, Vector 21.2, Spring 2005
+
+   c=: ''
+   c=: c,&lt; _4 6 _3 1
+   c=: c,&lt; _9 9 _3 1
+   c=: c,&lt; _2 6 _6 1
+   c=: c,&lt; _18 18 _6 1
+   c=: c,&lt; _3 9 _9 1
+   c=: c,&lt; _12 18 _9 1
+   c=: c,&lt; _1 6 _12 1
+   c=: c,&lt; _4 12 _12 1
+   c=: c,&lt; _9 18 _12 1
+   c=: c,&lt; _5 15 _15 1
+   c=: c,&lt; _20 30 _15 1
+   c=: c,&lt; 12 _30 27 _10 1
+   c=: c,&lt; 2 _3 _3 6 0 _3 1
+   c=: c,&lt; 175 210 99 _40 _33 _10 1 0 1
+
+   r=: &gt;@{:@p.&.&gt; c
+   _5 ]\ c &gt;./@:|@:p.&&gt; r
+          0 8.88178e_16 4.44089e_16 3.97205e_15 8.88178e_15
+1.77636e_15 6.70575e_14 5.32907e_14  2.4869e_14 5.50671e_14
+5.32907e_14 6.92779e_14           0 3.71543e_13           0
+
+   NB. the Wilkinson monster
+
+   ] c=: p. &lt;1+i.20
+2432902008176640000 _8752948036761600000 13803759753640704000 _12870931245150988800 ...
+   &gt; {: p. c
+20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
+   (20-i.20) =!.0 &gt; {: p. c
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+   NB. Lest you think that all problems have been solved ...
+
+   d=: (- 210+2^_23x) _2}c
+   c =!.0 d
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1
+   0j20 ": ,.(_2{c),_2{d
+_210.00000000000000000000
+_210.00000011920928955078
+
+   r=: &gt; {: p. d
+   _5]\ r
+          20.8469  19.5024j1.94034 19.5024j_1.94034  16.7308j2.81265 16.7308j_2.81265
+  13.9924j2.51888 13.9924j_2.51888  11.7938j1.65261 11.7938j_1.65261 10.0952j0.644694
+10.0952j_0.644694          8.91681          8.00738          6.99968          6.00001
+                5                4                3                2                1
+   _5]\ | d p. r
+1.04249e13 7.99439e12 7.99439e12 4.73027e11 4.73027e11
+2.09392e10 2.09392e10 1.27872e10 1.27872e10  2.86188e9
+ 2.86188e9    3.906e7  8.60529e7  3.70852e7  9.29178e6
+    274432     565248      13312       4096        512
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="pco2.htm">&gt;&gt;</a>&nbsp;
+<a href="binsearch.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

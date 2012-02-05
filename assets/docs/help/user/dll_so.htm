@@ -1,0 +1,94 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Binaries - Shared Libraries - Directories</title>
+</head><body> <!--top jump start--><a href="dlls.htm">&gt;&gt;</a>&nbsp;
+<a href="start_errors.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+<h1>Binaries - Shared Libraries - Directories</h1>
+Windows binaries that start applications have a suffix of exe and in Unix they have no suffix. Windows shared library binaries are called DLLs (dynamic load libraries) and have a suffix of dll. Unix shared libraries have a prefix of lib and a suffix of so in Linux and dylib in Mac. The Linux form is used in these examples. Each binary has an equivalent on all platforms except for j.exe, which is Windows only.<br>
+<br>
+The J Engine is a shared library and the different front ends use the same J Engine shared library.<br>
+<br>
+In addition to the system use of shared libraries, the J user can use other shared libraries, such as the host api and the J provided Perl Compatible Regular Expressions, with the cd facility<br>
+
+<h2>Windows binaries</h2>
+<font face=courier size=-1>j.dll -- J Engine<br>
+jconsole.exe -- front end with console support<br>
+jpcre.dll -- Perl Compatible regular expression (in tools folder)<br>
+</font><br>
+
+<h2>Windows use of shared libraries</h2>
+<font face=courier size=-1>jconsole.exe -&gt; j.dll<br>
+... -&gt; j.dll -&gt; jpcre.dll<br>
+... -&gt; j.dll -&gt; Windows API and other DLLs<br>
+</font><br>
+
+<h2>Unix binaries</h2>
+<font face=courier size=-1>libj.so -- J Engine<br>
+jconsole -- front end with console support<br>
+jpcre.so -- Perl Compatible regular expression  (in tools folder)<br>
+</font><br>
+
+<h2>Unix use of shared libraries</h2>
+<font face=courier size=-1>jconsole -&gt; libj.so<br>
+... -&gt; libj.so -&gt; libjpcre.so<br>
+... -&gt; libj.so -&gt; Unix API and other shared libraries<br>
+</font><br>
+
+<h2>Finding shared libaries</h2>
+A problem with shared libraries is where to find them when they are needed. For example, in Windows when you run jconsole.exe it needs to load j.dll into memory. The question is where should it load from. There could be serveral different versions of j.dll on your hard drive and it is critical that get the right one. The problem is the same on Windows and Unix, but the rules for finding the shared library are a bit different.<br><br>
+
+JFE's assume the correct JE is in the same J folder that contains the JFE. The JFE determines the path to this J folder and loads exactly that JE with a fullpath.<br><br>
+
+<h2>Windows Shared Library Search Rules</h2>
+Windows searches and uses the first one it finds:<br><br>
+0. the exact file if a fullpath is specified<br>
+1. the directory that contained the exe binary that started the process<br>
+2. current directory<br>
+3. system directory (usually c:\windows\system32)<br>
+4. windows directory (usually c:\windows)<br>
+5. path environment directories<br>
+
+
+<h2>Unix Shared Library Search Rules</h2>
+Here is a simplified summary of where Unix searches for the shared library (it uses the first one it finds): <br>
+<br>
+0. the exact file if a fullpath is specified<br>
+1. /usr/lib<br>
+2. /lib<br><br>
+There are three complications<br>
+1. links (files that link to other files) are often used with shared libraries<br>
+2. different versions of a shared library can be indicated by suffixes: so.5.1 and so.5.2<br>
+3. search rules are different when linking and when running<br>
+<br>
+A typical shared library might have the following three files in /usr/lib<br>
+<pre>
+libfubar.so       link to     libfubar.so.5 
+libfubar.so.5     link to     libfubar.so.5.2
+libfubar.so.5.2   binary file for fubar version 5.2
+libfubar.so.5.1   binary file for fubar version 5.1
+</pre>
+When a binary is built for distribution the link is done with just the name fubar. The linker finds libfubar.so then libfubar.so.5 and then libfubar.so.5.2 and resolves everything based on the code there. But it puts the name libfubar.so.5 (not the starting name libfubar.so and not the name of the file actually used) in the resulting binary. When the binary is run it starts at libfubar.so.5. Generally this is good because it means that libfubar.so.5 could link to a new binary libfubar.so.5.3 with nice fixes. But it could be bad because you're not getting exactly what you were built to expect. The theory is that the 5 is a major change and you wouldn't want to quitely be given version 6 instead, but that that the 2 or 3 are minor versions (bug fixes) and you would want the latest.
+<!--bottom jump start--><hr><a href="dlls.htm">&gt;&gt;</a>&nbsp;
+<a href="start_errors.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>
+</html>

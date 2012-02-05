@@ -1,0 +1,95 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>p.. Poly. Deriv.  -  Poly. Integral</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dpco.htm">&gt;&gt;</a>&nbsp;
+<a href="dpdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Polynomial Derivative</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>p.. &nbsp;1 0 1</font></td>
+<td align=right  width=33%><b><font size=+2>Polynomial Integral</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+Applied to a polynomial (coefficients or boxed roots),<tt> p.. </tt>produces 
+the coefficients of the derivative of polynomial.  For example:<br>
+<pre>
+   p.. 1 2 3 4 5
+2 6 12 20
+   p.. 5 4 3 2 1
+4 6 6 4
+
+   p.. 2; 1j1 1j_1
+_4 4
+   p.. p. 2; 1j1 1j_1
+_4 4
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x p.. y </tt>produces the integral of polynomial<tt> y </tt>with a 
+constant term of<tt> x</tt> .<tt> </tt>Thus:
+<pre>
+   5 p.. 4 6 6 4
+5 4 3 2 1
+   1 p.. 2 6 12 20
+1 2 3 4 5
+</pre>
+</td></tr></table><br>
+
+Further examples:
+<pre>
+   p.. 1&amp;o. t. i. 11x              NB. derivative of sine
+1 0 _1r2 0 1r24 0 _1r720 0 1r40320 0
+   2&amp;o. t. i.10x                   NB. cosine
+1 0 _1r2 0 1r24 0 _1r720 0 1r40320 0
+
+   p.. 2&amp;o. t. i. 11x              NB. derivative of cosine
+0 _1 0 1r6 0 _1r120 0 1r5040 0 _1r362880
+   -@(1&amp;o.) t. i.10x               NB. minus sine
+0 _1 0 1r6 0 _1r120 0 1r5040 0 _1r362880
+   - (1&amp;o. t. i.10x)
+0 _1 0 1r6 0 _1r120 0 1r5040 0 _1r362880
+
+   p..^:(i.@#) 8 $ 1
+   1    1    1   1   1  1 1 1
+   1    2    3   4   5  6 7 0
+   2    6   12  20  30 42 0 0
+   6   24   60 120 210  0 0 0
+  24  120  360 840   0  0 0 0
+ 120  720 2520   0   0  0 0 0
+ 720 5040    0   0   0  0 0 0
+5040    0    0   0   0  0 0 0
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="dpco.htm">&gt;&gt;</a>&nbsp;
+<a href="dpdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

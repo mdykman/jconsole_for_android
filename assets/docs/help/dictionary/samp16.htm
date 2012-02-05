@@ -1,0 +1,94 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 16. Partitions I</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp17.htm">&gt;&gt;</a>&nbsp;
+<a href="samp15.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>16. Partitions (Adverbs)</b></font><br><br>
+
+Used monadically, the results of the adverbs<tt> \ </tt>and<tt> \. </tt>
+and<tt> /. </tt>provide <i>prefix</i>, <i>suffix</i>, and <i>oblique</i> 
+partitions.  They are commonly applied to arithmetic functions 
+such as summation (<tt>+/</tt>), product over (<tt>*/</tt>),
+and continued fractions (<tt>(+%)/</tt>); we will also illustrate 
+them for box (<tt>&lt;</tt>), which shows their structure more clearly:<br>
+
+<pre>
+   a=: 2 3 5 7 11 [ t=: 1 2 1 */ 1 3 3 1
+  
+   ,.&amp;.&gt;((+/\a) ; (+/\.a) ; ((+%)/\a) ; (+//.t);t)
++--+--+-------+--+-------+
+| 2|28|      2| 1|1 3 3 1|
+| 5|26|2.33333| 5|2 6 6 2|
+|10|23| 2.3125|10|1 3 3 1|
+|17|18|2.31304|10|       |
+|28|11|2.31304| 5|       |
+|  |  |       | 1|       |
++--+--+-------+--+-------+
+  
+   &lt;\a
++-+---+-----+-------+----------+
+|2|2 3|2 3 5|2 3 5 7|2 3 5 7 11|
++-+---+-----+-------+----------+
+
+   &lt;\.a
++----------+--------+------+----+--+
+|2 3 5 7 11|3 5 7 11|5 7 11|7 11|11|
++----------+--------+------+----+--+
+
+   &lt;/.t
++-+---+-----+-----+---+-+
+|1|3 2|3 6 1|1 6 3|2 3|1|
++-+---+-----+-----+---+-+
+</pre>
+
+Used dyadically, they provide <i>infix</i>, <i>outfix</i>, and 
+<i>key classification</i>.  For example:<br>
+
+<pre>
+   3 &lt;\ a
++-----+-----+------+
+|2 3 5|3 5 7|5 7 11|
++-----+-----+------+
+ 
+   _3 &lt;\ a
++-----+----+
+|2 3 5|7 11|
++-----+----+
+
+   2&lt;\.a
++------+------+------+-----+
+|5 7 11|2 7 11|2 3 11|2 3 5|
++------+------+------+-----+
+
+   1 2 3 1 3 *//. a
+14 3 55
+
+</pre>
+
+
+<!--bottom jump start--><hr><a href="samp17.htm">&gt;&gt;</a>&nbsp;
+<a href="samp15.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

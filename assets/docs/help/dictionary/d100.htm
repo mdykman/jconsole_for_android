@@ -1,0 +1,100 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>+ Conjugate  -  Plus</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d101.htm">&gt;&gt;</a>&nbsp;
+<a href="d032.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Conjugate</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>+ &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>Plus</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>+ y </tt>is the <i>conjugate</i> of<tt> y</tt> .<tt> </tt>
+For example,<tt> +3j4 </tt>is<tt> 3j_4</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>+ </tt>is defined as in elementary arithmetic, and is extended to 
+complex numbers as usual.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+A complex number<tt> y </tt>multiplied by its conjugate produces a 
+real number equal to the square of its magnitude<tt> |y</tt> .<tt> </tt>
+For example:<br>
+
+<pre>
+   3j4 * 3j_4
+25
+</pre>
+
+The <a href="djdot.htm">function<tt> j.</tt></a><tt> </tt>
+multiplies its argument by the square root 
+of negative one:
+
+<pre>
+   ]i=: i. 5
+0 1 2 3 4
+
+   j. i
+0 0j1 0j2 0j3 0j4
+
+   ]y=: i + 2 * j. i
+0 1j2 2j4 3j6 4j8
+
+   +y
+0 1j_2 2j_4 3j_6 4j_8
+
+   y * +y
+0 5 20 45 80
+
+   %: y * +y
+0 2.23607 4.47214 6.7082 8.94427
+
+   |y
+0 2.23607 4.47214 6.7082 8.94427
+</pre>
+
+The conjugate of<tt> y </tt>can also be expressed 
+as<tt> (|y*y)%y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   (|y*y)%y
+0 1j_2 2j_4 3j_6 4j_8
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d101.htm">&gt;&gt;</a>&nbsp;
+<a href="d032.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

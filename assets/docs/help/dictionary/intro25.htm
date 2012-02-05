@@ -1,0 +1,122 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 25. Linear Functions</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro26.htm">&gt;&gt;</a>&nbsp;
+<a href="intro24.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>25. Linear Functions</b></font><br><br>
+
+A function<tt> f </tt>is said to be <i>linear</i> if<tt> f(x+y) </tt>
+equals<tt> (f x)+(f y) </tt>for all arguments<tt> x </tt>
+and<tt> y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   f=: 3&amp;|. @: +: @: |.
+   ]x=: i.# y=:2 3 5 7 11
+0 1 2 3 4
+
+   x+y                            f x+y
+2 4 7 10 15                    8 4 30 20 14
+
+   (f x),:(f y)                   (f x)+(f y)
+2 0  8  6  4                   8 4 30 20 14
+6 4 22 14 10
+</pre>
+
+A linear function can be defined equivalently as follows:<tt> f </tt>
+is linear if<tt> f@:+ </tt>and<tt> +&amp;f </tt>are equivalent.  For example:<br>
+
+<pre>
+   x f@:+ y                       x +&amp;f y
+8 4 30 20 14                   8 4 30 20 14
+</pre>
+
+If<tt> f </tt>is a linear function, then<tt> f y </tt>
+can be expressed as the <i>matrix product</i><tt> mp&amp;M y</tt> ,<tt> </tt>
+where<br>
+
+<pre>
+   mp=: +/ . *
+   M=: f I=: = i.#y            I <font face=Times size=+1>is an identity matrix</font>
+
+   mp&amp;M y
+6 4 22 14 10 
+   f y
+6 4 22 14 10
+</pre>
+
+Conversely, if<tt> m </tt>is any square matrix of 
+order<tt> #y</tt> ,<tt> </tt>then<tt> m&amp;mp </tt>
+is a linear function on<tt> y</tt> ,<tt> </tt>and if<tt> m </tt>
+is invertible, then<tt> (%.m)&amp;mp </tt>is its inverse:<br><br>
+
+<pre>
+   x=: 1 2 3 [ y=: 2 3 5
+   ]m=: ?. 3 3$9
+3 8 8
+4 2 0
+2 7 4
+   ]n=: %. m
+0.0909091   0.272727 _0.181818
+_0.181818 _0.0454545  0.363636
+ 0.272727 _0.0568182 _0.295455
+   
+   g=: mp&amp;m
+   h=: mp&amp;n
+   
+   x g@:+ y
+45 90 56
+   
+   x +&amp;g y
+45 90 56
+    g h y
+2 3 5
+</pre>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>25.1 &nbsp;</td>
+<td>For each of the following functions, determine the 
+matrix<tt> M </tt>such that<tt> M (mp=: +/ . *) N </tt>
+is equivalent to the result of the function applied 
+to the matrix<tt> N</tt> ,<tt> </tt>and test it for the 
+case<tt> N=: i. 6&nbsp;6</tt> <br>
+
+<pre>
+|.
+-
++:
+(4&amp;*-2&amp;*@|.)
+2&amp;A.
+</pre>
+</td></tr>
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro26.htm">&gt;&gt;</a>&nbsp;
+<a href="intro24.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

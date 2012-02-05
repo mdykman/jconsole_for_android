@@ -1,0 +1,130 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Lab Header</title>
+
+</head><body><!--top jump start--><a href="lab_sections.htm">&gt;&gt;</a>&nbsp;
+<a href="lab_system_overview.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end--><TR valign="baseline"><TD><H1>Lab Header</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+A Lab file has a <I>header</I> defining various nouns, followed by one or more chapters that start with lines beginning <code>Lab Chapter </code>followed by the chapter name. If there is only one chapter, the line <code>Lab Chapter</code> need not be given.
+
+<P>
+Each chapter consists of sections that start with lines beginning <code>Lab Section</code> optionally followed by a section title. Where the section title is not given, it is assumed to be a continuation of the previous section. 
+
+<P>
+<B><I>Header</I></B><br>
+The header is executed as a script in the <code>jlab</code> locale, and may be used to define the following nouns:
+<P>
+<TABLE>
+<tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABTITLE
+<TD VALIGN="TOP" WIDTH=394><P>
+Title (must be given first) 
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABAUTHOR
+<TD VALIGN="TOP" WIDTH=394><P>
+Author (optional, may include address, email etc.)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABCOMMENTS
+<TD VALIGN="TOP" WIDTH=394><P>
+Comments (optional)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABERRORS
+<TD VALIGN="TOP" WIDTH=394><P>
+1=continue after errors in code (default 0)
+</tr>
+
+<tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABFOCUS
+<TD VALIGN="TOP" WIDTH=394><P>
+Return focus to session after advancing the lab
+</tr>
+
+
+
+
+<tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABNOSESSION
+<TD VALIGN="TOP" WIDTH=394><P>
+1=no output to J session (default 0)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABWIDTH
+<TD VALIGN="TOP" WIDTH=394><P>
+Text width (default 61)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABWINDOWED
+<TD VALIGN="TOP" WIDTH=394><P>
+1=run Lab with text in a window (default 1)
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=157><P>
+LABWRAP
+<TD VALIGN="TOP" WIDTH=394><P>
+1=wrap text to LABWIDTH (default 1)
+</tr></table>
+<P>
+The title and author (if given) are shown when the lab is run. 
+
+<P>
+Comments are not shown when the lab is started.
+
+<P>
+Continue after errors should be on if you intend to demonstrate errors in your J code, otherwise errors are signalled to the user. By default this is 0 (off).
+
+<P>
+Set no session output if you do not want to write to the J execution session. This may be appropriate for labs where there are no code examples; the labs may still contain code within keywords.
+
+<P>
+Run in window shows the lab text in a window. By default this is 1 (on); you may want to set this off for labs that create their own windows.
+
+<P>
+Text wrap and text width: by default text wrap is on, and means that any text output to the J execution window is wrapped to the specified text width (default 61).
+
+<P>
+The header may also contain any other required definitions, such as initialization code that is to be run at the beginning of each chapter. You can invoke any such definitions within <code>PREPARE</code> keywords in the first section of the chapter (see below). Since the header is defined in the jlab locale, subsequent references must use the full locale name.
+
+<P>
+<B><I>Chapters</I></B><br>
+Chapters are delimited by a line beginning <code>Lab Chapter</code>, for example:
+
+<pre>
+Lab Chapter Function Rank
+</pre>
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="lab_sections.htm">&gt;&gt;</a>&nbsp;
+<a href="lab_system_overview.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

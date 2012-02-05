@@ -1,0 +1,78 @@
+Linux Specific Notes for JOD 0.9.2 (May 2011)
+
+This is the first Linux compatible version of JOD. Before using
+JOD on linux machines please read these notes.
+
+1) JOD source code is distributed in the JODSOURCE addon. Install the 
+JODSOURCE addon and run the script:
+
+  ~addons/general/jodsource/jodsourcesetup.ijs 
+
+This script installs the JOD development dictionaries using my recommended path structure.
+After running (jodsourcesetup.ijs) you should see directories like: ('john' is my $HOME)
+
+  /home/john/jod/j701/joddev
+  /home/john/jod/j701/jod
+  /home/john/jod/j701/utils
+  
+To view verbs described in following items these dictionaries must be available.
+
+2) JOD was originally developed on Windows. The port to Linux was
+done on a 32 bit Ubuntu 11.0x system. The only Linux library call
+made by JOD occurs in the (guids) verb. 
+
+  NB. to view (guids) (install JODSOURCE item 1)
+  od ;:'joddev jod utils' [ 3 od ''
+  disp ;:'guids'
+
+(guids) works fine on 32 bit Ubuntu Linux machines. It may work on 64 bit 
+Linux as well.  The remaining host dependencies derive from shell commands. 
+JOD makes very limited use of Linux shell commands. Shell commands are 
+called primarily to move, rename and copy files. They should work on 
+any strain of Linux or Unix. However, JOD has only been tested on 32 bit Ubuntu!
+
+3) JOD creates host files and directories and assumes it has the necessary
+rights to read, write and move these files. During development I put all my
+JOD dictionaries in my $HOME (/home/john) directory.
+
+  NB. to view verbs that manipulate host files (install JODSOURCE item 1)
+  od ;:'joddev jod utils' [ 3 od ''
+  disp ;:'renamefiles copyfiles'
+
+4) JOD requires rooted dictionary paths, i.e., your paths must begin with a slash /.
+
+5) JOD uses J's configured web browser and pdf reader. Make sure you
+have a browser and reader setup.  
+
+If you have not configured a J web browser JOD will attempt to use chromium-browser
+to browse online help. If you do not have Chrome installed (jodhelp) will
+not work.
+   
+   NB. od ;:'joddev jod utils' [ 3 od'' NB. required dictionaries
+   disp 'jodhelp'
+
+Similarily JOD will use the /usr/evince pdf reader if you have not specified a pdf reader.
+
+5) DO NOT USE blanks in Linux JOD paths.  Blanks may produce errors in 
+JOD generated shell commands.  On Windows machines you can enclose blank
+infested paths with double quotes like "c:\Program Files\".  I am not sure how to
+do something similiar with Linux paths.
+
+6) JOD tests volume space before creating, copying or restoring backups. On Windows
+free disk space is returned by an API call.  On Linux the (df) shell command is used.
+The df command returns free space for all mounted volumes.  I only need the volume
+that contains JOD dictionary files but I do not know how to determine the volume
+name from a linux file path.  Hence I return the smallest amount of free space for 
+all mounted volumes.  See the JOD (freedisk) verb for details. If you have really
+small volumes mounted JOD may refuse to create, backup or restore dictionaries.
+
+  NB. od ;:'joddev jod utils' [ 3 od'' NB. required dictionaries
+  disp 'freedisk'
+  
+Finally, If you encounter problems using JOD please email me at: bakerjd99@gmail.com
+
+
+
+
+
+

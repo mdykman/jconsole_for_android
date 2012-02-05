@@ -1,0 +1,108 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>=. Is (Local)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d010.htm">&gt;&gt;</a>&nbsp;
+<a href="d000.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Copula</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>=. </font><b><font size=+2>Local </font></b></td>
+<td align=right  width=34%><font face="Courier New" size=+3>=: </font><b><font size=+2>Global</font></b></td>
+</tr></table>
+<br>
+
+<table width=100% bgcolor=#eeeeee><tr><td>
+The copula is used to assign a referent to a name, as 
+in<tt> a=:3 </tt>and in<tt> sum=:+/</tt> .<tt> </tt> 
+The copula<tt> <b>=.</b> </tt>is <i>local</i> as discussed under
+<a href="d310n.htm">Explicit Definition (<b><tt>:</tt></b>)</a>,
+and<tt> <b>=:</b> </tt>is <i>global</i>, 
+except that global assignment to a local name is not permitted and 
+an assignment to a locative is always global.
+<br><br>
+
+Copulas may also be used <i>indirectly</i>, with the name or names 
+specified as a character or boxed list.
+If<tt> y </tt>is the expression to the right of the copula,
+then a single name is assigned<tt> y</tt> ,<tt> </tt>
+otherwise each name is assigned<tt> &gt;y </tt>if<tt> y </tt>
+is an atom, otherwise the<tt> i</tt>-th name is 
+assigned<tt> &gt;i{y</tt> .<tt> </tt>
+If the character list begins with<b><tt> ` </tt></b>then gerund 
+referents are evoked.
+<br>&nbsp;</td>
+</tr></table>
+<br>
+
+For example:<br>
+
+<pre>
+   f=: 3 : 0
+a=. +:y
+b=: *:a
+10*b
+)
+
+   a=: b=: 678
+   a,b
+678 678
+
+   f 3 
+360
+
+   a,b 
+678 36
+
+   x=: 'abc';'c'
+   (x) =: 3 4 ; 5 6 7
+   abc
+3 4
+   c
+5 6 7
+</pre>
+
+Note that the parentheses around the name<tt> x </tt>force it to be 
+evaluated before the assignment specified by the copula is effected.<br>
+
+<pre>
+   'alpha beta'=: i.2 4
+   alpha
+0 1 2 3
+
+   beta 
+4 5 6 7
+
+   '`sum sqrt'=: +/ ` %:
+   sum 3 1 4 2
+10
+   sqrt 2
+1.41421
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="d010.htm">&gt;&gt;</a>&nbsp;
+<a href="d000.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

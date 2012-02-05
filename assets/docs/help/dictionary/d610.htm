@@ -1,0 +1,101 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>` Tie (Gerund)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d612.htm">&gt;&gt;</a>&nbsp;
+<a href="d602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Tie</font></b></td>
+<td align=center width=55%><font face="Courier New" size=+3>m`n &nbsp;m`v &nbsp;u`n &nbsp;u`v</font></td>
+<td align=right  width=12%><b><font size=+2>&nbsp;</font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+In English, a gerund is a noun that carries the force of 
+a verb, as does the noun <i>cooking</i> in <i>the art of cooking</i>.  
+The tie applies to two verbs to produce a gerund.  
+Gerunds are commonly used with <a href="d420.htm">Insert (<tt>/</tt>)</a> and 
+with <a href="d621.htm">Agenda (<tt>@.</tt>)</a>:
+<br>&nbsp;</td>
+</tr></table><br>
+
+<pre>
+   ]g=: +`*
++-+-+
+|+|*|
++-+-+
+
+   (g/1 2 3 4 5) ; (1+2*3+4*5)
++--+--+
+|47|47|
++--+--+
+</pre>
+
+More generally, tie produces gerunds as follows:<tt> u`v </tt>
+is<tt> au,av</tt> ,<tt> </tt>where<tt> au </tt>and<tt> av </tt>
+are the (boxed noun) <i>atomic representations</i><tt> </tt>
+(<a href="dx005.htm"><tt>5!:1</tt></a>)<tt> </tt>of<tt> u </tt>
+and<tt> v</tt> .<tt> </tt>  
+Moreover,<tt> m`n </tt>is<tt> m,n </tt>and<tt> m`v </tt>
+is<tt> m,av </tt>and<tt> u`n </tt>is<tt> au,n</tt> .<tt> </tt>  
+See <a href="ref.htm#12">Bernecky and Hui [12]</a>.  
+Gerunds may also be produced directly by boxing. Thus:<br>
+
+<pre>
+   ]h=: '+' ; '*'
++-+-+
+|+|*|
++-+-+
+
+   h/1 2 3 4 5
+47
+</pre>
+
+The atomic representation of a noun (used so as to 
+distinguish a noun such as<tt> '+' </tt>from the verb<tt> +</tt>)<tt> </tt>
+is given by the following function:<br>
+
+<pre>
+   (ar=: [: &lt; (,'0')&quot;_ ; ]) '+'
++-----+
+|+-+-+|
+||0|+||
+|+-+-+|
++-----+
+
+   *`(ar '+')
++-+-----+
+|*|+-+-+|
+| ||0|+||
+| |+-+-+|
++-+-----+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d612.htm">&gt;&gt;</a>&nbsp;
+<a href="d602.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,190 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>m : 0 Space Consumption Reduced</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="hkravel.htm">&gt;&gt;</a>&nbsp;
+<a href="nsievesp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">m : 0 </font>
+<font size=+3>Space Consumption Reduced</font></b>
+</td><td align=right>
+initial writing: 2000-12-19<br>last updated: 2004-10-26
+</td></tr></table>
+<br>
+
+The space consumed by verbs, adverbs, and conjunctions have
+been reduced.  For explicit definitions, the reduction
+is typically by a factor of between 2 and 3; for tacit
+definitions, the reduction (if any) is very minor.
+The space reduction obtained from economizing in several areas, 
+including:<br><br>
+
+<table>
+<tr>
+<td valign=top>&#149;</td>
+<td>Discarding from the representation all comments and 
+non-essential white space; presumably the source text is
+available <i>literatim</i> in some source script.<tt> </tt>
+(<a href="../dictionary/dx009.htm#40"><tt>9!:40</tt></a><tt> </tt>
+and<tt> </tt><a href="../dictionary/dx009.htm#40"><tt>9!:41</tt></a>
+<tt> </tt>control whether comments and 
+non-essential white space are retained.)</td></tr>
+
+<tr>
+<td valign=top>&#149;</td>
+<td>Sharing the space for some commonly-used constants</td></tr>
+
+<td valign=top>&#149;</td>
+<td>Limiting the maximum number of lines to 65535</td></tr>
+
+<td valign=top>&#149;</td>
+<td>Limiting the maximum number of words per line to 65535</td></tr>
+
+<td valign=top>&#149;</td>
+<td>Limiting the maximum length of the non-locale part of a name to 255</td></tr>
+
+<td valign=top>&#149;</td>
+<td>Renumbering the code used for control words 
+from<tt> n </tt>to<tt> 1+2^.n</tt></td></tr>
+</table>
+
+<br>
+The verb<tt> </tt><a href="../dictionary/dx007.htm#5"><tt>7!:5</tt></a><tt> </tt>(new in this release) 
+can be used to determine the space consumed by an object.
+The verb<tt> sp </tt> defined below can be used in previous
+releases to compute the same measure; it is destructive in that it 
+works by erasing the object named in the argument.<br>
+
+<pre>
+sp=: 3 : 0
+ p=. 7!:0 ''
+ q=. 7!:0 ''
+ p=. 7!:0 ''
+ 1 [ 4!:55 y.
+ q=. 7!:0 ''
+ p-q
+)
+
+   7!:5 &lt;'scriptmake_j_'                <font face=Times size=3>non-destructive</font>
+4544
+   sp &lt;'scriptmake_j_'                  <font face=Times size=3>destructive: erases argument</font>
+4544
+   scriptmake_j_
+|value error: scriptmake_j_
+</pre>
+
+The non-noun system utility definitions in the<tt> j </tt>locale 
+give an indication of the amount of reduction:<br><br>
+
+<table>
+<tr>
+<td>&nbsp;</td>
+<td><b>Name</b></td> 
+<td><b>J 4.06 <tt>&nbsp; &nbsp;</tt></b></td> 
+<td><b>J 4.05 <tt>&nbsp; &nbsp; &nbsp;</tt></b></td>
+<td><b>Ratio</b></td>
+</tr>
+
+<tr><td><b>Tacit</b></td></tr>
+
+<tr><td>&nbsp;</td><td><tt>boxopen        </tt></td> <td><tt>&nbsp;448</tt></td> <td><tt>&nbsp;&nbsp;448</tt></td> <td><tt>1.00</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>build3         </tt></td> <td><tt>6400</tt></td>      <td><tt>&nbsp;9024</tt></td>      <td><tt>1.41</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>cleantable     </tt></td> <td><tt>&nbsp;768</tt></td> <td><tt>&nbsp;&nbsp;896</tt></td> <td><tt>1.17</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>exist          </tt></td> <td><tt>1152</tt></td>      <td><tt>&nbsp;1472</tt></td>      <td><tt>1.28</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>fexist         </tt></td> <td><tt>1152</tt></td>      <td><tt>&nbsp;1472</tt></td>      <td><tt>1.28</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>fileprintsetup </tt></td> <td><tt>&nbsp;896</tt></td> <td><tt>&nbsp;1216</tt></td>      <td><tt>1.36</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>filex          </tt></td> <td><tt>&nbsp;768</tt></td> <td><tt>&nbsp;&nbsp;832</tt></td> <td><tt>1.08</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>fullname       </tt></td> <td><tt>&nbsp;192</tt></td> <td><tt>&nbsp;&nbsp;384</tt></td> <td><tt>2.00</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>getpath        </tt></td> <td><tt>&nbsp;896</tt></td> <td><tt>&nbsp;&nbsp;960</tt></td> <td><tt>1.07</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>info           </tt></td> <td><tt>&nbsp;192</tt></td> <td><tt>&nbsp;&nbsp;384</tt></td> <td><tt>2.00</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>pathsep        </tt></td> <td><tt>&nbsp;&nbsp;&nbsp;0</tt></td> <td><tt>&nbsp;&nbsp;&nbsp;&nbsp;0</tt></td> <td><tt>0.00</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>tolower        </tt></td> <td><tt>3712</tt></td>      <td><tt>&nbsp;3712</tt></td> <td><tt>1.00</tt></td> </tr>
+
+<tr><td><b>Explicit</b></td></tr>
+
+<tr><td>&nbsp;</td><td><tt>builder        </tt></td> <td><tt>2688</tt></td>      <td><tt>&nbsp;8960</tt></td>      <td><tt>3.33</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>buildpublic    </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;2112</tt></td>      <td><tt>2.54</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>buildsource    </tt></td> <td><tt>1792</tt></td>      <td><tt>&nbsp;5440</tt></td>      <td><tt>3.04</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>cename         </tt></td> <td><tt>&nbsp;640</tt></td> <td><tt>&nbsp;1664</tt></td>      <td><tt>2.60</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>classwizard    </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;1792</tt></td>      <td><tt>2.15</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>config         </tt></td> <td><tt>&nbsp;640</tt></td> <td><tt>&nbsp;1152</tt></td>      <td><tt>1.80</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>debug          </tt></td> <td><tt>1216</tt></td>      <td><tt>&nbsp;3392</tt></td>      <td><tt>2.79</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>demos          </tt></td> <td><tt>&nbsp;640</tt></td> <td><tt>&nbsp;1152</tt></td>      <td><tt>1.80</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>dosname        </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;2752</tt></td>      <td><tt>3.31</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>edit           </tt></td> <td><tt>4096</tt></td>      <td><tt>11776</tt></td>           <td><tt>2.88</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>editfind       </tt></td> <td><tt>&nbsp;768</tt></td> <td><tt>&nbsp;1792</tt></td>      <td><tt>2.33</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>editinputlog   </tt></td> <td><tt>4160</tt></td>      <td><tt>11712</tt></td>           <td><tt>2.82</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>editinputlogs  </tt></td> <td><tt>3904</tt></td>      <td><tt>11520</tt></td>           <td><tt>2.95</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>fif            </tt></td> <td><tt>1344</tt></td>      <td><tt>&nbsp;3456</tt></td>      <td><tt>2.57</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>filenew        </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;1920</tt></td>      <td><tt>2.31</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>filenewform    </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;1856</tt></td>      <td><tt>2.23</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>fileopen       </tt></td> <td><tt>&nbsp;960</tt></td> <td><tt>&nbsp;2496</tt></td>      <td><tt>2.60</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>fileprint      </tt></td> <td><tt>1600</tt></td>      <td><tt>&nbsp;3456</tt></td>      <td><tt>2.16</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>formeditrun    </tt></td> <td><tt>2304</tt></td>      <td><tt>&nbsp;6336</tt></td>      <td><tt>2.75</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>getconfig      </tt></td> <td><tt>&nbsp;896</tt></td> <td><tt>&nbsp;2240</tt></td>      <td><tt>2.50</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>getscripts     </tt></td> <td><tt>6144</tt></td>      <td><tt>17984</tt></td>           <td><tt>2.93</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>gettarget      </tt></td> <td><tt>3072</tt></td>      <td><tt>&nbsp;9408</tt></td>      <td><tt>3.06</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>gettargetlocale &nbsp; &nbsp;</tt></td> <td><tt>2688</tt></td> <td><tt>&nbsp;6912</tt></td> <td><tt>2.57</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>globaldefs     </tt></td> <td><tt>2432</tt></td>      <td><tt>&nbsp;5184</tt></td>      <td><tt>2.13</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>gridwizard     </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;1792</tt></td>      <td><tt>2.15</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>help           </tt></td> <td><tt>1152</tt></td>      <td><tt>&nbsp;2368</tt></td>      <td><tt>2.06</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>htmlhelp       </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;1792</tt></td>      <td><tt>2.15</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>jrequires      </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;1600</tt></td>      <td><tt>1.92</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>lab            </tt></td> <td><tt>&nbsp;768</tt></td> <td><tt>&nbsp;1792</tt></td>      <td><tt>2.33</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>load           </tt></td> <td><tt>&nbsp;832</tt></td> <td><tt>&nbsp;1600</tt></td>      <td><tt>1.92</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>loadd          </tt></td> <td><tt>&nbsp;896</tt></td> <td><tt>&nbsp;1664</tt></td>      <td><tt>1.86</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>loadp          </tt></td> <td><tt>1088</tt></td>      <td><tt>&nbsp;2112</tt></td>      <td><tt>1.94</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>loadreset      </tt></td> <td><tt>&nbsp;576</tt></td> <td><tt>&nbsp;1024</tt></td>      <td><tt>1.78</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>loads          </tt></td> <td><tt>3008</tt></td>      <td><tt>&nbsp;8576</tt></td>      <td><tt>2.85</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>macname        </tt></td> <td><tt>&nbsp;576</tt></td> <td><tt>&nbsp;1024</tt></td>      <td><tt>1.78</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>open           </tt></td> <td><tt>2944</tt></td>      <td><tt>&nbsp;7296</tt></td>      <td><tt>2.48</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>openfiles      </tt></td> <td><tt>1728</tt></td>      <td><tt>&nbsp;4992</tt></td>      <td><tt>2.89</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>origin         </tt></td> <td><tt>&nbsp;576</tt></td> <td><tt>&nbsp;1536</tt></td>      <td><tt>2.67</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>printfiles     </tt></td> <td><tt>2176</tt></td>      <td><tt>&nbsp;4672</tt></td>      <td><tt>2.15</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>prints         </tt></td> <td><tt>1664</tt></td>      <td><tt>&nbsp;3840</tt></td>      <td><tt>2.31</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>projectmanager </tt></td> <td><tt>1408</tt></td>      <td><tt>&nbsp;3456</tt></td>      <td><tt>2.45</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>publish        </tt></td> <td><tt>&nbsp;768</tt></td> <td><tt>&nbsp;1728</tt></td>      <td><tt>2.25</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>putconfig      </tt></td> <td><tt>&nbsp;640</tt></td> <td><tt>&nbsp;1344</tt></td>      <td><tt>2.10</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>require        </tt></td> <td><tt>1344</tt></td>      <td><tt>&nbsp;3904</tt></td>      <td><tt>2.90</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>save           </tt></td> <td><tt>3072</tt></td>      <td><tt>&nbsp;9408</tt></td>      <td><tt>3.06</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>scriptmake     </tt></td> <td><tt>4544</tt></td>      <td><tt>10944</tt></td>           <td><tt>2.41</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>scripts        </tt></td> <td><tt>3520</tt></td>      <td><tt>11136</tt></td>           <td><tt>3.16</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>selactive      </tt></td> <td><tt>2112</tt></td>      <td><tt>&nbsp;5120</tt></td>      <td><tt>2.42</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>unixname       </tt></td> <td><tt>&nbsp;576</tt></td> <td><tt>&nbsp;&nbsp;960</tt></td> <td><tt>1.67</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>wpreset        </tt></td> <td><tt>1472</tt></td>      <td><tt>&nbsp;4032</tt></td>      <td><tt>2.74</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>wpsave         </tt></td> <td><tt>3904</tt></td>      <td><tt>11392</tt></td>           <td><tt>2.92</tt></td> </tr>
+<tr><td>&nbsp;</td><td><tt>wpset          </tt></td> <td><tt>3008</tt></td>      <td><tt>&nbsp;6656</tt></td>      <td><tt>2.21</tt></td> </tr>
+   
+</table>
+<br>
+
+<br>
+<!--bottom jump start--><hr><a href="hkravel.htm">&gt;&gt;</a>&nbsp;
+<a href="nsievesp.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

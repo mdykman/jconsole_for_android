@@ -1,0 +1,68 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Listing the Data Sources</title>
+
+</head><body><!--top jump start--><a href="odbc_error_messages.htm">&gt;&gt;</a>&nbsp;
+<a href="data_driver.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Listing the Data Sources</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+The list of data sources that are specified in the ODBC Control Panel dialog box can be retrieved under program control. The verb <code>ddsrc</code> requests this information. In J Win95, the result is the list of data sources; in J Win31, the result is a statement handle that may be used with <code>ddfet</code> to return the list of data sources.
+
+<pre>
+   ddsrc''
++----------------------+------------------------------------+
+|MS Access 7.0 Database|Microsoft Access Driver (*.mdb)     |
++----------------------+------------------------------------+
+|Excel Files           |Microsoft Excel Driver (*.xls)      |
++----------------------+------------------------------------+
+|FoxPro Files          |Microsoft FoxPro Driver (*.dbf)     |
++----------------------+------------------------------------+
+|Text Files            |Microsoft Text Driver (*.txt; *.csv)|
++----------------------+------------------------------------+
+|dBASE Files           |Microsoft dBase Driver (*.dbf)      |
++----------------------+------------------------------------+
+|jdata                 |Microsoft dBase Driver (*.dbf)      |
++----------------------+------------------------------------+
+</pre>
+
+<P>
+The result will depend on the drivers you have set up. Note that you should see an entry for <I>jdata</I>, which is the data source name you assigned to the examples\data subdirectory. 
+
+<P>
+The result has 2 columns: the data source name, and a description of the driver.
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="odbc_error_messages.htm">&gt;&gt;</a>&nbsp;
+<a href="data_driver.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

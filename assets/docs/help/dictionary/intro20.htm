@@ -1,0 +1,180 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 20. Rank</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro21.htm">&gt;&gt;</a>&nbsp;
+<a href="intro19.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>20. Rank</b></font><br><br>
+
+The shape<tt> </tt>(<tt>$</tt>),<tt> </tt>tally<tt> </tt>
+(<tt>#</tt>),<tt> </tt>and rank<tt> </tt>(<tt>#@$</tt>),<tt> </tt>
+of a noun are illustrated by the noun<tt> report</tt> ,<tt> </tt>
+which may be construed as a report covering two years 
+of four quarters of three months each:<br>
+
+<pre>
+   ]report=: i. 2 4 3
+ 0  1  2
+ 3  4  5
+ 6  7  8
+ 9 10 11
+
+12 13 14
+15 16 17
+18 19 20
+21 22 23
+
+   ($ ; # ; #@$) report        <font face=Times size=+1>Shape, Number of items, Rank</font>
++-----+-+-+
+|2 4 3|2|3|
++-----+-+-+
+</pre>
+
+The last <i>k</i> axes determine a <i>k-cell</i> of a noun; 
+the 0-cells of<tt> report </tt>are the atoms (such as<tt> 4 </tt>
+and<tt> 14</tt>),<tt> </tt>the 1-cells are the three-element 
+quarterly reports, and the two-cells (or <i>major cells</i> 
+or <i>items</i>) are the two four-by-three yearly reports. <br><br>
+
+The rank conjunction<tt> &quot; </tt>is used in the phrase<tt> f&quot;k </tt>
+to apply a function<tt> f </tt>to each of the<tt> k-</tt>cells of 
+its argument.  For example:<br>
+
+<pre>
+   ,report
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+
+   ,&quot;2 report
+ 0  1  2  3  4  5  6  7  8  9 10 11
+12 13 14 15 16 17 18 19 20 21 22 23
+
+   &lt;@i. s=: 2 5 
++---------+ 
+|0 1 2 3 4|
+|5 6 7 8 9|
++---------+
+   &lt;@i.&quot;0 s
++---+---------+
+|0 1|0 1 2 3 4|
++---+---------+
+</pre>
+
+Both the left and right ranks of a dyad may be specified.  Thus:<br>
+
+<pre>
+   10 11 12 (,&quot;0 1 ; ,&quot;1 1 ; ,&quot;1) 0 1 2
++--------+--------------+--------------+
+|10 0 1 2|10 11 12 0 1 2|10 11 12 0 1 2|
+|11 0 1 2|              |              |
+|12 0 1 2|              |              |
++--------+--------------+--------------+
+</pre>
+
+The <i>basic characteristics</i> adverb<tt> b. </tt>is 
+very useful in analyzing functions (or expressions 
+that define them) with respect to their ranks.  For example:<br>
+
+<pre>
+   (# b. 0) ; (+/\ b. 0) ; (+/\ % #) b. 0
++-----+-----+-----+
+|_ 1 _|_ 0 _|_ _ _|
++-----+-----+-----+
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>20.1 &nbsp;</td>
+<td>Observe the results of the following uses of 
+the monads produced by the rank conjunction, and comment on them: <br>
+
+<pre>
+a=: i. 3 4 5
+&lt;&quot;0 a
+&lt;&quot;1 a
+&lt;&quot;2 a
+&lt;&quot;3 a
+&lt; a
+&lt;&quot;_1 a
+&lt;&quot;_2 a
+mean=: +/ % #
+mean a
+mean&quot;1 a
+mean&quot;2 a
+</pre>
+
+Answer:<tt> &lt;&quot;k </tt>applies<tt> &lt; </tt>to each cell 
+of rank<tt> k</tt> ,<tt> </tt>with<tt> &lt;&quot;(#$a) a </tt>
+being equivalent to<tt> &lt;a</tt> .<tt> </tt>Moreover, 
+a negative value of<tt> k </tt>specifies a <i>complementary</i> 
+rank that is effectively<tt> |k </tt>less than the rank of 
+the argument<tt> a</tt> .<br><br>
+</td></tr>
+  
+<tr><td valign=top>20.2 &nbsp;</td>
+<td>Use the results of the following experiments to state 
+the relation between the conjunctions<tt> @ </tt>(<i>Atop</i>)<tt> </tt>
+and<tt> @: </tt>(<i>At</i>), and compare your conclusions 
+with the dictionary definition: <br>
+
+<pre>
+(g=: &lt;&quot;2) a=: i. 3 4 5
+|. @: g a
+|. @ g a
+|: @: (&lt;&quot;1) a
+|: @ (&lt;&quot;1) a
+</pre>
+  
+Answer: The rank of the function<tt> |. @: g </tt>is itself 
+infinite and<tt> |. </tt>therefore applies to the entire list 
+result of<tt> g a</tt> ,<tt> </tt>consequently reversing it.  
+On the other hand, the function<tt> f @ g </tt><i>inherits</i> 
+the rank of<tt> g</tt> ,<tt> </tt>and<tt> |. </tt>therefore 
+applies individually to the atoms produced by<tt> g</tt> ,<tt> </tt>
+producing no effect.<br><br>
+</td></tr>
+  
+<tr><td valign=top>20.3 &nbsp;</td>
+<td>Use the results of the following experiments to comment 
+on the use of the rank conjunction in dyads: <br>
+
+<pre>
+b=: 'ABC'
+c=: 3 5 $ 'abcdefghijklmno'
+c
+b,c
+b ,&quot;0 1 c
+b ,&quot;1 1 c
+b ,&quot;1 c
+</pre>
+</td></tr>
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro21.htm">&gt;&gt;</a>&nbsp;
+<a href="intro19.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

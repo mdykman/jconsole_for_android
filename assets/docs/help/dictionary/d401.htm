@@ -1,0 +1,110 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>#. Base 2  -  Base</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d402.htm">&gt;&gt;</a>&nbsp;
+<a href="d400.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Base Two</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>#. &nbsp;1 1 1</font></td>
+<td align=right  width=33%><b><font size=+2>Base</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>#.y </tt>is the base-2 value of<tt> y</tt>,<tt> </tt>
+that is,<tt> 2#.y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   #. 1 0 1 0
+10
+
+   #. 2 3$ 0 0 1,1 0 1
+1 5
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x#.y </tt>is a weighted sum of the items of<tt> y</tt> ;<tt> </tt>
+that is,<tt> +/w*y</tt> ,<tt> </tt>where<tt> w </tt>is the product 
+scan<tt> */\.}.x,1</tt> .<tt> </tt>An atomic argument is reshaped 
+to the shape of the other argument.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   ]a=: i. 3 4
+0 1  2  3
+4 5  6  7
+8 9 10 11
+
+   10 #.a
+123 4567 9011
+
+   8 #. a
+83 2423 4763
+
+   ]time=: 0 1 3,1 1 3,:2 4 6
+0 1 3
+1 1 3
+2 4 6
+
+   x=: 24 60 60
+   x #. time
+63 3663 7446
+
+   x,1
+24 60 60 1
+
+   ]w=: */\.}. x,1
+3600 60 1
+
+   w *&quot;1 time
+   0  60 3
+3600  60 3
+7200 240 6
+
+   +/&quot;1 w *&quot;1 time
+63 3663 7446
+
+   w +/@:* &quot;1 time
+63 3663 7446
+
+   c=: 3 1 4 2 [ y=: 0 1 2 3 4 5
+   c p. y                    <font face=Times size=+1>Polynomial with coefficients</font> c
+3 10 37 96 199 358
+
+   y #.&quot;0 1 |.c
+3 10 37 96 199 358
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d402.htm">&gt;&gt;</a>&nbsp;
+<a href="d400.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

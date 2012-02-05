@@ -1,0 +1,97 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Amend }</title>
+
+</head><body><!--top jump start--><a href="select_without_from.htm">&gt;&gt;</a>&nbsp;
+<a href="from_scattered_index.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Amend } (modify selected)</h1>
+Amend is an adverb whose result is a dyad that is used to modify an array. The left argument of amend is usually a noun. Let's look at an example:<br>
+
+<pre>   change_index_two =. 2}</pre>
+The verb <font face=courier size=-1>change_index_two</font> is used dyadically. Its right argument is the original data and the left argument is a new value for index position <font face=courier size=-1>2</font>.<br>
+
+<pre>   15 change_index_two 5 6 7 8
+5 6 15 8
+   30 change_index_two 23 18 17
+23 18 30
+   'b' change_index_two 'cat'
+cab
+   15 (2}) 5 6 7 8
+5 6 15 8
+   30 (2}) 23 18 17
+23 18 30
+   'b' 2} 'cat'
+cab</pre>
+This extends in ways that you might expect.<br>
+
+<pre>   23 (1 4}) 7 7 7 7 7
+7 23 7 7 23
+   23 24 (1 4}) 7 7 7 7 7
+7 23 7 7 24
+   'bet' 2 5 8} 'cattumbiz'
+cabtuebit</pre>
+In general an amend <font face=courier size=-1>x s} y</font> is defined as:
+<blockquote>The result is formed by replacing by <font face=courier size=-1>x</font> those parts of <font face=courier size=-1>y</font> that are selected by <font face=courier size=-1>s</font>. The <font face=courier size=-1>s</font> argument to <font face=courier size=-1>}</font> is treated the same way as the left argument of the verb <font face=courier size=-1>{</font> .</blockquote>
+Amend allows us to give selected parts of an array new values. The amend argument gives the indexing information about what data to modify. This selects the same elements to be modified as it would if used as the left argument to the dyad verb <font face=courier size=-1>{</font> .<br>
+<br>
+ If you understand from, then amend is quite simple.<br>
+
+<pre>   m =. i. 3 4
+   1 { m
+4 5 6 7
+   23 23 23 23 (1}) m
+ 0  1  2  3
+23 23 23 23
+ 8  9 10 11
+   23 (1}) m
+ 0  1  2  3
+23 23 23 23
+ 8  9 10 11</pre>
+You can first use the selection information to see what data is to be modified.<br>
+
+<pre>   1 2 { m
+4 5  6  7
+8 9 10 11</pre>
+The selected data is a subarray of shape <font face=courier size=-1>2 4 </font>. So you need a subarray of shape <font face=courier size=-1>2 4</font> to replace the selected data.<br>
+
+<pre>  (2 4 $ 23 23 23 23 24 24 24 24) (1 2}) m
+ 0  1  2  3
+23 23 23 23
+24 24 24 24</pre>
+Suppose you want to modify the subarray that is selected as rows <font face=courier size=-1>1</font> and <font face=courier size=-1>2</font>, and columns <font face=courier size=-1>0</font> and <font face=courier size=-1>3</font> with the value <font face=courier size=-1>12</font>.<br>
+
+<pre>   12 ((&lt;1 2;0 3)}) m
+ 0 1  2  3
+12 5  6 12
+12 9 10 12</pre>
+Modify that subarray by replacing it with the array in the left argument.<br>
+
+<pre>   (2 2 $ 23 24 25 26) ((&lt;1 2;0 3)}) m
+ 0 1  2  3
+23 5  6 24
+25 9 10 26</pre>
+<!--bottom jump start--><hr><a href="select_without_from.htm">&gt;&gt;</a>&nbsp;
+<a href="from_scattered_index.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

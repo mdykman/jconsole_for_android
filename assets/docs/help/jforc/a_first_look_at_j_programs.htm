@@ -1,0 +1,453 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>A First Look At J Programs</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="declarations.htm">&gt;&gt;</a>&nbsp;
+<a href="preliminaries.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734316"></a><a name="_Toc5414533"></a><a name="_Toc1896173"><span
+style='mso-bookmark:_Toc5414533'><span style='mso-bookmark:_Toc191734316'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>4. <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>A
+First Look At J Programs</span></span></a></h1>
+
+<p class=MsoBodyText>Before we get into learning the details of J, let's look
+at a couple of realistic, if simple, problems, comparing solutions in C to
+solutions in J.&nbsp; The J code will be
+utterly incomprehensible to you, but we will nevertheless be able to see some
+of the differences between J programs and C programs.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you stick with me through this book, you
+will be able to come back at the end and understand the J code presented here.</p>
+
+<p class=Section><a name="_Toc191734317"></a><a name="_Toc5414534"></a><a
+name="_Toc5414390"></a><a name="_Toc1896174"><span style='mso-bookmark:_Toc5414390'><span
+style='mso-bookmark:_Toc5414534'><span style='mso-bookmark:_Toc191734317'>Average
+Daily Balance</span></span></span></a></p>
+
+<p class=MsoBodyText>Here is a program a bank might use.<span
+style='mso-spacerun:yes'>&nbsp; </span>It calculates some information on accounts given
+the transactions that were performed during a month.<span
+style='mso-spacerun:yes'>&nbsp; </span>We are given two files, each one containing
+numbers in lines ended by (CR,LF) and numeric fields separated by TAB
+characters (they could come from spreadsheets).&nbsp;
+Each line in the Accounts file contains an account number followed by
+the balance in the account at the beginning of the month.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each line in the Journal file contains an
+account number, the day of the month for a transaction, and the amount of the transaction
+(positive if money goes into the account, negative if money goes out).<span
+style='mso-spacerun:yes'>&nbsp; </span>The records in the Journal file are in order
+of date, but not in order of account.&nbsp; We
+are to match each journal entry with its account, and print a line for each
+account giving the starting balance, ending balance, and average daily balance
+(which is the average of each day's closing balance).<span
+style='mso-spacerun:yes'>&nbsp; </span>The number of days in the month is an input
+to the program, as are the filenames of the two files.</p>
+
+<p class=MsoBodyText>I will offer C code and J code to solve this problem.<span
+style='mso-spacerun:yes'>&nbsp; </span>To keep things simple, I am not going to deal
+with file-I/O errors, or data with invalid format, or account numbers in the
+Journal that don't match anything in the Accounts file.</p>
+
+<p class=MsoBodyText>C code to perform this function might look like this:</p>
+
+<p class=Ccodemultipage>#include &lt;stdio.h&gt;</p>
+
+<p class=Ccodemultipage>#define MAXACCT 500</p>
+
+<p class=Ccodemultipage>// Program to process journal and account files,
+printing</p>
+
+<p class=Ccodemultipage>// start/end/avg balance.<span
+style='mso-spacerun:yes'>&nbsp; </span>Parameters are # days in current</p>
+
+<p class=Ccodemultipage>// month, filename of Accounts file, filename of
+Journal file</p>
+
+<p class=Ccodemultipage>void acctprocess(int daysinmo, char * acctfn, char
+*jourfn)</p>
+
+<p class=Ccodemultipage>{</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>FILE fid;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int nacct,
+acctx;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+acctno, openbal, xactnday, xactnamt</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>struct {</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+ano;<span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// account number</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+openbal;<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp; </span>// opening balance</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+prevday;<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp; </span>// day number of last activity</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+currbal;<span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// balance after last
+activity</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+weightbal;<span style='mso-tab-count:1'> </span>// weighted balance: sum of
+closing balances</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}
+acct[MAXACCT];</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// Read
+initial balances; set day to start-of-month, sum of balances to 0</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fid =
+fopen(acctfn);</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(nacct =
+0;2 == fscanf(fid,&quot;%f%f&quot;,acctno,openbal) {</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].ano
+= acctno;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].openbal
+= openbal;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].prevday
+= 1;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].currbal
+= openbal;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].weightbal
+= 0;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>++nacct;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fclose(acctfn);</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// Process
+the journal: for each record, look up the account</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//
+structure; add closing-balance values for any days that</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// ended
+before this journal record; update the balance</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fid =
+fopen(jourfn);</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>while(3 ==
+fscanf(fid,&quot;%f%f%f&quot;,acctno,xactnday,xactnamt) {</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(acctx
+= 0;acct[acctx].ano != acctno;++acctx);</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].weightbal
++=</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].currbal
+* (xactnday - acct[nacct].prevday);</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].currbal
++= xactnamt;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].prevday
+= xactnday;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultipage><o:p>&nbsp;</o:p></p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// Go
+through the accounts.&nbsp; Close the month by
+adding </p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>//
+closing-balance values applicable to the final balance;</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// produce
+output record</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(acctx =
+0;acctx &lt; nacct;++acctx) {</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].weightbal
++= </p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[nacct].currbal
+* (daysinmo - acct[nacct].prevday);</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>printf(&quot;Account
+%d: Opening %d, closing %d, avg %d\n&quot;,</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>acct[acctx].ano,
+acct[acctx].openbal, acct[acctx].currbal,</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style='mso-spacerun:yes'>&nbsp;</span>acct[acctx].weightbal/daysinmo);</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultipage><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fclose(fid);</p>
+
+<p class=Ccodemultipage>}</p>
+
+<p class=MsoBodyText>The corresponding J program would look like this:</p>
+
+<p class=Jcodemultiline>NB. Verb to convert TAB-delimited file into numeric
+array</p>
+
+<p class=Jcodemultiline>rdtabfile =: (0&amp;&quot;.;.2@:(TAB&amp;,)@:}:);._2) @
+ReadFile @&lt;</p>
+
+<p class=Jcodemultiline>NB. Verb to process journal and account files</p>
+
+<p class=Jcodemultiline>NB. y is (# days in current month);(Account filename);</p>
+
+<p class=Jcodemultiline>NB.&nbsp;&nbsp; (Journal
+filename)</p>
+
+<p class=Jcodemultiline>acctprocess =: monad define</p>
+
+<p class=Jcodemultiline>'ndays acctfn jourfn' =: y</p>
+
+<p class=Jcodemultiline>NB. Read files</p>
+
+<p class=Jcodemultiline>'acctano openbal' =. |: rdtabfile acctfn</p>
+
+<p class=Jcodemultiline>'jourano jourday jouramt' =. |: rdtabfile jourfn</p>
+
+<p class=Jcodemultiline>NB. Verb: given list of days y, return # days that</p>
+
+<p class=Jcodemultiline>NB. each balance is a day's closing balance</p>
+
+<p class=Jcodemultiline>wt =. monad : '(-~ 1&amp;(|.!.(&gt;:ndays))) 0{&quot;1 y'</p>
+
+<p class=Jcodemultiline>NB. Verb: given an Account entry followed by the
+Journal</p>
+
+<p class=Jcodemultiline>NB. entries for the account, produce (closing balance),</p>
+
+<p class=Jcodemultiline>NB.&nbsp; (average
+daily balance)</p>
+
+<p class=Jcodemultiline>ab =. monad : '(wt y)({:@] ,
+(%&amp;ndays)@(+/)@:*)+/\1{&quot;1 y'</p>
+
+<p class=Jcodemultiline>NB. Create (closing balance),(average daily balance)
+for</p>
+
+<p class=Jcodemultiline>NB. each account.&nbsp;
+Assign the start-of-month day (1) to the</p>
+
+<p class=Jcodemultiline>NB. opening balance</p>
+
+<p class=Jcodemultiline>cavg =. (acctano,jourano)
+ab/.(1,.openbal),jourday,.jouramt</p>
+
+<p class=Jcodemultiline>NB. Format and print all results</p>
+
+<p class=Jcodemultiline>s =. 'Account %d: Opening %d, closing %d, avg %d\n'</p>
+
+<p class=Jcodemultiline>s&amp;printf&quot;1 acctano ,. openbal ,. cavg</p>
+
+<p class=Jcodemultiline>''</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>Let's compare the two versions.<span
+style='mso-spacerun:yes'>&nbsp; </span>The first thing we notice is that the J code
+is mostly commentary (beginning with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>NB.</span></span>).&nbsp;
+The actual processing is done in 3 lines that read the files, 3 lines to
+perform the computation of closing and average balance, and 2 lines to print
+the results.&nbsp; J expresses the algorithm
+much more briefly.</p>
+
+<p class=MsoBodyText>The next thing we notice is that there seems to be nothing
+in the J code that is looping over the journal records and the accounts.<span
+style='mso-spacerun:yes'>&nbsp; </span>The commentary <i>says</i> 'create balances
+for each account' and 'produce average daily balance for an account', tasks
+that clearly require loops, and yet there is nothing resembling loop indexes.<span
+style='mso-spacerun:yes'>&nbsp; </span>This is one of the miracles of J: loops are
+implied; in C terminology, they are <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>expressions</span></span> rather than <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>statements</span></span>, and so
+they can be assembled easily into single lines of code that replace many nested
+loops.&nbsp; We will be spending a lot of time
+learning how to do this.</p>
+
+<p class=MsoBodyText>We also note that there is nothing in the J code
+corresponding to the <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>#define&nbsp;MAXACCT&nbsp;500</span></span>
+in the C.&nbsp; This is one of the things that
+makes programming in J so pleasant: you don't have to worry about allocating
+storage, or freeing it, or wondering how long is long enough for a
+character-string variable, or how big to make an array.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here, even though we don't know how many
+accounts there are until we have read the entire Accounts file, we simply read
+the file, split it into lines and numbers, and let the interpreter allocate as
+much storage as it needs to hold the resulting array.</p>
+
+<p class=MsoBodyText>The last thing to see, and perhaps the most important, is
+that <i>the C version is just a toy program</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>It searches through the Accounts information
+for every record in the Journal file.&nbsp; We
+can test it with a small dataset and verify that it works, but if we scale it
+up to 10,000 accounts and 1,000,000 journal entries, we are going to be
+disappointed in the performance, because its execution time will be proportional
+to <i>A*J</i> where <i>A</i> is the number of accounts and <i>J</i> the number
+of journal entries.&nbsp; It is every
+programmer's dread: a function that will have to be rewritten when the going
+gets tough.</p>
+
+<p class=MsoBodyText>The J version, in contrast, will have execution time
+proportional to <i>(A+J)*log(A+J)</i>.&nbsp;
+We did nothing meritorious to achieve this better behavior; we simply
+expressed our desired result and let the interpreter pick an
+implementation.&nbsp; Because we 'think big'--we
+treat the entire Journal and Accounts files as units--we give the interpreter
+great latitude in picking a good algorithm.&nbsp;
+In many cases the interpreter makes better decisions than we could hope
+to, because it looks at the characteristics of the data before it decides on
+its algorithm.&nbsp; For example, when we sort
+an array, the interpreter will use a very fast method if the range of numbers
+to be sorted is fairly small, where 'fairly small' depends on the number of
+items to be sorted.&nbsp; The interpreter
+takes great care in its implementation of its primitives, greater care than we
+can normally afford in our own C coding.&nbsp;
+In our example, it will use a high-speed method for matching journal
+entries with accounts.</p>
+
+<p class=Section><a name="_Toc191734318"></a><a name="_Toc5414535"></a><a
+name="_Toc5414391"></a><a name="_Toc1896175"><span style='mso-bookmark:_Toc5414391'><span
+style='mso-bookmark:_Toc5414535'><span style='mso-bookmark:_Toc191734318'>Calculating
+Chebyshev Coefficients</span></span></span></a></p>
+
+<p class=MsoBodyText>This algorithm for calculating coefficients of the
+Chebyshev approximation of a function is taken verbatim from <i
+style='mso-bidi-font-style:normal'>Numerical Recipes in C</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>I have translated it into J just so you can
+see how compact the J representation of an algorithm can be.<span
+style='mso-spacerun:yes'>&nbsp; </span>Again, the J code will be gobbledygook for
+now, but it's <i>concentrated</i> gobbledygook.</p>
+
+<p class=Ccodemultiline>// Program to calculate Chebyshev coefficients</p>
+
+<p class=Ccodemultiline>// Code taken from Numerical Recipes in C 1/e</p>
+
+<p class=Ccodemultiline>#include &lt;math.h&gt;</p>
+
+<p class=Ccodemultiline>#define PI 3.141592653589793</p>
+
+<p class=Ccodemultiline>void chebft(float a, float b, float c[], int n, float
+(*func)())</p>
+
+<p class=Ccodemultiline>{</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int k,j;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+fac,bpa,bma,f[300];</p>
+
+<p class=Ccodemultiline><o:p>&nbsp;</o:p></p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>bma = 0.5 *
+(b-a)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>bpa = 0.5 *
+(b+a)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(k =
+0;k&lt;n;k++) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>float
+y = cos(PI*(k+0.5)/n);</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>f[k] =
+(*func)(y*bma+bpa);</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>fac = 2.0/n;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for (j =
+0;j&lt;n;j++) {</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>double
+sum = 0.0;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>for(k
+= 0;k&lt;n;k++)</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:3'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>sum
++= f[k] * cos(PI*j*(k+0.5)/n);</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:2'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>c[j] =
+fac*sum;</p>
+
+<p class=Ccodemultiline><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}</p>
+
+<p class=Ccodemultiline>}</p>
+
+<p class=MsoBodyText>J version:</p>
+
+<p class=Jcodemultiline>chebft =: adverb define</p>
+
+<p class=Jcodemultiline>:</p>
+
+<p class=Jcodemultiline>f =. u 0.5 * (+/y) - (-/y) * 2 o. o. (0.5 +
+i. x) % x</p>
+
+<p class=Jcodemultiline>(2 % x) * +/ f * 2 o. o. (0.5 + i. x) *&quot;0 1 (i. x)
+% x</p>
+
+<p class=Jcodemultiline>)</p>
+
+</div><!--bottom jump start--><hr><a href="declarations.htm">&gt;&gt;</a>&nbsp;
+<a href="preliminaries.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

@@ -1,0 +1,66 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>%. Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="powopb.htm">&gt;&gt;</a>&nbsp;
+<a href="j64.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">%. </font>
+<font size=+3>Improved</font></b>
+</td><td align=right>
+initial writing: 2005-03-18<br>last updated: 2005-03-18
+</td></tr></table>
+<br>
+
+<p><tt>%. </tt>has been made faster. The following benchmarks demonstrate
+the improvement:</p>
+
+<pre>
+timer=: 6!:2
+timer '%. x' [ x=: s ?@$ 0
+</pre>
+
+<table>
+<tr>
+<td align=center><b>s</b></td><td>&nbsp;</td>
+<td align=center><b>J5.04</b></td><td>&nbsp;</td>
+<td align=center><b>J5.03</b></td><td>&nbsp;</td>
+<td align=center><b>Ratio</b></td><td>&nbsp;</td>
+</tr>
+<tr><td>800 100</td><td>&nbsp;</td><td>0.073961</td><td>&nbsp;</td><td align=right>  0.144983<td>&nbsp;</td><td align=right>1.96</td></tr>
+<tr><td>800 200</td><td>&nbsp;</td><td>0.238355</td><td>&nbsp;</td><td align=right>  0.600619<td>&nbsp;</td><td align=right>2.52</td></tr>
+<tr><td>800 400</td><td>&nbsp;</td><td>0.859816</td><td>&nbsp;</td><td align=right>  2.586502<td>&nbsp;</td><td align=right>3.01</td></tr>
+<tr><td>800 800</td><td>&nbsp;</td><td>3.568658</td><td>&nbsp;</td><td align=right> 13.885126<td>&nbsp;</td><td align=right>3.89</td></tr>
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="powopb.htm">&gt;&gt;</a>&nbsp;
+<a href="j64.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

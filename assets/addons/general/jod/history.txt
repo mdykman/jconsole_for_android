@@ -1,0 +1,105 @@
+general/jod - change history
+
+== 0.9.3 == {RSN}
+ * online documentation revised and extended. The online documents
+   are hosted by Google Documents and can be read on the web or
+   downloaded in a variety of formats: PDF, ODT, Word, HTML. The
+   offline jod.pdf will be revised after collecting user feedback.
+
+== 0.9.2 == May 29, 2011
+ * first Linux compatible version of JOD. The Linux version
+   requires J 7.01 or beyond see: 
+
+   ~addons/general/jod/joddoc/linuxnotes.txt
+
+ * online documentation, availabe via the verb (jodhelp),
+   has been converted to the new Google Document format. 
+   The conversion process broke all the internal hyperlinks
+   I am slowly fixing them. The offline PDF document (jod.pdf)
+
+   http://www.box.net/shared/gajfu50gc0
+
+   does not show Linux specific examples but is still
+   an accurate description of what JOD is all about.
+
+ * additional information about JOD will be made
+   available on my blog after a round of beta testing 
+   in the wild.
+ 
+   http://bakerjd99.wordpress.com
+
+ * this version of JOD runs on windows J 6.0x and J 7.0x systems.
+  
+== 0.9.1 == May 7, 2011
+ * minor fix of edit verb (et) to run on both 7.0x and 6.0x J systems.
+
+== 0.9.0 == Feb 18, 2011
+ * modified to run under J 7.01 JHS and JGTK. This version
+   also runs on J 6.0x systems.
+ * replaced JOD's (z) locale interface with an (ijod) interface.
+   JOD now defines only three words: (jodon), (jodoff) and 
+   (jodsystempath) in the (z) locale.  All other interface
+   words are defined in (ijod) which is placed on the
+   base locale's search path
+ * path and file displays converted to (jpathsep) conventions.
+ * jod.pdf removed from the core JOD addon package.  jod.pdf
+   was by far the largest part of the core install package. jod.pdf
+   is now browsed on-line by (jodhelp). You can download jod.pdf
+   and place it in ~addons/general/jod/joddoc/pdfdoc/ to enable
+   local PDF reading.
+ * online JOD documentation updated to reflect changes.
+ * UTF8 macro script code changed from 26 to 28 (remember 28 for UTF8).
+ * BYTE macro script code added with value 26.  
+ 
+== 0.8.0 == Oct 31, 2008
+ * added new jodparms.ijs parameter ASCII85 that controls whether
+   dump files use ascii85 for text objects.  Default is 0.
+   The ascii85 representation generally produces smaller 
+   dump files but is slower than the default method.
+ * jodsource uses ascii85 for JOD development dictionaries to 
+   reduce the size of the downloads.
+ * minor fixes in jod.pdf
+
+== 0.7.3 == Oct 7, 2008
+ * forced path comparisons to lower case in JOD Lab #4 and test 'setup_jodproject'
+ * fixed a few typos in jod.pdf
+
+== 0.7.2 == Sep 25, 2008
+ * completed dyadic case of doc
+ * updated jod.pdf to describe changes
+
+== 0.7.1 == Sep 24, 2008
+ * removed some large EPS files from dictionary to reduce download size
+ * replaced JOD directory diagram in jod.pdf - reduces size of jod.pdf
+
+== 0.7.0 == Sep 24, 2008
+ * references added to jod.pdf 
+ * new jod hardcopy www.lulu.com edition
+ 
+== 0.6.0 == Aug 18, 2008
+ * minor jod script edits
+ * jod.pdf index improved 
+ 
+== 0.5.1 == Jul 21, 2008
+ * joduserconfig.ijs added
+ * gdeps now documented in jod.pdf
+ 
+== 0.5.0 == Jul 18, 2008
+ * jod.pdf documentation complete
+ 
+== 0.4.0 == Jul 10, 2008
+ * insure at least one group in joddevload for lab
+ * minor lab edits - refer to startup.ijs instead of scripts.ijs
+ 
+== 0.3.8 == May 31, 2008
+ * minor update to last lab section
+
+== 0.3.7 == May 31, 2008
+ * bug fixes in labs - all labs can be run
+
+== 0.3.6 == May 29, 2008
+ * first release of fully "addon-ized" JOD - version prior
+   to this release had to be manually installed by 
+   ad-hoc scripts. Now the JAL system handles JOD installs.
+ 
+ 

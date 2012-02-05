@@ -1,0 +1,92 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Debug - step through</title>
+
+</head><body><!--top jump start--><a href="debug_error.htm">&gt;&gt;</a>&nbsp;
+<a href="checkpoint_b.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Debug - stepping through a verb</h1>
+In an earlier section you added a debugging line to a verb definition that allowed you to see the results of intermediate steps when the verb was run. Sometimes you need more powerful tools than that.<br>
+<br>
+Use <font face=courier size=-1>load </font>to load the debug utilities.<br>
+
+<pre>   load 'debug'
+</pre>
+Open your script file cf.ijs and run it.<br>
+<br>
+Let's execute <font face=courier size=-1>centigrade</font>, but with a stop on each line so that you can take a look at exactly what is going on.<br>
+
+<pre>   dbss 'centigrade *:*'
+</pre>
+The <font face=courier size=-1>dbss </font>(Set Stop) argument requests a stop before executing all, indicated by <font face=courier size=-1>*:*</font>, lines in <font face=courier size=-1>centigrade</font>.<br>
+
+<pre>   dbr 1
+</pre>
+<font face=courier size=-1>dbr </font>with an argument of 1 requests that the system suspend execution when an error or stop occurs. When a verb is suspended it is halted in mid execution. You can examine definitions, change definitions, and you can resume execution of the suspended verb.<br>
+
+<pre>   centigrade 212
+¦stop
+¦       t1=.y-32
+¦centigrade[0]
+</pre>
+The error report (bars at the left margin) indicates execution stopped on line 0 of <font face=courier size=-1>centigrade </font>and shows the sentence from that line.<br>
+<br>
+The execution of <font face=courier size=-1>centigrade </font>is suspended and the indent of six spaces, rather than three, indicates the suspension. The variable <font face=courier size=-1>y</font> is the argument.<br>
+
+<pre>      y
+212</pre>
+The stop occurs before the line is executed, so <font face=courier size=-1>t1 </font>has not been defined and if you try to look at it you will get a value error.<br>
+<br>
+Use <font face=courier size=-1>dbrun </font>to continue execution. It will run the current line, and because stops are set on all lines it will then stop on the next line.<br>
+
+<pre>      dbrun ''
+¦stop
+¦       t2=.t1*5
+¦centigrade[1]
+      t1
+180
+      t1*5
+900</pre>
+<font face=courier size=-1>centigrade</font> is now stopped on line 1, and as you can see, you are able to check the value of local t1 that was defined in line 0. Step through the next lines and examine locals.<br>
+
+<pre>      dbrun ''
+¦stop
+¦       t3=.t2%9
+¦centigrade[2]
+      t2
+900
+      t2%9
+100
+      dbrun ''
+100</pre>
+You are no longer suspended in <font face=courier size=-1>centigrade </font>and you are back to the normal indent of three spaces.<br>
+<br>
+Turn off the request for debug suspensions and reset to have no stops.<br>
+
+<pre>   dbr 0
+   dbss ''
+</pre>
+<!--bottom jump start--><hr><a href="debug_error.htm">&gt;&gt;</a>&nbsp;
+<a href="checkpoint_b.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

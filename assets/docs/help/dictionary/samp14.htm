@@ -1,0 +1,68 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 14. Compositions II</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp15.htm">&gt;&gt;</a>&nbsp;
+<a href="samp13.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>14. Compositions (Based on Hooks and Forks)</b></font><br><br>
+
+A <i>verb</i> is produced by trains of three or two verbs, 
+as defined by the following diagrams:<br>
+
+<pre>
+           FORK                 HOOK 
+        g        g           g       g
+       / \      / \         / \     / \
+      f   h    f   h       y   h   x   h
+      |   |   / \ / \          |       |
+      y   y   x y x y          y       y
+</pre>
+
+For example,<tt> 5(+*-)3 </tt><font size=+1>&harr;</font><tt> (5+3)*(5-3)</tt> .<br><br>
+
+The foregoing definition is from 
+<a href="dictf.htm">Section II F</a> of the dictionary.  
+The following examples concern functions used in statistics:<br>
+
+<pre>
+   mean=: +/%#                              <font face=Times size=+1>Mean</font>
+   norm=: ] - +/ % #                        <font face=Times size=+1>Centered on mean</font>
+   sqcm=: 2: ^~ ] - +/ % #                  <font face=Times size=+1>Sqr of centred on mean</font>
+   var =: [:    mean 2: ^~ ] - mean=: +/%#  <font face=Times size=+1>Variance</font>
+   stdv=: 2:%:[:mean 2: ^~ ] - mean=: +/%#  <font face=Times size=+1>Standard Deviation</font>
+
+   ,.&amp;.&gt;@(];mean;norm;sqcm;var;stdv) y=: 2 3 4 5
++-+---+----+----+----+-------+
+|2|3.5|_1.5|2.25|1.25|1.11803|
+|3|   |_0.5|0.25|    |       |
+|4|   | 0.5|0.25|    |       |
+|5|   | 1.5|2.25|    |       |
++-+---+----+----+----+-------+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="samp15.htm">&gt;&gt;</a>&nbsp;
+<a href="samp13.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

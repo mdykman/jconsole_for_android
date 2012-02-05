@@ -1,0 +1,115 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 13. Format</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro14.htm">&gt;&gt;</a>&nbsp;
+<a href="intro12.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>13. Format</b></font><br><br>
+
+A numeric table such as:<br>
+
+<pre>
+   ]t=:(i.4 5)%3
+      0 0.333333 0.666667       1 1.33333
+1.66667        2  2.33333 2.66667       3
+3.33333  3.66667        4 4.33333 4.66667
+      5  5.33333  5.66667       6 6.33333
+</pre>
+
+can be rendered more readable by <i>formatting</i> it to appear 
+with a specified width for each column, and with a specified 
+number of digits following the decimal point.  For example:<br>
+
+<pre>
+   ]f=: 6j2 &quot;: t
+  0.00  0.33  0.67  1.00  1.33
+  1.67  2.00  2.33  2.67  3.00
+  3.33  3.67  4.00  4.33  4.67
+  5.00  5.33  5.67  6.00  6.33
+</pre>
+
+The real part of the left argument of the format 
+function specifies the column width, and the imaginary 
+part specifies the number of digits to follow the decimal point.<br><br>
+
+Although the formatted table <i>looks</i> much like the original 
+table<tt> t</tt> ,<tt> </tt>it is a table of <i>characters</i>, 
+not of numbers.  For example:<br><br>
+
+<pre>
+   $t
+4 5
+
+   $f
+4 30
+
+   +/t
+10 11.3333 12.6667 14 15.3333
+
+   +/f
+|domain error
+|       +/f 
+</pre>
+
+However, the verb <i>do</i> or <i>execute</i><tt> </tt>
+(<tt>&quot;.</tt>)<tt> </tt>applied to such a character table 
+yields a corresponding numeric table:<br><br>
+
+<pre>
+   &quot;. f
+   0 0.33 0.67    1 1.33
+1.67    2 2.33 2.67    3
+3.33 3.67    4 4.33 4.67
+   5 5.33 5.67    6 6.33
+  
+   +/ &quot;. f
+10 11.33 12.67 14 15.33
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table><tr><td valign=top>13.1 &nbsp;</td>
+<td>Using the programs defined in Section 12, experiment with 
+the following expressions:<br>
+
+<pre>
+5j2 &quot;: d=: %: i.12
+5j2 &quot;:,.d
+fc=: 5j2&amp;&quot;:@,. 
+fc d
+20 (fc@h3 ,. h5) d
+20 (fc@h3 ,. '|'&amp;,.@h5) d
+plot=: fc@h3,.'|'&amp;,.@h5
+20 plot d
+</pre>
+</table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro14.htm">&gt;&gt;</a>&nbsp;
+<a href="intro12.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

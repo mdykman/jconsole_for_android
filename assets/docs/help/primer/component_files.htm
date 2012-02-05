@@ -1,0 +1,81 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Component files</title>
+
+</head><body><!--top jump start--><a href="gui.htm">&gt;&gt;</a>&nbsp;
+<a href="files.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Component files</h1>
+A component file (jfile) can be thought of as a boxed list stored in a file. An item of the boxed list on file is referred to as a component. The script jfiles.ijs provides the utilities for working with jfiles.<br>
+
+<pre>   load 'jfiles'
+   f =. 'user\data.jf'
+   jcreate f
+1
+   'first component' jappend f
+0
+   (1.5+i.2 3) jappend f
+1
+   ('asdf';23) jappend f
+2 3
+   (&lt;'mum';'dad') jappend f
+4</pre>
+The <font face=courier size=-1>jsize </font>result gives file information, including the indexes of the first and last items.<br>
+
+<pre>   jsize f
+0 5 1408 0
+   jread f;0
++---------------+
+¦first component¦
++---------------+
+   jread f;1
++-----------+
+¦1.5 2.5 3.5¦
+¦4.5 5.5 6.5¦
++-----------+
+   jread f;2
++----+
+¦asdf¦
++----+
+   jread f;3
++--+
+¦23¦
++--+
+   jread f;4
++---------+
+¦+---+---+¦
+¦¦mum¦dad¦¦
+¦+---+---+¦
++---------+
+   'new' jreplace f;3
+3
+   jread f;i.5
++---------------+-----------+----+---+---------+
+¦first component¦1.5 2.5 3.5¦asdf¦new¦+---+---+¦
+¦               ¦4.5 5.5 6.5¦    ¦   ¦¦mum¦dad¦¦
+¦               ¦           ¦    ¦   ¦+---+---+¦
++---------------+-----------+----+---+---------+</pre>
+Jfiles are documented in the J Online Documentation.<!--bottom jump start--><hr><a href="gui.htm">&gt;&gt;</a>&nbsp;
+<a href="files.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

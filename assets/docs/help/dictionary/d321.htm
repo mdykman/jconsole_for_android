@@ -1,0 +1,98 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>,. Ravel Items  -  Stitch</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d322.htm">&gt;&gt;</a>&nbsp;
+<a href="d320.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Ravel Items</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>,. &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Stitch</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> y </tt>is an atom, then<tt> ,.y </tt>is<tt> 1 1$y</tt> ;<tt> </tt>
+otherwise,<tt> ,.y </tt>is<tt> ,&quot;_1 y</tt> ,<tt> </tt>
+the table formed by ravelling each item of<tt> y</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x,.y </tt>is equivalent to<tt> x,&quot;_1 y</tt> .<tt> </tt>
+In other words, items of<tt> x </tt>are stitched to corresponding 
+items of<tt> y</tt> .<br><br>
+
+The fit conjunction<tt> </tt>(<tt>,.!.f</tt>)<tt> </tt>provides 
+fill specified by the atom<tt> f</tt> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   a=: i. 2 3 2
+   ($,.3) ; (,.2 3 5 7 11) ; ($,.&lt;'abcd') ; a ; (,.a)
++---+--+---+-----+-------------+
+|1 1| 2|1 1| 0  1|0 1 2 3  4  5|
+|   | 3|   | 2  3|6 7 8 9 10 11|
+|   | 5|   | 4  5|             |
+|   | 7|   |     |             |
+|   |11|   | 6  7|             |
+|   |  |   | 8  9|             |
+|   |  |   |10 11|             |
++---+--+---+-----+-------------+
+</pre>
+
+The following examples illustrate the dyadic case:<br>
+
+<pre>
+   b=:3 4$'abcdefghijkl' [ c=:3 4$'ABCDEFGHIJKL'
+   b ; c ; (b,.c) ; (b,c) ; a ; (a ,. |.&quot;1 a) ; (,/a) ; (,./a)
++----+----+--------+----+-----+-----+-----+---------+
+|abcd|ABCD|abcdABCD|abcd| 0  1| 0  1| 0  1|0 1  6  7|
+|efgh|EFGH|efghEFGH|efgh| 2  3| 2  3| 2  3|2 3  8  9|
+|ijkl|IJKL|ijklIJKL|ijkl| 4  5| 4  5| 4  5|4 5 10 11|
+|    |    |        |ABCD|     | 1  0| 6  7|         |
+|    |    |        |EFGH| 6  7| 3  2| 8  9|         |
+|    |    |        |IJKL| 8  9| 5  4|10 11|         |
+|    |    |        |    |10 11|     |     |         |
+|    |    |        |    |     | 6  7|     |         |
+|    |    |        |    |     | 8  9|     |         |
+|    |    |        |    |     |10 11|     |         |
+|    |    |        |    |     | 7  6|     |         |
+|    |    |        |    |     | 9  8|     |         |
+|    |    |        |    |     |11 10|     |         |
++----+----+--------+----+-----+-----+-----+---------+
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d322.htm">&gt;&gt;</a>&nbsp;
+<a href="d320.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

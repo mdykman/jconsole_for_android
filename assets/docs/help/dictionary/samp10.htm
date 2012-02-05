@@ -1,0 +1,87 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 10. Classification I</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp11.htm">&gt;&gt;</a>&nbsp;
+<a href="samp09.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>10. Classification (with Selection and Inner Product)</b></font><br><br>
+
+The complete classification table can be used in a variety of ways, 
+including use with various inner products.  For example:<br>
+
+<pre>
+  cct=: #:@i.@(2: ^ #)
+  m=: 2 3 5 ,: 4 2 1
+  n=: |: cct 0{m
+  m ; n ; m +/ . * n
++-----+---------------+----------------+
+|2 3 5|0 0 0 0 1 1 1 1|0 5 3 8 2 7 5 10|
+|4 2 1|0 0 1 1 0 0 1 1|0 1 2 3 4 5 6  7|
+|     |0 1 0 1 0 1 0 1|                |
++-----+---------------+----------------+
+</pre>
+
+The pattern of the inner product can be seen more 
+clearly in the following display: the element in a given 
+row and column of the matrix product<tt> p </tt>
+in the lower right box corresponds to the row of the left argument 
+and the column of the right argument.  Thus:<br>
+
+<pre>
+   ('' ; n) ,: (m ; p=: m +/ . * n)
++-----+----------------+
+|     |0 0 0 0 1 1 1 1 |
+|     |0 0 1 1 0 0 1 1 |
+|     |0 1 0 1 0 1 0 1 |
++-----+----------------+
+|2 3 5|0 5 3 8 2 7 5 10|
+|4 2 1|0 1 2 3 4 5 6  7|
++-----+----------------+
+  
+   (+/r*c) ; (r*c) ; (r=: 0{m) ; (c=: 3{&quot;1 n) ; (&lt;0 3){p
++-+-----+-----+-----+-+
+|8|0 3 5|2 3 5|0 1 1|8|
++-+-----+-----+-----+-+
+</pre>
+
+Just as the ordinary matrix product yields sums over products, 
+the inner product<tt> */ . ^ </tt>yields products over powers.  
+Hence,<tt> m */ . ^ n </tt>produces products 
+over all possible subsets of the rows of<tt> m</tt> :<br>
+
+<pre>
+   m */ . ^ n
+1 5 3 15 2 10 6 30
+1 1 2  2 4  4 8  8
+</pre>
+
+Also see the use of the <i>key</i> adverb (<tt>/.</tt>)
+for classification.<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp11.htm">&gt;&gt;</a>&nbsp;
+<a href="samp09.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

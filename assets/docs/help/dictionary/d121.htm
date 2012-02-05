@@ -1,0 +1,95 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>-. Not  -  Less</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d122.htm">&gt;&gt;</a>&nbsp;
+<a href="d120.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Not</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>-. &nbsp;0 _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Less</font></b></td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>-.y </tt>is<tt> 1-y</tt> ;<tt> </tt>for a boolean argument 
+it is the complement (not); for a probability, it is the complementary 
+probability.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x-.y </tt>includes all items of<tt> x </tt>except for those 
+that are cells of<tt> y</tt> .<br><br>
+
+Tolerance<tt> t </tt>is provided by<tt> -.!.t</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+The function <i>less</i> applies to any conformable pair of arguments.  
+For example:<br>
+
+<pre>
+   (i. 9) -. 2 3 5 7
+0 1 4 6 8
+                
+   'abcdefghij' -. 'aeiou'
+bcdfghj
+
+   ]m=: i. 4 5 
+ 0  1  2  3  4
+ 5  6  7  8  9
+10 11 12 13 14
+15 16 17 18 19
+
+   m -. 5 6 7 8 9
+ 0  1  2  3  4
+10 11 12 13 14
+15 16 17 18 19
+ 
+   b=: &lt;\ 'abcdefg'
+   b
++-+--+---+----+-----+------+-------+
+|a|ab|abc|abcd|abcde|abcdef|abcdefg|
++-+--+---+----+-----+------+-------+
+
+   b -. 'abc';'abcde';'cba'
++-+--+----+------+-------+
+|a|ab|abcd|abcdef|abcdefg|
++-+--+----+------+-------+
+
+   2 3 4 5 -. 'abcdef'
+2 3 4 5
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d122.htm">&gt;&gt;</a>&nbsp;
+<a href="d120.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

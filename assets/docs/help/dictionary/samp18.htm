@@ -1,0 +1,76 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 18. Geometry</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp19.htm">&gt;&gt;</a>&nbsp;
+<a href="samp17.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>18. Geometry</b></font><br><br>
+
+We will illustrate the topic of coordinate geometry by 
+defining functions for polygons in two dimensions that give 
+the displacements between adjacent vertices, the length of sides, 
+the semiperimeter, and the area based on Heron&rsquo;s formula. <br><br>
+
+We also present a more general definition for area that 
+not only gives the signed area (positive if the vertices 
+appear in counter-clockwise order), but also applies to polyhedra 
+in higher dimensions (in which case the name <i>area</i> might 
+better be replaced by <i>volume</i>). This definition is based
+on the use of the determinant applied to a square matrix obtained 
+by bordering a table of vertices<tt> t </tt>by a final row 
+of the values<tt> %!#t </tt>. Thus:<br>
+
+<pre>
+   (length=: +/&amp;.:*:) 5 12
+13
+
+   disp=: ] - 1&amp;|.&quot;1
+   sides=: length@disp
+   semiper=: -:@(+/)@sides
+   HERON=: %:@(*/)@(semiper - 0: , sides)
+   area=: -/ . * @ (] , %@!@#)
+
+   t=: 0 0 4 ,: 3 4 7
+   (];(1&amp;|.&quot;1);disp;sides;semiper;HERON;area) t
++-----+-----+-------+-----+---------+---------------+--+
+|0 0 4|0 4 0| 0 _4 4|0 4 4|0.5 3.5 4|2.29129 0j0.5 0|_2|
+|3 4 7|4 7 3|_1 _3 4|1 3 4|         |               |  |
++-----+-----+-------+-----+---------+---------------+--+
+  
+   tet1=:6 0 3 0,3 6 5 8,:7 4 0 5
+   tet2=: 0,.=i.3 3
+   tet1;(area tet1);tet2;(area tet2)
++-------+----+-------+---------+
+|6 0 3 0|11.5|0 1 0 0|_0.166667|
+|3 6 5 8|    |0 0 1 0|         |
+|7 4 0 5|    |0 0 0 1|         |
++-------+----+-------+---------+
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="samp19.htm">&gt;&gt;</a>&nbsp;
+<a href="samp17.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

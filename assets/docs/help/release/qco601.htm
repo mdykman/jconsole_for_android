@@ -1,0 +1,58 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>q: Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="uco601.htm">&gt;&gt;</a>&nbsp;
+<a href="pi.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">q: </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2006-07-12<br>last updated: 2006-07-12
+</td></tr></table>
+<br>
+
+<p>The dyad<tt> x q: y </tt>where<tt> x </tt>is a small non-negative
+integer (up to 1229) and<tt> y </tt>is a large extended integer, 
+now performs much better &mdash; faster, leaner, and producing a result
+when previously it might have signalled error.  For example:</p>  
+
+<pre>
+   y=: 60 * 1+2^300x
+   5 q: y
+2 1 1 0 0
+
+   ts=: 6!:2 , 7!:2@]
+   ts '5 q: y'
+1.45417e_5 4032
+</pre>
+
+<!--bottom jump start--><hr><a href="uco601.htm">&gt;&gt;</a>&nbsp;
+<a href="pi.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

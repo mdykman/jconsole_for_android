@@ -1,0 +1,150 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>/ Insert  -  Table</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d421.htm">&gt;&gt;</a>&nbsp;
+<a href="d412.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=30%><b><font size=+2>Insert</font></b></td>
+<td align=center width=37%><font face="Courier New" size=+3>m/  u/ &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Table</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>u/y </tt>applies the dyad<tt> u </tt>between the items of<tt> y</tt> .  
+Thus:<br>
+
+<pre>
+   m=: i. 3 2
+   m;(+/m);(+/&quot;1 m);(+/2 3 4)
++---+---+-----+-+
+|0 1|6 9|1 5 9|9|
+|2 3|   |     | |
+|4 5|   |     | |
++---+---+-----+-+
+</pre>
+
+<tt>m/y </tt>inserts successive verbs from the gerund<tt> m </tt>
+between items of <tt>y</tt>,<tt> </tt>extending<tt> m </tt>cyclically 
+as required.  Thus,<tt> +`*/i.6 </tt>is<tt> 0+1*2+3*4+5</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> x </tt>and<tt> y </tt>are numeric lists, then<tt> x */ y </tt>
+is their multiplication table.  Thus:<br>
+
+<pre>
+   1 2 3 */ 4 5 6 7
+ 4  5  6  7
+ 8 10 12 14
+12 15 18 21
+</pre>
+
+In general, each cell of<tt> x </tt>is applied to the entire 
+of<tt> y</tt> .<tt> </tt> 
+Thus<tt> x u/ y </tt>is equivalent to<tt> x u&quot;(lu,_) y </tt>where<tt> lu </tt>
+is the left rank of<tt> u</tt> .<br><br>
+
+The case<tt> */ </tt>is called <i>outer product</i> in tensor analysis.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+If<tt> y </tt>has no items (that is,<tt> 0=#y</tt>),<tt> </tt>
+the result of<tt> u/y </tt>is the <i>neutral</i> or 
+<i>identity element</i> of the function<tt> u</tt> .<tt> </tt>  
+A neutral of a function<tt> u </tt>is a value<tt> e </tt>such 
+that<tt> x u e </tt><font size=+1>&harr;</font><tt> x </tt>
+or<tt> e u x </tt><font size=+1>&harr;</font><tt> x</tt>,<tt> </tt>
+for every<tt> x </tt>in the domain (or some significant 
+sub-domain such as boolean) of<tt> u</tt> .<tt> </tt>  
+This definition of insertion over an argument having 
+<i>zero</i> items extends partitioning identities of the 
+form<tt> u/y </tt><font size=+1>&harr;</font><tt> (u/k{.y) u (u/k}.y) </tt>to the 
+cases<tt> k e. 0,#y</tt> .<br><br>
+
+The <i>identity function </i>of<tt> u </tt>is a function<tt> ifu </tt>
+such that<tt> ifu y </tt><font size=+1>&harr;</font><tt> u/y </tt>if<tt> 0=#y</tt> .<tt> </tt>  
+The identity functions used are:<br><br>
+
+<table>
+<tr>
+<td><b>Identity function</b></td>
+<td><b>For</b></td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td><tt>0 &nbsp;$~ }.@$</tt></td>
+<td><tt>&lt; &nbsp;&gt; &nbsp;+ &nbsp;- &nbsp;+. &nbsp;~: &nbsp;| &nbsp;(2 4 5 6 b.)</tt></td>
+</tr>
+
+<tr>
+<td><tt>1 &nbsp;$~ }.@$</tt></td>
+<td><tt>= &nbsp;&lt;: &nbsp;&gt;: &nbsp;* &nbsp;% &nbsp;*. &nbsp;%: &nbsp;^ &nbsp;! &nbsp;(1 9 11 13 b.)</tt></td>
+</tr>
+
+<tr>
+<td><tt>_ &nbsp;$~ }.@$</tt></td>
+<td><tt>&lt;.</tt></td></tr>
+
+<tr>
+<td><tt>__ $~ }.@$</tt></td>
+<td><tt>&gt;.</tt></td></tr>
+
+<tr>
+<td><tt>(v^:_1 ifu$0) $~ }.@$ </tt>&nbsp; </td>
+<td><tt>u&amp;.v</tt></td></tr>
+
+<tr>
+<td><tt>i.@(0&amp;,)@(2&amp;}.)@$</tt></td>
+<td><tt>,</tt></td></tr>
+
+<tr>
+<td><tt>/:@{.</tt></td>
+<td><tt>C. &nbsp;{</tt></td></tr>
+
+<tr>
+<td><tt>=@/:@{.</tt></td>
+<td><tt>%. &nbsp;+/ . *</tt></td></tr>
+
+<tr>
+<td><tt>ifu@#</tt></td>
+<td><tt>u/</tt></td></tr>
+
+</table>
+
+<br>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d421.htm">&gt;&gt;</a>&nbsp;
+<a href="d412.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

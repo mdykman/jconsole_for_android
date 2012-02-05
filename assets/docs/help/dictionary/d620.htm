@@ -1,0 +1,93 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>@ Atop</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d621.htm">&gt;&gt;</a>&nbsp;
+<a href="d612.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Atop</font></b></td>
+<td align=center width=50%><font face="Courier New" size=+3>u@v &nbsp;mv lv rv</font></td>
+<td align=right  width=17%><b><font size=+2></font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>u@v y </tt><font size=+1>&harr;</font><tt> u v y</tt> .<tt> </tt>For example,<tt> +:@- 7 </tt>
+is<tt> _14 </tt>(double the negation).  Moreover, 
+the monadic uses of<tt> u@v </tt>and<tt> u&amp;v </tt>are equivalent.
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x u@v y </tt><font size=+1>&harr;</font><tt> u x v y</tt> .<tt> </tt>  
+For example, <tt>3 +:@- 7 </tt>is<tt> _8 </tt>(double the difference).
+<br>&nbsp;</td>
+</tr></table><br>
+
+Because adverbs and conjunctions are (as stated more precisely in
+<a href="dicte.htm">Section II E</a>) executed before verbs, 
+phrases involving them 
+are commonly used in trains without parentheses. For example:<br>
+
+<pre>
+   mean=: +/ % #
+   mean 1 2 3 4
+2.5
+
+   f=: +:@*: +/ -:@%:          NB. Addition table of doubled square and halved sqrt
+   f 1 2 3 4
+ 2.5 2.70711 2.86603  3
+ 8.5 8.70711 8.86603  9
+18.5 18.7071  18.866 19
+32.5 32.7071  32.866 33
+</pre>
+
+Because a conjunction applies to the entity immediately to its right, 
+expressions to the right of conjunctions commonly require parenthesization.  
+For example:<br>
+
+<pre>
+   g=: *:@(+/)
+   h=: *:@+/
+   g 1 2 3 4
+100
+   h 1 2 3 4
+6770404
+
+   k=: *:@+
+   k/ 1 2 3 4
+6770404
+</pre>
+
+Compare the behaviour of<tt> @ </tt>with that of<tt> @:</tt> .<tt> </tt>  
+They differ only in the ranks of the verbs that they produce.<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="d621.htm">&gt;&gt;</a>&nbsp;
+<a href="d612.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

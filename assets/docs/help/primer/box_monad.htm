@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Box - monad &lt;</title>
+
+</head><body><!--top jump start--><a href="link_dyad.htm">&gt;&gt;</a>&nbsp;
+<a href="order_ex_adverbs_conjunc.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Box - monad &lt; </h1>
+So far you have dealt with atoms that are either numeric or character. The monad &lt; (box) introduces a new type of atom called boxed. The monad &lt; applies to any noun and returns an atom that is a box which contains the argument.<br>
+<br>
+An array is either a numeric array that contains numbers, or a literal array that contains characters, or a boxed array that contains boxes. Arrays of numbers and characters are referred to as open to distinguish them from boxed arrays.<br>
+
+<pre>   b =. &lt; 2 3 4
+   $b		NB. an atom has empty shape
+</pre>
+A boxed array is displayed in a box.<br>
+
+<pre>   b
++-----+
+¦2 3 4¦
++-----+
+   c =. &lt; 4 7 9
+   d =. b , c	NB. append
+   d
++-----+-----+
+¦2 3 4¦4 7 9¦
++-----+-----+
+   $d		NB. list with shape 2
+2
+   (&lt; 2 3 4) , &lt; 4 7 9
++-----+-----+
+¦2 3 4¦4 7 9¦
++-----+-----+</pre>
+Arrays of different types (numeric, character, and boxed) cannot be appended to one another.<br>
+
+<pre>   'a' , 3
+¦domain error
+¦   'a'    ,3
+   3 , &lt; 2 3 4
+¦domain error
+¦   3    ,&lt;2 3 4</pre>
+Boxed arrays are of the same type and can be appended no matter what they contain.<br>
+
+<pre>   (&lt; 'abc') , &lt; 4 5 6
++---+-----+
+¦abc¦4 5 6¦
++---+-----+
+   (&lt; 2 3 $ 'abcdef') , (&lt; i. 3 4) , &lt; 23
++---+---------+--+
+¦abc¦0 1  2  3¦23¦
+¦def¦4 5  6  7¦  ¦
+¦   ¦8 9 10 11¦  ¦
++---+---------+--+</pre>
+<!--bottom jump start--><hr><a href="link_dyad.htm">&gt;&gt;</a>&nbsp;
+<a href="order_ex_adverbs_conjunc.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,133 @@
+<html><head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Calling DLLs</title></head><body><!--top jump start--><a href="cd_domain_error.htm">&gt;&gt;</a>&nbsp;
+<a href="dlls.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+<h1>Calling Procedures in Dynamic-link Libraries (DLLs)</h1>
+ <b>Calling procedures incorrectly can crash your system or corrupt memory.</b><br><br>
+
+J can call procedures that are compiled in a shared library file. In Windows these files are called DLLs (dynamic link libraries) and have a .dll extension. In Linux they are called shared libraries or shared objects and have a .so extension. In Mac they are called dynamic libraries and have a .dylib extension. The term DLL is used here for all platforms. A procedure in a DLL is called by its name and filename.<br><br>
+
+J can also call a procedure in memory directly with its address.<br><br>
+
+J can also call a procedure in an object with the object address and the procedure index.<br><br>
+
+Calling procedures from J is the same across platforms.<br><br>
+
+To learn how to call DLLs, run Labs 'DLL: Writing and Using a DLL' and 'DLL: Using System DLLs (file examples)'. These labs are for Windows. <br><br>
+
+Script main\dll.ijs ( <font face=courier size=-1>load 'dll' </font>) defines utilities for working with DLLs.<br><br>
+
+Verb <font face=courier size=-1>cd</font> calls a procedure. The form is:<font face=courier size=-1><br>
+&nbsp;&nbsp; 'filename procedure [&gt;][+][%] declaration' cd parameters<br>
+</font><br>
+<b>filename</b> is usually the name of a DLL. The search path for finding a filename that is not fully qualified involves many directories and is different on each platform. Except for system DLLs, a fully qualified filename is recommended.<br><br>
+
+A filename of 0 indicates procedure is a memory address (J display of a J signed integer with _ as the negative sign).<br><br>
+
+A filename of 1 indicates procedure is a non-negative integer that is the index of a procedure in a vtable (list of procedure addresses). The first paramter is the 'object address' and is the address of the address of the vtable. The declaration of the first parameter must be * or x .<br><br>
+
+<b>procedure</b> is usually the case-sensitive name of the procedure in the DLL to call. A Windows procedure can be identified by a number specified as # followed by digits. Win32 API procedures that take string parameters are documented under a name, but are implemented under the name with an A suffix for 8 bit characters and a W suffix for 16 bit characters. For example, CreateFile is documented, but the procedures you call are CreateFileA or CreateFileW. If filename is 0 or 1, procedure is treated as discussed in the filename section.<br><br>
+
+ A procedure returns a scalar result and takes 0 or more parameters. Parameters are passed by value or by a pointer to values. Pointer parameters can be read and set. <br><br>
+
+<b>&gt;</b> option returns a scalar result. Without &gt; the result is the boxed scalar result appended to the boxed arguments.<br><br>
+
+<b>+</b> option selects the alternate calling convention. The calling convention is the rules for how the result and parameters are passed between the caller and the procedure. Using the wrong one can crash or corrupt memory. On Windows standard is __stdcall and + selects __cdecl. On Unix + currently has no effect, but should be avoided as this may change in future releases.<br><br>
+
+<b>%</b> option does an fpreset (floating-point state reset) after the call. Some procedures leave floating-point in an invalid state that causes a crash at some later time.<br><br>
+
+<b>declaration</b> is a set of blank delimited codes describing result and parameter types:<br><br>
+
+<font face=courier>c&nbsp;&nbsp;</font>J character (1 byte)<br>
+<font face=courier>w&nbsp;&nbsp;</font>J unicode (2 byte) (see <font face=courier>u:</font>)<br>
+<font face=courier>s&nbsp;&nbsp;</font>short integer (2 byte)<br>
+<font face=courier>i&nbsp;&nbsp;</font>integer (4 byte)<br>
+<font face=courier>l&nbsp;&nbsp;</font>long integer (8 byte)<br>
+<font face=courier>x&nbsp;&nbsp;</font>J integer (4 byte or 8 byte depending on 32/64)<br>
+<font face=courier>f&nbsp;&nbsp;</font>short float (4 byte)<br>
+<font face=courier>d&nbsp;&nbsp;</font>J float (8 byte)<br>
+<font face=courier>j&nbsp;&nbsp;</font>J complex (16 byte - 2 d values) (pointer only, not as result or scalar)<br>
+<font face=courier>*&nbsp;&nbsp;</font>pointer<br>
+<font face=courier>n&nbsp;&nbsp;</font>no result (result, if any, is ignored and 0 is returned)<br><br>
+
+The first declaration type describes the result and the remaining ones describe the parameters in the <font face=courier>cd</font> right argument. Arguments are converted as required to conform with their declaration type.<br><br>
+
+The c w x d j types are native J types. In J32 (32 bit) the i type is the same as x and the l type is an error. In J64 (64bit) the l type is the same as x and the i type is handled similarly to s.<br><br>
+
+A scalar type (c w s i l x f d j) must have a scalar parameter of the right type. Scalar s i l values take a J integer and f values take a J float.<br><br>
+
+The * type is a pointer to values. A * can be followed by c w s i l x f d or j to indicate the type of values. The DLL can read or write this memory.<br><br>
+
+A pointer type parameter must be an array with rank &gt; 1 of the right type, or a scalar boxed scalar integer that is a memory address.<br><br>
+
+A J integer list used for *s is converted in place to shorts before calling the dll and is converted back after the call. A J integer list used for *i on J64 is converted in place to 4 bytes and then back. A J float list used for a *f is converted in place to short floats and then back.<br><br>
+
+A *s and *f also allow a character list with a count that is evenly divisible respectively by 2 and 4.<br><br>
+
+J doesn't have unsigned types so DLL unsigned type values with the top bit on are returned to J as negative values.<br><br>
+
+The mema result (<a href="memory_management.htm">Memory Management</a>) can be used as a * type parameter. A memory address parameter is a boxed scalar. The NULL pointer is &lt;0 .<br><br>
+
+The <font face=courier size=-1>cd</font> right argument is a list of enclosed parameters. If the argument is not boxed, it is&nbsp;&nbsp;treated as if <font face=courier size=-1>&lt;"0 </font> were applied.<br><br>
+
+<font face=courier size=-1>cd</font> is rank 1. Its result, without the &gt; option, is the procedure result catenated with its possibly modified right argument. With the &gt; option the result is the procedure scalar result.<br><br>
+
+For example, the Win32 API procedure GetProfileString in kernel32 gets the value of the windows/device keyword.<pre>   a=: 'kernel32 GetProfileStringA s *c *c *c *c s'
+   b=: 'windows';'device'; 'default'; (32$'z');32
+   a cd b
++--+-------+------+-------+--------------------------------+--+
+|31|windows|device|default|HP LaserJet 4P/4MP,HPPCL5MS,LPT |32|
++--+-------+------+-------+--------------------------------+--+</pre><br>
+The first type s indicates that the procedure returns a short integer. The first pointer names a section. The second pointer names a keyword. The third pointer is the default if the keyword is not found. The fourth parameter is where the keyword text is put. The fifth parameter is the length of the fourth parameter.<br><br>
+
+If the GetProfileStringA declaration was wrong, say a d result instead of s, it would crash your system. If the fifth parameter was 64 and the keyword was longer than the 32 characters allocated by the fourth parameter, the extra data would overwrite memory.<br><br>
+
+Procedures are usually documented with a C prototype or a Visual Basic declaration. The C prototype and VB declaration for GetProfileString are:<pre>DWORD GetProfileString(
+LPCTSTR lpAppName, // address of section name
+LPCTSTR lpKeyName, // address of key name
+LPCTSTR lpDefault, // address of default string
+LPTSTR lpReturnedString,// address of destination buffer
+DWORD nSize // size of destination buffer
+);
+
+Declare Function GetProfileString Lib &quot;kernel32&quot;
+Alias GetProfileStringA&quot;
+ByVal lpAppName As String,
+ByVal lpKeyName As String,
+ByVal lpDefault As String,
+ByVal lpReturnedString As String,
+ByVal nSize As Long)
+As Long</pre><br>
+J declaration types and some corresponding C and VB types are:<br>
+<font face=courier>c&nbsp;&nbsp;</font>char, byte, bool<br>
+<font face=courier>s&nbsp;&nbsp;</font>short, short int, word, %<br>
+<font face=courier>i&nbsp;&nbsp;</font>int, dword<br>
+<font face=courier>f&nbsp;&nbsp;</font>float, !<br>
+<font face=courier>d&nbsp;&nbsp;</font>double, #<br>
+<font face=courier>*c </font>char*, int*, LP..., void*, $<br>
+<font face=courier>n&nbsp;&nbsp;</font>void<br><br>
+
+<font face=courier size=-1>cdf''</font> unloads all DLLs that <font face=courier size=-1>cd</font> has loaded. A loaded DLL is in use and attempts to modify it will fail. If you are developing and testing a DLL you must run <font face=courier size=-1>cdf''</font> before you can build and save a new version.<br>
+<!--bottom jump start--><hr><a href="cd_domain_error.htm">&gt;&gt;</a>&nbsp;
+<a href="dlls.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body></html>

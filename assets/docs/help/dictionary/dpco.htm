@@ -1,0 +1,153 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>p: Primes</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dqco.htm">&gt;&gt;</a>&nbsp;
+<a href="dpdotdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Primes</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>p: &nbsp;0 _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Primes</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+The result of<tt> p: i </tt>is the <tt>i</tt>-th prime.
+For example:<br>
+
+<pre>
+   p: 0
+2
+   p: i. 15
+2 3 5 7 11 13 17 19 23 29 31 37 41 43 47
+</pre>
+
+<p>The inverse of<tt> p: </tt>is the number of primes less 
+than the argument, often denoted by &pi;(n): </p>
+
+<pre>
+   pi=: p:^:_1
+   pi i. 15
+0 0 0 1 2 2 3 3 4 4 4 4 5 5 6
+   (] , pi ,: p:@pi) i.15
+0 1 2 3 4 5 6 7  8  9 10 11 12 13 14
+0 0 0 1 2 2 3 3  4  4  4  4  5  5  6
+2 2 2 3 5 5 7 7 11 11 11 11 13 13 17
+
+   y=: (2^31)-1
+   ] a=: pi y
+105097564
+   ] b=: p: a
+2147483647
+   b=y
+1
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<p><tt>_4 p: y </tt>is the next prime smaller than<tt> y </tt>and is the
+same as<br><tt> &lt;:^:(0&p:)^:_"0 &gt;.y-1</tt> .</p>
+
+<p><tt>_1 p: y </tt>is the same as<tt> p:^:_1 y</tt> ,<tt> </tt>
+the number of primes less than<tt> y</tt> .</p>
+
+<p><tt>0 p: y </tt>is the same as<tt> -.1 p: y</tt> .</p>
+
+<p><tt>1 p: y </tt>is 1 if and only if<tt> y </tt>is prime.</p>
+
+<p><tt>2 p: y </tt>is the same as<tt> __ q: y</tt> ,<tt> </tt>a 2-row table
+of the prime factors and exponents in the factorization of<tt> y</tt> .</p>
+
+<p><tt>3 p: y </tt>is the same as<tt> q: y</tt> ,<tt> </tt>the list of prime
+factors of<tt> y </tt>whose product is equal to<tt> y</tt> .</p>
+
+<p><tt>4 p: y </tt>is the next prime larger than<tt> y </tt>and is the
+same as<br><tt> &gt;:^:(0&p:)^:_"0 &lt;.y+1</tt> .</p>
+
+<p><tt>5 p: y </tt>computes the totient function (Euler&rsquo;s phi function) 
+of<tt> y</tt> ,<tt> </tt>the number of non-negative integers less than<tt> y </tt>
+relatively prime to it, the sum<tt> +/1=y+.i.y</tt> .</p>
+
+<p>Currently, arguments larger than<tt> 2^31 </tt>are tested to be prime 
+according to a probabilistic algorithm (Miller-Rabin).<br>&nbsp;</p>
+</td>
+</tr></table><br>
+
+<pre>
+   4 p: 20
+23
+   4&p:^:(i.8) 20
+20 23 29 31 37 41 43 47
+
+   _4 p: 50
+47
+   _4&p:^:(i.8) 50
+50 47 43 41 37 31 29 23
+
+   ] y=: !14x
+87178291200
+   ] c=: _4 4 p:"0 y
+87178291199 87178291219
+   1 p: ({.c)+i.1--/c
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+   1 p: _1+2^67x
+0
+   m=: 366384x * */ p: i.9x
+   1 p: 6171054912832631x + m * i.25
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+   2 p: y
+ 2 3 5 7 11 13
+11 5 2 2  1  1
+   'p e'=: 2 p: y
+   */p^e
+87178291200
+   y
+87178291200
+
+   3 p: y
+2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 5 5 7 7 11 13
+   */ 3 p: y
+87178291200
+   y
+87178291200
+   e#p
+2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 5 5 7 7 11 13
+
+   5 p: y
+16721510400
+   */(p-1)*p^e-1
+16721510400
+   (- ~:)&.q: y
+16721510400
+</pre>
+
+<!--bottom jump start--><hr><a href="dqco.htm">&gt;&gt;</a>&nbsp;
+<a href="dpdotdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

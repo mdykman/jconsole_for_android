@@ -1,0 +1,217 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Intro 2.  Ambivalence</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="intro03.htm">&gt;&gt;</a>&nbsp;
+<a href="intro01.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>2. Ambivalence</b></font><br><br>
+
+Cover the comments on the right and provide your own.<br>
+
+<pre>
+   7-5                        <font face=Times size=+1>The function in the sentence</font> 7-5 <font face=Times size=+1>applies to two </font>
+2                             <font face=Times size=+1>arguments to perform subtraction, but in the</font>
+   -5                         <font face=Times size=+1>sentence</font> -5 <font face=Times size=+1>it applies to a single argument to</font>
+_5                            <font face=Times size=+1>perform negation.</font>
+
+                              <font face=Times size=+1>Adopting from chemistry the term valence, we</font>
+                              <font face=Times size=+1>say that the symbol</font> <b>-</b> <font face=Times size=+1>is <i>ambivalent</i>, its effective</font>
+   7%5                        <font face=Times size=+1>binding power being determined by context.</font>
+1.4
+
+   %5                         <font face=Times size=+1>The ambivalence of</font> - <font face=Times size=+1>is familiar in arithmetic;</font>
+0.2                           <font face=Times size=+1>it is here extended to other functions.</font>
+
+   3^2
+9
+
+   ^2                         <font face=Times size=+1><i>Exponential</i> (that is,</font> 2.71828^2<font face=Times size=+1>)</font>
+7.38906
+
+            
+   a=: i. 5                   <font face=Times size=+1>The function <i>integer</i> or <i>integer list</i></font>
+   a
+0 1 2 3 4                     <font face=Times size=+1><i>List</i> or <i>vector</i></font>
+
+   a i. 3 1                   <font face=Times size=+1>The function <i>index</i> or <i>index of</i></font>
+3 1
+  
+   b=: 'Canada'               <font face=Times size=+1>Enclosing quotes denote literal characters</font>
+   b i. 'da'
+4 1
+  
+   $ a                        <font face=Times size=+1><i>Shape</i> function</font>
+5
+
+   3 4 $ a                    <font face=Times size=+1><i>Reshape</i> function</font>
+0 1 2 3                       <font face=Times size=+1><i>Table</i> or <i>matrix</i></font>
+4 0 1 2
+3 4 0 1
+  
+   3 4 $ b
+Cana
+daCa
+nada
+
+   %a                         <font face=Times size=+1>Functions apply to lists</font>
+_ 1 0.5 0.333333 0.25         <font face=Times size=+1>The symbol</font> _ <font face=Times size=+1>alone denotes <i>infinity</i></font>
+</pre>
+<br>
+
+<P ALIGN=CENTER><b>Exercises</b></p>
+
+<table>
+<tr><td valign=top>2.1 &nbsp;</td>
+<td>Enter the following sentences (and perhaps related sentences 
+using different arguments), observe the results, and state what the two cases 
+(<i>monadic</i> and <i>dyadic</i>) of each function do:<br>
+
+<pre>
+   a=: 3 1 4 1 5 9
+   b=: 'Canada'
+   #a
+   1 0 1 0 1 3 # a
+   1 0 1 0 1 3 # b
+   /: a
+   /: b
+   a /: a
+   a /: b
+   b /: a
+   b /: b
+   c=: 'can''t'
+   c
+   #c
+   c /: c
+</pre>
+</td></tr>
+
+<tr><td valign=top>2.2 &nbsp;</td>
+<td>Make a summary table of the functions used thus far.  
+Then compare it with the following table (in which a bullet 
+separates the monadic case from the dyadic, as in Negate &#149; Subtract):<br>
+
+<table>
+<tr><td>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>
+    <td><font size=+3><u><b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </b></u></font></td>    
+    <td><font size=+3><u><b>&nbsp; &nbsp; &nbsp; . &nbsp; &nbsp; &nbsp; &nbsp;</b></u></font></td>
+    <td><font size=+3><u><b>&nbsp; &nbsp; &nbsp; : &nbsp; &nbsp; &nbsp; &nbsp;</b></u></font></td></tr>
+
+<tr><td><tt>+</tt></td>
+    <td>&#149; Add</td>
+    <td>&#149; Or </td></tr>
+
+<tr><td><tt>-</tt></td>
+    <td>Negate &#149; Subtract</td></tr>
+
+<tr><td><tt>*</tt></td>
+    <td>&#149; Times</td>
+    <td>&#149; And </td></tr>
+
+<tr><td><tt>%</tt></td>
+    <td>Reciprocal &#149; Divide</td></tr>
+
+<tr><td><tt>^</tt></td>
+    <td>Exponential &#149; Power</td>
+    <td>&#149; Log </td></tr>
+
+<tr><td><tt>&lt;</tt></td>
+    <td>&#149; Less Than</td>
+    <td>&#149; Lessor Of </td></tr>
+
+<tr><td><tt>&gt;</tt></td>
+    <td>&#149; Greater Than</td>
+    <td>&#149; Greater Of</td></tr>
+
+<tr><td><tt>=</tt></td>
+    <td>&#149; Equals</td>
+    <td> </td>
+    <td>Is (Copula)</td></tr>
+
+<tr><td><tt>i</tt></td>
+    <td> </td>
+    <td>Integers &#149; Index Of &nbsp;  &nbsp;</td></tr>
+
+<tr><td><tt>$</tt></td>
+    <td>Shape &#149; Reshape</td></tr>
+
+<tr><td><tt>/</tt></td>
+    <td></td>
+    <td></td>
+    <td>Grade &#149; Sort</td></tr>
+
+<tr><td><tt>#</tt></td>
+    <td>Number Of Items &#149; Replicate</td>
+</table>
+<br></td></tr>
+
+<tr><td valign=top>2.3 &nbsp;</td>
+<td>Try to fill some of the gaps in the table of Exercise 2.2 
+by experimenting on the computer with appropriate expressions.  
+For example, enter<tt> ^.10 </tt>and<tt> ^. 2.71828 </tt>
+to determine the missing (monadic) case of<tt> ^. </tt>and 
+enter<tt> %: 4 </tt>and<tt> %: -4 </tt>and<tt> +%: -4 </tt>
+to determine the case of<tt> % </tt>followed by a colon. <br><br>
+
+However, do not waste time on matters (such as, perhaps, 
+complex numbers or the <i>boxed</i> results produced by the 
+monad<tt> &lt;</tt>) that are still beyond your grasp; 
+it may be better to return to them after working through later sections.  
+Note that the effects of certain functions become evident 
+only when applied to arguments other than positive integers:  
+try<tt> &lt;.1 2 3 4 </tt>and<tt> &lt;.3.4 5.2 3.6 </tt>
+to determine the effect of the monad<tt> &lt;.</tt> .
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>2.4 &nbsp;</td>
+<td>If<tt> b=: 3.4 5.2 3.6 </tt>,<tt> </tt>then<tt> &lt;.b </tt>
+yields the argument<tt> b </tt>rounded <i>down</i> to the nearest integer.  
+Write and test a sentence that rounds the argument<tt> b </tt>to the 
+<i>nearest</i> integer.<br><br>
+  
+Answer:<tt> &lt;.(b+0.5) </tt>or<tt> &lt;.b+0.5 </tt>
+or<tt> &lt;.b+1r2</tt>
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>2.5 &nbsp;</td>
+<td>Enter<tt> 2 4 3 $ i. 5 </tt>to see an example of a 
+<i>rank</i><tt> 3 </tt><i>array</i> or <i>report</i> 
+(for two years of four quarters of three months each).
+<br>&nbsp;</td></tr>
+
+<tr><td valign=top>2.6 &nbsp;</td>
+<td>Enter<tt> ?9 </tt>repeatedly and state what the 
+function<tt> ? </tt>does.  Then enter<tt> t=: ?3 5 $ 9 </tt>to 
+make a table for use in further experiments.<br><br>
+  
+Answer:<tt> ? </tt>is a (pseudo-) random number generator;<tt> ?n </tt>
+produces an element from the population<tt> i.n</tt><br>
+</td></tr>
+</table>
+<br>
+<br><br>
+
+<!--bottom jump start--><hr><a href="intro03.htm">&gt;&gt;</a>&nbsp;
+<a href="intro01.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

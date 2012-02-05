@@ -1,0 +1,109 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Sample 13. Compositions I</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="samp14.htm">&gt;&gt;</a>&nbsp;
+<a href="samp12.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>13. Compositions (Based on Conjunctions)</b></font><br><br>
+
+In  math, the 
+symbol<tt> </tt><b><font size=-2>&#176;</font></b><tt> </tt>
+is commonly used to produce a function defined as the <i>composition</i> of two 
+functions:<tt> f</tt><b><font size=-2> &#176; </font></b><tt>g y </tt>
+is defined as<tt> f (g y)</tt> .<tt> </tt>Normally, such composed functions are 
+only defined to apply to a single scalar argument.<br><br>
+
+<b>J</b> provides compositions effected by five distinct conjunctions, 
+as well as compositions effected by isolated sequences of verbs: 
+hooks and forks, and longer trains formed from them.  
+The five conjunctions are<tt> &amp; &amp;. &amp;: @ </tt>and<tt> @:</tt> ,<tt> </tt>
+the conjunctions<tt> @ </tt>and<tt> @: </tt>being related in 
+the same manner as<tt> &amp; </tt>and<tt> &amp;:</tt> .<br><br>
+
+The conjunction<tt> &amp; </tt>is closest to the 
+composition<tt> </tt><b><font size=-2>&#176;</font></b><tt> </tt>
+used in math, being identical to it when used for two scalar (rank zero) 
+functions to produce a function to be applied to a single scalar argument.  
+However, it is also extended in two directions:<br><br>
+
+<table>
+<tr><td valign=top>1. &nbsp;</td>
+<td valign=top>Applied to one verb and one noun it produces 
+a monadic function illustrated by the cases<tt> 10&amp;^. </tt>
+(Base ten logarithm) and<tt> ^&amp;3 </tt>(Cube).</td></tr>
+
+<tr><td valign=top>2.</td>
+<td valign=top>Applied to two verbs it produces (in addition to the 
+monadic case used in math) a dyadic case defined 
+by:<tt> x f&amp;g y </tt><font size=+1>&harr;</font><tt> (g x) f (g y)</tt> .  
+For example,<tt> x %&amp;! y </tt>is the quotient of 
+the factorials of<tt> x </tt>and<tt> y</tt> . </td></tr>
+</table>
+<br>
+
+The conjunction<tt> &amp;. </tt>applies only to verbs, 
+and<tt> f&amp;.g </tt>is equivalent to<tt> f&amp;g </tt>except that 
+the inverse of<tt> g </tt>is applied to the final result.  For example:<br>
+
+<pre>
+   3 +&amp;^. 4                      3 +&amp;.^. 4
+2.48491                       12
+</pre>
+
+For scalar arguments the functions<tt> f&amp;:g </tt>
+and<tt> f&amp;g </tt>are equivalent, but for more general 
+arguments,<tt> g </tt>applies to each cell as dictated by its ranks.  
+In the case of<tt> f&amp;g</tt>,<tt> </tt>the function<tt> f </tt>
+then applies to each result produced; in the case of<tt> f&amp;:g </tt>
+it applies to the overall result of all of the cells.  For example:<br>
+
+<pre>
+   (] ; %. ; |:&amp;%. ; |:&amp;:%.) i. 2 2 2
++---+--------+-------+---------+
+|0 1|_1.5 0.5|_1.5  1|_1.5 _3.5|
+|2 3|   1   0| 0.5  0|   1    3|
+|   |        |       |         |
+|4 5|_3.5 2.5|_3.5  3| 0.5  2.5|
+|6 7|   3  _2| 2.5 _2|   0   _2|
++---+--------+-------+---------+
+</pre>
+
+The conjunctions<tt> @ </tt>and<tt> &amp; </tt>
+agree in the monadic case, as indicated below for 
+cells<tt> x </tt>and<tt> y </tt>as dictated by the ranks 
+of<tt> g</tt> :<br>
+
+<p>
+<tt>&nbsp; f&amp;g y  </tt><font size=+1>&harr;</font><tt>  f g y</tt><br>
+<tt>&nbsp; f@g y  </tt><font size=+1>&harr;</font><tt>  f g y</tt><br>
+<tt>x f&amp;g y  </tt><font size=+1>&harr;</font><tt>  (g x) f (g y)</tt><br>
+<tt>x f@g y  </tt><font size=+1>&harr;</font><tt>  f (x g y)</tt><br>
+</p>
+
+<br>
+
+<!--bottom jump start--><hr><a href="samp14.htm">&gt;&gt;</a>&nbsp;
+<a href="samp12.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

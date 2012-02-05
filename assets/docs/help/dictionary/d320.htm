@@ -1,0 +1,121 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>, Ravel  -  Append</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d321.htm">&gt;&gt;</a>&nbsp;
+<a href="d312.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Ravel</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>, &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Append</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>,y </tt>gives a list of the atoms of<tt> y </tt>in &ldquo;normal&rdquo; order: 
+the result is ordered by items, by items within items, etc.  
+The result shape is<tt> 1$*/$ y</tt> .<tt> </tt>Thus:<br>
+
+<pre>
+   y=: 2 4 $ 'abcdefgh'
+
+   y
+abcd
+efgh
+
+   ,y
+abcdefgh
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x,y </tt>appends items of<tt> y </tt>to items of<tt> x </tt>after:<br>
+<br>
+
+<table>
+<tr><td valign=top>1.</td>
+<td>Reshaping an atomic argument to the 
+shape of the items of the other, </td></tr>
+  
+<tr><td valign=top>2.</td>
+<td>Bringing the arguments to a common rank 
+(of at least 1) by repeatedly 
+<a href="d322.htm"><i>itemizing</i><tt> </tt>(<tt>,:</tt>)</a><tt> </tt>
+any of lower rank, and</td></tr>
+  
+<tr><td valign=top>3.</td>
+<td>Bringing them to a common shape by padding with fill 
+elements in the manner described in 
+<a href="dictb.htm#fill">Section II B</a>. </td></tr>
+</table>
+<br>
+
+The fit conjunction<tt> </tt>(<tt>,!.f</tt>)<tt> </tt>provides fill 
+specified by the atom<tt> f</tt> .
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   ]a=: i. 2 3 3
+ 0  1  2
+ 3  4  5
+ 6  7  8
+
+ 9 10 11
+12 13 14
+15 16 17
+
+   ,a
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17
+
+   ,&quot;2 a
+0  1  2  3  4  5  6  7  8
+9 10 11 12 13 14 15 16 17
+</pre>
+
+The following examples illustrate the dyadic case:<br>
+
+<pre>
+   ('abc','de');('abc',&quot;0/'de');(5 6 7,i.2 3);(7,i.2 3)
++-----+--+-----+-----+
+|abcde|ad|5 6 7|7 7 7|
+|     |ae|0 1 2|0 1 2|
+|     |  |3 4 5|3 4 5|
+|     |bd|     |     |
+|     |be|     |     |
+|     |  |     |     |
+|     |cd|     |     |
+|     |ce|     |     |
++-----+--+-----+-----+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d321.htm">&gt;&gt;</a>&nbsp;
+<a href="d312.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,884 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Performance: Measurement & Tips</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="tacit_programming.htm">&gt;&gt;</a>&nbsp;
+<a href="odds_and_ends.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734571"></a><a name="_Toc5414612"></a><a name="_Toc1896242"><span
+style='mso-bookmark:_Toc5414612'><span style='mso-bookmark:_Toc191734571'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>35. </span></span><![endif]>Performance: Measurement</span></span></a><span
+style='mso-bookmark:_Toc191734571'> &amp; Tips</span></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;performance measurement&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->J lets you express your ideas
+tersely, but it is up to you to make sure they are good ideas.<span
+style='mso-spacerun:yes'>&nbsp; </span>Since each keystroke in a J sentence can
+summon up billions of machine cycles, you must make sure that you don't force
+the interpreter into a bad choice of algorithm.&nbsp;
+This will be hard at first, when you are struggling to figure out what
+the interpreter is doing, never mind how it is doing it; fortunately the
+interpreter gives you tools to measure the performance of your code.</p>
+
+<p class=Section><a name="_Toc191734572">Timing Individual Sentences</a></p>
+
+<p class=MsoBodyText>If you run the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>JforC</span></span> script with</p>
+
+<p class=Jcodemultiline>load 'system\packages\misc\jforc.ijs'</p>
+
+<p class=BodyTextnoleader>it will define the verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>Ts</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Ts</span></span> stands for 'time and space' and it tells
+you how long it takes to run a given J sentence, and how much space the
+interpreter used during the execution.&nbsp;
+For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a3 =. i. 1000</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts '+/\ a3'</p>
+
+<p class=Jcodemultiline>4.3581e_5 5248</p>
+
+<p class=BodyTextnoleader>We define a noun <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a3</span></span>, and we
+calculate the running total of its items.&nbsp;
+It took 0.00004 seconds to create the 1000-item running total, and used
+5248 bytes.&nbsp; We could have done the whole
+operation in one line with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Ts&nbsp;'+/\&nbsp;i.&nbsp;1000'</span></span>, but the
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.</span></span>
+uses time and space too, so if we want to find out only what is used by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/\</span></span>,
+we make sure that's all we measure.</p>
+
+<p class=MsoBodyText>We can use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Ts</span></span> to start to understand what can make J
+programs slow.&nbsp; Let's define a verb to do
+the addition operation:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; sum =: dyad :
+'x + y'&quot;0</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sum</span></span> is an exact replacement for dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+</span></span>,
+having the same rank and function.&nbsp;
+Replacing <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+</span></span>
+with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum</span></span>
+does not change the result of a sentence:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +/\ i. 7</p>
+
+<p class=Jcodemultiline>0 1 3 6 10 15 21</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; sum/\ i. 7</p>
+
+<p class=Jcodemultiline>0 1 3 6 10 15 21</p>
+
+<p class=MsoBodyText>But the performance is quite different, as we can measure:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a10 =. i. 10</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1000 Ts '+/\
+a10'</p>
+
+<p class=Jcodemultiline>2.68191e_5 1280</p>
+
+<p class=BodyTextnoleader>Because <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/\</span></span> is so fast, we give <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>Ts</span></span> a left argument
+to report the average time over 1000 runs.&nbsp;
+If we just ran the sentence once, the result would be corrupted by small
+timing variations introduced by the operating system.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sum/\</span></span> is not so fast so we run it only once:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts 'sum/\ a10'</p>
+
+<p class=Jcodemultiline>0.00181867 3648</p>
+
+<p class=BodyTextnoleader>Quite a difference: in this running total <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum</span></span>
+seems to be about 50 times slower than <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Let's just try adding a list to itself
+(remember that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u~&nbsp;y</span></span>
+is equivalent to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;u&nbsp;y</span></span>):</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1000 Ts '+~
+a10'</p>
+
+<p class=Jcodemultiline>2.68191e_5 896</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 100 Ts 'sum~
+a10'</p>
+
+<p class=Jcodemultiline>0.00033021 2560</p>
+
+<p class=BodyTextnoleader>Yes, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sum</span></span> is definitely slower than <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+</span></span>,
+though only by a factor of 10 or so this time.&nbsp;
+Why should it be slower?&nbsp; The
+answer is, Because it deals with atoms.&nbsp;
+Since J verb-definitions are not compiled, but interpreted line-by-line
+on each execution, every single time we add two numbers with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sum</span></span>, the
+interpreter has to parse <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'x&nbsp;+&nbsp;y'</span></span> and perform the
+addition.&nbsp; Why, it's a miracle that it
+only slows down by a factor of 10!&nbsp; The
+lesson is that if you define verbs with small rank, the interpretive overhead
+will be significant.</p>
+
+<p class=MsoBodyText>Still, that doesn't fully explain why <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sum/\</span></span> is <b>so</b>
+much slower than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/\&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Let's investigate further by increasing the
+size of the operand:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a20 =. i. 20</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1000 Ts '+/\
+a20'</p>
+
+<p class=Jcodemultiline>2.68191e_5 1280</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts 'sum/\ a20'</p>
+
+<p class=Jcodemultiline>0.00728641 3648</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/\</span></span> is unchanged when we move to a list of 20
+items--the operation is so fast that time is being spent starting the verb
+rather than running it--but <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sum/\</span></span> slows down noticeably.<span
+style='mso-spacerun:yes'>&nbsp; </span>Interesting; let's try bigger and bigger
+operands:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a40 =. i. 40</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1000 Ts '+/\
+a40'</p>
+
+<p class=Jcodemultiline>2.76572e_5 1408</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts 'sum/\ a40'</p>
+
+<p class=Jcodemultiline>0.0299561 4160</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a100 =. i. 100</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1000 Ts '+/\
+a100'</p>
+
+<p class=Jcodemultiline>2.76572e_5 1664</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts 'sum/\
+a100'</p>
+
+<p class=Jcodemultiline>0.185741 5184</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a400 =. i. 400</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 1000 Ts '+/\
+a400'</p>
+
+<p class=Jcodemultiline>3.77143e_5 3200</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts 'sum/\
+a400'</p>
+
+<p class=Jcodemultiline>3.00367 11328</p>
+
+<p class=BodyTextnoleader>Holy cow!&nbsp; On a
+400-item list, <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum/\</span></span>
+is 80000 times slower than <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/\</span></span>!&nbsp;
+What happened?</p>
+
+<p class=MsoBodyText>Recall what monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sum/\</span></span> is really
+doing.&nbsp; It applies monad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum/</span></span>
+to the first item of the list; then to the list made of the first 2 items; then
+the list made of the first 3 items; and so on.&nbsp;
+At each evaluation of monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sum/</span></span>, the
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum</span></span>
+verb is interleaved between the items and the result is evaluated <i>right-to-left</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The problem is, the interpreter doesn't
+analyze <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum</span></span>
+to know that it is associative--that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;sum&nbsp;(y&nbsp;sum&nbsp;z)</span></span> is the
+same as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(x&nbsp;sum&nbsp;y)&nbsp;sum&nbsp;z</span></span>--so
+it doesn't know that it can use the result from one subset as an input to the
+operation for the next subset, and it winds up performing every single
+addition: for the 400<sup>th</sup> item it adds all 400 numbers together.<span
+style='mso-spacerun:yes'>&nbsp; </span>That's why its time increases as the square
+of the length of the list.</p>
+
+<p class=MsoBodyText>Monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/\</span></span> is fast because the interpreter knows that
+dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+</span></span>
+is associative, and therefore it reuses the result from one subset as input to the
+next, producing each item of the result with a single addition.</p>
+
+<p class=MsoBodyText>Well then, can we give a hint to the interpreter that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum</span></span>
+is associative?&nbsp; Alas, no, but we have
+another trick up our sleeve.&nbsp; Consider
+monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum/\.</span></span>,
+which applies monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sum/</span></span> to successive <i>suffixes</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the interpreter is clever, it will notice
+that if it starts with the smallest suffix--the one made up of just the last
+item--and processes the suffixes in order of increasing size, it will always be
+evaluating <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;sum&nbsp;(<i>previous&nbsp;suffix&nbsp;result</i>)</span></span>,
+and right-to-left evaluation implies that the result of the previous suffix can
+always be used as the right operand to each application of monad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum</span></span>,
+without needing any knowledge of associativity.&nbsp;
+Let me tell you, this interpreter is nothing if not clever, and that's
+just what it does.&nbsp; All we have to do is
+to convert our <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum/\</span></span>
+into a variant of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sum/\.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The way to do that is simple: we reverse the
+order of the items, apply <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sum/\.</span></span>, and reverse the order again:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; sum/\.&amp;.|.
+i. 7</p>
+
+<p class=Jcodemultiline>0 1 3 6 10 15 21</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;u\\. monad:for performance&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->This arises enough to be a
+standard J idiom: use it whenever you need to apply an associative verb on
+prefixes.&nbsp; It's much faster:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts
+'sum/\.&amp;.|. a400'</p>
+
+<p class=Jcodemultiline>0.014805 59264</p>
+
+<p class=BodyTextnoleader>Still not as fast as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+/\</span></span>, but the
+suffix version uses time proportional to the number of items rather than the
+square of the number of items.</p>
+
+<p class=Section><a name="_Toc191734573">Use Large Verb-Ranks! and Integrated
+Rank Support</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;integrated rank support&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->'Think big' is a watchword not
+just for program design, but for coding as well.<span
+style='mso-spacerun:yes'>&nbsp; </span>Starting a primitive has a small cost, but if
+you start a primitive for each atom of a large array, the cost will add
+up.&nbsp; To reduce the time spent starting
+primitives, apply them to the biggest operands possible.<span
+style='mso-spacerun:yes'>&nbsp; </span>This means, <b>Use as large a verb-rank as
+you can</b>.&nbsp; See what a difference a
+tiny change can make:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. i. 100000
+10</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts 'a -@+ a'</p>
+
+<p class=Jcodemultiline>3.96384 4.19552e6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts 'a -@:+ a'</p>
+
+<p class=Jcodemultiline>0.12801 8.3895e6</p>
+
+<p class=BodyTextnoleader>These two verbs produce identical results, but <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-@+</span></span>
+is 30-fold slower than <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-@:+</span></span> on this large operand.<span
+style='mso-spacerun:yes'>&nbsp; </span>The reason is that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-@+</span></span> has rank
+0 (taken from the rank of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+</span></span>), while <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-@:+</span></span> has
+infinite rank.&nbsp; Rank 0 means that each
+pair of atoms is fed individually through the verb. So, when <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-@+</span></span> is
+executed, two primitives are started for each pair of atoms, one to add and the
+other to change the sign. Execution of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-@:+</span></span>
+requires only two primitive-starts for the entire array.</p>
+
+<p class=MsoBodyText>You do not need to worry much about the ranks at which
+individual primitives are applied, because of an important feature of J called <span
+class=Definition>integrated rank support</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>When a verb with integrated rank support is
+used as the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&quot;n</span></span>,
+the resulting verb runs with a single primitive-start and the application of
+the verb on the proper cells is handled within the primitive.<span
+style='mso-spacerun:yes'>&nbsp; </span>So,</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 100 Ts 'a + a'</p>
+
+<p class=Jcodemultiline>0.0623949 4.19501e6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 100 Ts 'a
++&quot;0 a'</p>
+
+<p class=Jcodemultiline>0.248846 4.19526e6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 100 Ts 'a
++&quot;1 a'</p>
+
+<p class=Jcodemultiline>0.0681035 4.19526e6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 100 Ts 'a
++&quot;2 a'</p>
+
+<p class=Jcodemultiline>0.0626361 4.1952e6</p>
+
+<p class=BodyTextnoleader>All these forms produce identical results.<span
+style='mso-spacerun:yes'>&nbsp; </span>The weak dependence of the speed on the rank
+is typical of a verb with integrated rank support.<span
+style='mso-spacerun:yes'>&nbsp; </span>Fastest execution is achieved when the verb
+is used alone, but the form <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&quot;n</span></span> still runs fast, and the higher the
+rank, the less the loop-control overhead.&nbsp;
+The Special Code page referred to in the previous section includes the
+long list of the primitives with integrated rank support.<span
+style='mso-spacerun:yes'>&nbsp; </span>You will see there that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u/</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/\</span></span>,
+and the like are also taken care of.</p>
+
+<p class=MsoBodyText>The practical effect of integrated rank support is that
+you don't need to worry much about using the largest possible rank for
+primitives.&nbsp; In compounds and verbs that
+you write, you do need to keep the rank high:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts '(&lt;a:;1)
+{ a'</p>
+
+<p class=Jcodemultiline>0.00939758 525568</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts '1 {&quot;1
+a'</p>
+
+<p class=Jcodemultiline>0.00952329 525184</p>
+
+<p class=BodyTextnoleader>Integrated rank support in dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{</span></span>
+gives the two forms equal performance.&nbsp;
+Look what happens when we replace the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{</span></span> by a
+user-defined verb with the same function:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; from =. {</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts '(&lt;a:;1)
+from a'</p>
+
+<p class=Jcodemultiline>0.00953335 525760</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Ts '1
+from&quot;1 a'</p>
+
+<p class=Jcodemultiline>0.365966 525696</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>from</span></span> lacks integrated rank support, even
+though it is defined to have the same function as <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>{</span></span>, and it suffers
+when it is applied to each 1-cell.&nbsp;
+This is a good reason for you to learn the J primitives and not replace
+them with mnemonic equivalents.</p>
+
+<p class=Section><a name="_Toc191734574">Tips For Coding</a></p>
+
+<p class=MsoBodyText>Here is a list of things to keep in mind, starting with
+the most important.&nbsp; Some of these tips
+will not be understandable until you have mastered tacit programming.</p>
+
+<p class=Subsection><a name="_Toc191734575">Avoid Boxing, Especially Small
+Boxes</a></p>
+
+<p class=MsoBodyText>An unboxed array is stored packed into sequential memory
+locations.&nbsp; An array of boxes is stored
+as sequential headers, where each header points to the contents of the box; the
+contents of each box is stored in its own memory area.</p>
+
+<p class=MsoBodyText>Operations on the contents of an array of boxes require
+much more complicated addressing than operations on an unboxed array, and are
+therefore slower.&nbsp; In addition, the
+storage required for the headers can dwarf that for the data if the contents of
+each box are small.</p>
+
+<p class=MsoBodyText>For these reasons, you should try to use unboxed arrays
+when speed is paramount, and if you need boxing, make the contents of each box
+as large as possible.&nbsp; In C terms, you
+should use a <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>structure
+of arrays</span></span> rather than an <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>array of structures</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Most C programmers find the array of
+structures more pleasing.&nbsp; In C there is
+no penalty for using it, but J is different.</p>
+
+<p class=Subsection><a name="_Toc191734576">Use the Dyad </a><span
+style='mso-bookmark:_Toc191734576'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.</span></span> Family: Dyad </span><span style='mso-bookmark:
+_Toc191734576'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.
+i:</span></span> </span><span style='mso-bookmark:_Toc191734576'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>e.</span></span>
+</span><span style='mso-bookmark:_Toc191734576'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>-.</span></span>, Monad </span><span
+style='mso-bookmark:_Toc191734576'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~. ~: u/.</span></span></span></p>
+
+<p class=MsoBodyText>Dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.</span></span> is the most highly polished code in the J
+interpreter.&nbsp; It has more algorithms,
+based on operand size and type, than you'd ever code yourself.<span
+style='mso-spacerun:yes'>&nbsp; </span>Use it whenever you can.<span
+style='mso-spacerun:yes'>&nbsp; </span>Other primitives also use this fast code:
+these are dyads&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>e.
+i: -.</span></span> and monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~. ~: u/&nbsp;</span></span>.</p>
+
+<p class=Subsection><a name="_Toc191734577">Use </a><span style='mso-bookmark:
+_Toc191734577'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;</span></span>
+(</span><span style='mso-bookmark:_Toc191734577'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u each</span></span>) To Operate
+Inside Boxes</span></p>
+
+<p class=MsoBodyText>If you need to open boxes, do something to the contents,
+and box them up again, the way to do it is with the form <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&amp;.&gt;</span></span> which
+bypasses most of the overhead of creating a list of boxes.<span
+style='mso-spacerun:yes'>&nbsp; </span>This form is recommended for either monadic
+or dyadic <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is even worth using if one of the operands
+is an unboxed scalar, as the unboxing will have no effect and the reboxing will
+be fast.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&amp;.&gt;</span></span>
+is given the name <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>each</span></span>
+in the J startup scripts.</p>
+
+<p class=Subsection><a name="_Toc191734578">Use In-Place Assignment</a></p>
+
+<p class=MsoBodyText>Special forms of dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m}</span></span> and dyad&nbsp;<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>,</span></span>
+modify or extend an array without copying the array.<span
+style='mso-spacerun:yes'>&nbsp; </span>Use these whenever possible.<span
+style='mso-spacerun:yes'>&nbsp; </span>The forms are:</p>
+
+<p class=Jcodemultiline><i>name</i> =. x m} <i>name</i></p>
+
+<p class=Jcodemultiline><i>name</i> =: x m} <i>name<o:p></o:p></i></p>
+
+<p class=Jcodemultiline><i>name</i> =. <i>name</i> , x</p>
+
+<p class=Jcodemultiline><i>name</i> =: <i>name</i> , x</p>
+
+<p class=Subsection><a name="_Toc191734579">Use Compounds Recognized by the
+Interpreter</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;special code in the interpreter&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->The
+interpreter recognizes a great many compounds and has special code to perform
+the compound functions.&nbsp; For example, we
+have learned that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u@:v&nbsp;y</span></span>
+gives the same result as <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;v&nbsp;y</span></span>, but it does not follow that
+the two forms are identical: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/@:,&nbsp;y</span></span> is faster than <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+/&nbsp;,&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>How do you know what forms are handled with
+special code?</p>
+
+<p class=MsoBodyText>An appendix to the Dictionary gives a list of special code
+in the interpreter (press F1 to bring up help; then click on 'Dic' at the top
+of the page to bring up the Contents page; the appendices are listed at the end
+of the contents).&nbsp; There we see that
+there is special code for <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f/@:,</span></span> so we know to use that form.<span
+style='mso-spacerun:yes'>&nbsp; </span>Similarly, farther along we see that <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&amp;1@:&lt;</span></span><span
+class=Jcode><span style='mso-fareast-font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>&nbsp;y</span></span><span style='mso-fareast-font-family:
+"Courier New"'> has special coding, so we know to prefer that form over </span><span
+class=Jcode><span style='mso-fareast-font-family:"Courier New";mso-bidi-font-family:
+"Times New Roman"'>(x&nbsp;&lt;&nbsp;y)&nbsp;i.&nbsp;1&nbsp;</span></span><span
+style='mso-fareast-font-family:"Courier New"'>.</span><span
+style='mso-spacerun:yes'>&nbsp; </span>This list changes from release to release, so
+you should review it occasionally.&nbsp; A few
+of the more important ones are:<span style='mso-fareast-font-family:"Courier New"'><o:p></o:p></span></p>
+
+<p class=Subsubsection>Combine enfile with another operation:<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>($,)</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u/@,<o:p></o:p></span></span></p>
+
+<p class=MsoBodyText>Use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;($,)&nbsp;y</span></span> rather than <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;$&nbsp;,&nbsp;y</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/@,&nbsp;y</span></span>
+rather than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u/&nbsp;,&nbsp;y</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>In each case the interpreter can avoid making
+a copy of the data for the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>,</span></span> operation.</p>
+
+<p class=Subsubsection>Use unboxed <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;{&nbsp;y</span></span></p>
+
+<p class=MsoBodyText>If the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> operand of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;{&nbsp;y</span></span> is
+a rank-2 array (in which each item specifies one cell of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>),
+you should code <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;(&lt;&quot;1@[&nbsp;{&nbsp;])&nbsp;y</span></span>
+rather than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(&lt;&quot;1&nbsp;x)&nbsp;{&nbsp;y</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result is the same, but the first form
+creates the result directly without computing the boxed lists of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.</p>
+
+<p class=Subsubsection>Search a constant list using preinterpreted <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&amp;i.</span></span></p>
+
+<p class=MsoBodyText>If you are going to do many searches through the same list
+of data <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>,
+you will do well to create a search verb</p>
+
+<p class=Jcodemultiline><i style='mso-bidi-font-style:normal'>name</i> =:
+m&amp;i.&nbsp; NB. m&amp;e. and -.&amp;n work
+too, and some others</p>
+
+<p class=BodyTextnoleader>The compound <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m&amp;i.</span></span> is
+interpreted when name is assigned, and the interpreter builds an index for m and saves it
+as part of the verb, so that it doesn't have to be calculated each time the
+verb is used.</p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'>Note</b> that it
+doesn't help you to use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&amp;i.</span></span> in a line in an explicit verb,
+because each line in an explicit verb is interpreted afresh each time it is
+executed.</p>
+
+<p class=Subsubsection>Use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.&amp;1@:u</span></span> to find the first item where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y</span></span>
+is true</p>
+
+<p class=MsoBodyText>The natural way to find the first item where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y</span></span>
+is true is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(x&nbsp;u&nbsp;y)&nbsp;i.&nbsp;1&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The inefficiency in this code is that the
+entire <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;y</span></span>
+is calculated before the search is made for the first 1, which is needless
+computation for all the items after the first 1.</p>
+
+<p class=MsoBodyText>The form <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;i.&amp;1@:u&nbsp;y</span></span> produces the same result,
+but the interpreter can see what you are up to, and it stops computing <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+when the first 1 is found.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&amp;1@:u&nbsp;y</span></span>
+always gives the correct answer, but it performs the fast abbreviated search
+only when the operands have rank less than 2 and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u</span></span> is one of = <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>~: &lt; &lt;:
+&gt; &gt;: E. e.</span></span>&nbsp;</p>
+
+<p class=MsoBodyText>Variations of this form produce related results.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i:</span></span> rather than <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>i.</span></span> searches for
+the last occurrence; <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+rather than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>
+searches for an item that is false.&nbsp; In
+place of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.&amp;1</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/</span></span>
+counts the occurrences, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+./</span></span> tests whether any of the results is true, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>*./</span></span>
+tests whether all the results are true, and <span
+ class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>I.</span></span>
+gives all the indices at which the result is
+true.</p>
+
+<p class=MsoBodyText>The version with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>E.</span></span> is the verb to use to find one string in
+another: <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;i.&amp;1@:E.&nbsp;y</span></span>
+finds the starting position of the first occurrence of the string <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+in the string <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(u&nbsp;i.&nbsp;1:)</span></span>
+is an alternative way to write <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.&amp;1@:u</span></span>&nbsp;.</p>
+
+<p class=Section><a name="_Toc191734580">Shining a Light: The J Performance
+Monitor</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Performance Monitor&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->A magnet makes it easy to pick
+up a needle, but it won't much help you find a needle in a haystack.<span
+style='mso-spacerun:yes'>&nbsp; </span>Likewise, being able to time and tune
+individual sentences will not suffice to let you improve the performance of a
+large J program.&nbsp; A large program spends
+most of its time executing a small subset of its code, and any improvements you
+make to other areas are simply wasted effort.&nbsp;
+I remember a case where a 20,000-line assembler-language program was
+spending 30% of its time executing a single machine instruction--and that
+instruction turned out to be unnecessary!&nbsp;
+What you need is a tool that will direct your attention to the areas
+where a speedup will really matter.</p>
+
+<p class=MsoBodyText>The J Performance Monitor will show you how much time is
+spent executing each line of your application.&nbsp;
+You can run the Lab on the Performance Monitor to see all the facilities
+available, or you can jump right into timing your code with the simple sequence</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; load 'jpm'</p>
+
+<p class=BodyTextnoleader>Do this once to load the tool.<span
+style='mso-spacerun:yes'>&nbsp; </span>Then, for each timing run, execute</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; start_jpm_ 1e7</p>
+
+<p class=Jcodemultiline>357142</p>
+
+<p class=BodyTextnoleader>The operand of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>start_jpm_</span></span> is the
+size in bytes of the trace buffer, and the result is the number of trace
+entries that can fit in the buffer.&nbsp; A
+trace entry is added for each line executed, and for entry and exit of explicit
+definitions (i.&nbsp;e. verbs defined with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define</span></span>).</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; <i>run the
+code you want to time<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; viewtotal_jpm_
+''</p>
+
+<p class=MsoBodyText>J will display a popup window with information about the
+time spent in each verb.&nbsp; An example
+display is</p>
+
+<p class=Jcodemultiline>+---------+------+--------+--------+-----+----+---+</p>
+
+<p class=Jcodemultiline>|name&nbsp;&nbsp;&nbsp;&nbsp;
+|locale|all&nbsp;&nbsp;&nbsp;&nbsp; |here<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>|here%|cum%|rep|</p>
+
+<p class=Jcodemultiline>+---------+------+--------+--------+-----+----+---+</p>
+
+<p class=Jcodemultiline>|accpay&nbsp;&nbsp; |base<span
+style='mso-spacerun:yes'>&nbsp; </span>|0.001435|0.000829| 57.8| 58 |1<span
+style='mso-spacerun:yes'>&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>|intrep&nbsp;&nbsp;
+|base&nbsp; |0.000213|0.000213| 14.8|
+73 |1&nbsp; |</p>
+
+<p class=Jcodemultiline>|accint&nbsp;&nbsp;
+|base&nbsp; |0.000393|0.000147| 10.2|
+83 |1&nbsp; |</p>
+
+<p class=Jcodemultiline>|stretch&nbsp;
+|base&nbsp; |0.000142|0.000142|<span
+style='mso-spacerun:yes'>&nbsp; </span>9.9| 93 |1&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|intexpand|base&nbsp;
+|0.000105|0.000105|&nbsp; 7.3|100
+|1&nbsp; |</p>
+
+<p class=Jcodemultiline>|[total]&nbsp; |<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|0.001435|100.0|100 |&nbsp;&nbsp; |</p>
+
+<p class=Jcodemultiline>+---------+------+--------+--------+-----+----+---+</p>
+
+<p class=MsoBodyText>The columns contain the following information:</p>
+
+<p class=Gloss><b>name&nbsp; </b>the name of
+the verb</p>
+
+<p class=Gloss><b>locale&nbsp; </b>the locale
+the verb was running in</p>
+
+<p class=Gloss><b>all&nbsp; </b>the amount of
+time spent in this verb including time spent in verbs called by this verb</p>
+
+<p class=Gloss><b>here&nbsp; </b>the amount of
+time spent in this verb but <b>not</b> including time spent in verbs called by
+this verb</p>
+
+<p class=Gloss><b>here%&nbsp; </b>the <b>here</b>
+time as a percentage of total time</p>
+
+<p class=Gloss><b>cum%&nbsp; </b>cumulative
+total of <b>here%</b></p>
+
+<p class=Gloss><b>rep&nbsp; </b>the number of
+times the verb was executed</p>
+
+<p class=MsoBodyText>You should focus your attention on the <b>here</b>
+column.&nbsp; If you see a verb that is taking
+longer than you think it should, double-click on its name to look at the
+details of its execution.&nbsp;
+Double-clicking on <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>accpay</span></span> will pop up another window showing</p>
+
+<p class=Jcodemultiline>+--------+--------+---+----------------------------------+</p>
+
+<p class=Jcodemultiline>|all&nbsp;&nbsp;&nbsp;&nbsp;
+|here&nbsp;&nbsp;&nbsp; |rep|accpay<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>+--------+--------+---+----------------------------------+</p>
+
+<p class=Jcodemultiline>|0.000041|0.000041|1&nbsp;
+|monad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|0.000040|0.000040|1&nbsp;
+|[8] if. 4~:#y do.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|0.000000|0.000000|0&nbsp;
+|[9] 'imm frq int pay' return. end.|</p>
+
+<p class=Jcodemultiline>|0.000054|0.000054|1&nbsp;
+|[10] 'm f i p'=.y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|0.000116|0.000116|1&nbsp;
+|[11] len=.$p=.f#p%f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|0.000724|0.000131|1&nbsp;
+|[12] j=.}.len accint f intrep i&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|0.000322|0.000322|1&nbsp;
+|[13] r=.j*+/\p%m}.1,(m-1)}.j&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|0.000137|0.000137|1&nbsp;
+|[14] (len$(-f){.1)#r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|0.001435|0.000841|1&nbsp;
+|total monad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</p>
+
+<p class=Jcodemultiline>+--------+--------+---+----------------------------------+</p>
+
+<p class=BodyTextnoleader>We see that line 13 takes the most time.<span
+style='mso-spacerun:yes'>&nbsp; </span>Clicking on the column heading will sort the
+lines using that column as a key, making it easy for you to concentrate on the
+individual lines that are taking the most time.</p>
+
+<p class=MsoBodyText>You should be aware of one quirk.<span
+style='mso-spacerun:yes'>&nbsp; </span>The Performance Monitor will account for the
+time spent in every line of a named verb that is explicitly defined (i.&nbsp;e.
+defined using <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;:</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;:</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Other verbs are accounted for only as a
+whole, not line-by-line.&nbsp; You may be
+surprised to find that a verb defined by</p>
+
+<p class=Jcodemultiline>opaqueverb =: verb define&quot;0</p>
+
+<p class=Jcodemultiline>&lt;definition here&gt;</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=BodyTextnoleader>will not be treated line-by-line.<span
+style='mso-spacerun:yes'>&nbsp; </span>Yes, there is an explicit definition, but <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>opaqueverb</span></span>
+is not that definition: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>opaqueverb</span></span> is a compound produced by the rank
+conjunction <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want to look inside <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>opaqueverb</span></span>, you
+need to define it like so:</p>
+
+<p class=Jcodemultiline>opaqueverb =: limpidverb&quot;0</p>
+
+<p class=Jcodemultiline>limpidverb =: verb define</p>
+
+<p class=Jcodemultiline>&lt;definition here&gt;</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=MsoBodyText>The J Performance Monitor makes it easy to give your code
+a good finish by pounding down the nails that are sticking up.<span
+style='mso-spacerun:yes'>&nbsp; </span>As of J6.01 there are a few quirks you need
+to work around: you cannot have a verb with the same name as a locale; you must
+close a detail window before you create a new one; and time spent in explicit
+modifiers is not correctly accounted for.</p>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+</div><!--bottom jump start--><hr><a href="tacit_programming.htm">&gt;&gt;</a>&nbsp;
+<a href="odds_and_ends.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

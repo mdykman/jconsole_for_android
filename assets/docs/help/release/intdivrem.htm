@@ -1,0 +1,81 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Integer Division and Remainder Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="spaxes.htm">&gt;&gt;</a>&nbsp;
+<a href="rank0.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3>Integer Division and Remainder Improved</font>
+</td><td align=right>
+initial writing: 2006-10-26<br>last updated: 2007-10-23
+</td></tr></table>
+<br>
+
+<p>The following dyads have been made faster and/or leaner
+on (machine word) integer arguments, 
+with the largest improvement occurring 
+when the divisor is a positive power of 2
+and the dividend is non-negative.</p>
+
+<table>
+<tr><td><tt>x &lt;.@% d </tt></td><td>&nbsp; &nbsp;</td>
+ <td>integer quotient (also<tt> x &gt;.@% d </tt>and<tt> @: </tt>instead of<tt> @</tt>)</td></tr>
+<tr><td><tt>d|x</tt></td><td>&nbsp;</td>
+ <td>integer remainder</td></tr>
+<tr><td><tt>(0,d)#:x</tt></td><td>&nbsp;</td>
+ <td>integer quotient and remainder</td></tr>
+</table>
+
+<p>The following benchmarks demonstrate the improvement.
+</p>
+
+<pre>
+ts=: 6!:2 , 7!:2@]
+x=: 1e6 ?@$ 2e5 
+ts 'Expression'
+</pre>
+
+<table>
+<tr><td><b>Expression</b></td><td>&nbsp; &nbsp;</td>
+ <td colspan=3 align=center><b>J 6.02</b></td><td>&nbsp; &nbsp;</td>
+ <td colspan=3 align=center><b>J 6.01</b></td><td>&nbsp; &nbsp;</td>
+ <td colspan=3 align=center><b>Ratio</b></td></tr>
+<tr><td><tt>x &lt;.@% 256     </tt></td><td>&nbsp;</td><td>0.00557535</td><td>&nbsp;</td><td>4.19507e6</td><td>&nbsp;</td><td>0.15662585</td><td>&nbsp;</td><td>2.09723e7</td><td>&nbsp;</td><td align=right>28.09</td><td>&nbsp;</td><td>5.00</td></tr>
+<tr><td><tt>x &lt;.@% &nbsp;17</tt></td><td>&nbsp;</td><td>0.02155449</td><td>&nbsp;</td><td>4.19507e6</td><td>&nbsp;</td><td>0.18823105</td><td>&nbsp;</td><td>2.09723e7</td><td>&nbsp;</td><td align=right> 8.73</td><td>&nbsp;</td><td>5.00</td></tr>
+<tr><td><tt>&nbsp;&nbsp;2 | x </tt></td><td>&nbsp;</td><td>0.00322822</td><td>&nbsp;</td><td>1.04915e6</td><td>&nbsp;</td><td>0.02589772</td><td>&nbsp;</td><td>4.19488e6</td><td>&nbsp;</td><td align=right> 8.02</td><td>&nbsp;</td><td>4.00</td></tr>
+<tr><td><tt>256 | x           </tt></td><td>&nbsp;</td><td>0.00610019</td><td>&nbsp;</td><td>4.19494e6</td><td>&nbsp;</td><td>0.03139283</td><td>&nbsp;</td><td>4.19494e6</td><td>&nbsp;</td><td align=right> 5.15</td><td>&nbsp;</td><td>1.00</td></tr>
+<tr><td><tt>&nbsp;17 | x      </tt></td><td>&nbsp;</td><td>0.02469388</td><td>&nbsp;</td><td>4.19494e6</td><td>&nbsp;</td><td>0.02866373</td><td>&nbsp;</td><td>4.19494e6</td><td>&nbsp;</td><td align=right> 1.16</td><td>&nbsp;</td><td>1.00</td></tr>
+<tr><td><tt>0 256 #: x        </tt></td><td>&nbsp;</td><td>0.00956875</td><td>&nbsp;</td><td>8.38925e6</td><td>&nbsp;</td><td>0.06542851</td><td>&nbsp;</td><td>8.38925e6</td><td>&nbsp;</td><td align=right> 6.84</td><td>&nbsp;</td><td>1.00</td></tr>
+<tr><td><tt>0 &nbsp;17 #: x   </tt></td><td>&nbsp;</td><td>0.04244978</td><td>&nbsp;</td><td>8.38925e6</td><td>&nbsp;</td><td>0.06992786</td><td>&nbsp;</td><td>8.38925e6</td><td>&nbsp;</td><td align=right> 1.65</td><td>&nbsp;</td><td>1.00</td></tr>
+</table>
+
+<br>
+<!--bottom jump start--><hr><a href="spaxes.htm">&gt;&gt;</a>&nbsp;
+<a href="rank0.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

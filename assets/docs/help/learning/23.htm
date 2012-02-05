@@ -1,0 +1,437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+    
+<HTML> 
+<HEAD> 
+  <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=ISO-8859-1"> 
+  <META NAME="GENERATOR" CONTENT="OpenOffice.org 1.9.118  (Win32)"> 
+  <META NAME="CREATED" CONTENT="20051014;16001218"> 
+	<META NAME="CHANGED" CONTENT="20051014;16020434"> 
+  <title>   Ch 23: Calculus</title> 
+  <STYLE TYPE="text/css"> 
+   <!-- 
+    TT  {font-size: 11pt; COLOR: BLUE} 
+    PRE {font-size: 11pt; COLOR: BLUE} 
+   --> 
+  </STYLE>
+</HEAD>
+          
+<BODY BGCOLOR=WHITE><!--top jump start--><a href="24.htm">&gt;&gt;</a>&nbsp;
+<a href="22.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<hr><!--top jump end--> 
+  <table border="0" cellpadding="5" cellspacing="0"  width="100%"> 
+  <tr> <td valign="top" width="17%"> <p> </td> 
+   <td valign="top" width="83%"> 
+ <A NAME="01"></A>
+<A NAME="02"></A>
+<H1>Chapter 23: Calculus</H1>
+This chapter covers J operators for differentiation and 
+integration.  It covers
+<UL>
+<LI> The conjunction <TT>d.</TT> which differentiates and integrates analytically,
+that is, it transforms expressions denoting functions into expressions
+ denoting functions.</LI>
+<p>
+<LI> The conjunction <TT>D.</TT> which differentiates numerically, and thus 
+broadens
+the range of functions which can be differentiated. It also covers partial
+ derivatives. </LI>
+<p>
+<LI> A library script with functions for numerical integration.</LI>
+</UL>
+<H2>23.1  Differentiation</H2>
+There is a built-in conjunction <TT>d.</TT>(lowercase d dot). Its left argument 
+is a function to be differentiated. Its right argument is <TT>1</TT> if the first 
+derivative is required, or <TT>2</TT> for the second derivative, and so on.
+The first derivative of the "cube" function <TT>^&3</TT> is "3 times the square".
+<PRE>
+   ^&3  d. 1
+3&*@(^&2)
+</PRE>
+The general scheme is that if <TT>e</TT> is (an expression denoting) a function,
+then <TT>e d. n</TT> is (an expression denoting) the n'th derivative of <TT>e</TT>.    
+Here is another example, expressing the cube function as the polynomial
+<TT>0 0 0 1 & p.</TT>
+<PRE>
+   0 0 0 1 &p. d. 1
+0 0 3&p.
+   
+</PRE>
+Suppose we define a verb <TT>cube</TT>: 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>cube =: 0 0 0 1 & p.</TT></TD>
+<TD><TT>cube 2</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 0 0 1&p.</TT></TD>
+<TD><TT>8</TT></TD>
+</TABLE>
+<p>
+Differentiating with <TT>d.</TT>, we see that the derivative is, as expected, 
+3-times-the-square, but the 
+expression for the derivative is not very informative.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>(cube d. 1) 2</TT></TD>
+<TD><TT>cube d. 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>12</TT></TD>
+<TD><TT>cube d.1</TT></TD>
+</TABLE>
+<p>
+The reason is that <TT>cube</TT> is a name denoting a verb, and such names
+are in general not evaluated until
+the verb is applied. (See <a href="91.htm"> Appendix 1 </a>.)
+If we want to inspect the derivative of <TT>cube</TT>, we can force
+evaluation of the name <TT>cube</TT> by applying the  <TT>f.</TT> adverb. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>cube d. 1</TT></TD>
+<TD><TT>(cube f.) d. 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>cube d.1</TT></TD>
+<TD><TT>0 0 3&p.</TT></TD>
+</TABLE>
+<p>
+Alternatively, we could force evaluation of the expression for the 
+derivative, again by applying <TT>f.</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>cube d. 1</TT></TD>
+<TD><TT>(cube d. 1) f.</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>cube d.1</TT></TD>
+<TD><TT>0 0 3&p.</TT></TD>
+</TABLE>
+<p>
+<H2>23.2  Integration</H2>
+With a right argument of <TT>_1</TT>, the conjunction <TT>d.</TT>
+integrates the left argument.  The integral of 
+"3 times the square" is "cube".
+<PRE>
+   0 0 3 & p. d. _1
+0 0 0 1&p.
+</PRE>
+<H2>23.3  The Domain of d.</H2>
+Functions which are differentiable or integrable with <TT>d.</TT>
+must firstly be scalar. That is, they must take scalar arguments 
+and deliver scalar results, and all intermediate
+quantities must be scalars. 
+Here is an example. The function "(x-1)*(x-2)" 
+can be written in several different ways. Here are two:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>f =: -&1 * -&2</TT></TD>
+<TD><TT>g =: (*/) @: (- & 1 2)</TT></TD>
+<TD><TT>f 3</TT></TD>
+<TD><TT>g 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>-&1 * -&2</TT></TD>
+<TD><TT>*/@:(-&1 2)</TT></TD>
+<TD><TT>2</TT></TD>
+<TD><TT>2</TT></TD>
+</TABLE>
+<p>
+<TT>f</TT> is scalar, and in the domain of <TT>d.</TT> However, <TT>g</TT> is not scalar, because
+it forms the intermediate quantity <TT>x - 1 2</TT> which is a vector. Thus <TT>g</TT> 
+is not in the domain of <TT>d.</TT>. To demonstrate this, we force evaluation of the 
+derivatives.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>(f d. 1) f.</TT></TD>
+<TD><TT>(g d. 1) f.</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>_3 2x&p.</TT></TD>
+<TD><TT>error</TT></TD>
+</TABLE>
+<p>
+Secondly, 
+<TT>d.</TT> can differentiate  constant functions, polynomials, exponentials
+<TT>^x</TT> and integral powers <TT>x^n</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>3: d. 1</TT></TD>
+<TD><TT>0 2 &p. d. 1</TT></TD>
+<TD><TT>^ d. 1</TT></TD>
+<TD><TT>^&4 d. 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0"0</TT></TD>
+<TD><TT>2"0</TT></TD>
+<TD><TT>^</TT></TD>
+<TD><TT>4&*@(^&3)</TT></TD>
+</TABLE>
+<p>
+If <TT>f</TT> and <TT>g</TT> are differentiable with <TT>d.</TT>, then
+so are the forks <TT>(f+g)</TT>, <TT>(f-g)</TT>, <TT>(f*g)</TT> and <TT>f%g</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>f =: ^&3</TT></TD>
+<TD><TT>g =: 0 2 & p.</TT></TD>
+<TD><TT>((f + g)  d. 1) f.</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>^&3</TT></TD>
+<TD><TT>0 2&p.</TT></TD>
+<TD><TT>2 0 3x&p.</TT></TD>
+</TABLE>
+<p>
+Trigonometric functions are differentiable with <TT>d.</TT>
+The derivative
+of the fork <TT>(sin + cos)</TT> is <TT>(cos - sin)</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>sin =: 1&o.</TT></TD>
+<TD><TT>cos =: 2&o.</TT></TD>
+<TD><TT>(sin + cos) f. d. 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>1&o.</TT></TD>
+<TD><TT>2&o.</TT></TD>
+<TD><TT>2&o. + -@(1&o.)</TT></TD>
+</TABLE>
+<p>
+If <TT>f</TT> and <TT>g</TT> are differentiable with <TT>d.</TT>, then
+so are the compositions <TT>f@g</TT> and <TT>f@:g</TT> 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>f</TT></TD>
+<TD><TT>g</TT></TD>
+<TD><TT>(f @ g d. 1) f.</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>^&3</TT></TD>
+<TD><TT>0 2&p.</TT></TD>
+<TD><TT>0 0 24x&p.</TT></TD>
+</TABLE>
+<p>
+<H2>23.4  The Conjunction D.</H2>
+The conjunction <TT>D.</TT> (uppercase D dot) computes 
+derivatives. It differs from <TT>d.</TT> in two ways.
+<p>
+<UL> 
+<LI> By using numerical methods it can differentiate
+ arbitrary functions, that is, it is not limited to the domain 
+of <TT>d.</TT></LI>
+<LI> It is not limited to scalar functions: it can
+differentiate functions with vector arguments to 
+produce partial derivatives.</LI>
+</UL>
+<H3>23.4.1  The Domain of D.</H3>
+Since <TT>D.</TT> can use numerical methods, 
+its arguments can be arbitrary functions. For example,
+recall the function <TT>g</TT> above, to compute "(x-1)*(x-2)",which was demonstrated above
+to be outside the domain of <TT>d.</TT> .
+However it is within the domain of <TT>D.</TT>. Its derivative is "2x-3"
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>g =: (*/) @: (- & 1 2)</TT></TD>
+<TD><TT>(g d. 1) 3</TT></TD>
+<TD><TT>(g D. 1) 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>*/@:(-&1 2)</TT></TD>
+<TD><TT>error</TT></TD>
+<TD><TT>3</TT></TD>
+</TABLE>
+<p>
+<A NAME="03"></A>
+<H3>23.4.2  Partial Derivatives with D.</H3>
+Next we look at functions which compute a scalar
+from a vector argument. For example consider a surface where the
+height at a point <TT>(x,y)</TT> is given by 
+<PRE>
+                 (sin x) * (cos y)
+</PRE>
+The height-function, with the vector argument <TT>(x,y)</TT>
+ might be written:
+<PRE>
+   h =: (sin @ {.) * (cos @ {:)
+</PRE>
+The expression <TT>(h D.1)(x,y)</TT> computes the numerical values
+of the two slopes, in the x-direction and the y-direction,
+of the function <TT>h</TT> at the point <TT>(x,y)</TT>.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>x=: 0.4</TT></TD>
+<TD><TT>y =: 0.5</TT></TD>
+<TD><TT>p =: h D. 1 x,y</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.4</TT></TD>
+<TD><TT>0.5</TT></TD>
+<TD><TT>0.8083071 _0.1866971</TT></TD>
+</TABLE>
+<p>
+The result <TT>p</TT> gives the values of the partial derivatives 
+with respect to <TT>x</TT> and with respect to <TT>y</TT>.
+<p>
+We can check this result. 
+Suppose  we
+ define a function <TT>q</TT> say, for the height
+along the line <TT>y=0.5</TT>. We want <TT>q(x)</TT> to be
+<TT>h(x,0.5)</TT> and thus
+<PRE>
+   q =: h @: (, & 0.5)
+</PRE>
+The idea now is that the derivative of <TT>q</TT> applied to 
+argument <TT>x</TT> should be the same as the first partial
+derivative of <TT>h</TT> at <TT>x,0.5</TT>. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>h D.1 x,y</TT></TD>
+<TD><TT>q D. 1 x</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0.8083071 _0.1866971</TT></TD>
+<TD><TT>0.8083071</TT></TD>
+</TABLE>
+<p>
+Now we look at partial derivatives of functions which compute vectors from vectors.
+Here is an example, a function which takes the point (<TT>x,y,z)</TT> in 3-space
+to the point <TT>(2x,3y)</TT> in 2-space.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>foo =: (2 3 & *) @: (1 1 0 & #)</TT></TD>
+<TD><TT>foo 1 1 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>2 3&*@:(1 1 0&#)</TT></TD>
+<TD><TT>2 3</TT></TD>
+</TABLE>
+<p>
+In general such a function will take an argument-vector of length <TT>m</TT> and produce 
+a result-vector of length <TT>n</TT>. Hence there will be <TT>m*n</TT> partial derivatives,
+one for each element of the result with respect to each element of the argument.
+The six partial derivatives of <TT>foo</TT> at the point <TT>xyz = 1 1 1</TT> are shown by:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>pd =: foo D. 1</TT></TD>
+<TD><TT>pd  1 1 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>foo D.1</TT></TD>
+<TD><TT>2 0<BR>
+0 3<BR>
+0 0</TT></TD>
+</TABLE>
+<p>
+Consider now a function such as <TT>cube</TT> which produces scalars from scalars. 
+Given a vector argument, it will
+produce a vector result of the same length, where an element of the result
+depends only on the corresponding element of the argument. 
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>cube</TT></TD>
+<TD><TT>cube a =: 1 2 3</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>0 0 0 1&p.</TT></TD>
+<TD><TT>1 8 27</TT></TD>
+</TABLE>
+<p>
+Therefore, for a scalar function, all partial derivatives are zero except
+those for elements of the result with respect to the corresponding
+elements of the argument.
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>pd =: cube D. 1</TT></TD>
+<TD><TT>pd 2 3 4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>cube D.1</TT></TD>
+<TD><TT>12&nbsp;&nbsp;0&nbsp;&nbsp;0<BR>
+ 0 27&nbsp;&nbsp;0<BR>
+ 0&nbsp;&nbsp;0 48</TT></TD>
+</TABLE>
+<p>
+If a scalar function is given in fully-evaluated form, and is in the domain of <TT>d.</TT>,
+the <TT>D.</TT> conjunction will produce an analytic expression for the partial derivatives
+function:
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>PD =: (0 0 0 1 & p.) D.1</TT></TD>
+<TD><TT>PD 2 3 4</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>(* =/~@(i.@$))@:(0 0 3&p.)</TT></TD>
+<TD><TT>12&nbsp;&nbsp;0&nbsp;&nbsp;0<BR>
+ 0 27&nbsp;&nbsp;0<BR>
+ 0&nbsp;&nbsp;0 48</TT></TD>
+</TABLE>
+<p>
+<H2>23.5  Numerical Integration</H2>
+There is a library script-file called <TT>integrat.ijs</TT> . It contains several different operators
+for integration. Documentation is given in the script file.  
+<p>
+It can be be downloaded from the JSoftware website: here is a  
+<A HREF="http://www.jsoftware.com/svn/addons/trunk/math/misc/integrat.ijs"> 
+link to integrat.ijs  </A> 
+<p>
+Assuming that we have downloaded into a directory, say <TT>C:\temp</TT> for example, 
+then we load it into the J session with:
+<PRE>
+      load 'c:\temp\integrat.ijs'
+</PRE>
+One of the integration operators provided is the 
+conjunction
+<TT>adapt</TT> ("numeric integration by adaptive quadrature"). The expression 
+<TT>f adapt (L,U)</TT> computes the numeric value
+of the definite integral of <TT>f</TT> between limits <TT>L</TT> and <TT>U</TT>. For example,
+we expect the integral of <TT>3&*</TT> between <TT>0</TT> and <TT>1</TT> to be <TT>1.5</TT>
+<p>
+<TABLE CELLPADDING=10 BORDER=1>
+<TR  VALIGN=TOP>
+<TD><TT>f =: 3&*</TT></TD>
+<TD><TT>f adapt 0 1</TT></TD>
+<TR VALIGN=TOP>
+<TD><TT>3&*</TT></TD>
+<TD><TT>1.5</TT></TD>
+</TABLE>
+<p>
+This is the end of Chapter 23.
+  </tr> </table> 
+<HR>  
+ <p ALIGN=CENTER> 
+ <A HREF="24.htm"> NEXT </A> <BR> 
+ <A HREF="contents.htm#toc"> Table of Contents </A> <BR> 
+<A HREF="kwic.htm"> Index </A> 
+<HR> 
+<P ALIGN=CENTER> 
+<FONT SIZE=-1>The examples in this chapter 
+were executed using J version  j701/beta/2010-11-24/22:45. 
+ This chapter last updated 22 Dec 2010<BR> 
+Copyright &copy; Roger Stokes 2010. 
+ This material may be freely reproduced, 
+provided that this copyright notice is also reproduced. 
+</FONT> 
+ <!--bottom jump start--><hr><a href="24.htm">&gt;&gt;</a>&nbsp;
+<a href="22.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Learning J<!--bottom jump end--></BODY> 
+ </HTML> 
+ 

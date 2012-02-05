@@ -1,0 +1,594 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Forks, Hooks, and Compound Adverbs</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="readable_tacit_definitions.htm">&gt;&gt;</a>&nbsp;
+<a href="parsing_and_execution_ii.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734590"></a><a name="_Toc5414681"></a><a name="_Toc1896300"><span
+style='mso-bookmark:_Toc5414681'><span style='mso-bookmark:_Toc191734590'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>40. </span></span><![endif]>Forks, Hooks</span></span></a><span
+style='mso-bookmark:_Toc191734590'>, and Compound Adverbs</span></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:forks and hooks&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->Now
+that you understand execution, and in particular how anonymous entities are
+created and then executed, you are ready to see forks used in some practical
+applications.&nbsp; This will be a relief
+after the last two chapters of theory.</p>
+
+<p class=MsoBodyText>You have learned the rule for the trident called the
+monadic fork:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(V0&nbsp;V1&nbsp;V2)&nbsp;Ny <span style='mso-bidi-font-family:"Courier New"'><span
+style='mso-spacerun:yes'>&nbsp;</span><i>is</i>&nbsp;
+</span>(V0 Ny) V1 (V2 Ny)</p>
+
+<p class=MsoBodyText>Now learn the other bidents/tridents involving only verbs
+and nouns.&nbsp;&nbsp; The <span class=Definition>dyadic
+fork</span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Nx
+(V0&nbsp;V1&nbsp;V2)&nbsp;Ny <span style='mso-bidi-font-family:"Courier New"'><span
+style='mso-spacerun:yes'>&nbsp;</span><i>is</i>&nbsp;
+</span>(Nx V0 Ny) V1 (Nx V2 Ny)</p>
+
+<p class=BodyTextnoleader><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;nouns in forks&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The <span class=Definition>monadic
+noun fork</span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; (N0&nbsp;V1&nbsp;V2)&nbsp;Ny
+<span style='mso-bidi-font-family:"Courier New"'><span
+style='mso-spacerun:yes'>&nbsp;</span><i>is</i>&nbsp;
+</span>N0 V1 (V2 Ny)</p>
+
+<p class=BodyTextnoleader>The <span class=Definition>dyadic noun fork</span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Nx (N0&nbsp;V1&nbsp;V2)&nbsp;Ny
+<span style='mso-bidi-font-family:"Courier New"'><span
+style='mso-spacerun:yes'>&nbsp;</span><i>is</i>&nbsp;
+</span>N0 V1 (Nx V2 Ny)</p>
+
+<p class=BodyTextnoleader>The noun forks are like the verb forks if you treat
+the noun like a constant verb of infinite rank whose result is always the value
+of the noun.</p>
+
+<p class=BodyTextnoleader>The <span class=Definition>monadic hook</span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+(V0&nbsp;V1)&nbsp;Ny <span style='mso-bidi-font-family:"Courier New"'><span
+style='mso-spacerun:yes'>&nbsp;</span><i>is</i>&nbsp;
+</span>Ny V0 (V1 Ny)</p>
+
+<p class=BodyTextnoleader>The <span class=Definition>dyadic hook</span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; Nx
+(V0&nbsp;V1)&nbsp;Ny <span style='mso-bidi-font-family:"Courier New"'><span
+style='mso-spacerun:yes'>&nbsp;</span><i>is</i>&nbsp;
+</span>Nx V0 (V1 Ny)</p>
+
+<p class=MsoBodyText>The purpose of taking you through the two preceding
+chapters was for you to understand that 'is' in these definitions is shorthand
+for 'replaces the parenthesized part with an anonymous entity that when
+executed on an <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+produces the same result as' (you don't have to be a politician to hesitate
+over the meaning of 'is').</p>
+
+<p class=MsoBodyText>It may be helpful to think of these bidents and tridents
+as ghostly conjunctions, with no actual symbol, that create an entity (the
+bident/trident) out of the sequence of verbs.&nbsp;
+The entity so created is quite real: it is executed just like any anonymous
+verb created by a modifier.</p>
+
+<p class=MsoBodyText>You can see that for both the hooks and the forks, the
+monadic case is derived from the dyadic: for forks by omitting <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>Nx</span></span>,
+and for hooks by replacing <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Nx</span></span> with <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>Ny&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The verbs produced by hooks and forks have
+infinite rank.</p>
+
+<p class=MsoBodyText>Using hooks and forks, assisted by all the modifiers we
+have learned, we can produce any function of 2 operands.<span
+style='mso-spacerun:yes'>&nbsp; </span>If we have more than 2 operands, we can link
+them together into a list of boxes using dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>;</span></span> and then extract
+the pieces as needed using dyad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>{::&nbsp;</span></span>.&nbsp;
+For the rest of this chapter we will show examples of functions turned
+into tacit verbs using hooks and forks.&nbsp;
+If I don't show the expansion using the bident/trident rules, you should
+produce it yourself.</p>
+
+<p class=MsoBodyText>To find how much <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> has changed from <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, as a percentage
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; pctchg =:
+100&amp;*@:(- % ])</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 12 pctchg 10</p>
+
+<p class=Jcodemultiline>20</p>
+
+<p class=BodyTextnoleader>This becomes <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>100&nbsp;*&nbsp;(x&nbsp;-&nbsp;y)&nbsp;%&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note the use of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>]</span></span> to select the
+original <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+operand.&nbsp; Similarly, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>[</span></span> can be used to
+select the original <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+operand.&nbsp; Tacit verbs make heavy use of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]&nbsp;</span></span>.</p>
+
+<p class=BodyTextnoleader><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Another
+way to code <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pctchg</span></span>
+is</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; pctchg =: 100
+* (- % ])</p>
+
+<p class=BodyTextnoleader>where we used a noun fork to provide the constant <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>100</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Which of these forms you prefer is a matter
+of taste.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>fndisplay</span></span>
+is very helpful in understanding tacit verbs.&nbsp;
+The two versions of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pctchg</span></span> are displayed as</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defverbs 'times&quot;0
+minus&quot;0 div&quot;0'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; defnouns 'x y'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; x
+100&amp;times@:(minus div ]) y</p>
+
+<p class=Jcodemultiline>+---------------------------+</p>
+
+<p class=Jcodemultiline>|100 times (x minus y) div y|</p>
+
+<p class=Jcodemultiline>+---------------------------+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; x (100 times
+(minus div ])) y</p>
+
+<p class=Jcodemultiline>+---------------------------+</p>
+
+<p class=Jcodemultiline>|100 times (x minus y) div y|</p>
+
+<p class=Jcodemultiline>+---------------------------+</p>
+
+<p class=BodyTextnoleader>I encourage you to use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>fndisplay</span></span> to
+expand any tacit definitions that are troublesome.</p>
+
+<p class=MsoBodyText>To find the elements common to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+keeping the same order as in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; setintersect
+=: e. # [</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 3 1 4 1 5 9
+setintersect 4 6 9</p>
+
+<p class=Jcodemultiline>4 9</p>
+
+<p class=BodyTextnoleader>This becomes <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(x e. y) # x&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>You can see that the identity verbs <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]</span></span>
+are useful for steering operands through hooks and forks.<span
+style='mso-spacerun:yes'>&nbsp; </span>As an exercise, see how the alternative
+version <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>([&nbsp;-.&nbsp;-.)</span></span>
+produces the same result.</p>
+
+<p class=MsoBodyText>To list all the indexes of the 1s in a Boolean list:</p>
+
+<p class=Jcodemultiline>&nbsp; <span
+style='mso-spacerun:yes'>&nbsp;</span>booltondx =: (# i.@:#)&quot;1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; booltondx 0 1
+0 1 0 0 1</p>
+
+<p class=Jcodemultiline>1 3 6</p>
+
+<p class=BodyTextnoleader>Note that we are careful to give our verb a rank of
+1, since it works only with lists.&nbsp; The
+primitive <span class=Jcode><span style='mso-bidi-font-family:
+ "Times New Roman"'>I.</span></span> has the same effect.</p>
+
+<p class=MsoBodyText>To find the difference between the largest and smallest
+items in a list:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; range =:
+(&gt;./ - &lt;./)&quot;1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; range 3 1 4 1
+5 9</p>
+
+<p class=Jcodemultiline>8</p>
+
+<p class=MsoBodyText>To find the index of the largest item in a list:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; indexmax =:
+(i. &gt;./)&quot;1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; indexmax 3 1 4
+1 5 9 2 6 5 3 5</p>
+
+<p class=Jcodemultiline>5</p>
+
+<p class=MsoBodyText>To create a Boolean list with a <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1</span></span> at each position
+that is different from the previous position:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; changeflag =:
+1 , 2 ~:/\ ]</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; changeflag 1 1
+2 2 7 7 7 3 3 4 5 8 8</p>
+
+<p class=Jcodemultiline>1 0 1 0 1 0 0 1 0 1 1 1 0</p>
+
+<p class=BodyTextnoleader>We could have done this without using forks, with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(1&amp;,)@:(2&amp;(~:/\)&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Which version you use is a matter of
+taste.&nbsp; Note that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>changeflag</span></span> is
+executed as if parenthesized <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(1 , (2 (~:/\) ]))&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you work with long trains of verbs like
+this you will soon notice that if you count the verbs from the right (starting
+at 0, of course), the even-numbered verbs have the original <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+applied, and the odd-numbered ones combine the results from the even-numbered.<span
+style='mso-spacerun:yes'>&nbsp; </span>Only the even-numbered ones can be nouns (and
+if the last one, number 0, is a noun, it will cause all the verbs to be
+evaluated).</p>
+
+<p class=MsoBodyText>To replace multiple spaces by a single space:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; delmb<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>=: ((#~ -.)<span
+style='mso-spacerun:yes'>&nbsp; </span>'&nbsp; '&amp;E.)&quot;1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; delmb 'abc<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>nb'</p>
+
+<p class=Jcodemultiline>abc nb</p>
+
+<p class=MsoBodyText>To create an array in which each item is a list of (value,
+number of times that value appeared):</p>
+
+<p class=Jcodemultiline>histogram =: ~. ,. #/.~</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; histogram 3 1
+4 1 5 9 2 6 5 3 5 8 9 7 9</p>
+
+<p class=Jcodemultiline>3 2</p>
+
+<p class=Jcodemultiline>1 2</p>
+
+<p class=Jcodemultiline>4 1</p>
+
+<p class=Jcodemultiline>5 3</p>
+
+<p class=Jcodemultiline>9 3</p>
+
+<p class=Jcodemultiline>2 1</p>
+
+<p class=Jcodemultiline>6 1</p>
+
+<p class=Jcodemultiline>8 1</p>
+
+<p class=Jcodemultiline>7 1</p>
+
+<p class=MsoBodyText>To append the contents of the first item of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+in front of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and the contents of the last item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> behind <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;&nbsp; enclose =:
+&gt;@:{.@:[ , ] , &gt;@:{:@[</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; '*' enclose 'xyz'</p>
+
+<p class=Jcodemultiline><span style='mso-bidi-font-weight:bold'>*xyz*</span></p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; '()' enclose 'abc'</p>
+
+<p class=Jcodemultiline>(abc)</p>
+
+<p class=MsoBodyText>To produce <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1</span></span> if all the items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> are equal, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>
+if not:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; allitemsequal
+=: -: 1&amp;|.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; allitemsequal
+1 1 1 1 1</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; allitemsequal
+1 1 1 2 1</p>
+
+<p class=Jcodemultiline>0</p>
+
+<p class=MsoBodyText>To extend <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> to the length of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, where the items
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+supply default values for the corresponding omitted items of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; default =: [ ,
+(}.~ #)~</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('abc';2)
+default 'Defname';0;'Deftype';100</p>
+
+<p class=Jcodemultiline>+---+-+-------+---+</p>
+
+<p class=Jcodemultiline>|abc|2|Deftype|100|</p>
+
+<p class=Jcodemultiline>+---+-+-------+---+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('abc';2;'xyz';30)
+default 'Defname';0;'Deftype';100</p>
+
+<p class=Jcodemultiline>+---+-+---+--+</p>
+
+<p class=Jcodemultiline>|abc|2|xyz|30|</p>
+
+<p class=Jcodemultiline>+---+-+---+--+</p>
+
+<p class=MsoBodyText>The verb&nbsp;<span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>[:</span></span>, which we met as a way to cause an error,
+has a special meaning in a fork.&nbsp; As the
+leftmost verb of the fork, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>[:</span></span> means 'ignore the left branch'.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>Nx&nbsp;([:&nbsp;V1&nbsp;V2)&nbsp;Ny</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>V1&nbsp;Nx&nbsp;V2&nbsp;Ny</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>([:&nbsp;V1&nbsp;V2)&nbsp;Ny</span></span>
+is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>V1&nbsp;V2&nbsp;Ny&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In both cases, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>([:&nbsp;V1&nbsp;V2)</span></span>
+is equivalent to <b style='mso-bidi-font-weight:normal'><span style='font-family:
+"Courier New";mso-bidi-font-family:"Times New Roman"'>V1@:V2&nbsp;</span></b>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Almost always, the choice between one form or
+the other is a matter of taste.&nbsp; Do not
+fear that the extra word in the fork leads to slower execution; the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[:</span></span>
+is not executed--it is recognized by the parser when it creates the anonymous
+verb for the fork.</p>
+
+<p class=MsoBodyText>As a final example, here is a definition of the
+word-counting example we wrote earlier.&nbsp;
+See if you can convince yourself that it is equivalent to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>wc2&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>WS =: '&nbsp;',TAB,LF</p>
+
+<p class=Jcodemultiline>wc3 =: (# , (*. -.@(|.!.0))@(e.&amp;WS) ,
++/@(LF&amp;=))@ReadFile</p>
+
+<p class=MsoBodyText>I could go on with pages more of hooks and forks for you
+to study, but what you really need is to write some yourself.<span
+style='mso-spacerun:yes'>&nbsp; </span>It will be a frustrating experience for the
+first few weeks as you struggle to jigsaw your verbs into pieces that have one
+or two operands and yet fit together to perform a complex function.<span
+style='mso-spacerun:yes'>&nbsp; </span>It's not a necessary skill--you can get along
+acceptably in J writing mostly explicit definitions, with an occasional fork
+thrown in where obvious--but it is a useful, honorable, and satisfying one.<span
+style='mso-spacerun:yes'>&nbsp; </span>Learning to write tacit verbs is like
+learning to walk with a book balanced on your head: it will slow you down at
+first, but in the end you'll stand taller for it.</p>
+
+<p class=MsoBodyText>The book <i>J Phrases</i>, which is part of the J release,
+has dozens of interesting examples of tacit programs which you can use as
+exercises.</p>
+
+<p class=Section><a name="_Toc5414682"></a><a name="_Toc5414508"></a><a
+name="_Toc1896301"></a><a name="_Toc191734591"><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>Tacit
+and Compound Adverbs</span></span></span></a><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896301'><span style='mso-bookmark:_Toc5414508'><span
+style='mso-bookmark:_Toc5414682'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit adverbs&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896301'><span style='mso-bookmark:_Toc5414508'><span
+style='mso-bookmark:_Toc5414682'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896301'><span style='mso-bookmark:_Toc5414508'><span
+style='mso-bookmark:_Toc5414682'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896301'><span style='mso-bookmark:_Toc5414508'><span
+style='mso-bookmark:_Toc5414682'></span></span></span><span style='mso-element:
+field-begin'></span><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;compound adverbs&quot; </span></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896301'><span style='mso-bookmark:_Toc5414508'><span
+style='mso-bookmark:_Toc5414682'></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896301'><span style='mso-bookmark:_Toc5414508'><span
+style='mso-bookmark:_Toc5414682'></span></span></span><span style='mso-element:
+field-end'></span><![endif]--><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>Adverbs
+as well as verbs can be defined tacitly.&nbsp;
+Any sequence of adverbs is also an adverb, and applies the component
+adverbs one by one to its left operand.&nbsp;
+For example,</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>onprefixes =: /\</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>defines
+an adverb that applies </span></span></span><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/</span></span>
+followed by </span></span></span><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>\</span></span>,
+as can be seen by</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>+ onprefixes 1 2 3 4</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>1 3 6
+10</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>A
+conjunction with one operand also defines an adverb.<span
+style='mso-spacerun:yes'>&nbsp; </span>A conjunction needs two operands, but if you
+supply one, the combination is treated as an adverb that attaches its operand
+to the empty side of the conjunction.&nbsp;
+For example, </span></span></span><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(2&amp;)</span></span>
+is an adverb, and </span></span></span><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+&nbsp;(2&amp;)</span></span>
+is equivalent to</span></span></span><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'> 2&amp;+&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For another example, the J startup scripts
+define</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>each =: &amp;.&gt;</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>so that</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&gt;: each 1 2 3</span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>is
+equivalent to</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>&gt;:&amp;.&gt; 1 2 3</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>+-+-+-+</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>|2|3|4|</span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896301'><span
+style='mso-bookmark:_Toc5414508'><span style='mso-bookmark:_Toc5414682'>+-+-+-+</span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896301'><span style='mso-bookmark:
+_Toc5414508'><span style='mso-bookmark:_Toc5414682'><a name="_Toc191734592">Referring
+To a Noun In a Tacit Verb</a></span></span></span></p>
+
+<p class=MsoBodyText>Suppose you want a verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> that returns the
+current value of the noun <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> (maybe it's a button handler).<span
+style='mso-spacerun:yes'>&nbsp; </span>Suppose you want <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v</span></span> to be tacitly
+defined.&nbsp; How would you do it?<span
+style='mso-spacerun:yes'>&nbsp; </span>You can't use</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; v =: n</p>
+
+<p class=BodyTextnoleader>because that would use the value of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+at the time <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is <i>defined</i> (in fact, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v</span></span> would be a noun), and you want the value of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+when <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>
+is <i>executed</i>.&nbsp; Use this trick:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; v =: &quot;.@:('n'&quot;_)</p>
+
+<p class=BodyTextnoleader>When this is executed, the operand is ignored and
+replaced by the string <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'n'</span></span>, which is then executed by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span>
+to produce the value of the noun <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n&nbsp;</span></span>.</p>
+
+</div><!--bottom jump start--><hr><a href="readable_tacit_definitions.htm">&gt;&gt;</a>&nbsp;
+<a href="parsing_and_execution_ii.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

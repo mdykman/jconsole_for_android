@@ -1,0 +1,103 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>[: Cap</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d520.htm">&gt;&gt;</a>&nbsp;
+<a href="d500.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Cap</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>[: &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Cap</font></b>
+</tr></table>
+<br>
+
+<table width=100%><tr>
+<td bgcolor=#eeeeee>
+<tt>[: </tt>caps a left branch of a fork as described in 
+<a href="dictf.htm">Section II F</a>.  For example, 
+the verb<tt> p=: [: +/ + * - </tt>
+applies the monad<tt> +/ </tt>to the result of the fork<tt> + * - </tt>.<br><br>
+
+<tt>[: </tt>signals error on any argument.
+<br>&nbsp;</td>
+</tr></table><br>
+
+Caps make it possible to define a wider range of functions 
+as unbroken trains.  For example, the maximum divided by the 
+product of the sum and difference would be defined by a single train, 
+whereas (without the use of the cap) the definition 
+of the maximum divided by the (monad) floor of the product 
+of the sum and difference would require the use of trains interrupted 
+by the monad.  Thus:<br>
+
+<pre>
+   f=: &gt;. % + * -
+   g=: &gt;. % &lt;. @ (+ * -)
+
+   2.5 f 4
+_0.410256
+
+   2.5 g 4
+_0.4
+</pre>
+
+The cap makes possible the use of an unbroken train as follows:<br>
+
+<pre>
+   h=: &gt;. % [: &lt;. + * -
+
+   2.5 h 4
+_0.4
+</pre>
+
+Since the domain of the cap is empty, it can be used 
+(with<a href="d310v.htm"><tt> :</tt></a>)<tt> </tt>to define a function whose 
+monadic or dyadic case invokes an error.  For example:<br>
+
+<pre>
+   abs=: | : [:
+   res=: [: : |
+
+   res _4 0 5
+|valence error: res
+|       res _4 0 5
+    
+   abs _4 0 5
+4 0 5
+          
+   3 res _4 0 5
+2 0 2
+          
+   3 abs _4 0 5
+|valence error: abs
+|   3     abs _4 0 5
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d520.htm">&gt;&gt;</a>&nbsp;
+<a href="d500.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

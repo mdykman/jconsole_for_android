@@ -1,0 +1,386 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>13!: Debug</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dx015.htm">&gt;&gt;</a>&nbsp;
+<a href="dx011.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=50%><b><font size=+2>Debug</font></b></td>
+<td align=right  width=50%><b><font face="Courier New" size=+3>13!:</font></b></td>
+</tr></table>
+<br>
+
+See <a href="dictj.htm">Section II.J</a> and the 
+script<tt> system\main\debug.ijs</tt>.<br><br>
+
+<table>
+<tr>
+<td valign=top width=120>
+<a name="0"></a><tt>13!:0 y</tt>
+</td>
+<td>
+<b>Reset</b>.  Reset stack and disable (<tt>0</tt>) or enable 
+(<tt>1</tt>) suspension.  Nearly all the facilities in the<tt> 13!: </tt>
+family require that suspension be enabled; all the examples below 
+assume that suspension is enabled:<tt> 13!:0 ]1 </tt>.  Only named
+definitions (verb, adverb, or conjunction) can be suspended.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="1"></a>
+<tt>13!:1 y </tt></td>
+<td>
+<b>Display Stack</b>. Only named definitions (verb, adverb, or conjunction)
+are put on the stack.  See also<tt> 13!:13 </tt>and<tt> 13!:18</tt> .
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="2"></a>
+<tt>13!:2 y </tt></td>
+<td>
+<b>Query Stops</b>.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="3"></a>
+<tt>13!:3 y </tt></td>
+<td>
+<b>Set Stops</b>. Explicit stops are requested by name and 
+line number in the argument<tt> y</tt>,<tt> </tt>which contains zero 
+or more stop specifications separated by semicolons.  
+Each stop specification indicates a name, line numbers (if any) 
+for the monadic case, a colon, and line numbers (if any) for 
+the dyadic case.  An asterisk indicates &ldquo;all&rdquo;, and a tilde indicates 
+&ldquo;except for&rdquo;.  For example:<br>
+
+<table>
+<tr><td><tt>13!:3 'f 0'</tt></td>
+<td><tt>f </tt>monadic line 0</td></tr>
+<tr><td><tt>13!:3 'f :2'</tt></td>
+<td><tt>f </tt>dyadic line 2</td></tr>
+<tr><td><tt>13!:3 'f 0 2:1'</tt></td>
+<td><tt>f </tt>monadic<tt> 0 2</tt>,<tt> </tt>dyadic<tt> 1</tt></td></tr>
+<tr><td><tt>13!:3 'f 0; g :*'</tt></td>
+<td><tt>f </tt>monadic<tt> 0 </tt>and<tt> g </tt>all dyadic</td></tr>
+<tr><td><tt>13!:3 '* 0:0'</tt></td>
+<td>monadic<tt> 0 </tt>and dyadic<tt> 0</tt></td></tr>
+<tr><td valign=top nowrap><tt>13!:3 'a* *:*; ~ab* *:*' &nbsp;</tt></td>
+<td>All monadic and dyadic whose names begin with<tt> a</tt>,<tt> </tt> 
+except for any beginning with<tt> ab</tt></td></tr>
+</table>
+
+<pre>
+   f=: 3 : 0
+10
+11
+:
+20
+)
+   13!:3 'f 1:0'               <FONT FACE=Times size=+1>Stop at</font> f <FONT FACE=Times size=+1>monad line 1, dyad line 0</font>
+   f ''
+|stop: f
+|       11
+|f[1]
+      13!:0 ]1                 <FONT FACE=Times size=+1>Clear stack and enable suspension</font>
+   3 f 4
+|stop: f
+|       20
+|f[:0]
+</pre>
+</td></tr>
+
+<tr>
+<td valign=top><a name="4"></a>
+<tt>13!:4 y </tt></td>
+<td><b>Run Again</b>.  Resume execution at the current line.  For example:<br>
+
+<pre>
+   g=: 3 : ('t=. 2*y'; '1+t')
+   3 4,g 'abc'
+|domain error: g
+|   t=.2    *y
+|g[0]
+      y                        <FONT FACE=Times size=+1>six-space indent indicates suspension</font>
+abc                            <FONT FACE=Times size=+1>Local value of</font> y
+      y=. 25                   <FONT FACE=Times size=+1>Redefine local value of</font> y
+      13!:4 ''                 <FONT FACE=Times size=+1>Run again</font>
+3 4 51
+</pre>
+</td></tr>
+
+<tr>
+<td valign=top><a name="5"></a>
+<tt>13!:5 y</tt></td>
+<td>
+<b>Run Next</b>. Resume execution at the next line.  
+For example:<br>
+
+<pre>
+   h=: 3 : ('t=. 2 3*y'; '1+t')
+   3 4,h 5 6 7
+|length error: h
+|   t=.2 3    *y
+|h[0]
+      t=. 99                   <FONT FACE=Times size=+1>six-space indent indicates suspension</font>
+      13!:5 ''                 <FONT FACE=Times size=+1>Run next</font>
+3 4 100
+</pre>
+</td></tr>
+
+<tr>
+<td valign=top><a name="6"></a>
+<tt>13!:6 y</tt></td>
+<td>
+<b>Exit and Return</b>.  Exit the verb/adverb/conjunction at the top 
+of the stack, returning result<tt> y</tt> .  For example:<br>
+
+<pre>
+   g=: 3 : ('t=. 2*y'; '1+t')
+   3 4,g 'abc'
+|domain error: g
+|   t=.2    *y
+|g[0]
+      13!:6 [9                 <FONT FACE=Times size=+1>Exit</font> g <FONT FACE=Times size=+1>with result</font> 9
+3 4 9
+   h=: 2&amp;*
+   3 4,h 'abc'
+|domain error: h
+|h[0]
+      13!:6 [97                <FONT FACE=Times size=+1>Exit</font> h <FONT FACE=Times size=+1>with result</font> 97
+3 4 97
+</pre>
+</td></tr>
+
+<tr>
+<td valign=top><a name="7"></a>
+<tt>13!:7 y</tt></td>
+<td><b>Continue</b>. Resume execution at line number<tt> y</tt>
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="9"></a>
+<tt>[x] 13!:8 y</tt></td>
+<td><b>Signal</b>.  Signal error number<tt> {.,y </tt>
+(an integer between 1 and 255) with optional text<tt> x</tt>
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="9"></a>
+<tt>[x] 13!:9 y</tt></td>
+<td><b>Rerun</b>.  Resume execution by rerunning the tacit verb 
+at the top of the stack with the specified arguments.  Thus:<br>
+
+<pre>
+   plus=: +
+   plus/'abc'
+|domain error: plus
+|plus[:0] *
+      13!:13 ''                <FONT FACE=Times size=+1>See <a href="#13">below</a> re interpretation of stack</font>
++----+-+-+-+-++-----+--+-+
+|plus|3|0|3|+||+-+-+|  |*|
+|    | | | | |||b|c||  | |
+|    | | | | ||+-+-+|  | |
++----+-+-+-+-++-----+--+-+
+      2 (13!:9) 3              <FONT FACE=Times size=+1>Rerun, getting another error</font>
+|domain error: plus
+|plus[:0] !
+      13!:13 ''                <FONT FACE=Times size=+1>Note left and right args (</font>'a' <FONT FACE=Times size=+1>and</font> 5<FONT FACE=Times size=+1>)</font>
++----+-+-+-+-++-----+--+-+
+|plus|3|0|3|+||+-+-+|  |*|
+|    | | | | |||a|5||  | |
+|    | | | | ||+-+-+|  | |
++----+-+-+-+-++-----+--+-+
+      1 (13!:9) 5              <FONT FACE=Times size=+1>Rerun </font>
+6
+</pre>
+</td></tr>
+
+<tr>
+<td valign=top><a name="11"></a>
+<tt>13!:11 y</tt>
+</td>
+<td>
+<b>Error Number</b>.  Last error number.  Does not required enabled suspension to work.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="12"></a>
+<tt>13!:12 y</tt>
+</td>
+<td>
+<b>Error Message</b>.  Last error message.  Does not required enabled suspension to work.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="13"></a>
+<tt>13!:13 y </tt></td>
+<td>
+<b>Stack</b>. Produces a 9-column matrix of information on the (named) 
+verbs/adverbs/conjunctions on the stack: <br>
+
+<table>
+<tr><td valign=top>0 &nbsp;</td><td>Name</td></tr>
+<tr><td valign=top>1</td><td>Error number or 0 if not in error</td></tr>
+<tr><td valign=top>2</td><td>Line number</td></tr>
+<tr><td valign=top>3</td><td>Name class: 3, 1, or 2, denoting verb, adverb, or conjunction</td></tr>
+<tr><td valign=top>4</td><td>Linear representation of the entity</td></tr>
+<tr><td valign=top>5</td><td>The name of the defining script</td></tr>
+<tr><td valign=top>6</td><td>Argument(s) individually boxed</td></tr>
+<tr><td valign=top>7</td><td>Locals as a 2-column matrix of name and value</td></tr>
+<tr><td valign=top>8</td><td><tt>* </tt>if begins a suspension; a blank otherwise</td></tr>
+</table>
+
+<br>
+In columns 6 and 7, nouns are included <I>per se</I>, and verb, 
+adverb, and conjunction are represented by their linear representation.  
+For example:<br>
+
+<pre>
+   mean=: sum % #
+   sum=: plus/
+   plus=: 4 : 'x+y'
+   mean 'abcd'
+|domain error: plus
+|   x    +y
+|plus[:0]
+
+      13!:13 ''                <FONT FACE=Times size=+1>Note tacit definitions have no locals</font>
++----+-+-+-+---------++------+-----+-+
+|plus|3|0|3|4 : 'x+y'||+-+-+ |+-+-+|*|
+|    | | | |         |||c|d| ||x|c|| |
+|    | | | |         ||+-+-+ |+-+-+| |
+|    | | | |         ||      ||y|d|| |
+|    | | | |         ||      |+-+-+| |
++----+-+-+-+---------++------+-----+-+
+|sum |0|0|3|plus/    ||+----+|     | |
+|    | | | |         |||abcd||     | |
+|    | | | |         ||+----+|     | |
++----+-+-+-+---------++------+-----+-+
+|mean|0|0|3|sum % #  ||+----+|     | |
+|    | | | |         |||abcd||     | |
+|    | | | |         ||+----+|     | |
++----+-+-+-+---------++------+-----+-+
+</pre></td></tr>
+
+<tr>
+<td valign=top><a name="14"></a>
+<tt>13!:14 y</tt></td>
+<td><b>Query Latent Expression</b>.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="15"></a>
+<tt>13!:15 y</tt></td>
+<td>
+<b>Set Latent Expression</b>. The latent expression is executed 
+when execution is about to be suspended; error messages are suppressed; 
+any continuation must be programmed in the latent expression. 
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr>
+<td valign=top><a name="17"></a>
+<tt>13!:17 y</tt></td>
+<td>
+<b>Query</b>. Is suspension enabled?  (Set by<tt> 13!:0</tt>)
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><a name="18"></a>
+<tt>13!:18 y</tt></td>
+<td valign=top>
+<b>Stack Text</b>. Like<tt> 13!:1</tt>,<tt> </tt>but gives the stack 
+as a literal matrix.
+</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td colspan=2><a name="19"></a>
+<p>A <i>debug suspension</i> is an immediate execution
+state with a non-empty execution stack.
+Another debug suspension is created when a named object 
+(verb, adverb, or conjunction) is invoked
+in a debug suspension and it too suspends.</p>
+
+<p>Four verbs are provided.  They are part of the debug facility
+in the J development environment and usually are not invoked directly.
+Their behaviour and availability are subject to change without notice.</p>
+</td></tr>
+
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>13!:19 y </tt></td>
+<td><b>Cut Back.</b>  Cut back one stack level, stopping at the
+line at the next stack level.</td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>[x] 13!:20 y </tt></td>
+<td><b>Step Over.</b>  Run the current line (or line<tt> x </tt> if specified)
+to completion, stopping at the next line.</td></tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>[x] 13!:21 y </tt></td>
+<td><b>Step Into.</b> Run the current line (or line<tt> x </tt> if specified),
+stopping at the next line.</td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<tr><td><tt>[x] 13!:22 y </tt></td>
+<td><b>Step Out.</b>  Run the current object to completion,
+starting with the current line (or line<tt> x </tt>if specified),
+stopping at the next line.</td>
+</tr>
+</table>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dx015.htm">&gt;&gt;</a>&nbsp;
+<a href="dx011.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

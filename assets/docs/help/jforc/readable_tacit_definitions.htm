@@ -1,0 +1,319 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Readable Tacit Definitions</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="explicit-to-tacit_converter.htm">&gt;&gt;</a>&nbsp;
+<a href="forks_hooks_and_compound_adv.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734593"></a><a name="_Toc5414683"></a><a name="_Toc1896302"><span
+style='mso-bookmark:_Toc5414683'><span style='mso-bookmark:_Toc191734593'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>41. </span></span><![endif]>Readable Tacit Definitions</span></span></a></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:improving
+readability&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->Heron's formula for the area of a triangle, given
+the lengths of the sides <i>a</i>, <i>b</i>, and <i>c</i>, is <i>sqrt</i>(<i>s</i>*(<i>s</i>-<i>a</i>)*(<i>s</i>-<i>b</i>)*<i>s</i>-<i>c</i>))
+where <i>s</i> is (<i>a</i>+<i>b</i>+<i>c</i>)%2&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>This can be written</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; triarea =: [:
+%: [: */ -:@:(+/) - 0 , ]</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; triarea 3 4 5</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=BodyTextnoleader>Regardless of your diligence in commenting your code
+and the level of J expertise in you and the sorry wretches who will have to
+read it, long tacit definitions like this can become trackless wastelands, Saharas
+of verb following verb unendingly with nothing to suggest an interpretation of
+the intermediate results.&nbsp; I know of two
+ways to mark a trail through such a definition.&nbsp;
+The first is to develop a regimen for using spaces and parentheses to
+help the reader group the parts.&nbsp; I would
+write</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; triarea =: [:
+%: [: */&nbsp; (-:@:(+/))<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>-&nbsp;&nbsp;
+0,]</p>
+
+<p class=MsoBodyText>The second way is to split the line into multiple lines,
+where each line can have a comment or a verb-name indicating what it
+produces.&nbsp; This approach, carried almost
+to an extreme, would yield</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; semiperimeter
+=: -:@:(+/)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; factors =:
+semiperimeter - 0,]</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; product =: [:
+*/ factors</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; triarea =: [:
+%: product</p>
+
+<p class=BodyTextnoleader>Combining the two approaches, you can find a
+comfortable level of complexity.</p>
+
+<p class=Section><a name="_Toc191734594"></a><a name="_Toc5414684"></a><a
+name="_Toc5414509"></a><a name="_Toc1896303"><span style='mso-bookmark:_Toc5414509'><span
+style='mso-bookmark:_Toc5414684'><span style='mso-bookmark:_Toc191734594'>Flatten
+a Verb: Adverb </span></span></span></a><span style='mso-bookmark:_Toc1896303'><span
+style='mso-bookmark:_Toc5414509'><span style='mso-bookmark:_Toc5414684'><span
+style='mso-bookmark:_Toc191734594'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>f.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Flatten adverb&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;f.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Splitting the definition into
+many lines has the unfortunate side-effect that all the names referred to by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>triarea</span></span>
+must be defined when <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>triarea</span></span>
+is executed:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; triarea</p>
+
+<p class=Jcodemultiline>[: %: product</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>triarea</span></span> refers to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>product</span></span> which
+refers to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>factors</span></span>
+which refers to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>semiperimeter&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you define many tacit verbs this way, the
+result is pollution of the namespace.&nbsp; To
+leave a smaller footprint, use <i>private</i> assignment for all the names
+except the name that will be public, and use the adverb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f.</span></span> which replaces
+names in its operand with their definitions:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; semiperimeter
+=. -:@:(+/)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; factors =.
+semiperimeter - 0,]</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; product =. [:
+*/ factors</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; triarea =: ([:
+%: product) f.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; triarea</p>
+
+<p class=Jcodemultiline>&nbsp;[: %: [: */ -:@:(+/)
+- 0 , ]</p>
+
+<p class=BodyTextnoleader>If these verbs are run from a script, the temporary
+verbs will disappear (since they were assigned by private assignment), leaving
+only the main verb <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>triarea&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f.</span></span>
+is also used in initialization of objects, as you can learn in the Lab for
+Object-Oriented Programming.</p>
+
+<p class=MsoBodyText>Note that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f.</span></span> has no effect on explicit definitions.</p>
+
+<p class=Subsection><a name="_Toc191734595"></a><a name="_Toc5414685"></a><a
+name="_Toc5414510"><span style='mso-bookmark:_Toc5414685'><span
+style='mso-bookmark:_Toc191734595'>Using </span></span></a><span
+style='mso-bookmark:_Toc5414510'><span style='mso-bookmark:_Toc5414685'><span
+style='mso-bookmark:_Toc191734595'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>f.</span></span> to improve
+performance</span></span></span></p>
+
+<p class=MsoBodyText>Flattening a verb has two beneficial effects on
+performance.&nbsp; The first is easy to see by
+comparing two equivalent sentences:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =. i. 100000</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; abs0 =: 3 : '|
+y' &quot;0</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 6!:2 'abs0 a'</p>
+
+<p class=Jcodemultiline>3.17136</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; abs1 =: 3 : '|
+y'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 6!:2 'abs1&quot;0
+a'</p>
+
+<p class=Jcodemultiline>3.54908</p>
+
+<p class=BodyTextnoleader>To be sure, in each case we have committed the crime
+of applying an explicitly-defined verb at a low rank (<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>|&quot;0&nbsp;a</span></span>
+executes in time <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0.006</span></span>),
+but that is not the point.&nbsp; Why is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>abs1&quot;0</span></span>
+slower than <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>abs0</span></span>?<span
+style='mso-spacerun:yes'>&nbsp; </span>Each one reinterprets its verb for each atom
+of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>The answer is that when <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>abs1&quot;0</span></span> is
+executed, the definition of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>abs1</span></span> must be looked up for every atom of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+(for all the interpreter knows, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>abs1</span></span> might be redefined during its
+execution).&nbsp; The time spent doing this
+lookup accounts for the difference in time between <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>abs0</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>abs1&quot;0</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>If we eliminate the lookup of the name <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>abs1</span></span>,
+that time is saved:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 6!:2 'abs1 f.&quot;0
+a'</p>
+
+<p class=Jcodemultiline>3.00941</p>
+
+<p class=MsoBodyText>The important lesson to learn from this is that you should
+define your verbs with the proper rank.&nbsp;
+That will eliminate superfluous name lookups.<span
+style='mso-spacerun:yes'>&nbsp; </span>In exceptional cases you may use <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f.</span></span>
+to avoid name lookups during execution of a complex verb.</p>
+
+<p class=MsoBodyText>The second case where <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f.</span></span> can improve
+performance is useful only for those users who feel compelled to redefine the J
+primitives with mnemonic names.&nbsp; This is
+a practice that I strongly deprecate, and if you don't heed my advice, the
+interpreter stands ready to punish you.&nbsp;
+See the disaster that can result when the primitives are replaced by
+mnemonic names:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; tally =: #</p>
+
+<p class=Jcodemultiline>&nbsp;<span
+style='mso-spacerun:yes'>&nbsp; </span>a =. 100000 $ i. 6</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; b =. i. 100000
+10</p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>6!:2 'a #/. b'<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0.0157688<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>6!:2 'a tally/. b'<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0.154675<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader>What happened is that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>#/.</span></span> is handled by
+special code in the interpreter, but <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>tally/.</span></span> is not.<span
+style='mso-spacerun:yes'>&nbsp; </span>The fact that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>tally</span></span> is defined
+to be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#</span></span>
+is immaterial: the interpreter doesn't know that at the time it creates the
+anonymous verb for <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>tally/.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The penalty is an almost-tenfold increase in
+execution time.</p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>6!:2 'a tally f./. b'<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader><b style='mso-bidi-font-weight:normal'><span
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman"'>0.0167351<o:p></o:p></span></b></p>
+
+<p class=BodyTextnoleader>By flattening <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>tally</span></span>, we cause it
+to be replaced by its definition <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>#</span></span>, and then the special case <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>#/.</span></span>
+is recognized.</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; b =. 0 =
+i. 100000</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 6!:2 '(# i.@#)
+b'</p>
+
+<p class=Jcodemultiline>0.0011616</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 6!:2 '(tally
+index@tally) b'</p>
+
+<p class=Jcodemultiline>0.00385943</p>
+
+<p class=BodyTextnoleader>Another example: <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(# i.@#)</span></span> is
+handled by special code, but the names prevent the interpreter from recognizing
+the situation.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 6!:2 '(tally
+index@tally) f. b'</p>
+
+<p class=Jcodemultiline>0.0011861</p>
+
+<p class=BodyTextnoleader>If we flatten every verb, we get good performance,
+but what an effort!&nbsp; It's much better to
+use the J primitives directly, so the interpreter can do its job effectively.</p>
+
+</div><!--bottom jump start--><hr><a href="explicit-to-tacit_converter.htm">&gt;&gt;</a>&nbsp;
+<a href="forks_hooks_and_compound_adv.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

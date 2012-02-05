@@ -1,0 +1,75 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>F. Hooks</title>
+
+</head><body><!--top jump start--><a href="verb_trains.htm">&gt;&gt;</a>&nbsp;
+<a href="explicit_def.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>2F. Hooks</h1>
+
+<P>A pair of functions in isolation form a hook whose monadic 
+case is defined as in:
+</P> 
+<blockquote>  <tt> (= &lt;.) y</tt> is equivalent to <tt>y = &lt;. y</tt>
+</blockquote>
+<P>hence the function<tt> h=: =&lt;. </tt>compares its argument with 
+its integer part, and therefore provides a test for integers. 
+Hooks occur frequently in most sections.</P>
+
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>m0=: It=: =&lt;.</tt></TD>	<td width=60%>Integer test</TD>
+  </TR><TR><TD><tt>m1=: Rt=: =+</tt></TD>	<TD>Real test</TD>
+  </TR><TR><TD><tt>d2=: $,:</tt></TD>	<TD><tt>x</tt> copies of <tt>y</tt></TD>
+  </TR><TR><TD><tt>d3=: $,</tt></TD>	<TD>Reshape as in APL</TD>
+  </TR><TR><TD><tt>m4=: cf=: (+%)/</tt></TD>	<TD>Continued fraction</TD>
+  </TR><TR><TD><tt>m5=: cfc=: (+%)/\</tt></TD>	<TD>Continued fraction convergents</TD>
+  </TR><TR><TD><tt>m6=: ifb=: # i.@#</tt></TD>	<TD>Integers from boolean list</TD></TR>
+  <tr><td><tt>m7=: [m</tt></td> <td><tt>([m)y </tt>invokes<tt> m y</tt> ,<tt> </tt>then returns<tt> y </tt></td></tr>
+</TABLE>
+
+<P>For example:
+</P>
+<pre>
+   cf 3 7 15 1		NB. Approximation to pi
+3.14159
+
+   cfc 3 7 15 1		NB. Convergents to pi
+3 3.14286 3.14151 3.14159	 
+
+   cfc 1 1 1 1 1 1 1	NB. Convergents to golden mean
+1 2 1.5 1.66667 1.6 1.625 1.61538	
+
+   cfc 10$1x		NB. As above in extended precision
+1 2 3r2 5r3 8r5 13r8 21r13 34r21 55r34 89r55</pre>
+
+
+<br>
+<!--bottom jump start--><hr><a href="verb_trains.htm">&gt;&gt;</a>&nbsp;
+<a href="explicit_def.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

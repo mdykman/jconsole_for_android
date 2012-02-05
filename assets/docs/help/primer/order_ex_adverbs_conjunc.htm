@@ -1,0 +1,50 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Order of execution</title>
+
+</head><body><!--top jump start--><a href="box_monad.htm">&gt;&gt;</a>&nbsp;
+<a href="conjunction.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Order of execution - adverbs & conjunctions</h1>
+Adverbs and conjunctions have higher precedence than verbs. This means that an adverb or conjunction is executed before a verb. Furthermore, the left argument of an adverb or conjunction is the entire verb phrase that precedes it. The exact rules for parsing and execution are given in section E of the J Dictionary.<br>
+<br>
+For practical purposes, the following examples illustrate the rules.<br>
+
+<pre>   a =. i.2 3
+   +/"1 - a
+_3 _12</pre>
+Like all J sentences, the above sentence executes from right-to-left. Before the <font face=courier size=-1>+</font> can be parsed as being a dyad or a monad, the higher precedence <font face=courier size=-1>"</font> conjunction executes. The <font face=courier size=-1>"</font> conjunction takes the 1 as its right argument and the entire verb phrase to its left as its left argument. The verb phrase to the left is the adverb <font face=courier size=-1>/</font> which takes the <font face=courier size=-1>+</font> as its left argument. The following uses parentheses to make clear the order of execution that follows from the rules.<br>
+
+<pre>   ((+/)"1) (- a)
+</pre>
+As mentioned earlier, simple examples with constants may require that you separate the constant that is the conjunction argument from the constant that is the argument of the derived verb.<br>
+
+<pre>   a (+"1) 1 2 3
+   a +"1 (1 2 3)
+   a +"1 [ 1 2 3
+</pre>
+The last one uses the monad <font face=courier size=-1>[</font> (same) that is defined to just return its argument. This is a bit shorter and avoids the use of parentheses.<br>
+<!--bottom jump start--><hr><a href="box_monad.htm">&gt;&gt;</a>&nbsp;
+<a href="conjunction.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

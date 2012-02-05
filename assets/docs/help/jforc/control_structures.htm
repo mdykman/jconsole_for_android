@@ -1,0 +1,452 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Control Structures</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="modular_code.htm">&gt;&gt;</a>&nbsp;
+<a href="modifying_an_array_m.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734474"></a><a name="_Toc5414641"></a><a name="_Toc1896269"><span
+style='mso-bookmark:_Toc5414641'><span style='mso-bookmark:_Toc191734474'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>28. </span></span><![endif]>Control Structures</span></span></a></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Your reward for persevering
+through two dozen chapters on J is to be shown the direct equivalent of <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>if/then/else</span></span>,
+<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>for</span></span>,
+and <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>while</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>I have waited until I am sure you realize
+that you don't need them, and will choose them not because you see no other way
+to solve a problem, but because you think they are the best way.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>if.</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>while.</span></span>,
+and the rest are classified as <span class=Definition>control words</span> in
+J.&nbsp; Their part of speech is 'punctuation',
+like a parenthesis or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>LF</span></span>
+character.&nbsp; They are allowed only inside explicit
+definitions, that is to say inside right operands of the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+conjunction.&nbsp; If you want to use them
+from the keyboard or in a script, you must define a verb/adverb/conjunction and
+then execute it.&nbsp; A control word ends any
+sentence to its left, as if the control word started with an end-of-line
+character.&nbsp; We will cover only a few
+important control sequences here; to find the rest, bring up the J Vocabulary
+by pressing F1 and click on <u>Controls</u> which is hidden in plain view next
+to the heading &quot;Vocabulary&quot;.</p>
+
+<p class=Section><a name="_Toc191734475"></a><a name="_Toc5414642"></a><a
+name="_Toc5414475"></a><a name="_Toc1896271"><span style='mso-bookmark:_Toc5414475'><span
+style='mso-bookmark:_Toc5414642'><span style='mso-bookmark:_Toc191734475'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>for.</span></span>/</span></span></span></a><span style='mso-bookmark:
+_Toc1896271'><span style='mso-bookmark:_Toc5414475'><span style='mso-bookmark:
+_Toc5414642'><span style='mso-bookmark:_Toc191734475'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>do.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896271'><span style='mso-bookmark:_Toc5414475'><span
+style='mso-bookmark:_Toc5414642'><span style='mso-bookmark:_Toc191734475'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>end.</span></span> and </span></span></span></span><span
+style='mso-bookmark:_Toc1896271'><span style='mso-bookmark:_Toc5414475'><span
+style='mso-bookmark:_Toc5414642'><span style='mso-bookmark:_Toc191734475'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>for_x.</span></span>/</span></span></span></span><span style='mso-bookmark:
+_Toc1896271'><span style='mso-bookmark:_Toc5414475'><span style='mso-bookmark:
+_Toc5414642'><span style='mso-bookmark:_Toc191734475'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>do.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896271'><span style='mso-bookmark:_Toc5414475'><span
+style='mso-bookmark:_Toc5414642'><span style='mso-bookmark:_Toc191734475'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>end.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures:for. do. end.&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->The
+allowed forms are:</p>
+
+<p class=Jcodemultiline>for. <i>T-block</i> do. <i>block</i> end.</p>
+
+<p class=Jcodemultiline>for_<i>x</i>. <i>T-block</i> do. <i>block</i>
+end.</p>
+
+<p class=BodyTextnoleader>The <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>T-block</span></i></span> is evaluated and its result <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>A</span></span>
+(that is, the result of the last sentence in the <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>)
+is saved.&nbsp; <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>block</span></i></span> is
+executed once for each item (item, not atom) of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>A&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you use the handy <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>for_<i>x</i>.</span></span> form
+(where <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span>
+represents any valid name of your choice), the private variables <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span>
+and <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_index</span></span>
+are created, and every time <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>block</span></i></span> is executed, <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_index</span></span>
+is assigned the index of an item of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>A</span></span> and <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span> is assigned<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'> <i>x</i>_index&nbsp;{&nbsp;A&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>break.</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>continue.</span></span> control
+words do what you would expect.</p>
+
+<p class=Section><a name="_Toc191734476"></a><a name="_Toc5414643"></a><a
+name="_Toc5414476"></a><a name="_Toc1896272"><span style='mso-bookmark:_Toc5414476'><span
+style='mso-bookmark:_Toc5414643'><span style='mso-bookmark:_Toc191734476'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>while.</span></span>/</span></span></span></a><span style='mso-bookmark:
+_Toc1896272'><span style='mso-bookmark:_Toc5414476'><span style='mso-bookmark:
+_Toc5414643'><span style='mso-bookmark:_Toc191734476'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>do.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896272'><span style='mso-bookmark:_Toc5414476'><span
+style='mso-bookmark:_Toc5414643'><span style='mso-bookmark:_Toc191734476'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>end.</span></span> and </span></span></span></span><span
+style='mso-bookmark:_Toc1896272'><span style='mso-bookmark:_Toc5414476'><span
+style='mso-bookmark:_Toc5414643'><span style='mso-bookmark:_Toc191734476'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>whilst.</span></span>/</span></span></span></span><span style='mso-bookmark:
+_Toc1896272'><span style='mso-bookmark:_Toc5414476'><span style='mso-bookmark:
+_Toc5414643'><span style='mso-bookmark:_Toc191734476'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>do.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896272'><span style='mso-bookmark:_Toc5414476'><span
+style='mso-bookmark:_Toc5414643'><span style='mso-bookmark:_Toc191734476'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>end.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures:while. whilst. do.
+end.&quot; <![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->The
+allowed forms are:</p>
+
+<p class=Jcodemultiline>while. <i>T-block</i> do. <i>block</i> end.</p>
+
+<p class=Jcodemultiline>whilst. <i>T-block</i> do. <i>block</i> end.</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>while.</span></span> corresponds to <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>while</span></span> and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>whilst.</span></span>
+corresponds to <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>do&nbsp;while</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'st'</span></span> in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>whilst.</span></span> stands for
+'skip test' (the first time through), so you get one free pass through the
+loop, just as with <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>do&nbsp;while</span></span>.</p>
+
+<p class=MsoBodyText>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>break.</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>continue.</span></span> control
+words do what you would expect.</p>
+
+<p class=Section><a name="_Toc191734477"></a><a name="_Toc5414644"></a><a
+name="_Toc5414477"></a><a name="_Toc1896270"><span style='mso-bookmark:_Toc5414477'><span
+style='mso-bookmark:_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>if.</span></span>/</span></span></span></a><span style='mso-bookmark:
+_Toc1896270'><span style='mso-bookmark:_Toc5414477'><span style='mso-bookmark:
+_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>do.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896270'><span style='mso-bookmark:_Toc5414477'><span
+style='mso-bookmark:_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>else.</span></span>/</span></span></span></span><span style='mso-bookmark:
+_Toc1896270'><span style='mso-bookmark:_Toc5414477'><span style='mso-bookmark:
+_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>end.</span></span>,
+</span></span></span></span><span style='mso-bookmark:_Toc1896270'><span
+style='mso-bookmark:_Toc5414477'><span style='mso-bookmark:_Toc5414644'><span
+style='mso-bookmark:_Toc191734477'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>if.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896270'><span style='mso-bookmark:_Toc5414477'><span
+style='mso-bookmark:_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>do.</span></span>/</span></span></span></span><span style='mso-bookmark:
+_Toc1896270'><span style='mso-bookmark:_Toc5414477'><span style='mso-bookmark:
+_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>elseif.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896270'><span style='mso-bookmark:_Toc5414477'><span
+style='mso-bookmark:_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>do.</span></span>/</span></span></span></span><span style='mso-bookmark:
+_Toc1896270'><span style='mso-bookmark:_Toc5414477'><span style='mso-bookmark:
+_Toc5414644'><span style='mso-bookmark:_Toc191734477'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>end.</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures:if. do. else.
+elseif. end.&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->The allowed forms (with optional components
+underlined) are:</p>
+
+<p class=Jcodemultiline>if. <i>T-block</i> do. <i>block</i> <u>else. <i>block</i>
+</u>end.</p>
+
+<p class=Jcodemultiline>if. <i>T-block</i> do. <i>block</i> elseif. <i>T-block</i>
+do. <i>block<u>...</u></i> end.</p>
+
+<p class=MsoBodyText>The flow of control is as you would expect.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>T-block</span></i></span>s and<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'> <i>block</i></span></span>s are
+both sequences of zero or more J sentences.&nbsp;
+The result of the last sentence in a <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>
+provides the result of the <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>T-block</span></i></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result of a <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>
+tests true if its first atom is nonzero, or if it is empty, or if the <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>
+was empty.&nbsp; The flow of control is as you
+would expect based on the tests.&nbsp; The
+sequence <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>elseif.&nbsp;<i>T-block</i>&nbsp;do.&nbsp;<i>block</i></span></span><i>
+</i>may be repeated as often as desired, but you will be surprised to learn
+that once you code an <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>elseif.</span></span>
+you are not allowed to use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>else.</span></span> in the same control structure: no loss,
+since an empty <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>
+tests true, and you can just code <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>elseif.&nbsp;do.</span></span> for the last block.</p>
+
+<p class=MsoBodyText>My antipathy for <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>for.</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>while.</span></span> has
+scarcely been concealed, but I harbor no ill will toward <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>if.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>As long as you don't apply it in a loop, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>if.</span></span>
+makes the structure of code obvious and you may use it without remorse.<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples are legion; the form</p>
+
+<p class=Jcodemultiline>if. # <i>name</i> =. <i>sentence to create an array </i><span
+style='mso-bidi-font-style:italic'>do.</span></p>
+
+<p class=Jcodemultiline>&nbsp; <i>code to
+process </i>name<i>, which is now known to have items<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>end.</p>
+
+<p class=BodyTextnoleader>is the most common in my code, used to guarantee that
+a block of code is executed only when a certain noun has a nonzero number of
+items.</p>
+
+<p class=MsoBodyText>When we first learned about verb definitions we said that
+the result of a verb was the result of the last sentence executed.<span
+style='mso-spacerun:yes'>&nbsp; </span>Now we must emend that statement: the result
+is the last sentence that is not part of a <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>.</p>
+
+<p class=Section><a name="_Toc191734478"></a><a name="_Toc5414645"></a><a
+name="_Toc5414478"></a><a name="_Toc1896273"><span style='mso-bookmark:_Toc5414478'><span
+style='mso-bookmark:_Toc5414645'><span style='mso-bookmark:_Toc191734478'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>try.</span></span>/</span></span></span></a><span style='mso-bookmark:
+_Toc1896273'><span style='mso-bookmark:_Toc5414478'><span style='mso-bookmark:
+_Toc5414645'><span style='mso-bookmark:_Toc191734478'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>catch.</span></span></span></span></span></span><span
+style='mso-bookmark:_Toc1896273'><span style='mso-bookmark:_Toc5414478'><span
+style='mso-bookmark:_Toc5414645'><span style='mso-bookmark:_Toc191734478'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/catcht.</span></span>/</span></span></span></span><span
+style='mso-bookmark:_Toc1896273'><span style='mso-bookmark:_Toc5414478'><span
+style='mso-bookmark:_Toc5414645'><span style='mso-bookmark:_Toc191734478'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>end.</span></span></span></span></span></span><span style='mso-bookmark:
+_Toc191734478'> and </span><span style='mso-bookmark:_Toc191734478'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>throw.</span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;error handling&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures:try. catch. end.&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->The
+simplest form (see the Dictionary for others) is:</p>
+
+<p class=Jcodemultiline>try. <i>block1</i> catch. <i>block2</i> end.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>try.</span></span>/<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>catch.</span></span>/<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>end.</span></span>
+is the control-structure equivalent of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;::v&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>block2</span></i></span> is executed only if there was an
+error during the execution of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>block1&nbsp;</span></i></span>.</p>
+
+<p class=MsoBodyText>If you want to signal an error, execute the foreign <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>13!:8&nbsp;y</span></span>
+where <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is the error number you want to signal.&nbsp;
+You can use this in a <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>try.</span></span> block to transfer execution to the
+corresponding <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>catch.</span></span>
+block.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures:catcht. throw.&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>throw.</span></span>
+aborts the explicit definition that is running, and looks in higher-level
+explicit definitions for a <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>catcht.</span></span>&nbsp;block to execute.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the previously-running explicit definition
+was executing in <span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>block1</span></i></span> of a <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>try.&nbsp;</span></span>block
+that contains a <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>catcht.</span></span>,
+execution resumes with that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>catcht.</span></span>&nbsp;block; otherwise, that explicit
+definition is also aborted, and the search continues in the next-most-recent
+explicit definition.&nbsp; If this search does
+not find a <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>catcht.</span></span>&nbsp;block
+to execute, the entire executing sentence is aborted, producing no result.</p>
+
+<p class=Section><a name="_Toc191734479"><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>select.</span></span>/</a><span
+style='mso-bookmark:_Toc191734479'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>case.</span></span>/</span><span
+style='mso-bookmark:_Toc191734479'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>fcase.</span></span>/</span><span
+style='mso-bookmark:_Toc191734479'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>end.</span></span></span></p>
+
+<p class=MsoBodyText>The<!--[if supportFields]><span style='mso-element:field-begin'></span>
+XE &quot;control structures:select. case. end.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><span
+style='mso-spacerun:yes'>&nbsp;</span>form is:</p>
+
+<p class=Jcodemultiline>select. <i>T-block0</i> case. <i>T-block1</i>
+do. <i>block1</i><u>...</u> end.<span style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoBodyText><span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>T-block0</span></i></span> is evaluated; then the <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>s
+of the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>case.</span></span>
+control words are evaluated sequentially until one is found that matches the
+result of <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-block0</span></i></span>;
+the following <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>block</span></i></span>
+is then executed, after which control passes to the sentence following the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>end.&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>fcase.</span></span>
+is like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>case.</span></span>
+except that after the <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>block</span></i></span> of an <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>fcase.</span></span> is
+executed, control passes to the next <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>block</span></i></span> rather
+than to the sentence following the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>end.&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>A <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>T-blockn</span></i></span> matches the result of <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-block0</span></i></span>
+if the result of <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-block0</span></i></span>
+is an element of the result of the <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>T-blockn</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, a <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>T-blockn</span></i></span>
+could be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2;3;5</span></span>
+and any of those three values would match it. <span
+style='mso-spacerun:yes'>&nbsp;</span>Before this check is made, each side of the
+comparison is boxed if it is not boxed already.&nbsp;
+An empty <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-blockn</span></i></span>
+matches anything.</p>
+
+<p class=Section><a name="_Toc191734480"></a><a name="_Toc5414646"></a><a
+name="_Toc5414479"></a><a name="_Toc1896274"><span style='mso-bookmark:_Toc5414479'><span
+style='mso-bookmark:_Toc5414646'><span style='mso-bookmark:_Toc191734480'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>return.</span></span></span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-element:field-begin'></span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures:return.&quot; <![endif]--><!--[if supportFields]><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-element:field-end'></span></span></span><![endif]--><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>return.</span></span>
+ends execution of the definition that is running.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result of the last sentence not in a <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>
+is the result.&nbsp; Example:</p>
+
+<p class=Jcodemultilinefirst>if. <i>T-block</i> do. <i>return-value</i>
+return. end.</p>
+
+<p class=Section><a name="_Toc191734481"><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>assert.</span></span></a></p>
+
+<p class=Jcodemultiline>assert. <i>sentence</i></p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>assert.</span></span>
+fails <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;control structures:assert.&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->with an <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>assertion failure</span></span>
+error if the result of executing the sentence contains any atoms that are not
+equal to 1.&nbsp; Note that there is no <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>end</span></span>.
+corresponding to the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>assert.</span></span>,
+so there may be only a single sentence rather than a <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>T-block</span></i></span>.</p>
+
+</div><!--bottom jump start--><hr><a href="modular_code.htm">&gt;&gt;</a>&nbsp;
+<a href="modifying_an_array_m.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

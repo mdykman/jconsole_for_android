@@ -1,0 +1,105 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>B. Linear Vector Functions</title>
+
+</head><body><!--top jump start--><a href="polynomials_rational.htm">&gt;&gt;</a>&nbsp;
+<a href="matrix_algebra.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<hr><!--top jump end-->
+
+
+
+
+<H1>9B. Linear Vector Functions</h1>
+
+<P>If <tt>f(x+y)</tt>equals <tt>(f x)+(f y)</tt> for all vectors <tt>x</tt> 
+and <tt>y</tt> in its domain, then <tt>f</tt> is said to be a linear vector function. 
+In other words, <tt>f@:+ -: f@[ + f@]</tt> is a test for the linearity 
+of <tt>f:</tt></P>
+
+<pre>   f=: +/\&quot;1	  NB. Sum scan (subtotals) is a linear vector function
+   x=: 4 3 2 1 0
+   y=: 2 3 5 7 11
+   x ([ , ] , f@[ , f@] , (f@[ + f@]) ,: f@:+) y
+4  3  2  1  0	x
+2  3  5  7 11	y
+4  7  9 10 10	f x
+2  5 10 17 28	f y
+6 12 19 27 38	(f x)+(f y)
+6 12 19 27 38	f (x+y)
+</pre>
+
+<P>For vector arguments of dimension <tt>n</tt>, any linear vector 
+function <tt>f</tt> can be expressed as a matrix product, 
+using a matrix obtained by applying <tt>f</tt> to the identity matrix of 
+order <tt>n</tt>. Moreover, the inverse of a linear function is a linear function. 
+For example:</P></TD>
+
+<pre>
+   g=: f^:_1	    NB. Inverse of subtotals is first differences
+   (] ; f ; g ; f@g) y
++--------------------------------------------+
+|2 3 5 7 11|2 5 10 17 28|2 1 2 2 4|2 3 5 7 11|
++--------------------------------------------+
+
+ 
+   I=: = i. 5	    NB. Identity matrix
+   mf=: (f I) [ mg=: (g I)
+   mp=: +/ . *	    NB. Matrix product
+   mf ; mg ; (y,(y mp mf),:f y) ; (mf mp mg)
++----------------------------------------------+
+|1 1 1 1 1|1 _1  0  0  0|2 3  5  7 11|1 0 0 0 0|
+|0 1 1 1 1|0  1 _1  0  0|2 5 10 17 28|0 1 0 0 0|
+|0 0 1 1 1|0  0  1 _1  0|2 5 10 17 28|0 0 1 0 0|
+|0 0 0 1 1|0  0  0  1 _1|            |0 0 0 1 0|
+|0 0 0 0 1|0  0  0  0  1|            |0 0 0 0 1|
++----------------------------------------------+
+</pre>
+
+<TABLE ALIGN="center" BORDER="1" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+  <TR><TD width=40%><tt>a0=: MR=: 1 : 'x.@=@i.@#'</tt></TD>	<TD width=60%>Matrix representation of linear function</TD></TR>
+  <TR><TD><tt>d1=: mp=: +/ . *</tt></TD>	<TD>Matrix product</TD>
+  </TR><TR><TD><tt>a2=: L=: &amp;mp</tt></TD>	<TD>Linear function represented by matrix</TD></TR>
+  <TR><TD><tt>a3=: inv=: ^:_1</tt></TD>	<TD>Inverse adverb</TD></TR>
+  <TR><TD><tt>a4=: MRI=: (^:_1) 'MR' f.</tt></TD>	<TD>Matrix representation of inverse function</TD></TR>
+  <TR><TD><tt>a5=: MR (%.@)</tt></TD>		<TD ALIGN="center">"</TD>
+  </TR>
+</TABLE>
+
+<pre>
+   m=: f MR y [ mi=: f MRI y
+   m ; mi ; y,(y L m),:(mi L m L y)
++------------------------------------+
+|1 1 1 1 1|1 _1  0  0  0|2 3  5  7 11|
+|0 1 1 1 1|0  1 _1  0  0|2 5 10 17 28|
+|0 0 1 1 1|0  0  1 _1  0|2 5 10 17 28|
+|0 0 0 1 1|0  0  0  1 _1|            |
+|0 0 0 0 1|0  0  0  0  1|            |
++------------------------------------+
+</pre>
+
+<br>
+
+<!--bottom jump start--><hr><a href="polynomials_rational.htm">&gt;&gt;</a>&nbsp;
+<a href="matrix_algebra.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Phrases<!--bottom jump end--></td></tr></table></body>
+</html>

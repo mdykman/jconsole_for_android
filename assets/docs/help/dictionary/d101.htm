@@ -1,0 +1,109 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>+. Real / Imaginary  -  GCD (Or)</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d102.htm">&gt;&gt;</a>&nbsp;
+<a href="d100.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Real / Imaginary</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>+. &nbsp;0 0 0</font></td>
+<td align=right  width=33%><b><font size=+2>GCD (Or)</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>+.y </tt>yields a two-element list of the real and imaginary parts of 
+its argument.  For example,<tt> +.3j5 </tt>is<tt> 3 5</tt>,<tt> </tt>
+and<tt> +.3 </tt>is<tt> 3 0</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x+.y </tt>is the <i>greatest common divisor </i>of<tt> x </tt>
+and<tt> y</tt> .<tt> </tt>If the arguments are boolean (<tt>0</tt> or <tt>1</tt>), 
+the functions<tt> +. </tt>and<tt> *. </tt>are equivalent to logical <i>or</i> 
+and <i>and</i>.  The <a href="d121.htm">function<tt> <b>-.</b></tt></a><tt> </tt>similarly restricted 
+is <i>not</i>.
+<br>&nbsp;</td>                                                         
+</tr></table><br>
+
+<pre>
+   ]y=: i+2*j. i=: i.4
+0 1j2 2j4 3j6
+
+   +. y
+0 0
+1 2
+2 4
+3 6
+</pre>
+
+The greatest common divisor divides both of its 
+arguments<tt> x </tt>and<tt> y </tt>to produce results that have 
+no common factor, that is, the GCD of the quotients is<tt> 1</tt>.<tt> </tt> 
+Moreover, these quotients represent the fraction<tt> x%y </tt>in lowest form.  
+For example:<br>
+
+<pre>
+   x=: 24 [ y=: 60
+   x;y;(x +. y);((x , y) % (x +. y))
++--+--+--+---+
+|24|60|12|2 5|
++--+--+--+---+
+
+   lff=: , % +.               <font face=Times size=+1>Gives lowest form of fraction</font>
+   x;y;(x lff y);(%/x lff y);(%/x,y);(+./x lff y)
++--+--+---+---+---+-+
+|24|60|2 5|0.4|0.4|1|
++--+--+---+---+---+-+
+</pre>
+
+Since the functions<tt> =| </tt>and<tt> =&lt;. </tt>
+(tests for non-negative and for integer) produce boolean results, 
+the phrase<tt> (=|)+.(=&lt;.) </tt>is a test for non-negative <i>or</i> 
+integer:<br>
+
+<pre>
+   (test=: (=|) +. (=&lt;.)) _2 _2.4 3 3.5
+1 0 1 1
+</pre>
+
+The duality of <i>or</i> and <i>and</i> may be shown as follows:<br>
+
+<pre>
+   d (+./ ; *.&amp;.-./ ; *./ ; +.&amp;.-./) d=: 0 1
++---+---+---+---+
+|0 1|0 1|0 0|0 0|
+|1 1|1 1|0 1|0 1|
++---+---+---+---+
+
+</pre>
+
+<!--bottom jump start--><hr><a href="d102.htm">&gt;&gt;</a>&nbsp;
+<a href="d100.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

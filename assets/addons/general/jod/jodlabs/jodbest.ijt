@@ -1,0 +1,347 @@
+LABTITLE=: 'JOD (3) Best Practices'
+LABAUTHOR=: 0 : 0
+John D, Baker 
+bakerjd99@gmail.com
+)
+LABCOMMENTS=: 'Best practices for JOD May 2008'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section Introduction
+Software tools are like loaded guns: powerful weapons for slaying your coding demons but also dangerous when used improperly.  Have you ever shot yourself in the foot?  I know I'm missing a few toes and I bet you are as well. 
+
+This lab outlines a number of "best practices" or guidelines for using JOD.  I've learned the hard way; if you take my advice to heart you might be spared!
+)
+
+NB. =========================================================
+Lab Section Lab cleanup
+WARNING: DICTIONARIES CREATED BY PRIOR RUNS OF LAB THIS WILL BE DELETED IN THE NEXT STEP.
+
+When the Best Practices lab runs it creates a number of dictionaries in the 'c:\jodlabs' directory. The next step will remove any of these dictionaries.  IF YOU CARE ABOUT THIS DATA STOP NOW.
+)
+
+NB. =========================================================
+Lab Section
+Remove Best Practices lab dictionaries.
+)
+require 'general/jod'
+
+NB. unregister dictionaries - IGNORE ERRORS
+3 regd&> ;:'bpcopy bptest' [ 3 od ''
+
+NB. delete dictionary files
+shell 'rd /s /q "c:\jodlabs"'
+
+NB. =========================================================
+Lab Section JOD does not belong in the J tree
+"JOD DOES NOT BELONG IN THE J TREE"
+
+My first and most important bit of advice is simply:
+
+NEVER NEVER NEVER store your JOD dictionaries in J install directories!
+
+I would also avoid any OS managed directories like 
+'\Progam Files\'.
+
+Create a JOD master dictionary directory root that is completely independent of J.  It's also a good idea to define a subdirectory structure that mirrors J's versions.  JOD creates binary jfiles.  These files are fairly stable but binaries can change when J changes.
+)
+NB. create a master JOD directory root outside of J's directories.
+newd 'bptest';'c:\jodlabs\602\bptest';'best practices test dictionary'
+
+NB. This is an example - use another root for your dictionaries.
+
+NB. =========================================================
+Lab Section Load lab dictionary from dump script
+To illustrate key features of JOD we need a nonempty dictionary. This next step loads the (bptest) dictionary from a dump script distributed with JOD.
+)
+
+NB. =========================================================
+Lab Section
+Load lab dictionary.
+)
+NB. open new dictionary
+od 'bptest' [ 3 od ''
+
+NB. load from example dump script
+0!:0 <jpath '~addons\general\jod\jodlabs\labdump.ijs'
+
+NB. regenerate all references - show last three messages
+_3 {. 0 globs&> }. revo''
+
+NB. =========================================================
+Lab Section Backup backup backup
+"BACKUP BACKUP BACKUP"
+
+It is literally a snap to make a backup with JOD.  So backup often!
+)
+NB. open the best practice dictionary
+od 'bptest' [ 3 od ''
+
+NB. back it up
+packd 'bptest'
+
+NB. restd recovers the most current backup
+restd 'bptest'
+
+NB. =========================================================
+Lab Section Take a script dumpt
+"TAKE A SCRIPT DUMP"
+
+(packd) backs up binary jfiles but it's also a good idea to "dump" your dictionaries as plain text.  JOD can dump all open dictionaries as a single J script. Script dumps are the most stable way to store J dictionaries.  The jodsource addon distributes all JOD source code in this form.
+)
+NB. dump only (bptest)
+od 'bptest' [ 3 od ''
+
+NB. (make) creates a dictionary dump in the dump subdirectory
+bptestdump=: showpass_ajod_ make ''
+
+NB. =========================================================
+Lab Section Some uses of dump scripts
+JOD dump scripts can be used to reload, copy and merge dictionaries.
+)
+NB. reload bptest
+od 'bptest' [ 3 od ''
+0!:0 {:bptestdump
+
+NB. =========================================================
+Lab Section
+Copy a dictionary.
+)
+NB. copy/merge bptest dictionary
+newd 'bpcopy';'c:\jodlabs\602\bpcopy'
+od 'bpcopy' [ 3 od ''
+0!:0 {:bptestdump
+
+NB. clear path
+dpset 'CLEARPATH'
+
+NB. =========================================================
+Lab Section Make a master re-register script
+"MAKE A MASTER RE-REGISTER SCRIPT"
+
+JOD only sees the dictionaries registered in the jmaster.ijf file so maintaining a list of registered dictionaries is a good idea.  JOD can generate a re-register script that you can edit.  
+
+Generate a re-register script and put it in your main JOD dictionary directory root.
+)
+NB. generate re-register script
+rereg=: showpass_ajod_ ;{: 5 od ''
+
+NB. save it in the master root
+rereg write_ajod_ 'c:\jodlabs\602\jodregister.ijs'
+
+NB. =========================================================
+Lab Section Set library dictionary to readonly
+"SET LIBRARY DICTIONARIES TO READONLY"
+
+Open JOD dictionaries define a search path.  The first dictionary on the path is the only dictionary that can be changed.  It is called the "put" dictionary.  Even though nonput dictionaries cannot be changed by JOD it's a good idea to set them READONLY because:
+
+READONLY dictionaries can be accessed by any number of JOD tasks. READWRITE dictionaries can only be accessed by one task.  
+
+Keeping libraries READONLY prevents accidental put's as you open and close dictionaries.
+)
+NB. make bptest READONLY
+od 'bptest' [ 3 od ''
+dpset 'READONLY'
+
+NB. bpcopy is now the put dictionary
+od ;:'bpcopy bptest' [ 3 od ''
+
+NB. first group/suite sets path
+grp 'agroup'; ;:'datecheck yeardates today sunriseset0'
+
+NB. note dictionary path
+did~ 0
+
+NB. =========================================================
+Lab Section Keep references updated
+"KEEP REFERENCES UPDATED"
+
+JOD stores word references.  References enable many useful operations. References allow (getrx) to load words that call other words in new contexts.
+)
+NB. only put dictionary references need updating - show last five messages
+_5 {. 0 globs&> }. revo ''
+
+NB. =========================================================
+Lab Section Document dictionary objects
+"DOCUMENT DICTIONARY OBJECTS"
+
+Documentation is a long standing sore point for programmers.  Most of them hate it. Some claim it's unnecessary and even distracting.  Others put in half baked efforts. In my opinion this "isn't even wrong!"  Good documentation elevates code. In Knuth's opinion it separates "literate programming" from the alternative - "illiterate programming."   
+
+JOD provides a number of easy ways to document code. You can enter a single sentence of a large dissertation.  I would recommend the former.  See JOD documentation for more documentation options.
+)
+NB. for new words try a single line of documentation.
+afterlaststr=:] }.~ #@[ + 1&(i:~)@([ E. ])
+put 'afterlaststr'
+
+NB. insert sentence
+0 8 put 'afterlaststr';'retains string (y) after last occurrence of (x)'
+
+NB. =========================================================
+Lab Section
+JOD uses documentation in new contexts.
+)
+NB. for tacits the docment sentence is fetched
+disp 'afterlaststr'
+
+NB. briefly describe sunmoon group  - the payback for entering those sentences
+hlpnl }. grp 'sunmoon'
+
+NB. =========================================================
+Lab Section
+An example of long documentation.
+)
+NB. long document
+0 9 disp 'sunriseset0'
+
+NB. =========================================================
+Lab Section Define your own JOD shortcuts
+"DEFINE YOUR OWN JOD SHORTCUTS"
+
+JOD words can be used within arbitrary J programs.  If you don't find a JOD primitive that meets your needs do a little programming.
+
+There are many examples of JOD programming in JOD's source code. Install the jodsource addon to get JOD source code.
+)
+NB. examples of using JOD words to define new facilities
+
+NB. describe a JOD group
+hg_z_=: [: hlpnl [: }. grp
+
+NB. re-reference put dictionary show any errors
+reref_z_=: 3 : '(n,.s) #~ -.;0{"1 s=.0 globs&>n=.}.revo'''' [ y'
+
+NB. show words referenced by words in a group that are not in the group
+JODGRP_z_=: 'agroup'
+nx_z_=: 3 : '(allrefs  }. gn) -. gn=. grp JODGRP'
+
+NB. missing from (agroup)
+nx ''
+
+NB. =========================================================
+Lab Section Customize JOD edit facilities
+"CUSTOMIZE JOD EDIT FACILITIES"
+
+The main JOD edit words (nw) and (ed) can be customized by defining a DOCUMENTCOMMAND script.
+)
+NB. define document command script - {~N~} is word name placeholder
+DOCUMENTCOMMAND_z_ =: 0 : 0
+smoutput pr '{~N~}'
+)
+
+
+NB. create a new word - opens edit window
+nw 'bpword'
+
+NB. =========================================================
+Lab Section
+Find the (bpword) edit window and note how DOCUMENTCOMMAND text has been modified and insert.  When the script window is saved with CRTL-W DOCUMENTCOMMAND runs.
+
+Run and close the (bpword) edit window.
+)
+
+NB. =========================================================
+Lab Section
+Edit a word in the dictionary.  JOD is always editing copies. Originals are can only be changed with explicit put operations.
+)
+NB. load dictionary word into edit window
+ed 'sunriseset0'
+
+NB. find the (sunriseset0) edit window and not DOCUMENTCOMMAND 
+
+NB. close edit window
+
+NB. =========================================================
+Lab Section Define JOD project macros
+"DEFINE JOD PROJECT MACROS"
+
+When programming with JOD you typically open a set of dictionaries. Load some system scripts and define some handy nouns.  This can be done in a project macro script.
+)
+NB. define a project macro - I use the prefix prj for such scripts
+prjsunmoon=: 0 : 0
+
+NB. standard j scripts
+require 'debug task'
+
+NB. local script nouns 
+JODGRP_z_=: 'sunmoon'
+JODSUI_z_=: 'sunmoontests'
+
+NB. put/xref
+DOCUMENTCOMMAND_z_ =: 'smoutput pr ''{~N~}'''
+)
+
+NB. store macro
+4 put 'prjsunmoon';JSCRIPT_ajod_;prjsunmoon
+
+NB. =========================================================
+Lab Section
+Once project macros are defined it's easy to configure your J session - open the required dictionaries and run with (rm) to setup.
+)
+NB. setup project
+rm 'prjsunmoon'  [ od ;:'bpcopy bptest' [ 3 od ''
+
+NB. =========================================================
+Lab Section Edit your jodprofile.ijs
+"EDIT YOUR jodprofile.ijs"
+
+When JOD loads the script ~addons\general\jod\jodprofile.ijs is executed. This script can be used to set up JOD the way you want. Note how you can execute project macros when JOD loads with sentences like:
+
+rm 'prjsunmoon' [ od ;:'bpcopy bptest'
+
+WARNING: store your profile in one of your dictionaries.  This file is reset when JAL updates the JOD addon.
+)
+NB. display jodprofile.ijs
+et read_ajod_ jpath'~addons\general\jod\jodprofile.ijs'
+
+NB. close the jodprofile.ijs window
+
+NB. =========================================================
+Lab Section USE JOD HELP AND DOCUMENTATION
+"USE JOD HELP AND DOCUMENTATION"
+
+JOD documentation is available in two forms.  There is an online PDF document that is installed with the addon and there is online help available with the (jodhelp) verb.
+)
+NB. open JOD online help - require internet connection
+NB. jodhelp 'AContents'
+
+NB. location of jod.pdf 
+jpath '~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+
+NB. opens jod.pdf if a pdf reader is available on your system
+'PDF' jodhelp ''
+
+NB. =========================================================
+Lab Section Summary and final remarks.
+The following practices make JOD more productive and useful:
+
+JOD DOES NOT BELONG IN THE J TREE
+
+BACKUP BACKUP BACKUP
+
+TAKE A SCRIPT DUMP
+
+MAKE A MASTER RE-REGISTER SCRIPT
+
+SET LIBRARY DICTIONARIES TO READONLY
+
+KEEP REFERENCES UPDATED
+
+DOCUMENT DICTIONARY OBJECTS
+
+DEFINE YOUR OWN JOD SHORTCUTS
+
+CUSTOMIZE JOD EDIT FACILITIES
+
+DEFINE JOD PROJECT MACROS
+
+EDIT YOUR jodprofile.ijs
+
+USE JOD HELP AND DOCUMENTATION
+
+
+These are just some of the JOD practices I have found useful.  As you use JOD you will probably find your own methods.  
+
+If you find an a useful method please let me know.  I can be reached at:
+
+bakerjd99@gmail.com
+)
+

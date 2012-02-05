@@ -1,0 +1,71 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Word formation</title>
+
+</head><body><!--top jump start--><a href="space.htm">&gt;&gt;</a>&nbsp;
+<a href="string.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Word formation</h1>
+The monad <font face=courier size=-1>;:</font> can be useful in figuring out what the words are in a sentence. The word formation primitive takes a string as its right argument, splits it into words, and returns a result with each word in a box. For now, don't worry about what the boxes are, just note how visually helpful they are. You'll learn about boxes in later sections.<br>
+<br>
+
+<pre>   ;: '2 + 3'
++-----+
+¦2¦+¦3¦
++-----+
+   ;: '2.5 + 3e4'
++---+-+---+
+¦2.5¦+¦3e4¦
++---+-+---+
+   ;: 'a =. 1 2 3'
++-+--+-----+
+¦a¦=.¦1 2 3¦
++-+--+-----+
+   ;: 'test + 123 NB. this is a comment'
++----+-+---+---------------------+
+¦test¦+¦123¦NB. this is a comment¦
++----+-+---+---------------------+
+   ;: 'def =. ''testing 1 2 3'''
++---+--+---------------+
+¦def¦=.¦'testing 1 2 3'¦
++---+--+---------------+</pre>
+Note that the following are all J words and each goes in its own box:<br>
+<br>
+
+<pre>2.5
+3e4
+=.
+1 2 3
+test
+NB. this is a comment
+'testing 1 2 3'
+</pre>
+It might surprise you that constants such as <font face=courier size=-1>1 2 3</font> and <font face=courier size=-1>'testing 1 2 3'</font> are J words. This is an important point and understanding it is necessary in reading and writing J sentences.<br>
+<br>
+If you are ever puzzled by a J sentence (it could happen), one of the things you can do is apply <font face=courier size=-1>;:</font> to it to be sure you know the words. You can then worry about the meanings of those words.<br>
+<br>
+Look up <font face=courier size=-1>;:</font> in the J Dictionary. The informal name for <font face=courier size=-1>;:</font> is word formation. <br>
+<!--bottom jump start--><hr><a href="space.htm">&gt;&gt;</a>&nbsp;
+<a href="string.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,479 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>When Programs Are Data</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="loopless_code_vi_temporary_v.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_v_partitions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734463"></a><a name="_Toc5414632"></a><a name="_Toc1896260"><span
+style='mso-bookmark:_Toc5414632'><span style='mso-bookmark:_Toc191734463'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>24. </span></span><![endif]>When Programs Are Data</span></span></a></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;passing a verb as an argument&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->One characteristic of maturity
+in programming is readiness to pass a program as an argument.<span
+style='mso-spacerun:yes'>&nbsp; </span>A well-designed program does not exhibit a
+megalomanic urge to do everything the user may desire; it is content to perform
+a limited function well, and to leave other functions to other programs. <span
+style='mso-spacerun:yes'>&nbsp;</span>A suite of such programs can be variously
+connected to perform a great variety of functions, with each program doing its
+bit and passing control to the next one.</p>
+
+<p class=MsoBodyText>In C a program is passed to another program by pointer
+reference, and invoked by <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>(*pfi)(arguments)</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>J has no pointers, but it has a great many
+ways to pass executable nuggets around the system.<span
+style='mso-spacerun:yes'>&nbsp; </span>We will learn them now.</p>
+
+<p class=Section><a name="_Toc191734464"></a><a name="_Toc5414633"></a><a
+name="_Toc5414469"></a><a name="_Toc1896261"><span style='mso-bookmark:_Toc5414469'><span
+style='mso-bookmark:_Toc5414633'><span style='mso-bookmark:_Toc191734464'>Calling
+a Published Name</span></span></span></a></p>
+
+<p class=MsoBodyText>The simplest way to get a verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f</span></span> to pass control
+to another program <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>g</span></span>
+is to define <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+to call a verb with a public name, say <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f_subfn</span></span>, and then
+to define <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f_subfn</span></span>
+to be <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>g&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In C, this would be ridiculous, because it
+would imply that <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f_subfn</span></span>
+is permanently bound to a single value of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>g</span></span>, with the result
+that all calls to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+from anywhere in your program would be stuck with the same value of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>g&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>J overcomes this objection by allowing redefinition of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f_subfn&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each invocation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f</span></span> looks like</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; f_subfn =: g</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; f <i>arguments</i></p>
+
+<p class=BodyTextnoleader>When <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f</span></span> is invoked elsewhere, the correct value of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f_subfn</span></span>
+will be assigned similarly, so each invocation of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f</span></span> can pass control
+properly.</p>
+
+<p class=MsoBodyText>I find this technique hideous, but I have to admit it is
+effective.&nbsp; J uses it to get callbacks
+from DLLs.&nbsp; It must not be used if <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f_subfn</span></span>
+is going to be called in response to an event, since its value may have been
+redefined by the time the event occurs.</p>
+
+<p class=Section><a name="_Toc191734465"></a><a name="_Toc5414634"></a><a
+name="_Toc5414470"></a><a name="_Toc1896262"><span style='mso-bookmark:_Toc5414470'><span
+style='mso-bookmark:_Toc5414634'><span style='mso-bookmark:_Toc191734465'>Using
+the Argument To a Modifier</span></span></span></a></p>
+
+<p class=MsoBodyText>If the verb isn't going to call a name of its own
+choosing, you have to tell it what to call.&nbsp;
+The simplest way to do this is to change the verb into a modifier; then
+when it executes it has access to its operands, which can be verbs.<span
+style='mso-spacerun:yes'>&nbsp; </span>So, instead of</p>
+
+<p class=Jcodemultiline>f =: verb : '<i>definition</i>'</p>
+
+<p class=BodyTextnoleader>you write</p>
+
+<p class=Jcodemultiline>f =: adverb define</p>
+
+<p class=Jcodemultiline><i>monadic definition<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>:</p>
+
+<p class=Jcodemultiline><i>dyadic definition<o:p></o:p></i></p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=BodyTextnoleader>and within the definition of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f</span></span> you can refer to
+the left operand of the adverb, which goes by the name <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you decide to write a conjunction instead,
+its right operand is <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The noun operands of the derived verb (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;f</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;f&nbsp;v</span></span>)
+are <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+as usual.&nbsp; We will discuss user-defined
+modifiers in a later chapter.</p>
+
+<p class=MsoBodyText>In Chapter 3 this technique was used to calculate the
+Chebyshev coefficients of a function.&nbsp;
+The function to be approximated is one of the inputs to this
+calculation, so we write an adverb and let its left operand be the function.<span
+style='mso-spacerun:yes'>&nbsp; </span>With <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>chebft</span></span> defined as
+in the example, an example of its use is:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 10 (2&amp;o.)
+chebft 0 1</p>
+
+<p class=Jcodemultiline>1.64717 _0.232299 _0.0537151 0.00245824 0.000282119...</p>
+
+<p class=BodyTextnoleader>Here the function to be approximated is the cosine
+function <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2&amp;o.</span></span>,
+evaluated for <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>10</span></span>
+Chebyshev coefficients over the interval <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;1&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>When you define a modifier, you have no way to specify
+that you are defining only the dyadic case as you can for a verb with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>dyad&nbsp;define&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Instead, you use the form given above, in
+which the monadic definition (if any) is separated from the dyadic by a line
+containing a single <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>':'</span></span>
+character.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>chebft</span></span> did this,
+since its derived verb is always dyadic.</p>
+
+<p class=Section><a name="_Toc191734466"></a><a name="_Toc5414635"></a><a
+name="_Toc5414471"></a><a name="_Toc1896263"><span style='mso-bookmark:_Toc5414471'><span
+style='mso-bookmark:_Toc5414635'><span style='mso-bookmark:_Toc191734466'>Invoking
+a Gerund: </span></span></span></a><span style='mso-bookmark:_Toc1896263'><span
+style='mso-bookmark:_Toc5414471'><span style='mso-bookmark:_Toc5414635'><span
+style='mso-bookmark:_Toc191734466'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>m`:6</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Invoke Gerund conjunction `\:&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;m`\:6&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Sometimes you want to use a
+noun rather than a verb to designate a verb to be called.<span
+style='mso-spacerun:yes'>&nbsp; </span>An asynchronous socket handler is an example:
+the socket handler will have many transfers going on at once, each one with a
+callback to be executed when the transfer is complete.<span
+style='mso-spacerun:yes'>&nbsp; </span>The callbacks must be put into a table along
+with other information about the transfer; in other words, the callbacks must
+be nouns.</p>
+
+<p class=MsoBodyText>We have already met nouns that carried verbs; we called
+them gerunds.&nbsp; We found that gerunds were
+created by the conjunction <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>`</span></span> and executed by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><a href="mailto:m@.v"><span
+style='color:windowtext;text-decoration:none;text-underline:none'>m@.v</span></a>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>While these tools are adequate to allow verbs
+to be passed as arguments, some simplifications are available that we will
+discuss now.</p>
+
+<p class=MsoBodyText>A gerund created by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u`v</span></span> is always a
+list (each element of which, as we learned, is an atomic representation of a
+verb, which we will treat as untouchable).&nbsp;
+Even if there is only one verb, the result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>`</span></span> is a list:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +`''</p>
+
+<p class=Jcodemultiline>+-+</p>
+
+<p class=Jcodemultiline>|+|</p>
+
+<p class=Jcodemultiline>+-+</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; $ +`''</p>
+
+<p class=Jcodemultiline>1</p>
+
+<p class=MsoBodyText>It makes sense for the gerund created by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+to be a list, since it contains a list of verb-representations one of which is
+selected for execution by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'><a href="mailto:m@.v"></a>m@.v</span></span>&nbsp;. <span
+style='mso-spacerun:yes'>&nbsp;</span>But when we are passing a single verb-as-noun
+as an argument, it is OK for it to be a scalar box.<span
+style='mso-spacerun:yes'>&nbsp; </span>And, it can be invoked using the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`:</span></span>
+conjunction: <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m`:6</span></span>
+converts the gerund <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+into a verb.&nbsp; So, in our example, we pass
+the callback as one box in a parameter list, and then we select it, turn it
+into a verb with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m`:6</span></span>,
+and execute it, as we can see in a stripped-down example.<span
+style='mso-spacerun:yes'>&nbsp; </span>The gerund operations are not difficult so I
+am going to keep your interest with a couple of new tricks:</p>
+
+<p class=Jcodemultilinefirst>&nbsp;&nbsp; callback
+=: dyad : '(x) =: y'</p>
+
+<p class=BodyTextnoleader>Howzat?&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(x)&nbsp;=:</span></span>?<span
+style='mso-spacerun:yes'>&nbsp; </span>Yeah, this means that the <i>value</i> of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+tells what variable will be assigned.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+can be any valid assignment target: a name, a multiple assignment, or other
+exotic forms given in the Dictionary.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; calledfn =:
+monad : '(0 { y)`:6 (1 {:: y)'</p>
+
+<p class=BodyTextnoleader>So <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>calledfn</span></span> is expecting an argument of (at
+least) 2 boxes.&nbsp; The first one will be
+the gerund to execute, and the second one will be the argument to pass to that
+verb.&nbsp; We open the second box (with <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>{::</span></span>)
+but we leave the first as a box so that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>`:6</span></span> can turn it
+into a verb.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; calledfn 'vbl'&amp;callback
+` (&lt;25)</p>
+
+<p class=BodyTextnoleader>The first challenge is figuring out what the argument
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>calledfn</span></span>
+is.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>`</span></span> sees a verb on
+its left; it converts that to a gerund.&nbsp;
+It sees a noun to its right, so it appends it unchanged to the gerund
+from the left.&nbsp; This produces</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 'vbl'&amp;callback
+` (&lt;25)</p>
+
+<p class=Jcodemultiline>+----------------------+--+</p>
+
+<p class=Jcodemultiline>|+-+------------------+|25|</p>
+
+<p class=Jcodemultiline>||&amp;|+-------+--------+||<span
+style='mso-spacerun:yes'>&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>|| ||+-+---+|callback|||<span
+style='mso-spacerun:yes'>&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>|| |||0|vbl||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|||&nbsp; |</p>
+
+<p class=Jcodemultiline>|| ||+-+---+|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>|||&nbsp;
+|</p>
+
+<p class=Jcodemultiline>|| |+-------+--------+||<span
+style='mso-spacerun:yes'>&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>|+-+------------------+|<span
+style='mso-spacerun:yes'>&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>+----------------------+--+</p>
+
+<p class=BodyTextnoleader>The first box is the atomic representation of the
+verb, just as mysterious as it was billed to be, and the second box has the
+25.&nbsp; Now what do we get when we pass that
+in as the argument to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>calledfn</span></span>
+(try to work it out before you peek at the answer)?</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; calledfn 'vbl'&amp;callback
+` (&lt;25)</p>
+
+<p class=Jcodemultiline>25</p>
+
+<p class=BodyTextnoleader>Did you get it?&nbsp;
+We executed <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'vbl'&amp;callback&nbsp;25</span></span>
+which then executed <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>vbl&nbsp;=:&nbsp;25</span></span>
+which has the result <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>25</span></span>,
+which comes back as the result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>calledfn&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The assignment was public:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; vbl</p>
+
+<p class=Jcodemultiline>25</p>
+
+<p class=Section><a name="_Toc191734467"></a><a name="_Toc5414636"></a><a
+name="_Toc5414472"></a><a name="_Toc1896264"><span style='mso-bookmark:_Toc5414472'><span
+style='mso-bookmark:_Toc5414636'><span style='mso-bookmark:_Toc191734467'>Passing
+the Definition Of a Verb</span></span></span></a><span style='mso-bookmark:
+_Toc191734467'>: </span><span style='mso-bookmark:_Toc191734467'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:
+bold'>128!:2</span></span> (Apply)</span></p>
+
+<p class=MsoBodyText>As an alternative to passing a gerund and invoking it with
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m`:6</span></span>,
+you could pass the string representation of a verb and make a verb out of it
+with <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;:n</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4&nbsp;:n&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Better yet, if you can make do with a monadic
+verb, you can use the foreign dyad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>128!:2</span></span> which has
+rank <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;_</span></span>
+and goes by the name <!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Apply verb 128!\:2&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;128!\:2 dyad&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Apply.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;128!:2&nbsp;y</span></span> takes the string <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+which must describe a verb, and applies the verb so described to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+(as a monad).&nbsp; It is therefore similar to
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(3&nbsp;:&nbsp;'x')&nbsp;y</span></span>
+with the restriction that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> must describe a one-line verb without
+assignments.&nbsp; The advantage of using <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>128!:2</span></span>
+rather than the method in the next section is that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> does not have to
+be converted to its string representation.</p>
+
+<p class=Section><a name="_Toc191734468"></a><a name="_Toc5414637"></a><a
+name="_Toc5414473"></a><a name="_Toc1896265"><span style='mso-bookmark:_Toc5414473'><span
+style='mso-bookmark:_Toc5414637'><span style='mso-bookmark:_Toc191734468'>Passing
+an Executable Sentence: Monad </span></span></span></a><span style='mso-bookmark:
+_Toc1896265'><span style='mso-bookmark:_Toc5414473'><span style='mso-bookmark:
+_Toc5414637'><span style='mso-bookmark:_Toc191734468'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>&quot;.</span></span>
+and </span></span></span></span><span style='mso-bookmark:_Toc1896265'><span
+style='mso-bookmark:_Toc5414473'><span style='mso-bookmark:_Toc5414637'><span
+style='mso-bookmark:_Toc191734468'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>5!:5</span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Do verb <span style='font-size:10.0pt'>\</span>&quot;.&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;<span style='font-size:10.0pt'>\</span>&quot;.
+monad&quot; <![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->As
+the ultimate in flexibility, you can pass an entire J sentence as a character
+string and then execute it with monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is executed exactly as if it had been a
+line of the executing verb (or from the keyboard if that's where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span>
+was entered).&nbsp; For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &quot;. 'a =.
+i. 4'</p>
+
+<p class=Jcodemultiline>0 1 2 3</p>
+
+<p class=BodyTextnoleader>The sentence was executed.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a</p>
+
+<p class=Jcodemultiline>0 1 2 3</p>
+
+<p class=BodyTextnoleader>The assignment was performed.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; &quot;. '+/' ,
+&quot;: a</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=BodyTextnoleader>The operand of monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span> must be a
+string, so before we can take its total we must convert <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> to a sequence of
+characters that will have the value of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> when <i>executed</i>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For a large operand, converting to string
+form adds overhead that might steer you towards using a gerund or <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>128!:2</span></span>
+instead.</p>
+
+<p class=MsoBodyText>I think C programmers are likely to overlook opportunities
+to use monad&nbsp;<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span>
+because it is so foreign to their experience.&nbsp;
+It is equivalent to compiling and executing a code segment as part of
+the running program--it's just unthinkable.&nbsp;
+But in J, it's commonplace.</p>
+
+<p class=MsoBodyText>If you are going to use monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>&quot;.</span></span> you will
+face the problem of converting your nouns to string form.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here's the display of a noun: what character
+string would you execute to produce a noun with that value?</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a</p>
+
+<p class=Jcodemultiline>+------------+----------------------------------+</p>
+
+<p class=Jcodemultiline>|+---+--+---+|0
+2.25 4.5 6.75 9 11.25 13.5 15.75|</p>
+
+<p class=Jcodemultiline>||abc|de|fgh||<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>|+---+--+---+|<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>|</p>
+
+<p class=Jcodemultiline>+------------+----------------------------------+</p>
+
+<p class=BodyTextnoleader>Fortunately, you don't have to worry about it.<span
+style='mso-spacerun:yes'>&nbsp; </span>The foreign monad&nbsp;<span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5!:5</span></span> takes as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+a boxed <i>name </i>(not a value) and produces a string which when executed has
+the same value as the variable named by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>So:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 5!:5 &lt;'a'</p>
+
+<p class=Jcodemultiline>(&lt;&lt;;._1 ' abc de fgh'),&lt;2.25*i.8</p>
+
+<p class=BodyTextnoleader>...and if you tell me you came up with the same string,
+I'm not going to believe you.</p>
+
+</div><!--bottom jump start--><hr><a href="loopless_code_vi_temporary_v.htm">&gt;&gt;</a>&nbsp;
+<a href="loopless_code_v_partitions.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

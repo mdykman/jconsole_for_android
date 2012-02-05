@@ -1,0 +1,73 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>continue.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="cfor.htm">&gt;&gt;</a>&nbsp;
+<a href="cbreak.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font face="Courier New" size=+3>continue.</font></b><br><br>
+
+<table width=100%><tr><td bgcolor=#eeeeee>
+<tt>continue. </tt>may be used within 
+a<tt> </tt><a href="cfor.htm"><tt>for.</tt></a> ,<tt> </tt>
+<tt> </tt><a href="cwhile.htm"><tt>while.</tt></a> ,<tt> </tt>
+or<tt> </tt><a href="cwhile.htm"><tt>whilst.</tt></a><tt> </tt>
+control structure, and goes to the top of 
+the innermost such enclosing structure.  See 
+also<tt> </tt><a href="cbreak.htm"><tt>break.</tt></a> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+sumeven=: 3 : 0
+ s=.0
+ for_j. i.y do.
+  if. 2|j do. continue. end.
+  s=.j+s
+ end.
+)
+
+   sumeven 9
+20
+
+   +/ (* -.@(2&amp;|)) i.9
+20
+
+   sumeven 1000
+249500
+
+   +/ (* -.@(2&amp;|)) i.1000
+249500
+
+   (sumeven = 2&amp;!@&gt;.&amp;.-:) 1000
+1
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="cfor.htm">&gt;&gt;</a>&nbsp;
+<a href="cbreak.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,133 @@
+DGEGS computes for a pair of N-by-N complex nonsymmetric matrices A,
+B:  the generalized eigenvalues (alpha, beta), the complex Schur form
+(A, B), and optionally left and/or right Schur vectors (VSL and
+VSR).
+
+
+(If only the generalized eigenvalues are needed, use the driver ZGEGV
+instead.)
+
+
+A generalized eigenvalue for a pair of matrices (A,B) is, roughly
+speaking, a scalar w or a ratio  alpha/beta = w, such that  A - w*B is
+singular.  It is usually represented as the pair (alpha,beta), as
+there is a reasonable interpretation for beta=0, and even for both
+being zero.  A good beginning reference is the book, "Matrix
+Computations", by G. Golub & C. van Loan (Johns Hopkins U. Press)
+
+The (generalized) Schur form of a pair of matrices is the result of
+multiplying both matrices on the left by one unitary matrix and both
+on the right by another unitary matrix, these two unitary matrices
+being chosen so as to bring the pair of matrices into upper triangular
+form with the diagonal elements of B being non-negative real numbers
+(this is also called complex Schur form.)
+
+The left and right Schur vectors are the columns of VSL and VSR,
+respectively, where VSL and VSR are the unitary matrices
+
+which reduce A and B to Schur form:
+
+
+Schur form of (A,B) = ( (VSL)**H A (VSR), (VSL)**H B (VSR) )
+
+
+Arguments
+=========
+
+N       (input) INTEGER
+        The order of the matrices A, B, VSL, and VSR.  N >= 0.
+
+A       (input/output) COMPLEX*16 array, dimension (LDA, N)
+        On entry, the first of the pair of matrices whose generalized
+        eigenvalues and (optionally) Schur vectors are to be
+        computed.
+        On exit, the generalized Schur form of A.
+
+LDA     (input) INTEGER
+        The leading dimension of A.  LDA >= max(1,N).
+
+B       (input/output) COMPLEX*16 array, dimension (LDB, N)
+        On entry, the second of the pair of matrices whose
+        generalized eigenvalues and (optionally) Schur vectors are
+        to be computed.
+        On exit, the generalized Schur form of B.
+
+LDB     (input) INTEGER
+        The leading dimension of B.  LDB >= max(1,N).
+
+ALPHA   (output) COMPLEX*16 array, dimension (N)
+
+
+BETA    (output) COMPLEX*16 array, dimension (N)
+        On exit,  ALPHA(j)/BETA(j), j=1,...,N, will be the
+        generalized eigenvalues.  ALPHA(j), j=1,...,N  and  BETA(j),
+        j=1,...,N  are the diagonals of the complex Schur form (A,B)
+        output by ZGEGS.  The  BETA(j) will be non-negative real.
+
+        Note: the quotients ALPHA(j)/BETA(j) may easily over- or
+        underflow, and BETA(j) may even be zero.  Thus, the user
+        should avoid naively computing the ratio alpha/beta.
+        However, ALPHA will be always less than and usually
+        comparable with norm(A) in magnitude, and BETA always less
+        than and usually comparable with norm(B).
+
+VSL     (output) COMPLEX*16 array, dimension (LDVSL,N)
+        If JOBVSL = 'V', VSL will contain the left Schur vectors.
+        (See "Purpose", above.)
+        Not referenced if JOBVSL = 'N'.
+
+LDVSL   (input) INTEGER
+        The leading dimension of the matrix VSL. LDVSL >= 1, and
+        if JOBVSL = 'V', LDVSL >= N.
+
+VSR     (output) COMPLEX*16 array, dimension (LDVSR,N)
+        If JOBVSR = 'V', VSR will contain the right Schur vectors.
+        (See "Purpose", above.)
+        Not referenced if JOBVSR = 'N'.
+
+LDVSR   (input) INTEGER
+        The leading dimension of the matrix VSR. LDVSR >= 1, and
+        if JOBVSR = 'V', LDVSR >= N.
+
+WORK    (workspace/output) COMPLEX*16 array, dimension (LWORK)
+        On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
+
+LWORK   (input) INTEGER
+        The dimension of the array WORK.  LWORK >= max(1,2*N).
+        For good performance, LWORK must generally be larger.
+        To compute the optimal value of LWORK, call ILAENV to get
+        blocksizes (for ZGEQRF, ZUNMQR, and CUNGQR.)  Then compute:
+        NB  -- MAX of the blocksizes for ZGEQRF, ZUNMQR, and CUNGQR;
+        the optimal LWORK is N*(NB+1).
+
+RWORK   (workspace) DOUBLE PRECISION array, dimension (3*N)
+
+
+INFO    (output) INTEGER
+        = 0:  successful exit
+
+        < 0:  if INFO = -i, the i-th argument had an illegal value.
+
+        =1,...,N:
+        The QZ iteration failed.  (A,B) are not in Schur
+        form, but ALPHA(j) and BETA(j) should be correct for
+        j=INFO+1,...,N.
+        > N:  errors that usually indicate LAPACK problems:
+
+        =N+1: error return from ZGGBAL
+
+        =N+2: error return from ZGEQRF
+
+        =N+3: error return from ZUNMQR
+
+        =N+4: error return from ZUNGQR
+
+        =N+5: error return from ZGGHRD
+
+        =N+6: error return from ZHGEQZ (other than failed
+        iteration)
+        =N+7: error return from ZGGBAK (computing VSL)
+
+        =N+8: error return from ZGGBAK (computing VSR)
+
+        =N+9: error return from ZLASCL (various places)

@@ -1,0 +1,86 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Box Draw Characters</title>
+</head><body> <!--top jump start--><a href="unicode.htm">&gt;&gt;</a>&nbsp;
+<a href="interrupt.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+<h1>Box Draw Characters</h1>
+J draws boxes in the display of boxed data. The most portable way of drawing boxes is with the ascii characters +|- as shown in the following:<br>
+<font face=courier size=-1><br>
++---+---+----+<br>
+|abc|def|ghij|<br>
++---+---+----|<br>
+|2&nbsp;&nbsp;|3&nbsp;&nbsp;|4&nbsp;&nbsp;&nbsp;|<br>
++---+---+----+<br>
+</font><br>
+It isn't pretty, but displays predictably in all environments,&nbsp;&nbsp;works in plain text email, and is the most portable form for communicating between users. When these aren't important and you have a suitable font you can use special box draw chars to provide crisper displays. <br>
+<br>
+Profile, depending on JFE configuration, sets special box draw characters when possible.<br><br>
+
+There are 3 sets of box draw characters: portable, OEM, and unicode. The boxes are just drawn with chars so in all cases the display only looks right only with a fixed pitch font.<br>
+<br>
+J draws boxes with 11 characters:<br>
+<font face=courier size=-1>upper left corner&nbsp;&nbsp;&nbsp;&nbsp; T down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;upper right corner<br>
+T right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cross&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; T left<br>
+lower left corner&nbsp;&nbsp;&nbsp;&nbsp; T up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lower right corner<br>
+vertical&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;horizontal</font><br>
+<br>
+The values for the 11 characters can be queried&nbsp;&nbsp;with <font face=courier size=-1>9!:6</font> and set with <font face=courier size=-1>9!:7</font>.<br>
+<br>
+Box draw with +|- is set with:<br>
+<font face=courier size=-1>&nbsp;&nbsp; 9!:7 '+++++++++|-'</font><br>
+<br>
+Box draw with special OEM font chars is set with:<br>
+<font face=courier size=-1>&nbsp;&nbsp; 9!:7 [ 218 194 191 195 197 180 192 193 217 179 196{a.</font><br>
+<br>
+Box draw with Unicode font chars is set with:<br>
+<font face=courier size=-1>&nbsp;&nbsp; 9!:7 [ (16+i.11){a.</font><br>
+<br>
+J Engine input/output is in UTF-8 and the 9!:7 Unicode setting results in the Unicode values:<br>
+9484 9516 9488 9500 9532 9508 9492 9524 9496 9474 9472<br>
+<br>
+Some unicode fixed pitch fonts don't have box draw characters of the same pitch and aren't useable.<br>
+<br>
+<b>Macintosh</b><br>
+<br>
+The default darwin installation doesn't have a fixed pitch font with Unicode box draw characters of the correct width. <br>
+<br>
+The DejaVu Sans Mono freely available from http://dejavu.sourceforge.net has proper box draw characters.<br>
+ <br>
+install procedure:<br>
+ - download zip file<br>
+ - extract DejaVuSansMono.ttf (fixed pitch regular)<br>
+ - drag to /Users/user/Library/Fonts/ (or double click)<br>
+ - start J<br>
+ - select the font in Edit|Configure<br>
+ - select Linedraw in Edit|Configure<br>
+ - restart J and test<br>
+<br>
+install for Jconsole:<br>
+ - in Terminal menu, Window Settings, select Display<br>
+ - uncheck "Wide glyphs for Japanese..."<br>
+ - select DejaVu Sans Mono<br>
+ - select "Use These Setting as Default"<br>
+<!--bottom jump start--><hr><a href="unicode.htm">&gt;&gt;</a>&nbsp;
+<a href="interrupt.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>
+</html>

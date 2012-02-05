@@ -1,0 +1,95 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>GUI part 2</title>
+
+</head><body><!--top jump start--><a href="where_to_go.htm">&gt;&gt;</a>&nbsp;
+<a href="data_processing.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>GUI</h1>
+The GUI part of the application is specified as follows:<br>
+<br>
+The form should have a File button, a Close button, and a multiline edit control. The File button allows the user to select a text file. The report on the selected text file is displayed in the multiline edit control.<br>
+<br>
+You need to design the form and define the event handlers.<br>
+<br>
+The GUI definitions will be in a different script from the DP definitions to keep clear the distinction between the two parts. Create a new script file and save it as user\textgui.ijs. Start the form editor and design the form. The File button should have an id of <font face=courier size=-1>file </font>and the Close button should have an id of <font face=courier size=-1>close</font>. The large edit control is a multiline edit control that has a class of <font face=courier size=-1>editm </font>in the New Control dialog. The multiline edit control should have an id of <font face=courier size=-1>editm </font>(the default is <font face=courier size=-1>cceditm </font>, so you must specify <font face=courier size=-1>editm </font>). The form should look like the following:<br>
+<br>
+ <img src="gui2form.gif" border="0" alt=""><br>
+<br>
+You need to add event handlers for the Close and File buttons. The code for the event handlers is in the following listing. This listing should be similar to your final textgui.ijs script.<br>
+
+<pre>FILEREP=: noun define
+pc filerep;
+xywh 9 7 34 14;cc file button;cn "File";
+xywh 47 7 34 14;cc close button;cn "Close";
+xywh 9 27 119 134;cc editm editm ws_border es_autovscroll;
+pas 6 6;pcenter;
+rem form end;
+)
+
+filerep_run=: 3 : 0
+wd FILEREP
+NB. initialize form here
+wd 'pshow;'
+)
+
+filerep_close=: 3 : 0
+wd'pclose'
+)
+
+filerep_close_button=: 3 : 0
+wd'pclose'
+)
+
+filerep_file_button=: 3 : 0
+p =. '"" "" "" "Text(*.txt)|*.txt" ofn_filemustexist'
+fn =. wd 'mbopen ' , p
+if. 0 ~: #fn do.
+ wd 'set editm *' , report fn end.
+)</pre>
+The only part that is new is the use of the <font face=courier size=-1>wd</font> command <font face=courier size=-1>mbopen</font>. This command brings up the common file open dialog box that allows the user to select a file. Local <font face=courier size=-1>p</font> contains the parameters for the <font face=courier size=-1>mbopen </font>command. These parameters are critical and must be defined properly. If you want to know more about the <font face=courier size=-1>mbopen </font>parameters, you can check in the J Online Documentation.<br>
+<br>
+The result of the <font face=courier size=-1>mbopen </font>command is the file name selected by the user. If the user pressed cancel in the open dialog the result will be an empty string and there is nothing to do. If <font face=courier size=-1>fn </font>is not empty then you execute <font face=courier size=-1>report fn</font> to generate the report and set it into the <font face=courier size=-1>editm </font>control. <br>
+<br>
+The <font face=courier size=-1>*</font> in the line <font face=courier size=-1>wd 'set editm *' , report fn end.</font> indicates that the rest of the string, which is the result of <font face=courier size=-1>report fn</font>, is the data to set into the <font face=courier size=-1>editm </font>multiline edit control.<br>
+<br>
+Run the textdp.ijs and textgui.ijs scripts and if this is a new session do the load for files and misc then start the application.<br>
+
+<pre>   filerep_run 0</pre>
+Press the File button and select your user\text.txt file and press OK. Try other text files.<br>
+<br>
+The application uses definitions from four scripts: textdp.ijs, textgui.ijs, files.ijs, and misc.ijs. It makes sense to create a single script that will load all the scripts and then run the application.<br>
+<br>
+Create a new script file, save it as user\textapp.ijs, and add the following lines.<br>
+
+<pre>NB. this application reports file character frequencies
+load 'files'
+load 'misc'	
+0!:0 &lt; 'user\textdp.ijs'
+0!:0 &lt; 'user\textgui.ijs'
+filerep_run 0</pre>
+Save the script. Close J and restart it to get a clean slate. Run the application by using <b>Run|File</b> to run the script user\textapp.ijs.<br>
+<!--bottom jump start--><hr><a href="where_to_go.htm">&gt;&gt;</a>&nbsp;
+<a href="data_processing.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></img></body>
+</html>

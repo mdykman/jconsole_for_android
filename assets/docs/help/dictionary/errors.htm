@@ -1,0 +1,135 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>Errors</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="errors.htm">&gt;&gt;</a>&nbsp;
+<a href="limits.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>Appendix D. Errors</b></font><br><br>
+
+<p>The following are the errors that can be signalled
+by the system.</p>
+
+<table>
+<tr><td valign=top><b>Message Text</b></td>
+<td><b>Example</b></td><td>&nbsp;</td>
+<td><b>Description</b></td>
+</tr>
+<tr><td valign=top>allocation error</td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td>insufficient space in a memory-mapped boxed array</td></tr>
+<tr><td valign=top>assertion failure</td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td><tt>T </tt>is not an array of all 1s in 
+ a control structure<tt> </tt><a href="cassert.htm"><tt> assert. T</tt></a></td></tr>
+ <!--EVATTN   --><tr><td valign=top>attention interrupt        </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <!--EVBREAK  --><tr><td valign=top>break                      </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td valign=top>control error</td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td>an ill-formed <a href="ctrl.htm">control structure</a>; or
+ the T block of a control structure does not result in a noun.</td></tr>
+<tr><td valign=top>domain error</td>
+ <td valign=top><tt>3+'4'</tt><td>&nbsp;</td>
+ <td>&nbsp;</td></tr>
+<tr><td valign=top>file access error</td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td>no permission to do a file operation</td></tr>
+<tr><td valign=top>file name error</td>
+ <td nowrap><tt>1!:1 &lt;'foojunkfoo'</tt><td>&nbsp;</td>
+ <td>a named file does not exist</td></tr>
+ <!--EVFNUM   --><tr><td valign=top>file number error          </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td valign=top>ill-formed name            </td>
+ <td valign=top><tt>7!:5 &lt;'bad name!'</tt></td><td>&nbsp;</td>
+ <td>violates the rules for names as specified
+ in <a href="dict1.htm">Section I</a></td></tr>
+<tr><td valign=top>ill-formed number          </td>
+ <td valign=top><tt>1234 4q3</tt></td><td>&nbsp;</td>
+ <td>violates the rules for numeric constants as specified
+ in <a href="dict1.htm">Section I</a> and the discussion of
+ <a href="dcons.htm">Constants</a></td></tr>
+<tr><td valign=top>index error                </td>
+ <td valign=top><tt>19 { i.7</tt></td><td>&nbsp;</td>
+ <td>a value used as an index is out of range</td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <!--EVINPRUPT--><tr><td valign=top>input interrupt            </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <!--EVFACE   --><tr><td valign=top>interface error            </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td valign=top>length error               </td>
+ <td valign=top><tt>2 3 + 4 5 6</tt></td><td>&nbsp;</td>
+ <td>&nbsp;</td></tr>
+<tr><td valign=top>limit error                </td> 
+ <td valign=top><tt>i. 9e8</tt></td><td>&nbsp;</td>
+ <td>&nbsp;</td></tr>
+ <!--EVLOCALE --><tr><td valign=top>locale error               </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td valign=top>NaN error</td>
+ <td><tt>_+__</tt><td>&nbsp;</td>
+ <td>the result would have been<tt> </tt><a href="d031.htm"><tt>_.</tt></a><tt> </tt>(NaN)</td></tr>
+<tr><td valign=top>nonce error</td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td>not yet implemented for the nonce</td></tr>
+<tr><td valign=top nowrap>non-unique sparse elements &nbsp; </td>
+ <td valign=top><tt>($.i.4){i.4 2</tt><td>&nbsp;</td>
+ <td>the sparse element of a sparse array must be an atom</td></tr>
+<tr><td valign=top>open quote                 </td>
+ <td valign=top><tt>'don't do it'</tt></td><td>&nbsp;</td>
+ <td>an executed line contains an odd number of quotes in the non-comment text</td></tr>
+<tr><td valign=top>out of memory</td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td>out of memory; or memory limit exceeded, see<tt> </tt><a href="dx009.htm#20">
+ <tt>9!:20 </tt>and<tt> 9!:21</tt></a></td></tr>
+<tr><td valign=top>rank error                 </td><td><tt>(i.2 3) i. 1</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <!--EVRO     --><tr><td valign=top>read-only data             </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td valign=top>security violation         </td>
+ <td><tt>&nbsp;</tt></td><td>&nbsp;</td>
+ <td>operation not permitted with the current security level setting;
+ see<tt> </tt><a href="dx009.htm#24">
+ <tt>9!:24 </tt>and<tt> 9!:26</tt></a></td></tr>
+<tr><td valign=top>spelling error             </td>
+ <td valign=top><tt>3 z: '4'</tt><td>&nbsp;</td>
+ <td>violates the rhematic rules as specified in <a href="dict1.htm">Section I</a>,
+ or using a primitive word with no assigned meaning</td></tr>
+<tr><td valign=top>stack error                </td>
+ <td valign=top><tt>".t=:'".t'</tt></td><td>&nbsp;</td>
+ <td><a href="../release/recurlim.htm">recursion limit exceeded</a>, or
+ redefinition of a suspended verb, adverb, or conjunction (other than the current one)
+ </td></tr>
+ <!--EVSTOP   --><tr><td valign=top>stop                       </td><td><tt>&nbsp;</tt><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td valign=top>syntax error               </td>
+ <td valign=top><tt>)</tt><td>&nbsp;</td>
+ <td>the result of a sentence is not a noun/verb/adverb/conjunction; 
+ a verb attempting to produce a verb/adverb/conjunction result</td></tr>
+<tr><td valign=top>system error               </td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td>an &ldquo;impossible&rdquo; error (failure of an internal consistency check)</td></tr>
+<tr><td valign=top>time limit</td>
+ <td><tt>&nbsp;</tt><td>&nbsp;</td>
+ <td>execution time limit exceeded; see<tt> </tt><a href="dx009.htm#32"><tt>9!:32 </tt>and<tt> 9!:33</tt></a></td></tr>
+<tr><td valign=top>value error                </td>
+ <td valign=top nowrap><tt>UninitializedName</tt>&nbsp;<td>&nbsp;</td>
+ <td>using an uninitialized name</td></tr>
+</table>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="errors.htm">&gt;&gt;</a>&nbsp;
+<a href="limits.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

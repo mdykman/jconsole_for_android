@@ -1,0 +1,1562 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Modular Code</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="writing_your_own_modifiers.htm">&gt;&gt;</a>&nbsp;
+<a href="control_structures.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734482"></a><a name="_Toc5414647"></a><a name="_Toc1896275"><span
+style='mso-bookmark:_Toc5414647'><span style='mso-bookmark:_Toc191734482'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>29. </span></span><![endif]>Modular Code</span></span></a></h1>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;modular code&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Separating your code into
+independent modules boils down to segmenting the space of variable names into
+subspaces that overlap to the extent you want.&nbsp;
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;C:J equivalent for class&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->We will discuss how J handles
+namespaces, and then see how this corresponds to the <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>classes</span></span> and <span
+class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>objects </span></span>provided
+by C++.</p>
+
+<p class=MsoBodyText>A reminder on nomenclature: <span class=Definition>private</span>
+names are assigned with <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>=.</span></span> and are visible only to the entity they are
+assigned in; <span class=Definition>public</span> names are visible to all
+entities.</p>
+
+<p class=Section><a name="_Toc191734483"></a><a name="_Toc5414648"></a><a
+name="_Toc5414480"></a><a name="_Toc1896276"><span style='mso-bookmark:_Toc5414480'><span
+style='mso-bookmark:_Toc5414648'><span style='mso-bookmark:_Toc191734483'>Locales
+And Locatives</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:defined&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Every public named entity in J
+is a member of a single <span class=Definition>locale</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each locale has a <span class=Definition>name</span>
+which is a list of characters.&nbsp; <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:locative&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->A <span class=Definition>locative</span>
+is a name containing a <span class=Definition>simple name</span> (the only kind
+of name we have encountered so far) and an <span class=Definition>explicit
+locale</span>, in one of the two forms <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>simplename</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_<i>localename</i>_</span></span>
+and <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>simplename</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>__<i>var</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>In the form <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>simplename</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_<i>localename</i>_</span></span>,
+<span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>localename</span></i></span>
+is the name of the explicit locale; in the form <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>simplename</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>__<i>var</i></span></span>,
+the variable <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>var</span></i></span>
+must be a scalar boxed string whose opened contents provide the name of the
+explicit locale.&nbsp; Examples:</p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>abc_z_</span></span><span
+style='mso-spacerun:yes'>&nbsp; </span>is simple name <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>abc</span></span> and locale <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span></p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>vv =. &lt;'lname'</span></span></p>
+
+<p class=BodyTextnoleader style='margin-left:.25in'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>def__vv</span></span><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>is simple name <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>def</span></span> and locale <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>lname</span></span></p>
+
+<p class=BodyTextnoleader>Note that a simple name may contain an underscore; it
+may not end with an underscore or contain two underscores in a row.</p>
+
+<p class=MsoBodyText>(Note: J makes a distinction between <span
+class=Definition>named locales</span> whose names are valid J variable names
+not including an underscore, and <span class=Definition>numbered locales</span>
+<!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:numbered&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->whose names are strings
+representing nonnegative decimal integers with no leading zeroes.<span
+style='mso-spacerun:yes'>&nbsp; </span>The difference between the two is small:
+numbered locales use slightly less memory, and numbered locales must be created
+in ascending numerical order.&nbsp; Numbered
+locales are created when you use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>conew</span></span> to create an object, as we will discuss
+below).</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:current&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The <span class=Definition>current
+locale</span> is a value kept by J and used to influence the processing of
+names.&nbsp; We will learn what causes it to
+change.&nbsp; The current locale is the name
+of a locale.&nbsp; When J starts, the current
+locale is set to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'base'&nbsp;</span></span>.</p>
+
+<p class=Section><a name="_Toc191734484"></a><a name="_Toc5414649"></a><a
+name="_Toc5414481"><span style='mso-bookmark:_Toc5414649'><span
+style='mso-bookmark:_Toc191734484'>Assignment</span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;assignment:private&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->An assignment is <span
+class=Definition>private</span> if it is of the form <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>simplename=.value</span></span>
+and is executed while an explicit definition is running (an explicit definition
+is the result of the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>:</span></span>
+conjunction, for example a verb defined by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;:&nbsp;'text'</span></span>
+or <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;define</span></span>,
+or a modifier defined by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>conjunction&nbsp;define</span></span> or <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>adverb&nbsp;define</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>An entity assigned by private assignment is
+not part of any locale and is accessible only by sentences executed by the
+explicit definition that was running when the entity was assigned.<span
+style='mso-spacerun:yes'>&nbsp; </span>The idea is this: there is a pushdown stack
+of namespaces in which private entities are assigned.<span
+style='mso-spacerun:yes'>&nbsp; </span>When an explicit definition <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>E</span></span>
+is executed, it starts with a new empty namespace that will be destroyed when <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>E</span></span>
+finishes.&nbsp; Any private assignments made
+while <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>E</span></span>
+is running are made in this private namespace.&nbsp;
+Any private variables referred to by <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>E</span></span> or by
+tacitly-defined entities invoked by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>E</span></span> are taken from this private namespace.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>E</span></span> invokes another explicit definition <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>F</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>F</span></span>
+starts off with its own private namespace and has no access to elements of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>E</span></span>'s
+private namespace.&nbsp; When <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>F</span></span>
+finishes, returning control to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>E</span></span>, <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>F</span></span>'s private namespace is destroyed.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>E</span></span> is said to be <span class=Definition>suspended</span>
+while <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>F</span></span>
+is running.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;assignment:public&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Assignments that are not
+private (because they assign to a locative, use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>=:</span></span>, or are
+executed when no explicit definition is running) are <span class=Definition>public</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Assignment to a locative creates an entity
+having the simple name in the locative, residing in the explicit locale given
+by the locative.&nbsp; A public assignment to
+a simple name creates the named entity in the current locale.<span
+style='mso-spacerun:yes'>&nbsp; </span>Entities in a locale are not affected by
+completion of an explicit definition; they have a life of their own and can be
+referred to by any verb that knows how to reach the locale they are in.<span
+style='mso-spacerun:yes'>&nbsp; </span>The following examples illustrate
+assignments; the interpretation given is correct if the lines are entered from
+the keyboard:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; simp1 =.
+5&nbsp; NB. public (outside of explicit
+definition)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; vb1 =: verb
+define&nbsp; NB. public</p>
+
+<p class=Jcodemultiline>isimp =. simp1&nbsp;
+NB. private, referring to public simp1</p>
+
+<p class=Jcodemultiline>simp1 =. 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+NB. private (=. inside definition)</p>
+
+<p class=Jcodemultiline>loc1_z_ =. 10&nbsp;&nbsp;
+NB. public (locative)</p>
+
+<p class=Jcodemultiline>simp2 =: 12&nbsp;&nbsp;&nbsp;&nbsp;
+NB. public (=:)</p>
+
+<p class=Jcodemultiline>isimp,simp1&nbsp;&nbsp;&nbsp;&nbsp;
+NB. result</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; vb1 ''<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>NB. execute vb1, see result</p>
+
+<p class=Jcodemultiline>5 8</p>
+
+<p class=BodyTextnoleader>Note that <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>simp1</span></span> was set to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>8</span></span> by the explicit
+definition.&nbsp; Because this was a private
+assignment, the public value was not changed:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; simp1</p>
+
+<p class=Jcodemultiline>5</p>
+
+<p class=BodyTextnoleader>The public value is still <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5</span></span>, as it was
+before the explicit definition was executed.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; loc1_z_</p>
+
+<p class=Jcodemultiline>10</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; simp2</p>
+
+<p class=Jcodemultiline>12</p>
+
+<p class=BodyTextnoleader>The other public assignments leave their results in
+the locale they were assigned to.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; isimp</p>
+
+<p class=Jcodemultiline>|value error: isimp</p>
+
+<p class=BodyTextnoleader>The entities assigned by private assignment were
+destroyed when <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>vb1</span></span>
+finished.</p>
+
+<p class=MsoBodyText><a name="_Toc5414650"></a><a name="_Toc5414482"><span
+style='mso-bookmark:_Toc5414650'><b>Note</b> that the </span></a><span
+style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:_Toc5414650'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>load</span></span>
+verb (which runs scripts) is an explicit definition.<span
+style='mso-spacerun:yes'>&nbsp; </span>Any assignment using </span></span><span
+style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:_Toc5414650'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>=.</span></span>
+executed during </span></span><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>load</span></span> will be lost.<span
+style='mso-spacerun:yes'>&nbsp; </span>Use </span></span><span style='mso-bookmark:
+_Toc5414482'><span style='mso-bookmark:_Toc5414650'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>=:</span></span> to define names
+in scripts.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:
+_Toc5414650'><a name="_Toc191734485">Referencing a Name: Scope</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:_Toc5414650'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'>&nbsp;XE
+&quot;locale:name lookup&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:_Toc5414650'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:_Toc5414650'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc5414482'><span style='mso-bookmark:_Toc5414650'>Names and locatives used to
+refer to entities look just like names appearing as targets of assignments, but
+reference is more complicated than assignment because referencing conducts a
+search through several namespaces in order.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'>First, the name is sought in the private
+namespace of the executing entity.&nbsp; If
+the name is found, its private value is used.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'>If the name is not found as a private name
+(because it has not been assigned as a private name, or there is no executing
+entity, or the name is a locative), it is sought as a public name in the
+locales, as explained in the next section.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'><b style='mso-bidi-font-weight:normal'>Note</b>
+that the same name can exist as a private name and a public name.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is not unusual or harmful for an entity to
+use a private name, blissfully unaware that the same name is public in some
+locale.&nbsp; The converse situation is not so
+benign: if an entity creates a private name and subsequently makes a public
+assignment to the name, as in</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'>&nbsp;&nbsp; name
+=. 5</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'>&nbsp;&nbsp; ...</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'>&nbsp;&nbsp; name
+=: 7</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'>the odds are that this is a mistake, because
+any reference to </span></span><span style='mso-bookmark:_Toc5414482'><span
+style='mso-bookmark:_Toc5414650'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>name</span></span> is going to use the private version.<span
+style='mso-spacerun:yes'>&nbsp; </span>The interpreter treats this case, where a
+global assignment is made to a name already defined locally, as a domain
+error.&nbsp; If you really need to perform the
+assignment (perhaps you want to have the value available for inspection after
+the function finishes), assign to a locative rather than a simple name: </span></span><span
+style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:_Toc5414650'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>name__&nbsp;=:</span></span>&nbsp;or
+</span></span><span style='mso-bookmark:_Toc5414482'><span style='mso-bookmark:
+_Toc5414650'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>name_<i
+style='mso-bidi-font-style:normal'>locale</i>_&nbsp;=:</span></span>&nbsp;.</span></span></p>
+
+<span style='mso-bookmark:_Toc5414650'></span><span style='mso-bookmark:_Toc5414482'></span>
+
+<p class=Section><a name="_Toc191734486">Referencing a Public Name: The Search
+Path</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:search path&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->Each locale has a <span
+class=Definition>search path</span> (usually called simply the <span
+class=Definition>path</span>) which is a list of boxed locale names.<span
+style='mso-spacerun:yes'>&nbsp; </span>The path is set and queried by the foreign <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>18!:2</span></span>
+which goes by the alias <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>copath&nbsp;</span></span>.&nbsp;
+Examples:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('loc1';'loc2';'z')
+18!:2 &lt;'loc3'</p>
+
+<p class=BodyTextnoleader>Sets the path for locale <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc3'</span></span> to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc1'</span></span>
+followed by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc2'</span></span>
+(and the obligatory <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span>).</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; copath &lt;'loc3'</p>
+
+<p class=Jcodemultiline>+----+----+-+</p>
+
+<p class=Jcodemultiline>|loc1|loc2|z|</p>
+
+<p class=Jcodemultiline>+----+----+-+</p>
+
+<p class=BodyTextnoleader>Queries the path for <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc3'&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText>Every reference to a public name implicitly uses a
+path.&nbsp; A reference to a locative looks for
+the simple name in the locative's explicit locale; if the name is not found
+there, the locales in the path of the explicit locale are examined one by one
+until the simple name is found (if the name is not found in any locale in the
+path, it is an undefined name).&nbsp; A
+reference to a simple name that was not found as a private name is similar,
+starting in the current locale and continuing if necessary in the locales in
+the current locale's path; in other words, a simple name that is not found as a
+private name is treated as if it were written <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>simplename_<i style='mso-bidi-font-style:
+normal'>currentlocale</i>_</span></span>&nbsp;.</p>
+
+<p class=MsoBodyText>Note that only the path of the starting locale (either the
+current locale or the explicit locale) specifies the search order.<span
+style='mso-spacerun:yes'>&nbsp; </span>No other paths are used.</p>
+
+<p class=MsoBodyText>Examples of references:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('loc1';'loc2';'z')
+18!:2 &lt;'loc3'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a_loc1_ =: 'a'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a_loc2_ =: 'b'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; c_loc3_ =: 'c'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; c_loc2_ =: 'd'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a_loc3_</p>
+
+<p class=Jcodemultiline>a</p>
+
+<p class=BodyTextnoleader>The name was not defined in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc3'</span></span> so the path
+was used, and the name was found in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'loc1'&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a_loc2_</p>
+
+<p class=Jcodemultiline>b</p>
+
+<p class=BodyTextnoleader>The value in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc2'</span></span> can be
+retrieved if we start the search there.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; c_loc3_</p>
+
+<p class=Jcodemultiline>c</p>
+
+<p class=BodyTextnoleader>If the value is found in the starting locale, no
+search is performed.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; c_loc1_</p>
+
+<p class=Jcodemultiline>|value error: c_loc1_</p>
+
+<p class=BodyTextnoleader>&nbsp;&nbsp; We have not
+defined a path for <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc1'</span></span>,
+so <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc2'</span></span>
+is not searched.</p>
+
+<p class=Section><a name="_Toc191734487"></a><a name="_Toc5414651"></a><a
+name="_Toc5414483"><span style='mso-bookmark:_Toc5414651'><span
+style='mso-bookmark:_Toc191734487'>Changing The Current Locale</span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:changing current&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The current locale can be
+changed in two ways: explicitly by executing the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>cocurrent</span></span> verb,
+and implicitly by executing a verb named by a locative.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cocurrent&nbsp;y</span></span>
+sets the current locale to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.&nbsp;
+Simple as that.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cocurrent</span></span>
+uses the foreign <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>18!:4&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><b>Do not use </b><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>18!:4</span></span><b> directly!</b><span
+style='mso-spacerun:yes'>&nbsp; </span>It is intended to be used under an alias, and
+it has side effects.<span style='font-size:14.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span></p>
+
+<p class=MsoBodyText>Executing an entity named by a locative (almost always a
+verb, but it could be a modifier as well) saves the current locale, changes the
+current locale to the explicit locale of the locative before starting the
+entity, and resets the current locale to the saved value when the entity
+finishes.&nbsp; <b>Note</b> that <b>the entity
+always runs in the explicit locale of the locative</b>, even if the search for
+the name found the entity in some other locale in the search path.</p>
+
+<p class=MsoBodyText>Whenever a named entity finishes execution, the locale is
+restored to its original value, even if the entity changed the current locale.</p>
+
+<p class=MsoBodyText>Here is an extended example of actions affecting the
+current locale:&nbsp; We load a utility file:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; load 'printf'</p>
+
+<p class=BodyTextnoleader>We establish the search paths we want, and display
+the name of the current locale:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp;
+('loc1';'loc2';'z') 18!:2 &lt;'loc3'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; ('loc2';'z')
+18!:2 &lt;'loc1'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 18!:5 ''</p>
+
+<p class=Jcodemultiline>+----+</p>
+
+<p class=Jcodemultiline>|base|</p>
+
+<p class=Jcodemultiline>+----+</p>
+
+<p class=BodyTextnoleader>Next we define two verbs.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; v1_z_ =: verb
+define</p>
+
+<p class=Jcodemultiline>'Locale at start of v1 is %j' printf 18!:5 ''</p>
+
+<p class=Jcodemultiline>qprintf 'n1 '</p>
+
+<p class=Jcodemultiline>v2_result =. v2_loc1_ n1</p>
+
+<p class=Jcodemultiline>'Value returned by v2 is %s' printf &lt;v2_result</p>
+
+<p class=Jcodemultiline>'Locale in v1 after calling v2 is %j' printf 18!:5 ''</p>
+
+<p class=Jcodemultiline>qprintf 'n1 '</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; cocurrent &lt;'loc2'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; v2 =: verb
+define</p>
+
+<p class=Jcodemultiline>'Locale at start of v2 is %j' printf 18!:5 ''</p>
+
+<p class=Jcodemultiline>qprintf 'n1 y '</p>
+
+<p class=Jcodemultiline>cocurrent &lt;'loc2'</p>
+
+<p class=Jcodemultiline>qprintf 'n1 '</p>
+
+<p class=Jcodemultiline>'Locale at end of v2 is %j' printf 18!:5 ''</p>
+
+<p class=Jcodemultiline>n1</p>
+
+<p class=Jcodemultiline>)</p>
+
+<p class=BodyTextnoleader>The verb <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v1</span></span> was defined in locale <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span> because it was
+an assignment to a locative; the verb <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v2</span></span> was defined in locale <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc2'</span></span> because it
+was an assignment to a simple name and the current locale at the time of its
+assignment was <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc2'&nbsp;</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; cocurrent &lt;'loc3'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; v2 =: [:</p>
+
+<p class=BodyTextnoleader>Now the verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v2</span></span> is defined,
+with different values, in locales <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'loc2'</span></span> and <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc3'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Next we define the noun <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n1</span></span> in each of our
+locales, so we can see which locale a name was found in:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; n1_loc1_ =: 'n1
+in loc1'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; n1_loc2_ =: 'n1
+in loc2'</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; n1_loc3_ =: 'n1
+in loc3'</p>
+
+<p class=BodyTextnoleader>Now run the verbs.&nbsp;
+I will insert interpretation of the execution.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; v1 ''</p>
+
+<p class=BodyTextnoleader>J searches for the simple name <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v1</span></span> in the current
+locale <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc3'</span></span>;
+not finding it there it looks in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'loc1'</span></span>, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc2'</span></span>, and <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span>,
+finally finding it in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>J executes the definition of the verb found
+in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span>,
+but without changing the current locale.</p>
+
+<p class=Jcodemultilinefirst>Locale at start of v1 is loc3</p>
+
+<p class=BodyTextnoleader>Yes, the current locale is still <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'loc3'&nbsp;</span></span>...</p>
+
+<p class=Jcodemultilinefirst>n1=n1 in loc3</p>
+
+<p class=BodyTextnoleader>...and a name lookup uses the current locale as the
+starting point.</p>
+
+<p class=Jcodemultilinefirst>Locale at start of v2 is loc1</p>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v1</span></span> has executed <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v2_loc1_&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>J starts searching for the name <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v2</span></span>
+in locale <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc1'</span></span>
+and its path, eventually finding it in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'z'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v2</span></span> is executed, using the definition found in <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span>,
+but with the current locale set to the explicit locale of the locative, namely <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc1'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v2</span></span> was also
+defined in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc3'</span></span>
+(as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[:</span></span>
+which would give an error), but <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'loc3'</span></span> was never searched.<span
+style='mso-spacerun:yes'>&nbsp; </span>The operand of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v2</span></span> was <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n1</span></span>;
+note that the lookup for <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n1</span></span> is completely independent of the lookup for
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v2</span></span>;
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n1</span></span>
+is sought and found in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'loc3'</span></span> and it is that value that becomes <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+at the start of execution of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v2&nbsp;</span></span>.</p>
+
+<p class=Jcodemultilinefirst>n1=n1 in loc1 y=n1 in loc3</p>
+
+<p class=BodyTextnoleader>Simple name lookups start in the current locale <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc1'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The private name <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> has the value it
+was given on entry.</p>
+
+<p class=Jcodemultilinefirst>n1=n1 in loc2</p>
+
+<p class=BodyTextnoleader>Here we have switched the current locale to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc2'</span></span>
+using <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cocurrent</span></span>,
+and the name is found in the new current locale.</p>
+
+<p class=Jcodemultilinefirst>Locale at end of v2 is loc2</p>
+
+<p class=Jcodemultiline>Value returned by v2 is n1 in loc2</p>
+
+<p class=BodyTextnoleader>Here <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v2</span></span> has finished and control has returned to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v1&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that the value returned by <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v2</span></span>
+is simply the result of the last sentence executed; it is a noun.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here it is the value of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>n1</span></span> at the end of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v2</span></span>,
+at which time the current locale was <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'loc2'&nbsp;</span></span>.</p>
+
+<p class=Jcodemultilinefirst>Locale in v1 after calling v2 is loc3</p>
+
+<p class=BodyTextnoleader>Note that when <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v2</span></span> finished the
+current locale was restored to its value before execution of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v2&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>cocurrent</span></span> in <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v2</span></span> has no effect
+once <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v2</span></span>
+finishes.</p>
+
+<p class=Jcodemultilinefirst>n1=n1 in loc3</p>
+
+<p class=BodyTextnoleader>Execution of the verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v1</span></span> is
+complete.&nbsp; We should be back in locale <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'loc3'</span></span>
+from which we executed <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>v1&nbsp;</span></span>:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; 18!:5 ''</p>
+
+<p class=Jcodemultiline>+----+</p>
+
+<p class=Jcodemultiline>|loc3|</p>
+
+<p class=Jcodemultiline>+----+</p>
+
+<p class=Section><a name="_Toc191734488"></a><a name="_Toc5414652"></a><a
+name="_Toc5414484"><span style='mso-bookmark:_Toc5414652'><span
+style='mso-bookmark:_Toc191734488'>True Globals--The Shared Locale </span></span></a><span
+style='mso-bookmark:_Toc5414484'><span style='mso-bookmark:_Toc5414652'><span
+style='mso-bookmark:_Toc191734488'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>'z'</span></span></span></span></span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:z&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->It is a J convention,
+universally adhered to, that every locale's search path must end with the
+locale <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Any name in the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span> locale can
+then be referred to by a simple name from any locale, making names in the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span>
+locale truly global names.</p>
+
+<p class=Section><a name="_Toc191734489"></a><a name="_Toc5414653"></a><a
+name="_Toc5414485"></a><a name="_Toc1896277"><span style='mso-bookmark:_Toc5414485'><span
+style='mso-bookmark:_Toc5414653'><span style='mso-bookmark:_Toc191734489'>Using
+Locales</span></span></span></a><span style='mso-bookmark:_Toc191734489'>--Object-Oriented Programming</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:used for modular programming&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->You
+have my sympathy for having to read through that detailed description of name
+processing; I refuse to apologize, though, because you really can't write
+programs if you don't know what names mean.&nbsp;
+But, you wonder, How do I <i>use</i> locales?</p>
+
+<p class=Subsection><a name="_Toc191734490"></a><span
+ style='mso-bookmark:_Toc191734490'>Ob</span><span
+style='mso-bookmark:_Toc191734490'>ject-Oriented Programming in J: Base Classes</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:base class&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->You won't go far wrong to
+think of a locale as akin to a <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>class</span></span> in C++.&nbsp;
+When you have a set of functions that go together as a <span
+class=Definition>module</span>, define all their verbs and nouns in a single
+locale.&nbsp; The easiest way to do this is to
+put a line</p>
+
+<p class=Jcodemultiline>coclass &lt;'<i>localename</i>'</p>
+
+<p class=BodyTextnoleader>at the beginning of each source file for the module (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>coclass</span></span>
+is like <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cocurrent</span></span>
+but it supports inheritance).&nbsp; Then,
+every public assignment in the file will automatically be made in the locale <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>localename&nbsp;</span></i></span>.</p>
+
+<p class=MsoBodyText>The simplest kind of module, comprising a set of routines
+and some private data storage, is called a <span class=Definition>base class</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>A typical base class is shown in Figure 1.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is a class to manage an execution
+log.&nbsp; Programs make calls to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>addlog</span></span>
+to append information to the log.&nbsp; A call
+to <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>setmodule</span></span>
+saves a module name to be appended to each log item.<span
+style='mso-spacerun:yes'>&nbsp; </span>A call to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>readlog</span></span> returns
+the most recent log entries.</p>
+
+<div align=center>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Locale specifier</p>
+  </td>
+  <td valign=top style='border-top:solid windowtext 1.0pt;border-left:none;
+  border-bottom:none;border-right:solid windowtext 1.0pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>coclass
+  'execlog'</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Initializations</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>currmod
+  =: ''</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>One-time<br>
+  Initializations</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>'loglist'
+  InitIfUndef 0$a:</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Methods</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>setmodule
+  =: monad : 'currmod =: y'<br>
+  <br>
+  addlog =: verb define<br>
+  loglist =: loglist , &lt; currmod,y<br>
+  )<br>
+  <br>
+  readlog =: verb define<br>
+  y =. {. y , 10<br>
+  (-y &lt;. #loglist) {. loglist<br>
+  )</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Public interface</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>setmodule_z_
+  =: setmodule_execlog_<br>
+  addlog_z_ =: addlog_execlog_<br>
+  readlog_z_ =: readlog_execlog_</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td colspan=2 valign=top style='border:none;mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoCaption style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Figure 1.&nbsp;
+  Sample class definition: execution checkpoint logging</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoBodyText>The first line of the module establishes the locale for
+the class.&nbsp; Next come the
+initializations, which are normally just public assignments that initialize the
+nouns used by the class.&nbsp; </p>
+
+<p class=MsoBodyText>The one-time initializations are an optional element used
+mainly during debugging.&nbsp; If you are
+debugging code and you reload the script that defines a class, all the
+initializations will be performed again.&nbsp;
+This may destroy values that have been assigned by calls to the
+class.&nbsp; To preserve existing definitions,
+use the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>InitIfUndef</span></span>
+adverb defined in <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>jforc.ijs</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the name has been defined already, it is
+not changed, but if it is not defined it is given an initial value. </p>
+
+<p class=MsoBodyText>The <span class=Definition>methods</span> are the verbs
+that do the work of the class.&nbsp; These
+include both verbs that can be called by users of the class and verbs used only
+by the class itself.</p>
+
+<p class=MsoBodyText>The last component is the public interface for the
+class.&nbsp; The names defined in the locale
+are the equivalent of the private portion of class.<span
+style='mso-spacerun:yes'>&nbsp; </span>To provide the public interface to the class,
+you need to put those names in a place where they can be found by other
+modules.&nbsp; The traditional way to do this
+is to define them in the locale <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'z'</span></span> by ending each file with lines like</p>
+
+<p class=Jcodemultiline><i>epname</i>_z_ =: <i>epname</i>_<i>localename</i>_</p>
+
+<p class=BodyTextnoleader>Here <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>epname</span></i></span> is the name of a verb, and <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>localename</span></i></span>
+is the name of the module's locale.&nbsp; Take
+a minute to see what happens when some other locale invokes <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>epname&nbsp;</span></i></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The name search for <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>epname</span></i></span> will
+end in the locale <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'z'</span></span>
+where this definition is found.&nbsp;
+Execution of this definition immediately results in execution of <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>epname</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>_<i>localename</i>_</span></span>
+which switches the current locale to <span class=Jcode><i><span
+style='mso-bidi-font-family:"Times New Roman"'>localename</span></i></span> and
+runs the definition of <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>epname</span></i></span> found there.<span
+style='mso-spacerun:yes'>&nbsp; </span>The benefit is that the calling module doesn't
+need to know the locale that <span class=Jcode><i><span style='mso-bidi-font-family:
+"Times New Roman"'>epname</span></i></span> is going to be executed in.</p>
+
+<p class=MsoBodyText>If you tire of writing out the public definitions one by
+one, I have included in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>jforc.ijs</span></span> a verb to do it for a list of entry
+points using a sentence like</p>
+
+<p class=Jcodemultiline>PublishEntryPoints 'setmodule addlog readlog'</p>
+
+<p class=Subsection><a name="_Toc191734491"></a><span
+ style='mso-bookmark:_Toc191734491'>Ob</span><span
+style='mso-bookmark:_Toc191734491'>ject-Oriented Programming in J: Derived
+Classes</span></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:derived class&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->A <span class=Definition>derived
+class</span> is a class that has all the features of a base class, plus a few
+additions of its own.&nbsp; It is easy to
+create such a class in J.&nbsp; In Figure 2 we
+create a timestamping class that adds timestamps to the log entries provided by
+the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>execlog</span></span>
+class defined above:</p>
+
+<div align=center>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Locale specifier</p>
+  </td>
+  <td valign=top style='border-top:solid windowtext 1.0pt;border-left:none;
+  border-bottom:none;border-right:solid windowtext 1.0pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>coclass
+  'timelog'</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Append base class</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>coinsert
+  'execlog'</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Initializations<br>
+  and Methods</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>addtimelog
+  =: verb define<br>
+  addlog y,' ',&quot;: 6!:0 ''<br>
+  )</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Public interface</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>addtimelog_z_
+  =: addtimelog_timelog_</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes'>
+  <td colspan=2 valign=top style='border:none;mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoCaption style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Figure 2.&nbsp;
+  Derived class: timestamp logging</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoBodyText>We use <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>coinsert</span></span> to give the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>timelog</span></span> class all
+the facilities of the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>execlog</span></span>
+class.&nbsp; A call to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>addtimelog</span></span> will
+add a timestamped log entry, while calls to <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>addlog</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>readlog</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>setmodule</span></span>
+are handled as before.</p>
+
+<p class=Subsection><a name="_Toc191734492">Object-Oriented Programming in J:
+Objects</a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:objects&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->As described so far, a class
+is a collection of code with associated private data storage.<span
+style='mso-spacerun:yes'>&nbsp; </span>The same entities can be thought of as a set
+of data with associated methods for operating on the data; this view can be
+extended to allow multiple instances of the data, each instance sharing the
+same set of methods for operating on the instance.</p>
+
+<p class=MsoBodyText>When a class is augmented to allow creation of multiple
+instances of the data, we use the name <span class=Definition>object</span> to
+denote a single instance of the data, along with its associated methods.<span
+style='mso-spacerun:yes'>&nbsp; </span>In J, an object has a locale of its own, in
+which the data resides; the locale of the class is in the path of the object's
+locale, which makes the methods in the class available through name searches
+starting in the object's locale.</p>
+
+<p class=MsoBodyText>A class that supports objects must define methods named <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>create</span></span>
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>destroy</span></span>
+that initialize the object's locale when the object is created and destroy the
+object's locale when the object is no longer needed.</p>
+
+<p class=MsoBodyText>Templates for defining a class that supports objects are
+given in Figures 3 and 4.</p>
+
+<div align=center>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Locale specifier</p>
+  </td>
+  <td valign=top style='border-top:solid windowtext 1.0pt;border-left:none;
+  border-bottom:none;border-right:solid windowtext 1.0pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>coclass
+  'objclass'</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Initial Values</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>oval
+  =: 0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>create</span></span> Method</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>create
+  =: verb define</p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><i
+  style='mso-bidi-font-style:normal'>initialization that depends on y<o:p></o:p></i></p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>destroy</span></span> Method</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>destroy
+  =: verb define</p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><i
+  style='mso-bidi-font-style:normal'>release acquired resources here</i><br>
+  codestroy ''<br>
+  )</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Other Methods</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>method
+  =: verb define<br>
+  &nbsp; <i style='mso-bidi-font-style:normal'>verb
+  definition here</i><br>
+  )</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Public interface</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><i
+  style='mso-bidi-font-style:normal'>not used for objects<o:p></o:p></i></p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>cmethod_z_
+  =: cmethod_objclass_</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6;mso-yfti-lastrow:yes'>
+  <td colspan=2 valign=top style='border:none;mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoCaption style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Figure 3.&nbsp; Template
+  for a base class that supports objects</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoBodyText><o:p>&nbsp;</o:p></p>
+
+<div align=center>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:480;mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td valign=top style='border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Locale specifier</p>
+  </td>
+  <td valign=top style='border-top:solid windowtext 1.0pt;border-left:none;
+  border-bottom:none;border-right:solid windowtext 1.0pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>coclass
+  'derobjclass'</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Base class</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>coinsert
+  'baseobjclass'</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Initial Values</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>oval
+  =: 0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>create</span></span> Method</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>create
+  =: verb define<br>
+  create_baseobjclass_ f. y</p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><i
+  style='mso-bidi-font-style:normal'>other initialization here<o:p></o:p></i></p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>0</p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'><span class=Jcode><span style='mso-bidi-font-family:
+  "Times New Roman"'>destroy</span></span> Method</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>destroy
+  =: verb define<br>
+  <i style='mso-bidi-font-style:normal'>release acquired resources here</i></p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>destroy_baseobjclass_
+  f. y</p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>)</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Other Methods</p>
+  </td>
+  <td valign=top style='border:none;border-right:solid windowtext 1.0pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>method
+  =: verb define<br>
+  &nbsp; <i style='mso-bidi-font-style:normal'>verb
+  definition here</i><br>
+  )</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=BodyTextnoleader style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Public interface</p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-left-alt:solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;
+  mso-border-right-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><i
+  style='mso-bidi-font-style:normal'>not used for objects<o:p></o:p></i></p>
+  <p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'>cmethod_z_
+  =: cmethod_derobjclass_</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes'>
+  <td colspan=2 valign=top style='border:none;mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoCaption style='mso-pagination:widow-orphan lines-together;
+  page-break-after:avoid'>Figure 4.&nbsp;
+  Template for a derived class that supports objects</p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=Subsubsection>Creating an Object</p>
+
+<p class=MsoBodyText>A new object is created by execution of</p>
+
+<p class=Jcodemultiline><span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>objname</span></i></span> =:
+conew <i style='mso-bidi-font-style:normal'>'classname</i>'</p>
+
+<p class=Jcodemultiline>create__<i style='mso-bidi-font-style:normal'>objname</i>
+<i style='mso-bidi-font-style:normal'>objparms</i></p>
+
+<p class=BodyTextnoleader>&nbsp;&nbsp;&nbsp; or</p>
+
+<p class=Jcodemultiline><span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>objname</span></i></span> =: <i
+style='mso-bidi-font-style:normal'>objparms</i> conew '<i style='mso-bidi-font-style:
+normal'>classname</i>'</p>
+
+<p class=BodyTextnoleader>where <span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>classname</span></i></span>
+is the name of the locale the class is loaded in.<span
+style='mso-spacerun:yes'>&nbsp; </span>The second form is normally used, but you can
+use the first form if the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>create</span></span> method requires a left argument or
+returns a result you need to keep.</p>
+
+<p class=MsoBodyText>Either form of object-creation code first creates a <!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:numbered&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->numbered locale which will
+hold the object's instance of the data; then puts <span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>classname</span></i></span>
+into the path of the object locale; then calls the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>create</span></span> verb in the
+object's locale to initialize the object.&nbsp;
+Since the object's locale has just been created and doesn't have any
+verbs in it, this call to <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>create</span></span> will execute the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>create</span></span> verb defined
+in the locale <span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>classname</span></i></span>, but
+it will run it in the object's locale so that the initialization is performed
+in the object's locale.&nbsp; If the class is
+a derived class, its <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>create</span></span>
+verb should call the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>create</span></span>
+verb in the base class to perform any initialization needed by that class.</p>
+
+<p class=MsoBodyText>The result of <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>conew</span></span> is the name of the object locale.<span
+style='mso-spacerun:yes'>&nbsp; </span>This value should be saved in the variable
+that will be used to refer to the object.</p>
+
+<p class=MsoBodyText>For example, to create a Grid Control object, use</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; grid=: ''
+conew 'jzgrid'</p>
+
+<p class=BodyTextnoleader>and thereafter use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>grid</span></span> as the object
+name, for example calling <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>show__grid</span></span> to display the grid.</p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'>Note</b> that
+default initial values for each object may simply be defined in the class.<span
+style='mso-spacerun:yes'>&nbsp; </span>When an object refers to them, they will be
+found in the class if they have not been modified in the object.<span
+style='mso-spacerun:yes'>&nbsp; </span>If a method in the object changes one of
+these values, the updated value will be written into the object's locale, where
+it will thereafter override the value in the class.</p>
+
+<p class=Subsubsection>Calling an Object's
+Methods and Reading
+Its Contents</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;locale:object methods&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->The methods in an object are
+called using locatives.&nbsp; The name
+returned by <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>conew</span></span>
+is used as the explicit locale of the locative.&nbsp;
+To call the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>method</span></span>
+verb, use</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; [<i
+style='mso-bidi-font-style:normal'>operand</i>] method__<i style='mso-bidi-font-style:
+normal'>objname</i> <i style='mso-bidi-font-style:normal'>operand</i></p>
+
+<p class=MsoBodyText>Nouns in the object can be referred to by locative, as in</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; publicnoun__<i
+style='mso-bidi-font-style:normal'>objname</i></p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'>Note</b> that the
+methods referred to through locatives do not need to be published as global
+names in the <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+locale.</p>
+
+<p class=MsoBodyText><b style='mso-bidi-font-weight:normal'>Note</b> that
+object may contain other objects.&nbsp; In a
+locative of the form <span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>simplename</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>__<i
+style='mso-bidi-font-style:normal'>var</i></span></span>, <span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>var</span></i></span>
+may be a locative, as in <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>method__subobjname__objname</span></span>, where <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>method</span></span>
+is sought in the locale given by <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>subobjname__objname&nbsp;</span></span>.</p>
+
+<p class=Subsubsection>Destroying an Object</p>
+
+<p class=MsoBodyText>When an object is no longer needed, call <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>destroy__<i
+style='mso-bidi-font-style:normal'>objname</i></span></span> to remove it.<span
+style='mso-spacerun:yes'>&nbsp; </span>A class's <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>destroy</span></span> verb
+should release any resources that were allocated when the object was <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>create</span></span>d,
+and if the class is derived, it should call the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>destroy</span></span> method in
+the base class so that it can do likewise.&nbsp;
+The last act in destroying an object is to issue <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>codestroy</span></span>, which
+erases the object's locale.</p>
+
+<p class=Subsubsection>Calling Class Methods
+in a Class That Supports Objects</p>
+
+<p class=MsoBodyText>It is perfectly acceptable for a class that supports
+objects also to publish methods that deal with the class as a whole.<span
+style='mso-spacerun:yes'>&nbsp; </span>Such methods must use <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>PublishEntryPoints</span></span>
+or define names in the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>z</span></span> locale.</p>
+
+<p class=Subsubsection>Watch That <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f.</span></span> When Calling
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>create</span></span>
+From a Derived Class</p>
+
+<p class=MsoBodyText>If you were paying close attention you noticed that the <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>create</span></span>
+method in a derived class calls the <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>create</span></span> method in the base class with a line
+like</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; create_<i
+style='mso-bidi-font-style:normal'>baseclass</i>_ f. y</p>
+
+<p class=BodyTextnoleader>What is the purpose of the <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f.</span></span>?<span
+style='mso-spacerun:yes'>&nbsp; </span>Why not just <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>create_<i style='mso-bidi-font-style:
+normal'>baseclass</i>_&nbsp;y</span></span>?</p>
+
+<p class=MsoBodyText>The trick is that <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(create_<i style='mso-bidi-font-style:
+normal'>baseclass</i>_&nbsp;f.)</span></span> looks up the name<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'> create_<i
+style='mso-bidi-font-style:normal'>baseclass</i>_</span></span> and returns its
+value after substituting defined names with their values.<span
+style='mso-spacerun:yes'>&nbsp; </span>The result of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(create_<i style='mso-bidi-font-style:
+normal'>baseclass</i>_&nbsp;f.)</span></span> is a verb but not a
+locative.&nbsp; It executes the same code as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>create_<i
+style='mso-bidi-font-style:normal'>baseclass</i>_</span></span>, but it doesn't
+switch locales before it does so, so the operation is executed in the object's
+locale.</p>
+
+<p class=Subsubsection>Utility Verbs to Use With Objects</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>costate&nbsp;''</span></span>
+gives a list of objects and associated information.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>conl&nbsp;y</span></span>
+lists the named (if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+contains <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0</span></span>)
+or numbered (if <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+contains <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1</span></span>)
+locales.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>conouns&quot;0
+<i style='mso-bidi-font-style:normal'>localelist</i></span></span> gives a list
+of nouns that can be used to refer to locales in <span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>localelist</span></i></span><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&nbsp;</span></span>.</p>
+
+<p class=MsoBodyText><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>[<i
+style='mso-bidi-font-style:normal'>prefix</i>]&nbsp;copathnlx&nbsp;<i
+style='mso-bidi-font-style:normal'>types</i></span></span> displays names of
+the specified types in every locale in the path at which the verb is
+executed.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>copathnlx__<i style='mso-bidi-font-style:
+normal'>obj</i></span></span> can be used to display names defined in an
+object.&nbsp; The types are any combination of
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0-3</span></span>
+for noun, adverb, conjunction, or verb, or <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>6</span></span> for locale; omitted
+<span class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>types</span></i></span> lists names of all types.<span
+style='mso-spacerun:yes'>&nbsp; </span>If <span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>prefix</span></i></span>
+is specified, only names starting with a letter in <span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>prefix</span></i></span>
+are listed.</p>
+
+<p class=Subsection><a name="_Toc191734493">Good </a><span
+ style='mso-bookmark:_Toc191734493'>Ob</span><span
+style='mso-bookmark:_Toc191734493'>ject-Oriented Design in J</span></p>
+
+<p class=MsoBodyText>Some C programmers get object-happy and make every little
+array its own object.&nbsp; Don't do this in
+J.&nbsp; If you keep your data in arrays or
+boxed arrays, you have the full power and high efficiency of J's
+array-processing verbs.&nbsp; Use objects when
+you have a substantial amount of processing that you want to be able to reuse.<span
+style='mso-spacerun:yes'>&nbsp; </span>Good examples of objects are the Grid
+Control, in which the object is the entire grid of data to be displayed and
+edited, and the Plot Control, in which the object is the graph or surface to be
+plotted.</p>
+
+<p class=Subsection><a name="_Toc191734494">Other Uses of Locales in J</a></p>
+
+<p class=MsoBodyText>By following the guidelines given above you will be able
+to emulate the <span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>class</span></span>
+facilities of C++.&nbsp; Because J is
+interpreted, you can do much more if you want: you can install verbs in objects
+in addition to the usual nouns; you can change search paths dynamically; you
+can use locales and paths to create a high-performance network database; you
+can pass locales as data and use them to direct processing; you can peek at a
+module's private data.&nbsp; You can even
+modify a module's private data from outside the module, but if you are struck
+by lightning after doing so the coroner will find it was suicide.</p>
+
+<p class=MsoBodyText>Using locale-names as data allows for dynamic separation
+of namespaces.&nbsp; For example, the
+processing of forms in J requires definition of verbs for a great many
+events.&nbsp; You may let these verbs all
+share the same locale; but if you want to segregate them, the Window Driver
+will remember what locale was running when each form was displayed, and direct
+events for a form to the locale handling the form.</p>
+
+</div><!--bottom jump start--><hr><a href="writing_your_own_modifiers.htm">&gt;&gt;</a>&nbsp;
+<a href="control_structures.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

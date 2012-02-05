@@ -1,0 +1,342 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Verbs</title>
+
+</head><body><!--top jump start--><a href="regex_utilities.htm">&gt;&gt;</a>&nbsp;
+<a href="regex_patterns.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Regular Expression Verbs</h1>
+<TR><TD colspan="2"> 
+
+
+
+<P>
+The standard regex verbs are defined in <code>system\main\regex.ijs</code> .The main verbs are <code>rxmatch</code> and <code>rxmatches</code>. The former locates the first occurrence of a match in the string; the latter locates all occurrences.  Four other verbs create, list, display, and free up compiled patterns: <code>rxcomp, rxhandles, rxinfo</code>, and <code>rxfree</code>.
+
+<P>
+Most of the rest of the definitions either use the <code>rxmatch</code> or <code>rxmatches</code> verbs, or take the result of them as arguments.
+<br><br>
+
+<TABLE>
+<tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+match=. pattern rxmatch string
+<TD VALIGN="TOP" WIDTH=400><P>
+Find first match
+</TR></TABLE>
+The result of <code>rxmatch</code> is a table, each row being an index/length pair. The first row describes the entire match, one row per subexpression follow which describes where each subexpression was found in the string.  Where a match does not occur, <code>_1 0</code> is returned.
+<br><br>
+
+<TABLE>
+<TD VALIGN="TOP" WIDTH=300><P>
+matches =. pattern <code>rxmatches</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+Find all matches
+</TABLE>
+<code>rxmatches</code> returns a list of tables, with one item per match in the string.  The shape of the result is  <code>#matches</code> by <code>#subexpr</code> by <code>2</code>.
+<br><br>
+
+<TABLE>
+<tr>
+<TD VALIGN="TOP" WIDTH=700><P>
+phandle =. <code>rxcomp</code> pattern
+<TD VALIGN="TOP" WIDTH=800><P>
+Compile pattern
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+<code>rxfree</code> phandle    
+<TD VALIGN="TOP" WIDTH=400><P>
+Release compiled pattern
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+phandles =. <code>rxhandles</code> ''  
+<TD VALIGN="TOP" WIDTH=400><P>
+Return all pattern handles
+</tr><tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+'nsub pat' =. <code>rxinfo</code> phandle  
+<TD VALIGN="TOP" WIDTH=400><P>
+Return #subexprs;pattern
+</TR></table>
+<br>
+The verbs <code>rxcomp, rxhandles, rxinfo</code>, and <code>rxfree</code> allow you to create pattern handles which are simple integers which represent compiled patterns.  A handle can be used anywhere a pattern can be and, if used repeatedly, will avoid having to recompile the pattern on each call.
+<P>
+<code>rxcomp</code> compiles a pattern and returns a handle.
+
+<P>
+<code>rxhandles</code> returns a list of all existing handles.
+
+  <P>
+<code>rxinfo</code> returns information about a handle.  It currently returns a boxed list of <code>1 +</code> the number of subexpressions and the original pattern.  The length of the result may be extended (on the right) in the future.
+
+<P>
+<code>rxfree</code> releases all resources associated with a compiled pattern.
+<br><br>
+
+<tABLE>
+<tr>
+<TD VALIGN="TOP" WIDTH=300><P>
+errtext <code>=. rxerror ''</code>
+<TD VALIGN="TOP" WIDTH=400><P>
+Error text
+</TR></table>
+The result of <code>rxerror</code> is a text string describing the last error from a regular expression verb.
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+ismatch <code>=.</code> pattern <code>rxeq</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+1 if entire string matches
+</TR></table>
+Returns a <code>1</code> if the pattern fully describes the string.  (Similar to = verb).
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+index <code>=.</code> pattern <code>rxindex</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+index of match or #string
+</TR></table>
+The result of <code>rxindex</code> is the index of the first match, or <code>#</code>string if none.  (Similar to <code>i</code>. verb).
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+mask <code>=.</code> pattern <code>rxE</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+mask: <code>1</code>'s start matches
+</TR></table>
+<code>rxE</code> returns a boolean mask of length #string, with <code>1</code>'s to mark the start of a match.  (Similar to <code>E</code>. verb).
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+sub <code>=.</code> pattern <code>rxfirst</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+first substring match
+</TR></table>
+<code>rxfirst</code> returns the substring in the right argument which matches the pattern.
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+subs <code>=.</code> pattern <code>rxall</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+all substring matches
+</TR></table>
+The result of <code>rxall</code> is a boxed list of all substrings in the right argument which match the pattern.
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+subs <code>=.</code> matches <code>rxfrom</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+select substrings matched
+</TR></table>
+<code>rxfrom</code> returns a box containing the substrings described by each index/length pair on the left.
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+subs <code>=.</code> matches <code>rxcut</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+cut into alternating non-match/match
+</TR></table>
+<code>rxcut</code> returns a boxed list which will match the original string if razed.  The items alternate between non-matches and matches, always starting with a non-match.
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=300><P>
+newstr <code>=.</code> (pat;rplcstr) <code>rxrplc</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+replace pat with rplcstr
+</TR></table>
+<code>rxrplc</code> replaces substrings in the right argument.  The left argument is a
+boxed list of the pattern and the replacement text.
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350><P>
+newstr <code>=.</code> rplcstrs matches <code>rxmerge</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+merge rplcstrs into string
+</TR></table>
+<code>rxmerge</code> takes a table of matches as an argument, and returns a verb which merges the boxed strings in the left argument into those positions on the right.  (Similar to } adverb).
+<br><br>
+
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350><P>
+newstr <code>=.</code> pattern  f <code>rxapply</code> string
+<TD VALIGN="TOP" WIDTH=400><P>
+apply f to each match
+</TR></table>
+<code>rxapply</code> applies its verb argument to each of the substring in the right argument which match the pattern in the left argument.
+
+<P>
+All verbs which take a pattern as an argument can be called with either a character list containing a pattern or pattern handle (an integer resulting from <code>rxcomp</code>).  For example,
+<br><br>
+<TABLE>
+<tr><TD VALIGN="TOP" WIDTH=350>
+<pre>'[[:alpha:]]+' rxmatches str
+<TD VALIGN="TOP" WIDTH=400>
+NB. match all sets of letters in str</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>handle=. rxcomp '[[:alpha:]]+'
+<TD VALIGN="TOP" WIDTH=400>
+NB. compile pattern into handle</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>handle rxmatches str
+<TD VALIGN="TOP" WIDTH=400>
+NB. do the match</PRE>
+</tr><tr><TD VALIGN="TOP" WIDTH=350>
+<pre>rxfree handle</pre>
+<TD VALIGN="TOP" WIDTH=400>
+NB.  (once handle is no longer required)
+</TR></table>
+
+<P>
+<B>Notes</B><br>
+1. the <code>rmatch</code> and <code>rxmatches</code> verbs return either a single or list of matches, respectively, with each match being a table of index/length pairs for the match and each subexpression. Other verbs which use the result of <code>rxmatch</code> or <code>rxmatches</code> tend to only use the first row for each match, which represents the entire match.<BR><br>
+2. if you're interested in one or more of the subexpressions, it is possible to identify the specific rows of the match which are to be returned by <code>rxmatch</code> and <code>rxmatches</code>.  If a boxed array is passed rather than a character or numeric pattern, it is a 2-element list consisting of a pattern and a list of the indices of the important rows in a match.<BR>
+<BR>
+For example, the pattern <code>'(x+)([[:digit:]]+)'</code> matches one or more letters <code>'x'</code>, followed by a string of digits, with both the <code>'x'</code>s and the digits being a subexpressions of the pattern.  Each match will be returned as a three-row table, describing the entire match, just the <code>'x'</code>s, and just the digits.<BR>
+
+<pre>
+   pat=. rxcomp '(x+)([[:digit:]]+)'
+   str=. 'just one xxx1234 match here'
+   pat rxmatches str
+ 9 7
+ 9 3
+12 4
+   (pat;1 2) rxmatches str   NB. just the 'x's and digits
+ 9 3
+12 4
+
+   pat |. rxapply str        NB. reverse the whole match
+just one 4321xxx match here
+   (pat;,2) |. rxapply str   NB.  reverse just the digits
+just one xxx4321 match here
+</pre>
+
+<P>
+<B>Examples</B><br>
+
+<PRE>   pat=. '[[:alpha:]][[:alnum:]_]*'  NB. pattern for J name
+   str=. '3,foo3=.23,j42=.123,123'   NB. a sample string
+   pat rxmatch str                   NB. find at index 2, length 4
+2 4
+
+   pat=. '([[:alpha:]][[:alnum:]_]*) *=[.;]'   NB. subexp is name in assign
+   pat rxmatch str         NB. pattern at 2/6; name at 2/4
+2 6
+2 4
+   pat rxmatches str       NB. find all matches
+ 2 6
+ 2 4
+ 
+11 5
+11 3
+
+   ]phandle=. rxcomp pat   NB. compile
+1
+   rxcomp '[wrong'         NB. a bad pattern
+|domain error: rxcomp
+|       rxcomp'[wrong'
+   rxerror ''
+Unmatched [ or [^
+   rxhandles ''            NB. just handle 1 defined
+1
+
+   rxinfo phandle          NB.  return (1+#subexp);pattern
++-+---------------------------------+
+|2|([[:alpha:]][[:alnum:]_]*) *=[.;]|
++-+---------------------------------+
+
+   phandle rxmatches str   NB. use phandle like pattern
+ 2 6
+ 2 4
+ 
+11 5
+11 3
+
+   phandle rxfirst str     NB. first matching substring
+foo3=.
+
+   phandle rxall str       NB. all matching substrings
++------+-----+
+|foo3=.|j42=.|
++------+-----+
+
+   phandle rxindex&amp;&gt; '  foo=.10';'nothing at all'   NB. index of match
+2 14
+
+   phandle rxE str                 NB. mask over matches
+0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0<br><br>
+
+   '[[:digit:]]*' rxeq '2342342'   NB. test for exact match
+1
+   '[[:digit:]]*' rxeq '2342 342'
+0                NB. rxfrom selects substring using index/length pairs
+
+   phandle rxmatch str
+2 6
+2 4        NB. entire and subexpression match<br><br>
+
+   m=. phandle rxmatches str
+   phandle rxmerge str
++------+----+
+|foo3=.|foo3|
++------+----+
+
+   phandle rxmatches str            NB.  all matches
+ 2 6
+ 2 4
+ 
+11 5
+11 3
+   ]m=.(phandle;,0) rxmatches str   NB.  entire matches only
+ 2 6
+11 5
+   m rxcut str       NB.  return alternating non-match/match boxes
++--+------+---+-----+-------+
+|3,|foo3=.|23,|j42=.|123,123|
++--+------+---+-----+-------+
+
+   phandle |. rxapply str        NB.  reverse each match
+3,.=3oof23,.=24j123,123
+   (phandle;,1) |. rxapply str   NB.   reverse just name part of match
+3,3oof=.23,24j=.123,123</PRE>
+
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="regex_utilities.htm">&gt;&gt;</a>&nbsp;
+<a href="regex_patterns.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

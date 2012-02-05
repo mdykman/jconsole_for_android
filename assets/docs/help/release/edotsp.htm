@@ -1,0 +1,94 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>e. Sparse Arguments</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="idot1.htm">&gt;&gt;</a>&nbsp;
+<a href="bond.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">e. </font>
+<font size=+3>Sparse Arguments</font></b>
+</td><td align=right>
+initial writing: 2001-04-05<br>last updated: 2001-04-05
+</td></tr></table>
+<br>
+
+The dyad<tt> e. </tt>now supports sparse arguments.
+For example:<br>
+
+<pre>
+   ] d=: ?. 15 2$4 
+0 3
+1 2
+0 0
+2 2
+3 1
+2 3
+0 0
+2 2
+0 1
+0 1
+2 2
+3 3
+2 0
+2 1
+2 3
+   s=: $. d
+
+   (s e. #: i.4) -: d e. #: i.4
+1
+   s e. #: i.4
+ 0 | 0
+ 1 | 0
+ 3 | 0
+ 4 | 0
+ 5 | 0
+ 7 | 0
+10 | 0
+11 | 0
+12 | 0
+13 | 0
+14 | 0
+   d e. #: i.4
+0 0 1 0 0 0 1 0 1 1 0 0 0 0 0
+
+   p=: ?.100$2e9
+   q=: ?.100$1e9
+   s=: q p}1 $. 2e9 ; 0 ; 2-2
+   $s
+2000000000
+   $ s e. q
+2000000000
+   +/ s e. q
+100
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="idot1.htm">&gt;&gt;</a>&nbsp;
+<a href="bond.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

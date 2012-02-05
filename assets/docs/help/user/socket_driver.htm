@@ -1,0 +1,77 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Socket Driver</title>
+
+</head><body><!--top jump start--><a href="socket_utilities.htm">&gt;&gt;</a>&nbsp;
+<a href="sockets.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+
+
+
+
+<TR valign="baseline"><TD><H1>Socket Driver</h1>
+<TR><TD colspan="2"> 
+
+
+<P>
+A socket is an endpoint in a bi-directional communication channel. The other end can be in the same task (not usually very interesting), in another task on the same machine, or in a task on another machine that is accessed through a TCP/IP connection.
+
+<P>
+The foreign family  <code>16!:</code> support sockets under NT and Win95. The Socket Driver is not available on the Macintosh. The Socket Driver works with 32 bit TCP/IP and does not work with a 16 bit TCP/IP stack.
+
+<P>
+File system\main\socket.ijs contains cover functions for the new Socket Driver. To load, enter:
+
+<pre>
+   load 'socket'
+</pre>
+
+<P>
+Directory system\examples\socket contains examples of using the Socket Driver to communicate between two J sessions. See system\examples\socket\socket.txt for details.
+
+<P>
+To use sockets you need to have TCP/IP support configured. The following is an excerpt from a FAQ:
+
+<P>
+[Q: How do I set up my computer for a TCP/IP network?]<br><br>
+1. In Control Panel, double-click the Network icon.<br>
+2. On the Configuration tab, click Add, and then double-click Protocol.<br>
+3. Click Microsoft, and then click TCP/IP <br><br>
+After it is installed, click TCP/IP on the Configuration tab of Network properties, and then click Properties. Configure your protocol per instructions from your system administrator.
+
+<P>
+The Socket Driver is a very direct mapping onto the Windows Sockets 1.1 API. interface. General documentation on sockets and the Windows API is relevant and useful for complete understanding of how best to make use of sockets. Web sites 
+www.stardust.com and www.sockets.com have lots of relevant information for a serious socket application developer. In particular, you might want to download the complete Windows Sockets 1.1 Specification from:
+<br>
+http://www.stardust.com/winsock/ws1.1_api
+<P>
+There are labs (Studio|Labs) on sockets.
+
+
+</TD>
+  </tr>
+<TR><TD>
+<!--bottom jump start--><hr><a href="socket_utilities.htm">&gt;&gt;</a>&nbsp;
+<a href="sockets.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></td></tr></table></body>
+</html>

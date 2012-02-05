@@ -1,0 +1,102 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>i. Integers  -  Index Of</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dico.htm">&gt;&gt;</a>&nbsp;
+<a href="dhcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Integers</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>i. &nbsp;1 _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Index Of</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+The shape of<tt> i.y </tt>is<tt> |y</tt> ,<tt> </tt>and its atoms 
+are the first<tt> */|y </tt>non-negative integers.  
+A negative element in<tt> y </tt>causes reversal of the atoms 
+along the corresponding axis.  For example:<br>
+
+<pre>
+   i. 5
+0 1 2 3 4
+
+   i. 2 _5
+4 3 2 1 0
+9 8 7 6 5
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If<tt> rix </tt>is the rank of an item of<tt> x</tt>,<tt> </tt>
+then the shape of the result of<tt> x i. y </tt>
+is<tt> (-rix)}.$y</tt> .<tt> </tt>Each atom of the result is 
+either<tt> #x </tt>or the index of the first occurrence 
+among the items of<tt> x </tt>of the corresponding<tt> rix-</tt>cell 
+of<tt> y</tt> . <br><br>
+
+The comparison in<tt> x i. y </tt>is tolerant, and <i>fit</i> 
+can be used to specify the tolerance, as in<tt> i. !. t</tt> .
+<br>&nbsp;</td>
+</tr></table><br><br>
+
+<pre>
+   (i.4);(i._4);(i.2 3 4);(i.2 _3 4);(i.'')
++-------+-------+-----------+-----------+-+
+|0 1 2 3|3 2 1 0| 0  1  2  3| 8  9 10 11|0|
+|       |       | 4  5  6  7| 4  5  6  7| |
+|       |       | 8  9 10 11| 0  1  2  3| |
+|       |       |           |           | |
+|       |       |12 13 14 15|20 21 22 23| |
+|       |       |16 17 18 19|16 17 18 19| |
+|       |       |20 21 22 23|12 13 14 15| |
++-------+-------+-----------+-----------+-+
+
+   A=: 'abcdefghijklmnopqrstuvwxyz'
+   (A i. 'Now');(A i. 'now');(A {~ A i. 'now')
++--------+--------+---+
+|26 14 22|13 14 22|now|
++--------+--------+---+
+
+   m=: 5 4 $ 12{. A
+   m;(m i. 'efgh');(1{m);(4{m)
++----+-+----+----+
+|abcd|1|efgh|efgh|
+|efgh| |    |    |
+|ijkl| |    |    |
+|abcd| |    |    |
+|efgh| |    |    |
++----+-+----+----+
+</pre>
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dico.htm">&gt;&gt;</a>&nbsp;
+<a href="dhcapdot.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

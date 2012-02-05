@@ -1,0 +1,95 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>Rank conjunction "</title>
+
+</head><body><!--top jump start--><a href="result_shape.htm">&gt;&gt;</a>&nbsp;
+<a href="agreement.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>Rank conjunction "</h1>
+The primitive <font face=courier size=-1>"</font> (double-quote, not two quotes) is the rank conjunction. Conjunctions haven't been introduced yet and there is more detail in a later section. For now, just think of a conjunction as similar to a dyad verb in that it takes a left and right argument and has a result. The particular use of <font face=courier size=-1>"</font> of interest here is when the left argument is a verb and the right argument is a noun. Yes, conjunctions can take verb arguments, as well as noun, whereas a verb can take only noun arguments.<br>
+<br>
+In the section on names there was an example where you directly defined a name as a verb.<br>
+
+<pre>   plus =. +</pre>
+This style of definition is more direct than the type you used to define <font face=courier size=-1>centigrade</font>. It is called tacit definition and is dealt with in more detail in a later section. The name plus is defined as the primitive <font face=courier size=-1>+</font> and thus has the same rank as <font face=courier size=-1>+</font> of <font face=courier size=-1>0 0 0</font> .<br>
+<br>
+The rank conjunction produces a new verb from its left argument with the rank information from its right argument. <br>
+
+<pre>   plus000 =. + " 0 0 0</pre>
+The right argument for <font face=courier size=-1>"</font> is the rank information for the primitive <font face=courier size=-1>+</font> that is given in the J Dictionary (look up <font face=courier size=-1>+</font> in the vocabulary, turn to the definition page, and note the rank information in the heading). The first 0 is the rank of the monad argument. The second and third 0's are respectively the rank of the dyad left and right arguments.<br>
+<br>
+Since <font face=courier size=-1>plus000 </font>is <font face=courier size=-1>+</font> with same ranks as the primitive <font face=courier size=-1>+</font> it should behave just as does <font face=courier size=-1>+</font> or <font face=courier size=-1>plus </font>. You can verify this with a few experiments borrowed from the previous section on agreement.<br>
+
+<pre>   a =. i. 2 3
+   a plus000 a
+0 2  4
+6 8 10
+   a plus000 1 2 3
+¦length error
+¦   a   plus000 1 2 3</pre>
+The length error occurs because the arguments do not agree as per the previous section. The left frame is <font face=courier size=-1>2 3</font> and the right frame <font face=courier size=-1>3</font>, and <font face=courier size=-1>3</font> is not a prefix of <font face=courier size=-1>2 3</font>; there are extra cells from the left argument without corresponding cells from the right argument.<br>
+<br>
+However, it seems reasonable to want to add the list <font face=courier size=-1>1 2 3</font> to each list in the left argument. You know what you want it to do. Visually:<br>
+
+<pre>0 1 2   +   1 2 3      gives   1 3 5
+3 4 5       ...                4 6 8</pre>
+<br>
+You want a variation of <font face=courier size=-1>+</font> that adds lists from its left argument to lists from its right. You can do that by changing the arguments to the <font face=courier size=-1>"</font> conjunction to indicate that the dyad left and right ranks are lists.<br>
+
+<pre>   plus011 =. + " 0 1 1
+   a plus011 1 2 3
+1 3 5
+4 6 8
+   1 2 3 plus011 a
+1 3 5
+4 6 8</pre>
+In practice you wouldn't bother to give a name to such a specific application of <font face=courier size=-1>+</font> and you would instead use the expression directly.<br>
+
+<pre>   1 2 3 +" 0 1 1 a
+1 3 5
+4 6 8</pre>
+Since <font face=courier size=-1>+</font> is applied dyadically and both ranks are 1, you can use the shorter form of <font face=courier size=-1>+"1</font> which uses 1 for the rank of all arguments.<br>
+
+<pre>   1 2 3 +"1 a
+1 3 5
+4 6 8</pre>
+In this case, the left frame is empty with a cell shape of <font face=courier size=-1>3</font> and the right frame is <font face=courier size=-1>2</font> with a cell shape of <font face=courier size=-1>3</font>. Empty is a prefix of <font face=courier size=-1>2</font>, and so the frames agree.<br>
+<br>
+There is one thing you have to be aware of.<br>
+
+<pre>   a +"1 1 2 3
+¦length error
+¦   a    +"1 1 2 3</pre>
+The problem is that J doesn't know that you want the first 1 to be the argument to <font face=courier size=-1>"</font> and the second 1 to be part of the constant <font face=courier size=-1>1 2 3</font>. What happens is that the constant <font face=courier size=-1>1 1 2 3</font> is used as the right argument of <font face=courier size=-1>"</font> and since <font face=courier size=-1>"</font> is defined to allow only arguments of 1 2 or 3 numbers, there is a length error. You need to let J know that the 1 belongs to the <font face=courier size=-1>"</font> and that the <font face=courier size=-1>1 2 3</font> is a constant. <br>
+
+<pre>   a (+"1) 1 2 3
+1 3 5
+4 6 8
+   a +"1 (1 2 3)
+1 3 5
+4 6 8
+</pre>
+<!--bottom jump start--><hr><a href="result_shape.htm">&gt;&gt;</a>&nbsp;
+<a href="agreement.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

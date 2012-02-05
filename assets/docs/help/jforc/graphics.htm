@@ -1,0 +1,2572 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Graphics</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="odds_and_ends.htm">&gt;&gt;</a>&nbsp;
+<a href="elementary_mathematics_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><a
+name="_Toc191734521"><![if !supportLists]><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-list:Ignore'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>33. </span></span><![endif]>Graphics</a></span></span></h1>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>J gives you several ways to draw
+pictures.&nbsp; The Plot Package is a quick
+but powerful way to display datasets in 2D or 3D form.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want to draw your own graphics, you
+can use the gl2 library for 2D graphics, or OpenGL for 3D.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734522">Plot Package</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot
+Package&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The easy way to display
+data in J is with Plot.&nbsp; First, load the
+Plot Package:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; load 'plot'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Hand your data to the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>plot</span></span>
+verb:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+3 1 4 1 5 9</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>and it will give you a graph of your data.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734523">Plot Demo</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>To see what J Plot can do, go to the menu bar
+in a J session and click down to Studio|Demos|plot.<span
+style='mso-spacerun:yes'>&nbsp; </span>A Plot window will pop up, on whose menu bar
+pulldowns labeled 2D, 3D, Multi, Styles, and Gallery contain lists of demo
+plots.&nbsp; Click on one and you will
+immediately see the plot.&nbsp; When you find
+an interesting one, you may click Options|View&nbsp;Definition to see the
+commands that created it.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734524">Interfaces to Plot</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The Plot Package has two interfaces:
+lightning-fast (the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>plot</span></span> verb) and fast (the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>
+verb).&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>
+lets you build a custom plot containing multiple datasets and options.<span
+style='mso-spacerun:yes'>&nbsp; </span>The picture described by </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>plot&nbsp;3&nbsp;1&nbsp;4&nbsp;1&nbsp;5&nbsp;9</span></span>
+could have been built with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'reset'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'type
+line'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 3
+1 4 1 5 9</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'show'</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>plot</span></span> and </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>pd</span></span> make up the
+Plot Package, which I will refer to simply as Plot.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Plot has a great variety of options which you
+can find listed in the User Guide.&nbsp; Here
+I will give enough of an overview to get started.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you need a feature for your plot, there's
+a good chance it's described in the User Guide.&nbsp;
+If you need to direct your plot to PostScript or to a control on a form,
+the User Guide explains that too.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Plot accepts a series of commands, options,
+and data.&nbsp; <span class=Definition>Commands</span>
+are actions taken independent of any data: setting the size of the plot
+window(s), writing annotation text, and the like.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Definition>Options</span>, which
+include things like axis scaling and color selection, control the
+interpretation of subsequent <span class=Definition>data</span>, which is added
+to the plot using whatever options are in effect when the data is
+encountered.&nbsp; A single plot may contain
+multiple sets of data with different options.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734525">Commands and Options</a></span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Plot Type</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:options&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The most important option
+is the <span class=Definition>type</span> of plot: </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>surface</span></span>
+or </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>wire</span></span>
+to display 3-D data, </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>line</span></span> to graph 2-D or 3D data, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>symbol</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>dot</span></span> to plot points individually, and a variety
+of types to produce bar charts, pie charts, error bars, and many others.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Colors</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:colors&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The components of a plot
+have different colors which you can specify.&nbsp;
+A color is given either as a 3-item list of red,green,blue intensity in
+the range 0-255, or as a name taken from J's list in </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>system\packages\color\colortab.ijs</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Names of colors are not case-sensitive.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Definition>standard colors</span>
+for plot are </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>BLUE</span></span>, </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>RED</span></span>, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>GREEN</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>PURPLE</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>FUCHSIA</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>OLIVE</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>TEAL</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>YELLOW</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>MEDIUMBLUE</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>AQUA</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>BROWN</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>GRAY.<o:p></o:p></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The <span class=Definition>background </span>of
+the plot is made up of two parts, the <span class=Definition>graph background</span>
+which is the canvas the plot is drawn on, and the <span class=Definition>frame
+background</span> which surrounds the graph background, filling out the
+window.&nbsp; These colors can be set
+simultaneously with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+backcolor <i style='mso-bidi-font-style:normal'>color_spec</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The default is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>backcolor&nbsp;255&nbsp;255&nbsp;255</span></span>
+or, equivalently, </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>backcolor&nbsp;WHITE</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The components of the background can be set
+individually with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+framebackcolor <i style='mso-bidi-font-style:normal'>color_spec</i></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+graphbackcolor <i style='mso-bidi-font-style:normal'>color_spec</i></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Most plotted data is drawn with the <span
+class=Definition>item colors</span>.&nbsp; The
+data is broken into sets of points, and the item colors are assigned to the
+sets sequentially.&nbsp; By default the item
+colors are the standard colors; they can be set by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;
+itemcolor <i style='mso-bidi-font-style:normal'>color_spec,color_spec...</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The list of item colors can be as long as you
+want; it recycles as needed.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Certain plot types, such as </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>density</span></span>,
+derive the plotted colors from the data.&nbsp;
+For these plots you use</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+bandcolor <i style='mso-bidi-font-style:normal'>color_spec,color_spec...</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>to specify the colors used for the bands of
+data.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Other components have their own colors, set by
+the following commands whose names are mostly self-explanatory: </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>axiscolor</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>captioncolor</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>edgecolor</span></span>
+(for edges of filled regions), </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gridcolor</span></span>, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>keycolor</span></span>
+(a list, used for legend boxes), </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>rulecolor</span></span>, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>symbolcolor</span></span>
+(for symbol plots), </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>textcolor</span></span>, and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>titlecolor</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Fonts</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:fonts&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>You can select the font for
+the different kinds of text drawing.&nbsp; The
+commands are </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>captionfont</span></span>, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>keyfont</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>labelfont</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>symbolfont</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>textfont</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>titlefont</span></span>.&nbsp;
+An example is</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+titlefont Arial 18</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Postscript Type 1 fonts are also supported.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Titles, Captions, and Labels</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:title&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The <span class=Definition>title</span>
+of the plot is drawn above the plot.&nbsp; You
+give the title with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; title
+<i style='mso-bidi-font-style:normal'>title_text</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>titlecolor</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>titlefont</span></span>
+apply to the title.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:captions&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>A <span class=Definition>caption</span>
+is a character string displayed running parallel to an axis, and can be had
+with</span></span></p>
+
+<p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span><i style='mso-bidi-font-style:normal'>C</i>caption
+<i style='mso-bidi-font-style:normal'>caption_text</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>(</span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>C</span></i></span>
+is replaced by </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>, or </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+to select the coordinate), where </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>caption_text</span></i></span>
+should be enclosed in double-quotes if it contains spaces.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>captioncolor</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>captionfont</span></span>
+apply to captions.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:labels&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Definition>Labeling</span>
+the axes means marking them to indicate coordinate values and is controlled by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+labels <i style='mso-bidi-font-style:normal'>xon</i> <i
+style='mso-bidi-font-style:normal'>yon</i> [<i style='mso-bidi-font-style:normal'>zon</i>]</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>(default </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>1 1</span></span>) to turn
+labeling on or off.&nbsp; By default the
+labels are just the numeric values of the coordinates at the tic marks, but you
+can use</span></span></p>
+
+<p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span><i style='mso-bidi-font-style:normal'>C</i>label
+<i style='mso-bidi-font-style:normal'>label1</i> <i style='mso-bidi-font-style:
+normal'>label2</i>...</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>to specify the label at each tic.<span
+style='mso-spacerun:yes'>&nbsp; </span>If </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>labeln</span></i></span>
+contains spaces, it should be enclosed in double-quotes.<span
+style='mso-spacerun:yes'>&nbsp; </span>You can specify the coordinates at which
+labels are to be shown with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; <i
+style='mso-bidi-font-style:normal'>C</i>ticpos <i style='mso-bidi-font-style:
+normal'>positions</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>or you can apply labels at regular intervals
+with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; <i
+style='mso-bidi-font-style:normal'>C</i>tic <i style='mso-bidi-font-style:normal'>label_interval</i>
+<i style='mso-bidi-font-style:normal'>tics_between_labels</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>which will write a label at intervals of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>label_interval</span></i></span>, and add </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>tics_between_labels</span></i></span> unlabeled tics between
+labeled tics.&nbsp; The plot will be scaled to
+match the range of your data unless you specify the range of the coordinate
+with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; <i
+style='mso-bidi-font-style:normal'>C</i>range <i style='mso-bidi-font-style:
+normal'>min</i> <i style='mso-bidi-font-style:normal'>max<o:p></o:p></i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>labelcolor</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>labelfont</span></span>
+apply to labels.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Annotation (Text in the Drawing Area)</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:annotation&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Annotation text is given by
+the text options:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+textcolor <i style='mso-bidi-font-style:normal'>color</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>where </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>color</span></i></span>
+is </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>red</span></i></span>,</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>green</span></i></span>,</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>blue</span></i></span> or a name such as </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>RED</span></span>;</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+textfont <i style='mso-bidi-font-style:normal'>font_name</i> <i
+style='mso-bidi-font-style:normal'>size</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>to select the font;</span></span></p>
+
+<p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>text <i style='mso-bidi-font-style:normal'>xpos</i>
+<i style='mso-bidi-font-style:normal'>ypos</i> <i style='mso-bidi-font-style:
+normal'>text</i></span></span></p>
+
+<p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>textc <i style='mso-bidi-font-style:normal'>xpos</i>
+<i style='mso-bidi-font-style:normal'>ypos</i> <i style='mso-bidi-font-style:
+normal'>text</i></span></span></p>
+
+<p class=Jcodemultiline style='mso-pagination:widow-orphan lines-together'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>textr <i style='mso-bidi-font-style:normal'>xpos</i>
+<i style='mso-bidi-font-style:normal'>ypos</i> <i style='mso-bidi-font-style:
+normal'>text</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>to draw </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>text</span></i></span>
+at the given position, left-aligned, centered, or right-aligned.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Many other options are on view in the User
+Guide.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734526">Data; Constructing a
+Plot with </a></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='mso-bookmark:_Toc191734526'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:data&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Commands, options, and data
+are all added to the plot using the monadic </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>
+verb.&nbsp; Character operands to </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>
+are interpreted as commands or options with the format </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>name&nbsp;value</span></i></span><span
+style='mso-spacerun:yes'>&nbsp; </span>where </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>name</span></i></span>
+identifies the command/option, which is set to the (optional) </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>value</span></i></span>.&nbsp;
+Multiple commands/options can be given to </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>,
+either as a list of boxed strings, or as one long string with semicolons used
+as a separator between command/options.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Numeric operands to </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>
+are data: one or more <span class=Definition>sets of points</span>, where a
+point comprises a <span class=Definition>dependent variable</span> and one or
+two <span class=Definition>independent variables</span><span
+style='mso-spacerun:yes'>&nbsp; </span>Normally data will be a list of boxes, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x;y</span></span>
+for 2-D data or </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x;y;z</span></span> for 3-D data.<span
+style='mso-spacerun:yes'>&nbsp; </span>The last item (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+for 2-D, </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>z</span></span> for 3-D) is the dependent variable
+whose values correspond to the independent variables given by the previous
+items.&nbsp; We can distinguish 3 types of
+plot: 2-D line plots, 3-D line plots, and surface plots.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>2-D Line Plots</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The dependent variable </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+may be a list or an array.&nbsp; Each 1-cell
+of </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+gives a set of points, and each set is plotted with a different item
+color.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+may have the same shape as </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>, or </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> may be a list with
+the shape of a 1-cell of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> in which case it is repeated for each 1-cell
+of </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>3-D Line and Point Plots</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The dependent variable </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+may be a list or an array.&nbsp; Each 1-cell
+of </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+gives a set of points, and each set is plotted with a different item
+color.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> must each be a list, with the shape of a 1-cell
+of </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>,
+which is repeated for each 1-cell of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>surface</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>wire</span></span>
+Plots (3-D)</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The dependent variable </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+is an array.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+may have the same shape as </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>z</span></span>, or be a list with one atom for each <b
+style='mso-bidi-font-weight:normal'>row</b> of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>:
+the atom is repeated across the row.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+may have the same shape as </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>z</span></span>, or be a list with one atom for each <b
+style='mso-bidi-font-weight:normal'>column</b> of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>:
+the atom is repeated down the column.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Unboxed operands to </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The boxing can be omitted from a data operand
+to </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>,
+in which case it gives values of the dependent variable (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+&nbsp;for 2-D, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+for 3-D) and the independent variables are taken to be integers starting
+at 0.&nbsp; Or, the operand can be a complex
+list in which case the real parts are </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> and the
+imaginary parts are </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Control Commands to </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>:
+Starting and Ending a Plot</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:starting
+and ending&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The first command in a plot
+should be </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd&nbsp;'reset'</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>After you have sent all your data through </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>,
+your last command should be </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd&nbsp;'show'</span></span> which causes the plot to be
+displayed.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734527">Quick Plots Using </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734527'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>plot</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If your plot does not require multiple
+datasets with different options, you can display the whole thing with one use
+of the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>plot</span></span> verb:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; <i
+style='mso-bidi-font-style:normal'>commands_and_options</i> plot <i
+style='mso-bidi-font-style:normal'>data</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>plot</span></span> starts a new plot, sends the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>commands_and_options</span></i></span> through </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>,
+sends the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>data</span></i></span>
+through </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd</span></span>, and issues </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd&nbsp;'show'</span></span>
+to display the result.&nbsp; The axes will be
+scaled to fit your data.&nbsp; If </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>data</span></i></span> is made up of a rank-2 array of
+boxes each of which contains a list of boxes, each box gives the data for a <span
+class=Definition>subplot</span>: the plot window is divided into tiles based on
+the shape of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>data</span></i></span>,
+and each atom of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>data</span></i></span>
+is opened revealing a list of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x;y[;z]</span></span> boxes containing data to be plotted in
+corresponding tile.&nbsp; An example of
+subplots is</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+2 1 $ (&lt;3 1 4 1 5 9) ,&amp;&lt; (&lt;2 7 1 8 2 8)</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734528">Generating Plots of
+Functions</a></span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Idioms for Generating Plot Operands: the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>steps</span></span>
+verb</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:steps
+verb&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;steps
+verb&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>For a simple 2-D plot of
+the value of a function </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f</span></span> evaluated at the values </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+use</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+x ; f x</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If you just want evenly-spaced values of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>,
+you can use the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>steps</span></span> verb:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; steps
+<i style='mso-bidi-font-style:normal'>initial_value final_value
+number_of_intervals</i></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>A plot of one period of the sine function is
+given by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>plot (steps 0 2p1 100) ; sin steps 0 2p1 100</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>(</span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2p1</span></span> is 2&#960;).<span
+style='mso-spacerun:yes'>&nbsp; </span>To plot two functions at the same </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+values, make each function's values a row of an array:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; x =.
+steps 0 2p1 100</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+x ; (sin x) ,: cos x</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Using a fork, you can express this plot as</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+(; sin,:cos) steps 0 2p1 100</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>For 3-D plot of a function </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+evaluated on a grid of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> values, use</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+x ; y ; x f&quot;0/ y</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>f&quot;0/</span></span> is described in the &quot;Make a
+Table&quot; section of the chapter &quot;Odds and Ends&quot;.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;f&quot;0/&nbsp;y</span></span> evaluates </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>f</span></span>
+at each combination of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>To plot cos(<i style='mso-bidi-font-style:
+normal'>r</i>)/(1+<i style='mso-bidi-font-style:normal'>r</i>) we would use</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; x =.
+y =. steps _4 4 100</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; f =.
+4 : '(cos r) % 1 + r =. x +&amp;:*: y'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+x ; y ; x f&quot;0/ y</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Using a fork, this plot is given succinctly by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot x
+([ ; ] ; f&quot;0/) y</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The Simplest Function Plotting: Let Plot Evaluate
+Your Function</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:functions&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The simplest way to plot a
+function is to give Plot the description of the function and the domain, and
+let Plot decide where to evaluate the function.&nbsp;
+You do this by giving the function instead of the data as the dependent
+variable in the right argument to </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>plot</span></span> or </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>pd&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The plot may be 2-D or 3-D.<span
+style='mso-spacerun:yes'>&nbsp; </span>An example is</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; plot
+0 10 ; 'sin'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The character string instead of data tells Plot
+to evaluate the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sin</span></span> function over the interval [0,10].</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The independent variable(s) are given either
+as intervals or as lists of points.&nbsp; An
+interval is indicated by 2 or 3 numbers, specifying start value,end
+value,number of steps.&nbsp; A list of points
+is indicated by a boxed argument containing the points, or by an unboxed list
+of more than 3 points.&nbsp; Multiple
+intervals or point-lists are allowed.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If the number of steps is omitted or 0, Plot
+will pick an appropriate number of points to use.<span
+style='mso-spacerun:yes'>&nbsp; </span>It does so by repeatedly subdividing the
+interval until the curve is smooth or it decides that the curve is discontinous,
+in which case it plots continuous sections separately.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The subdivision is controlled by the plot
+commands <b style='mso-bidi-font-weight:normal'><i style='mso-bidi-font-style:
+normal'>C</i>funcres</b> and <b style='mso-bidi-font-weight:normal'>singtoler</b>.<span
+style='mso-spacerun:yes'>&nbsp; </span><b style='mso-bidi-font-weight:normal'><i
+style='mso-bidi-font-style:normal'>C</i>funcres</b> (<b style='mso-bidi-font-weight:
+normal'><i style='mso-bidi-font-style:normal'>C</i></b> is <b style='mso-bidi-font-weight:
+normal'>x</b> or <b style='mso-bidi-font-weight:normal'>y</b>) gives the
+subdivision resolution: an interval smaller than 1/<b style='mso-bidi-font-weight:
+normal'><i style='mso-bidi-font-style:normal'>C</i>funcres</b> of the screen
+will not be split.&nbsp; <b style='mso-bidi-font-weight:
+normal'><i style='mso-bidi-font-style:normal'>C</i>funcres</b> defaults to
+twice the pixel resolution of the plot.&nbsp; <b
+style='mso-bidi-font-weight:normal'>singtoler</b> is used when the display has
+singularities, and controls how much of the heading-off-to-infinity tail of the
+curve will be shown at the singularity.&nbsp;
+You can experiment to find a good value for <b style='mso-bidi-font-weight:
+normal'>singtoler</b> for your application; the default is 10 and higher
+numbers cause more of the tail to be displayed.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The function(s) to be displayed can be given
+as a list of gerunds, one for each verb to be drawn, or as a string where the
+verb-specifiers are separated by the </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>`</span></span> character (use
+doubled </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>`</span></span> as an escape if your verb contains a </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>`</span></span>
+character).&nbsp; Each verb-specifier can be
+in either tacit or explicit form: if it contains the word </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y.</span></span>or
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+it is assumed to describe an explicit verb, otherwise a tacit one.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The verbs are invoked with lists as arguments
+and should be able to return a list of results.&nbsp;
+If you use </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd</span></span>, <b style='mso-bidi-font-weight:normal'>note</b>
+that the verbs are not executed until </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>pd&nbsp;'show'</span></span> is
+processed, so the values of any public variables that are referred to by an
+explicit verb will use the values in effect when the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd&nbsp;'show'</span></span>
+is executed.&nbsp; Public variables referred
+to in a tacit verb are frozen (using </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>f.</span></span>) when the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>
+for the function is issued.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Examples of function plots:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>plot _10 10 ; '%'<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. reciprocal: has a discontinuity</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>plot _10 10 ; 'sin`cos'<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. two curves</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>plot 0.001 0.1 ; 'sin % y'<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. sin(1/x), a busy function</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The 3-D plot shown above can be created
+with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>f =: 4 : '(cos r) % 1 + r =. x +&amp;:*: y'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>plot _4 4 100 ; _4 4 100 ; 'f'</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734529">Assembling a Multipart
+Plot with </a></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='mso-bookmark:_Toc191734529'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>A plot of a function with discontinuities, or
+multiple functions with different domains, can be assembled using </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>If we want to plot the function 1/<i
+style='mso-bidi-font-style:normal'>x</i> (the J primitive </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>%</span></span>)
+by hand rather than using function plotting as shown above, we need to plot the
+negative and positive sides individually:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'reset'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'type
+line'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'color
+0 0 255'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd (^
+steps _2 2 50) ; % (^ steps _2 2 50)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd (-
+^ steps _2 2 50) ; % (- ^ steps _2 2 50)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'show'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Here we plotted the positive </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+values, then the negative ones.&nbsp; We set </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>color</span></span>
+to override Plot's default behavior of giving each dataset a different
+color.&nbsp; The exponential applied to the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+values keeps the points spaced fairly uniformly along the curve.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734530">Examples of Plots with
+Multiple Sets of Points</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>A 2-D plot with multiple sets of points was
+given above by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>plot _10 10 ; 'sin`cos'<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. two curves</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>A 3-D line plot with 3 sets of lines:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; x =.
+i. 5</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; y =.
+*: x</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; z =.
+0 10 20 + 1 , x ,: *: x</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 'line'
+plot x ; y ; z</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734531">Plots of Parametric
+Functions</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:parametric&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Although we often think of one
+variable as dependent and the others independent, this is our interpretation,
+not a restriction in Plot.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+does not have to be a function of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>: </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> may just
+represent data measurements at values of </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>, or </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> can both be parametric functions of
+something else.&nbsp; For example, a lovely
+Lissajous figure can be plotted with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp; plot
+(sin 3 * steps 0 2p1 100) ; (cos steps 0 2p1 100)</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734532">Output Options</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd&nbsp;'show'</span></span> creates a 480x360-pixel window
+and draws your plot into it.&nbsp; You have
+several other options for output, using one of the following commands in place
+of </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd&nbsp;'show'</span></span>:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd&nbsp;'isi&nbsp;[<i
+style='mso-bidi-font-style:normal'>width height</i>]'<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>NB. items in [] are optional</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>creates a window of size </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>width</span></i></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>height</span></i></span>, and displays the plot in it.<span
+style='mso-spacerun:yes'>&nbsp; </span>For normal J sessions, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd&nbsp;'show'</span></span>
+and</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>
+pd 'isi'</span></span> are equivalent.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd&nbsp;'eps
+[<i style='mso-bidi-font-style:normal'>filename width height</i>]'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>creates a plot in EPS format.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>filename</span></i></span>
+defaults to </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~temp\plot.eps</span></span><span style='color:black'>, and
+the default size is 480x360.<o:p></o:p></span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='color:black'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>pd&nbsp;'pdf </span>[<i style='mso-bidi-font-style:
+normal'>filename width height</i>]'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>creates a plot in PDF format.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>filename</span></i></span>
+defaults to </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>~temp\plot.pdf</span></span><span style='color:black'>, and
+the default size is 480x360.&nbsp; For
+Jconsole sessions, </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd&nbsp;'show'</span></span><span style='color:black'> produces
+</span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd&nbsp;'pdf'</span></span><span style='color:black'>, since
+there are no windows in a Jconsole session.<o:p></o:p></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Plot:printing&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span style='color:black'>If
+you have created your plot in a window using </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>plot</span></span><span
+style='color:black'>, </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>pd&nbsp;'show'</span></span><span style='color:black'>, or </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pd&nbsp;'isi'</span></span><span
+style='color:black'>, you can treat the bitmap of the plot as pixel data:<o:p></o:p></span></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'print'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>sends the bitmap to the printer;</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'clip'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>copies the bitmap to the clipboard;</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; pd 'save&nbsp;<i
+style='mso-bidi-font-style:normal'>type</i>&nbsp;<i style='mso-bidi-font-style:
+normal'>filename</i>'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>saves the bitmap in </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>filename</span></i></span> encoded according to </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>type</span></i></span>, which may be </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>bmp</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>wmf</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>jpg</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>pgm</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>png</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>ppm</span></span>,
+or </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>tga</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>All but </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>bmp</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>wmf</span></span>
+require the <i style='mso-bidi-font-style:normal'>image3</i> addon to J.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734533">2D Graphics: the gl2 Library</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The gl2 Library is a set of functions for
+drawing 2D graphics into windows.&nbsp; There
+are many more functions in this library than can be discussed here: to see the
+full list, open a J session, press F1 for help, click on 'wd' at the top of the
+page, then click the link for 'gl2 commands'.&nbsp;
+It will be worth your time to read through the commands a few times to
+get an idea about what's available.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>To use the gl2 commands you must include them
+in your program with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; load 'gl2'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Because there are so many functions, they are
+defined in a locale of their own, called </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>jgl2&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>To have access to the functions in </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>jgl2</span></span>,
+you should include the line</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+coinsert 'jgl2'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>at the top of each file using the gl2
+commands.&nbsp; Alternatively, you could add </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>jgl2</span></i></span>
+to the name of each gl2 function you use, but it is easier to use the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>coinsert</span></span>.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734534">Example of Drawing</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:example&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>A simple program to draw a
+line could look like the following:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>load 'gl2'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>coinsert 'jgl2'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>load 'graph'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>gopen''<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>NB. Create drawing surface</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>glrgb 255 0 0<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>NB. set the color</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>glpen 2, PS_DASH<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>NB. pen width 2, dashed line</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>gllines 0 1000&nbsp;
+1000 0&nbsp; NB. draw using current pen</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>glpaint''<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;</span>NB. display the drawing</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734535">Creating an </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734535'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> Graphics Control</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:creating
+an isigraph&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Graphics are drawn into an
+object called an </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></i></span><i
+style='mso-bidi-font-style:normal'> <b style='mso-bidi-font-weight:normal'>control</b></i>
+(the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isi</span></span> comes from Iverson Software, Inc., the
+original name of Jsoftware, Inc.) which resides in a window.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>You can choose from several ways to create an </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+control, depending on what features you need.&nbsp;
+The quickest way to get one is with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; load 'graph'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; gopen
+''</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>which will leave you ready for drawing with an
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+control 150 pixels on a side.&nbsp; If you
+want to specify your own options for the parent window or </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+control, you can bypass the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>graph</span></span> package, using instead a line like</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='font-size:11.0pt'>wd 'pc x closeok;xywh 0 0 200 200;cc g isigraph;pas 0
+0;pshow'<o:p></o:p></span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>which will also leave you ready for
+drawing.&nbsp; In this example, the parent
+window was named </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+control was named </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>g</span></span> with a size of 200x200 pixels.<span
+style='mso-spacerun:yes'>&nbsp; </span>The </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>pas&nbsp;0&nbsp;0</span></span>
+caused the parent to fit tightly around the isigraph.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If you simply want a standalone window to
+display graphics in, either of the preceding methods is adequate.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want your graphics to be part of a <span
+class=Definition>form</span> which can contain other graphics controls as well
+as text, sliders, selection boxes, and the like, you will want to learn how to
+use the Form Editor, either by reading the User Guide or by running the
+Labs.&nbsp; Use the Form Editor to create a
+form, and include a child control of type </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>Your gl2 commands will be drawn into this
+child control.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>All </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span> controls
+have the same capabilities, no matter what method was used to create them.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734536">Selecting an </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734536'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> Control for Output</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:selecting
+an isigraph&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>If you have simply created
+a single </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> control for use as a display, it was
+automatically selected for output when created and you do not need to do
+anything more than write to it.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If you have a more complex environment, where
+there are perhaps several </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> controls in a form and many forms
+open at once, you need to select the correct </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+control before you write to it.&nbsp; gl2
+commands operate on the currently-selected </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+control.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>First, you select the parent window, using</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; wd 'psel
+<span class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>windowname</span></i></span>'</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>and then select the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+you want to draw into, using</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glsel '</span></span><i
+style='mso-bidi-font-style:normal'>isigraphname</i></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";font-weight:
+normal'>'</span></span></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Now you are ready to push pixels.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734537">Addressing the Screen</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:screen
+addressing&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gl<i
+style='mso-bidi-font-style:normal'>xxx</i></span></span> verbs take integer
+arguments that represent pixel coordinates in the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+control.&nbsp; The top-left pixel has
+coordinates (0,0), and the bottom-right pixel has coordinates (<i
+style='mso-bidi-font-style:normal'>xsize</i>-1,<i style='mso-bidi-font-style:
+normal'>ysize</i>-1).&nbsp; </span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734538">Drawing Graphics</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:drawing
+graphics&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>You will issue a sequence
+of </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gl<i
+style='mso-bidi-font-style:normal'>xxx</i></span></span> verbs.<span
+style='mso-spacerun:yes'>&nbsp; </span>(The </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>graph</span></span> library
+defines verbs to interface to the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+verbs, but I recommend you avoid them in the interests of performance)<span
+style='mso-spacerun:yes'>&nbsp; </span>The pixel-writing verbs, such as </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glrect</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gllines</span></span>, make use of the <span
+class=Definition>current pen</span> (the linestyle used to draw the outline)
+and the <span class=Definition>current brush</span> (the fill style used for
+the interior).&nbsp; The pen and brush
+commands, and some of the other </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+verbs, use the <span class=Definition>current color</span>, a list of RGB
+(red-green-blue) values from 0 to 255.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>As an example, to draw a 2-pixel-wide dashed red
+line from the top-left corner to the bottom-right corner of the selected </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>,
+use</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; glrgb
+255 0 0&nbsp; NB. set the color</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; glpen
+2,PS_DASH&nbsp; NB. use that color for the pen</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+gllines 0 0&nbsp;&nbsp; 150 150<span
+style='mso-spacerun:yes'>&nbsp; </span>NB. lines use current pen</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734539">Drawing Text</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:drawing
+text&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Text can be mixed with
+graphics.&nbsp; First, set the <span
+class=Definition>font</span>:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+glfont <i style='mso-bidi-font-style:normal'>name</i> <i
+style='mso-bidi-font-style:normal'>size</i> <i style='mso-bidi-font-style:normal'>styles</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>where </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>styles</span></i></span>
+can be any of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>italic</span></span>, </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>bold</span></span>, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>underline</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>oem</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>default</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>angle<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+(where </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>xxx</span></i></span>
+is the angle of the font, in tenths of a degree clockwise).<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>size</span></i></span>
+is in points.&nbsp; Example:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+glfont &quot;Times New Roman&quot; 12 italic</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Next, draw the <span class=Definition>background
+rectangle</span> if any.&nbsp; Text itself is
+transparent, in other words the background shows though the text. <span
+style='mso-spacerun:yes'>&nbsp;</span>If you want a solid background for the text,
+you must draw one.&nbsp; Find out how big the
+text will be in pixels:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; extent
+=. glqextent <i style='mso-bidi-font-style:normal'>textstring</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>then create a brush with the background color,
+and draw the background rectangle:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+glbrush '' [ glrgb <i style='mso-bidi-font-style:normal'>red green blue</i></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+glrect <i style='mso-bidi-font-style:normal'>xcoord</i>,<i
+style='mso-bidi-font-style:normal'>ycoord</i>,extent</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Next, set the color for the text itself:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+gltextcolor '' [ glrgb <i style='mso-bidi-font-style:normal'>red</i> <i
+style='mso-bidi-font-style:normal'>green</i> <i style='mso-bidi-font-style:
+normal'>blue</i></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Finally, set the <span class=Definition>text position</span>
+in pixels and draw the text.&nbsp; </span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+gltextxy <i style='mso-bidi-font-style:normal'>xcoord</i>,<i
+style='mso-bidi-font-style:normal'>ycoord</i></span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+gltext <i style='mso-bidi-font-style:normal'>text</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>where </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>text</span></i></span>
+is the character string to draw.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='color:black'>The settings of the
+text attributes are preserved, so only the changed values need to be set for
+subsequent </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gltext</span></span><span style='color:black'> calls.</span></span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734540">The Drawing Surface</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:drawing
+surface&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gl<i
+style='mso-bidi-font-style:normal'>xxx</i></span></span> verbs write pixels on
+the <span class=Definition>drawing surface</span>, which is a memory area that
+has the size of your </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> control.<span
+style='mso-spacerun:yes'>&nbsp; </span>Changes to the drawing surface are not
+immediately visible, lest the user be distracted by continual painting and an
+incomplete picture.&nbsp; When you have
+executed enough </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+commands to have a picture worth seeing, you issue</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; glpaint
+''</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>which copies the drawing surface to the
+visible screen..</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734541">Screen Resizing: The </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734541'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>paint</span></span> Event</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If your </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span> control
+never changes size, what is displayed on the screen will be whatever you put
+there with your last </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glpaint</span></span> command.<span
+style='mso-spacerun:yes'>&nbsp; </span>If, on the other hand, your </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+can be resized by the user, the display will become invalid whenever the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+is resized.&nbsp; When this happens, the
+system will signal a </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>paint</span></span> event, and you will have to recreate the
+display surface.&nbsp; See below for a
+discussion of event handling.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Supporting a resizable </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+window has profound effects on the design of your program.<span
+style='mso-spacerun:yes'>&nbsp; </span>You must keep a copy of all the graphics
+commands needed to regenerate the display, and for most applications you need
+to keep these commands in a virtual screen space so that they don't suffer
+unsightly errors in quantization when the screen size changes.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734542">Partial List of </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734542'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+Drawing Commands</span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:command
+summary&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>i&nbsp;j</span></i></span> give the (<i style='mso-bidi-font-style:
+normal'>i</i>,<i style='mso-bidi-font-style:normal'>j</i>) coordinates of a
+point in logical units, where </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>i</span></i></span>
+is the horizontal coordinate and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>j</span></i></span>
+is the vertical coordinate.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;y&nbsp;w&nbsp;h</span></i></span> specifies a
+rectangular region with one corner at (</span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span>,</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></i></span>) and the other at (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></i></span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+<i style='mso-bidi-font-style:
+normal'>w</i>-1</span></span>,</span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>y</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+<i
+style='mso-bidi-font-style:normal'>h</i>-1</span></span>). </span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Initialization</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glclear ''</span></span><b> </b><span
+style='mso-spacerun:yes'>&nbsp;</span>&nbsp;&nbsp;clear </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+drawing buffer to white and reset default values for graphics state variables:<br>
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glfont
+<i style='mso-bidi-font-style:normal'>system default</i><br>
+glrgb 0 0 0<br>
+glpen 1 0<br>
+glbrushnull''<br>
+gltextxy 0 0<br>
+gltextcolor''<br>
+glclipreset''<o:p></o:p></span></span></span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Display Settings That You Will Probably Never
+Need To Modify</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glnodblbuf <i style='mso-bidi-font-style:normal'>bool</i></span></span><b>
+</b>&nbsp;default 0 paints with double buffer
+to avoid flicker. Set to 1 to paint directly to the screen.</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glwindoworg <i style='mso-bidi-font-style:normal'>x y</i></span></span><b>
+</b>&nbsp;default is 0 0.<span
+style='mso-spacerun:yes'>&nbsp; </span>The </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>x</span></i></span>
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>y</span></i></span>
+values are added to subsequent graphics coordinates</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>.<o:p></o:p></span></span></span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glcursor <i style='mso-bidi-font-style:normal'>n</i></span></span><b>
+</b>&nbsp;sets mouse cursor. Values are
+defined as IDC_... in gl2.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Setting a Clipping Window for Subsequent Drawing
+Primitives</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glclip <i style='mso-bidi-font-style:normal'>x y w h</i></span></span><b>
+</b>&nbsp;Only pixels inside the given
+rectangle will be modified by subsequent drawing commands.</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glclipreset ''</span></span> <span
+style='mso-spacerun:yes'>&nbsp;</span>Turn off clip rectangle, allowing all pixels
+to be overwritten by drawing commands</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Setting Colors</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glrgb <i style='mso-bidi-font-style:normal'>color</i></span></span><b>
+;</b> set current color</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Settings That Apply to Lines (including
+Borders of Filled Areas)</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glpen <i style='mso-bidi-font-style:normal'>i</i> [<i
+style='mso-bidi-font-style:normal'>style</i>]</span></span><b> </b><span
+style='mso-spacerun:yes'>&nbsp;</span>select pen. color is taken from last glrgb
+command, and the lines are drawn </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>i</span></i></span>
+units wide. &nbsp;</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>style</span></i></span> is from the set (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman";text-transform:
+uppercase'>ps_solid, ps_dash, ps_dot, ps_dashdot, ps_dashdotdot, ps_null,
+ps_insideframe</span></span>)</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Drawing Lines</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gllines <i style='mso-bidi-font-style:normal'>i j i j</i>
+...</span></span><b> </b>&nbsp;draw connected
+lines. </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>i&nbsp;j...</span></i></span>
+is 2 or more points.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gllines</span></span>
+is the verb normally used for line-drawing.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Settings That Apply to Area-Filling Commands</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glbrush ''</span></span><b> </b><span
+style='mso-spacerun:yes'>&nbsp;</span>select solid brush in current color,
+i.&nbsp;e. fill interiors with solid fill in the color of the most recent </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glrgb</span></span>.</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glbrushnull ''</span></span><b> </b><span
+style='mso-spacerun:yes'>&nbsp;</span>select null brush, i.&nbsp;e. leave interiors
+unfilled</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Drawing Rectangles, Ellipses, and Arcs</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glrect <i style='mso-bidi-font-style:normal'>x y w h</i></span></span><b>
+</b>&nbsp;draw rectangle with current pen and
+current brush</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glroundr <i style='mso-bidi-font-style:normal'>x y w h rw rh</i></span></span><b>
+</b>&nbsp;(not java) draw rectangle with
+rounded corners defined by ellipse with width </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>rw</span></i></span> and height </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>rh</span></i></span>.&nbsp;
+Use current pen and brush.</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glellipse <i style='mso-bidi-font-style:normal'>x y w h</i></span></span><b>
+</b>&nbsp;draw a filled ellipse in the given rectangle
+with the current pen and brush</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glarc <i style='mso-bidi-font-style:normal'>x y w h xa ya xz
+yz</i></span></span><b>&nbsp; </b>(not wince)
+draw arc on the ellipse defined by the given rectangle. <span
+style='mso-spacerun:yes'>&nbsp;</span>Arc starts at (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>xa</span></i></span>,</span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>ya</span></i></span>)
+and ends at (</span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>xz</span></i></span>,</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>yz</span></i></span>). <span
+style='mso-spacerun:yes'>&nbsp;</span>Start and end points need not lie on the
+ellipse: they define a line from the center that intersects the ellipse.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Drawing Polygons</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glpolygon <i style='mso-bidi-font-style:normal'>i j i j</i>
+...</span></span><b> </b>&nbsp;draw polygon in
+current pen and brush.&nbsp; The list of (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>i</span></i></span>,</span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>j</span></i></span>)
+values are the polygon vertices..&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glpolygon</span></span>
+is the verb normally used to draw polygons.</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Settings That Apply to Text</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glfont <i style='mso-bidi-font-style:normal'>name size
+styles</i></span></span><b> </b>&nbsp;sets font
+for text commands</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Drawing Text</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gltext <i style='mso-bidi-font-style:normal'>text</i></span></span><b>
+</b>&nbsp;write text using the font specified
+by the most recent </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glfont</span></span> in the color saved by the most recent </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gltextcolor</span></span>.
+&nbsp;Where and how the text is displayed is
+affected by the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gltextalign</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gltextxy</span></span>
+commands.</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gltextcolor ''</span></span><b> <span
+style='mso-spacerun:yes'>&nbsp;&nbsp;</span></b><span style='mso-bidi-font-weight:bold'>the
+color set by the most recent</span> </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>glrgb</span></span> is saved as the
+color to be used for text</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gltextxy <i style='mso-bidi-font-style:normal'>i j</i></span></span><b>
+</b>&nbsp;position to be used by </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gltext</span></span>
+when </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gltexalign</span></span> specifies </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>TA_NOUPDATECP</span></span></span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Bitmap Operations</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glpixel <i style='mso-bidi-font-style:normal'>i j</i></span></span><b>
+&nbsp;</b><span
+style='mso-spacerun:yes'>&nbsp;</span>draw pixel at (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>i</span></i></span>,</span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>j</span></i></span>)
+in current color</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glpixels <i style='mso-bidi-font-style:normal'>x y w h pixeldata</i></span></span><b>
+&nbsp;&nbsp;</b><span style='mso-bidi-font-weight:
+bold'>write pixels to the given rectangle. </span><span
+style='mso-spacerun:yes'>&nbsp;</span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>pixeldata</span></i></span>
+is an integer per pixel with RGB values</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Metafile Operations</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glfile <i style='mso-bidi-font-style:normal'>filename</i></span></span><b><span
+style='mso-spacerun:yes'>&nbsp; </span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>(only win32) set filename for subsequent </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glemfopen</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glemfplay</span></span>.</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glemfopen ''</span></span><b> </b><span
+style='mso-spacerun:yes'>&nbsp;</span>(only win32) Open the file named in the most
+recent </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glfile</span></span> command.<span
+style='mso-spacerun:yes'>&nbsp; </span>This file will be an enhanced metafile, and
+subsequent </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+commands will be written to this file.</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glemfclose '' <i style='mso-bidi-font-style:normal'><span
+style='mso-spacerun:yes'>&nbsp;</span></i></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span>(only win32) Close the file opened by </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glemfopen</span></span>&nbsp;..</span></span></p>
+
+<p class=Gloss style='margin-left:.5in'><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glemfplay <i style='mso-bidi-font-style:normal'>x y </i>[<i
+style='mso-bidi-font-style:normal'>w h</i>]</span></span><b> <span
+style='mso-spacerun:yes'>&nbsp;&nbsp;</span></b><span
+style='mso-spacerun:yes'>&nbsp;</span>(only win32) Play the enhanced metafile named
+in the most recent </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glfile</span></span> command.<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;y</span></i></span>
+gives the top-left corner of the area on which the metafile will be drawn; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>w&nbsp;h</span></i></span> give the size of the rectangle
+that the metafile will be scaled to fit into, or may be omitted to display the
+metafile at full size.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734543"><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span> Events</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:isigraph
+events&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isigraph</span></span>
+controls produce events, which like all window events result in execution of
+the sentence</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; <i
+style='mso-bidi-font-style:normal'>formname_isigraphname_eventname_formlocale_</i>
+''</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman";
+font-weight:normal'><o:p></o:p></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>where </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>formlocale</span></i></span>
+is the name of the locale the form was executed in, and the other names
+identify the form, </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span>, and event type.<span
+style='mso-spacerun:yes'>&nbsp; </span>Before execution of this sentence, the
+variable </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sysdata</span></span> is set with information about the
+event.&nbsp; The events and their associated </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sysdata</span></span>
+are:</span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>paint</span></span> Event</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>paint</span></span> event is signalled
+whenever the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> control changes size.<span
+style='mso-spacerun:yes'>&nbsp; </span>The </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>paint</span></span> event
+handler must redraw the drawing surface.&nbsp;
+It does not need to issue </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glpaint</span></span> to move the display surface to the
+screen--that will be done automatically. </span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>char</span></span> Event</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>When a character is pressed while the cursor
+is within an </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> control, a </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>char</span></span>
+event is produced.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sysdata</span></span>
+is a character list giving the key that was pressed: the character itself for
+printable keys, or the virtual key </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>VK_<i style='mso-bidi-font-style:
+normal'>name</i></span></span> for a special key such as HOME or an arrow key
+(look in </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>system\packages\graphics\vkeys.ijs</span></span><span
+style='color:black'> for the </span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>VK_<i style='mso-bidi-font-style:
+normal'>name</i></span></span><span style='color:black'> definitions).<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>sysdata</span></span><span
+style='color:black'> is </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'a'</span></span><span style='color:black'> if the letter-a
+key is pressed, and </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>21{a.</span></span><span style='color:black'> if the
+up-arrow is pressed.&nbsp; </span>The
+character in </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sysdata</span></span> is represented in UTF-8 form, which
+means that it will be encoded as a multi-character sequence if the ASCII code
+is 128 or higher.<span style='color:black'><o:p></o:p></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='color:black'><span
+style='mso-spacerun:yes'>&nbsp;</span></span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>sysmodifiers</span></span><span
+style='color:black'> is a single <b style='mso-bidi-font-weight:normal'>character</b>
+value indicating whether CTRL or SHIFT was pressed: </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>'0'</span></span><span
+style='color:black'>=neither, </span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'1'</span></span><span
+style='color:black'>=SHIFT, </span></span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>'2'</span></span><span
+style='color:black'>=CTRL, </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>'3'</span></span><span style='color:black'>=SHIFT+CTRL.<span
+style='mso-spacerun:yes'>&nbsp; </span>No event is signaled for CTRL+ASCII-character
+as that is taken to be a keyboard shortcut.</span></span></span></p>
+
+<p class=Subsubsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Mouse Events</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The mouse events are </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mmove</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mbldown</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mblup</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mbldbl</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mbrdown</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mbrup</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>mbrdbl</span></span>, corresponding to mouse-move and
+mouse-clicks (left or right button; down, up, or double-click).<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>sysdata</span></span> contains a character string which
+should be converted to numeric using </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>0&amp;&quot;.</span></span>,
+after which it will be an 8-item vector indicating the values</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>cursorx cursory isiwidth isiheight mbl mbr
+ctrl shift</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>where </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>cursorx</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>cursory</span></span>
+give the cursor position in pixels, </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>isiwidth</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>isiheight</span></span>
+give the size of the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>isigraph</span></span> control in pixels, and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mbl</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mbr</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>ctrl</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>shift</span></span> give the status of the corresponding
+mouse-buttons and keys at the time of the event.</span></span></p>
+
+<p class=Subsection><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><a name="_Toc191734544">High Performance:
+Blocks of </a></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='mso-bookmark:_Toc191734544'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gl<i
+style='mso-bidi-font-style:normal'>xxx</i></span></span> Commands Using </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734544'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glcmds</span></span></span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><o:p></o:p></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:graphics
+blocks&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Each call to a </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gl<i
+style='mso-bidi-font-style:normal'>xxx</i></span></span> verb makes an addition
+to the display list.&nbsp; If your calls have
+small amounts of data, the overhead of updating the display list could take
+much more time than the drawing to the screen.&nbsp;
+In that case, you can see a performance improvement if you build a <span
+class=Definition>graphics block</span> holding the data for several </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gl<i
+style='mso-bidi-font-style:normal'>xxx</i></span></span> verbs and then pass
+the block into J with a single call.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The graphics block will be a numeric list
+which is a concatenation of <span class=Definition>graphics orders</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each graphics order replaces one call to a </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>gl<i
+style='mso-bidi-font-style:normal'>xxx</i></span></span> verb and has the
+format</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; <i
+style='mso-bidi-font-style:normal'>length_of_order</i>,<i style='mso-bidi-font-style:
+normal'>glxxx_code</i>,<i style='mso-bidi-font-style:normal'>data</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>length_of_order</span></i></span>
+is </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2+$<i
+style='mso-bidi-font-style:normal'>data</i></span></span> (i. e., the length of
+the graphics order including the length field).&nbsp;
+</span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>glxxx_code</span></i></span>
+identifies the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+verb that the graphics order represents: this is the code used in </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>system\main\gl2.ijs</span></span>
+to define the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+verb.&nbsp; For example, the </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glline</span></span>
+verb is defined by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>glline=: 11!:2013</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>so the </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>glxxx_code</span></i></span>
+for </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glline</span></span> is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2013</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>data</span></i></span>
+is the operand needed by the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gl<i style='mso-bidi-font-style:normal'>xxx</i></span></span>
+verb.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Once you have built the graphics block, you draw
+it by executing </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>glcmds&nbsp;<i style='mso-bidi-font-style:normal'>graphicsblock</i></span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>To draw the 2-pixel-wide dashed red line used
+in the example above, you could issue the </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>glrgb</span></span>, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>glpen</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>gllines</span></span> in one go with</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>block =: 5 2032 255 0 0<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>4 2022 2 1&nbsp;&nbsp;
+6 2015 0 1000 1000 0</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>glcmds block</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734545">Displaying Tabular Data: the Grid Control</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:Grid
+Control&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The Grid Control is a set
+of J functions that probably does all you need for displaying a table of
+data.&nbsp; See the User Guide for a
+description of its numerous features.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734546">3D Graphics: OpenGL</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Graphics:OpenGL&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>For 3-D graphics, J
+supports OpenGL, a graphics interface of great power with a manual the size of
+a phonebook.&nbsp; If you want to learn about
+it, study the manual; if you know OpenGL and want to use it in J, consult the
+Labs.</span></span></p>
+
+</div><!--bottom jump start--><hr><a href="odds_and_ends.htm">&gt;&gt;</a>&nbsp;
+<a href="elementary_mathematics_in_j.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

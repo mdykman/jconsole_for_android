@@ -1,0 +1,13 @@
+ZLADIV := X / Y, where X and Y are complex.  The computation of X / Y
+will not overflow on an intermediary step unless the results
+overflows.
+
+
+Arguments
+=========
+
+X       (input) COMPLEX*16
+
+
+Y       (input) COMPLEX*16
+        The complex scalars X and Y.

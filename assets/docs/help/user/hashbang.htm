@@ -1,0 +1,87 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>J #! script</title>
+
+</head><body><!--top jump start--><a href="stdin_stdout.htm">&gt;&gt;</a>&nbsp;
+<a href="unix_history.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<hr><!--top jump end-->
+<h1>Unix J #! script</h1>
+A #! J script (hashbang) is an executable text file with a first line that starts with #! and a path to jconsole. jconsole is run with the name of the hashbang file as an argument so the hashbang file is loaded by J.<br><br>
+
+The #! line will be run as a normal J sentence so it must run without error or side effect. This is the case with #!/home/fred/j701/bin/jconsole, but #!/home/fred/j64-701/bin/jconsole will get an error because of the - character. The workaround is to create a link file that has no characters that cause problems.<br><br>
+
+Try the following:<br>
+<br>
+create file sumsquares with 3 lines of text:<br>
+<font face=courier size=-1>#!/home/fred/j701/bin/jconsole<br>
+echo +/*:0".&gt;,.2}.ARGV<br>
+exit''</font><br>
+<br>
+make it executable ( <font face=courier size=-1>chmod +x</font> ) and run it<br>
+<font face=courier size=-1>./sumsquares 1 2 3 4 5</font><br>
+<br>
+Use<font face=courier size=-1> NB. </font> to comment out the<font face=courier size=-1> exit'' </font> to stay in J.<br>
+<br>
+The following loads profile, which loads the #! script, which echos the result on the console and leaves J running.<br>
+<br>
+#!/home/fred/j701/bin/jconsole<br>
+load'strings'<br>
+echo 'abcXXXdef' rplc 'XXX';' insert '<br>
+<br>
+The following is the same, except it exits J at the end.<br>
+<br>
+#!/home/fred/j701/bin/jconsole<br>
+load'strings'<br>
+echo 'abcXXXdef' rplc 'XXX';' insert '<br>
+exit''<br>
+<br>
+The following doesn't load profile and just loads the script.<br>
+<br>
+#!/home/fred/j701/bin/jconsole -jprofile<br>
+...<br>
+<br>
+Profile loads <font face=courier size=-1> jconsole </font> with the following definitions that are useful in #! J scripts:<br>
+<font face=courier size=-1>ARGV - boxed list of jconsole, script name, and arguments<br>
+echo - format and display output<br>
+getenv - get value of environment variable<br>
+stdin - read from standard input<br>
+stdout - write to standard output<br>
+stderr - write to standard error<br>
+exit - exit J (arg is return code)<br>
+</font><br>
+<font face=courier size=-1>stdin </font>is defined with<font face=courier size=-1> stdout </font>as its obverse (see the<font face=courier size=-1> :. </font>conjunction). When used with<font face=courier size=-1> &. </font>(under conjunction), as in<font face=courier size=-1> foo&.stdin '' </font> stdin is first called, reading all of standard input. That input is the argument to foo, and the result is passed to the inverse of stdin, which is stdout. A verb which transforms a character list can be combined with the stdin verb with under to apply the transformation as a Unix filter. As an example we will create a Unix filter which reverses all the characters in a file. Rather than just using<font face=courier size=-1> |. </font>we'll use<font face=courier size=-1> (|.@}: , {:) </font>which reverses all but the last character, and appends the last character to it. For files which end in a newline, this reverses the file keeping that newline at the end. Define the #! J script reverse as follows:<br>
+
+<pre>
+#!/home/fred/j701/bin/jconsole
+rev=. |.@}: , {:
+rev&.stdin ''
+exit''
+</pre>
+If you wanted to do a complete reverse of a file which does not end in a newline you could do the following:<br>
+<font face=courier size=-1> rev=. |.`(|.@}: , {:)@.(LF&=@{:)</font><br>
+<br>
+<font face=courier size=-1>echo </font> uses<font face=courier size=-1> 1!:2 </font>to write to J output (file number 2) and formats and writes any J array.<font face=courier size=-1> stdout </font>and<font face=courier size=-1> stderr </font>, however, must be given character lists, and writes them unaltered. In particular, <font face=courier size=-1> echo 'a line' </font> will write a trailing newline character whereas<font face=courier size=-1> stdout 'a line' </font>does not.<br>
+<!--bottom jump start--><hr><a href="stdin_stdout.htm">&gt;&gt;</a>&nbsp;
+<a href="unix_history.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+User<!--bottom jump end--></body>
+</html>

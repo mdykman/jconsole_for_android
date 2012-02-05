@@ -1,0 +1,141 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>B. Verbs</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dictc.htm">&gt;&gt;</a>&nbsp;
+<a href="dicta.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br><font size=+2><b>B. Verbs</b></font><br><br>
+
+<b>Monads and Dyads. </b> Verbs have two definitions, 
+one for the <i>monadic</i> case (one argument), 
+and one for the <i>dyadic</i> case (two arguments).  
+The dyadic definition applies if the verb is preceded by 
+a suitable left argument, that is, any noun that is not itself 
+an argument of a conjunction; otherwise the monadic definition applies.<br><br>
+
+The monadic case of a verb is also called a <i>monad</i>, 
+and we speak of the <i>monad</i><tt> % </tt>used in the 
+phrase<tt> %4</tt> ,<tt> </tt>
+and of the <i>dyad</i><tt> % </tt>used in<tt> 3%4</tt> .<tt> </tt>
+Either or both may have empty domains.<br><br>
+
+<b>Ranks of Verbs.</b>  The notion of verb rank is closely 
+related to that of noun rank: a verb of rank <i>k</i> applies 
+to each of the k-cells of its argument.  
+For example (using the array<tt> b </tt>from
+<a href="dicta.htm">Section A</a>):<br>
+
+<pre>
+   ,b
+abcdefghijklmnopqrstuvwx
+
+   ,&quot;2 b                         ,&quot;_1 b
+abcdefghijkl                  abcdefghijkl
+mnopqrstuvwx                  mnopqrstuvwx
+</pre>
+
+Since the verb <i>ravel</i> (denoted by<tt> ,</tt>)
+applies to its entire argument, its rank is said to be <i>unbounded</i>.  
+The <i>rank</i> conjunction<tt> &quot; </tt>used in the phrase<tt> ,&quot;2 </tt>
+produces a related verb of rank 2 that ravels each of the 2-cells 
+to produce a result of shape 2 by 12.<br><br>
+
+The shape of a result is the frame (relative to the cells to which 
+the verb applies) catenated with the shape produced by applying 
+the verb to the individual cells.  
+<a name="fill"></a>
+Commonly these individual shapes agree, but if not, 
+they are first brought to a common rank 
+by introducing leading unit axes to any of lower rank, 
+and are then brought to a common shape by 
+<i>padding</i> with an appropriate <i>fill</i> element:  space for a character 
+array,<tt> 0 </tt>for a numeric array, and a boxed empty list 
+for a boxed array.  For example: <br>
+
+<pre>
+   i.&quot;0 s=: 2 3 4                &gt;'I';'was';'here'
+0 1 0 0                       I
+0 1 2 0                       was
+0 1 2 3                       here
+</pre>
+
+The dyadic case of a verb has two ranks, governing the 
+left and right arguments.  For example:<br>
+
+<pre>
+   p=: 'abc'
+   q=: 3 5$'wake read lamp '
+   p,&quot;0 1 q
+awake
+bread
+clamp
+</pre>
+
+Finally, each verb has three intrinsic ranks: 
+monadic, left, and right.  The definition of any verb need specify 
+only its behaviour on cells of the intrinsic ranks, and 
+the extension to arguments of higher rank occurs systematically.  
+The ranks of a verb merely place upper limits on the ranks of 
+the cells to which it applies; its domain may include 
+arguments of lower rank.  For example, <a href="d131.htm">Matrix Inverse (<tt>%.</tt>)</a>
+has monadic rank 2, but treats the case of a vector as 
+a one-column matrix.<br><br>
+
+<b>Agreement. </b> In the phrase<tt> p v q</tt>,<tt> </tt>
+the arguments of<tt> v </tt>must <i>agree</i> in the sense that one 
+frame must be a prefix of the other, as in<tt> p,&quot;0 1 q </tt>above, 
+and in the following examples:<br>
+
+<pre>
+   p ,&quot;1 1 q                     3 4 5 * i. 3 4
+abcwake                        0  3  6  9
+abcread                       16 20 24 28
+abclamp                       40 45 50 55
+
+   (i.3 4) * 3 4 5
+ 0  3  6  9
+16 20 24 28
+40 45 50 55
+</pre>
+
+If a frame contains<tt> 0</tt>,<tt> </tt>the verb is applied 
+to a cell of fills.  For example:<br>
+
+<pre>
+   ($ #&quot;2 i. 1 0 3 4);($ 2 3 %&quot;1 i. 0 2)
++---+---+
+|1 0|0 2|
++---+---+
+
+   ($ $&quot;2 i. 1 0 3 4);($ 2 3 %/&quot;1 i. 0 4)
++-----+-----+
+|1 0 2|0 2 4|
++-----+-----+
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="dictc.htm">&gt;&gt;</a>&nbsp;
+<a href="dicta.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

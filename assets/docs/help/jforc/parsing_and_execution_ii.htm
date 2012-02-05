@@ -1,0 +1,2476 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Parsing and Execution II</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="forks_hooks_and_compound_adv.htm">&gt;&gt;</a>&nbsp;
+<a href="parsing_and_execution_i.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><a
+name="_Toc191734586"></a><a name="_Toc5414677"></a><a name="_Toc1896298"><span
+style='mso-bookmark:_Toc5414677'><span style='mso-bookmark:_Toc191734586'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>39. </span></span><![endif]>Parsing and Execution II</span></span></a></h1>
+
+<p class=MsoBodyText>Now that you understand what an anonymous
+verb/adverb/conjunction is, you are ready to follow parsing and execution word
+by word.&nbsp; We will finally abandon all
+shortcuts and process sentences exactly as the interpreter does.</p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:summary of
+execution&quot; <![endif]--><!--[if supportFields]><span style='mso-element:
+field-end'></span><![endif]-->In any compiled language, a program is broken
+into words (<span class=Ccode><span style='mso-bidi-font-family:"Times New Roman"'>tokens</span></span>)
+and then parsed, and code is generated from the parsed result.<span
+style='mso-spacerun:yes'>&nbsp; </span>Not so in J: a sentence is broken into words,
+but the sentence is not fully parsed; rather, parsing and execution proceed
+simultaneously, scanning the text from right to left.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Definition>Parsing</span> finds
+patterns in the sentence that are then executed.<span
+style='mso-spacerun:yes'>&nbsp; </span><span class=Definition>Execution</span>
+includes the usual supplying of noun operands to verbs to obtain a result from
+the verb, but also other actions: supplying verb and noun operands to
+conjunctions and adverbs to produce derived entities, and recognition of other
+sequences that we will learn soon.&nbsp; </p>
+
+<p class=MsoBodyText>Execution of a bit of a sentence, which we will call a <span
+class=Definition>fragment</span>, consists of replacing the fragment with an
+appropriate <i>single word,</i> namely the result of executing the
+fragment.&nbsp; In the simple case, where the
+fragment is the invocation of a verb (i.&nbsp;e. the fragment looks like <span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>verb&nbsp;noun</span></i></span>
+or <span class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>noun&nbsp;verb&nbsp;noun</span></i></span>),
+the word that replaces it is the noun that is the result of the verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>If the fragment is the invocation of a
+modifier, the result of executing it will be a noun or a derived
+verb/adverb/conjunction.&nbsp; A noun is
+nothing but its value, but the derived verb/adverb/conjunction will itself
+eventually be executed: it is called an <span class=Definition>anonymous
+verb/adverb/conjunction</span> and is saved by the interpreter in a private
+form, and the single word used to replace the fragment is a reference to this
+anonymous verb/adverb/conjunction (for the case of an anonymous verb, you may
+think of the single word as a <span class=Ccode><span style='mso-bidi-font-family:
+"Times New Roman"'>pointer</span></span> to a <span class=Ccode><span
+style='mso-bidi-font-family:"Times New Roman"'>function</span></span> that
+performs according to the definition of the anonymous verb).<span
+style='mso-spacerun:yes'>&nbsp; </span></p>
+
+<p class=MsoBodyText>In all cases the word replacing the fragment has a
+definite part of speech, and if it is a verb, a definite rank.</p>
+
+<p class=MsoBodyText>I want to repeat that 'execution' as used here is not
+synonymous with 'execution on noun operands'.&nbsp;
+Yes, verbs are executed that way.&nbsp;
+But the execution of a modifier produces an anonymous entity, and it may
+consume no nouns at all (as in the example of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+&amp;.&gt;</span></span>).<span
+style='mso-spacerun:yes'>&nbsp; </span>Execution of a modifier is a step along the
+path to execution of the derived verb.</p>
+
+<p class=Section><a name="_Toc191734587"></a><a name="_Toc5414678"></a><a
+name="_Toc5414505"><span style='mso-bookmark:_Toc5414678'><span
+style='mso-bookmark:_Toc191734587'>The Parsing Table</span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;tacit programming:parsing table&quot;
+<![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]-->Execution
+of a sentence begins by breaking the sentence into words.<span
+style='mso-spacerun:yes'>&nbsp; </span>The words (with a beginning-of-line marker,
+shown here as $, prepended) become the initial contents of the <span
+class=Definition>unprocessed word list</span>.&nbsp;
+A push-down <span class=Definition>stack</span> will also be used during
+execution; it is initially empty.&nbsp;
+Execution of the sentence is performed by repetition of the <span
+class=Definition>parsing step</span> which comprises: (1) examining the top 4
+elements of the stack to see if they match one of the 9 executable patterns;
+(2) if a match was found, executing the executable portion of the stack (what
+we called the executable fragment in the last chapter), resulting in a single
+word which replaces the fragment on the stack; (3) if no match was found,
+moving the rightmost word of the unprocessed word list into the leftmost
+position of the stack, pushing the rest of the stack to the right.<span
+style='mso-spacerun:yes'>&nbsp; </span>Execution finishes when there are no
+unprocessed words and the stack does not contain an executable pattern.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that execution of a fragment may leave
+the stack matching one of the executable patterns, so several sequential
+parsing steps may perform an execution without moving anything onto the
+stack.&nbsp; After all words have been
+processed, the stack should contain a beginning-of-line marker followed by a
+single word which becomes the result of the sentence.</p>
+
+<p class=MsoBodyText>To follow the parsing we need to know what patterns at the
+top of the stack contain an executable fragment.<span
+style='mso-spacerun:yes'>&nbsp; </span>The <span class=Definition>parsing table</span>
+below gives the complete list.&nbsp; More than
+one symbol in a box means that any one of them matches the box.<span
+style='mso-spacerun:yes'>&nbsp; </span><b>name</b> means any valid variable name,
+and C, A, V, and N stand for conjunction, adverb, verb, and noun respectively.</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='mso-cellspacing:0in;border:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;
+ mso-padding-top-alt:0in;mso-padding-bottom-alt:0in;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;padding:
+  0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader align=center style='text-align:center;mso-element:
+  frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:106.6pt;mso-element-top:.05pt;mso-height-rule:exactly'><b>leftmost
+  stack word<o:p></o:p></b></p>
+  </td>
+  <td width=260 colspan=3 style='width:194.65pt;border:solid windowtext 1.0pt;
+  padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader align=center style='text-align:center;mso-element:
+  frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:106.6pt;mso-element-top:.05pt;mso-height-rule:exactly'><b>other
+  stack words<o:p></o:p></b></p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader align=center style='text-align:center;mso-element:
+  frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:106.6pt;mso-element-top:.05pt;mso-height-rule:exactly'><b>action<o:p></o:p></b></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ =. =: (</p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>N</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>anything</p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>0 Monad</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ =. =: ( A V N</p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>V</p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>N</b></p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>1 Monad</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ =. =: ( A V N</p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>N</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>N</b></p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>2 Dyad</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ =. =: ( A V N</p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V N</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>A</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>anything</p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>3 Adverb</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ =. =: ( A V N</p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V N</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>C</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V N</b></p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>4 Conj</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ =. =: ( A V N</p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V N</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>V</b></p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>5 Fork</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ =. =: (</p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>C A V N</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>C A V N</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>anything</p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>6 Hook/Adverb</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.5pt;border-right:
+  solid windowtext 1.0pt;mso-border-alt:solid windowtext 1.5pt;mso-border-right-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>name</b> <span style='mso-bidi-font-weight:
+  bold'>N</span></p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>=. =:</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>C A V N</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>anything</p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>7 Is</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9;mso-yfti-lastrow:yes'>
+  <td width=158 style='width:118.75pt;border:solid windowtext 1.5pt;border-right:
+  solid windowtext 1.0pt;mso-border-alt:solid windowtext 1.5pt;mso-border-right-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>(</b></p>
+  </td>
+  <td width=89 style='width:66.75pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>C A V N</b></p>
+  </td>
+  <td width=71 style='width:53.5pt;border:solid windowtext 1.5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'><b>)</b></p>
+  </td>
+  <td width=99 style='width:74.4pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>anything</p>
+  </td>
+  <td width=116 style='width:86.7pt;border:solid windowtext 1.0pt;mso-border-alt:
+  solid windowtext .5pt;padding:0in .75pt 0in .75pt'>
+  <p class=BodyTextnoleader style='mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:106.6pt;mso-element-top:
+  .05pt;mso-height-rule:exactly'>8 Paren</p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>The lines in the parsing table are processed in
+order.&nbsp; If the leftmost 4 words on the
+stack match a line in the table, the fragment (those words on the stack which
+are in boldface in the parsing table) is executed and replaced on the stack by
+the single word returned.&nbsp; Because the
+fragment is always either two or three words long, it is officially known as a <span
+class=Definition>bident</span> or <span class=Definition>trident</span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The last column of the parsing table gives a
+description of what execution of the fragment entails.</p>
+
+<p class=MsoBodyText>You will have an easier time following the parsing if you
+note that the leftmost word in the executable pattern is usually one of <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$&nbsp;=.&nbsp;=:&nbsp;(&nbsp;<i>A&nbsp;V&nbsp;N</i>&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>This means that you can scan from the right
+until you hit a word that matches one of those before you even start checking
+for an executable pattern.&nbsp; If you find
+one of <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$&nbsp;=.&nbsp;=:&nbsp;(&nbsp;<i>A&nbsp;V&nbsp;N</i></span></span>
+and it doesn't match an executable pattern, keep looking for the next
+occurrence.</p>
+
+<p class=MsoBodyText>Note that the leftmost stack word in the parsing table is
+never a conjunction.&nbsp; This is the
+ultimate source of our long-noted rule that conjunctions associate
+left-to-right: a conjunction can be executed only when it appears in the third
+stack position, but if another conjunction is in the leftmost position then,
+the stack will always be pushed down to examine that conjunction's left
+argument.</p>
+
+<p class=MsoBodyText>Line 6, defining hooks, is matched for any combination of <span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>CAVN&nbsp;CAVN</span></i></span> except <span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>N&nbsp;A</span></i></span>
+and <span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>V&nbsp;A</span></i></span> which
+are matched in line 3.&nbsp; Only the
+combinations <span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>A&nbsp;A</span></i></span>, <span
+class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>C&nbsp;N</span></i></span>, <span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>C&nbsp;V</span></i></span>,
+<span class=Jcode><i style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:
+"Times New Roman"'>N&nbsp;C</span></i></span>, <span class=Jcode><i
+style='mso-bidi-font-style:normal'><span style='mso-bidi-font-family:"Times New Roman"'>V&nbsp;C</span></i></span>,
+and <span class=Jcode><i style='mso-bidi-font-style:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>V&nbsp;V</span></i></span> are
+valid; the rest result in syntax errors.</p>
+
+<p class=Section><a name="_Toc191734588"></a><a name="_Toc5414679"></a><a
+name="_Toc5414506"><span style='mso-bookmark:_Toc5414679'><span
+style='mso-bookmark:_Toc191734588'>Examples Of Parsing And Execution</span></span></a></p>
+
+<p class=MsoBodyText>We will now follow a few sentences through parsing.<span
+style='mso-spacerun:yes'>&nbsp; </span>We will represent anonymous entities by names
+in italics, with an indication of how the anonymous entity was created.<span
+style='mso-spacerun:yes'>&nbsp; </span>Up till now in this book we have scarcely
+noticed that the term 'verb' was used both for an entity that can be applied to
+a noun to produce a noun result, and also for the <i>name</i> of that
+entity.&nbsp; This ambiguity will
+continue--being precise would be too cumbersome--but you should be aware of
+it.&nbsp; When we say 'the result is <i>av</i>,
+defined as +/', that means that an anonymous verb was created whose function is
+described as <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/</span></span>,
+and the nickname we are giving it--the word, that is, that goes on the execution
+stack to betoken this verb--is <i>av</i>.</p>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/2*a</span></span> where <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1 2 3</span></span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>$ + /
+  2 * a</p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>$ + /
+  2 *</p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'>1 2 3&nbsp;&nbsp;
+  (not executable)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>$ + /
+  2</p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'>* 1 2 3&nbsp;&nbsp;
+  (not executable)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>$ + /</p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'>2 * 1 2 3&nbsp;&nbsp;
+  (not executable)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>$ +</p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'>/ <b><u>2 * 1 2 3</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result 2 4 6)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>2</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'>$ <b><u>+ /</u></b> 2 4 6<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av</i>, defined as +/)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>3</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'>$ <b><i><u>av</u></i><u> 2 4 6</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result 12)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'>0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8;mso-yfti-lastrow:yes'>
+  <td width=187 valign=top style='width:1.95in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=324 valign=top style='width:243.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  5.1pt;mso-height-rule:exactly'>$ 12</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:5.1pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>The column labeled 'line' indicates which line of the
+parsing table was matched by the stack.&nbsp;
+The fragment is marked in boldface and underlined.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that when the noun <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> moved onto the
+stack, its <i>value</i> was moved; when a named verb, adverb, or conjunction is
+moved onto the stack, only the <i>name</i> is moved.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note also that the noun's value (<span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>1&nbsp;2&nbsp;3</span></span>
+here) is a single word.</p>
+
+<p class=MsoBodyText>From now on we will omit the lines that do not contain an
+executable fragment.</p>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>mean =: +/ % #</span></span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>$ mean
+  =: + / % #</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>$ mean</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>=: <b><u>+ /</u></b> % #<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av1</i>, defined as +/)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>3</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>$ mean</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>=: <b><i><u>av1</u></i><u> % #</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av2</i>, defined as <i>av1</i>&nbsp;%&nbsp;#)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>5</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ <b><u>mean =: av2</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av2</i>; <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>mean</span></span> is assigned
+  <i>av2</i>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'>7</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:page;mso-element-left:center;mso-element-top:
+  .05pt;mso-height-rule:exactly'>$ <i>av2</i></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:page;
+  mso-element-left:center;mso-element-top:.05pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=BodyTextnoleader>I want to emphasize that what is assigned to <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mean</span></span>
+is the <i>result of parsing</i> <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+/&nbsp;%&nbsp;#&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>It is <b>not</b> the sequence <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/&nbsp;%&nbsp;#</span></span>,
+but rather a single verb which performs the function described by the
+fork.&nbsp; Now you see why putting
+parentheses around the definition doesn't matter: <i>av2</i> would be parsed
+the same either way.</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'>$
+  mean 4 5 6</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  28.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  28.15pt;mso-height-rule:exactly'>$ <b><u>mean 4 5 6</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result 5)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'>0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  28.15pt;mso-height-rule:exactly'>$ 5</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:28.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>mean 4 5 6</span></span></p>
+
+<p class=BodyTextnoleader>Since <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>mean</span></span> is the result from parsing <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/ % #</span></span>,
+it is executed without further ado.&nbsp; As
+you can see, a single 'execution' step can trigger a cascade of processing as
+each verb referred to by an executing verb is executed in turn.<span
+style='mso-spacerun:yes'>&nbsp; </span>Here, execution of <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>mean</span></span> does the
+entire processing of the fork, returning the result <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>5&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The verb to be executed can be quite complex,
+and can have a mixture of named and anonymous components, as in the next
+example.</p>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(mean - (+/ % #)&amp;.(^.&quot;1)) 4 5 6</span></span><span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(find the difference between arithmetic and
+geometric mean)</p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 0in 0in 0in;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$ (
+  mean - ( + / % # ) &amp;. ( ^. &quot; 1 ) ) 4&nbsp;5&nbsp;6</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$ (
+  mean - ( + / % # ) &amp;.</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'>( <b><u>^. &quot; 1</u></b> ) ) 4 5 6<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av1</i>, defined as ^.&nbsp;&quot;&nbsp;1)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$ (
+  mean - ( + / % # ) &amp;.</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'><b><u>( <i>av1</i> )</u></b> ) 4 5 6<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av1</i>)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>8</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$ (
+  mean -</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'>( <b><u>+ /</u></b> % # ) &amp;. <i>av1</i>
+  ) 4 5 6&nbsp;&nbsp; (result <i>av2</i>, defined
+  as +/</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>3</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$ (
+  mean -</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'>( <b><i><u>av2</u></i><u> % #</u></b> )
+  &amp;. <i>av1</i> ) 4 5 6&nbsp;&nbsp; (result <i>av3</i>,
+  defined as <i>av2</i>&nbsp;%&nbsp;#)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>5</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$ (
+  mean -</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'><b><u>( <i>av3</i> )</u></b> &amp;. <i>av1</i>
+  ) 4 5 6&nbsp;&nbsp; (result <i>av3</i>)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>8</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$ (
+  mean</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'>- <b><i><u>av3</u></i><u> &amp;. <i>av1</i></u></b>
+  ) 4 5 6&nbsp;&nbsp; (result <i>av4</i>, defined
+  as <i>av3</i>&nbsp;&amp;.&nbsp;<i>av1</i>)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:8'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'>( <b><u>mean - <i>av4</i></u></b> ) 4 5
+  6&nbsp;&nbsp; (result av5, defined as
+  mean&nbsp;-&nbsp;<i>av4</i>)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>5</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:9'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>$</p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'><b><u>( <i>av5</i> )</u></b> 4 5 6<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av5</i>)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>8</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:10'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'>$ <b><i><u>av5</u></i><u> 4 5 6</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>0.0675759</span></span>)</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'>0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:11;mso-yfti-lastrow:yes'>
+  <td width=259 valign=top style='width:194.25pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=264 valign=top style='width:2.75in;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  10.15pt;mso-height-rule:exactly'>$ 0.0675759</p>
+  </td>
+  <td width=32 valign=top style='width:23.95pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 0in 0in 0in'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:10.15pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=BodyTextnoleader>Again, there was only one execution of a verb.<span
+style='mso-spacerun:yes'>&nbsp; </span>It happened at the very end: after <i>av5</i>
+was created, it was executed, and its execution included the execution of
+everything else.&nbsp; <i style='mso-bidi-font-style:
+normal'>av5</i> executed to produce <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>mean&nbsp;-&nbsp;<i style='mso-bidi-font-style:normal'>av4</i></span></span>;
+to do that it executed <i style='mso-bidi-font-style:normal'>av4</i>, then <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>mean</span></span>,
+then <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>-</span></span>,
+and so on up the line.&nbsp; Each executed
+entity produced a result in accordance with its definition.</p>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>inc =: ({.a)&amp;+</span></span> where <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> is <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>4 5 6</span></span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>$ inc
+  =: ( {. a ) &amp; +</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  3.65pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>$ inc
+  =:</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  3.65pt;mso-height-rule:exactly'>( <b><u>{. 4 5 6</u></b> ) &amp; +<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>4</span></span>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>$ inc
+  =:</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  3.65pt;mso-height-rule:exactly'><b><u>( 4 )</u></b> &amp; +<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>4</span></span>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>8</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>$ inc</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  3.65pt;mso-height-rule:exactly'>=: <b><u>4 &amp; +</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result <i>av</i>, defined as 4&amp;+)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>$</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  3.65pt;mso-height-rule:exactly'><b><u>inc =: <i>av</i></u></b><i><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span></i>(result <i>av</i>; <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>inc</span></span> is assigned <i>av</i>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'>7</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6;mso-yfti-lastrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  3.65pt;mso-height-rule:exactly'>$ <i>av</i></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:3.65pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=BodyTextnoleader>This illustrates an important point.<span
+style='mso-spacerun:yes'>&nbsp; </span>Even in the middle of a complex definition,
+verbs are applied to nouns wherever possible.&nbsp;
+And, the value of a noun in a definition is the value at the time the
+definition was <i>parsed</i>.&nbsp; If a
+parsed definition refers to a verb, it does so by name, so the value of a verb
+is its value when it is <i>executed</i>.</p>
+
+<p class=MsoBodyText>The remaining examples are curiosities to show you that it's
+worth your trouble to learn the intricacies of parsing.</p>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a + a =. 5</span></span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>$ a +
+  a =. 5</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>$ a +</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'><b><u>a =. 5</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>5</span></span>; <span
+  class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>
+  is assigned <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>5</span></span>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'>$ <b><u>5 + 5</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>10</span></span>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>2</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'>$ 10</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=BodyTextnoleader><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span> is assigned a value just before that value
+is pushed onto the stack.</p>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2 +: (2 : '&amp;') -: *<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>5</span></span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>$ 2
+  +: ( 2 : '&amp;' ) -: * 5</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  12.3pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>$ 2
+  +:</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  12.3pt;mso-height-rule:exactly'>( <b><u>2 : '&amp;'</u></b> ) -: * 5<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <i>ac1</i>, defined as 2 : '&amp;')</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>$ 2
+  +:</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  12.3pt;mso-height-rule:exactly'><b><u>( <i>ac1</i> )</u></b> -: * 5<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <i>ac1</i>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>8</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>$</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  12.3pt;mso-height-rule:exactly'>2 <b><u>+: <i>ac1</i> -:</u></b> * 5<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <i>ac2</i>, defined as &amp;)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  12.3pt;mso-height-rule:exactly'>$ <b><u>2 <i>ac2</i> *</u></b> 5<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <i>av</i>, defined as 2&amp;*)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  12.3pt;mso-height-rule:exactly'>$ <b><i><u>av</u></i><u> 5</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>10</span></span>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'>0</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7;mso-yfti-lastrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  12.3pt;mso-height-rule:exactly'>$ 10</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:12.3pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoBodyText>Look at what happens when we omit the parentheses:</p>
+
+<p class=MsoBodyText>Sentence: <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>2 +: 2 : '&amp;' -: *&nbsp;&nbsp;
+5</span></span></p>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-padding-alt:0in 5.4pt 0in 5.4pt;mso-border-insideh:.5pt solid windowtext;
+ mso-border-insidev:.5pt solid windowtext'>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>unprocessed
+  word list</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>stack</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border:solid windowtext 1.5pt;
+  border-left:none;mso-border-left-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>line</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext 1.5pt;mso-border-alt:
+  solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>$ 2 +:
+  2 : '&amp;' -: * 5</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext 1.5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext 1.5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:2'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>$ 2
+  +: 2 :</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'>'&amp;' -: <b><u>* 5</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <span class=Jcode><span
+  style='mso-bidi-font-family:"Times New Roman"'>1</span></span>)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>1</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:3'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>$ 2</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'>+: <b><u>2 : '&amp;'</u></b> -: 1<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <i>ac1</i>, defined as 2 : '&amp;')</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>$</p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'>2 <b><u>+: <i>ac1</i> -:</u></b> 1<span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(result is <i>ac2</i>, defined as &amp;)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5;mso-yfti-lastrow:yes'>
+  <td width=163 valign=top style='width:1.7in;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=right style='text-align:right;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'><o:p>&nbsp;</o:p></p>
+  </td>
+  <td width=348 valign=top style='width:261.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText style='text-indent:0in;mso-element:frame;mso-element-frame-hspace:
+  9.35pt;mso-element-wrap:no-wrap-beside;mso-element-anchor-vertical:paragraph;
+  mso-element-anchor-horizontal:column;mso-element-left:center;mso-element-top:
+  7.95pt;mso-height-rule:exactly'>$ <b><u>2 <i>ac2</i> 1</u></b><span
+  style='mso-spacerun:yes'>&nbsp;&nbsp; </span>(domain error: 2&amp;1 is illegal)</p>
+  </td>
+  <td width=44 valign=top style='width:32.8pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoBodyText align=center style='text-align:center;text-indent:0in;
+  mso-element:frame;mso-element-frame-hspace:9.35pt;mso-element-wrap:no-wrap-beside;
+  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:column;
+  mso-element-left:center;mso-element-top:7.95pt;mso-height-rule:exactly'>4</p>
+  </td>
+ </tr>
+</table>
+
+<p class=BodyTextnoleader>The omission produces a subtle but fatal change in
+the parsing order.&nbsp; As the Dictionary
+says, &quot;it may be necessary to parenthesize an adverbial or conjunctival
+phrase that produces anything other than a noun or verb&quot;.<span
+style='mso-spacerun:yes'>&nbsp; </span>Now you see why.</p>
+
+<p class=Section><a name="_Toc191734589"></a><a name="_Toc5414680"></a><a
+name="_Toc5414507"></a><a name="_Toc1896299"><span style='mso-bookmark:_Toc5414507'><span
+style='mso-bookmark:_Toc5414680'><span style='mso-bookmark:_Toc191734589'>Undefined
+Words</span></span></span></a></p>
+
+<p class=MsoBodyText><!--[if supportFields]><span style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;undefined names&quot; <![endif]--><!--[if supportFields]><span
+style='mso-element:field-end'></span><![endif]-->If you try to execute a
+nonexistent verb, you get an error:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; z 5</p>
+
+<p class=Jcodemultiline>|value error: z</p>
+
+<p class=Jcodemultiline>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; z 5</p>
+
+<p class=BodyTextnoleader>However, that error occurs during execution of the
+name, not during its parsing.&nbsp; During
+parsing, <b style='mso-bidi-font-weight:normal'>an undefined name is assumed to
+be a verb of infinite rank</b>.&nbsp; This
+allows you to write verbs that refer to each other, and relieves you from
+having to be scrupulous about the order in which you define verbs.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a =: z</p>
+
+<p class=BodyTextnoleader>This produces a verb <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> which, when
+executed, will execute <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>z</span></span>.</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; z =: +</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; a 5</p>
+
+<p class=Jcodemultiline>5</p>
+
+<p class=BodyTextnoleader>With <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>z</span></span> defined, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> executes
+correctly.&nbsp; Of course, it's OK to assign <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>z</span></span>
+to another verb too:</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; b =: z</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; b 5</p>
+
+<p class=Jcodemultiline>5</p>
+
+<p class=MsoBodyText>Now, can you tell me what <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><a href="mailto:+/@b"><span
+style='color:windowtext;text-decoration:none;text-underline:none'>+/@b</span></a>&nbsp;1&nbsp;2&nbsp;3</span></span>
+will do?&nbsp; Take a minute to figure it out
+(Hint: note that I used <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>@</span></span> rather than <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>@:</span></span>).</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +/@b 1 2 3</p>
+
+<p class=Jcodemultiline>1 2 3</p>
+
+<p class=BodyTextnoleader>Because <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>b</span></span> has rank 0, <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'><a href="mailto:+/@b"><span
+style='color:windowtext;text-decoration:none;text-underline:none'>+/@b</span></a></span></span>
+also has rank zero, so the 'summing' is applied to atoms individually and we
+get a list result.&nbsp; Do you think <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>+/@a&nbsp;1&nbsp;2&nbsp;3</span></span>
+will have the same result?</p>
+
+<p class=Jcodemultiline>&nbsp;&nbsp; +/@a 1 2 3</p>
+
+<p class=Jcodemultiline>6</p>
+
+<p class=BodyTextnoleader>Even though <span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>a</span></span> has the same <i>value</i> as <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>b</span></span>,
+its <i>rank</i> is different.&nbsp; <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>a</span></span>'s
+rank was assigned when it was parsed, and at that time <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>z</span></span> was assumed to
+have infinite rank.&nbsp; <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>b</span></span>'s rank was
+assigned when it was parsed too, but by that time <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>z</span></span> had been defined
+with rank 0.&nbsp; You can win a lot of bar
+bets with this one if you hang out with the right crowd.</p>
+
+<p class=Note>Note</p>
+
+<p class=Note>Avoid using the parameter names <span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span>, <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>v</span></span>,
+<span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>,
+and <span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>n</span></span>
+for your own public variables.&nbsp; Those
+names are reassigned whenever an explicitly-defined entity starts.<span
+style='mso-spacerun:yes'>&nbsp; </span>Also, when an explicit definition is running,
+those names are always evaluated before they are put onto the stack (in other
+words, they are passed by value rather than by name, even if they are
+verbs).&nbsp; Therefore, they produce <span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>value error</span></span>
+if they are undefined when used.</p>
+
+</div><!--bottom jump start--><hr><a href="forks_hooks_and_compound_adv.htm">&gt;&gt;</a>&nbsp;
+<a href="parsing_and_execution_i.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>

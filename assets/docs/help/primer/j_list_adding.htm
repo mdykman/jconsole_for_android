@@ -1,0 +1,105 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>J way of adding lists</title>
+
+</head><body><!--top jump start--><a href="more_primitives.htm">&gt;&gt;</a>&nbsp;
+<a href="basic_list_adding.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<hr><!--top jump end--> 
+<h1>J way of adding lists</h1>
+J knows how to do things to single numbers, but it also knows how to do things with lists.<br>
+<br>
+Since J knows how to add lists, you can write a third, simpler version of the definition.<br>
+
+<pre>addb =: 4 : 'x + y'
+</pre>
+Add this definition to your temporary script file, run the script, and test it.<br>
+
+<pre>   2 3 4 addb 4 5 6
+6 8 10</pre>
+At this point you probably realize that <font face=courier size=-1>addb </font>is so simple as to be unnecessary.<br>
+
+<pre>   2 3 4 + 4 5 6
+6 8 10</pre>
+In J you can just add the lists of numbers because the <font face=courier size=-1>+</font> verb knows all about lists of numbers.<br>
+<br>
+Years of research and thought have gone into how J verbs work with lists. For example, if you wanted to add 1 to each number in a list.<br>
+
+<pre>   1 adda 2 3 4
+3
+</pre>
+The Basic style <font face=courier size=-1>adda </font>verb gives an answer, but it is the wrong answer. What happens is that the <font face=courier size=-1>while.</font> uses the count of the left argument (which is 1) to determine how many elements to generate in the result, and so calculates only the first result number.<br>
+
+<pre>   2 3 4 adda 1
+¦index error
+¦   r=.r,(i{x.)+(i    {y.)</pre>
+ This gives an error because the <font face=courier size=-1>while.</font> uses a count of 3 (the count of numbers in the left argument) but the right argument doesn't have that many so you get an error.<br>
+<br>
+But the J<font face=courier size=-1> +</font> handles both these cases the way you would like, and would expect!<br>
+
+<pre>   1 + 2 3 4
+3 4 5
+   2 3 4 + 1
+3 4 5</pre>
+Thank goodness the <font face=courier size=-1>addlists </font>and <font face=courier size=-1>adda </font>verbs are in a temporary file and are easy to get rid of, because clearly you don't need them in J. Close and delete that temporary script now.<br>
+<br>
+The simple concept of working with lists, instead of just single things, extends throughout J.<br>
+
+<pre>   2 4 6 * 7 8 9
+14 32 54
+   2 * 2 3 4
+4 6 8
+   2 3 4 * 2
+4 6 8
+   5 6 7 % 2
+2.5 3 3.5
+   2 3 4 - 3
+_1 0 1</pre>
+It works for the comparatives as well.<br>
+
+<pre>   2 3 4 = 7 3 8
+0 1 0
+   2 &lt; 0 1 2 3 4 5
+0 0 0 1 1 1
+   't' = 'testing'
+1 0 0 1 0 0 0</pre>
+If this works for primitives, what about verbs such as <font face=courier size=-1>centigrade</font>?<br>
+<br>
+Run your cf.ijs script to define your verbs and see what happens.<br>
+
+<pre>   centigrade _40 32 212
+_40 0 100</pre>
+You can apply your <font face=courier size=-1>centigrade </font>verb to a list of numbers and get a list of results. This also work for <font face=courier size=-1>fahrenheit</font>.<br>
+
+<pre>   fahrenheit _40 0 100
+_40 32 212</pre>
+What about your dyad convert? <br>
+
+<pre>   'c' convert _40 32 212
+_40 0 100
+   'f' convert _40 0 32 100 212
+_40 32 89.6 212 413.6</pre>
+The extension of verbs to work consistently on lists is very powerful and significantly distinguishes J from most other languages. It is important that you assimilate this into the way you think about solving problems.<br>
+<!--bottom jump start--><hr><a href="more_primitives.htm">&gt;&gt;</a>&nbsp;
+<a href="basic_list_adding.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Primer<!--bottom jump end--></body>
+</html>

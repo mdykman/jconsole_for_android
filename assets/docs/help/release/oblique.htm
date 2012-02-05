@@ -1,0 +1,110 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css">
+<title>f//. and f//.@(g/) Improved</title>
+<link href="../jdoc.css" rel=stylesheet>
+</head>
+
+<body><!--top jump start--><a href="infix2a.htm">&gt;&gt;</a>&nbsp;
+<a href="fslashg.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr><td align=left valign=top>
+<b><font size=+3 face="Courier New">f//. </font><font size=+3>and</font><font size=+3 face="Courier New"> f//.@(g/) </font>
+<font size=+3>Improved</font></b></td>
+<td align=right>
+initial writing: 2005-10-18<br>last updated: 2005-10-28
+</td></tr></table>
+<br>
+
+<p>The monad<tt> f//. </tt>and the dyad<tt> f//.@(g/) </tt>
+are now implemented using special code for certain combinations of datatypes and
+rank-0 verbs<tt> f </tt>and<tt> g</tt> .</p>
+
+<tt>+//. </tt>for all datatypes;<tt> &lt;.//. </tt>and<tt> &gt;.//. </tt>for all 
+but the complex datatype; and<tt> f//. </tt>for the following<tt> f</tt> :
+<table>
+<tr><td>Boolean</td> <td>&nbsp; &nbsp;</td>
+ <td><tt>+. *. = ~: &lt; &lt;: &gt; &gt;:</tt></td></tr>
+<tr><td>integer</td><td>&nbsp;</td>
+ <td><tt>17 b.  22 b.  23 b.  </tt></td></tr>
+</table>
+
+<br>
+
+<tt>+//.@(*/) </tt>for all datatypes, and:
+<table>
+<tr><td>Boolean</td> <td>&nbsp; &nbsp;</td>
+ <td><tt>~://.@(*./) &nbsp; ~://.@(+./) &nbsp; +//.@(*./) &nbsp; +//.@(+./)</tt></td>
+ </tr>
+<tr><td valign=top>integer</td> <td>&nbsp;</td>
+ <td><tt>22 b.//.@(17 b./)</tt></td>
+ </tr>
+</table>
+
+<p>The following benchmarks demonstrate the improvement:</p>
+
+<pre>
+b=: 257 263 ?@$ 2
+i=: 257 263 ?@$ 1e6
+d=: 257 263 ?@$ 0
+bx=: 257 ?@$ 2   [ by=: 263 ?@$ 2
+ix=: 257 ?@$ 1e3 [ iy=: 263 ?@$ 1e3
+dx=: 257 ?@$ 0   [ dy=: 263 ?@$ 0
+
+ts=: 6!:2 , 7!:2@]
+ts 'Expression'
+</pre>
+
+<table>
+<tr><td><b>Expression</b></td><td>&nbsp; &nbsp; &nbsp;</td>
+ <td colspan=3 align=center><b>J 6.01</b></td><td>&nbsp; &nbsp;</td>
+ <td colspan=3 align=center><b>J 5.04</b></td><td>&nbsp; &nbsp;</td>
+ <td colspan=3 align=center><b>Ratio</b></td></tr>
+<tr><td><tt>     ~://. b</tt></td><td>&nbsp;</td><td>0.0000759</td><td>&nbsp;</td><td align=right>2176</td><td>&nbsp;</td><td>0.08696</td><td>&nbsp;</td><td>1.12156e7</td><td>&nbsp;</td><td align=right>1146</td><td>&nbsp;</td><td>5154</td></tr>
+<tr><td><tt>&nbsp;+//. b</tt></td><td>&nbsp;</td><td>0.0001019</td><td>&nbsp;</td><td align=right>5248</td><td>&nbsp;</td><td>0.08812</td><td>&nbsp;</td><td>1.12156e7</td><td>&nbsp;</td><td align=right> 865</td><td>&nbsp;</td><td>2137</td></tr>
+<tr><td><tt>&nbsp;+//. i</tt></td><td>&nbsp;</td><td>0.0002662</td><td>&nbsp;</td><td align=right>5248</td><td>&nbsp;</td><td>0.08658</td><td>&nbsp;</td><td>1.12156e7</td><td>&nbsp;</td><td align=right> 325</td><td>&nbsp;</td><td>2137</td></tr>
+<tr><td><tt>  &gt;.//. i</tt></td><td>&nbsp;</td><td>0.0001825</td><td>&nbsp;</td><td align=right>5248</td><td>&nbsp;</td><td>0.08705</td><td>&nbsp;</td><td>1.12156e7</td><td>&nbsp;</td><td align=right> 477</td><td>&nbsp;</td><td>2137</td></tr>
+<tr><td><tt>&nbsp;+//. d</tt></td><td>&nbsp;</td><td>0.0001584</td><td>&nbsp;</td><td align=right>9344</td><td>&nbsp;</td><td>0.08903</td><td>&nbsp;</td><td>1.12156e7</td><td>&nbsp;</td><td align=right> 562</td><td>&nbsp;</td><td>1200</td></tr>
+<tr><td><tt>  &gt;.//. d</tt></td><td>&nbsp;</td><td>0.0002768</td><td>&nbsp;</td><td align=right>9344</td><td>&nbsp;</td><td>0.08848</td><td>&nbsp;</td><td>1.12156e7</td><td>&nbsp;</td><td align=right> 320</td><td>&nbsp;</td><td>1200</td></tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td><tt>bx ~://.@(*./) by     </tt></td><td>&nbsp;</td><td>0.0001151</td><td>&nbsp;</td><td align=right> 2944</td><td>&nbsp;</td><td>0.08788</td><td>&nbsp;</td><td>1.13475e7</td><td>&nbsp;</td><td align=right>763</td><td>&nbsp;</td><td>3854</td></tr>
+<tr><td><tt>bx &nbsp;+//.@( */) by</tt></td><td>&nbsp;</td><td>0.0001343</td><td>&nbsp;</td><td align=right> 6016</td><td>&nbsp;</td><td>0.08611</td><td>&nbsp;</td><td>1.13475e7</td><td>&nbsp;</td><td align=right>641</td><td>&nbsp;</td><td>1886</td></tr>
+<tr><td><tt>ix &nbsp;+//.@( */) iy</tt></td><td>&nbsp;</td><td>0.0003165</td><td>&nbsp;</td><td align=right>10112</td><td>&nbsp;</td><td>0.08704</td><td>&nbsp;</td><td>1.17416e7</td><td>&nbsp;</td><td align=right>275</td><td>&nbsp;</td><td>1161</td></tr>
+<tr><td><tt>dx &nbsp;+//.@( */) dy</tt></td><td>&nbsp;</td><td>0.0001345</td><td>&nbsp;</td><td align=right>10112</td><td>&nbsp;</td><td>0.08883</td><td>&nbsp;</td><td>1.22659e7</td><td>&nbsp;</td><td align=right>660</td><td>&nbsp;</td><td>1213</td></tr>
+
+
+</table>
+
+
+
+
+
+
+
+
+<br>
+<!--bottom jump start--><hr><a href="infix2a.htm">&gt;&gt;</a>&nbsp;
+<a href="fslashg.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Release<!--bottom jump end--></body>
+</html>

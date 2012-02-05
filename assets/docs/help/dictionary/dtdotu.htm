@@ -1,0 +1,107 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>t. Taylor Coeff.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="dtdotm.htm">&gt;&gt;</a>&nbsp;
+<a href="dscapco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=45%><b><font size=+2>Taylor Coefficient</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>u t. &nbsp;0 0 0</font></td>
+<td align=right  width=21%>&nbsp;</td>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>u t. y </tt>is the <tt>y</tt>th coefficient in the Taylor 
+series approximation to the function<tt> u</tt> .<tt> </tt>
+The domain of the adverb<tt> t. </tt>is the same as the left 
+domain of the derivative<tt> D.</tt> .<tt> </tt>See the case<tt> m t.</tt> .
+<br>&nbsp;</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x u t.y </tt>is the product of<tt> (x^y) </tt>and<tt> u t. y</tt> .
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+   f=: 1 2 1&amp;p. 
+   g=: 1 3 3 1&amp;p. 
+   x=: 10%~i=: i.8
+   ]c=: (f*g) t. i
+1 5 10 10 5 1 0 0
+
+   6j2 &quot;:(c p. x),:(f*g) x
+  1.00  1.61  2.49  3.71  5.38  7.59 10.49 14.20
+  1.00  1.61  2.49  3.71  5.38  7.59 10.49 14.20
+
+   (c p. x)=(f*g) x
+1 1 1 1 1 1 1 1
+            
+   ]d=: f@g t. i 
+4 12 21 22 15 6 1 0
+
+   (d p. x)=(f g x)
+1 1 1 1 1 1 1 1
+
+   sin=: 1&amp;o. 
+   cos=: 2&amp;o.
+   8j4&quot;:t=: (^ t. i),(sin t. i),:(cos t. i)
+  1.0000  1.0000  0.5000  0.1667  0.0417  0.0083  0.0014  0.0002
+  0.0000  1.0000  0.0000 _0.1667  0.0000  0.0083  0.0000 _0.0002
+  1.0000  0.0000 _0.5000  0.0000  0.0417  0.0000 _0.0014  0.0000
+
+   * t
+1 1  1  1 1 1  1  1
+0 1  0 _1 0 1  0 _1
+1 0 _1  0 1 0 _1  0
+
+   ((sin*sin)+(cos*cos)) t. i
+1 0 0 0 _2.71051e_20 0 0 0
+
+   rf=: n%d 
+   n=: 0 1&amp;p. 
+   d=: 1 _1 _1&amp;p.
+   ]fibonacci=: rf t. i. 20
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181
+
+   2 +/\ fibonacci
+1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765
+
+   (% -. - *:) t. i.20
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="dtdotm.htm">&gt;&gt;</a>&nbsp;
+<a href="dscapco.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

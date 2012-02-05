@@ -1,0 +1,10 @@
+NB. section 2
+
+<h1 name="Section 2">SECTION 2</h1>
+
+Following are examples of J plots drawn in publish.
+							
+<image>plot21.jpf</image>
+<image>plot22.jpf</image>
+<image>plot23.jpf</image>
+

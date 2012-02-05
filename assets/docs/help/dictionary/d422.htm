@@ -1,0 +1,114 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>/: Grade Up  -  Sort</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d430.htm">&gt;&gt;</a>&nbsp;
+<a href="d421.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Grade Up</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3>/: &nbsp;_ _ _</font></td>
+<td align=right  width=33%><b><font size=+2>Sort Up</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>/: </tt>grades <i>any</i> argument, yielding a permutation 
+vector;<tt> (/:y){y </tt>sorts<tt> y </tt>in ascending order.  
+For example:<br>
+
+<pre>
+   n=: 3 1 4 2 1 3 3
+   ]g=: /: n
+1 4 3 0 5 6 2
+
+   g { n
+1 1 2 3 3 3 4
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>x/:y </tt>is<tt> (/:y){x</tt> ;<tt> </tt>i.e.,<tt> x </tt>is 
+sorted to an order specified by<tt> y</tt> .<tt> </tt>
+In particular,<tt> y/:y </tt>(or<tt> /:~y</tt>)<tt> </tt>
+sorts<tt> y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   y=: 'popfly'
+   y /: 3 1 4 1 5 9
+ofpply
+    
+   y /: y
+floppy
+</pre>
+</td>                                                         
+</tr></table><br>
+
+Elements of<tt> /:y </tt>that select equal elements of<tt> y </tt>
+are in ascending order.  If<tt> y </tt>is a table,<tt> /:y </tt>
+grades the base value of the rows, using a base larger than twice 
+the magnitude of any of the elements.  Higher ranks are treated 
+as<tt> ,.y</tt> ,<tt> </tt>(as if its items were each ravelled).<br><br>
+
+If<tt> y </tt>is literal,<tt> /:y </tt>grades according to the 
+collating sequence determined by the alphabet<tt> a.</tt> ;<tt> </tt>
+another collating sequence<tt> cs </tt>can be imposed by 
+grading<tt> cs i. y</tt> .<tt> </tt>For example:<br>
+
+<pre>
+   ]n=: 3 1 4 1 6,2 7 1 8 3,:6 1 8 0 3
+3 1 4 1 6
+2 7 1 8 3
+6 1 8 0 3
+
+   /: n
+1 0 2
+
+   Aa=: ' ',. a. {~ 65 97 +/ i. 26
+   x=: words=: &gt;;: 'When eras die'
+   j=: &lt;./Aa i.&quot;1 _ x
+   x ; (x/:x) ; (x/:j) ; Aa
++----+----+----+---------------------------+
+|When|When|die | ABCDEFGHIJKLMNOPQRSTUVWXYZ|
+|eras|die |eras| abcdefghijklmnopqrstuvwxyz|
+|die |eras|When|                           |
++----+----+----+---------------------------+
+</pre>
+
+<p>The types: numeric or empty, symbol, literal (1 byte or 2 byte characters), 
+and boxed, are so ordered; within them, a lower rank precedes a higher, 
+and arrays to be compared are padded with fills if necessary
+to have the same shape.  
+Complex arguments are ordered by real part, then by imaginary.  
+Boxed arrays are ordered according to the opened elements.</p>
+
+<br>
+
+<!--bottom jump start--><hr><a href="d430.htm">&gt;&gt;</a>&nbsp;
+<a href="d421.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

@@ -1,0 +1,107 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title># Tally  -  Copy</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="d401.htm">&gt;&gt;</a>&nbsp;
+<a href="d332.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<table width=100%><tr>
+<td align=left   width=33%><b><font size=+2>Tally</font></b></td>
+<td align=center width=34%><font face="Courier New" size=+3># &nbsp;_ 1 _</font></td>
+<td align=right  width=33%><b><font size=+2>Copy</font></b>
+</tr></table>
+<br>
+
+<table width=100% border=0><tr>
+<td valign=top width=49% bgcolor=#eeeeee>
+<tt>#y </tt>is the number of items in<tt> y</tt> .<tt> </tt>Thus: <br>
+
+<pre>
+   (#'');(#'a');(#'octothorpe')
++-+-+--+
+|0|1|10|
++-+-+--+
+
+   (#3);(#,3);(# 3 4)
++-+-+-+
+|1|1|2|
++-+-+-+
+
+   (#i.4 5 6);(#$i.4 5 6)
++-+-+
+|4|3|
++-+-+
+</pre>
+</td>
+
+<td width=2%>&nbsp;</td>
+
+<td valign=top width=49% bgcolor=#eeeeee>
+If the arguments have an equal number of items, then<tt> x#y </tt>
+copies<tt> +/x </tt>items from <tt>y</tt>,<tt> </tt>with<tt> i{x </tt>
+repetitions of item<tt> i{y</tt> .<tt> </tt>
+Otherwise, if one is an atom it is repeated to make the item 
+count of the arguments equal. <br><br>
+
+The complex left argument<tt> a j. b </tt>copies<tt> a </tt>
+items followed by<tt> b </tt>fills.  The fit conjunction 
+provides specified fills, as in<tt> #!.f</tt> .
+</td>
+</tr></table>
+<br>
+
+Copy is illustrated by the following examples:<br>
+
+<pre>
+   0 1 2 3 4 5 # 0 1 2 3 4 5
+1 2 2 3 3 3 4 4 4 4 5 5 5 5 5 
+
+   t=: 3 4 $'abcdefghijkl' [ n=: i. 3 4
+   t ; n ; (3 0 1 # t) ; (3 0 1 # n) ; (3 1 4 2 #&quot;1 t)
++----+---------+----+---------+----------+
+|abcd|0 1  2  3|abcd|0 1  2  3|aaabccccdd|
+|efgh|4 5  6  7|abcd|0 1  2  3|eeefgggghh|
+|ijkl|8 9 10 11|abcd|0 1  2  3|iiijkkkkll|
+|    |         |ijkl|8 9 10 11|          |
++----+---------+----+---------+----------+
+
+   k=: 2j1 0 1j2
+   (k # t);(k # n);(k  #!.'*' t);(k #!.4 n)
++----+---------+----+---------+
+|abcd|0 1  2  3|abcd|0 1  2  3|
+|abcd|0 1  2  3|abcd|0 1  2  3|
+|    |0 0  0  0|****|4 4  4  4|
+|ijkl|8 9 10 11|ijkl|8 9 10 11|
+|    |0 0  0  0|****|4 4  4  4|
+|    |0 0  0  0|****|4 4  4  4|
++----+---------+----+---------+
+</pre>
+
+
+<br><br>
+
+<!--bottom jump start--><hr><a href="d401.htm">&gt;&gt;</a>&nbsp;
+<a href="d332.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

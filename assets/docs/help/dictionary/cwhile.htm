@@ -1,0 +1,87 @@
+<html>
+<head><link rel=stylesheet href="../jdoc.css" type="text/css"><title>while.</title>
+<link href="../jdoc.css" rel=stylesheet></head>
+<body><!--top jump start--><a href="ref.htm">&gt;&gt;</a>&nbsp;
+<a href="ctry.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<hr><!--top jump end-->
+
+<br>
+<b><font face="Courier New" size=+3>while.</font></b><br><br>
+
+<table><tr><td valign=top width=100% bgcolor=#eeeeee>
+<pre>
+while.  T do. B end.
+whilst. T do. B end.
+</pre>
+
+The last sentence executed in the<tt> T </tt>block is tested for a 
+non-zero value in its leading atom.  If true, the<tt> B </tt>block 
+is executed.  The<tt> T </tt>block is then retested, and so on, 
+continuing until the<tt> T </tt>block tests false.  
+(An empty<tt> T </tt>block result or an 
+omitted<tt> T </tt>block tests true.)<br><br>
+
+<tt>whilst. </tt>differs from<tt> while. </tt>only in that 
+it <b>s</b>kips <b>t</b>est the first time.<br><br>
+
+<a href="cbreak.htm"><tt>break.</tt></a><tt> </tt>
+goes to the end of the<tt> while. </tt>
+or<tt> whilst. </tt>control structure 
+and<tt> </tt><a href="ccont.htm"><tt>continue.</tt></a><tt> </tt>
+goes to the top.
+<br>&nbsp;</td>
+</tr></table><br>
+
+For example:<br>
+
+<pre>
+exp =: 4 : 0                  <font face=Times size=+1>Exponentiation by repeated squaring</font>
+ z=.1
+ a=.x
+ n=.y
+ while. n do.
+  if. 2|n do. z=.z*a end.
+  a=.*:a
+  n=.&lt;.-:n
+ end.
+ z
+)
+
+   3 exp 7
+2187
+
+   3 ^ 7
+2187
+
+   1.1 exp 0
+1
+
+   2x exp 128
+340282366920938463463374607431768211456
+</pre>
+
+<br>
+<!--bottom jump start--><hr><a href="ref.htm">&gt;&gt;</a>&nbsp;
+<a href="ctry.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+Dictionary<!--bottom jump end--></body>
+</html>

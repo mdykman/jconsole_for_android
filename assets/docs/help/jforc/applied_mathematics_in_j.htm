@@ -1,0 +1,1512 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st2="urn:schemas:contacts"
+xmlns:st1="urn:schemas-microsoft-com:office:smarttags"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="jforcprogrammers_files/filelist.xml">
+<link rel=Edit-Time-Data href="jforcprogrammers_files/editdata.mso">
+<link rel=OLE-Object-Data href="jforcprogrammers_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<link rel=stylesheet href="../jdoc.css" type="text/css"><title>Applied Mathematics in J</title><link rel=stylesheet href="stylesheet.htm" type="text/css"></head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'><!--top jump start--><a href="elementary_mathematics_in_j.htm">&gt;&gt;</a>&nbsp;
+<a href="writing_your_own_modifiers.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<hr><!--top jump end--><div class=Section2><h1 style='margin-left:0in;text-indent:0in;mso-text-indent-alt:0in'><span
+style='mso-bookmark:_Toc1896278'><a name="_Toc5414657"></a><a
+name="_Toc191734502"><span style='mso-bookmark:_Toc5414657'><![if !supportLists]><span
+style='mso-bidi-font-family:"Times New Roman"'><span style='mso-list:Ignore'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>31. </span></span><![endif]>Applied Mathematics in J</span></a><span
+style='mso-bookmark:_Toc5414657'></span></span></h1>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734503">Radix Notation For Numbers</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Numbers in radix form comprise a <span
+class=Definition>multiplier</span>, a <span class=Definition>base</span>, and an
+<span class=Definition>exponent</span>, written together with no spaces; the
+value of the number is </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>multiplier&nbsp;*&nbsp;base&nbsp;^&nbsp;exponent</span></span>&nbsp;.<span
+style='mso-spacerun:yes'>&nbsp; </span>The base is indicated by a letter, chosen from </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>e</span></span>
+(base 10), </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>p</span></span> (base &#960;, 3.14159...), or </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+(base <i style='mso-bidi-font-style:normal'>e</i>, 2.71828...).<span
+style='mso-spacerun:yes'>&nbsp; </span>Examples:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 1p1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>3.14159</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 1x1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>2.71828</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 1e3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>1000</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734504">Complex Numbers</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;complex
+numbers&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>All the mathematical
+functions can be applied to complex numbers.&nbsp;
+A complex constant is written with the letter </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>j</span></span>
+separating the real and imaginary parts, e.&nbsp;g. </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0j1</span></span>
+is the square-root of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>_1&nbsp;</span></span>.&nbsp;
+Alternatively, a constant can be written in <span class=Definition>polar
+form</span> in which the letters </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>ar</span></span> (or </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>ad</span></span>) separate the
+magnitude of the number from the angle in radians (or degrees) between the real
+axis and a line in the complex plane from the origin to the point representing
+the number:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 1ar1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>0.540302j0.841471</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 1ad90</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>0j1</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>A number of verbs are available for operations
+on components of complex numbers.&nbsp; All
+have rank 0.</span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+&nbsp;y</span></span><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;+
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>conjugate of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>+.&nbsp;y<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span
+style='mso-spacerun:yes'>&nbsp;</span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;+.
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;</span>creates a 2-atom list of the real and
+imaginary components o<span class=Jcode><span style='font-family:"Times New Roman";
+font-weight:normal'>f</span></span><b style='mso-bidi-font-weight:normal'> </b></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman";mso-bidi-font-weight:bold'>.&nbsp;y</span></span><b><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span></b></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><b>&nbsp;XE &quot;</b>.
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>creates a 2-atom list of
+the length and angle in radians of the polar form of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>|&nbsp;y</span></span><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;|
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>magnitude of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>j.&nbsp;y<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>0j1 * y</span></span><span class=Jcode><span
+style='font-family:"Times New Roman";font-weight:normal'> </span></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;j.
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='font-family:"Times New Roman";font-weight:normal'><span
+style='mso-spacerun:yes'>&nbsp;</span></span></span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><o:p></o:p></span></span></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>r.&nbsp;y<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>^ 0j1 * y</span></span><span class=Jcode><span
+style='font-family:"Times New Roman";font-weight:normal'> </span></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;r.
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='font-family:"Times New Roman";font-weight:normal'><span
+style='mso-spacerun:yes'>&nbsp;</span></span></span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'><o:p></o:p></span></span></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;j.&nbsp;y<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>x + j. y</span></span> (i.&nbsp;e. </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is the real part, </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is the imaginary part)</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'> XE &quot;j. dyad&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;r.&nbsp;y<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>x * r. y</span></span> (i. e. polar form,
+where </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is the magnitude and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+the angle in radians)</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'> XE &quot;r. dyad&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span></p>
+
+<p class=BodyTextVerbdef style='margin-left:.5in'><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>! y</span></span><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>factorial of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+</span></span><!--[if supportFields]><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;! monad&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Factorial
+verb !&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>(more generally, the gamma
+function </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='font-family:"Courier New"'>&#915;</span>(1+</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>))</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734505">Matrix Operations</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;-/
+.*&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;+/
+.*&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;matrix
+verbs&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>J has primitive verbs for
+operations on matrices, some using the conjunction </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>-/&nbsp;.*&nbsp;y</span></span> gives the determinant
+of </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>;
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;+/&nbsp;.*&nbsp;y</span></span>
+is the matrix product of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> and </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>%.&nbsp;y</span></span>
+is the matrix inverse of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> (provided </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+does not have dependent columns); </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;%.&nbsp;y</span></span> is the projection of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+onto the column space of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is square, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>%.&nbsp;y</span></span>
+is </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><sup>-1</sup>,
+the inverse matrix of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span>&nbsp;.&nbsp;
+If </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is not square, it must have more rows than
+columns, and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>%.&nbsp;y</span></span> is (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><sup>T</sup></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>)<sup>-1</sup></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span><sup>T</sup>&nbsp;.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;%.&nbsp;y</span></span> is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>(%.&nbsp;y)&nbsp;+/&nbsp;.*&nbsp;x</span></span>&nbsp;.<sup><o:p></o:p></sup></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>In </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;+/&nbsp;.*&nbsp;y</span></span>,
+a rank-1 </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> is treated as a matrix with one row, and a
+rank-1 </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is treated as a matrix with one column; but
+the result rank, which is 2 when rank-2 matrices are multiplied, is 1
+when one operand has rank 1 and 0 when both do.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;%.&nbsp;y</span></span> is a rough-and-ready way to
+get a least-squares approximation of </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> as a linear
+combination of the columns of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.&nbsp;
+If your </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> is singular or close to it, avoid </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>%.</span></span>
+and use methods based on singular value decomposition.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734506">Polynomials: </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734506'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>p.</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;polynomials&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>J supports 3 different ways
+of specifying a polynomial:</span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l5 level1 lfo9;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><![if !supportLists]><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>as a list of coefficients of increasing powers,
+starting with power 0 (i.&nbsp;e. a constant term), where each coefficient
+multiplied by the corresponding power of the variable produces a term; the
+polynomial is the sum of the terms.&nbsp; This
+form is an unboxed numeric list.</span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l5 level1 lfo9;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><![if !supportLists]><span
+style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>as a multiplier </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>m</span></span> and a list of
+roots </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>r</span></span>, representing the polynomial <i>m</i>(<i>x</i>-<i>r<sub>0</sub></i>)(<i>x</i>-<i>r<sub>1</sub></i>)...(<i>x</i>-<i>r<sub>n</sub></i>).<span
+style='mso-spacerun:yes'>&nbsp; </span>This form is a 2-item list of boxes </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m;r</span></span>
+(if </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m</span></span> is 1 it may be omitted, leaving just </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>&lt;r</span></span>).</span></span></p>
+
+<p class=BodyTextList style='margin-left:.25in;text-indent:-.25in;mso-list:
+l5 level1 lfo9;tab-stops:list .25in left .75in 1.0in 1.25in 1.5in 1.75in 2.0in'><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><![if !supportLists]><span
+style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;multinomials&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>(for multinomials) a
+multinomial of <i>n</i> variables is represented as a list of terms, each term
+consisting of a coefficient and a list of <i>n</i> exponents (one exponent per
+variable).&nbsp; The multinomial is the sum of
+the terms.&nbsp; The form is a boxed rank-2
+array in which each item is a coefficient followed by the list of <i>n</i>
+exponents.&nbsp; This form is distinguished
+from the multiplier-root form by the rank of the boxed array.<span
+style='mso-spacerun:yes'>&nbsp; </span>(It is possible to have multiple multinomials
+that share a common exponent array, by having more than one coefficient
+preceding each list of exponents, but we will not pursue that here)</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>For example, three ways of expressing the polynomial
+3<i>x</i><sup>3</sup>-12<i>x</i> (which can be written 3<i>x</i>(<i>x</i>+2)(<i>x-</i>2))are
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;_12&nbsp;0&nbsp;3</span></span>,
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3;_2&nbsp;0&nbsp;2</span></span>,
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>&lt;2&nbsp;2$_12&nbsp;1&nbsp;3&nbsp;3&nbsp;</span></span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>p.&nbsp;y</span></span> has </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Roots
+verb p.&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;p.
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>rank 1 and converts between
+coefficient and multiplier-root form of the polynomial </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>Note that converting from coefficient form to
+multiplier-root form solves for the roots of the polynomial.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; p. 0
+_12 0 3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>+-+------+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>|3|2 _2 0|</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>+-+------+</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; p.
+3;2 0 _2</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>0 _12 0 3</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If the multinomial form has only one variable
+(i.&nbsp;e. each item has length 2), monad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p.</span></span>
+will convert it to coefficient form:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; p.
+&lt;2 2$_12 1 3 3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>0 _12 0 3</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Polynomial
+verb p.&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;p.
+dyad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p.</span></span>
+has rank </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>1&nbsp;0</span></span> and is used to evaluate a polynomial
+in any of these forms.&nbsp; If </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+is a polynomial in coefficient or multiplier-root form, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;p.&nbsp;y</span></span>
+evaluates it with </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> giving the value of the variable:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 0 _12
+0 3 p. 1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>_9</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; (3;_2
+0 2) p. _2 _1 0 1 2</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>0 9 0 _9 0</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>(the second evaluation applied the polynomial
+to 5 different values of the variable).</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>If </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is a
+multinomial, </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;p.&nbsp;&lt;y</span></span> evaluates it with the
+list </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> giving the values of the variables (</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+must be boxed because the right rank of dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p.</span></span>
+is 0 and in this case there is more than one variable).<span
+style='mso-spacerun:yes'>&nbsp; </span>So to evaluate the binomial <i>x</i><sup>3</sup>+3<i>x</i><sup>2</sup><i>y</i>+3<i>xy</i><sup>2</sup>+<i>y</i><sup>3</sup>
+with <i>x</i>=2 and <i>y</i>=3 we have</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+(&lt;4 3$1 3 0&nbsp; 3 2 1<span
+style='mso-spacerun:yes'>&nbsp; </span>3 1 2&nbsp;
+1 0 3) p. &lt;2 3</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>125</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>as expected.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734507">Calculus: </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734507'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>d.</span></span>, </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734507'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>D.</span></span>, </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734507'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>D:</span></span>, and </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734507'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>p..</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;calculus&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;derivative&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>J provides support for
+differential and integral calculus.</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'> XE &quot;u d. n&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;</span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;d.&nbsp;n</span></span> produces the verb that gives
+the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span><sup>th</sup> derivative of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;</span></span>:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; *: d.
+1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>+:</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>*:&nbsp;y</span></span> is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+squared; the derivative is </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>+:&nbsp;y</span></span> which is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+doubled.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+^&amp;3 d. 1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>3&amp;*@(^&amp;2)</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>^&amp;3&nbsp;y</span></span> is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+cubed; the derivative is </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>3&nbsp;*&nbsp;y&nbsp;^&nbsp;2&nbsp;</span></span>.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+^&amp;3 d. 2</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>3&quot;0 * +:</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Second derivative is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>3&nbsp;*&nbsp;2&nbsp;*&nbsp;y&nbsp;</span></span>.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; *: d.
+_1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>0 0 0 0.33333&amp;p.</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The _1<sup>st</sup> derivative is the
+indefinite integral, which is </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>(y&nbsp;^&nbsp;3)&nbsp;%&nbsp;3&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>The form the interpreter uses is the
+polynomial form.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; f =.
+*:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; f d.
+_1 (6)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>72</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; g =.
+*:@+:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; g d.
+_1 (6)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>288</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;d.&nbsp;n</span></span> produces ordinary
+derivatives, and evaluates its </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> with rank 0.&nbsp;
+For partial derivatives,</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'> XE &quot;derivative:partial&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;u
+D. n&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;</span>use </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;D.&nbsp;n</span></span>
+where </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span> has rank greater than 0.<span
+style='mso-spacerun:yes'>&nbsp; </span>Each cell of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+produces an array of results, one result for each atom of the cell, giving the
+partial derivative with respect to that atom.&nbsp;
+For example, the length of a vector is given by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+veclength =: +/&amp;.:*:&quot;1</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>which squares the atoms, adds them, and takes
+the square root:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+veclength 3 4 5</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>7.07107</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The derivative of the vector length with
+respect to the individual components is given by:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+veclength D. 1 (3 4 5)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>0.424264 0.565685 0.707107</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The result of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+need not be a scalar.&nbsp; Here we define the
+cross product:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; xp =:
+dyad : '((1|.x)*(_1|.y)) - ((_1|.x)*(1|.y))'&quot;1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 0 0
+2&amp;xp D. 1 (4 2 0)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;0 2 0</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>_2 0 0</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;0 0 0</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Each row is the vector-valued partial
+derivative of the cross product (</span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>0&nbsp;0&nbsp;2&nbsp;xp&nbsp;4&nbsp;2&nbsp;0</span></span>)
+with respect to one component of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The interpreter will bend every effort to find
+a derivative for your function, but it may fail, or you may not like the
+derivative it chooses.</span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'> XE &quot;m D. n&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;</span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&nbsp;D.&nbsp;n</span></span>, when </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+is a gerund </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u`v</span></span>, produces a new verb which executes like </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+but whose n<sup>th</sup> derivative is </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>v&nbsp;</span></span>:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; a =.
+*:`] D. 1</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Here </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>a</span></span> is defined to be
+</span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>*:</span></span>
+except that its derivative is </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>]&nbsp;</span></span>.</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; a</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>*:`]D.1</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; a D.
+1 (5)</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>5</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Sure enough, the derivative is </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>]&nbsp;</span></span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;derivative:approximate&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;u
+D\: n&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>If you don't want to express
+the derivative, you can have the interpreter approximate it for you.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;u&nbsp;D:&nbsp;n&nbsp;y</span></span> approximates
+the derivative at </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> by evaluating </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+at </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y+x&nbsp;</span></span>.&nbsp;
+Both the left and right ranks of </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;D:&nbsp;n</span></span>
+are the monadic rank of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u</span></span>, so you can specify different step-sizes for
+different atoms of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> (if </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>x</span></span> is a scalar, it
+is used for the step-size at all atoms of </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span>).</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;polynomials:calculus&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;calculus:polynomials&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>You can do calculus on
+polynomials by manipulating the polynomial forms without having to create the
+verbs that operate on those forms.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>p..&nbsp;y</span></span>
+(rank 1) </span></span><!--[if supportFields]><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Polynomial Derivative verb p..&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;p..
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>takes polynomial </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+in either coefficient or multiplier-root form and produces the coefficient form
+of the derivative of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y&nbsp;</span></span>.&nbsp;
+</span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;p..&nbsp;y</span></span> (rank </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>0&nbsp;1</span></span>)
+</span></span><!--[if supportFields]><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><span style='mso-element:field-begin'></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;</span>XE &quot;Polynomial Integral verb p..&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;p..
+dyad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>produces the coefficient
+form of the integral of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> with constant term </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;</span></span>.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734508">Taylor Series: </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734508'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>t.</span></span>, </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734508'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>t:</span></span>, and </span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734508'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>T.</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Taylor series&quot; </span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;u&nbsp;t.&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>With derivatives available,
+Taylor series
+are a natural next step.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;t.&nbsp;y</span></span>
+is the </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span><sup>th</sup> Taylor coefficient of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+expanded about 0, and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x&nbsp;u&nbsp;t.&nbsp;y</span></span> evaluates that term at
+the point </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span>, in other words </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;u&nbsp;t.&nbsp;y</span></span>
+is </span></span><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x^y&nbsp;*&nbsp;u&nbsp;t.&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>All ranks of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u&nbsp;t.</span></span>
+are 0.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;T.&nbsp;n</span></span> is </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;u&nbsp;T.
+n&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>a verb which is the n-term Taylor approximation to </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>u</span></span>
+(expanded about 0).</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>u&nbsp;t:&nbsp;y</span></span></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'> XE &quot;u t\:&quot; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><![endif]--><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-spacerun:yes'>&nbsp;</span>is </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>(!y)&nbsp;*&nbsp;u&nbsp;t.&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734509">Hypergeometric Function with </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734509'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>H.</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;generalized
+hypergeometric function&quot; </span></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The <span class=Definition>generalized
+hypergeometric function</span> is specified by two lists of numbers, a <span
+class=Definition>numerator list</span> and a <span class=Definition>denominator
+list</span>.&nbsp; The generalized
+hypergeometric function is the sum over all <i>k</i> of the (infinite)
+generalized hypergeometric series, which is a power series in which the
+coefficient of the <i>y<sup>k</sup></i> term is the product of the rising
+factorials of length <i>k</i> of the numerator items divided by a similar
+product for the denominator items, and then divided by </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>!k&nbsp;</span></span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;m
+H. n&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The conjunction </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>H.</span></span>
+is used in the form </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>m&nbsp;H.&nbsp;n</span></span> where </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+is the numerator list and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> is the denominator list.<span
+style='mso-spacerun:yes'>&nbsp; </span>The resulting verb </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;H.&nbsp;n</span></span>
+has rank 0.&nbsp; The monad </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;H.&nbsp;n&nbsp;y</span></span>
+takes the limit of the sum of the generalized hypergeometric series; the dyad </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;m&nbsp;H.&nbsp;n&nbsp;y</span></span>
+takes the sum of the first </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> terms.&nbsp;
+Formally, the generalized hypergeometric function is</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><sub><!--[if gte vml 1]><v:shape id="_x0000_i1026"
+ type="#_x0000_t75" style='width:158.25pt;height:36pt' o:ole="">
+ <v:imagedata src="jforcprogrammers_files/image003.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=211 height=48
+src="jforcprogrammers_files/image004.gif" v:shapes="_x0000_i1026"><![endif]></sub><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="Equation.3" ShapeID="_x0000_i1026"
+  DrawAspect="Content" ObjectID="_1265476153">
+ </o:OLEObject>
+</xml><![endif]-->&nbsp;where <sub><!--[if gte vml 1]><v:shape
+ id="_x0000_i1027" type="#_x0000_t75" style='width:132pt;height:15.75pt' o:ole="">
+ <v:imagedata src="jforcprogrammers_files/image005.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img border=0 width=176 height=21
+src="jforcprogrammers_files/image006.gif" v:shapes="_x0000_i1027"><![endif]></sub><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="Equation.3" ShapeID="_x0000_i1027"
+  DrawAspect="Content" ObjectID="_1265476154">
+ </o:OLEObject>
+</xml><![endif]--></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;hypergeometric
+function&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>If </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m</span></span>
+contains 2 items and </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>n</span></span> contains 1 item, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>m&nbsp;H.&nbsp;n</span></span>
+defines a <span class=Definition>hypergeometric function</span>.</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Generalized hypergeometric functions can be
+used to calculate a great many functions of interest: Legendre polynomials,
+Laguerre polynomials, Chebyshev polynomials, and Bessel functions of the first
+kind are all special cases of hypergeometric functions.<span
+style='mso-spacerun:yes'>&nbsp; </span>Ewart Shaw, in <span class=MsoHyperlink>http://www.ewartshaw.co.uk/data/jhyper.doc</span>,
+gives a number of examples of uses of </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>H.&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example, the error function and the
+cumulative distribution function are given by</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; erf
+=: 3 : '(((2p_0.5)*y) % (^*:y)) * 1 H. 1.5 *: y'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+n01cdf =: 3 : '-: &gt;: erf y % %:2'&nbsp;&nbsp;
+NB. CDF of N(0,1)</span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>where I have rewritten Shaw's formulas to use
+elementary J.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>2p_0.5</span></span>
+is 2/<i>sqrt</i>(&#960;).</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734510">Sparse Arrays: Monad and Dyad </a></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+style='mso-bookmark:_Toc191734510'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>$.</span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$.&nbsp;y</span></span> </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;$.
+monad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;$.
+dyad&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;sparse
+arrays&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>converts the array </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+into a sparse-matrix representation which can save a lot of space and time if
+most of the atoms of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>y</span></span> have the same value.<span
+style='mso-spacerun:yes'>&nbsp; </span></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>$.^:_1&nbsp;y</span></span> converts sparse </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+back to normal (<span class=Definition>dense</span>) form.<span
+style='mso-spacerun:yes'>&nbsp; </span>A large but incomplete subset of operations
+is supported on sparse arrays; look at the description of </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>$.</span></span>
+if you think you'd like to use them.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734511"></a><a name="_Toc5414662"></a><a
+name="_Toc5414492"></a><a name="_Toc1896283"><span style='mso-bookmark:_Toc5414492'><span
+style='mso-bookmark:_Toc5414662'><span style='mso-bookmark:_Toc191734511'>Random
+Numbers: </span></span></span></a></span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span style='mso-bookmark:_Toc1896283'><span
+style='mso-bookmark:_Toc5414492'><span style='mso-bookmark:_Toc5414662'><span
+style='mso-bookmark:_Toc191734511'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman";mso-bidi-font-weight:bold'>?</span></span></span></span></span></span></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;random
+numbers&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Deal
+verb ?&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;Roll
+verb ?&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;?&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>Monad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>?</span></span>
+has rank 0.&nbsp; If </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>y</span></span>
+is 0, </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>?&nbsp;y</span></span> is a random floating-point number
+uniformly distributed in the interval 0&nbsp;&lt;=&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>?&nbsp;y</span></span>&nbsp;&lt;&nbsp;1.<span
+style='mso-spacerun:yes'>&nbsp; </span>If </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>y</span></span> is positive, </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>?&nbsp;y</span></span>
+is a random element of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.&nbsp;y&nbsp;</span></span>.<span
+style='mso-spacerun:yes'>&nbsp; </span>An example use is</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; ? 3 3
+$ 1000</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>755 458 532</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>218&nbsp; 47
+678</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>679 934 383</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>Dyad&nbsp;</span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>?</span></span>
+has rank 0.&nbsp; </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x&nbsp;?&nbsp;y</span></span>
+is a list of </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>x</span></span> items selected without repetition from </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>i.&nbsp;y</span></span>,
+as if the list </span></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'><span class=Jcode><span style='mso-bidi-font-family:
+"Times New Roman"'>i.&nbsp;y</span></span> were shuffled and the first </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>x</span></span>
+elements were taken:</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp; 5 ?
+52</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>24 8 48 46 22</span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>The </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>?</span></span> verbs use the
+Mersenne Twister generator by default.&nbsp;
+Foreigns, described.in the Dictionary page for </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>?</span></span>,
+allow selection of other generators.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734512">Computational Addons</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;addons&quot;
+</span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The web site at
+www.jsoftware.com has several <span class=Definition>addons</span> that you can
+download.&nbsp; These are executable
+libraries, along with J scripts to call functions in them, that offer efficient
+implementations of often-used functions.&nbsp;
+Two of interest in applied mathematics are the </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;LAPACK
+addon&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>LAPACK addon and the </span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;FFT
+addon&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>FFT addon.<span
+style='mso-spacerun:yes'>&nbsp; </span>If you want a fast implementation of the
+singular value decomposition referred to earlier, install the LAPACK addon;
+then you can use</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+require 'addons\lapack\lapack'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+require 'addons\lapack\dgesvd'</span></span></p>
+
+<p class=Jcodemultiline><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;&nbsp;
+dgesvd_jlapack_ <i>yourmatrix</i></span></span></p>
+
+<p class=BodyTextnoleader><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>which will quickly return the desired singular
+values and singular vectors.</span></span></p>
+
+<p class=Section><span style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:
+_Toc5414657'><a name="_Toc191734513">Useful Scripts Supplied With J</a></span></span></p>
+
+<p class=MsoBodyText><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-begin'></span><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'>&nbsp;XE &quot;scripts:
+supplied with J&quot; </span></span><![endif]--><span style='mso-bookmark:_Toc1896278'><span
+style='mso-bookmark:_Toc5414657'></span></span><!--[if supportFields]><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'></span></span><span
+style='mso-element:field-end'></span><![endif]--><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'>The directory </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><i><span style='mso-bidi-font-family:"Times New Roman"'>yourJdirectory</span></i></span></span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/system/packages</span></span>
+contains a number of subdirectories full of useful scripts.<span
+style='mso-spacerun:yes'>&nbsp; </span>The </span></span><span style='mso-bookmark:
+_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span class=Jcode><span
+style='mso-bidi-font-family:"Times New Roman"'>/math</span></span> and </span></span><span
+style='mso-bookmark:_Toc1896278'><span style='mso-bookmark:_Toc5414657'><span
+class=Jcode><span style='mso-bidi-font-family:"Times New Roman"'>/stats</span></span>
+subdirectories have scripts for mathematics and statistics; other
+subdirectories cover topics such as finance, printing, graphics, and
+interfacing to Windows.</span></span></p>
+
+</div><!--bottom jump start--><hr><a href="elementary_mathematics_in_j.htm">&gt;&gt;</a>&nbsp;
+<a href="writing_your_own_modifiers.htm">&lt;&lt;</a>&nbsp;
+<a href="../user/contents.htm">Usr</a>&nbsp;
+<a href="../primer/contents.htm">Pri</a>&nbsp;
+<a href="../jforc/contents.htm">JfC</a>&nbsp;
+<a href="../learning/contents.htm">LJ</a>&nbsp;
+<a href="../phrases/contents.htm">Phr</a>&nbsp;
+<a href="../dictionary/contents.htm">Dic</a>&nbsp;
+<a href="../release/contents.htm">Rel</a>&nbsp;
+<a href="../dictionary/vocabul.htm">Voc</a>&nbsp;
+<a href="../dictionary/xmain.htm">!:</a>&nbsp;
+<a href="../index.htm">Help</a>&nbsp;
+J for C Programmers<!--bottom jump end--></BODY></HTML>
