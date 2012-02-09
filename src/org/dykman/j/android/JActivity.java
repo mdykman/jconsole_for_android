@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -305,9 +306,15 @@ public class JActivity extends Activity implements ExecutionListener {
 		return true;
 	}
 	public void showHelp() {
+		Intent myIntent = new Intent(Intent.ACTION_VIEW,
+			Uri.parse(getResources().getString(R.string.help_start)));
+		startActivity(myIntent); 
+/*		
 		Intent intent = new Intent();
 		intent.setClass(this.getApplicationContext(), HelpActivity.class);
 		this.startActivity(intent);
+*/
+		
 	}
 
 	public void testQuit() {

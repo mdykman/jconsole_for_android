@@ -10,6 +10,6 @@
     <string name="label_send_key">Send</string>
     <string name="label_next_key">Next</string>
     
-    <string name="help_start">docs/help/dictionary/volcabul.htm</string>
+    <string name="help_start">http://www.jsoftware.com/help/dictionary/vocabul.htm</string>
         
 </resources>

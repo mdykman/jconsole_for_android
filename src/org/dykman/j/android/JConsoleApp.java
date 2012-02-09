@@ -1,7 +1,7 @@
 package org.dykman.j.android;
 
 import java.io.File;
-import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.DialogInterface;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -155,7 +154,8 @@ public class JConsoleApp extends Application {
 	
 	protected FileEdit toView(FileEdit fe,EditorData data) {
 //		FileEdit fe = new FileEdit(activity);
-		fe.setText(data.text);
+		if(data.text != null) fe.setText(data.text);
+		else fe.setText("");
 		fe.cursorPosition = data.cursorPosition;
 		fe.setName(data.name);
 		if(data.path != null) {
@@ -193,7 +193,7 @@ Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
 		preserveCurrentWindow();
 		EditorData data = windows.get(label);
 		windows.put(label, null);
-		toView(console,data);
+		if(data != null) toView(console,data);
 		setView(label, console);
 		console.requestFocus();
 		console.restoreCursor();
@@ -406,88 +406,69 @@ Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
 
 		protected boolean doInstall(File base) throws IOException {
 			publishProgress("installing system files");
-			File system = createDirectory(base, "system");
+			installDirectory(base, "system");
+			installDirectory(base, "bin");
 
-			File addons = new File(base,"addons/data/jmf");
-			addons.mkdirs();
-			installFile(base, "addons/data/jmf/jmf.ijs");
+			publishProgress("installing addons");
+			installDirectory(base, "addons");			
 			
-			File extras = createDirectory(system, "extras");
-			createDirectory(extras, "config");
-			createDirectory(system, "util");
-			createDirectory(base, "bin");
-			installFile(base, "bin/profile.ijs");
-			installFile(base, "bin/installer.txt");
-
-			installDirectory(base, "system/main");
-			installDirectory(base, "system/config");
-			installDirectory(base, "system/defs");
-			installDirectory(base, "system/util");
-
 			publishProgress("installing help files");
+			installDirectory(base, "docs");
 
-			File docs = createDirectory(base, "docs");
-			installFile(base, "docs/copyright.txt");
-			installFile(base, "docs/gpl3.txt");
-			installFile(base, "docs/license.txt");
-			installFile(base, "docs/readme.txt");
-			installFile(base, "docs/android-release-notes.txt");
-
-			
-			createDirectory(docs, "ioj");
-			installDirectory(base, "docs/ioj");
-			
 			publishProgress("installing test files");
 			installDirectory(base, "test");
+			
 			publishProgress("installation complete");
 
 			return true;
 		}
+
+		protected boolean _installFile(File base, String path) 
+			throws IOException {
+			byte buff[] = new byte[8092];
+			InputStream in = getAssets().open(path);
+			OutputStream out = new FileOutputStream(new File(base, path));
+			int n;
+			while ((n = in.read(buff)) != -1) {
+				out.write(buff, 0, n);
+			}
+			out.close();
+			in.close();
+			return true;
+		}		
+		
+		
 		protected boolean installFile(File base, String path) {
 			try {
-				// Log.d(LogTag,"installing " + path + " to " + base.getPath());
-				byte buff[] = new byte[8092];
-				InputStream in = getAssets().open(path);
-				OutputStream out = new FileOutputStream(new File(base, path));
-				int n;
-				while ((n = in.read(buff)) != -1) {
-					out.write(buff, 0, n);
-				}
-				out.close();
-				in.close();
-				return true;
+				return _installFile(base,path);
 			} catch (Exception e) {
-				Log.e(JActivity.LogTag, "failed to install " + path, e);
-				return false;
+				Log.e(JActivity.LogTag, "failed to install " + path);
 			}
+			return false;
 		}
 
 		protected File createDirectory(File base, String d) {
 			File f = new File(base, d);
-			f.mkdir();
+			f.mkdirs();
 			return f;
 		}
-/*
-		protected boolean installDirectory(AssetManager am,String source,File target, String filesin)
-				throws IOException {
-			boolean res = true;
-			AssetFileDescriptor fd = am.openFd(source);
-			FileDescriptor ffd = fd.getFileDescriptor();
-			return res;
-		}
-*/
-		protected boolean installDirectory(File base, String filesin)
+
+		protected boolean installDirectory(File base, String directory)
 				throws IOException {
 			AssetManager am = getAssets();
-			createDirectory(base, filesin);
-			String[] tests = am.list(filesin);
 			boolean res = true;
+			String[] tests = am.list(directory);
+			createDirectory(base, directory);
 			for (String t : tests) {
-				res &= installFile(base, filesin + "/" + t);
+				try {
+					res &= _installFile(base, directory + "/" + t);
+				} catch(FileNotFoundException e) {
+					Log.i(JActivity.LogTag,"recursing to " + directory + "/" + t);
+					installDirectory(base,directory + "/" + t);
+				}
 			}
 			return res;
 		}
-
 	}
 	
 	public JInterface getjInterface() {

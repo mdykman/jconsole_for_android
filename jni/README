@@ -1,2 +1,4 @@
-this directory shoul also contain the contents of git@github.com:mdykman/core.git in a seperate subdirectory.
+this directory should also contain the contents of git@github.com:mdykman/core.git in a seperate subdirectory.
 source code for any additional native shared libraries should be placed in individual directories here.
+
+the rest of nthe android app can be found at https://github.com/mdykman/jconsole_for_android
