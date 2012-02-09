@@ -1,8 +1,0 @@
-ZSPMV  performs the matrix-vector operation
-
-where alpha and beta are scalars, x and y are n element vectors and A
-is an n by n symmetric matrix, supplied in packed form.
-
-
-Arguments
-=========

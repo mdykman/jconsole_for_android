@@ -1,7 +1,0 @@
-DLAMRG will create a permutation list which will merge the elements of
-A (which is composed of two independently sorted sets) into a single
-set which is sorted in ascending order.
-
-
-Arguments
-=========

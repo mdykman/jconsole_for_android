@@ -1,7 +1,0 @@
-DLAEDA computes the Z vector corresponding to the merge step in the
-CURLVLth step of the merge process with TLVLS steps for the CURPBMth
-problem.
-
-
-Arguments
-=========
