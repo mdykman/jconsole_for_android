@@ -28,7 +28,10 @@ NB. home =. install ]`('user/',[)@.(0-:]) home
 NB. home =. install (4 : 'if. 0 = y do.  x, ''/user'' else. y end.') home
 
 NB. userx=.   '\j',('64-'#~16={:$3!:3[2),'user'
-user=.    home,'/user'
+userx=.   '\j',('64-'#~16={:$3!:3[2),'701-user'
+user=.    home,     '/user'"_^:IFANDROID userx
+
+NB. user=.    home,'/user'
 break=.   user,'/break'
 snap=.    user,'/snap'
 temp=.    user,'/temp'
