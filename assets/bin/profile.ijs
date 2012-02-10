@@ -24,19 +24,16 @@ end.
 	
 home =. install sth systype
 
-NB. on android, 9!:12 tests as UNIX
-NB. but android does not define HOME 
 NB. home =. install ]`('user/',[)@.(0-:]) home
 NB. home =. install (4 : 'if. 0 = y do.  x, ''/user'' else. y end.') home
 
 NB. userx=.   '\j',('64-'#~16={:$3!:3[2),'user'
 user=.    home,'/user'
-test=.   install,'/test'
 break=.   user,'/break'
 snap=.    user,'/snap'
 temp=.    user,'/temp'
 config=.  user,'/config'
-ids=. ;:'addons bin break config home install snap system tools temp user test'
+ids=. ;:'addons bin break config home install snap system tools temp user'
 
 0!:0 :: ] <jpathsep bin,'/profilex.ijs' NB. override
 

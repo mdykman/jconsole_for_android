@@ -1,0 +1,10 @@
+About J
+J is a general purpose programming language designed by Ken Iverson and Roger Hui. It is available on a wide variety of computers and operating systems. J is distinguished by its simple and consistent rules, a large set of built-in capabilities, powerful facilities for defining new operations, and a general and systematic treatment of arrays.
+
+J Systems are developed and distributed by Jsoftware Inc.
+
+For the latest information: www.jsoftware.com
+
+General inquiries: info@jsoftware.com
+Tech support: tech@jsoftware.com
+Sales: sales@jsoftware.com

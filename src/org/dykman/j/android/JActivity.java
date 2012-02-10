@@ -316,6 +316,16 @@ public class JActivity extends Activity implements ExecutionListener {
 */
 		
 	}
+	public void showTextFile(String file) {
+		File f = new File(root,file);
+		Intent intent = new Intent();
+		intent.setClass(this.getApplicationContext(), HelpActivity.class);
+		
+		intent.putExtra("file", file);
+		intent.putExtra("base", root.getAbsolutePath());
+		this.startActivity(intent);
+
+	}
 
 	public void testQuit() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -351,20 +361,22 @@ public class JActivity extends Activity implements ExecutionListener {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		boolean result = true;
-		switch (item.getItemId()) {
+		switch(item.getItemId()) {
 			case R.id.reset:   reset();                       break;
 			case R.id.clear:   clearConsole();                break;
-			case R.id.vocab:   showHelp();                    break;
 			case R.id.newf:    newFile();                     break;
 			case R.id.open:    requestFileSelect(); 		  break;
 			case R.id.window:  requestWindowSelect();     	  break;
 			case R.id.jbreak:  callBreak();                   break;
 			case R.id.save:    saveCurrent();                 break;
-			case R.id.close:   theApp.closeCurrent();                break;
+			case R.id.close:   theApp.closeCurrent();         break;
 			case R.id.exit:    testQuit();					  break;
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
 			case R.id.runf:    theApp.runCurrentFile(console); break;
+			case R.id.vocab:   showHelp();                    break;
+			case R.id.readme:  showTextFile("docs/android-readme.txt");	break;
+			case R.id.aboutj:  showTextFile("docs/aboutj.txt"); break;
 			default: result = false;
 		}
 		return result;

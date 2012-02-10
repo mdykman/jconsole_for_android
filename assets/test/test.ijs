@@ -33,6 +33,7 @@ TOOLONG=. 'g410'
 
  ddt=: ddall -. SNS CRASHERS,' ',TOOLONG NB. remove crashers
  
+ NB. smaller grouping for testing on android
  tg1=:50 {. ddt
  tg2=:50 {. 50 }. ddt
  tg3=:50 {. 100 }. ddt

@@ -16,4 +16,7 @@ class EditorData {
 		this.path = path;
 		this.changed = changed;
 	}
+	public void placeCursor() {
+		cursorPosition = text.length();
+	}
 }

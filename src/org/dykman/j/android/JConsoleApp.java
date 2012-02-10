@@ -20,8 +20,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -153,7 +155,6 @@ public class JConsoleApp extends Application {
 	}
 	
 	protected FileEdit toView(FileEdit fe,EditorData data) {
-//		FileEdit fe = new FileEdit(activity);
 		if(data.text != null) fe.setText(data.text);
 		else fe.setText("");
 		fe.cursorPosition = data.cursorPosition;
@@ -175,7 +176,7 @@ public class JConsoleApp extends Application {
 	}
 	
 	protected void setView(String label, FileEdit win) {
-Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
+//Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
 		setCurrentWindow(label);
 		currentEditor =  win;
 		activity.getContainer().removeAllViews();
@@ -581,6 +582,10 @@ Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
 		@Override
 		protected void onPostExecute(Integer code) {
 			// this is a worry, in the world of async windows
+			EditorData ed = windows.get(JActivity.CONSOLE_NAME);
+			if(ed!=null) {
+				ed.placeCursor();
+			}
 			console.placeCursor();
 			console.prompt();
 			console.setEnabled(true);
