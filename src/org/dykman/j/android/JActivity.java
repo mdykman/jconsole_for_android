@@ -317,7 +317,6 @@ public class JActivity extends Activity implements ExecutionListener {
 		
 	}
 	public void showTextFile(String file) {
-		File f = new File(root,file);
 		Intent intent = new Intent();
 		intent.setClass(this.getApplicationContext(), HelpActivity.class);
 		
