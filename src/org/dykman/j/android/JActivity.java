@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.dykman.j.ExecutionListener;
-import org.dykman.j.JInterface;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,12 +20,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,7 +40,6 @@ public class JActivity extends Activity implements ExecutionListener {
 	
 	Console console;
 	ViewGroup container = null;
-    JInterface jInterface;
     File root;
 	JConsoleApp theApp;
 	
@@ -51,17 +49,9 @@ public class JActivity extends Activity implements ExecutionListener {
 		setContentView(R.layout.main);
 		container = (ViewGroup) findViewById(R.id.mainLayout);
 		theApp = (JConsoleApp) this.getApplication();
-		jInterface = theApp.getjInterface();
 		root = theApp.getRoot();
 		console = (Console) findViewById(R.id.ws);
-//		console.setjInterface(jInterface);
-//		console.setApplication(theApp);
-//		console.setBaseDirectory(root);
-		//		console.setjActivity(this);
-//		console.setBaseDirectory(root);
-		
 		theApp.setup(this,console);
-
 	}
 	
 
@@ -211,31 +201,6 @@ public class JActivity extends Activity implements ExecutionListener {
 		return null;
 	}
 
-	protected AlertDialog saveAsView(File dir, String name) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		try {
-			ViewGroup group = new LinearLayout(this);
-			TextView dirname = new TextView(this);
-			dirname.setText(filePath(dir.getCanonicalPath()));
-			dirname.setSingleLine();
-			dirname.setOnTouchListener(new View.OnTouchListener() {
-				public boolean onTouch(View v, MotionEvent event) {
-					return false;
-					// change directory
-				}
-			});
-			group.addView(dirname);
-			EditText et = new EditText(this);
-			et.setSingleLine();
-			if(name!=null) et.setText(name);
-			group.addView(et);
-			builder.setView(group);
-		} catch(IOException e ) {
-			Log.d(LogTag,"error during SaveAs",e);
-		}
-		return null;
-	}
-
 	public String buildTitle(File f)  throws IOException {
 		String title =  filePath(f.getCanonicalPath());
 		if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") || title.equals("/sdcard")) {
@@ -244,36 +209,151 @@ public class JActivity extends Activity implements ExecutionListener {
 		return (theApp.isLocalFile() ? "local: " : "sdcard: ") + title;
 	}
 	
-	public void requestFileSelect() {
+	public void requestFileOpen() {
+		
 		File f = theApp.getCurrentDirectory();
-		requestFileSelect(f);
+		FileAction fs = new OpenFileAction(); 
+		requestFileSelect(f,fs);
 	}
-	public void requestFileSelect(final File dir) {
-		final ListView lv = new ListView(this);
-//		theApp.setCurrentLocalDir(dir);
+	public void requestFileRun() {
+		
+		File f = theApp.getCurrentDirectory();
+		
+		FileAction fs = new RunFileAction(); 
+		requestFileSelect(f,fs);
+	}
+	
+	interface  FileAction {
+		public void useFile(File f);
+	}
+	
+	class OpenFileAction implements FileAction {
+		public void useFile(File f) {
+			EditorData data = openEditor(f);
+			theApp.setWindow(data, data.name);
+		}
+		
+	}
+	class RunFileAction implements FileAction {
+		public void useFile(File f) {
+			theApp.runFile(console,f);
+		}
+		
+	}
 
+	class SaveAsAction implements FileAction {
+		
+		EditText et;
+		public SaveAsAction(EditText et) {
+			this.et = et;
+		}
+		
+		public void useFile(File f) {
+			et.setText(f.getName());
+		}
+		
+	}
+	public void requestFileSaveAs() {
+		FileEdit fe = theApp.getCurrentEditor();
+		File ff = fe.getFile();
+		final EditText et = new EditText(JActivity.this);
+		et.setLayoutParams(new ViewGroup.LayoutParams(
+			ViewGroup.LayoutParams.FILL_PARENT, 
+			ViewGroup.LayoutParams.WRAP_CONTENT));
+		et.setSingleLine();
+		et.setText(ff.getName());
+		
+		FileAction fs = new SaveAsAction(et); 
+		File dir = ff.getParentFile();
+		theApp.setCurrentDirectory(dir);
+		requestFileSelect(dir,fs,et);
+	}
+	
+	public void requestFileSelect(File dir, final FileAction ffa) {
+		requestFileSelect(dir, ffa, null);
+	}
+	
+	public void requestFileSelect(final File dir, final FileAction ffa,
+			final TextView textView) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//		builder.setMessage("a message here");
+
+		final LinearLayout ll = new LinearLayout(JActivity.this);
+		ll.setLayoutParams(new ViewGroup.LayoutParams(
+			ViewGroup.LayoutParams.FILL_PARENT, 
+			ViewGroup.LayoutParams.FILL_PARENT));
+		ll.setOrientation(LinearLayout.VERTICAL);
+
+		final Button dev = new Button(this);
+		dev.setLayoutParams(new ViewGroup.LayoutParams(
+			ViewGroup.LayoutParams.FILL_PARENT, 
+			ViewGroup.LayoutParams.WRAP_CONTENT));
+		dev.setText(theApp.isLocalFile() ? "sdcard" : "local");
+		ll.addView(dev);
+		
+		final ListView lv = new ListView(this);
+		lv.setFastScrollEnabled(true);
 		ArrayAdapter<String> add = createDirAdapter(dir,false);
 		lv.setAdapter(add);
+		ll.addView(lv);
+		
 		try {
-			builder.setView(lv);
-			final AlertDialog ad = builder.create();
-			ad.setTitle(buildTitle(dir));
-			ad.setButton(theApp.isLocalFile() ? "sdcard" : "local", 
-				new DialogInterface.OnClickListener() {
+			if(textView != null) {
+				ll.addView(textView);
+
+				builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						theApp.setLocalFile(!theApp.isLocalFile());
-						ad.dismiss();
-						requestFileSelect();
+						String name = new StringBuilder(textView.getText()).toString();
+						File myfile = new File(theApp.getCurrentDirectory(),name);
+						FileEdit fe = theApp.getCurrentEditor();
+						try {
+							
+							fe.saveAs(myfile);
+						} catch(IOException e) {
+							Toast.makeText(JActivity.this, "there was an error saving " + myfile.getName(), 
+								Toast.LENGTH_LONG);
+							Log.e(LogTag,"there was an error saving the file " + myfile.getName(),e);
+						}
+						dialog.dismiss();
 					}
+				});
+				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+			}
+			builder.setTitle(buildTitle(dir));
+			builder.setView(ll);
+			
+			final AlertDialog ad = builder.create();
+			
+			dev.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View vv) {
+					theApp.setLocalFile(!theApp.isLocalFile());
+					File newfile = theApp.getCurrentDirectory();
+					/*
+					ArrayAdapter<String> add = createDirAdapter(newfile,false);
+					try {
+						ad.setTitle(buildTitle(newfile));
+					} catch(IOException e) {
+						Log.d(LogTag,"error building title",e);
+					}
+					lv.setAdapter(add);
+					dev.setText(theApp.isLocalFile() ? "sdcard" : "local");
+//					theApp.setCurrentDirectory(newfile);		
+ 			
+ */
+					ad.dismiss();
+					ll.removeView(textView);
+					requestFileSelect(newfile, ffa, textView);
+				}
 			});
 			
 			lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View vv,
 						int index, long id) {
 					TextView ttv = ((TextView) vv);
-					File d = theApp.getCurrentLocalDir();
+					File d = theApp.getCurrentDirectory();
 					String ss = new StringBuilder(ttv.getText()).toString();
 					File newfile = ss.startsWith("..") ? d.getParentFile() : new File(d, ss);
 					Log.d(LogTag, "file selected: " + newfile.getPath());
@@ -288,9 +368,8 @@ public class JActivity extends Activity implements ExecutionListener {
 						}
 						lv.setAdapter(add);
 					} else {
-						EditorData data = openEditor(newfile);
-						theApp.setWindow(data, data.name);
-						ad.dismiss();
+						ffa.useFile(newfile);
+						if(textView == null) ad.dismiss();
 					}
 				}
 			});
@@ -305,22 +384,16 @@ public class JActivity extends Activity implements ExecutionListener {
 		showHistoryDialog();
 		return true;
 	}
-	public void showHelp() {
+	public void showHelp(int resId) {
 		Intent myIntent = new Intent(Intent.ACTION_VIEW,
-			Uri.parse(getResources().getString(R.string.help_start)));
-		startActivity(myIntent); 
-/*		
-		Intent intent = new Intent();
-		intent.setClass(this.getApplicationContext(), HelpActivity.class);
-		this.startActivity(intent);
-*/
-		
+			Uri.parse(getResources().getString(resId)));
+		startActivity(myIntent);	
 	}
-	public void showTextFile(String file) {
+	public void showTextFile(int resId) {
 		Intent intent = new Intent();
 		intent.setClass(this.getApplicationContext(), HelpActivity.class);
 		
-		intent.putExtra("file", file);
+		intent.putExtra("file", getResources().getString(resId));
 		intent.putExtra("base", root.getAbsolutePath());
 		this.startActivity(intent);
 
@@ -364,18 +437,21 @@ public class JActivity extends Activity implements ExecutionListener {
 			case R.id.reset:   reset();                       break;
 			case R.id.clear:   clearConsole();                break;
 			case R.id.newf:    newFile();                     break;
-			case R.id.open:    requestFileSelect(); 		  break;
+			case R.id.open:    requestFileOpen(); 	          break;
 			case R.id.window:  requestWindowSelect();     	  break;
 			case R.id.jbreak:  callBreak();                   break;
 			case R.id.save:    saveCurrent();                 break;
+			case R.id.saveas:  requestFileSaveAs();           break;
 			case R.id.close:   theApp.closeCurrent();         break;
 			case R.id.exit:    testQuit();					  break;
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
-			case R.id.runf:    theApp.runCurrentFile(console); break;
-			case R.id.vocab:   showHelp();                    break;
-			case R.id.readme:  showTextFile("docs/android-readme.txt");	break;
-			case R.id.aboutj:  showTextFile("docs/aboutj.txt"); break;
+			case R.id.runc:    theApp.runCurrentFile(console); break; 
+			case R.id.runf:    requestFileRun();              break;
+			case R.id.vocab:   showHelp(R.string.help_start); break;
+			case R.id.learning: showHelp(R.string.learning);  break;
+			case R.id.readme:  showTextFile(R.string.readme); break;
+			case R.id.aboutj:  showTextFile(R.string.aboutj); break;
 			default: result = false;
 		}
 		return result;
@@ -398,7 +474,7 @@ public class JActivity extends Activity implements ExecutionListener {
 	}
 	
 	protected void callBreak() {
-		jInterface.callJ("break_z_ ''");
+		theApp.getjInterface().callJ("break_z_ ''");
 	}
 
 	public void quit() {
@@ -469,14 +545,14 @@ public class JActivity extends Activity implements ExecutionListener {
 	protected void onDestroy() {
 		theApp.setConsoleState(false);
 		theApp.getCurrentEditor().markCursor();
-		jInterface.removeExecutionListener(this);
+//		jInterface.removeExecutionListener(this);
 		if(isFinishing()) {
-			jInterface.destroyJ();
+			theApp.getjInterface().destroyJ();
 		}
 		super.onDestroy();
 	}
 
-	public void commandComplete(int code) {
+	public void onCommandComplete(int code) {
 		Log.d(LogTag, "commandComplete receives " + code);
 	}
 	class EngineOutput {
@@ -492,7 +568,7 @@ public class JActivity extends Activity implements ExecutionListener {
 	public void reset() {
 		Toast.makeText(this, "resetting console", Toast.LENGTH_SHORT).show();
 
-		jInterface.reset();
+		theApp.getjInterface().reset();
 		console.replaceText("");
 		theApp.bootStrapSession(this,"''");
 //		console.prompt();

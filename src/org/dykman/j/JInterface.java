@@ -31,7 +31,7 @@ public class JInterface {
 	    	result = callJNative(nativeInstance,s);
 	    	
 	    	for(ExecutionListener l : execlist) {
-	    		l.commandComplete(result);
+	    		l.onCommandComplete(result);
 	    	}
     	} catch(Throwable e) {
     		Log.e(JActivity.LogTag, "error executing sentence: " + s, e);
@@ -83,7 +83,9 @@ public class JInterface {
 		}
 	}
 /// not implemented, returns null
-    native public Object getVariableNative(long inst,String s); 
+    native public Object getVariableNative(long inst,String name); 
+  /// not implemented, returns null
+    native public void setVariableNative(long inst,String name, Object value); 
 	
     native public int callJNative(long inst,String s); 
     native public void destroyJNative(long inst); 

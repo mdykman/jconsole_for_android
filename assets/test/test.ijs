@@ -28,7 +28,7 @@ NB. TESTX SNS 'g120' NB. see g120 details
 
 NB. TESTX SNS 'g120 gintovfl' NB. see g120 gintovfl details
 
-CRASHERS =. 'g031 g120 g421c g8x gintovfl gstack'
+CRASHERS =. 'g031 g120 g421c g8x gintovfl gstack gxco'
 TOOLONG=. 'g410'
 
  ddt=: ddall -. SNS CRASHERS,' ',TOOLONG NB. remove crashers

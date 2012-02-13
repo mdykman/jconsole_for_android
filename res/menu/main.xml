@@ -28,8 +28,9 @@
     <item android:id="@+id/help" android:title="Help"  android:menuCategory="container" android:orderInCategory="5">
         <menu>
             <item android:id="@+id/vocab" android:title="Help"  android:orderInCategory="1"/>
-            <item android:id="@+id/readme" android:title="Readme"  android:orderInCategory="2"/>
-            <item android:id="@+id/aboutj" android:title="About J"  android:orderInCategory="3"/>
+            <item android:id="@+id/learning" android:title="Learning J"  android:orderInCategory="2"/>
+            <item android:id="@+id/readme" android:title="Readme"  android:orderInCategory="3"/>
+            <item android:id="@+id/aboutj" android:title="About J"  android:orderInCategory="4"/>
         </menu>
     </item>
 </menu>

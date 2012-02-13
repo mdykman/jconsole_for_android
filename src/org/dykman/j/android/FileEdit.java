@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.util.AttributeSet;
@@ -89,7 +91,6 @@ public class FileEdit extends EditText {
 		setTypeface(Typeface.MONOSPACE);
 		setHorizontallyScrolling(true);
 		this.setFreezesText(true);
-//		this.set
 	}
 
 	public void open(File f) throws IOException {
@@ -109,8 +110,6 @@ public class FileEdit extends EditText {
 			setTextKeepState(bb.toString());
 			endBatchEdit();
 		}
-//		this.
-//		this.scrollTo(0, 0);
 		if(getText().length() > 0) {
 			this.setSelection(1);
 		}
@@ -150,7 +149,30 @@ public class FileEdit extends EditText {
 	
 	public void saveAs(File f) throws IOException {
 		file = f;
-		save();
+		if(f.exists()) {
+			AlertDialog.Builder builder= new AlertDialog.Builder(jActivity);
+			builder.setMessage("do you want to overwrite " + f.getName() + "?");
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					textChanged = false;
+					jActivity.setTitle(createTitle());
+					try {
+						FileEdit.this.save();
+					} catch(IOException e) {
+						Log.e(JActivity.LogTag, "there was an error overwriting file " + file.getName());
+					}
+				}
+			});
+			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		} else {
+			textChanged = false;
+			jActivity.setTitle(createTitle());
+			save();
+		}
 	}
 
 	public boolean getTextChanged() {

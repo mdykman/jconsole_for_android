@@ -404,16 +404,18 @@ public class JConsoleApp extends Application {
 		}
 
 		protected boolean doInstall(File base) throws IOException {
+			publishProgress("performing first-boot installation");
 			publishProgress("installing system files");
 			installDirectory(base, "system");
 			installDirectory(base, "bin");
 
-			publishProgress("installing addons");
-			installDirectory(base, "addons");			
-			
 			publishProgress("installing help files");
 			installDirectory(base, "docs");
 
+			publishProgress("installing addons");
+			publishProgress("(addons take awhile)");
+			installDirectory(base, "addons");			
+			
 			publishProgress("installing test files");
 			installDirectory(base, "test");
 			

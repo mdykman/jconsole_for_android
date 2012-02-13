@@ -1,0 +1,8 @@
+Building libpcre under Android
+
+The provided Android.mk.ignore should be renamed to Android.mk to enable te building of libpcre.so
+
+The present version of jconsole-for-android uses pcre-8.21 although any modern version should do.
+
+In the absence of './configure', config.h is created by manually editing config.h.in.  The macro HAVE_CONFIG_H must be defined during the coompilation cycle.  This is taken care of with the provided Android.mk
+
