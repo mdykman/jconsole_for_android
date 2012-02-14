@@ -17,7 +17,7 @@ This Android package was created by Michael Dykman (mdykman@gmail.com) in 2012. 
 
 This package is compatible with Android versions 2.1 and up.
 
-Many thanks to Eric Iverson and JSoftware for providing the source code for the J7 engine as well as allowing the use of script, document and image resources to make this package.
+Many thanks to Eric Iverson and Jsoftware for providing the source code for the J7 engine as well as allowing the use of script, document and image resources to make this package.
 
 To enable the J-specific soft keyboard which is provided with this package, you must go to Settings/Languages and Keyboards to explicitly enable JKeyboard.  Within the console app, long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the newly-enabled JKeyboard.
 

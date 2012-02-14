@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,9 +67,6 @@ public class JActivity extends Activity implements ExecutionListener {
 			path = path.substring(rp.length());
 		}
 		return path;
-	}
-	protected void saveCurrentAs() {
-	
 	}
 	
 	protected void showHistoryDialog() {
@@ -285,9 +283,10 @@ public class JActivity extends Activity implements ExecutionListener {
 
 		final Button dev = new Button(this);
 		dev.setLayoutParams(new ViewGroup.LayoutParams(
-			ViewGroup.LayoutParams.FILL_PARENT, 
+			ViewGroup.LayoutParams.WRAP_CONTENT, 
 			ViewGroup.LayoutParams.WRAP_CONTENT));
-		dev.setText(theApp.isLocalFile() ? "sdcard" : "local");
+		dev.setText("browse " + (theApp.isLocalFile() ? "sdcard" : "local"));
+		dev.setGravity(Gravity.CENTER_HORIZONTAL);
 		ll.addView(dev);
 		
 		final ListView lv = new ListView(this);
@@ -306,7 +305,7 @@ public class JActivity extends Activity implements ExecutionListener {
 						File myfile = new File(theApp.getCurrentDirectory(),name);
 						FileEdit fe = theApp.getCurrentEditor();
 						try {
-							fe.saveAs(myfile);
+							theApp.saveAs(fe,myfile);
 						} catch(IOException e) {
 							Toast.makeText(JActivity.this, "there was an error saving " + myfile.getName(), 
 								Toast.LENGTH_LONG);
@@ -330,18 +329,6 @@ public class JActivity extends Activity implements ExecutionListener {
 				public void onClick(View vv) {
 					theApp.setLocalFile(!theApp.isLocalFile());
 					File newfile = theApp.getCurrentDirectory();
-					/*
-					ArrayAdapter<String> add = createDirAdapter(newfile,false);
-					try {
-						ad.setTitle(buildTitle(newfile));
-					} catch(IOException e) {
-						Log.d(LogTag,"error building title",e);
-					}
-					lv.setAdapter(add);
-					dev.setText(theApp.isLocalFile() ? "sdcard" : "local");
-//					theApp.setCurrentDirectory(newfile);		
- 			
- */
 					ad.dismiss();
 					ll.removeView(textView);
 					requestFileSelect(newfile, ffa, textView);

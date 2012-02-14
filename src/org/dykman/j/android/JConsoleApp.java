@@ -142,7 +142,7 @@ public class JConsoleApp extends Application {
 		}
 	}
 	
-	protected EditorData toData(FileEdit fe) {
+	public EditorData toData(FileEdit fe) {
 		File f = fe.getFile();
 		return new EditorData(
 				fe.getName(),
@@ -151,7 +151,10 @@ public class JConsoleApp extends Application {
 				fe.getSelectionStart(),
 				fe.textChanged);
 	}
-	
+
+	public void removeWindow(String label) {
+		windows.remove(label);
+	}
 	protected FileEdit toView(FileEdit fe,EditorData data) {
 		if(data.text != null) fe.setText(data.text);
 		else fe.setText("");
@@ -173,6 +176,43 @@ public class JConsoleApp extends Application {
 		}
 	}
 	
+	private void _saveas(final FileEdit fe,final File f) 
+		throws IOException {
+		fe.setFile(f);
+		fe.setName(f.getName());
+		fe.setTextChanged(false);
+		fe.save();
+
+		windows.remove(getCurrentWindow());
+		windows.put(fe.getName(), toData(fe));
+		setCurrentWindow(fe.getName());
+		activity.setTitle(fe.createTitle());
+		
+	}
+	public void saveAs(final FileEdit fe,final File f) throws IOException {
+		
+		if(f.exists()) {
+			AlertDialog.Builder builder= new AlertDialog.Builder(activity);
+			builder.setMessage("do you want to overwrite " + f.getName() + "?");
+			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					try {
+						_saveas(fe,f);
+					} catch(IOException e) {
+						Toast.makeText(activity, "there was an error overwriting file " + f.getName(), Toast.LENGTH_LONG);
+						Log.e(JActivity.LogTag, "there was an error overwriting file " + f.getName());
+					}
+				}
+			});
+			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		} else {
+			_saveas(fe,f);
+		}
+	}
 	protected void setView(String label, FileEdit win) {
 //Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
 		setCurrentWindow(label);

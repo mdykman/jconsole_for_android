@@ -147,34 +147,6 @@ public class FileEdit extends EditText {
 		}
 	}
 	
-	public void saveAs(File f) throws IOException {
-		file = f;
-		if(f.exists()) {
-			AlertDialog.Builder builder= new AlertDialog.Builder(jActivity);
-			builder.setMessage("do you want to overwrite " + f.getName() + "?");
-			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					textChanged = false;
-					jActivity.setTitle(createTitle());
-					try {
-						FileEdit.this.save();
-					} catch(IOException e) {
-						Log.e(JActivity.LogTag, "there was an error overwriting file " + file.getName());
-					}
-				}
-			});
-			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-				}
-			});
-		} else {
-			textChanged = false;
-			jActivity.setTitle(createTitle());
-			save();
-		}
-	}
-
 	public boolean getTextChanged() {
 		return textChanged;
 	}
