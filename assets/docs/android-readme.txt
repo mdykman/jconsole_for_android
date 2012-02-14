@@ -13,13 +13,17 @@ See docs/gpl3.txt for GNU General Public License version 3. Additional info at h
 
 *** Android
 
-This Android package was created by Michael Dykman (mdykman@gmail.com) and is compatible with Android versions 2.1 and up.
+This Android package was created by Michael Dykman (mdykman@gmail.com) in 2012. It is licensed under GPL3.
+
+This package is compatible with Android versions 2.1 and up.
+
+Many thanks to Eric Iverson and JSoftware for providing the source code for the J7 engine as well as allowing the use of script, document and image resources to make this package.
 
 To enable the J-specific soft keyboard which is provided with this package, you must go to Settings/Languages and Keyboards to explicitly enable JKeyboard.  Within the console app, long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the newly-enabled JKeyboard.
 
  ** Addons under Android
 
-Pacman is broken in this release as it depends on the system having wget available.  Even if a binary for wget was bundled or already present on Android, it would be to no avail as non-rooted apps are prohibited from executing binaries, even if they are bundled within the calling application.
+Pacman (the J package manager) is broken in this release as it depends on the system having wget available.  Even if a binary for wget was bundled or already present on Android, it would be to no avail as non-rooted apps are prohibited from executing binaries, even if they are bundled within the calling application.
 
 As a strategy towards fixing this, two avenues suggest themselves:
   one could build an HTTP client in J using the socket library.
@@ -27,7 +31,7 @@ As a strategy towards fixing this, two avenues suggest themselves:
 
 I am opting for the latter option as it presents the highest likelihood of a stable HTTP client. I expect to bundle libcurl in a near-future release of this package.
 
-As some compensation for this shortcoming, I have bundled all available addons from the current distribution as long as they satisfied some compatibility criteria: 
+As some compensation for this shortcoming, I have bundled all available addons from the current distribution as long as they satisfied basic compatibility criteria: 
   Any addon which depends on bundled native libraries has been eliminated from this release. Examples of these include math/lapack.ijs and math/fftw.ijs.
   Any addon which depends on GL or GTK has also been eliminated from this release. See Graphics/GL2 below.
 
@@ -35,6 +39,11 @@ As some compensation for this shortcoming, I have bundled all available addons f
 
 In the present release, no graphics are implemented.  It was deemed by the author that the undertaking considerably expands the scope of the current effort.  We hope to rectify this in a future release.
 
-GL2 is available to Android via system-provided libGLESv2.so and libEGL.so.  The former provides an embedded edition the GL2 API; the latter provides platform-native containers and surfaces upon which to draw. These are the exact same facilities provided for low-level graphics under iOS.
+GL2 is available to Android via system-provided libGLESv2.so and libEGL.so.  The former provides an embedded edition the GL2 API; the latter provides platform-native containers and surfaces upon which to draw. These are the exact same facilities provided for low-level graphics under iOS as well.
 
 There is a project of unknown quality on github seeking to provide build files in order to build libcairo for the Android: https://github.com/anoek/android-cairo . It is hoped that this can be leveraged towards providing graphics support for J under the Android environment.
+
+ ** Foreign 2!:[0-3] Do not work on Android as on non-unix systems. 2!:5 and 2!:6 work as expected. The utility of 2!:55 is somewhat doubtful on this platform.
+
+ ** Tests
+The is a high number of failing unit tests in this release.  It is my hope that the community can guide towards those which are most dire.
