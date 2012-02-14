@@ -306,7 +306,6 @@ public class JActivity extends Activity implements ExecutionListener {
 						File myfile = new File(theApp.getCurrentDirectory(),name);
 						FileEdit fe = theApp.getCurrentEditor();
 						try {
-							
 							fe.saveAs(myfile);
 						} catch(IOException e) {
 							Toast.makeText(JActivity.this, "there was an error saving " + myfile.getName(), 

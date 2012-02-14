@@ -2,35 +2,39 @@ J from Jsoftware (www.jsoftware.com) source released under GPL version 3.
 
 *** copyright and license
 
-JSOFTWARE SOURCES refers to all files in this Jsoftware release package except for file gpl3.txt.
+JSOFTWARE SOURCES refers to the native "C" source files used to generate libj.so as well as all files in directories system/, bin/, addons/, docs/, and test/ with the exceptions of docs/android-readme.txt (this file) and docs/gpl3.txt .
 
-JSOFTWARE SOURCES are: Copyright 1990-2011, Jsoftware Inc.  All rights reserved.
+JSOFTWARE SOURCES are: Copyright 1990-2012, Jsoftware Inc.  All rights reserved.
 
 JSOFTWARE SOURCES are: Licensed under GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-See gpl3.txt for GNU General Public License version 3. Additional info at http://www.gnu.org/licenses.
+See docs/gpl3.txt for GNU General Public License version 3. Additional info at http://www.gnu.org/licenses.
 
 
 *** Android
 
-The Android package was created by Michael Dykman (mdykman@gmail.com) and is compatible with Android versions 2.1 and up.
+This Android package was created by Michael Dykman (mdykman@gmail.com) and is compatible with Android versions 2.1 and up.
 
-To enable the J-specific soft keyboard, you must open Settings/Languages and Keyboards to explicitly enable JKeyboard.  Long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the JKeyboard.
+To enable the J-specific soft keyboard which is provided with this package, you must go to Settings/Languages and Keyboards to explicitly enable JKeyboard.  Within the console app, long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the newly-enabled JKeyboard.
 
  ** Addons under Android
-Pacman is broken in this release as it depends on a system having wget available.  Even if a binary for wget was present on android, it would be to no avail as non-rooted apps are prohibited from executing binaries, even if they are bundled within the calling application.
+
+Pacman is broken in this release as it depends on the system having wget available.  Even if a binary for wget was bundled or already present on Android, it would be to no avail as non-rooted apps are prohibited from executing binaries, even if they are bundled within the calling application.
 
 As a strategy towards fixing this, two avenues suggest themselves:
   one could build an HTTP client in J using the socket library.
   one could bundle libcurl and use J to wrap calls to that.
 
-I am opting for the latter route (having already written far too many HTTP clients with raw sockets).  I expect to bundle libcurl in a near-future release of this package.
+I am opting for the latter option as it presents the highest likelihood of a stable HTTP client. I expect to bundle libcurl in a near-future release of this package.
 
-As some compensation for this shortcoming, I have bundled all available addons from the current distribution as long as they satisfied some compatibility criteria. 
-  Any addon which depends on bundled native libraries has been eliminated from this release. Examplesof these include math/lapack.ijs and math/fftw.ijs.
-  Any addons which depends on GL or GTK has also been eliminated from this release.  We hope to rectify this in a future release.
+As some compensation for this shortcoming, I have bundled all available addons from the current distribution as long as they satisfied some compatibility criteria: 
+  Any addon which depends on bundled native libraries has been eliminated from this release. Examples of these include math/lapack.ijs and math/fftw.ijs.
+  Any addon which depends on GL or GTK has also been eliminated from this release. See Graphics/GL2 below.
 
  ** Graphics/GL2
-The embedded version of GL2 is avilable to Android via system-provided libGLESv2.so and libEGL.so.  The former provided the GL2 API, the latter provides platform-native containers upon which to draw. These are the exact same facilities provided for low-level graphics under iOS.
 
-There is a project of uncertain quality on github seeking to provide build files in order to build libcairo for the android: https://github.com/anoek/android-cairo . It is hoped that this can be leveraged towards providing grphics support for J under the Android environment.
+In the present release, no graphics are implemented.  It was deemed by the author that the undertaking considerably expands the scope of the current effort.  We hope to rectify this in a future release.
+
+GL2 is available to Android via system-provided libGLESv2.so and libEGL.so.  The former provides an embedded edition the GL2 API; the latter provides platform-native containers and surfaces upon which to draw. These are the exact same facilities provided for low-level graphics under iOS.
+
+There is a project of unknown quality on github seeking to provide build files in order to build libcairo for the Android: https://github.com/anoek/android-cairo . It is hoped that this can be leveraged towards providing graphics support for J under the Android environment.
