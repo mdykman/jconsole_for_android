@@ -90,6 +90,11 @@ public class JConsoleApp extends Application {
 		this.activity = activity;
 		this.console = console;
 		this.console.setApplication(this);
+		
+		File f = new File(new File(root,getTempDir()),"console.ijx");
+		this.console.setFile(f);
+		this.console.setName(f.getName());
+		
 		if(currentWindow == null) {
 			setConsole(console, JActivity.CONSOLE_NAME);
 		} else {
@@ -155,6 +160,7 @@ public class JConsoleApp extends Application {
 	public void removeWindow(String label) {
 		windows.remove(label);
 	}
+	
 	protected FileEdit toView(FileEdit fe,EditorData data) {
 		if(data.text != null) fe.setText(data.text);
 		else fe.setText("");
@@ -178,9 +184,10 @@ public class JConsoleApp extends Application {
 	
 	private void _saveas(final FileEdit fe,final File f) 
 		throws IOException {
+		fe.setTextChanged(true);
 		fe.setFile(f);
 		fe.setName(f.getName());
-		fe.setTextChanged(false);
+//		Log.d(JActivity.LogTag,"writing file " + f.getAbsolutePath());
 		fe.save();
 
 		windows.remove(getCurrentWindow());
@@ -189,6 +196,7 @@ public class JConsoleApp extends Application {
 		activity.setTitle(fe.createTitle());
 		
 	}
+	
 	public void saveAs(final FileEdit fe,final File f) throws IOException {
 		
 		if(f.exists()) {
@@ -199,8 +207,9 @@ public class JConsoleApp extends Application {
 					try {
 						_saveas(fe,f);
 					} catch(IOException e) {
-						Toast.makeText(activity, "there was an error overwriting file " + f.getName(), Toast.LENGTH_LONG);
-						Log.e(JActivity.LogTag, "there was an error overwriting file " + f.getName());
+						Toast.makeText(activity, "there was an error overwriting file " + 
+								f.getName() +  ":" + e.getLocalizedMessage(),Toast.LENGTH_LONG);
+						Log.e(JActivity.LogTag, "there was an error overwriting file " + f.getName(),e);
 					}
 				}
 			});
@@ -258,7 +267,7 @@ public class JConsoleApp extends Application {
 	
 	protected void promptSaveWithAction(final FileEdit fe, final ResponseAction action) 
 			throws IOException {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setMessage("Save " + fe.getName() +"?")
 //				.setCancelable(false)
 			.setPositiveButton("Yes",
@@ -328,7 +337,18 @@ public class JConsoleApp extends Application {
 			}
 		}
 	}
+	
 	protected void runFile(Console console,File f) {
+		StringBuilder sb = new StringBuilder("1!:1 < '");
+		sb.append(f.getAbsolutePath()).append("'");
+		
+		console.placeCursor();
+		console.append("\n");
+		console.append(sb.toString());
+		console.append("\n");
+		callJ(sb.toString());
+	}
+	protected void loadFile(Console console,File f) {
 		StringBuilder sb = new StringBuilder("load '");
 		sb.append(f.getAbsolutePath()).append("'");
 		

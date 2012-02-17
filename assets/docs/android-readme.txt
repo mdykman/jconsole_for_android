@@ -15,7 +15,7 @@ See docs/gpl3.txt for GNU General Public License version 3. Additional info at h
 
 This Android package was created by Michael Dykman (mdykman@gmail.com) in 2012. It is licensed under GPL3.
 
-This package is compatible with Android versions 2.1 and up.
+This package is compatible with Android versions 2.2 and up.
 
 Many thanks to Eric Iverson and Jsoftware for providing the source code for the J7 engine as well as allowing the use of script, document and image resources to make this package.
 

@@ -17,8 +17,7 @@ public class FileComparator implements Comparator<String> {
 		boolean ad = a.isDirectory();
 		boolean bd = b.isDirectory();
 		
-		if((ad&& bd) || ! (ad||bd)) {
-			// both are directories or both are not
+		if(ad == bd) {
 			return a.getName().compareTo(b.getName());
 		} else {
 			return ad ? -1 : 1;

@@ -39,6 +39,8 @@ public class JActivity extends Activity implements ExecutionListener {
 	public static final String LogTag = "j-console";
 	static final String tempDir = "user/temp";
 	
+	public static final String EMPTY = " -- empty -- ";
+	
 	Console console;
 	ViewGroup container = null;
     File root;
@@ -54,8 +56,6 @@ public class JActivity extends Activity implements ExecutionListener {
 		console = (Console) findViewById(R.id.ws);
 		theApp.setup(this,console);
 	}
-	
-
 	public ViewGroup getContainer() {
 		return container;
 	}
@@ -123,7 +123,7 @@ public class JActivity extends Activity implements ExecutionListener {
 		view.setPadding(4, 4, 4, 4);
 		view.setBackgroundColor(0xff000000);
 		view.setTextColor(0xffffffff);
-		view.setText(" -- empty -- ");
+		view.setText(EMPTY);
 		return view;
 	}
 	
@@ -150,28 +150,36 @@ public class JActivity extends Activity implements ExecutionListener {
 		ad.show();
 	}
 
-	protected String[] filterFilelist(File dir, List<String> files) {
-		List<String> res = new ArrayList<String>(files.size());
+	protected String[] filterFilelist(File dir, List<String> files, int nfiles) {
+		List<String> res = files;
+		if(nfiles == 0) {
+			files.add(EMPTY);
+		}
+		res = new ArrayList<String>(files.size());
 		for (String s : files) {
+			Log.d(LogTag,"testing " + s);
 			File f = new File(dir, s);
-			if (f.isDirectory()) {
+			if (s.startsWith("..") || f.isDirectory()) {
+				Log.d(LogTag,f.getAbsolutePath() + " is a directory");
 				res.add(s + "/");
 			} else {
+				Log.d(LogTag,f.getAbsolutePath() + " is a file");
 				res.add(s);
 			}
 		}
 
 		String[] r = res.toArray(new String[res.size()]);
-		Arrays.sort(r, new FileComparator(dir));
+		if(nfiles > 0) Arrays.sort(r, new FileComparator(dir));
 		return r;
-	}
+}
 
 	protected ArrayAdapter<String> createDirAdapter(File dir,boolean dirsOnly) {
 		List<String> files = loadFileList(dir, null,dirsOnly);
+		int nfiles = files.size();
 		if(!(dir.equals(root) || dir.getAbsolutePath().equals("/mnt/sdcard") || dir.getAbsolutePath().equals("/sdcard"))) {
 			files.add(0, "..");
 		}
-		String[] fl = filterFilelist(dir, files);
+		String[] fl = filterFilelist(dir, files,nfiles);
 		return new ArrayAdapter<String>(this,R.layout.list_item, fl);
 	}
 	
@@ -281,45 +289,54 @@ public class JActivity extends Activity implements ExecutionListener {
 			ViewGroup.LayoutParams.FILL_PARENT));
 		ll.setOrientation(LinearLayout.VERTICAL);
 
-		final Button dev = new Button(this);
-		dev.setLayoutParams(new ViewGroup.LayoutParams(
-			ViewGroup.LayoutParams.WRAP_CONTENT, 
-			ViewGroup.LayoutParams.WRAP_CONTENT));
-		dev.setText("browse " + (theApp.isLocalFile() ? "sdcard" : "local"));
-		dev.setGravity(Gravity.CENTER_HORIZONTAL);
-		ll.addView(dev);
-		
 		final ListView lv = new ListView(this);
 		lv.setFastScrollEnabled(true);
+//		lv.setMinimumHeight(4);
+
 		ArrayAdapter<String> add = createDirAdapter(dir,false);
 		lv.setAdapter(add);
-		ll.addView(lv);
 		
+		Button save = null;
+		Button cancel = null;
 		try {
-			if(textView != null) {
-				ll.addView(textView);
+			ll.addView(lv);
 
-				builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						String name = new StringBuilder(textView.getText()).toString();
-						File myfile = new File(theApp.getCurrentDirectory(),name);
-						FileEdit fe = theApp.getCurrentEditor();
-						try {
-							theApp.saveAs(fe,myfile);
-						} catch(IOException e) {
-							Toast.makeText(JActivity.this, "there was an error saving " + myfile.getName(), 
-								Toast.LENGTH_LONG);
-							Log.e(LogTag,"there was an error saving the file " + myfile.getName(),e);
-						}
-						dialog.dismiss();
-					}
-				});
-				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+			if(textView != null) {
+				LinearLayout hl = new LinearLayout(JActivity.this);
+				hl.setLayoutParams(new ViewGroup.LayoutParams(
+						ViewGroup.LayoutParams.FILL_PARENT, 
+						ViewGroup.LayoutParams.FILL_PARENT));
+				hl.setOrientation(LinearLayout.HORIZONTAL);
+
+				save = new Button(this);
+				save.setLayoutParams(new LinearLayout.LayoutParams(
+						ViewGroup.LayoutParams.FILL_PARENT, 
+						ViewGroup.LayoutParams.WRAP_CONTENT,1f));
+				save.setGravity(Gravity.CENTER);
+				save.setText("Save");
+				
+				hl.addView(save);
+
+				cancel = new Button(this);
+				cancel.setLayoutParams(new LinearLayout.LayoutParams(
+						ViewGroup.LayoutParams.FILL_PARENT, 
+						ViewGroup.LayoutParams.WRAP_CONTENT,1f));
+				cancel.setText("Cancel");
+				cancel.setTextAppearance(this, 12);
+				
+				cancel.setGravity(Gravity.CENTER);
+				hl.addView(cancel);
+				
+				ll.addView(textView);
+				ll.addView(hl);
 			}
+			final Button dev = new Button(this);
+			dev.setLayoutParams(new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.FILL_PARENT, 
+				ViewGroup.LayoutParams.FILL_PARENT));
+			dev.setText("browse " + (theApp.isLocalFile() ? "sdcard" : "local"));
+			ll.addView(dev);
+
 			builder.setTitle(buildTitle(dir));
 			builder.setView(ll);
 			
@@ -334,29 +351,57 @@ public class JActivity extends Activity implements ExecutionListener {
 					requestFileSelect(newfile, ffa, textView);
 				}
 			});
-			
+
 			lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View vv,
 						int index, long id) {
 					TextView ttv = ((TextView) vv);
 					File d = theApp.getCurrentDirectory();
-					String ss = new StringBuilder(ttv.getText()).toString();
+					String ss = ttv.getText().toString();
 					File newfile = ss.startsWith("..") ? d.getParentFile() : new File(d, ss);
 					Log.d(LogTag, "file selected: " + newfile.getPath());
 					
 					if (newfile.isDirectory()) {
+						Log.d(LogTag, "directory " + newfile.getPath());
 						theApp.setCurrentDirectory(newfile);
 						ArrayAdapter<String> add = createDirAdapter(newfile,false);
+						lv.setAdapter(add);
 						try {
 							ad.setTitle(buildTitle(newfile));
 						} catch(IOException e) {
-							Log.d(LogTag,"error building title",e);
+							Log.e(LogTag,"error building title",e);
 						}
 						lv.setAdapter(add);
 					} else {
+						Log.d(LogTag, "file " + newfile.getPath());
+						if(EMPTY.equals(ss)) {
+							return;
+						}
 						ffa.useFile(newfile);
 						if(textView == null) ad.dismiss();
 					}
+				}
+			});
+			
+			if(save != null) save.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					String name = new StringBuilder(textView.getText()).toString();
+					File myfile = new File(theApp.getCurrentDirectory(),name);
+					FileEdit fe = theApp.getCurrentEditor();
+					try {
+						theApp.saveAs(fe,myfile);
+					} catch(IOException e) {
+						Toast.makeText(JActivity.this, "there was an error saving " + myfile.getName(), 
+							Toast.LENGTH_LONG);
+						Log.e(LogTag,"there was an error saving the file " + myfile.getName(),e);
+					}
+					ad.dismiss();
+					
+				}
+			});
+			if(cancel != null) cancel.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					ad.cancel();
 				}
 			});
 			ad.show();
@@ -464,7 +509,7 @@ public class JActivity extends Activity implements ExecutionListener {
 	}
 
 	public void quit() {
-		int pid = android.os.Process.myPid();		//TODO: check for editors in need of saving
+		int pid = android.os.Process.myPid();
 		android.os.Process.killProcess(pid);
 	}
 
