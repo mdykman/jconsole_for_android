@@ -16,8 +16,6 @@
 
 package org.dykman.j.android;
 
-import org.dykman.j.android.R;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;

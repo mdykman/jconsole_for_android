@@ -6,12 +6,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
-public class HelpActivity extends Activity {
+public class HelpActivity extends AbstractActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,34 @@ public class HelpActivity extends Activity {
 			wv.setText(sb.toString());
 		} catch(IOException e) {
 			wv.setText("The was an error reading the requested file " + s);
-			Log.e(JActivity.LogTag,"error loading file",e);
+			Log.e(JConsoleApp.LogTag,"error loading file",e);
 		}
 		
+	}
+	public String buildTitle(File f)  throws IOException {
+		return "help";
+	}
+	protected FileEdit getEditor() {
+		return null;
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = this.getMenuInflater();
+		inflater.inflate(R.menu.help, menu);
+		return true;
+	}
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		boolean result = true;
+		int itemId = item.getItemId();
+		Log.d(JConsoleApp.LogTag,"selection " + itemId + ", " + getClass().getName());
+		switch(itemId) {
+			default: result = false;
+		}
+		if(!result) {
+			result = super.onMenuItemSelected(featureId, item);
+		}
+
+		return result;
 	}
 }

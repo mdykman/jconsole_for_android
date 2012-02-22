@@ -19,21 +19,25 @@ import org.dykman.j.android.Console.Dimension;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 public class JConsoleApp extends Application {
 	
-	
+	public static final String LogTag = "j-console";
 
 	protected JInterface jInterface = null;
-	protected FileEdit currentEditor = null;
-	JActivity activity;
+//	protected FileEdit currentEditor = null;
+	private JActivity activity;
 
-	protected Map<String, EditorData> windows = new HashMap<String, EditorData>();
+	protected Map<String,Intent> intentMap = new HashMap<String, Intent>();
+//	protected Map<String, EditorData> windows = new HashMap<String, EditorData>();
 	
 	protected java.util.List<String> history = new LinkedList<String>();
 	protected final String tempDir = "user/temp";
@@ -42,26 +46,54 @@ public class JConsoleApp extends Application {
 	protected File currentExternDir = new File("/sdcard");
 	private Console console;
 	boolean localFile = true;
-	
-	public boolean isLocalFile() {
-		return localFile;
-	}
 
-	public void setLocalFile(boolean localFile) {
-		this.localFile = localFile;
-	}
-
+//	@SuppressWarnings({ "unchecked", "rawtypes" })
+//	Map<String,Activity> activities = new java.util.concurrent.ConcurrentHashMap();
 	List<EngineOutput> outputs = new LinkedList<JConsoleApp.EngineOutput>();
 	
 //	protected Console console;
 //	protected ViewGroup container = null;
-	protected String currentWindow;
+//	protected String currentWindow;
 	boolean consoleState = false;
 	boolean started = false;
-	public JConsoleApp() {
-		// TODO Auto-generated constructor stub
+	
+	public void setWindow(Context context, String label) {
+		Intent intent = intentMap.get(label);
+		context.startActivity(intent);
 	}
 	
+	protected void addFile(String path,Intent intent) {
+		if(!JActivity.JCONSOLE.equals(path)) {
+			path = new File(path).getName();
+		} 
+		
+		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+		intentMap.put(path, intent);
+	}
+	protected void removeFile(String path) {
+		intentMap.remove(path);
+	}
+	public boolean isLocalFile() {
+		return localFile;
+	}
+	/*
+	public Activity getActivity(String label) {
+		return getActivity(label,true);
+	}
+	public Activity getActivity(String label, boolean show) {
+		Activity activity = activities.get(label);
+		return activity;
+	}
+	
+	public void addActivity(String label, Activity activity) {
+		activities.put(label, activity);
+	}
+	*/
+	public void setLocalFile(boolean localFile) {
+		this.localFile = localFile;
+	}
+
 	protected void flushOutputs() {
 		for(EngineOutput eo : outputs) {
 			console.consoleOutput(eo.type, eo.content);
@@ -79,37 +111,31 @@ public class JConsoleApp extends Application {
 	}
 	@Override
 	public void onCreate() {
-		root = getDir("jconsole",0);
+		root = getDir("jconsole",Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
 		if(currentLocalDir == null) {
 			currentLocalDir = root;
 		}
 		jInterface = new JInterface();
 	}
 
+	public Console getConsole() {
+		return console;
+	}
 	public void setup(JActivity activity,Console console) {
 		this.activity = activity;
 		this.console = console;
 		this.console.setApplication(this);
-		
-		File f = new File(new File(root,getTempDir()),"console.ijx");
-		this.console.setFile(f);
-		this.console.setName(f.getName());
-		
-		if(currentWindow == null) {
-			setConsole(console, JActivity.CONSOLE_NAME);
-		} else {
-			setWindow(currentWindow);
-		}
-		
-		if(!started) {
-			started = true;
-			StringBuilder sb = new StringBuilder();
-			sb.append("1!:44 '").append(root.getAbsolutePath()).append("'");
-			jInterface.callJ(sb.toString());
-			installSystemFiles(activity,console,root,false);
-		}
 		setConsoleState(true);
 		flushOutputs();
+        if(!started) {
+           started = true;
+           StringBuilder sb = new StringBuilder();
+           sb.append("1!:44 '").append(root.getAbsolutePath()).append("'");
+           jInterface.callJ(sb.toString());
+           installSystemFiles(activity,console,root,false);
+        }
+        setConsoleState(true);
+
 	}
 	
 	public void setConsoleState(boolean n) {
@@ -118,10 +144,12 @@ public class JConsoleApp extends Application {
 	protected String[] getHistoryAsArray() {
 		return history.toArray(new String[history.size()]);
 	}
+	
 	protected String[] getWindowsAsArray() {
-		Set<String> k = windows.keySet();
+		Set<String> k = intentMap.keySet();
 		return k.toArray(new String[k.size()]);
 	}
+	
 	public void addHistory(String line) {
 		if (line != null && line.trim().length() > 0) {
 			line = line.trim();
@@ -136,43 +164,31 @@ public class JConsoleApp extends Application {
 			history.add(0,line);
 		}
 	}
-	public void setWindow(String label) {
-		if(JActivity.CONSOLE_NAME.equals(label)) {
-			setConsole(console, label);
-		} else {
-			EditorData fe = windows.get(label);
-			if(fe!=null) {
-				setWindow(fe,label);
-			}
-		}
-	}
+
+	public void reset() {
+		Toast.makeText(this, "resetting console", Toast.LENGTH_SHORT).show();
+		getjInterface().reset();
+		console.replaceText("");
+		bootStrapSession(null,"''");
+		InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		imm.restartInput(console);
+	}	
 	
-	public EditorData toData(FileEdit fe) {
-		File f = fe.getFile();
-		return new EditorData(
-				fe.getName(),
-				f == null ? null : f.getAbsolutePath(), 
-				fe.getText(), 
-				fe.getSelectionStart(),
-				fe.textChanged);
+	public void newFile() {
+		File tmp = new File(root, tempDir);
+		int i = 1;
+		File newf = new File(tmp, Integer.toString(i) + ".ijs");
+		while (hasEditor(newf.getName()) || newf.exists()) {
+			newf = new File(tmp, Integer.toString(++i) + ".ijs");
+		}
+		Intent intent = new Intent();
+		intent.setClass(getApplicationContext(), EditActivity.class);
+
+		intent.putExtra("file", newf.getAbsolutePath());
+		startActivity(intent);
 	}
 
-	public void removeWindow(String label) {
-		windows.remove(label);
-	}
-	
-	protected FileEdit toView(FileEdit fe,EditorData data) {
-		if(data.text != null) fe.setText(data.text);
-		else fe.setText("");
-		fe.cursorPosition = data.cursorPosition;
-		fe.setName(data.name);
-		if(data.path != null) {
-			fe.setFile(new File(data.path));
-		}
-		fe.setTextChanged(data.changed);
-		return fe;
-	}
-	
+/*
 	protected void preserveCurrentWindow() {
 		if(currentEditor != null) {
 			currentEditor.markCursor();
@@ -181,18 +197,21 @@ public class JConsoleApp extends Application {
 				windows.put(ol, old);
 		}
 	}
+ */	
 	
 	private void _saveas(final FileEdit fe,final File f) 
 		throws IOException {
 		fe.setTextChanged(true);
-		fe.setFile(f);
-		fe.setName(f.getName());
+//		fe.setFile(f);
+//		fe.setName(f.getName());
 //		Log.d(JActivity.LogTag,"writing file " + f.getAbsolutePath());
-		fe.save();
+		fe.save(f);
 
+		/*
 		windows.remove(getCurrentWindow());
 		windows.put(fe.getName(), toData(fe));
 		setCurrentWindow(fe.getName());
+		*/
 		activity.setTitle(fe.createTitle());
 		
 	}
@@ -201,7 +220,7 @@ public class JConsoleApp extends Application {
 		
 		if(f.exists()) {
 			AlertDialog.Builder builder= new AlertDialog.Builder(activity);
-			builder.setMessage("do you want to overwrite " + f.getName() + "?");
+			builder.setMessage("Do you want to overwrite " + f.getName() + "?");
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					try {
@@ -209,7 +228,7 @@ public class JConsoleApp extends Application {
 					} catch(IOException e) {
 						Toast.makeText(activity, "there was an error overwriting file " + 
 								f.getName() +  ":" + e.getLocalizedMessage(),Toast.LENGTH_LONG);
-						Log.e(JActivity.LogTag, "there was an error overwriting file " + f.getName(),e);
+						Log.e(JConsoleApp.LogTag, "there was an error overwriting file " + f.getName(),e);
 					}
 				}
 			});
@@ -222,6 +241,7 @@ public class JConsoleApp extends Application {
 			_saveas(fe,f);
 		}
 	}
+	/*
 	protected void setView(String label, FileEdit win) {
 //Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
 		setCurrentWindow(label);
@@ -236,7 +256,8 @@ public class JConsoleApp extends Application {
 		win.requestFocus();
 		win.restoreCursor();
 	}
-
+	*/
+/*
 	public void setConsole(Console console, String label) {
 		preserveCurrentWindow();
 		EditorData data = windows.get(label);
@@ -255,17 +276,19 @@ public class JConsoleApp extends Application {
 		setView(label, win);
 		win.restoreCursor();
 	}
-
+*/
 	protected void doCloseCurrent() {
+		/*
 		final FileEdit editor = getCurrentEditor();
 
 		if(!(editor instanceof Console)) {
 			String cw = getCurrentWindow();
 			windows.remove(cw);
 		}
+		*/
 	}
 	
-	protected void promptSaveWithAction(final FileEdit fe, final ResponseAction action) 
+	protected void promptSaveWithAction(final FileEdit fe, final File file, final ResponseAction action) 
 			throws IOException {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setMessage("Save " + fe.getName() +"?")
@@ -274,12 +297,12 @@ public class JConsoleApp extends Application {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						try {
-							fe.save();
+							fe.save(file);
 							if(action != null) action.action(true);
 //							doCloseCurrent();
 							dialog.dismiss();
 						} catch(IOException e) {
-							Log.e(JActivity.LogTag,"error saving file",e);
+							Log.e(JConsoleApp.LogTag,"error saving file",e);
 						}
 					}
 				})
@@ -292,6 +315,7 @@ public class JConsoleApp extends Application {
 		AlertDialog dd = builder.create();
 		dd.show();
 	}
+	/*
 	protected void closeCurrent() {
 		try {
 			final FileEdit fe = getCurrentEditor();
@@ -307,57 +331,15 @@ public class JConsoleApp extends Application {
 				}
 			}
 		} catch(IOException e) {
-			Log.e(JActivity.LogTag,"error on close",e);
+			Log.e(JConsoleApp.LogTag,"error on close",e);
 		}
+	}
+*/
+	public boolean hasEditor(String name) {
+		return false;
+//		return windows.keySet().contains(name);
 	}
 
-	public boolean hasEditor(String name) {
-		return windows.keySet().contains(name);
-	}
-	   
-	protected void runCurrentFile(final Console console) {
-		final FileEdit editor = getCurrentEditor();
-		if(!(editor instanceof Console)) {
-			try {
-				if(editor.isTextChanged()) {
-					promptSaveWithAction(editor, new ResponseAction() {
-						public void action(boolean state) {
-							if(state) {
-								File f = editor.getFile();
-								runFile(console,f);
-							}
-						}
-					});
-				} else {
-					File f = editor.getFile();
-					runFile(console,f);
-				}
-			} catch(IOException e) {
-				Log.e(JActivity.LogTag,"error running current file",e);
-			}
-		}
-	}
-	
-	protected void runFile(Console console,File f) {
-		StringBuilder sb = new StringBuilder("1!:1 < '");
-		sb.append(f.getAbsolutePath()).append("'");
-		
-		console.placeCursor();
-		console.append("\n");
-		console.append(sb.toString());
-		console.append("\n");
-		callJ(sb.toString());
-	}
-	protected void loadFile(Console console,File f) {
-		StringBuilder sb = new StringBuilder("load '");
-		sb.append(f.getAbsolutePath()).append("'");
-		
-		console.placeCursor();
-		console.append("\n");
-		console.append(sb.toString());
-		console.append("\n");
-		callJ(sb.toString());
-	}
 	public void callJ(String... sentences) {
 		JTask task = new JTask();
 		task.execute(sentences);
@@ -369,7 +351,7 @@ public class JConsoleApp extends Application {
 		bootStrapSession(activity,"''");
 	}
 
-	protected void bootStrapSession(JActivity activity, String... args) {
+	protected void bootStrapSession(JActivity apctivity, String... args) {
 		String argv = "''";
 		if(args.length > 0) {
 			argv = args[0];
@@ -380,20 +362,20 @@ public class JConsoleApp extends Application {
 				.append(argv).append(" [ BINPATH_z_ =: '")
 				.append(home)
 				.append("/bin").append("'");
-		Log.d(JActivity.LogTag, "initialize engine: " + sb.toString());
+		Log.d(JConsoleApp.LogTag, "initialize engine: " + sb.toString());
 		
 		if(args.length > 1) {
 			String [] ss = new String[args.length];
 			ss[0] = sb.toString();
-			Log.d(JActivity.LogTag,ss[0]);
+			Log.d(JConsoleApp.LogTag,ss[0]);
 			for(int i =1; i<args.length; ++i) {
 				ss[i] = args[i];
-				Log.d(JActivity.LogTag,ss[i]);
+				Log.d(JConsoleApp.LogTag,ss[i]);
 			}
 			callJ(ss);
 			
 		} else {
-			Log.d(JActivity.LogTag,sb.toString());
+			Log.d(JConsoleApp.LogTag,sb.toString());
 			callJ(sb.toString());
 		}
 	}
@@ -404,7 +386,7 @@ public class JConsoleApp extends Application {
 			InstallationTask task = new InstallationTask(activity,console);
 			task.execute(base);
 		} else {
-			Log.d(JActivity.LogTag,"bootstrapping");
+			Log.d(JConsoleApp.LogTag,"bootstrapping");
 			bootstrap(console);
 		}
 	}
@@ -503,7 +485,7 @@ public class JConsoleApp extends Application {
 			try {
 				return _installFile(base,path);
 			} catch (Exception e) {
-				Log.e(JActivity.LogTag, "failed to install " + path);
+				Log.e(JConsoleApp.LogTag, "failed to install " + path);
 			}
 			return false;
 		}
@@ -524,7 +506,7 @@ public class JConsoleApp extends Application {
 				try {
 					res &= _installFile(base, directory + "/" + t);
 				} catch(FileNotFoundException e) {
-					Log.i(JActivity.LogTag,"recursing to " + directory + "/" + t);
+					Log.i(JConsoleApp.LogTag,"recursing to " + directory + "/" + t);
 					installDirectory(base,directory + "/" + t);
 				}
 			}
@@ -538,18 +520,22 @@ public class JConsoleApp extends Application {
 	public void setjInterface(JInterface jInterface) {
 		this.jInterface = jInterface;
 	}
+	/*
 	public String getCurrentWindow() {
 		return currentWindow;
 	}
 	public void setCurrentWindow(String currentWindow) {
 		this.currentWindow = currentWindow;
 	}
+	*/
+	/*
 	public FileEdit getCurrentEditor() {
 		return currentEditor;
 	}
 	public void setCurrentEditor(FileEdit currentEditor) {
 		this.currentEditor = currentEditor;
 	}
+	*/
 	public java.util.List<String> getHistory() {
 		return history;
 	}
@@ -593,6 +579,11 @@ public class JConsoleApp extends Application {
 	public String getTempDir() {
 		return tempDir;
 	}
+	/*
+	public EditorData getWindow(String name) {
+		return windows.get(name);
+	}
+	*/
 	static class EngineOutput {
 		int type;
 		String content;
@@ -638,14 +629,17 @@ public class JConsoleApp extends Application {
 			jInterface.removeOutputListener(this);
 			return res;
 		}
-	
+
+		
 		@Override
 		protected void onPostExecute(Integer code) {
 			// this is a worry, in the world of async windows
+			/*
 			EditorData ed = windows.get(JActivity.CONSOLE_NAME);
 			if(ed!=null) {
 				ed.placeCursor();
 			}
+			*/
 			console.placeCursor();
 			console.prompt();
 			console.setEnabled(true);

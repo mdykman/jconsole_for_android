@@ -3,7 +3,7 @@ package org.dykman.j;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dykman.j.android.JActivity;
+import org.dykman.j.android.JConsoleApp;
 
 import android.util.Log;
 
@@ -34,7 +34,7 @@ public class JInterface {
 	    		l.onCommandComplete(result);
 	    	}
     	} catch(Throwable e) {
-    		Log.e(JActivity.LogTag, "error executing sentence: " + s, e);
+    		Log.e(JConsoleApp.LogTag, "error executing sentence: " + s, e);
     	}
     	return result;
     }

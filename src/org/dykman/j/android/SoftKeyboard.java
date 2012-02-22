@@ -16,8 +16,6 @@
 
 package org.dykman.j.android;
 
-import org.dykman.j.android.R;
-
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -354,7 +352,7 @@ public class SoftKeyboard extends InputMethodService
     		mInputView.setKeyboard(mNumKeyboard);
 
     	} else if (primaryCode == 10) {
-    		Log.d(JActivity.LogTag,"onKey Enter");
+    		Log.d(JConsoleApp.LogTag,"onKey Enter");
 //    		getCurrentInputConnection().performEditorAction(EditorInfo.IME_ACTION_UNSPECIFIED);
             handleEnter();
             

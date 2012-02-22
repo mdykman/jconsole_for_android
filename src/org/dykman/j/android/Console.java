@@ -48,6 +48,7 @@ public class Console extends FileEdit {
 					int n = getSelectionStart();
 					String line = getLineForPosition(n);
 					if(line != null && line.equals(last)) {
+						appendSeq("\n");
 						handleEnter(line, false);
 					}
 					last = line;
@@ -138,12 +139,20 @@ public class Console extends FileEdit {
 		endBatchEdit();
 	
 	}
-
+/*
+	public void synchCursor() {
+		EditorData ed = theApp.getWindow(JActivity.CONSOLE_NAME);
+		if(ed != null) ed.cursorPosition = getText().length();
+	}
+*/
 	@Override
 	public void onTextChanged(CharSequence seq,int start, int lengthBefore, int lengthAfter) {
-		
+//		this.ons
 	}
-
+	public void clear() {
+		replaceText("");
+		prompt();
+	}
 	public int getColorForType(int type) {
 		int res = inputColor; 
 		switch (type) {

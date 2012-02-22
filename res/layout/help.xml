@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:autoLink="all"
         android:saveEnabled="true"
+        android:freezesText="true"
         
        >
 

@@ -3,25 +3,24 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:id="@+id/mainLayout">
-    <org.dykman.j.android.Console
-        android:id="@+id/ws"
-        android:layout_width="match_parent"
+    >
+    <org.dykman.j.android.FileEdit
+        android:id="@+id/edit"
+        android:layout_width="match_parent" 
         android:layout_height="match_parent"
-        android:cursorVisible="true"
-        android:textSize="16sp"
-        android:typeface="monospace"
-        android:editable="true" 
+        android:autoLink="none"
         android:saveEnabled="true"
         android:freezesText="true"
-        android:inputType="textMultiLine|textNoSuggestions" 
+
+        android:bufferType="editable"
+        android:typeface="monospace"
+        android:gravity="top"
         android:scrollHorizontally="true"
         android:scrollbars="horizontal|vertical"
-        android:gravity="top"
-        >
-
+        android:inputType="textMultiLine|textNoSuggestions" 
+        android:cursorVisible="true"
+       >
         <requestFocus />
-
-   </org.dykman.j.android.Console>
+	</org.dykman.j.android.FileEdit>
 
 </LinearLayout>

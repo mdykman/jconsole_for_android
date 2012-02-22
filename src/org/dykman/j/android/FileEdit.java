@@ -8,47 +8,48 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class FileEdit extends EditText {
 
 	boolean textChanged = false;
 	int cursorPosition = 0;
-	File file;
+//	File file;
 	String name;
-	protected JActivity jActivity;
-	
+	protected Activity jActivity;
+
+	public void setActivity(Activity activity) {
+		jActivity = activity;
+	}
 	public FileEdit(Context context, AttributeSet attrs, int defStyle) {
 		super(context,attrs,defStyle);
-		this.jActivity = (JActivity)jActivity;
-		init();
+//		this.jActivity = (JActivity)jActivity;
+//		init();
 	}
 	
 	public FileEdit(Context context, AttributeSet attrs) {
 		super(context,attrs);
-		this.jActivity = (JActivity)jActivity;
-		init();
+//		this.jActivity = (JActivity)jActivity;
+//		init();
 	}
 	
 	public FileEdit(Context jActivity) {
 		super(jActivity);
-		this.jActivity = (JActivity)jActivity;
-		init();
+//		this.jActivity = (JActivity)jActivity;
+//		init();
 	}
-	
+	/*
 	public File getFile() {
 		return file;
 	}
-
+	 */
 	public void setName(String s) {
-		Log.d(JActivity.LogTag,"setname: " + s);
+		Log.d(JConsoleApp.LogTag,"setname: " + s);
 		name =s ;
 	}
 	
@@ -70,35 +71,39 @@ public class FileEdit extends EditText {
 	public void restoreCursor() {
 		setSelection(cursorPosition);
 	}
-	
+	/*
 	public void setFile(File file) {
 		this.file = file;
 	}
+	*/
 	public boolean isTextChanged() {
 		return textChanged;
 	}
 	public void setTextChanged(boolean b) {
 		textChanged = b;
 	}
+	/*
 	final private void init() {
 		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
 			ViewGroup.LayoutParams.MATCH_PARENT,
 			ViewGroup.LayoutParams.MATCH_PARENT);
-		setLayoutParams(params);
-		setGravity(Gravity.TOP);
+//		setLayoutParams(params);
+//		setGravity(Gravity.TOP);
 		setTypeface(Typeface.MONOSPACE);
 		setHorizontallyScrolling(true);
 		this.setFreezesText(true);
 	}
-
+*/
 	public void open(File f) throws IOException {
+/*
 		if(f != null) {
 			this.file = f;
 		}
+*/
 		ByteArrayOutputStream bb = new ByteArrayOutputStream();
 		byte[] buf = new byte[4096];
-		if(file.exists()) {
-			InputStream in = new FileInputStream(file);
+		if(f.exists()) {
+			InputStream in = new FileInputStream(f);
 			int n;
 			while((n = in.read(buf)) != -1) {
 				bb.write(buf, 0, n);
@@ -122,7 +127,7 @@ public class FileEdit extends EditText {
 		endBatchEdit();
 	}
 
-	public void save() throws IOException {
+	public void save(File file) throws IOException {
 		if(textChanged) {
 			OutputStream out = new FileOutputStream(file);
 			out.write(getText().toString().getBytes());

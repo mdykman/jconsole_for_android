@@ -22,21 +22,30 @@
 
         <activity
             android:label="@string/app_name"
-            android:name=".JActivity" >
+            android:name=".JActivity"
+            >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-         <activity
+        <activity
+            android:name="org.dykman.j.android.EditActivity" 
+            android:configChanges="orientation">
+            <intent-filter >
+                <action android:name="org.dykman.j.android.EDIT" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:label="@string/help_name"
-            android:name="org.dykman.j.android.HelpActivity" >
+            android:name=".HelpActivity" >
             <intent-filter >
                 <action android:name="org.dykman.j.android.HELP" />
             </intent-filter>
         </activity>
-
+            
         <service android:name=".SoftKeyboard"
             android:permission="android.permission.BIND_INPUT_METHOD" 
             android:exported="true" 
