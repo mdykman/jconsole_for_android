@@ -16,6 +16,8 @@ public class JInterface {
 	public static final int MTYOSYS	 =	4;	/* system assertion failure */
 	public static final int MTYOEXIT =	5;	/* exit */
 	public static final int MTYOFILE =	6;	/* output 1!:2[2 */
+	
+	public static final String LOGTAG = "j-interface";
 
 	private long nativeInstance = 0L;
 
@@ -25,16 +27,21 @@ public class JInterface {
     public int callJ(String s) {
     	int result = -1;
     	try {
-	    	if(nativeInstance == 0L) {
-	    			nativeInstance = initializeJ();
-	    	}
+    		if(nativeInstance == 0L) {
+	    		synchronized(this) {
+			    	if(nativeInstance == 0L) {
+			    			nativeInstance = initializeJ();
+			    	}
+	    		}
+    		}
 	    	result = callJNative(nativeInstance,s);
 	    	
+    	} catch(Throwable e) {
+    		Log.e(JConsoleApp.LogTag, "error executing sentence: " + s, e);
+    	} finally { 
 	    	for(ExecutionListener l : execlist) {
 	    		l.onCommandComplete(result);
 	    	}
-    	} catch(Throwable e) {
-    		Log.e(JConsoleApp.LogTag, "error executing sentence: " + s, e);
     	}
     	return result;
     }
@@ -54,11 +61,15 @@ public class JInterface {
 	}
 
 	public void reset() {
-    	if(nativeInstance == 0L) {
-    		destroyJ();
+    	if(nativeInstance != 0L) {
+    		synchronized(this) {
+	        	if(nativeInstance != 0L) {
+		    		nativeInstance = 0L;
+		    		destroyJ();
+	        	}
+	        	nativeInstance = initializeJ();
+    		}
     	}
-    	nativeInstance = initializeJ();
-
 	}
 
     public void addExecutionListener(ExecutionListener listener) {

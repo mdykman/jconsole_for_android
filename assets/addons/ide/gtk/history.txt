@@ -1,0 +1,86 @@
+ide/gtk - change history
+
+== 1.0.0 ==
+ * initial release
+
+== 1.0.1/42 ==
+ * beta releases
+
+== 1.0.43/48 ==
+ * add launch, studio menus
+
+== 1.0.49 ==
+ * gtk context help
+
+== 1.0.50/51 ==
+ * add labs/studio
+
+== 1.0.52/3 ==
+ * double click highlights J name
+
+== 1.0.54 ==
+ * add EscClose option 
+
+== 1.0.55 ==
+ * ide/gtk: autocompletion and codecompletion
+ * ide/gtk: add codecompletion ui box
+ * ide/gui: add gtkdocdict
+ * ide/ctag: minor fix
+ * ide/gtk: missing . in return.
+
+== 1.0.56 ==
+ * ide/gtk: add GTK IDE help menu item
+
+== 1.0.57 ==
+ * ide/gtk: context help for base library
+
+== 1.0.58 ==
+ * ide/gtk: smfocus_jijs_
+
+== 1.0.59 ==
+ * ide/gtk: refactorize ctag
+ * Support for Lab Text and monadic Note
+
+== 1.0.60 ==
+ * ide/gtk: remove generated file
+ * gtksourceview print
+
+== 1.0.61 ==
+ * EscClose also used for Edit window
+
+== 1.0.62/4 ==
+ * Find in Files has file type filter
+ * Project Open has resizeable panels
+
+== 1.0.65/7 ==
+ * fix test in term
+ * fix delete where no script open
+
+== 1.0.68 ==
+ * ide/gtk: more jijs locale stubs for labs
+
+== 1.0.69 ==
+ * ide/gtk: smwrite_jijs_ stub
+ * ide/gtk: kludge to avoid extra dialog
+
+== 1.0.70 ==
+ * ide/gtk: gtk+3 compatible
+
+== 1.0.71 ==
+ * ide/gtk: fix Keypad Enter behavior
+
+== 1.0.72 ==
+ * ide/gtk: fix htmlhelpgtk
+
+== 1.0.73 ==
+ * ide/gtk: detach console
+ * ide/gtk: update baselibtags
+
+== 1.0.74/5 ==
+ * ide/gtk: support line wrap
+
+== 1.0.76 ==
+ * ide/gtk: prevent crash in JHS
+
+== 1.0.77 ==
+ * ide/gtk: qualify spwan and fork

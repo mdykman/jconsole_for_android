@@ -67,6 +67,7 @@ public abstract class AbstractActivity extends Activity {
 			case R.id.runl:    runCurrentLine();              break;
 			case R.id.runf:    requestFileRun();              break;
 			case R.id.vocab:   showHelp(R.string.help_start); break;
+			case R.id.jhs:		theApp.launchJHS(this);		  break;
 			case R.id.learning: showHelp(R.string.learning);  break;
 			case R.id.readme:  showTextFile(R.string.readme); break;
 			case R.id.aboutj:  showTextFile(R.string.aboutj); break;

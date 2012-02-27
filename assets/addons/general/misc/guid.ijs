@@ -16,6 +16,8 @@ NB.  guidsx - return guids as extended precision integers
 cocurrent 'z'
 
 NB. =========================================================
+
+NB. Android lacks libuuid, hence a no-go here
 guids=: 3 : 0
 if. IFWIN do.
   cmd=. 'ole32 CoCreateGuid i *c'

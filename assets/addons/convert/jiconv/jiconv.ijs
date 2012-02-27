@@ -92,7 +92,10 @@ enc=. r=. ''
 if. 0=#y do. enc;r return. end.
 
 NB. iconv return _1 if failed
-libiconv=. ('Darwin'-:UNAME){::'libc.so.6';'libc.dylib'
+NB. android logic added by md
+lib=. 'libc.so'"_^:IFANDROID 'libc.so.6'
+libiconv=. ('Darwin'-:UNAME){::lib;'libc.dylib'
+
 iconv_open=. (libiconv, ' iconv_open > x *c *c')&cd        NB. tocode fromcode
 iconv_iconv=. (libiconv, ' iconv x x *x *x *x *x')&cd      NB. des **inbuf *inbytesleft **outbuf *outbytesleft
 iconv_close=. (libiconv, ' iconv_close > i x')&cd          NB. des

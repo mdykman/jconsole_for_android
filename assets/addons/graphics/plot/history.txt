@@ -1,0 +1,46 @@
+graphics/plot - change history
+
+== 1.0.0 ==
+ * initial 701 release
+
+== 1.0.1 ==
+ * bug fixes
+ * add missing demo
+
+== 1.0.2 ==
+ * fix jwplot
+ * use jgl2
+
+== 1.0.3 ==
+ * gtkbox and gtkda renamed as canvas
+
+== 1.0.4/5 ==
+ * use double buffering
+
+== 1.0.6 ==
+ * support multiple backends
+
+== 1.0.7/8 ==
+ * support gdi32 backend
+
+== 1.0.9/10 ==
+ * support glcmds shared library
+
+== 1.0.11 ==
+ * fix pd save
+
+== 1.0.12 ==
+ * gl2 plot: bug fix
+ * remove ijp
+
+== 1.0.13/20 ==
+ * canvas output
+
+== 1.0.21/76 ==
+ * cairo output
+
+== 1.0.77/78 ==
+ * isi output
+
+== 1.0.79/80 ==
+ * getparms bugfix

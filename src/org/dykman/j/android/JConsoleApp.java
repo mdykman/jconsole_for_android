@@ -6,12 +6,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.http.Header;
+import org.apache.http.HeaderIterator;
+import org.apache.http.HttpResponse;
+import org.apache.http.ProtocolVersion;
+import org.apache.http.RequestLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpParams;
 import org.dykman.j.JInterface;
 import org.dykman.j.OutputListener;
 import org.dykman.j.android.Console.Dimension;
@@ -23,6 +34,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
@@ -138,6 +150,15 @@ public class JConsoleApp extends Application {
 
 	}
 	
+
+	public void launchJHS(Context context) {
+		if(!testJHSServer()) {
+			JHSTask task = new JHSTask();
+			task.execute("");
+		}
+		JHSLauncherTask ltask = new JHSLauncherTask(context);
+		ltask.execute();
+	}
 	public void setConsoleState(boolean n) {
 		consoleState = n;
 	}
@@ -594,6 +615,19 @@ public class JConsoleApp extends Application {
 		}
 	}
 
+	class JHSTask extends JTask {
+		protected Integer doInBackground(String... params) {
+			String[] cmds = {
+					"load '~addons/ide/jhs/core.ijs'",
+					"init_jhs_''"
+			};
+//			Log.d(LogTag,"starting JHS");
+			super.doInBackground(cmds);
+			Log.d(LogTag,"returned from starting JHS");
+			return 0;
+		}		
+	}
+	
 	class JTask extends AsyncTask<String, EngineOutput, Integer> 
 		implements OutputListener {
 	
@@ -621,8 +655,8 @@ public class JConsoleApp extends Application {
 			Integer res = -1;
 			StringBuilder sb = new StringBuilder();
 			sb.append("Cwh_j_ =: ").append(width).append(" ").append(height);
-			res = jInterface.callJ(sb.toString());
 			jInterface.addOutputListener(this);
+			res = jInterface.callJ(sb.toString());
 			for(String sentence : params) {
 				res = jInterface.callJ(sentence);
 			}
@@ -645,5 +679,98 @@ public class JConsoleApp extends Application {
 			console.setEnabled(true);
 		}
 	}
+	
+	boolean testJHSServer() {
+		boolean result = false;
+		HttpClient client = new DefaultHttpClient();
+		HttpGet get = new HttpGet("http://localhost:65001/jijx");
+		
+		try {
+			client.execute(get);
+			result = true;
+		} catch(Exception e) {
+			// ignore
+		}
+		return result;
+	}
 
+	class JHSLauncherTask extends AsyncTask<String, Integer, String> {
+
+		Context context;
+		boolean ready = false;
+		public JHSLauncherTask(Context context) {
+			this.context = context;
+		}
+		
+		
+		@Override
+		protected String doInBackground(String... params) {
+			HttpClient client = new DefaultHttpClient();
+			long waitFor = 1000;
+			if(params != null && params.length > 0 && "ready".equals(params[0])) {
+				waitFor = 0;
+			}
+			HttpGet get = new HttpGet("http://localhost:65001/jijx");
+			boolean loop = true;
+			long start = System.currentTimeMillis();
+			publishProgress(0);
+			// try to wait for JHS to start
+			while(loop) {
+				try {
+					if(loop && waitFor > 0) Thread.sleep(waitFor);
+				} catch(Exception e) {
+					// ignore
+				}
+
+				if(testJHSServer()) {
+					ready = true;
+					loop = false;
+				}
+				// wait no more than 10 seconds, then abort
+				long ll = System.currentTimeMillis() - start;
+				if(ll > 10000) {
+					loop = false;
+					publishProgress(-1);
+				} else {
+					publishProgress((int)(ll/100));
+				}
+				waitFor = 500;
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(String code) {
+			if(ready) {
+				Intent myIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("http://localhost:65001/jijxipad"));
+				EngineOutput out = new EngineOutput(JInterface.MTYOLOG, "launching browser\n");
+				consoleOutput(out);
+				context.startActivity(myIntent);
+			} else {
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage("failed to connect to JHS server");
+				builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				builder.show();
+			}
+			
+		}		
+		
+		@Override
+		public void onProgressUpdate(Integer... oo) {
+			EngineOutput out;
+			if(oo[0] == -1) {
+				out = new EngineOutput(JInterface.MTYOLOG, "failed to establish JHS server.\n");
+				consoleOutput(out);
+			} else {
+				
+			}
+//			EngineOutput out = new EngineOutput(JInterface.MTYOLOG, "waiting for JHS to start: " + oo[0] + "\n");
+			Log.d(LogTag,"waiting: " + oo);
+		}
+	}
 }

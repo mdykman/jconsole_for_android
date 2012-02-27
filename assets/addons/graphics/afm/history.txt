@@ -1,0 +1,10 @@
+graphics/afm - change history
+
+== 1.0.0 ==
+ * initial release
+
+== 1.0.1 ==
+ * add GTKFONTNAMES
+
+== 1.0.2 ==
+ * getfont updated for GTKFONTNAMES

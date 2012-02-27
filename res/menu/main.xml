@@ -16,7 +16,8 @@
             <item android:id="@+id/runl" android:title="Run Current Line"  android:orderInCategory="1"/>
             <item android:id="@+id/runf" android:title="Run File"  android:orderInCategory="3"/>
             <item android:id="@+id/loadf" android:title="Load File"  android:orderInCategory="4"/>
-            <item android:id="@+id/jbreak" android:title="Break"  android:orderInCategory="5"/>
+            <item android:id="@+id/jhs" android:title="Launch JHS"  android:orderInCategory="5"/>
+            <item android:id="@+id/jbreak" android:title="Break"  android:orderInCategory="6"/>
         </menu>
     </item>
     <item android:id="@+id/window" android:title="Window"  android:menuCategory="container" android:orderInCategory="3">
