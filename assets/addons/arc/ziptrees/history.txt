@@ -1,0 +1,11 @@
+general/ziptrees - change history
+
+== 1.0.3 ==
+ * chg: j701 support
+ * chg: standardize testing methodology
+
+== 1.0.2 ==
+ * fix addon dependency
+
+== 1.0.0 ==
+ * publish in JAL

@@ -1,0 +1,407 @@
+LABTITLE=: 'Regular Expressions'
+
+NB. =========================================================
+Lab Section Introduction
+This lab covers both the use of regular expressions in general, and the specifics of this implementation.
+
+First, load the regular expression definitions in the system\main\regex.ijs script:
+)
+load 'regex'
+
+NB. =========================================================
+Lab Section Regular Expression Basics
+A regular expression is a character list which represents a pattern to be searched for in text.  By combining simple strings with special characters to control the match, regular expressions can represent quite complicated patterns.
+)
+
+NB. =========================================================
+Lab Section
+The simplest regular expression is a simple string of characters, for example the string  "abc"  would match the corresponding string of characters in the search text.
+)
+
+NB. =========================================================
+Lab Section
+The verb rxmatch takes a pattern on the left, a string on the right, and returns the match indices.  The first number is the index of the start of the match; the second number is the length of the match
+)
+'abc' rxmatch 'the match is here: abc followed by def'
+
+NB. =========================================================
+Lab Section
+A failure to find a match returns _1 0.
+)
+'abc' rxmatch 'not here, folks'
+
+NB. =========================================================
+Lab Section
+In order to make it easier to see the result of the match, we will create a verb, try, which will perform the match and display the result.
+)
+try=: dyad define
+y ,: ' ^' #~ 0 >. {. x rxmatch y
+)
+
+'abc' try 'the match is here: abc followed by junk'
+
+'abc' try 'not here, folks'
+
+NB. =========================================================
+Lab Section
+Special characters can be included in the pattern.
+
+The first of these is the dot "." character.  It matches any character in the string.
+
+The following finds the location in the string which matches the letters a, b, followed by any character, followed by the letter c.
+)
+'ab.c' try '. matches any char, ab#c shows this'
+
+NB. =========================================================
+Lab Section
+If you want to include a special character in your pattern and have it treated as a simple character, precede it with a backslash.
+
+In the following example the dot character is part of the match.
+)
+'ab\.c' try 'does not match ab#c, does match ab.c'
+
+NB. =========================================================
+Lab Section
+Instead of matching ANY character, you can match one of a fixed set of characters by including the list of characters within brackets.
+
+The following matches the letters a, b, followed by a vowel, followed by a c:
+)
+'ab[aeiou]c' try 'does not match abxc, does match aboc'
+
+NB. =========================================================
+Lab Section
+These sets of characters can include ranges of characters using a hyphen "-".  For example, "[a-z]" will match a lower case letter.
+
+Both lists of characters and ranges can be included in a single set.  The pattern "[a-z0-9._]" will match a character that is a lower case letter, a digit, a dot, or an underscore.
+)
+'ab[a-z]c' try 'does not match ab4c, does match abjc.'
+
+'ab[0-9aeiou]c' try 'digit or vowel: ab4c'
+
+NB. =========================================================
+Lab Section
+There are some fixed sets of characters (classes) which can be searched. The class name, surrounded by bracket-colon pairs, can be included in your set definition:
+
+  ab[aeiou[:digit:]]c
+
+matches ab, followed by either a vowel or a digit, followed by a c.
+
+Classes can be as simple as [:digit:], or more complicated such as [:print:] for all printable characters, [:punct:] for all punctuation, and [:cntrl:] for all control characters.
+)
+'ab[aeiou[:digit:]]c' try 'matches ab4c'
+
+txt=: 'alphanumeric or whitespace matches ab c'
+
+'ab[[:alpha:][:space:]]c' try txt
+
+NB. =========================================================
+Lab Section
+Finally, sets can be defined which accept any character EXCEPT those listed by starting it with a caret "^".
+
+"[^aeiou]" matches any character except a vowel.
+)
+'ab[^[:digit:]]c' try 'does not match ab4c, does match ab$c'
+
+NB. =========================================================
+Lab Section
+A substring in the pattern can be isolated by enclosing it in parenthesis, as in: "a(b[aeiou])c".  In this example the pattern will match a, followed by b, followed by a vowel, followed by the letter c.  The pattern includes a substring which includes the b and the vowel.
+
+The first row of the result of rxmatch describes the entire match, subsequent rows describe the match of each substring in the pattern.
+)
+'a(b[aeiou])c' try 'x abec x'
+
+'a(b[aeiou])c' rxmatch 'x abec x'
+
+NB. First row:   2 4  is the 'abec' string
+NB. Second row:  3 2  is the 'be' substring
+
+NB. =========================================================
+Lab Section
+Substrings within a pattern can be referred to later in the pattern by using a backslash followed by a digit.  The digit is the index of the substring within the pattern, as there could be more than one.
+
+For example, the pattern "a(b[aeiou])c\1" matches an ab-vowel-c string which is immediately followed by another repetition of the substring b-vowel.
+)
+'a(b[aeiou])c\1' try 'does not match abecbi; does match abecbe'
+
+NB. 'abecbi' does not match because, while the trailing 'bi'
+NB. matches the pattern, it does not match the text in the
+NB. string which actually matched.  In the 'abecbe' case,
+NB. the actual substring match, 'be', was repeated.
+
+NB. =========================================================
+Lab Section
+Another special character in a pattern is the asterisk "*". The asterisk follows a character, set, or substring which can be matched any number of times.
+
+For example, "ab*c" will match an a, followed by any number (zero or more occurrences) of the letter b, followed by c.
+)
+'ab*c' try 'will match ac'
+
+'ab*c' try 'will match abc'
+
+'ab*c' try 'will match abbc'
+
+'ab*c' try 'will match abbbbbbbbbbbbc'
+
+NB. =========================================================
+Lab Section
+Using such a closure on sets or substrings can lead to more interesting results.  For example, a name in J starts with an alphabetic character, and is followed by any number of alphanumberic characters or an underscore.
+
+A regular expression which matches a J name is:
+
+[[:alpha:]][[:alnum:]_]*
+)
+jname=: '[[:alpha:]][[:alnum:]_]*'
+
+jname try '3+foo%2'            NB. matches 'foo'
+
+jname try 'joe3_z_+10'         NB. matches 'joe3_z_'
+
+jname try '   1 2 3 foo5 5 5'  NB. matches 'foo5'
+
+NB. =========================================================
+Lab Section
+Two other special symbols work much like the asterisk:
+
+A character, set, or substring followed by a + will match one or more occurrences.
+
+A character, set, or substring followed by a ? will match zero or one occurrences.
+
+In summary:
+
+  *  matches 0 or more occurrences (any of)
+  +  matches 1 or more occurrences (some of)
+  ?  matches 0 or 1 occurrences (optional)
+)
+
+NB. =========================================================
+Lab Section
+In addition to the *, +, and ? symbols which govern how many times a character, set, or substring may match, a general form exists for precise control.  Two numbers within braces can specify the lower and upper limits on the number of repetitions.
+
+For example, "ab{4,6}c" matches a, followed by between 4 and 6 repetitions of b, followed by a c.
+)
+
+NB. =========================================================
+Lab Section
+Finally, a series of regular expressions separated with vertical bars will match a string which matches either of the regular expressions.
+
+For example, "abc|de*|[[:digit:]]+" will match either the string "abc", a "d" followed by zero or more "e"s, or one or more digits.
+)
+
+NB. =========================================================
+Lab Section J Regular Expression Verbs
+The verbs defined in the regex.ijs script provide the basic cover to the regular expression facility.
+
+The main verb is rxmatch, which takes a pattern on the left and a string on the right.
+
+The result has the starting index and length of the first match.
+)
+pat=: '[[:alpha:]]+'
+
+pat rxmatch '2+name=other'
+
+NB. The result, 2 4, selects the substring 'name'
+
+NB. =========================================================
+Lab Section
+The rxmatch verb can return more than one row if there are subexpressions in the pattern.  The first row describes the entire match, and each subsequent row describes where the subexpression matches the string.
+
+The following example searches for a word followed immediately by some punctuation.  The result has two rows which describe the full match of the word and punctuation, and just the word itself:
+)
+pat=: '([[:alpha:]]+)[[:punct:]]'
+
+pat rxmatch 'first one, then another'
+
+NB. The entire match is       'one,' (6 4)
+NB. The name subexpression is 'one'  (6 3)
+
+NB. =========================================================
+Lab Section
+Note that the result of rxmatch is a table -- even in the first example where there were no subexpressions the shape of the result of rxmatch was a 1-by-2 table.
+)
+
+NB. =========================================================
+Lab Section
+The rxmatches verb searches repeatedly through the string to find all occurrences of the pattern, and returns an array with one item per match.  Each item is the table which had been returned from the individual use of the rxmatch verb.
+
+The following finds all words followed immediately by punctuation:
+)
+pat rxmatches 'one, then another, and the last.'
+
+NB. =========================================================
+Lab Section
+The previous result has three match results, each a table, describing the whole and subexpression results of the matches.
+)
+
+NB. =========================================================
+Lab Section
+Other verbs defined in regex.ijs are based on the rxmatch and rxmatches verbs; many parallel some primitive J verbs.
+)
+
+NB. =========================================================
+Lab Section
+The rxindex verb is similar to dyadic i. in that it returns the index of the first match, or the length of the string if not found.
+)
+'[[:digit:]]+' rxindex 'ab 12 !#' NB. Index of first digits
+
+'[[:digit:]]+' rxindex 'not found'
+
+NB. =========================================================
+Lab Section
+The rxE verb returns a boolean mask with 1 wherever a match starts, similar to the E. verb.
+)
+'[[:digit:]]+' rxE 'abc 123 def 456 ghi'
+
+NB. =========================================================
+Lab Section
+The index/length pairs which result from the rxmatch and rxmatches verb can be used to select the match from the string.  The rxfrom verb selects from the right argument each substring specified in the left.  This is similar to the verb { "from".
+)
+s=. 'abc 123 def 456 ghi'
+
+]x=. {."2 '[[:digit:]]+' rxmatches s
+
+x rxfrom s
+
+NB. =========================================================
+Lab Section
+Two verbs perform the match and return the matched substrings as a result:
+
+  pattern rxfirst string   returns the first matched string
+  pattern rxall string   returns a boxed list of all matches
+)
+'[[:digit:]]+' rxfirst 'abc 123 def 456 ghi'
+
+'[[:digit:]]+' rxall 'abc 123 def 456 ghi'
+
+NB. =========================================================
+Lab Section
+Whenever a string is searched for a pattern, the first task to be accomplished is to analyze the pattern.  If you are performing many searches with the same pattern, it may be worthwhile to "compile" this pattern once and save the results.  Later, when performing the match, you simply refer to this compiled pattern.
+)
+
+NB. =========================================================
+Lab Section
+The rxcomp verb takes a pattern as its argument, compiles it, and returns a "handle" to this stored, compiled pattern.
+
+This handle can be used in place of a pattern in any of the matching verbs.
+)
+]pdigits=: rxcomp '[[:digit:]]+'
+
+pdigits rxmatch 'abc 123 def 456 ghi'
+
+pdigits rxfirst 'abc 123 def 456 ghi'
+
+pdigits rxall 'abc 123 def 456 ghi'
+
+NB. =========================================================
+Lab Section
+You can see what compiled patterns are available with the rxhandles verb, which returns a list of all pattern handles.
+
+The rxinfo verb returns information about a pattern, given a pattern handle.  The result is a boxed list with two elements.  The first is 1+ the number of subexpressions in the pattern, i.e. the number of rows which will be in the result of regmatch; the second is the pattern itself.
+)
+rxhandles ''
+
+rxinfo pdigits
+
+NB. =========================================================
+Lab Section
+The rxmerge adverb works like the J adverb } "merge".
+)
+s=: 'abc 123 def 456 ghi'
+
+pdigits rxmatches s
+
+('first';'second') (pdigits rxmatches s) rxmerge s
+
+NB. =========================================================
+Lab Section
+rxrplc is a simple string replacement verb.  The right argument is the string to be changed, and the left argument is a boxed list containing the pattern followed by the replacement text:
+)
+s=: 'abc 123 def 456 ghi'
+
+(pdigits;'***') rxrplc s
+
+NB. =========================================================
+Lab Section
+The rxcut verb verb chops the argument string into a boxed list containing alternating substrings which match and do not match the pattern.  The first element is always a non-match.
+)
+s=: 'abc 123 def 456 ghi'
+
+(pdigits&rxmatches rxcut ]) s
+
+(pdigits&rxmatches rxcut ]) '42',s
+
+NB. =========================================================
+Lab Section
+Finally, the rxapply adverb takes a verb on its left, and applies that verb to all matches in a string.  In this example we will reverse (|.) the digits of all numbers:
+)
+s=: 'abc 123 def 456 ghi'
+
+pdigits |. rxapply s
+
+NB. =========================================================
+Lab Section
+The verbs and adverbs described here will operate on a pattern and the substrings which match the entire pattern.
+
+These verbs will also take a boxed array of a pattern, and a list of items indicating which substrings are relevant.
+)
+
+NB. =========================================================
+Lab Section
+We will use a pattern with two subexpressions to illustrate this.  The following pattern matches some letters followed immediately by some digits.  The letters and digits are subexpressions in the pattern:
+)
+abc123=: '([[:alpha:]]+)([[:digit:]]+)'
+
+NB. =========================================================
+Lab Section
+As we have seen, the rxmatches verb will return all matches. For each match, the resulting item is the table of matches for each substring:
+)
+[str=: ' nodigits abc123 007  qwerty99942 '
+
+abc123 rxmatches str
+
+abc123 rxall str
+
+NB. =========================================================
+Lab Section
+By using a pattern;items boxed list as an argument, the specific subexpressions of interest can be isolated.  In the following, only the letter and digit subexpressions are returned.
+)
+[str=: ' nodigits abc123 007  qwerty99942 '
+
+(abc123;1 2) rxmatches str
+
+NB. =========================================================
+Lab Section
+Verbs like rxall, which use the first row in each match to select from the string will always returns the first subexpression that you selected.
+)
+[str=: ' nodigits abc123 007  qwerty99942 '
+
+(abc123;,1) rxmatches str   NB. just the letters
+
+(abc123;,2) rxmatches str   NB. just the digits
+
+NB. =========================================================
+Lab Section
+Note that the last example above does not just match the digits in the string, but also matches those digits immediately after some letters.
+
+The entire pattern must match, so those fields of str which only contain letters or only contain digits are not returned.
+)
+
+NB. =========================================================
+Lab Section
+Another example of using this is to use rxapply to change just the portions of a string which match a subexpression of a pattern:
+)
+[str=: ' nodigits abc123 007  qwerty99942 '
+
+(abc123;,1) |. rxapply str  NB. reverse no digits
+
+(abc123;,2) |. rxapply str  NB. reverse only digits
+
+NB. =========================================================
+Lab Section
+Finally, once you are done with a compiled pattern you can release it and free up the resources it consumes:
+)
+rxfree pdigits
+
+NB. =========================================================
+Lab Section
+This concludes the lab.  Also available is a script containing utilities for regular expressions, and a lab to describe its use.  See system\packages\regex\regbuild.ijs and the "Regular Expression Builder" for more information.
+)

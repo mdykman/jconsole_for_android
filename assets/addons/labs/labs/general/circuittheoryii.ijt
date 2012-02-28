@@ -1,0 +1,2300 @@
+LABTITLE=: 'Circuit Theory II'
+LABAUTHOR=: 0 : 0
+John C. Wilson
+
+Comments to  J Forum  or johnwilson@pocketmail.com
+)
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Chapter Introduction to part II
+NB. =========================================================
+Lab Section Outline
+
+Circuit Theory I  dealt with the mathematical definition of a
+circuit (as a function) and with the operations by which new
+circuits may be created from old ones.
+
+Circuit Theory II suggests a taxonomy or classification of
+circuits according to their special properties (i.e.,
+according to their external behaviour rather than their
+internal composition). Realization (or synthesis) questions
+are also addressed.
+
+A final chapter considers some conventionally acceptable
+circuits that are not circuits in this theory.
+
+
+
+
+Please note:
+ 1. Both Circuit Theory I and II use "apply" (128!:2), which
+was not available in J406.
+
+ 2. Circuit Theory II requires the addon LAPACK, obtainable
+at the JSoftware website.
+)
+PREPARE
+NB. Definitions from Circuit Theory I
+
+ures =: (- |.)"1        NB. a circuit (unit resistor)
+
+rci =: ({~ (?@#)) "1    NB. random choice of an item from vector
+qc =: rci @ i: "0       NB. random choice from i:n
+rac =: qc @: $ ~ "0 1   NB. random array of shape y from i: x
+ra =: 2&rac "1          NB. random array of shape y from i: 2
+
+res =: ures : (*ures)                     NB. resistor
+dp =: +/ . *                              NB. dot product
+
+M =: >1 _1 0; 1 3 _4; _2 _2 4
+ex14 =: M&dp "1                           NB. 3-terminal circuit
+
+zero =: 0"0                   NB. The open circuit
+
+sq =: *:                      NB. square
+n2 =: (+,-) @ sq @ (-/) "1    NB. a 2-terminal nonlinear circuit
+
+sort =: /:~
+ramp =: (-sort)"1             NB. n-terminal circuit
+
+load 'plot'
+plot3 =: conjunction : '''surface'' plot m&{&.tr v"1 >{y'
+tr =: |:                      NB. transpose
+load 'numeric'
+
+mean =: +/ % #                NB. arithmetic mean
+cf =: -mean                   NB. circuit: centering function
+diff =: - 1&|.                NB. circuit: differencer
+
+sq =: *: "1
+cube =: ^&3
+VOLS =: */\
+
+c2c =: cf@sq@cf
+c3c =: cf@cube@cf
+mc3c =: -@c3c
+d3c =: diff@cube@cf
+md3c =: -@d3c
+cvd =: cf@VOLS@diff
+
+ics =: 6 _2 _4 "1             NB. A 3-terminal current source
+ans =: , (- @ (+/))           NB. append neg sums
+trig =: ans @ sq @ (1 2&o.) @ (3 _2 _1&dp)
+
+P =: > 1 1 2 0 _1 0; 0 _1 _1 _1 1 0; _1 0 _1 1 0 0
+Q =: > 2 _1 _1; _1 2 _1; _1 _1 2
+ex18 =: (P&dp)@(,sq)@(dp&Q)
+
+exp =: ^"1
+
+P =: _1e_6 * >40 _38 _2; _38 50 _12; _2 _12 14
+Q =: _40 * > 1 0 0; 0 1 0; _1 _1 0
+npn =: (P&dp)@exp@(dp&Q)             NB. transistor
+
+P =: _1e_11* >1 _1; _1 1
+Q =: _40* >1 0;_1 0
+diode =: (P&dp)@exp@(dp&Q)           NB. diode
+
+sc =: 1e6&res                 NB. A 2-terminal short circuit
+vccs3 =: (> 0 0 0; 1 0 _1; _1 0 1)&dp
+vccs4 =: (> 0 0 0 0;0 0 0 0;1 _1 0 0;_1 1 0 0)&dp
+
+Grad =: adverb : 'tr@(u D.1)'       NB. Gradient
+
+mea =: >./@: | @ ,    NB. max |element of an array
+dbm =: % mea          NB. divide array by max elt
+
+Apprx =: conjunction : 0
+ J =. (u f.)Grad n
+ b =. (u n)-J dp n
+ (b&+)@(J&dp)
+)
+
+Nia =: adverb : '- ((0.1&*)@((u %.(u f. Grad))))'
+Newton =: adverb : 'u f. Nia^:_'    NB. Newton solution
+solve =: adverb : '(u,(+/))f. Newton'
+
+iv14 =: ics + vccs3 + ex14
+
+id =: =&i.             NB. identity matrix
+matrix =: conjunction : 'tr u"1 id n'
+transpose =: conjunction : '((u"1 id n)&dp)"1'
+under =: conjunction : '(v f. transpose(#y))@u@v y'
+map =: conjunction : '(u f.)under(n&{)'
+
+rvd =: ((2&res)map 0 1)+(vccs4 map 1 2 0 2)+(diff map 2 1 0)
+twores =: (2&res map 1 2)+(res map 0 1)
+tir =: (2&res map 0 1)+(res map 2 3)
+
+apply =: 128!:2
+CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
+
+NB. load 'convert'         NB. to get mfv (matrix from vector)
+
+interc =: conjunction : 0  NB. g interc t
+ z =. (#y)$0              NB. eg, (g0`g1`g2)interc(t0;t1;t2)
+ for_k. n do.
+   z =. z+((u @. k_index)f. map(>k_index}n))y
+ end.
+)
+
+eachg =: adverb : 0      NB. "each" for gerunds
+ z =. (#y)$,:<0         NB. eg, (f0`f1`f2)eachg(y0;y1;y2)
+ for_k. y do.
+   t =. (u @. k_index)&.> k
+   z =. t k_index}z
+ end.
+)
+
+expand =: #^:_1
+r1b =: (,@[ expand ]) ($~ $) [   NB. replace 1's in boolean x by y
+ti =: (2&!)^:_1                  NB. inverse of triangular numbers
+ut =: </~ & i.                   NB. upper triangular matrix
+setut =: ut@ti@# r1b ]@-         NB. set upper triangle to y
+insdiag =: + (id@# r1b -@(+/))   NB. add (-+/y) into the diag of y
+szm =: insdiag@(+ tr)@setut      NB. symmetric 0-sum matrix
+
+rzv =: zsv@ra                   NB. rzv s    random zero sum vector of length s
+                                NB.  or random zero column sum matrix
+zsv =: (*#) -"1  +/             NB. make zero sum (integer from integer arg)
+ rzm =: zsm@ra                  NB. rzm s: random zero sum matrix of shape s
+zsm =: zsv&.tr @ zsv            NB. zsm M: make zero sum matrix from M
+rcrsm =: qc@:(0&{) + tr@rzv@:|. NB. rndm cst row sum matrix
+
+restr1 =: conjunction : 0         NB. restriction of g to t
+ 't s' =. n
+ g =. u f.
+ vt =. y
+ v =. (/:&(t,s))@(vt&,)           NB. v as a fn of vs
+ vs =. (((s&{)@g@v f.)Newton) 0"0 s
+ ct=. (t&{)@g@v vs
+ vs;ct                            NB. returns both vs and ct
+)
+
+restr =: conjunction : '(1&pick)@(u f. restr1 n)'
+NB. End of definitions from Circuit Theory I
+
+
+NB. Circuit Theory II: Passive & linear
+pwr =: adverb : 'dp u'          NB. The power absorbed by a circuit
+Tfm =: dyad : '(tr y)dp x dp y'
+sum =: (+each)/
+Interc =: conjunction : '>@sum x Tfm each y'
+pind =:  <each @{@ ,~ @ <        NB. partitioning indices
+pmat =: pind@] {each <@[         NB. partitioned matrix
+require '~addons\math\lapack\lapack.ijs'
+require '~addons\math\lapack\dgeev.ijs'
+eiv =: >@(1&{)@dgeev_jlapack_   NB. compute eigenvalues
+eivs =: eiv@(] ..tr)            NB. eivs G <-> eiv(G+tr G)%2
+conn =: |."1 @ ($ (#.^:_1) i.@(*/@$))        NB. connections
+cmpv =: ":"0 @,                              NB. component values
+info =: ('&*@vccs3 map  '&,)"1               NB. constant info
+RLC =: (cmpv,.info @ ": @(conn ,. #))@(_1 _1&}.)
+apply =: 128!:2
+CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
+
+
+NB. Solution & restriction of Batteries & linears
+pivot=: 4 : 0                    NB.(row,col) pivot M
+ 'r c'=. x
+ col =. c{"1 y
+ y - (col-r=i.#y) */ (r{y)%r{col
+)
+
+rswap =: 4 : '(|. x{y) x}y'  NB. swap rows of matrix y
+ima =: $ #: imar                 NB. index of max abs
+ imar =: (i. max)@avr            NB. index of max abs of ravel
+  avr =: | @,                    NB. absolute value of ravel
+  max =: >./                     NB. maximum item
+iszero =: >: -: 1"0
+Show =: (1!:2)&2                 NB. Write y to screen
+
+NB. Gb Solve t
+Solve =: dyad : 0
+ G =. x [ t =. y
+ s =. (i.#G) -. t
+ r =. ((-.&>)~/)@((i. each)@$) G
+ p =. 0#0
+ while. 0<#s do.
+  ijs =. (ima (<s;s){G){s     NB. si,sj
+ if. iszero (<ijs){G do. break. end.
+  G =. ijs rswap G            NB. swap rows si and sj
+  sj =. 1{ijs
+  G =. (sj,sj) pivot G
+  p =. p, sj                  NB. move sj from s to p
+  s =. s -. sj
+ end.
+ q =. s
+ if.     -. iszero (<q;t,r){G do. msg =. 'No Vs exists'
+ elseif. -. iszero   (<t;q){G do. msg =. 'Ct is not unique'
+ elseif.                      do. msg =. ''
+ end.
+G;t;p;q;r;msg
+)
+
+Restr =: dyad : 0
+ 'H t p q r msg' =. x Solve(,y)
+ if. msg -: '' do.
+  (<t;t){H
+ else.
+  Show H pfm (t;p;q);<(t;p;q;r)
+  Show ('t= ',":t),(';   p= ',":p),(';   q= ',":q),(';   r= ',":r)
+  msg assert 0
+ end.
+)
+
+Restrb =: dyad : 0
+ 'H t p q r msg' =. (,.&>/x)Solve(,y)
+ if. msg -: '' do.
+  ((<t;t){H) ; ((<t;r){H)
+ else.
+  Show H pfm (t;p;q);<(t;p;q;r)
+  Show ('t= ',":t),(';   p= ',":p),(';   q= ',":q),(';   r= ',":r)
+  msg assert 0
+ end.
+)
+Solveb =: monad : 0
+ 'H t p q r msg' =. (,.&>/y)Solve 0#0
+ if. msg -: '' do.
+  -,r{"1 H              NB. Taking q{v to be 0. (It is arbitrary).
+ else.
+  Show H pfm (t;p;q);<(t;p;q;r)
+  Show ('t= ',":t),(';   p= ',":p),(';   q= ',":q),(';   r= ',":r)
+  msg assert 0
+ end.
+)
+
+
+NB. Bilaterals
+sut =: (,@ut@%:@#)# ]              NB. select upper triangle
+cmpv2 =: cmpv@:-@sut@,             NB. component values
+conn2 =: sut@($ #.^:_1 i.@(*/@$))  NB. connections
+info2 =: ('&res map  '&,)"1        NB. constant info
+RRC =: cmpv2,.info2 @ ": @ conn2
+
+
+NB. Gyrators
+ans =: ,(-@(+/))                 NB. append neg sums
+border =: (ans"1)@ans            NB. border with negative sums
+sszm =: border @ (- tr) @ setut  NB. create skew symm 0-sum matrix
+                                 NB.  from -(truncated upper tri)
+gyrator =: sszm@[ dp ]
+
+
+info3 =: ('&gyrator map  '&,)"1        NB. constant info
+RGY =: (cmpv2,.info3 @ ": @(conn2 ,. #)) @ (_1 _1&drop)
+
+
+NB. Ideals
+a =: 1e9
+sc =: a&res           NB. short circuit
+V =: 6
+f =: (V*_1 1)"1  + res      NB. battery
+b =: 1e9
+sixvolts =: b&*@f           NB. 6-volt source (approx)
+
+
+R =: >1 _1;_1 1
+Res =: ; @: (,.each/"1) @: (R&*each)  NB. "array of resistors"
+
+n =: 10                               NB. transformer ratio
+T =: Res 2 2$ 1,(-n),(-n),n^2
+b =: 1000
+transformer =: (b&*)@(T&dp)   NB. approx transformer
+PREPARE
+
+NB. =========================================================
+Lab Section Classification of circuits
+
+In the next series of chapters we introduce several classes
+of circuits. They are all characterized by extra conditions
+on the mapping beyond the current and voltage conditions. All
+of the classes we consider have the property of being closed
+under the operations of interconnection and restriction; that
+is, every interconnection of members of a class is also a
+member of the class, and a similar statement applies to
+restriction.
+
+This part is somewhat theoretical. That is the point: with
+the "function" model of circuits, precise theoretical
+statements are possible. There are many theorems stated in
+this part without proof. You are expected to supply the
+proofs, or at least perform enough experiments to convince
+yourself of their truth.
+
+We begin with passive circuits.
+)
+
+NB. =========================================================
+Lab Chapter Passive circuits
+NB. =========================================================
+Lab Section Power absorbed by a circuit
+
+The combination of a voltage v and a current c can be
+maintained only by doing work at a certain rate (i.e., by
+supplying power) equal to v dp c .
+
+Definition.  The  power absorbed  by an n-terminal circuit g
+is the scalar-valued funtion  g pwr  whose value at v is
+ v dp g v .
+
+Here for example is the power absorbed by the circuit  ex14
+at the voltage 6 3 _1.
+)
+pwr =: adverb : 'dp u'     NB. The power absorbed by a circuit
+
+v =: 6 3 _1
+ex14 pwr v
+v dp ex14 v
+
+NB. =========================================================
+Lab Section Power is insensitive to voltage reference level
+
+Prove and illustrate the following theorems.
+
+Theorem.  Let g be an n-terminal circuit. Then for every
+n-element vector v and scalar a ,
+   (g pwr v+a)-:(g pwr v)
+
+Both of the current and voltage laws are used in the proof,
+even though the statement looks a lot like just the voltage
+law.
+)
+ex14 pwr v
+ex14 pwr v+4.56
+
+NB. =========================================================
+Lab Section Power of a sum
+
+Theorem.   If f and g are n-terminal circuits then
+ (f+g)pwr -: (f pwr)+(g pwr) .
+)
+v =: 0 5 0.25
+(ex14+npn)pwr v
+(ex14 pwr v)+(npn pwr v)
+
+NB. =========================================================
+Lab Section Power of a transformed circuit
+
+Theorem.  If g is an n-terminal circuit and f is a
+u-preserving linear function from Rm to Rn then
+  (g under f)pwr -: (g pwr)@f .
+
+
+Corollary.
+  (g map t)pwr -: (g pwr)@(t&{) .
+)
+f =: (rcrsm 3 4)&dp     NB. u-preserving linear function
+g =: diff               NB. sample circuit
+v =: 2 3 8 0            NB. random voltage
+(g under f) pwr v
+(g pwr)@f v
+(g pwr) f v
+
+t =: 0 3 2
+(g map t)pwr v
+(g pwr)@(t&{)v
+(g pwr) t{v
+
+NB. =========================================================
+Lab Section Definition: passive circuit
+
+Definition.  An n-terminal circuit g is  passive  if and only
+if the power absorbed by it is never negative; i.e., for
+every vector v,
+  (g pwr v) >: 0 .
+
+We say that g is active if it is not passive.
+)
+*./ >:&0 (diff pwr"1) ra 100 4   NB. diff is passive
+
+*./ >:&0 (vccs3 pwr"1) ra 100 3  NB. vccs3 is active
+
+NB. =========================================================
+Lab Section Examples of power
+
+Exercise.  Plot the power function of the 2-terminal
+resistor  res  and observe that the resistor is a passive
+device.
+
+Exercise.  Plot the power function for other 2-terminal
+circuits such as diode  and  n2 . Are they passive?
+)
+v1 =: steps _1 1 30
+p =: (res pwr"1)0,.v1
+'' plot v1;p
+
+NB. =========================================================
+Lab Section
+
+Exercise.  Show theoretically that the voltage-controlled
+current source  vccs3  is active.
+
+Exercise.  Plot the power function of vccs3 . To reduce this
+to a 3-dimensional problem, let v2 be zero (why is this
+justified?).
+)
+v0 =: v1 =: steps _1 1 30
+0 plot3 (,:@:(vccs3 pwr"1)) v0;v1;0
+NB. (To get plot3 to work on a scalar-valued function
+NB.  it is necessary to add an axis to the result.)
+
+NB. =========================================================
+Lab Section Transistor
+
+Exercise.  Show that the transistor  npn  is passive. Can you
+do it theoretically? At least plot the power function: start
+your exploration near the origin and expand from there.
+
+Exercise.  Show that the approximation to the transistor,
+ npn Apprx p  (let p=: 0 5 0.2 , for example), is active. Is
+there an inconsistency here? Is this why some references say
+the transistor is active and some say it is passive?
+)
+vc =: steps _0.01 0.01 30                  NB. collector voltage
+vb =: steps _0.01 0.01 30                  NB. base voltage
+0 plot3 (,:@:(npn pwr"1)) 0;vc;vb
+
+NB. =========================================================
+Lab Section Closure theorems
+
+The following are the closure theorems for passive circuits.
+Prove them.
+
+Theorem.  Every sum of passive circuits is passive.
+
+Theorem.  If g is passive and f is a u-preserving linear
+function then (g under f) is passive.
+
+Exercise.  Disprove: If (g under f) is passive then g is
+passive.
+
+Theorem.  If g is passive then (g map t) is passive.
+
+Theorem.  Every interconnection of passive circuits is
+passive.
+
+Theorem.  Every restriction of a passive circuit is passive.
+)
+
+NB. =========================================================
+Lab Section The derivative of the power function of a circuit
+
+Let f be a function mapping n-element vectors into scalars.
+Then (f Grad) is a function which maps n-element vectors into
+n-element vectors. A critical point v of f is a point such
+that (f Grad v) = o where o =: 0"0 v . A critical point
+locates a potential extremum of f .
+
+Theorem.  The derivative at v of the power absorbed by a
+circuit g is (g v)+v dp(g Grad)v .
+
+Corollary. The critical points v of the power absorbed by a
+circuit g satisfy   o -: (g v)+v dp(g Grad)v .
+
+Later we will apply this result to the problem of extracting
+the maximum power from a battery.
+)
+
+NB. =========================================================
+Lab Section Conservation of power/Tellegen's theorem
+
+Theorem.  The power absorbed by an interconnection of
+circuits is the sum of the powers absorbed by the constituent
+circuits.
+
+
+Example. Recall the definition of  iv14 .
+)
+iv14 =: ics + vccs3 + ex14
+v =: 2 9 _6
+iv14 pwr v
+(ics pwr v),(vccs3 pwr v),(ex14 pwr v)
+(ics pwr v)+(vccs3 pwr v)+(ex14 pwr v)
+
+NB. =========================================================
+Lab Chapter Linear circuits
+NB. =========================================================
+Lab Section Linear circuit and its matrix
+
+A linear circuit is a linear function, and so it is
+completely specified by its matrix.
+
+The matrix of a linear circuit has been referred to in the
+literature (in the context of AC networks) as the "indefinite
+admittance matrix".
+
+Theorem.  The matrix of any linear circuit is a zero-sum
+matrix (that is, a matrix whose row and column sums are all
+zero).
+
+It follows from the above that there is a 1-1 correspondence
+between linear circuits and square, zero-sum matrices. This
+idea is an important one.  As we will see, the special
+classes of linear circuits (reciprocal, passive, resistors,
+and so on) correspond to special classes of 0-sum matrices.
+)
+V =: ra 1000 3                     NB. 1000 random voltages
+a =: ra 1000                       NB. 1000 random coefficients
+(ex14 a dp V) -: (a dp ex14"1 V)   NB. ex14 is linear
+
+(];(+/);(+/"1)) ex14 matrix 3      NB. a 0-sum matrix
+
+(];(+/);(+/"1)) trig matrix 3      NB. why isn't this 0-sum?
+
+NB. =========================================================
+Lab Section Contrast with conventional treatment
+By contrast, in conventional treatments of circuit theory the
+necessary concern with internal detail leads one author who
+is studying linear circuits, for example, to consider
+circuits "consisting of positive linear resistors,
+independent current and voltage sources and ideal operational
+amplifiers modeled by norator-nullator pairs", while another
+adds "the four types of linear controlled sources and
+negative linear resistors".
+)
+
+NB. =========================================================
+Lab Section Matrix of a linear circuit
+
+Examples.  Many of our previous examples have been linear.
+Here are their matrices.
+)
+(3&res) matrix 2       NB. a 3 mho resistor
+vccs3 matrix 3         NB. 3-terminal VCCS
+vccs4 matrix 4         NB. 4-terminal vccs
+diff matrix 3
+cf matrix 4
+ex14 matrix 3
+zero matrix 1          NB. 1-terminal zero
+zero matrix 2          NB. 2-terminal zero
+twores matrix 3        NB. two resistors in series
+tir matrix 4           NB. two isolated resistors
+ex14 matrix 3
+rvd matrix 3
+
+NB. =========================================================
+Lab Section Derivative of a linear circuit
+
+Theorem.  The derivative of a linear circuit is its matrix.
+)
+diff matrix 3
+diff Grad ra 3
+
+NB. =========================================================
+Lab Section transpose of a circuit is a circuit
+
+Theorem.  If g is an n-terminal linear circuit then
+   (g transpose n)  is a linear circuit.
+)
+diff matrix 5
+(diff transpose 5) matrix 5
+
+NB. =========================================================
+Lab Section Closure theorem: sum
+
+Theorem.  If g and h are linear n-terminal circuits with
+matrices G and H respectively, then the circuit g+h is linear
+and its matrix is G+H .
+)
+G =: diff matrix 3          NB. matrix of diff
+H =: ex14 matrix 3          NB. matrix of ex14
+G+H                         NB. sum
+(diff+ex14)matrix 3         NB. matrix of diff+ex14
+
+NB. =========================================================
+Lab Section Closure theorem: under
+
+Theorem.  If g is a linear circuit with matrix G and f is a
+u-preserving linear function with matrix F, then g under f is
+a linear circuit and its matrix is (tr F)dp G dp F .
+)
+f =: (rcrsm 3 4)&dp"1       NB. u-preserving linear function
+f 1 1 1 1
+(rvd under f)matrix 4       NB. matrix of rvd under f
+F =: f matrix 4             NB. matrix of f
+G =: rvd matrix 3           NB. matrix of rvd
+(tr F)dp G dp F             NB. F'.G.F
+
+NB. =========================================================
+Lab Section Closure theorem: interconnection
+
+Theorem.  Every interconnection of linear circuits is a
+linear circuit.
+)
+NB. Three linear circuits:
+g1 =: (>2 _2; _2 2)&dp
+g2 =: (>4 _1 _1 _2; _2 3 0 _1; _3 _1 5 _1; 1 _1 _4 4)&dp
+g3 =: (>5 _2 _3; _1 3 _2; _4 _1 5)&dp
+NB. An interconnection of them:
+g =: (g1 map 0 1)+(g2 map 1 2 0 2)+(g3 map 2 1 0)
+
+g ra 3
+
+V =: ra 1000 3                     NB. 1000 random voltages
+a =: ra 1000                       NB. 1000 random coefficients
+(g a dp V) -: (a dp g"1 V)         NB. g is linear
+
+g matrix 3                         NB. matrix of the interconnection
+
+NB. =========================================================
+Lab Section Interconnection
+
+We can formulate the interconnection of linear circuits in
+terms of their matrices.
+)
+G1 =: g1 matrix 2
+G2 =: g2 matrix 4
+G3 =: g3 matrix 3
+
+M1 =:     0 1&{ matrix 3     NB. attachment matrix for g1
+M2 =: 1 2 0 2&{ matrix 3     NB. attachment matrix for g2
+M3 =:   2 1 0&{ matrix 3     NB. attachment matrix for g3
+
+((tr M1)dp G1 dp M1)+((tr M2)dp G2 dp M2)+((tr M3)dp G3 dp M3)
+NB. Compare this with g matrix 3
+
+NB. =========================================================
+Lab Section
+
+We can put this in the form of a conjunction:
+)
+Tfm =: dyad : '(tr y)dp x dp y'
+sum =: (+each)/
+
+] G =: G1;G2;G3
+] M =: M1;M2;M3
+
+>@sum G Tfm each M
+Interc =: conjunction : '>@sum x Tfm each y'
+G Interc M           NB. matrix of the interconnection
+
+NB. =========================================================
+Lab Section Restriction
+
+We next show how the operation of restriction specializes in
+the case of linear circuits.
+
+Let g =: G&dp be a linear circuit and let t and s partition
+the terminals of g . To find the restriction of g to t we
+need to solve the two equations
+   ct      -: t{ g (vt,vs)/:(t,s)
+  (0"0 s)  -: s{ g (vt,vs)/:(t,s)
+ for vs and ct , given vt . We begin with the first equation.
+  ct
+  t{ g (vt,vs)/:(t,s)
+  t{ G dp (vt,vs)/:(t,s)           NB. g =: G&dp
+  ((<t;t,s){G) dp vt,vs            NB. reorder G instead of v
+  (((<t;t){G) dp vt) + (((<t;s){G) dp vs)
+  (Gtt dp vt) + (Gts dp vs)        NB. where Gtt =: (<t;t){G
+                                   NB.  and  Gts =: (<t;s){G
+
+Similarly, the second equation gives
+  0"0 s
+  s{ g (vt,vs)/:(t,s)
+  s{ G dp (vt,vs)/:(t,s)           NB. g =: G&dp
+  ((<s;t,s){G) dp vt,vs            NB. reorder G instead of v
+  (((<s;t){G) dp vt) + (((<s;s){G) dp vs)
+  (Gst dp vt) + (Gss dp vs)        NB. where Gst =: (<s;t){G
+                                   NB.  and  Gss =: (<s;s){G
+)
+
+NB. =========================================================
+Lab Section
+So informally, in conventional form,
+   ct = Gtt.vt + Gts.vs
+   os = Gst.vt + Gss.vs
+ where os =: 0"0 s , and the dot represents dp .
+
+The function  pmat  displays a matrix in partitioned form.
+)
+
+] G =: diff matrix 7              NB. matrix of a 7-terminal circuit
+t =: 0 1 3 5 [  s =: 2 4 6        NB. partitioning of its terminals
+G pmat t;s                        NB. partitioned matrix
+'Gtt Gts Gst Gss' =: ,G pmat t;s
+
+NB. =========================================================
+Lab Section
+
+Clearly the second equation has to be solved first for vs and
+then the solution substituted into the first equation to get
+ct.
+
+If Gss is nonsingular we can easily solve the second
+equation. But in general Gss may be singular even though the
+restriction exists. This corresponds to the case where vs is
+not uniquely determined by vt .
+
+There always exist row operations, and a partitioning of s
+into p and q , which will transform these equations into an
+equivalent set of equations of the following form:
+
+   ct = Htt.vt      + Htq.vt
+   op = Hpt.vt + vp + Hpq.vp
+   oq = Hqt.vt
+
+  where op =: 0"0 p  and oq =: 0"0 q .
+
+Either p or q may be empty. (The case where q is empty is the
+case where Gss is nonsingular.)
+)
+
+NB. =========================================================
+Lab Section
+
+The function Solve produces the required transformation.
+)
+'H t p q r msg' =: G Solve t
+H pmat t;p;q
+
+NB. =========================================================
+Lab Section
+
+Now there exist solutions vs (i.e., vp and vq ) for every vt
+if and only if Hqt is zero and then
+
+   vp
+   -((Hpt dp vt) + (Hpq dp vq))
+   -(%.Gpp)dp((Gpt dp vt) + (Gpq dp vq))
+
+Finally it is clear that ct depends only on vt (and not on
+vs) if and only if Htq is zero and then
+
+   ct
+   Htt dp vt
+   (Gtt - Gtp dp(%.Gpp)dp Gpt) dp vt
+
+Since this relationship is linear, we have proved
+
+Theorem.  Every restriction of a linear circuit is a
+linear circuit.
+)
+
+NB. =========================================================
+Lab Section
+
+In the above example there is no problem: q is empty. There
+is a unique value of vt for every vt and c depends only on
+vt.
+
+The matrix of the restriction of G&dp to t is Htt. The
+function Restr extracts that from Solve.
+)
+'Htt Hts Hst Hss' =: ,2 2$,H pmat t;p;q
+Htt
+
+G Restr t
+
+NB. =========================================================
+Lab Section Failure of restriction (1)
+
+
+In the example below, Hqt is not zero and so no solution
+exists. That is, for an arbitrary value of vt there are no
+values of vs that satisfy the second equation.
+)
+] G =: x: >2 0 _1 _1; _4 1 4 _1; 0 _1 3 _2; 2 0 _6 4
+t =: 0 1 [  s =: 2 3
+'H t p q r msg' =: G Solve t
+H pmat t;p;q
+msg
+
+NB. =========================================================
+Lab Section Failure of restriction (2)
+
+Here is another example.
+)
+
+] G =: x: >2 0 _1 _1; _2 _1 4 _1; 0 _1 3 _2; 0 2 _6 4
+t =: 0 1 [  s =: 2 3
+
+'H t p q r msg' =: G Solve t
+H pmat t;p;q
+msg
+
+NB. =========================================================
+Lab Section
+In this case, solutions exist for vp , specifically
+
+   vp -: - (0 _1r3 dp vt) + _2r3*vq
+
+for every scalar vq , but since Hts is not zero, ct is not
+uniquely determined by vt . Therefore once again the
+restriction of G to t does not exist.
+)
+
+NB. =========================================================
+Lab Section Suppressing isolated terminals
+
+Here is an example where the restriction is obvious.
+)
+] G =: x: >4 _1 _3 0 0;_2 3 _1 0 0;_2 _2 4 0 0;0 0 0 0 0;0 0 0 0 0
+t=: 0 1 2  [  s =: 3 4
+
+NB. =========================================================
+Lab Section
+In this case there is nothing to be done. The restriction of
+G to t exists and its matrix is just Gtt .
+)
+
+'H t p q r msg' =: G Solve t
+H pmat t;p;q
+
+G Restr t
+
+NB. =========================================================
+Lab Section Passivity in linear circuits
+
+The next theorem gives a test for passivity in linear
+circuits.
+
+Theorem. The linear circuit  G&dp  is passive if and only if
+every eigenvalue of -:(G+tr G) is nonnegative.
+
+Proof.  By definition,  G&dp  is passive if and only if for
+every n-element vector v ,  (v dp G dp v) >: 0
+
+Now
+   v dp G dp v
+   tr v dp G dp v                      NB. tr scalar
+   v dp(tr G)dp v
+   -:(v dp G dp v)+(v dp(tr G)dp v)    NB. half sum of equals
+   v dp(-:G+tr G)dp v
+
+It is a standard result of linear algebra that the last
+expression is nonnegative for every v if and only if all of
+the eigenvalues of -:G+tr G (a real, symmetric matrix) are
+nonnegative.
+
+Remark. One eigenvalue of a 0-sum matrix G is always 0 since
+(G dp u) -: 0*u  where u is a vector of 1's.
+
+In J we can use the eigenvalue finder in the addon "lapack":
+)
+require '~addons\math\lapack\lapack.ijs'
+require '~addons\math\lapack\dgeev.ijs'
+eiv =: >@(1&{)@dgeev_jlapack_   NB. compute eigenvalues
+eivs =: eiv@(] ..tr)            NB. eivs G <-> eiv(G+tr G)%2
+
+NB. =========================================================
+Lab Section
+
+We can check the passivity of the linear circuits we have seen so far.
+)
+
+NB. A 1 mho resistor
+eivs (1&res)matrix 2
+NB. The eigenvalues are 0 and 2. The device is passive.
+
+NB. A _1 mho resistor
+eivs (_1&res)matrix 2
+NB. The eigenvalues are 0 and _2 . The device is active.
+
+NB. Two resistors.
+eivs twores matrix 3
+NB. The eigenvalues are 0 , 3-*3 and 3+*3 . The device is passive.
+
+NB. The zero device
+eivs zero matrix 1
+NB. The only eigenvalue is 0 . The device is passive.
+
+NB. Three-terminal voltage-controlled current source, vccs3
+eivs vccs3 matrix 3
+NB. The eigenvalues are 0 , _1r2 and 3r2 . Therefore vccs3 is active.
+
+NB. The 3-terminal version of diff is a passive circuit.
+eivs diff matrix 3
+
+NB. =========================================================
+Lab Section
+
+Exercise.  Is diff of valence n passive for all n?
+)
+
+NB. =========================================================
+Lab Section
+
+Exercise.  Let g be an n-terminal linear circuit. Prove that
+ (g transpose n)pwr -: g pwr
+)
+
+NB. =========================================================
+Lab Section
+
+Theorem.  A linear circuit is active if its matrix has a
+negative diagonal element.
+
+Proof.  Let G be a linear circuit. Suppose the k th diagonal
+element (<k,k){G is negative. Let v be a vector whose only
+nonzero element is a 1 in the k th position. Then
+   v dp G dp v
+   (<k,k){G
+ which is negative, so G is active.
+
+
+Exercise. Create an example.
+)
+
+NB. =========================================================
+Lab Section
+
+The absence of negative diagonal elements is not a guarantee
+of passivity. For example the following circuit is active.
+)
+] G =: > 1  2 _3;_3  0  3; 2 _2  0
+
+v =: 0 1 _1
+v dp G dp v
+
+eivs G               NB. 0 , _1r2 and 3r2
+
+NB. =========================================================
+Lab Section Realization of linear circuits
+
+We next consider the problem of realizing a given linear
+circuit in terms of other circuits (a synthesis problem).
+
+Theorem.  Every linear circuit of valence 3 or more has a
+realization as an interconnection of multiples of the
+3-terminal voltage-controlled current source.
+
+Proof.  The proof is constructive. Let G be the matrix of an
+n-terminal linear circuit (n>:3). G is determined by the
+values of its first n-1 rows and columns. We create a circuit
+whose matrix is G by interconnecting components: one
+component for each element of _1 _1 drop G . This is done by
+observing that for i<n-1 and j<n-1 the n x n matrix of
+  vccs3 map(i,j,n-1)
+ has a 1 in element (j,i) and other nonzero entries
+only in the nth row and column. Here is a program that does
+just that, listing the components that result.
+)
+conn =: |."1 @ ($ (#.^:_1) i.@(*/@$))        NB. connections
+cmpv =: ":"0 @,                              NB. component values
+info =: ('&*@vccs3 map  '&,)"1               NB. constant info
+RLC =: (cmpv,.info @ ": @(conn ,. #))@(_1 _1&}.)
+
+NB. =========================================================
+Lab Section
+
+In the example, compare the list of components with the
+elements in the first 3 rows and columns of G.
+)
+
+] G =: > 3 _1  2 _4;_2  1  1  0; 0  2  4 _6;_1 _2 _7 10
+RLC G
+
+NB. =========================================================
+Lab Section
+
+It is emphatically not claimed that this is a particularly
+good realization. One obvious improvement would be to filter
+the output to remove zero circuits.
+
+Exercise. Notice that several components in the above example
+are connected in a way that shorts together the first two
+terminals of a vccs3. Prove that the result is a resistor.
+)
+
+NB. =========================================================
+Lab Section Circuit from listing
+We can check the claim that this program produces G&dp .
+First we define operations  apply  and  CFL  that are useful
+in creating a circuit from a listing of its components.
+)
+apply =: 128!:2
+CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
+
+NB. =========================================================
+Lab Section
+
+Then we apply this to check  RLC .
+)
+
+G
+
+h =: (RLC G)CFL
+h matrix 4                 NB. same as G
+
+NB. =========================================================
+Lab Section More on realization of linear circuits
+
+We can sharpen this result in an interesting way by showing
+that every linear circuit can be built out of positive scalar
+multiples of 3-terminal voltage-controlled current sources.
+
+The only part we haven't done is to show how to use copies of
+vccs3 to create -@vccs3 and all 1- and 2-terminal linear
+circuits.
+
+
+Theorem. The circuit -@vccs3 can be realized as a restriction
+of the circuit obtained by interconnecting nine copies of
+vccs3 .
+
+Proof. The proof is in the calculation below.
+)
+f =: 3:*vccs3                        NB. 3 copies of vccs3 in parallel
+h =: f`f`f interc(2 1 3;0 1 3;0 2 3) NB. interconnection of 3 fs.
+(h matrix 4)Restr 0 1 2
+
+-@vccs3 matrix 3                     NB. compare
+
+NB. =========================================================
+Lab Section
+
+Theorem.  A 1 mho resistor can be obtained by shorting
+together terminals 0 and 1 of  vccs3 . A _1 mho resistor can
+be obtained similarly from  -@vccs3 .
+
+Proof. The proof is in the calculation below.
+)
+vccs3 map 0 0 1 matrix 2     NB. 1 mho resistor
+-@vccs3 map 0 0 1 matrix 2   NB. _1 mho resistor
+
+NB. =========================================================
+Lab Section Theorem: realization of linear circuits
+
+We can now prove the realization theorem.
+
+Theorem. Every linear circuit is realizable as a restriction
+of an interconnection of positive scalar multiples of the
+3-terminal voltage-controlled current source.
+
+Proof. The only circuit not dealt with already is the circuit
+with one terminal: this is just a one-terminal restriction of
+vccs3 .
+
+This justifies the (apparently unexplained) practice in
+conventional textbooks of studying linear circuits by
+studying networks of resistors and controlled sources. The
+student may understand, when he sees the linearization of a
+transistor for instance, why dependent sources are necessary;
+he almost certainly will not understand why they are
+sufficient.
+)
+
+NB. =========================================================
+Lab Chapter Batteries
+NB. =========================================================
+Lab Section Definition of a battery
+
+The next class of circuit we will consider is an affine
+function; that is, one that behaves like  b"1+G&dp .
+
+Definition. An n-terminal battery g is a circuit with the
+property that (-&(g n#0))@g is linear.
+
+Theorem. An n-terminal circuit g is a battery if and only if
+there exist a 0-sum vector b and a 0-sum matrix G such that
+ g -: b"1+G&dp .
+
+Proof. The "if" part is easy. Here is the "only if" part. Let
+g be an n-terminal battery. Let o=:n#0 ,  and let b=:g o .
+Then there exists a G such that, for every n-element vector v,
+  g v
+  (g o)+(g v)-(g o)
+  b+(-&(g o))@g v
+  b+G dp v                NB. (-&(g o))@g  is linear
+  (b"1+G&dp)v
+
+The vector b may be called the internal current source and G
+the internal conductance of g . I may refer to  'the battery
+b"1+G&dp'  even though a particular battery may not actually
+be defined that way (iv14 is an example).
+)
+
+NB. =========================================================
+Lab Section
+
+The battery (as defined here) is the multiterminal
+generalization of what is usually called a "real" battery (or
+probably the "Norton equivalent" of a real battery. It is in
+fact a further generalization in that it permits as its
+internal conductance any 0-sum matrix.
+)
+
+NB. =========================================================
+Lab Section Example of a battery
+
+Example. The circuit  iv14  is the battery whose internal
+current source and internal conductance are shown here.
+)
+iv14 0 0 0                       NB. internal current source
+((-&(iv14 0 0 0))@iv14) matrix 3 NB. internal conductance
+
+NB. =========================================================
+Lab Section Closure theorems: interconnection
+
+Theorem. The sum of the batteries
+   g1 =: b1"1 + G1&dp
+ and
+   g2 =: b2"1 + G2&dp
+ is the battery
+   (b1+b2)"1 + (G1+G2)&dp .
+
+Theorem. If g is an n-terminal battery and f is a
+u-preserving linear function, then (g under f) is a battery.
+
+Proof. Let g =: b"1 +G&dp and let the matrix of f be F . Then
+for every n-element vector v ,
+  g under f v
+  (f transpose n) g f v             NB. under
+  (tr F)dp g F dp v                 NB. matrix of f
+  (tr F)dp(b + G dp F dp v)         NB. defn of g
+  ((tr F)dp b) + ((tr F)dp G dp F)v
+
+This is the battery whose internal current source is (tr F)dp
+b and whose internal conductance is (tr F)dp G dp F .
+
+Corollary. Every interconnection of batteries is a battery.
+)
+
+NB. =========================================================
+Lab Section Closure theorem: restriction
+
+Theorem. (Thevenin's theorem)  Every restriction of a battery
+is a battery.
+
+Proof. The proof is just an elaboration of that of the
+corresponding theorem for linear circuits. Let t and s
+partition the terminals of the battery g =: b"1 + G&dp . We
+must solve the equations
+   ct      -: bt + (Gtt dp vt) + (Gts dp vs)
+   (0"0 s) -: bs + (Gst dp vt) + (Gss dp vs)
+
+for vs and ct, given arbitrary vt. Row operations will always
+reduce these equations to the form
+   ct      -: wt + (Htt dp vt)      + (Htq dp vq)
+   (0"0 p) -: wp + (Hpt dp vt) + vp + (Hpq dp vq)
+   (0"0 q) -: wq + (Hqt dp vt)
+
+where p and q partition s . Either p or q may be empty.
+
+Now there exist solutions vs (i.e., vp and vq) for every vt
+if and only if both wq=0 and Hqt=0. Then vq is unconstrained
+and  vp =: - wp +(Hpt dp vt)+(Hpq dp vq) .
+
+Finally it is clear that ct depends only on vt (and not on
+vs) if and only if Htq=0 , and then  ct =: wt + Htt dp vt .
+
+We can put this into the form of an explicit algorithm. The
+only difference from the linear case is that the internal
+current source must be appended to the matrix when performing
+the row operations. The algorithm is programmed to permit
+either t or s to be empty.
+)
+
+NB. =========================================================
+Lab Section
+The cover functions are:
+ (G;b)Restrb t   -->  matric & current source of restriction
+ Solveb(G;b)     -->  v
+)
+
+b =: _2 _1 1 2
+] G =: x: szm 0 30 15 0 40 6
+(G;b)Restrb 0 1
+Solveb(G;b)
+
+NB. =========================================================
+Lab Section Maximum power transfer
+
+Let g =: b"1+G&dp . Then by a previous theorem the condition
+for the critical points of the power absorbed by g is
+ 0"0 v
+ (g v) + (v dp g Grad v)    NB. theorem
+ (g v) + (v dp G)           NB. (g Grad v) -: G
+ (g v) + ((tr G)dp v)
+ (g + ((tr G)&dp))v
+
+We can create conditions which satisfy this as follows.
+Connect in parallel g and the linear circuit (tr G)&dp . The
+result will be a circuit h =: g + (tr G)&dp .
+
+Now clearly if there exists a solution v of h then v is a
+critical point of the device g . Thus by attaching in
+parallel a linear circuit whose matrix is tr G as a load on
+our battery and then connecting nothing else to it, we may
+maximize the power drawn from the battery.
+)
+
+NB. =========================================================
+Lab Section
+Example.  Consider the battery g defined as follows.
+)
+b =: 7 4 _11
+]G =: 3 3$  6 _7   1   9  5 _14 _15  2  13
+g =: b"1 + G&dp
+
+NB. =========================================================
+Lab Section
+Now solve the circuit  g+(tr G)&dp  and compute the power
+produced by the battery (and absorbed by the load).
+)
+] v =: (g+(tr G)&dp) solve 0 0 0
+(g+(tr G)&dp)v              NB. verifying
+
+-g pwr v
+
+NB. =========================================================
+Lab Section
+
+According to our theory this is (strictly, may be) the
+maximum power available from this battery.
+
+For example, if we compute the power at some other point we
+get less than the maximum.
+)
+-g pwr v+0 0.1 0.2
+
+NB. =========================================================
+Lab Section
+
+If we attach G&dp instead of (tr G)&dp then a solution to the
+resulting circuit is w shown below, and the power produced by
+g at w is less than the maximum.
+)
+] w =: (g+ G&dp) solve 0 0 0
+-g pwr w
+
+NB. =========================================================
+Lab Chapter Reciprocal circuits
+NB. =========================================================
+Lab Section Definition
+We next define reciprocal circuits.
+
+Definition.  A circuit is reciprocal if and only if it is
+self-transpose. In other words, an n-terminal circuit g is
+reciprocal if and only if for every pair of n-element vectors
+v and w ,
+  (v dp g w) -: (g v)dp w .
+
+Theorem.  Our previous theory shows that every circuit is
+reciprocal if and only if it is linear and has a symmetric
+matrix.
+
+Reciprocal circuits have an interesting property. Let G&dp be
+a reciprocal linear circuit. If the i th terminal is set to 1
+volt and the rest are set to 0, then the j th current is
+(<j,i){G . On the other hand, if the j th terminal is set to
+1 volt and the rest are set to 0, then the i th current is
+(<i,j){G . Since G is symmetric, these currents are equal.
+)
+
+NB. =========================================================
+Lab Section Example
+
+We have already defined (but not shown) a function  szm  that
+can be used to generate reciprocal linear circuits. Only the
+upper triangle need be specified.
+)
+szm 6 5 4 3 2 1        NB. matrix of a 4-terminal recip lin cct
+
+g =: (szm ra 10)&dp    NB. a 5-terminal reciprocal linear cct
+g matrix 5
+
+NB. =========================================================
+Lab Section Theorems
+Here are some theorems to prove about reciprocal linear
+circuits.
+
+Theorem.  Every 2-terminal linear circuit is reciprocal.
+Proof.  Every 2x2 0-sum matrix is symmetric.
+
+Theorem.  Every sum of reciprocal circuits is reciprocal.
+
+Theorem.  If g is a reciprocal circuit and f is a
+u-preserving linear function, then (g under f) is a
+reciprocal circuit.
+
+Theorem.  Every interconnection of reciprocal circuits is
+reciprocal.
+
+Corollary.  Every interconnection of 2-terminal linear
+circuits is reciprocal.
+
+Theorem.  Every restriction of a reciprocal circuit is reciprocal.
+)
+
+NB. =========================================================
+Lab Section Realization of reciprocal circuits
+
+Theorem.  Every reciprocal circuit has a realization as an
+interconnection of linear circuits of valence 2 or less.
+
+Proof.  If the valence of the given circuit is 1 there is
+nothing to prove, so let G be the matrix of a reciprocal
+circuit of valence n>:2. G is determined by the elements in
+its upper triangle. We create a circuit whose matrix is G by
+interconnecting components: one component for each element of
+the upper triangle of G . This is done by observing that for
+i<j , the matrix of res map(i,j) has a _1 in element (i,j)
+and other nonzero entries only outside of the upper
+triangle.
+
+The program RRC produces a list of the required components
+and connections.
+
+Example.  The 3-terminal reciprocal circuit shown below has a
+realization in terms of 2-terminal resistors as follows.
+
+Note that one of the resistors is negative.
+)
+
+]G =: szm 2 _1 2
+RRC G
+
+NB. =========================================================
+Lab Section Realization of reciprocal circuits: example
+
+Here is a bigger example. Compare the list of components
+with the elements of the upper triangle of G.
+)
+] G =: szm 3 0 0 0 4 _2 1 0 5 3
+RRC G
+
+NB. Checking:
+h =: (RRC G)CFL
+G -: h matrix(#G)
+
+NB. =========================================================
+Lab Section Realization of reciprocal circuits: exercises
+
+
+Exercise.  Show that a realization of the centering function
+cf  of valence n is an n-clique of (1/n)-mho resistors.
+
+Exercise.  The function  res  is a circuit of arbitrary
+valence. Find realizations for the 3-, 4- and 5-terminal
+versions.
+)
+
+NB. =========================================================
+Lab Section Nonlinear reciprocal circuits?
+
+It is obvious that if g is a reciprocal circuit, then for
+every v , (g Grad v)-:tr g Grad v . It would be possible to
+define a nonlinear reciprocal circuit as one that satisfies
+this condition. It can be shown that this class is closed
+under the circuit operations. Every interconnection of
+two-terminal circuits whether linear or not, would be
+reciprocal in this sense.
+
+Exercise.  Show that the 3-terminal nonlinear circuit  c3c
+is reciprocal in the above sense but does not have a
+realization as an interconnection of 2-terminal circuits.
+)
+
+NB. =========================================================
+Lab Chapter Gyrators
+NB. =========================================================
+Lab Section Definition
+
+Definition.  A gyrator  G&dp  is a linear circuit with a
+skew-symmetric matrix: G -: -tr G .
+
+Remark.  The diagonal elements of the matrix of a gyrator are
+all zero.
+
+Examples
+ (1)  The only one-terminal gyrator is zero .
+ (2)  The only two-terminal gyrator is zero .
+ (3)  The matrix of every three-terminal gyrator is of the
+form a*G for some scalar a , where
+)
+] G =: >0 _1 1; 1 0 _1; _1 1 0
+
+NB. =========================================================
+Lab Section Theorems
+
+Exercise.  How many independent elements are there in the
+matrix of an n-terminal gyrator (n>0)?
+
+Answer.  2! <:  n
+
+Theorem.  An n-terminal linear circuit g is a gyrator if and
+only if (g transpose n) -: -@g .
+
+Theorem.  An n-terminal linear circuit g is a gyrator if and
+only if for every pair of n-element vectors v and w ,
+  (v dp g w)-: -(g v)dp w .
+)
+
+NB. =========================================================
+Lab Section Generating gyrators
+
+We can define a general gyrator by specifying the (truncated)
+upper triangle of its matrix.
+
+The function  sszm  computes a skew-symmetric 0-sum matrix,
+similar to szm.
+)
+ans =: ,(-@(+/))                 NB. append neg sums
+border =: (ans"1)@ans            NB. border with negative sums
+sszm =: border @ (- tr) @ setut  NB. create skew symm 0-sum matrix
+                                 NB.  from -(truncated upper tri)
+gyrator =: sszm@[ dp ]
+1 2 3 gyrator 0 9 3 5
+
+1&gyrator matrix 3
+
+h =: 1 2 3&gyrator        NB. a 4-terminal gyrator
+h 0 9 3 5
+h matrix 4
+
+NB. =========================================================
+Lab Section Power of a gyrator
+Theorem.  Every gyrator is passive (in fact it is lossless,
+neither producing nor absorbing power).
+
+Proof.  Let g =: G&dp be a gyrator. Then for every v ,
+
+ g pwr v
+ v dp g v                    NB. Defn of pwr
+ v dp G dp v                 NB. Defn of g
+ 0.5* v dp (G + tr G) dp v
+ 0.5* v dp (G - G) dp v      NB. G -: - tr G
+ 0.5* v dp (0"0 G) dp v
+ 0
+)
+
+((ra 3)&gyrator)pwr (ra 4)
+
+NB. =========================================================
+Lab Section Closure theorems
+
+Theorem.  Every sum of gyrators is a gyrator.
+
+Theorem.  If g is a gyrator and f is a u-preserving linear
+function, then (g under f) is a gyrator.
+
+Theorem.  Every interconnection of gyrators is a gyrator.
+)
+
+NB. =========================================================
+Lab Section
+Theorem. Every restriction of a gyrator is a gyrator.
+
+Exercise.  Do there exist any 2-terminal restrictions of a
+gyrator of valence n >: 3?
+
+Exercise  Does every 3-terminal restriction of a gyrator of
+valence n >: 3 exist?
+)
+
+NB. =========================================================
+Lab Section Realizations of a gyrator
+
+Exercise.  Show that a 3-terminal gyrator can be realized as
+an interconnection of six 3-terminal VCCS's in a symmetric
+arrangement.
+
+Exercise.  Show that the 3-terminal circuit diff@(+/\)@diff
+is a gyrator.
+
+Exercise.  Is diff@(+/\)@diff an n-terminal gyrator for every
+n?
+)
+
+NB. =========================================================
+Lab Section
+Theorem.  Every linear circuit T has a realization as the
+parallel interconnection of a reciprocal linear circuit and a
+gyrator.
+
+Proof.  For every square matrix T ,
+ T
+ (0.5* T + tr T) + (0.5* T - tr T)
+ ((] ..tr)T) + ((] .:tr)T)
+
+The first term is symmetric while the second is
+skew-symmetric.
+
+
+Example.  The circuit 2: * diff (or equivalently diff+diff)
+has a realization as the parallel interconnection of a
+triangle of 3 unit resistors   (] ..tr) G  and a gyrator
+ (] .:tr) G .
+)
+]G =: (diff+diff)matrix 3
+(] ..tr)G
+(] .: tr)G
+
+G -: ((] ..tr)+(] .:tr))G
+
+NB. =========================================================
+Lab Section
+
+Exercise.  Is it possible to find a realization of vccs3 in
+terms of only gyrators?
+
+Answer.  No. Everything built of only gyrators will be
+passive.
+
+Exercise.  Find a realization of 2:*vccs3 in terms of a
+gyrator and 2-terminal resistors. (At least one of the
+resistors must be negative.)
+)
+
+W =: vccs3 matrix 3
+((] ..tr);(] .:tr))2*W
+
+NB. =========================================================
+Lab Section
+Theorem.  Every gyrator of valence 3 or more has a
+realization as an interconnection of 3-terminal gyrators.
+
+Proof.  Let G be the matrix of a gyrator of valence n >: 3 .
+G is determined by the elements in the upper triangle of its
+first n-1 rows and columns. We create a circuit whose matrix
+is G by interconnecting components: one component for each
+element of the upper triangle of _1 _1 drop G . This is done
+by observing that for i<j<n-1 , the matrix of
+   1&gyrator map(i,j,n-1)
+ has a _1 in element (i,j) and other nonzero entries only
+outside of the upper triangle of _1 _1 drop G .
+)
+
+NB. =========================================================
+Lab Section
+
+The program  RGY  produces a list of the required component
+gyrators and their connections.
+
+Example.  Apply  RGY  to a randomly chosen 4-terminal
+gyrator.
+)
+info3 =: ('&gyrator map  '&,)"1        NB. constant info
+RGY =: (cmpv2,.info3 @ ": @(conn2 ,. #)) @ (_1 _1&drop)
+
+]G =: sszm 4 3 _10
+RGY G
+h =: (RGY G)CFL                        NB. Checking
+(h matrix(#G))-:G
+
+NB. =========================================================
+Lab Section
+
+The above theorems explain the conventional characterization
+of nonreciprocal linear circuits as those realizable as an
+interconnection of a reciprocal circuit and 3-terminal
+gyrators. Or, of positive and negative 2-terminal resistors
+and 3-terminal gyrators. Gyrators and positive 2-terminal
+resistors aren't sufficient since these are passive circuits
+and so anything built out of them will be passive and there
+exist active nonreciprocal circuits.
+
+Exercise.  Experiment with restrictions of imperfect gyrators
+formed by interconnecting a gyrator and small random
+resistors (i.e.,of small conductance).
+
+Exercise. Connect a resistor of conductance x mhos between
+terminals 1 and 2 of a 3-terminal gyrator. Show that the
+restriction of this to terminals 0 and 1 is a resistor of
+conductance %x mhos.
+)
+x =: 3
+f =: (1&gyrator) + (x&res)map 1 2
+f 3 4 2
+f matrix 3
+(f matrix 3)Restr 0 1
+
+NB. =========================================================
+Lab Chapter Resistors
+NB. =========================================================
+Lab Section Definition
+Definition.  A resistor is a reciprocal linear circuit whose
+matrix has no positive off-diagonal elements.
+
+Remark.  Every 2-terminal resistor is of the form G&dp where
+G =: b* >1 _1;_1 1  and b >: 0 .
+
+Example.  The function G&dp is a 4-terminal resistor.
+)
+] G =: szm 1 2 0 3 1 0
+
+]v =: ra 4
+G&dp v            NB. a 4-terminal resistor
+
+NB. =========================================================
+Lab Section Terminology
+
+Terminology  The term "resistor" is conventionally just used
+for the 2-terminal device. The multi-terminal circuits here
+called resistors form an important class and they have
+essentially the same properties as the 2-terminal device. The
+most serious conflict is probably that we often refer to the
+2-terminal linear reciprocal circuit with b<0 as a "negative
+resistor". I will continue to do this even though it is not a
+"resistor" in our terminology.
+
+Theorem.  Every resistor of valence n >: 2 has a realization
+as an interconnection of 2-terminal resistors. That is, no
+negative resistors are required. See the previous realization
+theorem for reciprocal linear circuits.
+)
+
+NB. =========================================================
+Lab Section Passivity of resistors
+Theorem.  Every resistor is passive.
+
+Proof.  The  matrix G of an n-terminal resistor g is
+diagonally dominant with nonnegative real diagonal entries.
+It is known that all of the eigenvalues of such a matrix have
+nonnegative real parts. Since G is in addition symmetric, its
+eigenvalues are nonnegative real numbers. By a previous
+theorem, g is passive.
+)
+
+NB. =========================================================
+Lab Section
+Theorem.  A 2-terminal linear circuit is passive if and only
+if it is a resistor.
+
+Proof.  Every 2-terminal linear circuit is of the form b* >1
+_1;_1 1 . The eigenvalues of this matrix are 0 and 2*b . By a
+previous theorem the circuit is passive if and only if b >: 0
+.
+)
+
+NB. =========================================================
+Lab Section Interconnection of resistors
+Theorem.  Every sum of resistors is a resistor.
+
+Exercise.  (Research question!) The usual closure theorem for
+resistors transformed under a u-preserving linear function is
+missing. If g is a resistor, then (g under f) is a passive,
+reciprocal circuit. But under what conditions on f is (g
+under f) a resistor?
+)
+
+NB. =========================================================
+Lab Section
+Theorem.  Let G be a square matrix and let M be a compatible
+attachment matrix. Then if G has no positive offdiagonal
+elements, neither does the matrix (tr M)dp G dp M .
+
+Proof.  The (i,j)th element of (tr M)dp G dp M is
+ (<i,j){(tr M)dp G dp M
+ (i{tr M)dp G dp(j{tr M)
+ +/, G* (i{tr M)*/ j{tr M
+ +/, G* (*/)/(i,j){tr M
+
+Now since there is exactly one 1 in each row of M , therefore
+if i is not equal to j the ith and jth columns of M cannot
+both have a 1 in the same position, so the matrix
+(*/)/(i,j){tr M has only zeros on the diagonal. Therefore the
+diagonal elements of G do not contribute to the offdiagonal
+elements of (tr M)dp G dp M . We conclude that the
+offdiagonal elements of (tr M)dp G dp M are sums of
+offdiagonal elements of G and hence are not positive.
+)
+
+NB. =========================================================
+Lab Section
+
+Theorem.  Every interconnection of resistors is a resistor.
+
+Proof.  By a previous theorem the matrix of the
+interconnection is the sum of matrices having no positive
+offdiagonal elements and hence it too has none.
+)
+
+NB. =========================================================
+Lab Section Restriction of resistors
+We have seen that in general, a restriction of a circuit --
+the suppression of some of its terminals -- may not exist. In
+the case of a resistor, however, we can show that every
+restriction exists.
+
+Theorem.  Every restriction of a resistor exists.
+
+I will not prove this formally, but here are the ideas behind
+the proof. Let G be the matrix of an n-terminal resistor
+(n>1). We wish to find the restriction of  G  to the subset
+t  of its terminals. Let  s  be the complement of t.
+)
+x =: 1 3;1 5;1 9;2 5;3 7;5 10;6 8  NB. wiring specification
+f =: (#x)# }. ]`res                NB. components (a gerund)
+] G =: (f interc x)matrix 12       NB. matrix of a resistor
+
+t =: 0 1 2                         NB. retain these terminals
+s =: 3 4 5 6 7 8 9 10 11           NB. suppress these
+
+NB. =========================================================
+Lab Section
+Then there always exists a partioning of s into subsets p and
+q that restructure  G  into a simple form.
+)
+p =: 3 7 5 10 9  [  q =: 4 6 8 11
+({ 2# < t;p;q) (<@{) G
+
+NB. =========================================================
+Lab Section
+We can now proceed with the restriction in two steps.
+
+First, the terminals in q can be suppressed without further
+calculation.
+)
+({ 2# < t;p) (<@{) G
+
+NB. =========================================================
+Lab Section
+The matrix  Gpp  is irreducibly diagonally dominant
+(i.e., diagonally dominant with inequality in at least one
+row). It is known in this case that  %.Gpp  exists, and the
+rest of the restriction can be completed easily.
+)
+'Gtt Gtp Gpt Gpp' =: ,({ 2# < t;p) (<@{) G
+Gtt - Gtp dp (%.Gpp) dp Gpt        NB. restriction to t
+
+G Restr t                          NB. compare
+
+NB. =========================================================
+Lab Section
+Interpretation.  The first step in the restriction as carried
+out in the proof of the theorem has a simple interpretation
+in terms of the "natural" 2-terminal resistor realization of
+G (the one produced by RRC ). In that realization the
+terminals represented by q are all the terminals of
+electrically isolated parts of the circuit: we suppress them
+by simply discarding those parts.
+)
+
+NB. =========================================================
+Lab Section
+We haven't yet shown that the matrix of the restriction of a
+resistor has the properties required of a resistor. That
+comes next.
+
+Theorem.  (%.Gpp)(>:every)0
+
+Proof(again only an outline). As defined above, Gpp is a
+diagonal matrix of real, irreducibly diagonally dominant
+square matrices with no positive offdiagonal elements and
+only positive diagonal elements. In our example we can make
+this clear as follows.
+)
+'p0 p1 p2' =: 3 7;5 10;,9
+({ 2# < t;p0;p1;p2) (<@{) G
+
+NB. =========================================================
+Lab Section
+Every element of the inverse of such matrices is known to be
+positive. Since %.Gpp is a diagonal partitioned matrix of
+these inverses every element of %.Gpp is either positive or
+zero.
+)
+
+%.Gpp
+
+NB. =========================================================
+Lab Section
+We can now complete the proof of the closure theorem.
+
+Theorem.  Every restriction of a resistor is a resistor.
+
+Proof.  We continue with the above notation. We know that the
+restriction exists and that it is a reciprocal linear
+circuit. It remains to show that the matrix has no positive
+offdiagonal elements.
+
+Since the offdiagonal elements of G are nonpositive,
+   Gtp (<:every) 0
+ and
+   Gpt (<:every) 0
+
+Therefore by the preceding theorem,
+   (Gtp dp(%.Gpp)dp Gpt) (>:every) 0
+
+Finally, since the offdiagonal elements of  Gtt  are
+nonpositive, the offdiagonal elements of
+   Gtt-Gtp dp(%.Gpp)dp Gpt
+ are nonpositive.
+)
+
+NB. =========================================================
+Lab Chapter Non-reciprocal resistors
+NB. =========================================================
+Lab Section Definition
+Here is a class of circuits that have many of the properties
+of resistors, but whose matrices aren't required to be
+reciprocal.
+
+Definition.  A non-reciprocal resistor (NRR)is a linear
+circuit whose matrix has no positive off-diagonal elements.
+
+The name "non-reciprocal resistor" is doubtless
+inappropriate. The NRR is like a resistor, but need not be
+reciprocal.
+
+Example.  The function G&dp is a 3-terminal non-reciprocal
+resistor.
+)
+]G =: >3 _1 _2;_2 3 _1;_1 _2 3
+
+NB. =========================================================
+Lab Section Example
+Example.  The circuit diff is an NRR.
+)
+diff matrix 4
+
+NB. =========================================================
+Lab Section Passivity of NRRs
+
+Theorem.  Every NRR is passive.
+
+Proof.  Let G be the matrix of an n-terminal NRR g . In the
+section on passivity in linear circuits I showed that
+   (G&dp)pwr v
+ is identical to
+   (] ..tr G)&dp pwr v
+
+But for an NRR,  (] ..tr)G  is the matrix of a resistor.
+Hence g is passive.
+)
+diff pwr ra 4
+
+NB. =========================================================
+Lab Section Closure theorems
+The proofs of the closure theorems for resistors do not
+depend on the symmetry of the matrix of the circuit. Hence:
+
+Theorem.  Every sum of NRRs is an NRR.
+
+Theorem.  Every interconnection of NRRs is an NRR.
+
+Theorem.  Every restriction of an NRR exists.
+
+Theorem.  Every restriction of an NRR is an NRR.
+
+Theorem.  Every NRR has a realization as the parallel
+connection of a resistor and a gyrator.
+
+Proof.  For every square matrix N,
+   N -: (] ..tr N) + (] .:tr N)
+ If N is the matrix of an NRR, the first term is a resistor
+and the second is a gyrator.
+)
+
+NB. =========================================================
+Lab Chapter Dormant circuits
+NB. =========================================================
+Lab Section Definition
+
+Definition.  An n-terminal circuit g is dormant if and only
+if
+   (g n#0)-:n#0 .
+
+
+Every linear circuit is dormant.
+
+A 2-terminal negative resistor is an active circuit that is
+dormant.
+
+
+It is convenient to call a non-dormant circuit a source.
+
+The simplest non-dormant circuit is a current source.
+)
+_1&res 2#0          NB. a dormant circuit ...
+_1&res pwr 1 _1     NB. ... which is active
+
+1 2 _3"1 ] 3#0      NB. a non-dormant circuit (a source)
+trig 3#0            NB. another one
+
+NB. =========================================================
+Lab Section Terminology
+There is as far as I know no precedent for the term
+"dormant".  Such circuits sometimes have been called
+"passive", but this is clearly wrong. A dormant circuit will
+lie quietly in a drawer, but if it is perturbed (for instance
+by the attachment of a current source), it may awake and
+become active.
+)
+
+NB. =========================================================
+Lab Section Closure theorems
+We can state the closure theorems for dormant circuits.
+
+Theorem.  Every sum of dormant circuits is dormant.
+
+Proof.
+ f o
+ (g+h)o      NB. Defn of f
+ (g o)+(h o) NB. Defn of g+h
+ o + o       NB. g and h are dormant
+ o
+
+Theorem.  If g is an n-terminal dormant circuit and f is a
+u-preserving linear function from Rm to Rn ,  then (g under
+f) is a dormant circuit.
+
+Proof.
+ (g under f)m#0
+ (f transpose m)g f m#0   NB. defn of under
+ (f transpose m)g n#0     NB. f is linear
+ (f transpose m)n#0       NB. g is dormant
+ m#0                      NB. f is linear
+
+Theorem.  Every interconnection of dormant circuits is
+dormant.
+
+Theorem.  Every restriction of a dormant circuit is dormant.
+
+Proof.  Let g be an n-terminal dormant circuit. Let t and s
+partition i. n into two subsets. Suppose that the restriction
+r of g to t exists. Let s be the complement of t . Let
+ot=:0"0 t . Then (r ot)-:t{g v uniquely for every v such that
+ot-:t{v and (s{g v)-:0"0 s . But v=:n#0 is such a vector.
+Therefore
+ r ot
+ t{g n#0             NB. above argument
+ t{n#0               NB. g is dormant
+ ot
+)
+
+NB. =========================================================
+Lab Chapter Bilateral circuits
+NB. =========================================================
+Lab Section Definition
+Many circuits have the property that the currents reverse
+when the polarity of the applied voltage is reversed.
+
+Definition.  A circuit g is bilateral  if and only if
+  (g@:-) -: (-@:g).
+
+Example.  The circuit cf@cube@cf is bilateral.
+
+Proof.
+   (cf@cube@cf)-v
+   cf cube -cf v
+   cf -cube cf v
+   -cf cube cf v
+   -(cf@cube@cf)v
+
+
+A diode is a 2-terminal circuit that is not bilateral.
+)
+v =: 4 9 2 _8
+-cf@cube@cf v         NB. bilateral circuit
+cf@cube@cf -v
+
+
+v =: 0 0.6            NB. non-bilateral circuit
+diode -v
+-diode v
+
+NB. =========================================================
+Lab Section Theorem
+
+Theorem.  Every linear circuit is bilateral.
+
+Proof.  For every v , (G dp -v) -: -G dp v .
+)
+
+NB. =========================================================
+Lab Section Closure theorems
+Here are the closure theorems for bilateral circuits.
+
+Theorem.  Every sum of bilateral circuits is bilateral.
+
+Proof.
+ (g+h)-v
+ (g -v) + (h -v)    NB. Defn of sum
+ (-g v) + (-h v)    NB. g and h are bilateral
+ - (g v) + (h v)
+ - (g+h)v           NB. Defn of sum
+
+Theorem.  If g is an n-terminal bilateral circuit and f is a u-preserving linear function from Rm to Rn , then (g under f) is a bilateral circuit.
+
+Proof.
+ g under f -v
+ (f transpose m)g f -v     NB. defn of under
+ (f transpose m)g -f v     NB. f is linear
+ (f transpose m)-g f v     NB. g is bilateral
+ -(f transpose m)g f v     NB. f tranpose is linear
+ -g under f v              NB. defn of under
+
+Theorem.  Every interconnection of bilateral circuits is bilateral.
+
+Theorem.  Every restriction of a bilateral circuit is bilateral.
+
+Proof.  Let r be the restriction of a bilateral circuit g to t . Let s be the complement of t. For every vt there exists a v such that (r vt)-:t{g v and vt-:t{v and (s{g v)-:0"0 s .
+
+Then (r -vt)-:t{g -v since (1)
+   t{-v
+   -t{v
+   -vt              NB. vt-:t{v
+ and (2)
+   s{g -v
+   s{-g v           NB. g is bilateral
+   -s{g v
+   0"0 s            NB. (s{g v)-:0"0 s
+ and the restriction is unique. Therefore
+   r -vt
+   t{g -v           NB. above argument
+   t{-g v           NB. g is bilateral
+   -t{g v
+   -r vt            NB. assumption
+)
+
+NB. =========================================================
+Lab Section Theorem
+Theorem.  Every bilateral circuit is dormant.
+
+Proof.  Let g be an n-terminal bilateral circuit. Then for
+  o =: n#0 ,
+
+ g o
+ 0.5* (g o)+(g o)
+ 0.5* (g o)-(g -o)
+ 0.5* (g o)-(g o)
+ o
+)
+
+NB. =========================================================
+Lab Chapter Some "ideal circuits"
+NB. =========================================================
+Lab Section Discussion
+This completes our exposition of classes of circuits.
+
+It was mentioned earlier that some idealizations that are
+considered "circuits" in conventional treatments of circuit
+theory are not circuits according to our definition. These
+devices generally exert some control over the voltages
+imposed on them.  I show in this chapter one way of dealing
+with such things.
+
+The idea is simply to approximate these devices arbitrarily
+closely with "real" circuits (our kind of circuits). This is
+after all what mother nature does.
+)
+
+NB. =========================================================
+Lab Section Short circuit
+
+A short circuit can be approximated arbitrarily closely by
+the circuit  a&res  as the scalar  a  is made sufficiently
+large.
+
+
+Clearly if something attached to  sc  keeps the current
+finite, then the voltage drop across the device will have to
+be close to 0 volts.
+)
+a =: 1e9
+sc =: a&res           NB. short circuit
+sc 3 3
+sc 3 3.01             NB. large currents
+sc 3 3.000000001      NB. smallish currents
+
+NB. =========================================================
+Lab Section Ideal voltage source
+
+It was mentioned earlier that an ideal voltage source is not
+a circuit according to our definition. However the function
+sixvolts  defined below is a circuit which approximates an
+ideal voltage source of 6 volts arbitrarily closely if the
+scalar  b  is made sufficiently large. Thus the current drawn
+by the device is finite only if the voltage drop across it is
+6 volts or very close to it.
+
+But if the voltage drop is much different from 6 volts the
+current is huge and so if something external keeps the
+current finite, the voltage drop will be close to 6 volts.
+)
+V =: 6
+f =: (V*_1 1)"1  + res      NB. battery
+b =: 1e9
+sixvolts =: b&*@f           NB. 6-volt source (approx)
+sixvolts 6 0                NB. OK currents
+sixvolts 6.000001 0         NB. huge currents
+
+NB. =========================================================
+Lab Section Ideal voltage transformer
+An ideal voltage transformer controls the voltages imposed on
+it, so it isn't a circuit. Again we can approximate a
+transformer arbitrarily closely.
+
+The function Res is useful here and in what follows.
+
+The 4-terminal bilateral linear device "transformer" is a 1:n
+current transformer: c2 = -n*c0 .
+
+Now  c0 = b*((v0-v1)-n*(v2-v3))  and so if something to which
+the transformer is attached keeps  c0  finite as  b  gets
+large, (v0-v1) must approach  n*(v2-v3).
+
+Thus this device becomes arbitrarily close to an ideal n:1
+voltage transformer, provided something limits the currents,
+)
+R =: >1 _1;_1 1
+Res =: ; @: (,.each/"1) @: (R&*each) NB. "array of resistors"
+Res each 4;3 5; i.2 3
+
+n =: 10                              NB. transformer ratio
+]T =: Res 2 2$ 1,(-n),(-n),n^2
+b =: 1000
+transformer =: (b&*)@(T&dp)          NB. approx transformer
+
+transformer 9 3 1 2                  NB. huge currents
+transformer 13 3 2 1                 NB. v0-v1=10*(v2-v3)
+transformer 12.999 3 2 1             NB. reasonable currents
+
+NB. =========================================================
+Lab Section Power of an ideal voltage transformer
+Exercise. Prove that the transformer approximation is passive
+for every b>0 and that it approaches a lossless device as b
+increases.
+)
+
+NB. =========================================================
+Lab Section Realization of an ideal voltage transformer?
+Some texts suggest that an ideal voltage transformer can be
+obtained by cascading two 4-terminal gyrators. This appears
+to be a paradox, since gyrators are legitimate circuits in
+our theory but the ideal transformer is not. To see what goes
+wrong, let g0 and g1 be two gyrators defined as below.
+
+We "cascade" these by interconnecting them as indicated and
+then compute the the matrix of the result.
+)
+a =: 1
+g0 =: (a*0 1 _1)&gyrator                NB. a gyrator
+g0 matrix 4
+
+b =: 10
+g1 =: (b*0 1 _1)&gyrator                NB. another gyrator
+g1 matrix 4
+
+h =: (g0 map 0 1 2 3)+ (g1 map 2 3 4 5) NB. cascaded gyrators
+h matrix 6
+
+NB. =========================================================
+Lab Section
+The problem is that cascading requires terminals 2 and 3 to
+be suppressed. This restriction does not exist, so the theory
+is consistent.
+
+Nevertheless, if small resistors are added randomly to the
+gyrators, making them slightly imperfect, then the
+restriction may exist. For instance in one case, with a = 1
+and b = 10 and with resistors added of size approximately
+0.00003 mhos, the matrix of the resulting restriction was
+of the form of our approximate 10:1 transformer with b =
+9316.77 .
+
+Exercise. Do the experiment suggested above.
+)
+
+NB. =========================================================
+Lab Section Controlled sources
+Textbooks refer to four kinds of controlled sources:
+ voltage-controlled current source
+ current-controlled current source
+ current-controlled voltage source
+ voltage-controlled voltage source.
+)
+
+NB. =========================================================
+Lab Section Voltage-controlled current source
+
+The 4-terminal voltage-controlled current source is the
+linear circuit  (Res 2 2$ 0 0,gm,0)&dp  where gm is called
+the transconductance.
+
+We have already seen this circuit. It is a legal circuit.
+)
+
+NB. =========================================================
+Lab Section Current-controlled current source
+The linear circuit  (b* Res 2 2$ 1,0,a,0)&dp  approximates a
+4-terminal current-controlled current source as  b  increases
+indefinitely. The scalar  a  is called the current transfer
+ratio. The current at terminals 2 and 3 is  a  times that at
+terminals 0 and 1. If the currents are kept finite by
+something attached to this device then as  b  increases
+indefinitely, the voltage difference between terminals 0 and
+1 must approach zero.
+)
+a =: 19                       NB. current transfer ratio
+b =: 100000
+g =: (b* Res 2 2$ 1,0,a,0)&dp NB. CCCS
+g matrix 4
+
+g 1 1.000001 3 5              NB. c2=19*c0 and OK currents
+g 1 1.1 3 5                   NB. huge currents
+
+NB. =========================================================
+Lab Section
+
+The circuit  g map 0 2 0 1  formed by coalescing terminals 0
+and 2 of the CCCS is closely related to a transistor.
+)
+
+h =: g map 0 2 0 1           NB. coalesce terminals 0 and 2
+mea =: (>./)@: | @ ,         NB. max |element of an array
+dbm =: % mea                 NB. divide by max
+
+dbm h matrix 3
+dbm npn Grad 0 5 0.2         NB. compare a transistor
+
+NB. =========================================================
+Lab Section Current-controlled voltage source
+
+The linear circuit  (Res 2 2$ 0,(%rm),b,0)&dp  approximates a
+4-terminal current-controlled voltage source as  b  increases
+indefinitely. The scalar  rm  is called the transresistance.
+The voltage difference between terminals 2 and 3 is  rm times
+the current at terminal 0 . If the current at terminal 2 is
+held finite then as  b  increases, the voltage difference
+between terminals 0 and 1 must approach zero.
+)
+rm =: 2                          NB. transresistance
+b =: 100000
+g =: (Res 2 2$ 0,(%rm),b,0)&dp   NB. CCVS
+g matrix 4
+
+g 7 9 3 1                        NB. huge currents
+g 7 7.000001 4 0                 NB. reasonable currents
+NB. Note that v2-v3 = rm*c0
+
+NB. =========================================================
+Lab Section Voltage-controlled voltage source
+
+The linear circuit  (b*Res 2 2$ 0, 0,(-mu),1)&dp approximates
+a 4-terminal voltage-controlled voltage source as  b
+increases indefinitely. The scalar  mu  is called the voltage
+transfer ratio. If the currents are finite then as  b
+increases indefinitely, the voltage difference between
+terminals 2 and 3 approaches  mu  times the voltage
+difference between terminals 0 and 1 .
+)
+mu =: 20                           NB. voltage transfer ratio
+b =: 10000
+g =: (b*Res 2 2$ 0, 0,(-mu),1)&dp  NB. VCVS
+
+%&b g matrix 4
+g 1 3 0 40                         NB. (v2-v3)=20*(v0-v1)
+g 1 3 0 39                         NB. huge currents if not
+
+NB. =========================================================
+Lab Section
+The circuit  h =: g map 0 2 0 1  formed by coalescing
+terminals 0 and 2 of the VCVS is closely related to a triode
+vacuum tube.
+
+The matrix of  h  is proportional to the derivative of a
+triode vacuum tube (the terminals in order are grid, plate,
+cathode). If the currents are finite as  b  increases
+indefinitely, then assuming the cathode voltage is 0 , the
+plate voltage varies approximately  mu  times as fast as the
+grid voltage.
+)
+
+h =: g map 2 0 2 1                 NB. coalesce terminals 0 and 2
+dbm h matrix 3

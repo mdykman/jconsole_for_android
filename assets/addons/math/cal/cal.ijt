@@ -1,0 +1,120 @@
+LABTITLE=: 'CAL - the TABULA engine'
+
+NB. =========================================================
+Lab Section INTRO
+CAL is the engine for TABULA.
+It constructs "ttables" (TABULA-tables),
+and saves and reloads them.
+It is command-driven via a single "keyhole",
+the verb: tabengine
+)
+
+require 'math/cal'
+
+tabengine_z_
+
+tabengine 'VERSION'	NB. --fails because not initialized.
+
+NB. =========================================================
+Lab Section INTRO2
+CAL needs initializing before it responds to instructions...
+)
+
+tabengine 'Init'
+tabengine 'VERSION'
+
+NB. =========================================================
+Lab Section DISP1
+On being initialized, CAL loads a ttable named: SAMPLE.
+ ++ Display the currently loaded ttable with CTAB or CTBU.
+ ++ Display its filename with TNAM.
+ ++ Display its caption with TITL ...
+)
+
+tabengine 'TNAM'
+tabengine 'TITL'
+$ z=: tabengine 'CTAB'
+z
+
+NB. =========================================================
+Lab Section DISP2
+CTAB returns a 2D display in unicode wide chars.
+But CTBU returns a LF-separated utf-8 string, as needed by
+J602 'wd' to display in a listview or editm control.
+)
+
+$ z=: tabengine 'CTBU'
+z
+
+NB. =========================================================
+Lab Section CMD1
+All CAL instructions begin with a 4-letter command,
+followed by arguments (if the command needs any).
+Commands like VERSION, CTAB, CTBU and QUERY ignore everything
+in the instruction after the first 4 letters.
+)
+
+tabengine 'VERSION'
+tabengine 'VERS'
+tabengine 'VER'		NB. --too short
+
+NB. =========================================================
+Lab Section CMD2
+Commands in UPPERCASE are requests for data,
+which is returned by: tabengine...
+)
+
+$z=: tabengine 'QUERY'
+z
+
+NB. =========================================================
+Lab Section CMD3
+Commands in lowercase make changes to the ttable.
+For example: newt (new empty ttable) and open.
+Since SAMPLE is freely changeable by the user,
+let us open an unchanging sample: SAMPLE0 ...
+)
+
+tabengine 'newt'
+tabengine 'open 0'	NB. ditto 'open 1' for SAMPLE1 etc
+tabengine 'CTBU'
+
+NB. =========================================================
+Lab Section CMD4
+Let us save this loaded ttable as the startup SAMPLE, then
+reload the SAMPLE ...
+)
+
+tabengine 'save $$'
+tabengine 'newt'	NB. (just to make sure it's gone)
+tabengine 'open'	NB. no arg means SAMPLE
+tabengine 'CTBU'
+
+NB. =========================================================
+Lab Section ITEM1
+The most important parameter following the 4-letter command
+is the item number.
+Let's fetch the main components of item 4 ...
+)
+
+tabengine 'NAME 4'	NB. the item's name
+tabengine 'VALU 4'	NB. the item's value
+tabengine 'FMLA 4'	NB. the item's formula
+
+NB. =========================================================
+Lab Section ITEM2
+Use corresponding lowercase commands to write back the value
+etc of item 4 (and notice how item 1 changes) ...
+)
+
+tabengine 'valu 4 1.0'
+tabengine 'CTBU'
+
+NB. =========================================================
+Lab Section SAVE
+Lastly, save the altered ttable in the user library under 
+your own choice of name ...
+)
+
+tabengine 'save mytestname'
+tabengine 'TFIL'	NB. full pathname of saved file

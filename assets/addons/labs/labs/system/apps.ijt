@@ -1,0 +1,434 @@
+LABTITLE=: 'Building Applications'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter Basics
+NB. =========================================================
+Lab Section Introduction
+This lab covers the various steps taken to build a typical application in J. The final application can be run directly from a desktop shortcut.
+
+The lab is self-contained. However, it uses several facilities such as the Form Editor, Plot, and Project Manager for which there are separate labs or help files, and which are therefore not described in this lab.
+)
+PREPARE
+load 'files'
+ferase jpath '~temp\tlab42.ijs'
+PREPARE
+
+NB. =========================================================
+Lab Section
+The application scripts will be stored in user directory:
+
+   ~user\projects\first
+
+If you are re-running this lab, you may wish to delete any
+scripts previously created in this directory.
+)
+
+NB. =========================================================
+Lab Section Application
+The application will create a Windows form to read and plot a data file:
+
+   system\examples\data\sales.dat
+
+To view this file, you can use the file and view utilities that are included with J.
+
+The next section uses fview to view the file. Press Esc to close the viewer.
+)
+PREPARE
+1!:5 :: 0: <jpath '~user\projects\first'
+PREPARE
+
+NB. =========================================================
+Lab Section
+)
+load 'files jview'
+
+fview jpath '~system\examples\data\sales.dat'
+
+NB. =========================================================
+Lab Section
+The file is a table of sales data. Each row contains a name, followed by 12 months sales results.
+
+The application will be a Windows form that lists the names, and displays a barchart of the sales results for the currently selected name.
+)
+
+NB. =========================================================
+Lab Section Reading the data
+First, read the file into the J session, and separate the names from the sales data.
+
+It will be convenient to read the file as a matrix. The next section does so, assigning the result to DAT.
+
+The result is a character matrix with 50 rows.
+)
+
+NB. =========================================================
+Lab Section
+)
+DAT=: 'm' fread jpath '~system\examples\data\sales.dat'
+
+$DAT
+
+NB. =========================================================
+Lab Section
+To split off the names, find the index of the first column that is entirely blank.
+
+Use this to select the names; then drop off the names to get the sales.
+)
+
+NB. =========================================================
+Lab Section
+)
+ndx=: 1 i.~ *./ ' ' = DAT
+NAMES=: ndx {."1 DAT
+SALES=: ndx }."1 DAT
+
+NB. =========================================================
+Lab Section
+The names data is a character matrix. Use list to view the matrix across the page.
+)
+list NAMES
+
+NB. =========================================================
+Lab Section
+The sales data is still character, and should be converted to numeric.
+
+Use ". (do) to convert to numeric. The result should have 12 columns.
+)
+
+NB. =========================================================
+Lab Section
+)
+NSALES=: 0 ". SALES
+
+$NSALES
+
+NB. =========================================================
+Lab Section Plot
+Now let us plot one of the sales results.
+
+The next section loads the plot package, and draws a barchart of row 5 of the sales data.
+
+Resize the plot window if necessary, then press Esc to close it.
+)
+
+NB. =========================================================
+Lab Section
+)
+load 'plot'
+
+'bar' plot 5 { NSALES
+
+NB. =========================================================
+Lab Section
+Add the name of the salesman to the plot.
+)
+
+NB. =========================================================
+Lab Section
+)
+name=: 5 { NAMES
+('bar;title ',name) plot 5 { NSALES
+
+NB. =========================================================
+Lab Section
+Close the plot window before continuing with the lab.
+)
+
+NB. =========================================================
+Lab Chapter Scripts
+NB. =========================================================
+Lab Section New Script
+Now lets create a script with this code, plus a verb to draw the plot for a given row.
+
+The next section creates the script.
+)
+PREPARE
+wd :: 0: 'psel jwplot;pclose'
+PREPARE
+
+NB. =========================================================
+Lab Section
+)
+SCRIPT
+require 'files plot'
+
+DAT=: 'm' fread jpath '~system\examples\data\sales.dat'
+
+ndx=: 1 i.~ *./ ' ' = DAT
+NAMES=: ndx {."1  DAT
+SALES=: ndx }."1 DAT
+NSALES=: 0 ". SALES
+
+showsales=: 3 : 0
+name=. y { NAMES
+data=. y { NSALES
+('bar;title ',name) plot data
+)
+SCRIPT
+PREPARE
+SCRIPT_jlab_ fwrites jpath '~temp\tlab42.ijs'
+open jpath '~temp\tlab42.ijs'
+PREPARE
+
+NB. =========================================================
+Lab Section
+Click on the script window to give it focus, then use the File|Save As menu item to save it in the following file in your user directory:
+
+   ~user\projects\first\defs.ijs
+
+You may have to create the "first" subdirectory.
+)
+
+NB. =========================================================
+Lab Section
+To load the script, click on it to give it focus, then select menu item Run|Window, or press Ctrl+W.
+
+Once the script is loaded, you can experiment with the showsales verb, for example, in the ijx window, try:
+
+   showsales 10
+   showsales 15
+)
+
+NB. =========================================================
+Lab Section
+Before continuing, close the defs.ijs script window, and the plot window.
+)
+
+NB. =========================================================
+Lab Section Form
+The next step is to create a form which has a listbox to show the names, and an isigraph control to show the plot.
+
+The next section creates such a form (you would normally use the Form Editor to do so).
+)
+PREPARE
+wd :: 0: 'psel jwplot;pclose'
+3 : 0''
+try.
+smsel_jijs_ jpath '~user\projects\first\defs.ijs'
+smclose_jijs_''
+catch. end.
+)
+PREPARE
+
+NB. =========================================================
+Lab Section
+)
+SCRIPT
+WP=: 0 : 0
+pc wp closeok;pn "Sales for Year";
+xywh 159 3 34 12;cc cancel button leftmove rightmove;cn "Close";
+xywh 5 10 40 9;cc label static;cn "Names:";
+xywh 4 19 60 98;cc names listbox ws_vscroll rightscale bottommove;
+xywh 67 19 126 98;cc g isigraph ws_border leftscale rightmove bottommove;
+pas 4 4;pcenter;
+rem form end;
+)
+
+wp_run=: 3 : 0
+wd WP
+wd 'set names ',,NAMES,.LF
+a=: conew 'jzplot'
+PForm__a=: 'wp'
+PFormhwnd__a=: wd 'qhwndp'
+PId__a=: 'g'
+wd 'pshow'
+)
+
+wp_cancel_button=: wp_close=: wd bind 'pclose'
+wp_g_size=: 3 : 'psize__a 0'
+
+wp_names_select=: 3 : 0
+index=. ".names_select
+name=. index { NAMES
+data=. index { NSALES
+('bar;title ',name) plot__a data
+)
+
+wp_run''
+SCRIPT
+PREPARE
+3 : 0''
+try.
+smsel_jijs_ jpath '~temp\tlab42.ijs'
+smclose_jijs_''
+catch. end.
+)
+SCRIPT_jlab_ fwrites jpath '~temp\tlab42.ijs'
+open jpath '~temp\tlab42.ijs'
+PREPARE
+
+NB. =========================================================
+Lab Section
+Click on the script window to give it focus, then use File|Save As to save the script as file:
+
+   ~user\projects\first\form.ijs
+
+Then close the script window.
+)
+
+NB. =========================================================
+Lab Section Scripts
+At this stage, there are two scripts containing the code for the system. If you were loading them from scratch, you could run this system by entering:
+
+  load '~user\projects\first\defs.ijs'
+  load '~user\projects\first\form.ijs'
+
+Try running these commands now. The form should load. Select one of the names to display the barchart.
+
+Ensure the form is working before continuing with the lab.
+)
+PREPARE
+3 : 0''
+try.
+smsel_jijs_ jpath '~user\projects\first\defs.ijs'
+smclose_jijs_ ''
+catch. end.
+)
+PREPARE
+
+NB. =========================================================
+Lab Chapter Project Manager
+NB. =========================================================
+Lab Section First Project
+We now create a project file for the application.
+
+1. Press Ctrl+B to bring up Project Manager.
+
+2. Run menu File|New and create a new project file in your user directory:
+
+   ~user\projects\first\first.ijp
+
+3. Click the Add button and add in the two scripts: defs.ijs and form.ijs.
+Several more scripts will appear in the Files list.
+
+4. Press Close to close Project Manager, saving changes.
+)
+
+NB. =========================================================
+Lab Section
+Now press Ctrl+B to reload Project Manager. It should show the "first" project.
+)
+
+NB. =========================================================
+Lab Section Requires
+The application requires the library scripts "files" and "plot", plus supporting scripts (these are the extra scripts seen in the Files list). It is best to let Project Manager take care of these requires. To do so:
+
+1. Open the "defs" script, and remove the first line with the require statement. Close and save the script.
+
+2. In Project Manager, select the Library tab, then move "files" and "plot" to the Selected window. If one or both is already selected but with a (d) tag (meaning development only) use the Options|Mark as Dev Only menu item to switch off the (d) tag.
+)
+
+NB. =========================================================
+Lab Section
+If you now switch back to the Source tab, and run menu File|Refresh Tabs, the Files list should now show only defs and form.
+)
+
+NB. =========================================================
+Lab Section File build
+Now create a single file containing the application, as follows:
+
+1. Select the Project tab.
+
+2. Use the Add button to add a Target file in your user directory of:
+
+   ~user\projects\first\run.ijs
+
+3. click Build to build the file.
+)
+
+NB. =========================================================
+Lab Section
+Next open the run.ijs file in the Project tab.
+)
+
+NB. =========================================================
+Lab Section
+Click on the run.ijs script window, and select menu Run|Window or press Ctrl+W to run the application.
+)
+
+NB. =========================================================
+Lab Section
+Before continuing with the lab, close down the run.ijs script window.
+)
+
+NB. =========================================================
+Lab Chapter Standalone Application
+NB. =========================================================
+Lab Section Standalone application
+The next step creates a standalone application that includes all required files.
+
+In Project Manager, run Project|Build Options...
+
+In the Include Files box, select all three Includes, i.e. Project source, Project libraries, Standard libraries.
+)
+PREPARE
+3 : 0''
+try.
+smsel_jijs_ jpath '~user\projects\first\run.ijs'
+smclose_jijs_ ''
+catch. end.
+)
+PREPARE
+
+NB. =========================================================
+Lab Section
+Click Build Now to build the file, then close the Build Options dialog.
+
+Try viewing the target file, run.ijs. This time the file may be too large to be viewed by the Windows editor, though you can view it in Notepad or other external editor.
+
+However, you can load it into J, as in the next Section.
+)
+
+NB. =========================================================
+Lab Section
+)
+load '~user\projects\first\run.ijs'
+
+NB. =========================================================
+Lab Section
+Now create a new J shortcut in the Desktop (you may find it easiest to copy the existing J shortcut), and enter a Target line as below.
+
+The target consists of the path to the J executable, followed by a parameter of the path to the run script.
+
+Use the correct pathnames. If either path has a blank in the name, surround the path with double quotes.
+
+On Windows, this will be something like:
+
+  c:\j\j.exe ~user\projects\first\run.ijs
+
+On Linux/Mac, the executable will be something like:
+
+  /home/dave/j/bin/jwd
+
+and the script file, like:
+
+  /home/dave/user/projects/first/run.ijs
+
+Click the shortcut to load J and run the file.
+)
+
+NB. =========================================================
+Lab Section
+A new J session should start with the form displayed. Click on the form to give it focus and try it out.
+
+Ensure the form is working before continuing with the lab.
+)
+
+NB. =========================================================
+Lab Section
+Next, change the command line in your new shortcut to load J without a session. Again, use the correct pathnames:
+
+  c:\j\j.exe -jijx ~user\projects\first\run.ijs
+
+Click the shortcut to load J and run the file.
+)
+
+NB. =========================================================
+Lab Section
+Congratulations - you have completed your first J application.
+
+All the scripts defining this application are in the directory ~user\projects\first. You may find it instructive to browse through this directory and review the files that were created.
+
+Note that the application reads data from a file in the J directories. If you want to try setting up the application outside those directories, you must either copy that file, or define another way of reading the data.
+
+)

@@ -15,7 +15,7 @@ NB.            generator and shape given
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -66,13 +66,13 @@ NB.     http://www.jsoftware.com/jwiki/Essays/Linear_Recurrences
 
 gepow=: 4 : 0
 
-  mpi3=. mp/ ^: (3 = (# @ $))       NB. apply mp/ only to 3-rank arrays (stiff rank)
+  mpi3=. mp/^:(3 = #@$)       NB. apply mp/ only to 3-rank arrays (stiff rank)
 
-  pl=. i. >: <. (2 & ^.) (>./) , x  NB. powers list: 2^i
-  pc=. mp~ ^: pl y                  NB. powers cache: A^2^i
-  pb=. (< @ I. @ (|. " 1) @ #:) x   NB. pl bits boxed array of shape sh
+  pl=. i. >: <. 2 ^. >./ , x  NB. powers list: 2^i
+  pc=. mp~^:pl y              NB. powers cache: A^2^i
+  pb=. <@I.@|."1@#: x         NB. pl bits boxed array of shape sh
 
-  pc (mpi3 @ ({~ >)) " 3 0 pb       NB. extract and mp A's powers for each pl atom
+  pc mpi3@({~ >)"3 0 pb       NB. extract and mp A's powers for each pl atom
 )
 
 NB. ---------------------------------------------------------
@@ -256,7 +256,7 @@ NB. - fixed powers vector (p -: 5 7) is used
 testgepow=: 3 : 0
   rcond=. gecon1 y
 
-  ('5 7 & gepow' tmonad (]`]`(rcond"_)`(_."_)`(_."_))) y
+  ('5 7&gepow' tmonad (]`]`(rcond"_)`(_."_)`(_."_))) y
 
   EMPTY
 )
@@ -289,7 +289,7 @@ testdipow=: 3 : 0
     R=. v=. iRh=. _.
   end.
 
-  ('5 7 & dipow' tmonad (]`]`(rcond"_)`(_."_)`(_."_))) (ct R) ; v ; iRh
+  ('5 7&dipow' tmonad (]`]`(rcond"_)`(_."_)`(_."_))) (ct R) ; v ; iRh
 
   EMPTY
 )
@@ -316,7 +316,7 @@ testhepow=: 3 : 0
     v=. R=. _.
   end.
 
-  ('5 7 & hepow' tmonad (]`]`(rcond"_)`(_."_)`(_."_))) v ; ct R
+  ('5 7&hepow' tmonad (]`]`(rcond"_)`(_."_)`(_."_))) v ; ct R
 
   EMPTY
 )
@@ -344,8 +344,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testpow_mt_ 150 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testpow_mt_ 150 150
+NB.     _1 1 0 4 _6 4&gemat_mt_ testpow_mt_ 150 150
 NB. - test by random square complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testpow_mt_ 150 150
 
-testpow=: 1 : 'EMPTY_mt_ [ ((testhepow_mt_ @ (u hemat_mt_)) [ (testdipow_mt_ @ (u dimat_mt_ u)) [ (testgepow_mt_ @ u)) ^: (=/)'
+testpow=: 1 : 'EMPTY_mt_ [ (testhepow_mt_@(u hemat_mt_) [ testdipow_mt_@(u dimat_mt_ u) [ testgepow_mt_@u)^:(=/)'

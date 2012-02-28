@@ -1,0 +1,465 @@
+LABTITLE=: 'Coleman (sample topics)'
+LABAUTHOR=: 'KEI'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter INTRODUCTION
+NB. =========================================================
+Lab Section A. Purpose
+This lab is written as a companion to A. J. Coleman, et al.,
+Algebra, Gage Publishing Limited, Toronto 1979,
+ISBN 0-7715-3636-4, designed for use in Grade 13 in Ontario
+schools. It will be referred to here as ALG.
+
+The use of the computer makes it possible to experiment with
+mathematical ideas with ease and precision, sometimes
+revealing lapses in the text-book treatment, and often
+providing new insights.
+
+Study each computer example, but do not get hung up by
+failure to fully grasp any one -- it is better to continue as
+far as possible, returning to the matter in a review.
+
+A computer sentence may include a phrase such as -- NB. *
+denotes multiplication -- which is used as a comment (Nota
+Bene) and is not executed. For example:
+)
+3+4
+3*4
+3^4     NB. three to the power four
+5*4+3   NB. Equivalent to 5*(4+3), that is, executed from
+        NB. right to left, with no precedence rules such
+        NB. as "times before plus and minus"
+
+NB. =========================================================
+Lab Section B. Computer use
+To use the computer for experimentation, type a sentence such
+as 2*i.11 and then press the Enter key to execute it.
+
+Do not hesitate to try any experiment -- the worst that can
+happen is the appearence of a (possibly helpful) error
+message, after which you may simply continue.
+
+This section illustrates the use of a few basic facilities:
+the copula (=:) to assign values to names of variables and
+functions, and the use of lists.
+
+The rest of this chapter provides examples for each chapter
+of ALG. They should prove intelligible even to a reader not
+yet familiar with the topics covered:
+)
+
+x=:4  NB. x is (assigned) 4
+
+y=:0 1 2 3 4 5 6 7 8 9 10  NB. y is (the list) 0 to 10
+
+x*y
+
+y*y   NB. Element-by element multiplication
+
+and=:*.
+0 0 1 1 and 0 1 0 1
+
+NB. =========================================================
+Lab Section C. Examples for Chapter 1 (Sets and Subsets)
+A function that yields only a 0 or a 1 classifies its
+arguments, and can therefore be said to represent a set, with
+the result 1 indicating that an argument belongs to the set:
+)
+y=:i.11  NB. the function i. produces lists of successive integers
+y
+5<y
+S1=:5&<  NB. The set "five is less than"
+S1 y
+S2=:8&>
+S2 y
+and=:*.
+(S1 y) and (S2 y)
+S3=:S1 and S2             NB. the intersection of sets S1 and S2
+S3 y
+select=:#
+(S3 y) select y           NB. the members of S3 in y
+membersofS3=:S3 select ]  NB. ] is the identity function
+membersofS3 y
+
+NB. =========================================================
+Lab Section D. Examples for Chapter 2 (Arrangements and Subsets)
+In the expression { 'ab';'ABC' the function { applies to the character lists 'ab' and 'ABC' to produce a catalogue of all possible pairs of an element from the first list with one from the second.
+
+Similarly, the expression {'abc';'abc' produces the Cartesian product shown in Section 2.1 of ALG, showing that the diagonal contains the only three duplicate pairs. Similar Cartesian products are produced by longer lists.
+
+The full definition (and further examples) of any function such as { may be obtained by placing the cursor immediately to the left of it, holding down the Ctrl key, and pressing key F1. To restore normal execution, press the key Esc:
+)
+'ab';'ABC'
+{ 'ab';'ABC'
+{ 'abc';'abc'
+{'abcde';'abcde'
+
+NB. =========================================================
+Lab Section
+The following examples define a binomial coefficients function bc, use it to define the function C of Section 2.4 of ALG (for the number of r-subsets of a set of n elements), as well as a function P that produces a matrix whose none-zero elements are the familiar Pascal's triangle.
+
+They also show the application of matrix inverse to the matrix P 5 to show some mathematically significant patterns:
+)
+bc=:!~
+C=:bc/
+P=:C~@i.
+5 bc 3
+C(5,3)
+]M=:P 5
+inv=:%.
+mp=:+/ . *
+inv M  NB. Alternating binomial coefficients
+(M mp inv M) ; (M mp M mp M mp M)
+
+NB. =========================================================
+Lab Section E. Examples for Chapter 3 (Mathematical Induction and the Binomial Theorem)
+These examples treat the summation notation of Section 3.1 of ALG:
+)
+a=:1 2 3 4 5
+sum=:+/      NB. Equivalent to Greek capital sigma
+sum a
+ps=:sum\     NB. Partial sums, or subtotals
+ps a
+ps a*a
+prod=:*/     NB. Equivalent to Greek capital pi
+pp=:prod\
+prod a
+pp a
+!a           NB. Factorial
+
+NB. =========================================================
+Lab Section
+The following illustrates the binomial theorem of Section 3.5 of ALG:
+)
+n=:4
+]i=:i. n+1
+bc=:!~
+n bc i
+pol=:p.         NB. Polynomial function with exponents in ascending order
+1 2 3 pol x=:2
+(n bc i) pol x
+(x+1)^n         NB. ^ is the power function
+10 bc i.11
+(10 bc i.11) pol x
+(x+1)^10
+
+NB. =========================================================
+Lab Section F. Examples for Chapter 4 (Probability)
+The following expressions give the sample spaces of a die (as discussed in Section 4.1 of ALG) for two and three throws:
+)
+S=:1 2 3 4 5 6
+{S;S
+{S;S;S
+L=:'ABCDEFGH'
+{L;L
+
+NB. =========================================================
+Lab Section
+The following illustrates the evaluation of C(n,r), the number of ways of choosing r things out of n, and the equivalent calculation in terms of a numerator and denominator (as discussed in Section 4.7 of ALG):
+)
+n=:6
+r=:3
+C=:!~/
+C(n,r)
+fon=:{.-i.@}.
+fon n,r
+fod=:>:@i.@}.
+fod n,r
+table=:(fon,.fod) n,r
+table
+*/table
+%/*/table
+
+NB. =========================================================
+Lab Section G. Examples for Chapter 5 (Vectors as Directed Line Segments)
+In Section 5.1 of ALG it is stated athat "A vector may be represented geometrically by a directed line segment".
+
+Algebraically, it may be represented by a list, and such lists can be added, subtracted, and multiplied by single elements (called scalars) in obvious ways:
+)
+a=:3 5
+b=:6 1
+a+b
+a-b
+b-a
+4*a
+(5*a)+(5*b)
+5*(a+b)
+
+NB. =========================================================
+Lab Section
+
+COORDINATE GEOMETRY
+
+Plot points with coordinates 3 5 and 6 2 on graph paper, and comment on the following statements:
+
+* The vectors a and b can be visualized as coordinates of points in geometry.
+
+* The difference a-b is a vector that can be pictured as the movement (in the x and y directions) from point a to point b.
+
+* Geometrically, the magnitude of the vector a-b is the length of the vector from point a to point b.
+
+* If you know the theorem of Pythagoras, write and execute an expression to give the magnitude of the vector c=:a-b.
+)
+
+NB. =========================================================
+Lab Section
+
+MAGNITUDE OR LENGTH
+
+The magnitude of a vector is the square root of the sum of the squares of its coordinates. Thus:
+)
+c=:a-b
+c
+*:c
++/*:c
+%:+/*:c
+L=:%:@:(+/)@:*:
+L c
+L a
+L b
+
+NB. =========================================================
+Lab Section
+
+THREE DIMENSIONS
+
+A three-element vector represents coordinates in 3-space. Thus, if d=:5 4 3 represents the dimensions in metres of a 5 by 4 room with a 3 metre ceiling, the length of a body diagonal (from any vertex to the farthest vertex) is given by the same function L, For example:
+)
+d=:5 4 3
+L d
+p=:0.25*d
+p
+L d-p
+cv=: 0 1 1 * d    NB. Ceiling vertex opposite to d
+cv
+L cv              NB. Length of the face diagonal on the ceiling
+*/d               NB. Volume of room
+
+NB. =========================================================
+Lab Section H. Examples for Chapter 6 (Vectors and their Components)
+The important dot product is simple to define (the sum of the element-by-element product of its vector arguments), but it is not so easy to get a grasp on its important properties.
+
+Begin by plotting the vectors 3 4 and _8 6, drawing lines to the origin, and verifying that they are perpendicular. Then note that their dot product is zero, and that the dot product of each with itself is the square of its length:
+)
+dp=:+/@:*"1/
+L=:%:@:(+/)@:*: " 1
+a=:3 4
+b=:_8 6
+a dp b
+a dp a
+b dp b
+L a
+L b
+
+NB. =========================================================
+Lab Section
+Further insight may be gained by taking a matrix (to be called B) whose row vectors are of equal length (that is, lie on the same circle), and computing the dot product of each with the others. Study the results carefully, and comment on them:
+)
+angles=:] * i.@:<.@:(360&%)
+angles 30
+sin=:1: o. %&180p_1
+cos=:2: o. %&180p_1
+circle=:(cos,.sin)@:angles
+]B=:circle 90
+B dp/ B
+B ; (B dp/ B)
+
+NB. =========================================================
+Lab Section
+Compare your comments with the following:
+
+* The dot product of a vector with its negative (e.g. 1 0 with _1 0) is negative.
+
+* The dot product of a vector with any perpendicular vector is zero (1 0 and 0 _1)
+
+Comment on the following results:
+)
+d2=:0j2&":   NB. Contract display to two digits
+d1=:0j1&":   NB. Contract display to one digit
+]B=:circle 30
+
+d2 B dp/ B
+
+NB. =========================================================
+Lab Section
+
+The cross product of vectors a and b is a vector that is perpendicular to both a and b. Thus:
+)
+l=:1&|.      NB. Left shift by one place
+r=:_1&|.     NB. Right shift by one place
+a=:3 5 4
+b=:1 2 6
+(l a);(r b);(l b);(r a)
+
+((l a)*(r b)) - ((l b)*(r a))
+X=:(l@[ * r@]) - (l@] * r@[)    NB. Cross product
+]]cp=:a X b
+cp dp a                         NB. Test for perpendicularity
+cp dp b
+a X a
+c=:2 1 4
+b+c
+(b+c) X a
+(b X a)+(c X a)
+
+NB. =========================================================
+Lab Section I. Examples for Chapter 7 (Equations of Lines and Planes)
+As noted in Section 7.4 of ALG, a line in 3-space through the point r0 and running in the direction m may be represented by r0+t*m, where t is a scalar parameter that determines a particular point on the line.
+
+For the vector r0=:1 1 2 and m=:1 2 1, plot several points on the line (including the cases 2 and 1 and 0 and _1 for t), using axes in the directions _ and / and | for coordinates x and y and z.
+
+The coordinates may be computed as illustrated below:
+)
+r0=:1 1 2
+m=:1 2 1
+r0+2*m
+r0+1*m
+r0+0*m
+r0+_1*m
+r0 (+"1 1) 2 1 0 _1 (*"0 1) m
+
+NB. =========================================================
+Lab Section
+
+Vectors a and b are said to be parallel if b is a scalar multiple of a. For any non-parallel vectors, the points (s*a)+(t*b) are said to lie in a plane.
+
+Using a=:r0 and b=:m, compute and plot a number of points (s*a)+(t*b), and observe that they appear to lie in a plane:
+)
+a=:1 1 2
+b=:1 2 1
+s=:2
+t=:3
+(s*a)+(t*b)
+
+NB. =========================================================
+Lab Section
+
+Convenient computation of points in a plane will be provided by an operator PLANE that produces a function afb=:a PLANE b for which s afb t produces a point in the plane of a and b. Thus:
+)
+PLANE=:2 : 0
+:
+(x*m)+(y*n)
+)
+
+afb=:a PLANE b
+
+2 afb 3
+2 a PLANE b 3
+1 2 3 afb"0/ 3 4
+
+NB. =========================================================
+Lab Section J. Examples for Chapter 8 (Linear Equations and Matrices)
+
+Section 8.1 of ALG states: By a system of equations ... we mean a set consisting of one or more linear equations. And in Example 1 gives the three equations:
+
+   x+2y- z =  1  (1)
+   x- y+2z =  7  (2)
+  2x+3y+ z = 10  (3)
+
+We will treat this as a single fuction F of the vector x,y,z yielding a vector that is required (by giving suitable values to x and y and z) to equal the result 1 7 10.
+
+The function F can be obtained by applying the dot product dp=:+/@:*"1 to each row of the following matrix:
+)
+M=:3 3 $ 1 2 _1,1 _1 2,2 3 1
+M
+x=:1 [ y=:2 [z=:4
+v=:x,y,z
+v
+dp=:+/@:*"1
+M dp v
+1 7 10 = M dp v  NB. x,y,z is not a solution
+
+NB. =========================================================
+Lab Section
+
+The inverse of the matrix M is a matrix that applied to the result r=:1 7 10 gives the values of a solution s. Methods for computng inverses are discussed in Section 9.10 of ALG; here we will use the fuction inv=:%. :
+)
+r=:1 7 10
+inv=:%.
+N=:inv M
+N
+s=:N dp r
+s
+M dp s
+r=M dp s
+
+NB. =========================================================
+Lab Section K. Examples for Chapter 9 (Matrices and Linear Transformations)
+
+In the expression M dp v, the dot product function applies to each row of the matrix M to produce a vector result. Similarly, the expression M dp N gives the dot product of each row of M with each row of N, producing a matrix result. Thus:
+)
+M;N
+dp=:+/@:*"1/
+M dp N
+
+NB. =========================================================
+Lab Section
+
+The matrix product defined in Section 9.8 of ALG behaves similarly, but applies the dot product between each row of the left argument, and each COLUMN of the right argument.
+
+The ALG matrix product of M and N can therefore be expressed as M dp transpose N, where the the function transpose flips its argument about the diagonal (\), interchanging rows and columns. Thus:
+)
+transpose=:|:
+N ; transpose N
+M dp transpose N
+mp=:[ dp |:@]     NB. matrix product
+M mp N
+
+NB. =========================================================
+Lab Section
+
+The result of M mp N is the IDENTITY MATRIX because N is the inverse of M. It is called the identity matrix because its matrix product with any matrix or vector leaves it unchanged. Thus:
+)
+I=:M mp N
+I
+M ; I mp M
+I mp 2 3 5
+
+NB. =========================================================
+Lab Section L. Examples for Chapter 10 (Complex Numbers)
+
+The square root of negative 1 is defined to have a result commonly called i (for i-maginary), and this new number is assumed to be subject to the same functions that apply to real numbers. For example:
+)
+i=:%:_1                NB. Square root
+*:i                    NB. Square
+*:i+i
+a=:3+4*i               NB. Complex number
+|a                     NB. Magnitude or Absolute Value
+a                      NB. "standard" representation of a complex number
+3j4*3j4
++a                     NB. Conjugate
+a * +a                 NB. Product with conjugate is real
+M=:2 2$3j4 2j5 0j3 5j2
+M ; %. M               NB. Inverse of a complex matrix
+
+NB. =========================================================
+Lab Section
+)
+a
++. a                       NB. Real and imaginary parts
+*. a                       NB. Polar representation: magnitude and (radian) angle
+(] ; +. ; *.) M
+
+]c=:i^0 1 2 3              NB. Powers of i
+
+(+. ; *.) c
+
+NB. =========================================================
+Lab Section
+
+Express the following examples from Section 10.4 of ALG in the standard form used here:
+
+   2+i
+   ---
+   3+4i
+
+   (1+i)(4+5i)
+   -----------
+           2
+      (1-i)
+)
+p=:(2+i)%(3+4*i)
+q=:((1+i)*(4+5*i)) % *:(1-i)
+
+p;q;(p*q);(p*p);(q*q)

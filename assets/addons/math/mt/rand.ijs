@@ -16,9 +16,9 @@ NB. unmat    Adv. to make verb to make random unitary
 NB.          (orthogonal) matrix
 NB. spmat    Conj. to make verb to make random sparse array
 NB.
-NB. Version: 0.7.0 2011-08-06
+NB. Version: 0.8.1 2011-10-29
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -69,9 +69,9 @@ NB. - verb to make complex matrix S with elements s having:
 NB.     Re(s) ~ U(0,1)
 NB.     Im(s) ~ U(_1,1)
 NB.   :
-NB.     unirand=: randu j. (_1 1 & randu)
+NB.     unirand=: randu j. _1 1&randu
 
-randu=: (?@$&0) :((p.~ (-~/\))~ $:)
+randu=: (?@$&0) :((p.~ -~/\)~ $:)
 
 NB. ---------------------------------------------------------
 NB. rande
@@ -98,7 +98,7 @@ NB. - verb to make complex matrix S with elements s having:
 NB.     Re(s) ~ E(1)
 NB.     Im(s) ~ E(2)
 NB.   :
-NB.     exprand=: rande j. (2 & rande)
+NB.     exprand=: rande j. 2&rande
 NB.
 NB. Notes:
 NB. - randu is used instead of (1-randu) since they are
@@ -106,7 +106,7 @@ NB.   equivalent under following assumptions:
 NB.   - randu's support is open interval (0,1)
 NB.   - randu's values aren't used outside elsewhere
 
-rande=: (- @ ^. @ randu) : (* $:)
+rande=: -@^.@randu : (* $:)
 
 NB. ---------------------------------------------------------
 NB. randnf
@@ -158,16 +158,16 @@ NB. Application:
 NB. - verb to make real matrix S with elements s having:
 NB.     s ~ N(1,3^2)
 NB.   :
-NB.     normrand=: 1 3 & randnf
+NB.     normrand=: 1 3&randnf
 NB. - verb to make complex matrix S with elements s having:
 NB.     s ~ N(1,3^2)
 NB.   :
-NB.     normrand=: 1 3 & randnc
+NB.     normrand=: 1 3&randnc
 NB. - verb to make complex matrix S with elements s having:
 NB.     Re(s) ~ N(0,1)
 NB.     Im(s) ~ N(1,3^2)
 NB.   :
-NB.     normrand=: randnf j. (1 3 & randnf)
+NB.     normrand=: randnf j. 1 3&randnf
 NB.
 NB. Notes:
 NB. - randnf requests only ⌈Π{sh[:]}/2⌉ numbers from RNG
@@ -176,14 +176,14 @@ NB. References:
 NB. [1] G. E. P. Box and Mervin E. Muller, A Note on the
 NB.     Generation of Random Normal Deviates, The Annals of
 NB.     Mathematical Statistics (1958), Vol. 29, No. 2 pp.
-NB.     610–611
+NB.     610-611
 NB. [2] D.R.Brillinger "Time series. Data analysis and
 NB.     theory", The University of California, Berkeley, 1975
 NB.     (Д. Бриллинджер "Временные ряды. Обработка данных и
 NB.     теория". Изд-во "Мир". М. 1980, стр. 98)
 
-randnf=: (($,) +.@:((%: @ (2 & rande)) r. (0 2p1 & randu))@>.@-:@(*/)) : (p. $:)
-randnc=:           ((%: @      rande ) r. (0 2p1 & randu))             : (p. $:)
+randnf=: (($,) +.@:(%:@(2&rande) r. 0 2p1&randu)@>.@-:@(*/)) : (p. $:)
+randnc=:           (%:@   rande  r. 0 2p1&randu)             : (p. $:)
 
 NB. ---------------------------------------------------------
 NB. randtnf
@@ -207,14 +207,14 @@ NB. - verb to make complex matrix S with elements s having
 NB.   left-side truncated normal distribution:
 NB.     s ~ TN(1,3^2,4,+∞)
 NB.   :
-NB.     tnormrand=: 1 3 4 _ & randtnf
+NB.     tnormrand=: 1 3 4 _&randtnf
 
-randtnf=: (0 1 __ _ & $:) :(4 : 0)
+randtnf=: (0 1 __ _&$:) :(4 : 0)
   'mu sigma a b'=. x
-  mrandnf=. (mu,sigma) & randnf
+  mrandnf=. (mu,sigma)&randnf
   NB. replace out-bounded elements recursively
-  rober=. (I. @ ((a & >) +. (b & <))) ((($: @ mrandnf @ # @ [)`[`] }) ^: (0 < (#@[))) ]
-  ($ (rober @ mrandnf @ (*/))) y
+  rober=. I.@(a&> +. b&<) $:@mrandnf@#@[`[`] }^:(0 < #@[) ]
+  ($ rober@mrandnf@(*/)) y
 )
 
 NB. =========================================================
@@ -266,13 +266,13 @@ NB.   having:
 NB.     mantissa(l) ~ U(_1,1)
 NB.     exponent(l) ~ TN(0,3^2,_6,4)
 NB.   :
-NB.     L=. (_1 1 0 3 _6 4 & gemat) trlmat 4 4
+NB.     L=. _1 1 0 3 _6 4&gemat trlmat 4 4
 NB. - make complex lower triangular 4×4-matrix L with
 NB.   elements l having:
 NB.     mantissa(Re(l)),mantissa(Im(l)) ~ U(_1,1)
 NB.     exponent(Re(l)),exponent(Im(l)) ~ TN(0,3^2,_6,4)
 NB.   :
-NB.     L=. (_1 1 0 3 _6 4 & (gemat j. gemat)) trlmat 4
+NB.     L=. _1 1 0 3 _6 4&(gemat j. gemat) trlmat 4
 NB. - make complex lower triangular 4×4-matrix L with
 NB.   elements l having:
 NB.     mantissa(Re(l)) ~ U(0,1)
@@ -280,7 +280,7 @@ NB.     exponent(Re(l)) ~ TN(0,1,-∞,+∞)
 NB.     mantissa(Im(l)) ~ U(_1,1)
 NB.     exponent(Im(l)) ~ TN(0,3^2,_6,4)
 NB.   :
-NB.     L=. ((0 1 0 1 __ _ & gemat) j. (_1 1 0 3 _6 4 & gemat)) trlmat 4
+NB.     L=. (0 1 0 1 __ _&gemat j. _1 1 0 3 _6 4&gemat) trlmat 4
 NB.
 NB. Notes:
 NB. - only n*(n+1)/2 numbers from RNG are requested
@@ -289,9 +289,9 @@ NB. TODO:
 NB. - fret should be sparse
 
 trlmat=:  1 : '1&([`(+/\@i.@{.@])`(0 $~ -:@(* >:)@{.@])}) ];.1 u@-:@(* >:)@{.'
-trl1mat=: 1 : '(1;a:) & setdiag_mt_ @ (u trlmat_mt_)'
-trumat=:  1 : '|: @ (u trlmat_mt_)'
-tru1mat=: 1 : '|: @ (u trl1mat_mt_)'
+trl1mat=: 1 : '(1;a:)&setdiag_mt_@(u trlmat_mt_)'
+trumat=:  1 : '|:@(u trlmat_mt_)'
+tru1mat=: 1 : '|:@(u trl1mat_mt_)'
 
 NB. ---------------------------------------------------------
 NB. gemat
@@ -334,14 +334,14 @@ NB.     exponent(Re(g)) ~ TN(0,1,-∞,+∞)
 NB.     mantissa(Im(g)) ~ U(_1,1)
 NB.     exponent(Im(g)) ~ TN(0,3^2,_6,4)
 NB.   :
-NB.     G=. ((0 1 0 1 __ _ & gemat) j. (_1 1 0 3 _6 4 & gemat)) 4 4
+NB.     G=. (0 1 0 1 __ _&gemat j. _1 1 0 3 _6 4&gemat) 4 4
 NB.
 NB. Notes:
 NB. - default par provides about 95% of g numbers falls into
 NB.   the range [-1/FP_EPS,-FP_EPS]U[FP_EPS,1/FP_EPS]
 NB.   ("68-95-99.7 rule")
 
-gemat=: ((_1 1 0 , (-: FP_FLEN) , FP_EMIN , FP_EMAX) & $:) :(((randu~ 2&{.) (* 2&^) (randtnf~ 2&}.))~)
+gemat=: (_1 1 0 , (-: FP_FLEN) , FP_EMIN , FP_EMAX)&$: :(((randu~ 2&{.) (* 2&^) (randtnf~ 2&}.))~)
 
 NB. ---------------------------------------------------------
 NB. dimat
@@ -377,21 +377,21 @@ NB.     mantissa(d) ~ U(1,3)
 NB.     exponent(d) ~ TN(0,4^2,_5,6)
 NB.   and eigenvectors Q derived via QR-factorization from
 NB.   real matrix B:
-NB.     A=. (1 3 0 4 _5 6 & gemat) dimat (randnf unmat) 4 4
+NB.     A=. 1 3 0 4 _5 6&gemat dimat (randnf unmat) 4 4
 NB. - make complex diagonalizable Hermitian 4×4-matrix A with
 NB.   eigenvalues d having:
 NB.     mantissa(d) ~ U(1,3)
 NB.     exponent(d) ~ TN(0,4^2,_5,6)
 NB.   and eigenvectors Q derived via QR-factorization from
 NB.   complex matrix B:
-NB.     A=. (1 3 0 4 _5 6 & gemat) dimat (randnc unmat) 4
+NB.     A=. 1 3 0 4 _5 6&gemat dimat (randnc unmat) 4
 NB. - make complex diagonalizable 4×4-matrix A with
 NB.   eigenvalues d having:
 NB.     mantissa(Re(d)),mantissa(Im(d)) ~ U(1,3)
 NB.     exponent(Re(d)),exponent(Im(d)) ~ TN(0,4^2,_5,6)
 NB.   and eigenvectors Q derived via QR-factorization from
 NB.   complex matrix B:
-NB.     A=. (1 3 0 4 _5 6 & (gemat j. gemat)) dimat (randnc unmat) 4
+NB.     A=. 1 3 0 4 _5 6&(gemat j. gemat) dimat (randnc unmat) 4
 NB.
 NB. Notes:
 NB. - A will be Hermitian (symmetric) if randx produces real
@@ -428,13 +428,13 @@ NB.  having:
 NB.     mantissa(h) ~ U(_1,1)
 NB.     exponent(h) ~ TN(0,3^2,_6,4)
 NB.   :
-NB.     H=. (_1 1 0 3 _6 4 & gemat) hemat 4 4
+NB.     H=. _1 1 0 3 _6 4&gemat hemat 4 4
 NB. - make complex Hermitian 4×4-matrix L with elements h
 NB.   having:
 NB.     mantissa(Re(h)),mantissa(Im(h)) ~ U(_1,1)
 NB.     exponent(Re(h)),exponent(Im(h)) ~ TN(0,3^2,_6,4)
 NB.   :
-NB.     H=. (_1 1 0 3 _6 4 & (gemat j. gemat)) hemat 4
+NB.     H=. _1 1 0 3 _6 4&(gemat j. gemat) hemat 4
 NB. - make complex Hermitian 4×4-matrix L with elements h
 NB.   having:
 NB.     mantissa(Re(h)) ~ U(0,1)
@@ -442,12 +442,12 @@ NB.     exponent(Re(h)) ~ TN(0,1,-∞,+∞)
 NB.     mantissa(Im(h)) ~ U(_1,1)
 NB.     exponent(Im(h)) ~ TN(0,3^2,_6,4)
 NB.   :
-NB.     H=. ((0 1 0 1 __ _ & gemat) j. (_1 1 0 3 _6 4 & gemat)) hemat 4
+NB.     H=. (0 1 0 1 __ _&gemat j. _1 1 0 3 _6 4&gemat) hemat 4
 NB.
 NB. Notes:
 NB. - only n*(n+1)/2 numbers from RNG are requested
 
-hemat=: 1 : 'tr2he_mt_ @ (u trlmat_mt_) @ (2 & $)'
+hemat=: 1 : 'tr2he_mt_@(u trlmat_mt_)@(2&$)'
 
 NB. ---------------------------------------------------------
 NB. pomat
@@ -475,13 +475,13 @@ NB.   elements p having:
 NB.     mantissa(p) ~ U(1,3)
 NB.     exponent(p) ~ TN(0,4^2,_5,6)
 NB.   :
-NB.     P=. (1 3 0 4 _5 6 & gemat) pomat 4 4
+NB.     P=. 1 3 0 4 _5 6&gemat pomat 4 4
 NB. - make complex Hermitian positive definite 4×4-matrix P
 NB.   with elements p having:
 NB.     mantissa(Re(p)),mantissa(Im(p)) ~ U(1,3)
 NB.     exponent(Re(p)),exponent(Im(p)) ~ TN(0,4^2,_5,6)
 NB.   :
-NB.     P=. (1 3 0 4 _5 6 & (gemat j. gemat)) pomat 4
+NB.     P=. 1 3 0 4 _5 6&(gemat j. gemat) pomat 4
 NB. - make complex Hermitian positive definite 4×4-matrix P
 NB.   with elements p having:
 NB.     mantissa(Re(p)) ~ U(1,2)
@@ -489,15 +489,15 @@ NB.     exponent(Re(p)) ~ TN(0,1,-∞,+∞)
 NB.     mantissa(Im(p)) ~ U(1,3)
 NB.     exponent(Im(p)) ~ TN(0,4^2,_5,6)
 NB.   :
-NB.     P=. ((1 2 0 1 __ _ & gemat) j. (1 3 0 4 _5 6 & gemat)) pomat 4
+NB.     P=. (1 2 0 1 __ _&gemat j. 1 3 0 4 _5 6&gemat) pomat 4
 NB. - make real symmetric negative definite 4×4-matrix P
 NB.   with elements p having:
 NB.     mantissa(p) ~ U(1,3)
 NB.     exponent(p) ~ TN(0,4^2,_5,6)
 NB.   :
-NB.     P=. -@((1 3 0 4 _5 6 & gemat) pomat) 4 4
+NB.     P=. -@(1 3 0 4 _5 6&gemat pomat) 4 4
 
-pomat=: 1 : 'po_mt_ @ u @ (2 & $)'
+pomat=: 1 : 'po_mt_@u@(2&$)'
 
 NB. ---------------------------------------------------------
 NB. ptmat
@@ -526,13 +526,13 @@ NB.   4×4-matrix T with elements d and e having:
 NB.     mantissa(d),mantissa(e) ~ U(1,3)
 NB.     mantissa(d),exponent(e) ~ TN(0,4^2,_5,6)
 NB.   :
-NB.     T=. (1 3 0 4 _5 6 & gemat) ptmat 4 4
+NB.     T=. 1 3 0 4 _5 6&gemat ptmat 4 4
 NB. - make complex Hermitian positive definite tridiagonal
 NB.   4×4-matrix T with elements d and e having:
 NB.     mantissa(d),mantissa(Re(e)),mantissa(Im(e)) ~ U(1,3)
 NB.     exponent(d),exponent(Re(e)),exponent(Im(e)) ~ TN(0,4^2,_5,6)
 NB.   :
-NB.     T=. (1 3 0 4 _5 6 & (gemat j. gemat)) ptmat 4
+NB.     T=. 1 3 0 4 _5 6&(gemat j. gemat) ptmat 4
 NB. - make complex Hermitian positive definite tridiagonal
 NB.   4×4-matrix T with elements d and e having:
 NB.     mantissa(d),mantissa(Re(e)) ~ U(0,1)
@@ -540,7 +540,7 @@ NB.     mantissa(d),exponent(Re(e)) ~ TN(0,1,-∞,+∞)
 NB.     mantissa(Im(e)) ~ U(1,3)
 NB.     exponent(Im(e)) ~ TN(0,4^2,_5,6)
 NB.   :
-NB.     T=. (gemat j. (1 3 0 4 _5 6 & gemat)) ptmat 4
+NB.     T=. gemat j. 1 3 0 4 _5 6&gemat ptmat 4
 NB.
 NB. TODO:
 NB. - T should be sparse
@@ -577,7 +577,8 @@ NB. where
 NB.   n - size of output matrix Q
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   I -: clean (mp~ ct) Q
+NB.   I -: clean (mp ct) Q
+NB.   I -: clean (mp~ct) Q
 NB. where
 NB.   I=. idmat n
 NB.   Q=. randnf unmat n
@@ -621,4 +622,4 @@ NB.
 NB. TODO:
 NB. - S should be sparse
 
-spmat=: 2 : '(u@<.@(n*(*/))) ((?@$~ #)~ (*/@$)) } ($&0)'
+spmat=: 2 : 'u@<.@(n * */) ((?@$~ #)~ (*/@$)) } $&0'

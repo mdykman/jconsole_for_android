@@ -1,0 +1,105 @@
+LABTITLE=: 'Print Basics'
+
+NB. =========================================================
+Lab Section Introduction
+The following print utilities are included with J:
+
+   print       a simple text printer
+   print2      2-up printing, useful for printing scripts
+)
+PREPARE
+clear''
+PREPARE
+
+NB. =========================================================
+Lab Section print - text printer
+"print" is a simple text printer that can be used for printing any J data or text files.
+
+First, load the print utilities:
+)
+load 'print'
+
+NB. =========================================================
+Lab Section
+There are two verbs:
+
+   [opt] print data            prints any J data
+   [opt] printfile filename    prints text files
+
+The next section will demonstrate - ensure your printer is available, then advance to the next section.
+)
+
+NB. =========================================================
+Lab Section
+)
+print i.2 3 4
+printfile jpath '~system\examples\print\jeltz.txt'
+
+NB. =========================================================
+Lab Section
+The left argument is optional, and is a list of one or more of the following, separated by a semicolon:
+
+  ascii              convert box drawing characters to ascii
+  filename           add filename to header
+  font {fontspec}    specifies font
+  fontsize {size}    specifies fontsize in points
+  footer {text}      footer text (bottom left of page)
+  fit                fit text to page width
+  land | landscape   set landscape mode (default is portrait)
+  printer            specify printer by name
+  printfile          set print to file name
+  ruler              put a ruler at the top of the page
+)
+
+NB. =========================================================
+Lab Section
+)
+'ascii;fontsize 14;footer Testing;land' print ;/i.#~4
+
+NB. =========================================================
+Lab Section
+The default font for print is given in Edit|Configure|Print. Typically this is a fixed-pitch font with line drawing characters, though it need not be.
+
+For example, see the effect of a proportional font without line-drawing characters:
+)
+
+NB. =========================================================
+Lab Section
+)
+'font arial 12' print ;/i.#~4
+
+NB. =========================================================
+Lab Section
+"fit" controls whether the text is fitted to the page width - by default it is not. Note that if the text is wider than the page it will be wrapped anyway, so fit only comes into effect when the text is shorter than the page width.
+
+Compare the following examples:
+)
+
+NB. =========================================================
+Lab Section
+)
+'fontsize 9' printfile jpath '~system\examples\print\alice.txt'
+'fit;fontsize 9' printfile jpath '~system\examples\print\alice.txt'
+
+NB. =========================================================
+Lab Section print2 - a 2-up text printer
+"print2" is a 2-up printer, so that two pages are printed on a single page in landscape mode. There are two verbs:
+
+   print2 data            prints any J data
+   printfile2 filename    prints text files
+
+For example, print the parts script file in 2-up mode:
+)
+
+NB. =========================================================
+Lab Section
+)
+printfile2 'parts'
+
+NB. =========================================================
+Lab Section
+The font for print2 is given in Edit|Configure|Print, and should be a 7 to 7.5 point fixed pitch font with line-drawing characters.
+
+The default font is "Courier New" which is available on all Windows systems, but which unfortunately does not read well in a small point size. Much better is Lucida Console, which should be configured as 7.25 point bold oem.
+)
+

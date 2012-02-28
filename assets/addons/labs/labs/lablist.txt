@@ -1,0 +1,97 @@
+NB. list of labs valid for the gtk ide
+NB.
+NB. The labs not yet tested in J7 are commented out.
+NB. uncomment when a lab is working
+
+Core;A J Introduction;~addons/labs/labs/core/j.ijt
+Core;A Taste of J (1);~addons/labs/labs/core/jtaste1.ijt
+Core;A Taste of J (2);~addons/labs/labs/core/jtaste2.ijt
+Core;An Idiosyncratic Introduction to J;~addons/labs/labs/core/intro.ijt
+Core;An Introductory Course in J;~addons/labs/labs/core/introcourse.ijt
+Core;Function Display;~addons/labs/labs/core/display.ijt
+Core;Locales;~addons/labs/labs/core/locales.ijt
+Core;Monad/Dyad;~addons/labs/labs/core/monad.ijt
+Core;Object Oriented Programming;~addons/labs/labs/core/oop.ijt
+Core;Sparse Arrays;~addons/labs/labs/core/sparse.ijt
+
+General;Circuit Theory I;~addons/labs/labs/general/circuittheoryi.ijt
+General;Circuit Theory II;~addons/labs/labs/general/circuittheoryii.ijt
+General;Fuzzy Logic;~addons/labs/labs/general/fuzzy.ijt
+General;Huffman Coding;~addons/labs/labs/general/huffman.ijt
+General;Neural Networks -- Feedforward w/ Backpropagation;~addons/labs/labs/general/nn1.ijt
+General;Sequential Machines;~addons/labs/labs/general/seqmachine.ijt
+General;The Tower of Hanoi;~addons/labs/labs/general/towerofhanoi.ijt
+General;Turtle Geometry - JTurtle User Guide;~addons/graphics/jturtle/jturtleuser.ijt
+General;JOD (1) Introduction;~addons/general/jod/jodlabs/jodintro.ijt
+General;JOD (2) Source Code Dump Scripts;~addons/general/jod/jodlabs/joddump.ijt
+General;JOD (3) Best Practices;~addons/general/jod/jodlabs/jodbest.ijt
+
+Graphics;Fractals, Visualization & J;~addons/labs/labs/graphics/fractals.ijt
+Graphics;Graph Utilities;~addons/labs/labs/graphics/graphut.ijt
+Graphics;Graphics - gl2 commands;~addons/labs/labs/graphics/gl2.ijt
+Graphics;OpenGL Introduction;~addons/labs/labs/graphics/opengl.ijt
+Graphics;OpenGL Utilities;~addons/labs/labs/graphics/openglut.ijt
+Graphics;Plot Package;~addons/labs/labs/graphics/plot.ijt
+Graphics;Viewmat;~addons/labs/labs/graphics/viewmat.ijt
+
+Image3;Image Addon 3;~addons/media/image3/image3.ijt
+Image3;Image Addon 3 Html;~addons/media/image3/image3html.ijt
+Image3;Image Addon 3 Movie;~addons/media/image3/image3movie.ijt
+
+LiveTexts;Arithmetic;~addons/labs/labs/livetexts/arithmetic.ijt
+LiveTexts;Book of Numbers;~addons/labs/labs/livetexts/candg.ijt
+LiveTexts;Coleman (sample topics);~addons/labs/labs/livetexts/coleman.ijt
+LiveTexts;Grade 8-7 (Saxon);~addons/labs/labs/livetexts/grade8-7.ijt
+LiveTexts;Linear algebra (Schaum);~addons/labs/labs/livetexts/linearalgebra.ijt
+
+Math;Area;~addons/labs/labs/math/area.ijt
+Math;Averages;~addons/labs/labs/math/averages.ijt
+Math;Best Fit;~addons/labs/labs/math/bestfit.ijt
+Math;Binomial Coefficients;~addons/labs/labs/math/bincoefs.ijt
+Math;CAL - the TABULA engine (1);~addons/math/cal/cal.ijt
+Math;Catalan Numbers;~addons/labs/labs/math/catalan.ijt
+Math;Families of Functions;~addons/labs/labs/math/families.ijt
+Math;Fast Fourier Transform;~addons/math/fftw/fftw.ijt
+Math;Finite Groups;~addons/labs/labs/math/groups.ijt
+Math;Finite mathematics;~addons/labs/labs/livetexts/finitemath.ijt
+Math;Frame's Method;~addons/labs/labs/math/frame.ijt
+Math;Function Tables;~addons/labs/labs/math/fntab.ijt
+Math;Iteration and the Power Operator;~addons/labs/labs/math/iter.ijt
+Math;LAPACK;~addons/math/lapack/lapack.ijt
+Math;Math Tables;~addons/labs/labs/math/tables.ijt
+Math;Mathematical Roots of J;~addons/labs/labs/math/mathroot.ijt
+Math;Polynomials;~addons/labs/labs/math/polynom.ijt
+Math;Pythagorean Triples;~addons/labs/labs/math/pythag3.ijt
+Math;Rotations;~addons/labs/labs/math/rot.ijt
+Math;Scientific Units;~addons/math/uu/uu.ijt
+Math;Shapley Value on Old Macdonald's Farm;~addons/labs/labs/math/shapley.ijt
+Math;Spirals;~addons/labs/labs/math/spiral.ijt
+Math;Teacher's Aide;~addons/labs/labs/math/teachersaide.ijt
+Math;Volume;~addons/labs/labs/math/volume.ijt
+
+System;Application Distribution - Installer;~addons/labs/labs/system/appdist.ijt
+System;Building Applications;~addons/labs/labs/system/apps.ijt
+System;Client/Server (Simple Socket);~addons/labs/labs/system/client_server.ijt
+System;DLL Callback;~addons/labs/labs/system/callback.ijt
+System;DLL: Using System DLLs (file examples);~addons/labs/labs/system/dllwin32.ijt
+System;DLL: Writing and Using a DLL;~addons/labs/labs/system/dllwrite.ijt
+System;Debug;~addons/labs/labs/system/debug.ijt
+System;Files;~addons/labs/labs/system/files.ijt
+System;Formatting with printf;~addons/labs/labs/system/printf.ijt
+System;Mapped Files;~addons/labs/labs/system/mapfile.ijt
+System;Mapped Files Database;~addons/labs/labs/system/mappeddb.ijt
+System;ODBC: A simple application;~addons/labs/labs/system/odbcsap.ijt
+System;ODBC: Basic ODBC;~addons/labs/labs/system/odbcint.ijt
+System;ODBC: Binary large objects - BLOBS;~addons/labs/labs/system/odbcblob.ijt
+System;ODBC: Inverting SQL data;~addons/labs/labs/system/odbcinv.ijt
+System;Performance Monitor Utilities;~addons/labs/labs/system/pm.ijt
+System;Print;~addons/labs/labs/system/printer.ijt
+System;Print Basics;~addons/labs/labs/system/printutl.ijt
+System;Regular Expressions;~addons/labs/labs/system/regex.ijt
+System;Regular Expressions Builder;~addons/labs/labs/system/regbuild.ijt
+System;Socket Driver Server;~addons/labs/labs/system/sockserv.ijt
+System;Socket Driver Server - Client;~addons/labs/labs/system/sockcli.ijt
+System;Sockets and the Internet;~addons/labs/labs/system/sockinet.ijt
+System;Special Searches;~addons/labs/labs/system/special_searches.ijt
+
+Tables;Tara and Excel;~addons/tables/tara/tara.ijt

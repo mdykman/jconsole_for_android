@@ -1,0 +1,2098 @@
+LABTITLE=: 'Grade 8-7 (Saxon)'
+LABAUTHOR=: 'Kenneth E. Iverson'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter INTRODUCTION
+NB. =========================================================
+Lab Section A. Purpose
+
+This program is designed to accompany the text
+"MATH 87", by Stephen Hake and John Saxon,
+Saxon Publishers, Norman, Oklahoma, 1997.
+It follows the text closely, and uses the programming
+language J to illustrate and illuminate the topics.
+
+To proceed through successive panels,
+select menu Studio|Advance. Press Up Arrow or Page Up to
+recall earlier material.
+)
+PREPARE
+NB. For MAC: load ':system:packages:graphics:bmp.ijs'
+
+load 'graph plot'
+PLOT=:plot@(;/@|:@([,{.))
+color=:viewmat
+
+decimal=:x:^:_1
+nd=:2&x: NB. Numerator and denominator of fraction
+eachrow=:"1
+
+rounddown=:] * <.@%
+round=: ] * <.@(+&0.5)@%
+
+piechart=:'pie'&plot
+graph=:'stick,line'&plot
+
+take=:<:@] { [
+
+border=:1 : 0
+u border~y
+:
+(' ';,.x),.({.;}.)":y,x u/y
+)
+
+PREPARE
+
+NB. =========================================================
+Lab Section B. Use of J
+
+J applies operations such as addition and multiplication
+to lists of numbers as well as to individual numbers, and
+can therefore bring out significant patterns
+inherent in the mathematical operations. For example:
+)
+2+2
+3*3
+1 2 3 4 5 + 1 2 3 4 5
+1 2 3 4 5 * 1 2 3 4 5
+
+NB. =========================================================
+Lab Section C. Comments
+
+A comment can be added to any J expression
+by using NB. (for the Latin Nota Bene -- Note Well).
+Such a comment does not affect the execution of
+the expression. For example:
+)
+1 2 3 4 5 + 1 2 3 4 5 NB. Gives even numbers
+
+1 2 3 4 5 * 1 2 3 4 5 NB. Gives squares
+
+1 2 3 4 5 % 1 2 3 4 5 NB. Division gives all ones
+
+1 2 3 4 5 - 1 2 3 4 5 NB. Subtraction gives all zeros
+
+NB. =========================================================
+Lab Section D. Scrolling
+
+You may use the up-arrow to scroll up to review
+earlier material, and the down-arrow to scroll back
+down. Try these, as well as the page-up and page-down
+keys (labelled PgUp and PgDn) for faster scrolling.
+)
+
+NB. =========================================================
+Lab Section E. Verbs and Adverbs
+
+We will refer to operations such as addition (+)
+and multiplication (*) as "verbs" because they
+perform actions, as do verbs in English.
+
+In English an adverb applies to a verb to produce
+a related verb, as in "walk slowly". Study the following
+results and try to state the effect of the adverb / used
+in the expressions:
+)
+1 2 3 4 5 +/ 1 2 3 4 5
+
+1 2 3 4 5 */ 1 2 3 4 5
+
+NB. =========================================================
+Lab Section F. Bordered Tables
+
+The result of the "modified" verb */ is a multiplication
+table. Such a table can be made more readable by using
+an alternative adverb (called table) to border it
+by its arguments.
+
+For example, the 3 in the left column of the
+table indicates that the row
+following it gives the 3-multiples of the list
+in the top border:
+)
+1 2 3 4 5 *border 1 2 3 4 5
+
+NB. =========================================================
+Lab Section G. Division and Subtraction Tables
+
+Bordered tables are more helpful in less familiar verbs:
+)
+1 2 3 4 5 %border 1 2 3 4 5
+
+1 2 3 4 5 -border 1 2 3 4 5
+
+NB. =========================================================
+Lab Section H. Color
+
+ Study verb tables
+ for their patterns.
+ They are shown
+ more clearly by
+ coloring equal
+ results alike.
+ Press the Esc
+ key to remove the
+ colored window:
+)
+1 2 3 4 5 +/ 1 2 3 4 5
+
+color 1 2 3 4 5 +/ 1 2 3 4 5
+
+NB. =========================================================
+Lab Section I. Experimentation
+
+You may experiment with any expressions
+by entering them yourself. After typing
+an expression press the key marked Enter
+to execute it. For example, enter the
+following expressions to produce a subtraction
+table and to color it:
+
+   1 2 3 4 5 -/ 1 2 3 4 5
+
+   color 1 2 3 4 5 -/ 1 2 3 4 5
+
+Note that you can avoid much typing
+(and typing errors) by using the up-arrow
+to scroll to any desired expression, pressing
+Enter to bring it down to the input area, and then
+pressing Enter again to execute it. Moreover, you can
+revise it before the final entry by using
+the left and right arrows and the Del (delete)
+and BkSp (backspace) keys.
+)
+
+NB. =========================================================
+Lab Chapter LESSONS 1-20
+NB. =========================================================
+Lab Section 1-2. + - * %
+
+This chapter begins the use of the HS (Hake, Saxon)
+text. It is titled LESSONS 1-8 to indicate the
+part of HS that it covers. Section names will
+appear in the form 1-2. + - * % to indicate both
+the relevant pages (1-2) of HS, and the
+topics addressed.
+)
+
+NB. =========================================================
+Lab Section
+
+As is common in mathematics, we will also use the
+term "argument" to refer to any one of the
+terms such as "addend", "minuend", and "subtrahend".
+
+As illustrated below, expressions such as 5+4 and 5-4 mean the same in HS and J,
+but for multiplication J uses the more common * instead of the St. George's Cross
+used in HS, and for division J uses the symbol %.
+
+But there is
+only one form for each verb in J, and
+attempts to use any of the alternatives from HS
+produce error messages:
+)
+5+4
+5*4
+5%4
+
+5(4)
+5/4
+
+NB. =========================================================
+Lab Section
+
+Moreover, we will not use the form 4 + 3 = 7 to indicate
+a solution, but can use (4 + 3) = 7, a matter to which we will
+return after discussing parentheses (page 2 of HS)
+and the comparison of numbers (pages 15-20 of HS).
+)
+(4 + 3) = 7
+
+(4 + 3) = 6
+
+NB. =========================================================
+Lab Section 2-3. Parentheses
+
+Punctuation in an English sentence
+governs "the order in which the phrases
+are evaluated", and can make an enormous
+difference. For example:
+
+ The teacher said George was stupid
+ The teacher, said George, was stupid
+
+Punctuation of math sentences is provided
+similarly by parentheses: (12-7)-3 is
+equivalent to 5-3, but 12-(7-3) is
+equivalent to 12-4, a different result:
+)
+   (12-7)-3
+
+   12-(7-3)
+
+NB. =========================================================
+Lab Section
+
+In the preceding example of subtraction, the grouping
+(or association) by parentheses made a difference.
+In the case of addition, any grouping by parentheses
+produces the same result, and addition is therefore said to be
+"associative". For example:
+)
+   3+(4+(5+6))
+
+   (3+4)+(5+6)
+
+   ((3+4)+5)+6
+
+NB. =========================================================
+Lab Section
+
+Multiplication is also associative, an assertion you
+may test by re-entering the foregoing examples of
+addition after replacing each occurrence of + by *.
+
+However, an expression with a mixture of additions
+and multiplications is not associative, as
+illustrated below:
+)
+3+(4*(5+6))
+
+(3+4)*(5+6)
+
+((3+4)*5)+6
+
+NB. =========================================================
+Lab Section 3-6. The counting numbers
+
+The counting numbers can be defined by stating
+that there is a first counting number called 1,
+and that EVERY counting number has a successor.
+This implies that counting numbers go on without
+end, that is, that they are infinite.
+
+In J there is a "successor" verb denoted by >:
+that may be used as shown below:
+)
+>:1
+
+>: >: 1
+
+>: >: >: 1
+
+>:3
+
+>:1 2 3 4 5 6 7 8
+
+NB. =========================================================
+Lab Section 651. Inverses
+
+The inverse is an important idea in mathematics
+that is defined in the Glossary on page 651 of
+HS as follows:
+
+ Two operations are inverse operations if one
+ operation will "undo" the other operation. If
+ we begin with 3 and multiply by 2, the product
+ is 6. If we divide 6 by 2, we will undo the
+ multiplication by 2, and the answer will be 3,
+ the original number.
+
+The successor verb >: has an inverse <: (called predecessor).
+For example:
+)
+>:1
+<:>:1
+>:1 2 3 4 5 6
+<:>:1 2 3 4 5 6
+
+NB. =========================================================
+Lab Section
+
+Inverses are often not "perfect inverses", and
+may lead to puzzling but illuminating results.
+
+For example, <: 2 clearly gives 1, but what is
+the result of <:1 ? It cannot be a counting number,
+because 1 is the FIRST counting number. In fact, <:1
+leads us out of the counting numbers, into the broader
+class of "whole numbers" or "integers" (as also defined
+in the Glossary). The word "integer" comes from "in" meaning
+"not", and "tag" meaning to touch (as in the
+children's game), that is "untouched" or "unbroken".
+
+For example:
+)
+<:1
+<:<:1
+<:<:<:1
+<:<:<:<:1 2 3 4 5 6 7
+
+NB. =========================================================
+Lab Section 4. Remainder
+
+HS shows that 6 divides evenly into 234, but
+that 56 into 1234 leaves a remainder of 2.
+The remainder verb in J is denoted by |, and
+provides a table with an interesting pattern:
+)
+6|234
+56|1234
+1234-(56|1234)        NB. Subtract remainder to get
+(1234-(56|1234)) % 56 NB.  a result divisible by 56
+1 2 3 4 5 |border 1 2 3 4 5
+
+NB. =========================================================
+Lab Section
+)
+1 2 3 4 5 6 7 8 |/ 1 2 3 4 5 6 7 8
+color 1 2 3 4 5 6 7 8 |/ 1 2 3 4 5 6 7 8
+
+NB. =========================================================
+Lab Section 15-16. The number line
+
+J provides two verbs that are convenient for
+producing number lines:
+)
+i.6 NB. The first 6 non-negative integers
+
+i:6 NB. The integers from _6 to 6
+
+3 < i.6
+
+3 < i:6
+
+_3 < i:6
+
+NB. =========================================================
+Lab Section
+
+They also provide interesting arguments for verb tables:
+)
+(i:3) *border (i:3)
+
+(i:3) */ (i:3)
+
+NB. =========================================================
+Lab Section
+
+Coloring the preceding multiplication table shows a
+pattern worth considerable study, in particular, the
+way in which the row and column of zeros break the table
+into four quadrants that alternate in sign:
+)
+color (i:3) */ (i:3)
+
+NB. =========================================================
+Lab Section 15-16. Comparing numbers
+
+On page 16, HS states that "The comparison
+symbols are the equals sign (=) and the greater
+than/less than symbol (> or <)."
+
+J uses the same symbols, but as verbs that produce
+results, a result of 1 indicating that the relation
+is true for the given arguments, and a result of 0 indicating
+that it is not.
+)
+3<4
+3=4
+3>4
+3<0 1 2 3 4 5 6
+3=0 1 2 3 4 5 6
+3>0 1 2 3 4 5 6
+
+NB. =========================================================
+Lab Section
+
+Again, these verbs produce tables with interesting patterns:
+)
+1 2 3 4 5 6 7 </ 1 2 3 4 5 6 7
+color 1 2 3 4 5 6 7 </ 1 2 3 4 5 6 7
+
+NB. =========================================================
+Lab Section
+
+Enter expressions to produce and to color tables
+for the remaining two relations.
+)
+
+NB. =========================================================
+Lab Section
+
+As promised, we will now return to the expression 12 - 7 = 5
+that occurs on page 2 of HS:
+)
+(12 - 7) = 5 NB. The relation is true
+
+7 = 5        NB. The result is 0
+
+12 - (7 = 5)
+
+NB. =========================================================
+Lab Section 20-21. Adding and subtracting on the number line
+
+These pages use the number line i:7 to illustrate ideas of
+addition and subtraction:
+)
+i:7
+
+3+i:7
+
+(3+i:7)+2
+
+((3+i:7)+2)=5
+
+5+i:7
+
+(5+i:7)-3
+
+NB. =========================================================
+Lab Section 23-25. Reading and writing whole numbers
+
+In J, the comma is used as a verb to chain together lists,
+and it cannot, therefore, be used to break the digits of a
+large integer into groups in the manner used in HS. We
+will illustrate this by the number used in Example 3
+on page 24:
+)
+3,406,521 NB. A list of three integers
+
+3406521   NB. 3 million, 406 thousand, and 521
+
+NB. =========================================================
+Lab Section
+
+Moreover, J gives the large number that results from the product
+3406521 * 3406521 only approximately, using a form of the "scientific
+notation" defined in the Glossary of HS (page 656). For example,
+1.16044e13 denotes the number 1.16044 multiplied by 10 to the power
+13 (that is, with the decimal point moved 13 places to the right).
+
+However, the expression 3406521 * 3406521x in J yields the product
+to complete (extended) precision. Thus:
+)
+3406521 * 3406521
+
+3406521 * 3406521x
+
+NB. =========================================================
+Lab Section 27-28. Factors
+
+Among the factors of a number, the prime factors
+are of particular importance. They are defined in
+the Glossary of HS (page 654) as follows:
+
+PRIME FACTORS The factors of a number that are prime numbers.
+
+PRIME NUMBER A number greater than one whose only whole
+number divisors are 1 and the number itself.
+)
+
+NB. =========================================================
+Lab Section
+
+In J, the verb q: gives the complete list of the prime factors
+of its argument. For example:
+)
+q: 389340
+
+2*2*3*3*3*5*7*103 NB. Product of all gives original argument
+
+NB. =========================================================
+Lab Section
+
+
+The remainder verb (|) can be used to test whether one number is
+a factor of another. For example:
+)
+103 | 389340 NB. Zero remainder indicates that 103 is a factor
+
+q: 389340
+
+(2*3*7)|389340 NB. product over any group of factors is a factor
+
+NB. =========================================================
+Lab Section
+
+Choose other integers, and use q: to perform similar
+experiments  on them.
+)
+
+NB. =========================================================
+Lab Section 36-43 Fractions and mixed numbers
+
+A number may be expressed in various equivalent ways. For example,
+the fraction three-quarters may be expressed in decimal (0.75), in
+scientific notation (75e_2), or even as a "rational" (3r4): Thus:
+)
+0.75
+75e_2
+0.75=75e_2
+3r4
+3r4=0.75
+3r4-1r4
+3r4-1r2
+
+NB. =========================================================
+Lab Section
+
+Lists of rationals may also be used as arguments to
+addition, multiplication, and other tables. For example:
+)
+1r2 1r3 1r4 1r5 1r6 +border 1r2 1r3 1r4 1r5 1r6
+
+1r2 1r3 1r4 1r5 1r6 *border 1r2 1r3 1r4 1r5 1r6
+
+NB. =========================================================
+Lab Section
+
+Enter corresponding expressions for subtraction and
+division tables.
+)
+
+NB. =========================================================
+Lab Section
+
+Division of integers in J gives decimal approximations, unless
+at least one of the arguments is in extended precision.
+For example:
+)
+1%1 2 3 4 5 6 7
+
+1%1 2 3 4 5 6 7x
+
+NB. =========================================================
+Lab Section 44-68 Word Problems
+
+The word problem of Example 1 of page 45
+of HS appears as follows:
+
+  Robert had 27 dollars. For his birthday he
+  received 18 dollars more. Now how much money
+  does Robert have?
+
+The solution to this word problem (and to any
+word problem) lies in finding which of our
+mathematical tools to apply. These tools include
+addition, subtraction, multiplication, and division.
+In other words, we may choose to use one or more of the
+operations that we have developed.
+
+We have called these operations "verbs", and will also
+use the term "function" (introduced on page 650
+of the Glossary of HS, and commonly used in mathematics).
+
+In the present example, the choice of function is obvious:
+)
+27+18
+
+NB. =========================================================
+Lab Section
+
+Problem 3 on page 47 of HS is stated as follows:
+
+  What is the difference when the sum of 2, 3, and
+  4 is subtracted from the product of 2, 3, and 4?
+
+This clearly involves three functions: subtraction,
+addition (sum), and multiplication (product). The
+following steps might be used:
+)
+2+3+4             NB. Sum
+
+2*3*4             NB. Product
+
+24-9              NB. Difference
+
+(2*3*4) - (2+3+4) NB. Complete statement
+
+NB. =========================================================
+Lab Section
+
+Problems 10-16 on page 48 ask to "Find each missing
+number", where the missing numbers are indicated
+by the letters X, Y, Z, A, B, and C.
+
+Such problems usually involve the use of an inverse
+function; subtraction where addition occurs,
+division where multiplication occurs, and so on.
+
+Problem 10 is stated as follows:
+
+   12,500
+  +     X
+  -------
+   36,275
+)
+36275 - 12500 NB. Use inverse of addition
+
+12500 + 23775 NB. Test the answer
+
+(12500 + 23775) = 36275
+
+NB. =========================================================
+Lab Section
+
+The testing of the answer is a most important part
+of the solution of a problem, so much so that much
+care should be taken to make thorough tests for
+cases other than the values given in the statement
+of the problem. For example, will the solution work
+for negative arguments? Expressions such as i:3 and
+1000*i:3 give lists of suitable values.
+
+To illustrate the matter of thorough testing,
+consider the following problem:
+
+  What is the tax due on an income of 6400, from
+  which you may deduct an exemption of 600 to get
+  the taxable income. The tax is 10 percent (0.1)
+  of the taxable income.
+
+A solution may be written as follows:
+)
+6400 - 600        NB. Taxable income
+
+0.1 * (6400 -600) NB. Tax due
+
+NB. =========================================================
+Lab Section
+
+Now try the solution for a small income of 400:
+)
+400 - 600        NB. Taxable income
+
+0.1 * (400 -600) NB. Tax due
+
+NB. =========================================================
+Lab Section
+
+Would you really expect to get the refund indicated by
+the negative tax of _20? No, a more careful statement
+of the problem would say that if the income is not less
+than the exemption, then ...
+
+This seems to lead to a more complicated solution,
+beginning with a test whose result is then used to
+choose between two different calculations. However,
+consider the following:
+)
+400-600        NB. Difference
+
+0 >. (400-600) NB. Larger of (maximum of) 0 and difference
+
+0.1 * (0 >. (400-600)) NB. Correct zero tax
+
+NB. =========================================================
+Lab Section 77-79. Reducing fractions
+
+If the numerator and denominator of a fraction are each
+multiplied by the same integer, the result is an equivalent
+fraction. For example:
+)
+3%4
+
+(2*3)%(2*4)
+
+(1 2 3 4 5 6*3)%(1 2 3 4 5 6*4)
+
+NB. =========================================================
+Lab Section
+
+Conversely, if both numerator and denominator are divided
+by the same integer, the result is again an equivalent
+fraction. For example:
+)
+36%8
+
+(36%2)%(8%2)
+
+(36%4)%(8%4)
+
+36%4
+
+8%4
+
+9%2
+
+NB. =========================================================
+Lab Section
+
+This scheme will work only if numerator and denominator
+share a common factor. Since 9 and 2 have no common
+factor, the process of the preceding example can go no
+further, and we say that 9%2 expresses the fraction 36%8 in
+lowest possible form.
+
+Thus, the lowest form is obtained by dividing
+numerator and denominator by their greatest common factor,
+or, as it is more commonly called, their greatest common
+divisor (gcd).
+
+J provides a gcd function denoted by +. used as follows:
+)
+36 +. 8          NB. Greatest common divisor
+
+36 8 % (36 +. 8) NB. Lowest form
+
+36%8             NB. Compare for equivalence
+
+9%2
+
+NB. =========================================================
+Lab Section
+
+A table of the gcd verb shows interesting patterns.
+Note, for example, the patterns of rows headed by
+prime numbers:
+)
+1 2 3 4 5 6 7 8 +.border 1 2 3 4 5 6 7 8
+
+NB. =========================================================
+Lab Section 92-93. Polygons
+
+A polygon can be described by the positions
+of each of its vertices. We will begin by applying
+the verb ,. to two lists to form a table, and then
+plot the points defined by the rows of the table
+to draw the polygon. For example:
+)
+1 4 3 ,. 6 2 1
+
+PLOT 1 4 3 ,. 6 2 1
+
+NB. =========================================================
+Lab Section
+
+The plot can be compared with the table to see that
+the first row 1 6 is plotted at the point labelled
+1 along the horizontal coordinate (often called the
+x-coordinate) and at the point 6 along the vertical
+(or y) coordinate; and that the line to the second point
+(4 2) is followed by a line to the point 3 1 to complete
+the triangle.
+
+You can (and perhaps should) make similar plots by hand,
+using squared paper marked off with numbers along
+horizontal and vertical coordinates.
+
+A triangle is, of course, a special case of a polygon,
+and a quadrilateral may be made as follows:
+)
+1 4 3 5,.6 2 1 7
+
+PLOT 1 4 3 5,.6 2 1 7
+
+NB. =========================================================
+Lab Section
+
+The result of the foregoing plot is not a proper
+quadrilateral, because the order of the points in
+the table caused the lines to cross. This can be
+rectified by changing the order of the points, using
+the function take as illustrated below:
+)
+
+1 4 5 3,.6 2 7 1                NB. The polygon with crossing lines
+
+(1 4 5 3,.6 2 7 1) take 1       NB. Take first row
+
+(1 4 5 3,.6 2 7 1) take 3 1     NB. Take rows 3 and 1
+
+(1 4 5 3,.6 2 7 1) take 1 4 2 3 NB. Re-order rows to remove crossing
+
+PLOT (1 4 5 3,.6 2 7 1) take 1 4 2 3
+
+NB. =========================================================
+Lab Section
+
+Try to use PLOT to make one or more of the polygons
+shown on page 92 of HS.
+)
+
+NB. =========================================================
+Lab Chapter LESSONS 21-40
+NB. =========================================================
+Lab Section 100 Why Solve Equations?
+
+The simple answer to the question "Why solve equations" is "Because
+it is taught in math courses".
+
+But for functions such as addition,
+subtraction, multiplication, and division there are more interesting
+reasons for their importance -- the same may be true for matters
+such as equations.
+
+The brief answer is that the solution of equations provides a
+general way of finding the result of an inverse function.
+
+The study of inverse functions was introduced in Section 8 of
+Chapter 2. For any function worth study, its inverse (that "undoes"
+its work) is clearly important: addition of 4 is undone by its
+inverse subtraction of 4, and multiplication by 4 is undone by
+division by 4.
+
+But how do you find the inverse of the square function?
+To find, for example, a number that squared (multiplied by itself)
+gives 5? The solution of an equation can provide the answer.
+
+Our first discussion of inverse began with the successor function
+(>:), important because it produces the counting numbers. Its
+seemingly-innocent inverse (<:) led to the integers, that include
+zero and the negative numbers.
+)
+
+NB. =========================================================
+Lab Section
+
+An equation remains true if each of its limbs (to the left and right of the equal
+sign) are modified in the same way. Thus, Example 1 (with added parentheses)
+is "Solve: (x +25) = 77". Subtraction of 25 leads to the equivalent equation
+x = (77-25), or x = 52.
+
+This last expression appears in the sentence "The solution is x = 52". But it is
+shown in boldface, and implies something subtly different from an equation.
+It might be stated as "x is assigned the value 52"
+
+Lesson 75 introduces the notion of assignment as follows:
+
+  In algebra we often use letters in place of numbers.
+  The expression
+
+       x + y
+
+  means that two numbers are added. The value of the
+  expression depends upon the numbers we choose for x
+  and y Since the value of a letter may vary, a letter
+  is called a variable.
+
+In Example 1 of Lesson 75, the phrase "if a = 3" is used to
+assign the value 3 to the letter a. In math, the phrase
+"let a = 3" is also comonly used.
+
+In J we use the phrase a =: 3, which uses the "copula"
+=:, which is distinct from the = used in relations. The
+phrase a =: 3 may be read simply as "a is 3". For example:
+)
+a=:3
+a*a
+x=:1 2 3 4
+y=:2 3 5 7
+x*y
+
+NB. =========================================================
+Lab Section
+
+The term "variable" used in math is somewhat misleading, because
+the value assigned to a letter does not vary under use. It may,
+however, be changed by a later reassignment. This is the behavior of a
+pronoun in English, and in J we prefer the term "pronoun" over "variable".
+For example:
+)
+it=:3
+it + it
+it * it
+
+it=:1 2 3
+it + it
+it * it
+
+ages=:3 5 2 7 9 6
+ages < 5
+
+NB. =========================================================
+Lab Section
+
+The use of a multi-letter pronoun such as "ages" has the advantage
+of being more mnemonic than a single letter.
+
+Why then is algebra confined to the use of single letters?
+The reason is the unfortunate (and usually unnoted) consequence
+of permitting the omission of the multiplication sign in mathematics.
+Thus, the product x*y may also be written as xy, making it
+impossible to use multi-letter names: the name ages used in the
+expression ages < 5 would have to be interpreted as the
+product a*g*e*s.
+)
+
+NB. =========================================================
+Lab Section 104 Prime and Composite Numbers
+
+Section 4. Remainder of Chapter 2 introduced the symbol | for the remainder
+function, and showed remainder tables. We will continue this
+as follows:
+)
+cn=:1 2 3 4 5 6 7 8 9 10 NB. Counting numbers
+
+rt=: cn |/ cn NB. Remainder table
+rt
+dt=: 0 = rt   NB. Comparison for zero remainder gives divisibility table
+dt
++/dt          NB. Sum down its columns gives number of divisors for each cn
+
+2=+/dt        NB. Identifies primes (which have exactly two distinct divisors)
+
+(2=+/dt) # cn NB. Selects the primes from cn
+
+NB. =========================================================
+Lab Section
+
+The foregoing provides a definition of a prime number as a counting number
+that has exactly two distinct divisors. It should be compared with the
+boxed definition of Lesson 22, noting that it does not need the
+extra condition that it must be "greater than 1".
+
+In studying primes it is sometimes helpful to see a list of
+them. This is conveniently provided by the function p: as shown below:
+)
+p: 0   NB. The leading prime
+
+p: 1
+
+p: 2
+
+p:0 1 2 3 4 5 6 7 8 8 10
+
+p: i.30
+
+NB. =========================================================
+Lab Section 104 Prime Factorization
+
+The function q: gives all prime factors of its argument. It
+can be useful in checking the results of the Factor Tree
+and Repeated Division methods of factoring. For example:
+)
+q: 420
+
+420 % 42
+
+42 % 7
+
+6 % 3
+
+10 % 5
+
+(2*2*5) | 420 NB. Any product of the prime factors of 420 divides 420
+
+420 % 2       NB. Repeated Division Method
+
+210 % 2
+
+105 % 3
+
+35 % 5
+
+NB. =========================================================
+Lab Section 110 Simplifying Fractions and Mixed Numbers
+
+Section 36-43 of Chapter 2 introduced the form 2r3 for the
+rational number (or fraction) two-thirds, and the use of the extended precision
+form to obtain results of division as rationals rather than as decimal
+approximations. For example:
+)
+1 % 1 2 3 4 5 6 7 8 9 10
+
+1 % 1 2 3 4 5 6 7 8 9 10x
+
+NB. =========================================================
+Lab Section
+
+The left argument of division is called the numerator, and the right
+argument is called the denominator. If both are multiplied (or divided)
+by the same number, the resulting quotient remains unchanged.
+For example:
+)
+36 % 18
+
+(36 * 2) % (18 * 2)
+
+(36 % 2) % (18 % 2)
+
+18 % 9
+
+(18 % 9) % (9 % 9)
+
+2 % 1
+
+2
+
+18 % 36  NB. Gives decimal approximation
+
+18 % 36x NB. Gives rational result
+
+NB. =========================================================
+Lab Section
+
+The process of dividing both numerator and denominator by a
+factor that is common to both yields integers, and is said
+to simplify the fraction. When no common factor remains
+the fraction is said to be in lowest form. For example:
+)
+54 % 12  NB. Decimal approximation
+
+54 % 12x NB. Extended precision gives rational result
+
+27 % 6x  NB. Divide both by common factor 2
+
+9 % 2x   NB. Divide both by common factor 3 to get lowest form
+
+NB. =========================================================
+Lab Section
+
+The reduction to lowest form could be completed in a single step
+if we knew the value of the greatest common factor, or greatest common
+divisor (gcd) as it is commonly called.
+
+The gcd is given by the function +. as illustrated below:
+)
+54 +. 12
+(54 % 6x) % (12 % 6x)
+
+cn=:1 2 3 4 5 6 7 8 9 10
+
+cn +.border cn
+
+NB. =========================================================
+Lab Section 114 Writing Mixed Numbers and Whole Numbers as Fractions
+
+A mixed number may be described by its whole part, its numerator,
+and its denominator. The improper form may be obtained from them as
+illustrated below for the first example of Lesson 24:
+)
+w=:3x
+n=:1x
+d=:4x
+
+(n+w*d)%d
+
+(1+3*4)%4x
+
+(1+3*3)%3x  NB. Case a of Example 1 of Lesson 24
+
+(3+2*4)%4x  NB. Case b
+
+(1+12*2)%2x NB. Case c
+
+10r3+11r4   NB. Sum of cases a and b
+
+10r3*11r4   NB. Product of cases a and b
+
+NB. =========================================================
+Lab Section 117 Fractions-of-a-Group Problems
+
+We first illustrate the cases of the first example, then illustrate
+the fact that the whole number 27 may be treated as the fraction 27r1,
+and finally illustrate the fact that fractions may be multiplied by multiplying
+their numerators and their denominators:
+)
+27*1r3
+
+27*2r3
+
+27r1*2r3
+
+14r18 * 15r5 NB. Product of fractions
+
+14*15        NB. Product of their numerators
+
+18*5         NB. Product of their denominators
+
+210%90x      NB. Quotient of products gives original product
+
+NB. =========================================================
+Lab Section 121 Adding and Subtracting Mixed Numbers
+
+The following illustrates the method of Example 1, adding the whole
+pies, adding the fractions. Finally we add the whole number to the
+fraction to get a single improper fraction:
+)
+2+1     NB. Whole pies
+
+3r5+4r5 NB. Sum of fractional pies
+
+3+7r5
+
+NB. =========================================================
+Lab Section 127 Reciprocals
+
+As stated on page 127, "The product of any fraction and its reciprocal
+is the number 1". Equivalently we may say that the reciprocal of a number
+is 1 divided by it. Thus:
+)
+1%4r3
+
+1%3r4
+
+3+1r5
+
+5r16      NB. Reciprocal
+
+5r16*16r5 NB. Product with reciprocal is 1
+
+NB. =========================================================
+Lab Section 131 Reducing Fractions
+
+We will illustrate the use of reduction by prime factors for
+rather large numbers:
+)
+n=:173250x            NB. A numerator
+
+d=:1615680x           NB. A denominator
+
+n%d                   NB. Fraction represented by n and d
+
+fon=:q: n             NB. Factors of n
+fon
+
+fod=:q: d             NB. Factors of d
+fod
+
+rfon=:5 5 7x          NB. Reduced factors of n
+rfod=:2 2 2 2 2 3 17x NB. Reduced factors of d
+
+rn=:*/rfon            NB. Product of reduced factors gives reduced numerator
+rd=:*/rfod            NB. Product of reduced factors gives reduced denominator
+
+rn%rd                 NB. Compare with original fraction
+
+NB. =========================================================
+Lab Section 135-140 Multiplying and Dividing
+
+Division is performed by muliplying by the reciprocal,
+obtained by interchanging numerator and denominator.
+For example:
+)
+na=:234x
+da=:65x
+
+nb=:4356x
+db=:12345x
+
+a=:na % da
+a
+
+b=:nb % db
+b
+
+a*b
+
+rb=:1%b
+rb
+
+a % b
+
+a * rb
+
+NB. =========================================================
+Lab Section 143 Multiples * Least Common Multiples
+
+We will make an equal table to compare multiples of 4 and of 6,
+sum the columns to obtain a 1 in each position where the multiples
+agree, and use this list of 1s to select from the multiples of 6
+those that are common multiples of 4 and 6. The samllest of them is called the
+least common multiple.
+Apply the method to other examples:
+)
+cn=:1 2 3 4 5 6 7 8 9 10 NB. Counting numbers
+
+m4=:4 * cn               NB. Multiples of 4
+m4
+
+m6=:6* cn                NB. Multiples of 6
+m6
+
+m4 =border m6
+
++/m4 =/ m6
+(+/m4 =/ m6) # m6
+
+NB. =========================================================
+Lab Section
+
+The function *. gives the least common multiple of its arguments,
+and +. gives the greatest common divisor. From the following tables
+determine whether each lcm is an integer multiple of the
+corresponding gcd. Test your conclusion by evaluating the
+quotient (cn *./ cn) % (cn +./ cn)
+)
+cn *.border cn
+
+cn +.border cn
+
+NB. =========================================================
+Lab Section 151 Average
+
+We will begin with the first example of Lesson 33, but will use
+the term "mean" introduced in Lesson 105 instead of the abbreviation
+"ave":
+)
+players=:7 9 6 10
+
++/players                NB. sum the players
+
+#players                 NB. Number of players
+
+(+/players) % (#players) NB. Mean or average number of players
+
+(+/ % #) players         NB. Mean expressed as a single function
+
+mean=:(+/ % #)           NB. Define a function called mean
+
+mean players             NB. Use the function mean
+
+i.13
+
+mean i.13
+
+mean i.14x
+
+NB. =========================================================
+Lab Section 155 Rounding whole numbers
+
+Although this lesson concerns rounding numbers to the "nearest"
+thousand, or hundred, or whatever, we will begin with the simpler
+notion of using the "integer part" function (<.) to round "down", and from
+it develop an expression for rounding to the nearest:
+)
+x=:3947
+
+x%1000
+
+<. x%1000                NB. round down to the number of whole thousands in x
+
+1000*(<. x%1000)         NB. The largest whole thousand in x
+
+0.5 + x%1000             NB. Add one-half to quotient
+
+<. 0.5 + x % 1000        NB. Integer part now gives number of NEAREST thousand
+
+1000 * <. 0.5 + x % 1000 NB. Rounds to nearest thousand
+
+NB. =========================================================
+Lab Section
+
+We now define functions rounddown, and round (round nearest)
+such that (x rounddown n) rounds x down to the next multiple of n, and
+(x round n) rounds to the NEAREST multiple of n
+
+In these definitions we will use the functions left ([) and right (])
+that give the left and right arguments, and the function plushalf=:+&0.5 :
+)
+3 [ 5            NB. Left function
+
+3 ] 5            NB. Right function
+
+plushalf=: +&0.5 NB. Addition with one-half
+
+plushalf 3
+
+rounddown=: ] * <.@ %
+
+x rounddown 1000
+
+round=: ] * <.@plushalf@%
+
+x round 1000
+
+x round 100
+x round 10
+
+NB. =========================================================
+Lab Section 166. Decimal Fractions * Decimal Place Value
+
+Lessons 28-31 treated earlier in this chapter introduced the
+matter of reducing fractions by removing common prime factors,
+by dividing numerator and denominator by their common divisors,
+and eventually by their greatest common divisor given by the function +. .
+They also introduced the function *. for the least common multiple,
+and displayed the relation between the gcd and lcm tables. These lessons
+should be reviewed before proceeding.
+
+To experiment with modifications of numerator and denominator, we
+will first define a function nd that gives us a list of them (in
+reduced form) when applied to a fraction. Thus:
+)
+nd=:2&x:
+
+nd 23r47
+
+]x=:nd 18r56 NB. The right function (]) displays the named result
+
++/ x         NB. Sum (not very useful)
+
+%/ x         NB. More interesting
+
+x*3          NB. Multiply numerator and denominator by the same number
+
+%/x*3        NB. Gives the same fraction
+
+x%3          NB. Divide numerator and denominator by the same number
+
+%/x%3        NB. Gives the same fraction
+
+NB. =========================================================
+Lab Section
+
+When applied to a list of fractions, nd gives a table whose
+rows represent the successive fractions. We must therefore
+apply %/ to each row of the table as follows:
+)
+]x=:18r56 234r48 23r51
+
+]y=:nd x
+
+eachrow=:"1
+
+%/eachrow y
+
+NB. =========================================================
+Lab Section
+
+We may similarly apply the reverse function |. to each row
+to get the num-den pair that represents the reciprocal:
+)
+|. eachrow y
+
+%/ eachrow |. eachrow y
+
+x
+
+1%x
+
+NB. =========================================================
+Lab Section
+
+Fractions with the denominators 1 and 10 and 100 and 1000 and so on are
+important because they provide the basis for our familiar decimal system.
+For example:
+)
+nd 1.5            NB. Numerator and denominator of familiar decimal fraction
+
+%/ nd 1.5         NB. division over numerator and denominator gives fraction
+
+decimal %/ nd 1.5 NB. Gives fraction in decimal form
+
+nd 36.432
+
+%/nd 36.432
+
+decimal %/nd 36.432
+
+nd 5
+
+%/nd 5
+
+decimal %/nd 5
+
+NB. =========================================================
+Lab Section 171. Comparing Decimal Numbers
+
+The relations < = > can be used in the normal way to compare decimal numbers.
+We will illustrate the fact that extra zeros at the end of the fractional
+part do not change the value of a decimal fraction:
+)
+1.3 = 1.30
+
+1.3 = 1.30000
+
+0.12 > 0.012
+
+NB. =========================================================
+Lab Section 176. Rounding Decimal Numbers
+
+The functions round and rounddown introduced in Lesson 34 for integers can also be
+applied to decimal fractions as illustrated below:
+)
+y=:1234.56
+
+y rounddown 100
+
+y round 100
+
+y rounddown 1
+
+y round 1
+
+NB. =========================================================
+Lab Section 180. Decimal Numbers on the Number Line
+
+The midpoint or average of two numbers is obtained by dividing their sum by 2.
+For example:
+)
+2.6 + 2.7
+
+(2.6 + 2.7) % 2
+
+2.6+2.75
+
+(2.6 + 2.75) % 2
+
+NB. =========================================================
+Lab Section 184. Adding and Subtracting Decimal Numbers
+
+The functions + and - can be applied to decimal numbers in the
+normal way. It must be remembered that expressions involving subtracton
+may require parentheses. For example:
+)
+3.6 + 0.36 + 36.
+
+36.274 - 5.39
+
+(36.274 - 5.39) + 1.23
+
+NB. =========================================================
+Lab Chapter LESSONS 41-60
+NB. =========================================================
+Lab Section 188 Ratio
+
+The following expressions illustrate various ways of representing ratios:
+)
+a=:1.929
+
+nd a           NB. numerator and denominator of equivalent fraction
+
+%/nd a         NB.gives rational form
+
+decimal %/nd a NB. Restores decimal form
+
+b=:123.456
+
+nd b           NB. Gives num and den in reduced form
+
+%/nd b
+
+b%a
+decimal %/nd b
+
+NB. =========================================================
+Lab Section 193 Perimeter
+
+We will make a table (hex) of coordinates of the first polygon of Lesson 42,
+plot it, make a table of displacements between each point and its neighbor,
+and then (using the Pythagorean Theorem discussed in Lesson 123)
+take the square root of the sum of the squares of the displacements
+to obtain the lengths of the sides:
+)
+x=:4 7 7 0 0 4 NB. x-coordinates of points A-F
+y=:6 6 0 0 4 4 NB. y-coordinates
+]hex=:x,.y     NB. Table of coordinates
+
+PLOT hex
+
+NB. =========================================================
+Lab Section
+)
+1 |. hex                  NB. Rotate up one place
+
+]disps=:hex - 1 |.hex
+
+*: disps                  NB. Square displacements
+
++/ eachrow *: disps       NB. Sum each row of squares
+
+%: +/ eachrow *: disps    NB. Lengths of sides
+
++/ %: +/ eachrow *: disps NB. Perimeter is sum of lengths
+
+NB. =========================================================
+Lab Section 197. Graphs
+
+The function plot provides variants that include a piechart and
+a stick and line plot that draws sticks down to the axis as well
+as lines between adjacent points:
+)
+piechart=:'pie'&plot
+
+graph=:'stick,line'&plot
+
+piechart 1 1 2 3 2 4
+
+NB. =========================================================
+Lab Section
+)
+]x=:i:4
+
+]y=:*:x
+
+graph x;y
+
+NB. =========================================================
+Lab Section 203-233
+
+Since the functions in J apply uniformly to whole numbers
+and to fractions, these lessons require no further comment.
+Later lessons will be omitted for similar reaons, but without comment.
+)
+
+NB. =========================================================
+Lab Section 236-240 Exponents
+
+Using the term "power" as defined in the Glossary (page 654),
+we may describe the product 5*5*5*5 as "5 to the power 4".
+
+In J, the power function is denoted by ^, as illustrated below:
+)
+5 ^ 4
+
+5 ^ 3
+
+5 ^ 1 2 3 4 5
+
+NB. =========================================================
+Lab Section
+
+The pattern of the result of 5 ^ 1 2 3 4 5 shows that the each power can be obtained
+from the next lower power by multiplying it by the "base" 5. Consequently, repeated
+multiplication by the base extends the powers to the right.
+
+Conversely, division by the base extends the pattern to the left, leading to a
+consistent extension of the power to zero and negative exponents,
+as illustrated below:
+)
+5 ^ 1 2 3 4 5
+
+3125 * 5
+5 ^ 6
+
+3125 % 5
+5 ^ 4
+
+5 % 5
+5 ^ 0
+
+1 % 5
+5 ^ _1
+
+0.2 % 5
+5 ^ _2
+
+NB. =========================================================
+Lab Section
+
+The pattern is shown more clearly by exponents such as i:5x
+as follows:
+)
+e=:i:5x
+e
+
+5 ^ e
+
+3 ^ e
+
+2 ^ e
+
+1 ^ e
+
+10 ^ e
+
+decimal 10 ^ e NB. 1e_5 is an example of Scientific Notation (Glossary p656)
+
+NB. =========================================================
+Lab Section 249 Square Root
+
+A power with exponent 2 is called the "square", which is also denoted by *: .
+
+The inverse of the square is given by the exponent one-half. It
+is also denoted by %: . For example:
+)
+64 ^ 0.5
+
+%: 64
+
+8 ^ 0.5
+
+%: 8
+
+*: %: 8
+
+64 ^ 1r3 NB. Cube root
+
+4 * 4 * 4
+
+(64 ^ 1r3) ^ 3
+
+NB. =========================================================
+Lab Chapter 61-80
+NB. =========================================================
+Lab Section 275 Scientific Notation
+
+In the form of scientific notation used in J we write
+the product of 4.62 with 10 the power 6 as 4.62e6. Thus:
+)
+10 ^ 6x NB. Extended precision
+
+10 ^ 6  NB. Scientific notation
+
+4.62 * 10 ^ 6
+
+4.62e6
+
+4.057e8
+
+NB. =========================================================
+Lab Section 279 Order of Operations
+
+In J, all functions are treated alike, and rules such as "perform
+multiplication before addition" do not apply. For precise expression,
+use parentheses.
+)
+
+NB. =========================================================
+Lab Section 292 Average
+
+In Lesson 33 we adopted the term "mean" instead of the abbreviation ave,
+and defined a corresponding function as shown below:
+)
+mean=:(+/ % #)
+
+players=:7 9 6 10
+
+mean players
+
+(mean players) * 4 NB. mean times number of players
+
++/players          NB. Gives total of players
+
+NB. =========================================================
+Lab Section 304 Scientific Notation for Small Numbers
+
+Scientific notation for small numbers uses negative exponents,
+as illustrated below:
+)
+6.32e_2
+
+6.32e_7
+
+6.32e_7 * (10 ^ 7)
+
+NB. =========================================================
+Lab Section 307 Classifying Quadrilaterals
+
+In Lesson 42 we used the table of coordinates to plot a hexagon, and the
+displacements between adjacent coordinates to determine
+some of its properties.
+
+Coordinate tables for quadrilaterals can be used
+similarly to determine the slopes of their sides, and therefore to
+determine if any sides are parallel. For example:
+)
+x=:0 2 10 6
+
+y=:0 4 8 0
+
+]t=:x,.y
+
+PLOT t
+
+NB. =========================================================
+Lab Section
+
+We now determine the table of displacements, and apply commuted division (%~)
+over each of its rows to determine the slopes of the sides. Since two (and only two)
+of these slopes are equal, the figure is a trapezium:
+)
+1 |. t              NB. Table rotated upward one place
+
+]disps=: t - 1 |. t NB. Displacements between adjacent points
+
+%~/ eachrow disps   NB. Ratios give slopes of lines
+
+NB. =========================================================
+Lab Section
+
+The function take can be used to select rows of a table
+as indicated below.
+In particular, triangles can be selected from a table
+for a quadrilateral:
+)
+t take 1           NB. Leading row
+
+t take 2           NB. Next row
+
+tri1=:t take 1 2 3 NB. Triangle of first three rows
+
+PLOT tri1
+
+NB. =========================================================
+Lab Section
+
+The other triangle that completes the quadrilateral is
+obtained as follows:
+)
+tri2=:t take 3 4 1
+
+tri2
+
+PLOT tri2
+
+NB. =========================================================
+Lab Section 312 Area of a Parallelogram
+
+The accompanying plot shows a parallelogram with a horizontal
+base. Elements of its displacements give the base and altitude in an obvious
+manner, and their product gives the area:
+)
+x=:2 5 11 8
+y=:3 8 8 3
+t=:x,.y
+
+t
+
+disps=:t-1|.t
+disps
+
+PLOT t
+
+NB. =========================================================
+Lab Section
+)
+disps NB. First of last row is base; last of third row is altitude
+
+6 * 5 NB. Area
+
+NB. =========================================================
+Lab Section 320 Sequences * Functions
+
+The rule defined by a list can be examined by comparing each
+item with the next. This can be done by rotating the list,
+as illustrated below:
+)
+a=:5 20 35 50
+
+b=:1|.a
+b
+
+b-a NB. Shows constant increase of 15. Ignore the last item
+
+NB. =========================================================
+Lab Section
+
+We may treat the list of Example 2 similarly, but in this
+case it is the ratio rather than the difference that is constant:
+)
+a2=:5 10 20 40
+
+b2=:1 |. a2
+
+b2
+
+b2 - a2
+
+b2 % a2
+
+NB. =========================================================
+Lab Section 324 Adding Integers on the Number Line
+
+We here recall the functions introduced in Lesson 2:
+)
+i.6
+
+i:6
+
+NB. =========================================================
+Lab Section 343 Symbols of Inclusion
+
+In J, the only symbols of inclusion used are the parentheses.
+Brackets and braces are used, but only for other purposes.
+)
+
+NB. =========================================================
+Lab Section 352 Area of a Triangle
+
+There is an elegant method for obtaining the area of
+a triangle from its table of vertices. We will include it even
+though it makes use of the determinant met in somewhat more
+advanced math.
+
+We begin with a triangle whose area is easily seen from its
+plot -- with a base of 2 and an altidude of 2, its area is one-half
+their product (that is, 2):
+)
+tri=:2 6 4,.3 5 3
+tri
+
+PLOT tri
+
+NB. =========================================================
+Lab Section
+)
+det=:-/ . *  NB. The determinant function
+
+tri          NB. Coordinates of the triangle
+
+tri,.1r2     NB. Bordered with a column of halves
+
+det tri,.1r2 NB. Area of triangle
+
+NB. =========================================================
+Lab Section
+
+The result _2 gives not only the area 2, but the negative
+value indicates that the points appear in clockwise order.
+A re-ordering of the points gives a positive area as illustrated below:
+)
+triA=:tri take 1 3 2
+
+triA
+
+det triA,.1r2
+
+NB. =========================================================
+Lab Section 352 Determinant
+
+Although we can use the determinant function det without
+examining its definition, its computation
+for a 3-by-3 matrix (table) is straightforward,
+as illustrated below:
+)
+m=:9 7 2,.5 1 6,.3 8 4
+
+m
+
+term1=:9 * ((1*4)-(6*8))
+term2=:7 * ((5*4)-(6*3))
+term3=:2 * ((5*8)-(1*3))
+
+term1,term2,term3
+
+(term1-term2)+term3
+
+det m
+
+NB. =========================================================
+Lab Section 352 Area of Quadrilateral
+
+If quad is the table of coordinates of any proper quadrilateral
+(that is, without crossing lines in its plot), we may now determine its
+area by adding the areas of the triangles quad take 1 2 4 and quad take 2 3 4
+that make it up.
+
+You may also wish to enter PLOT quad to estimate its area, and PLOT tri1 and PLOT tr2 to
+see the appearance of the component triangles:
+)
+]quad=:4 9 7 2,.7 7 3 0
+
+]tri1=:quad take 1 2 4
+
+]tri2=:quad take 2 3 4
+
+a1=:det tri1,.1r2
+
+a2=:det tri2,.1r2
+
+a1,a2
+
+a1+a2
+
+NB. =========================================================
+Lab Chapter 81-100
+NB. =========================================================
+Lab Section 379 Circumference and Pi
+
+The function o. applies to a diameter to give the circumference of the
+corresponding circle. In other words the function o. is "pi times". For example:
+)
+o. 1
+
+o.2
+
+o.1r2
+
+o.1r3
+
+o.1r4
+
+NB. =========================================================
+Lab Section 427 Multiplying and Dividing Signed Numbers
+
+Multiplication tables can be used to exhibit the pattern
+of products of signed numbers:
+)
+]a=:i:4x
+
+a *border a
+
+a */ a
+
+color a */ a
+
+NB. =========================================================
+Lab Section
+
+The symbol * denotes multiplication when applied to two argumnts.
+When applied to one argument it denotes the "signum" function
+that gives the sign of its argument, as
+illustrated below.
+
+In particular, when applied to a multiplication table
+it exhibits the pattern of signs in the table:
+)
+* 4  NB. 1 if argument exceeds 0
+
+* 0  NB. 0 if argument is 0
+
+* _5 NB. _1 if argument is less than 0
+
+a
+
+* a
+
+* a */ a
+
+color * a */ a
+
+NB. =========================================================
+Lab Section
+
+We may treat division similarly, after removing zero from the
+argument a:
+)
+b=:a -. 0 NB. The list a with 0 removed
+
+b
+
+b %border b
+
+NB. =========================================================
+Lab Section 447 Graphing Inequalities
+
+The symbols used for less-than-or-equal and greater-than-or-equal
+in J are <: and >:. They are illustrated below:
+)
+a
+
+a  <:border a
+
+a  >:border a
+
+NB. =========================================================
+Lab Chapter 101-127
+NB. =========================================================
+Lab Section 467 Area of a Circle
+
+To estimate the area of a circle we will use the piechart
+to divide it into smaller areas. The division into four quadrants
+is not very helpful:
+)
+piechart 1 1 1 1
+
+NB. =========================================================
+Lab Section
+
+But 40 divisions gives areas that (except
+for the slight curvature of the bases), look like triangles.
+
+The sides of these triangles are the radii of
+the circle, and their altitudes are very nearly equal to the sides.
+)
+piechart 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+NB. =========================================================
+Lab Section
+
+The area of each triangle is approximately the length of its
+base multiplied by the radius, all divided by 2. Moreover,
+the sum of these bases can be used to get the sum of the areas, This
+sum of bases is approximately the circumference, which is pi times the radius.
+
+The total area is therefore approximately one-half of the radius times pi times the
+radius. Moreover, the approximation improves as the number of divisions is
+increased, and we conclude that the area of the circle is (pi*radius*radius) % 2:
+)
+radius=:2
+
+o. radius          NB. pi times radius
+
+o. *: radius       NB. pi times square of radius
+
+(o. *: radius) % 2 NB. Area of circle
+
+radius=:1
+
+(o. *: radius) % 2 NB. Area of circle
+
+NB. =========================================================
+Lab Section 477 Mean
+
+In discussing averages we introduced a definition of the mean as the sum divided
+by the number of elements. Thus:
+)
+mean=:+/ % #
+
+a=: 8 5 6 3 1 7 7 10 4 6 9 1 1 6
+
++/a
+
+# a
+
+mean a
+
+NB. =========================================================
+Lab Section 477 Median
+
+To obtain the median we sort the argument and select the middle item
+from the sorted list. For example, in the list a, the median is 6:
+)
+a
+
+sort a
+
+NB. =========================================================
+Lab Section 447 Mode
+
+Among the list of distinct elements of the argument we seek the ones
+that occur most often. To do this we first apply the nub function (~.)
+to get the list of distinct elements, compare it with the original
+argument in an equal table, and count the number of agreements. The element
+(or elements) that occur most often constitute the mode:
+)
+a
+
+~.a NB. The list of distinct elements
+
+a =/ ~.a NB. Compared with each element of the argument
+
++/(a =/ ~.a) NB. Provides a count of agreements
+
+NB. Elements in third and fifth places of the nub (that si, 6 and 1)
+NB. constitute the mode
+
+NB. =========================================================
+Lab Section 477 Range
+
+The range is one more than the difference between the maximum and the
+minimum, that is, between the last and first of the
+sorted list:
+)
+a
+
+sort a
+
+{: sort a
+
+{. sort a
+
+({:-{.) sort a     NB. Difference of last and first
+
+1 + ({:-{.) sort a NB. Range
+
+NB. =========================================================
+Lab Section 592 Surface Area
+
+If d is the list of dimensions of a rectangular solid, then */d
+gives its volume. Moreover, the product of d with d rotated by 1 give
+the three different face areas, and twice their sum gives the
+total surface area. For example:
+)
+d=:5 3 7
+
+*/d                 NB. Volume
+
+1 |. d              NB. Rotate by 1
+
+d * 1 |. d          NB. Each different surface area
+
+2 * +/ (d * 1 |. d) NB. Total surface area

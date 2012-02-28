@@ -3,6 +3,6 @@ This directory is reserved for jod.pdf
 jod.pdf is not downloaded with the core JOD addon. To 
 enable local (jodhelp) PDF reading download jod.pdf from:
 
-https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3hRbt360vl5Y2I0MDdlZGYtNTNiZi00YWU5LTlhYTctMGQzOTZjYjQ4OGVl&hl=en
+http://www.box.net/shared/gajfu50gc0
 
 and copy it to this directory.

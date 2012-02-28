@@ -1,0 +1,1727 @@
+LABTITLE=: 'Arithmetic'
+LABAUTHOR=: 'Kenneth E. Iverson'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter INTRODUCTION
+NB. =========================================================
+Lab Section A. Labs
+This item under the STUDIO menu is called a Lab (or
+Laboratory) because it presents an idea, illustrates it by
+executing a few experiments, and then leaves the student free
+to clarify the idea by performing further experiments.
+
+Finally, the student may advance to the next panel of the Lab
+by selecting menu Studio|Advance. Press Up Arrow or PgUp to recall earlier material.
+
+This lab presents arithmetic at the most elementary level, using pictures to introduce the counting numbers, negative numbers, and zero as well as the elementary operations of addition, subtraction, multiplication, and division. In particular, Chapter 5 presents methods for multi-digit addition and multiplication that are simpler and less error-prone than those commonly taught.
+
+This is done in the manner proposed by W.W. Sawyer in his Vision in Elementary Mathematics (Penguin Books, 1964). In particular, his method avoids clothing the simple ideas of addition and multiplication in the much more complex ideas inherent in the decimal system.
+)
+
+NB. =========================================================
+Lab Section Table of Contents
+1. INTRODUCTION
+
+   A. Labs
+   B. Words, Pictures, and Symbols
+   C. Verbs
+   D. List Arguments
+   E. Experiments
+   F. Grouping
+   G. Even and Odd Numbers
+   H. Even +Even, Even+Odd, Odd+Odd
+   I. Multiplication
+   J. Commutativity
+   K. Division
+   L. Patterns and Colors
+   M. Fractions or Rationals
+   N. Terminology
+   O. Review and Exercises
+
+2. TABLES
+
+   A. Verb Tables
+   B. Reading
+   C. Fractional Arguments
+   D. Negative Numbers
+   E. Subtraction of Negative Arguments
+   F. Positive and Negative Arguments
+   G. Review and Exercises
+)
+PREPARE
+require 'graph plot trig numeric'
+color=:viewmat
+
+diag=:/.
+on=:@:
+with=:&
+
+ADD=:+/@:>
+add=:+/"1
+AND=:;/@:(,:&.(|."1)&,)
+and=:;
+aint=:i.
+at=:;~
+box=:]`($:@:(<"2))@.(2&<@:#@:$+.]-:>)
+by=:,.
+
+copies=:$&.>/
+dec=:+/@(] * 10&^@x:@i.@-@#)
+dint=:aint@:-
+DRAW=:(dr1&>) : (dr2&>/)
+  dr1=:(| # 1: {. <&0 |. 'IN'"0)"0
+  dr2=:((-@[ ]\ ])"0 1 dr1)"0
+draw=:box@:DRAW
+exp=:dint@shape
+flip=:|.&.>
+graph=:'line,stick'&plot
+join=:(] #"1~ 0: = ] = ' '"0)@,.
+of=:#<
+open=:>
+pack=:box@:(($&'I'@(#~))"0/)
+split=:"."0x@:":
+PACK=:([: > ] <@#"0x ":@dec@exp)@:split"0
+shape=:$
+symbol=:add@(~:&' ')
+
+border=:1 : 0
+u border~y
+:
+(' ';,.x),.({.;}.)":y,x u/y
+)
+
+PREPARE
+
+NB. =========================================================
+Lab Section
+3. PACKS and POWERS
+
+   A. Packs
+   B. Powers
+   C. Powers of Ten
+   D. Exponents
+   E. Addition
+   F. Review and Exercises
+
+4. SHAPES and EXPERIMENTS
+
+   A. Shapes
+   B. Experiments
+   C. Review and Exercise
+
+5. MULTI-DIGIT NUMBERS
+
+   A. Carry
+   B. Addition
+   C. Subtraction
+   D. Abbreviated Schemes
+   E. Multiplication
+   F. Basic Multiplication Tables
+   G. Hints
+   H. Division
+   I. Review and Exercises
+)
+
+NB. =========================================================
+Lab Section
+6. PLOTS and GRAPHS
+
+   A. Line Representation
+   B. Graphs
+   C. Review and Exercises
+
+7. ARRAYS
+
+   A. Terminology
+   B. Scalar (Rank-0) Functions
+   C. Infinite Rank
+   D. Restricted Rank
+   E. Vector Functions
+)
+
+NB. =========================================================
+Lab Section B. Words, Pictures, and Symbols
+We will use three ways of expressing the counting numbers:
+
+    In Words:  one two three four five etc.
+  In Symbols:   1   2    3    4    5   etc.
+ In Pictures:   I
+                II
+                III
+                IIII
+                IIIII                  etc.
+
+Symbols are best for general use, as in the following additions and multiplication:
+)
+
+2+3
+3+4+5
+3*4
+
+NB. =========================================================
+Lab Section
+But the effective use of these symbols requires an understanding of the workings of the rather complex decimal system. For example:
+
+   12 means one ten plus two units
+
+  123 means one hundred plus two tens plus three units
+
+ 1234 means one thousand plus two hundreds plus three tens          plus four units
+)
+
+NB. =========================================================
+Lab Section
+Pictures provide a simpler way of introducing the notions of addition, multiplication, subtraction, negative numbers, division, remainders, and fractions. For example, the picture:
+
+   I
+   II
+   III
+   IIII
+   IIIII
+
+shows the numbers one, two, three, four, and five, whose sum 1+2+3+4+5 can be found by simply counting the "ticks" represented by the letter I. The result is fifteen, or 15 in symbols.
+)
+
+NB. =========================================================
+Lab Section C. Verbs
+In the sentences 2+3 and 2*3, the + and * indicate actions to be performed on the arguments 2 and 3. We therefore call them verbs.
+
+The verbs + and * apply to two arguments, but we also have verbs that apply to single arguments. For example, the verb DRAW applies to a number symbol to draw the corresponding picture:
+)
+ DRAW 3
+ DRAW 5
+
+NB. =========================================================
+Lab Section D. List Arguments
+The verb DRAW also applies to a list of symbols to produce a list of the corresponding pictures. The sum 3+5+6 can therefore be obtained by counting the ticks in the picture DRAW 3 5 6.
+
+Similarly, the product 3*4 can be obtained by counting the picture DRAW 4 4 4:
+)
+DRAW 3 5 6
+DRAW 4 4 4
+
+NB. =========================================================
+Lab Section E. Experiments
+You may try your own experiments at any time. Type in a sentence and then press the Enter key. For example, try the sentences:
+
+ DRAW 2 3 4
+ DRAW 3 3 3
+ DRAW 4 3 2
+
+and then count them to verify that the sum of two and three and four is the same as the sum of three and three and three, as well as the sum of four and three and two.
+
+Before pressing the Enter key try to think what the result should be. If it is not what you expect you might revise your sentence and try again and again. However,if you cannot make out what is happening, do not spend too much time -- it is better to make a note of the matter and return to it after advancing through a few more sections.
+)
+
+NB. =========================================================
+Lab Section
+Below is a list of verbs that will be used in later sections, where their actions will be described. However, you should be able to learn a good deal about them by studying the examples given below, and perhaps by trying further experiments of your own:
+)
+names''
+
+a=:DRAW 1 2 3 4 5
+symbol a
+b=:DRAW 5 4 3 2 1
+a by b
+a join b
+symbol a join b
+add symbol a join b
+a join b join a
+symbol a join b join a
+add symbol a join b join a
+
+NB. =========================================================
+Lab Section
+The verbs used above are themselves defined by brief programs in the language J used here. The definition of a verb can be displayed by entering its name, as illustrated below.
+
+You should better spend time on learning to use the verbs in experiments concerning mathematical operations such as addition and multiplication, than in studying their definitions.
+)
+and
+by
+join
+
+NB. =========================================================
+Lab Section F. Grouping
+The verb DRAW with a left argument limits the number of ticks in each row, and therefore provides a grouping of ticks. For example:
+)
+2 DRAW 6
+2 DRAW 5
+3 DRAW 8
+
+NB. =========================================================
+Lab Section G. Even and Odd Numbers
+In the result of 2 DRAW 6, the ticks were all grouped in pairs with no remainder, that is, with none left over. Six is therefore said to be an even number.
+
+On the other hand, 2 DRAW 5 showed a remainder of one; it is said to be odd.
+
+Because an even number can be divided evenly into groups of two, we also say that it is divisible by two. An odd number such as five is not divisible by two.
+
+The three results can be collected in a single picture as follows:
+)
+2 DRAW 6 5 8
+
+NB. =========================================================
+Lab Section
+The verb draw "boxes" the result of DRAW, and provides a more compact, and perhaps more readable, view:
+)
+2 draw 6 5 8
+
+NB. =========================================================
+Lab Section H. Even+Even, Even+Odd, Odd+Odd
+Is the sum of two numbers even or odd? It depends on the parity (evenness or oddness) of the arguments, in a way that can be deduced from the following picture:
+)
+2 draw 1 2 3 4 5 6 7
+
+NB. =========================================================
+Lab Section
+It is clear that the sum of two evens is even, and that the sum of an even and an odd is odd. Moreover, the sum of two odds is even, because the remainder (of a single tick) in one supplements the other to form a pair.
+
+This may be tested as follows:
+)
+2 draw (2+3),(2+4),(3+4),(3+5)
+
+NB. =========================================================
+Lab Section I. Multiplication
+The multiplication of three and four is also expressed as three times four, or 3*4, or by the picture of three copies of four:
+)
+3 copies 4
+DRAW 3 copies 4
+
+NB. =========================================================
+Lab Section
+The result of multiplying two numbers is also called their product. Several products may be pictured together as follows:
+)
+2 3 copies 4 5 6
+draw 2 3 copies 4 5 6
+
+NB. =========================================================
+Lab Section J. Commutativity
+It is interesting to compare the product of three and four (3*4) with the product of four and three (4*3); a count of their pictures shows them to be equal.
+
+It is true that interchanging or "commuting" any pair of arguments of multiplication leaves the product unchanged. For this reason, multiplication is said to be commutative. This may be seen in the following example by comparing diagonally opposite results:
+)
+draw 1 2 3 4 copies 1 2 3 4
+
+NB. =========================================================
+Lab Section K. Division
+The following picture shows that the numbers 3 6 9 12 have no remainders when grouped by threes, and are therefore divisible by three.
+
+We also see that the division 3 6 9 12%3 gives 1 2 3 4:
+)
+a=:1 2 3 4 5 6 7 8 9 10 11 12
+3 draw a
+6%3
+3 6 9 12%3
+
+NB. =========================================================
+Lab Section
+The sentence 6%3 is read as six divided-by three or, more loosely, as six divide three, or six over three.
+
+The sentence 3|7 gives the remainder or residue on dividing seven by three. Therefore:
+)
+3|7
+7-3|7
+(7-3|7)%3
+3|a
+a-3|a
+(a-3|a)%3
+
+NB. =========================================================
+Lab Section
+Other divisors behave similarly:
+)
+4 draw a
+4|a
+a-4|a
+(a-4|a)%4
+
+NB. =========================================================
+Lab Section L. Patterns and Color
+The results of 4|a and a-4|a and (a=4|a)%4 each show interesting patterns. Such patterns can be shown more clearly by "coloring" them, using a distinct color for each distinct number.
+
+The verb color will do this, displaying the pattern in a separate small window. To continue entering expressions it may be necessary to "return focus to the execution window" by pressing the Tab key while holding down the Alt key. The color window may be erased by pressing the Escape key, or by clicking the mouse on the x in its upper right corner.
+
+Experiment with the patterns produced by other expressions in the manner illustrated below:
+)
+3|a
+color 3|a
+
+NB. =========================================================
+Lab Section M. Fractions or Rationals
+Because five is not divisible by four, the expression 5%4 does not yield a counting number, but rather the "fraction" denoted in decimal by 1.25. A fraction is also called a "rational number", and 5%4 is called five-fourths and will be denoted by 5r4. This rational form can be obtained by entering 5 % x: 4. For example:
+)
+5%4
+5%x: 4  NB. The function x: is called "extended precision"
+a
+a%x:4
+b=:x:a
+b%4
+b%border b
+
+NB. =========================================================
+Lab Section
+The third column of the divide table b%border b shows the "quotients" of 1 2 3 4 etc. divided  by 3. It begins with 1r3 and 2r3, but the next element is not the expected 3r3. Instead it is the equivalent integer 1.
+
+Throughout the table, results are similarly shown in "lowest form". For example, the second element of the fourth column is 1r2, not 2r4.
+
+We may also make addition and other tables for rational arguments, as illustrated in the next few panels. All of these tables should be "read" with care:
+)
+c=:b%3
+
+c+border c
+
+NB. =========================================================
+Lab Section
+)
+c-border c
+c*border c
+
+NB. =========================================================
+Lab Section
+)
+c%border c
+
+c%/c
+
+NB. =========================================================
+Lab Section
+In his excellent "Vision in Elementary Mathematics" (Penguin Books, 1964), W.W. Sawyer emphasizes the use of pictures in introducing addition, multiplication, subtraction, and negative numbers. Concerning fractions he says:
+
+"Fractions are supposed to be difficult to learn. The reason for the difficulty is almost certainly a wrong approach in teaching. Too often the attempt is made to teach children a variety of complicated procedures without any real understanding, instead of teaching children to see the situation and decide for themselves what procedure is most reasonable.
+
+"The idea of a fraction is not a difficult one. If I hear that someone has left me 2/3 of his estate, I understand the estate is to be broken into 3 equal parts, and I am to receive 2 of them.
+
+"One should never try to teach a child anything about operations on fractions without first making sure that the child understands what a fraction is. No elaborate equipment is required. You can take a scrap of paper and ask the child to give you 2/5 of it. You make it clear that this need not be done with extreme precision. If the child makes some attempt to split the paper into 5 equal portions, and to give you 2 of them, you know the essential idea is understood."
+)
+
+NB. =========================================================
+Lab Section N. Terminology
+A term is any word or phrase that we will use with a carefully specified meaning. This meaning may be somewhat different from the common meaning of the word.
+
+For example, the word "verb" in English refers to an "action word" such as "run" or "drop", but we are using verb to refer to analogous action words in math such as + and *.
+
+Review this chapter to collect terms that have been given a meaning somewhat different from that in common use. For example:
+
+   List     A linear array, such as the numbers 2 3 5 7.
+
+   Table    A rectangular array with rows and columns, such               as the result of 1 2 3 */ 2 3 5 7.
+
+Such a collection of terms is called a Vocabulary.
+)
+
+NB. =========================================================
+Lab Section
+Compare the vocabulary you have collected with the following (some of whose entries may not occur until later chapters):
+
+ADVERB   A thing (such as / or border) that applies to a verb to produce a related verb.
+
+COPULA   A thing (denoted by =:) that assigns a referent to a name. For example, year=:365 assigns to the name year the number of days in a normal year.
+
+FUNCTION A synonym for verb.
+
+LIST     A linear array, such as the numbers 2 3 5 7.
+
+NOUN     A thing (such as 3 or 2 3 5 7) to which a verb applies.
+
+PRONOUN  A thing that can be used as a noun. It is defined by a copula, as illustrated above for the pronoun year.
+
+TABLE    A rectangular array with rows and columns, such as the result of 1 2 3 */ 2 3 5 7.
+
+VERB     An action word, such as + or - or DRAW. Most verbs apply to either one or two arguments. For example 5-3 means to subtract 3 from 5, whereas -3 means to negate 3.
+)
+
+NB. =========================================================
+Lab Section O. Review and Exercises
+Chapter 1 comprises 23 sections on the treatment of various classes of numbers:
+
+SECS 1-3 introduce three ways of representing numbers -- in words (one two three four ...); in symbols (1 2 3 4 ...); in pictures (I II III IIII ...), and show the use of pictures to perform addition by counting up the ticks in the pictures of a group of numbers to be added.
+
+SECS 4-6 use the sentences 2+3 and 2*3 to introduce the notion of + and * as "verbs" that perform some action upon their aguments 2 and 3, and introduce the verb DRAW to draw the picture of a symbol or list of symbols, as in:
+
+    DRAW 3 5 6
+ III
+ IIIII
+ IIIIII
+
+SEC 7-8 show the use of the verb "by" to place one picture by the side of another and of "join" to produce the same picture squeezed together, and suggest experiments with these and other verbs.
+
+SECS 9-13 use the expression 2 DRAW 6 5 8 to group the ticks in the pictures of 6, 5, and 8 in rows of at most 2, and introduce the term "even" for a number whose picture split evenly into rows of two, and "odd" for one that has a remainder of one.
+
+SECS 14-16 use 3 copies 4 to produce the list 4 4 4, and DRAW 3 copies 4 to produce a picture whose count defines the product 3*4 (three times four). They also use pictures to illustrate the commutativity of multiplication -- for example, that 3*4 equals 4*3.
+
+Finally, they use the verb "draw" (in lowercase) to group the drawings of numbers, as illustrated by:
+
+    draw 2 3 copies 4 5 6
+ +------+------+------+
+ |IIII  |IIIII |IIIIII|
+ |IIII  |IIIII |IIIIII|
+ |      |      |      |
+ +------+------+------+
+ |IIII  |IIIII |IIIIII|
+ |IIII  |IIIII |IIIIII|
+ |IIII  |IIIII |IIIIII|
+ +------+------+------+
+
+SECS 17-19 use the picture 3 draw a to show which elements of the list a are divisible by 3, and show that the division 3 6 9 12%3 gives the integer result 1 2 3 4. The expression 3|7 is then used to obtain the remainder on dividing 7 by 3, and (a-3|a)%3 is used to give the integer part of the quotient on dividing by 3
+
+SECS 20-23 use the verb color to bring out patterns in a list of numbers by showing a different color for each different number, and continue with rational numbers obtained by dividing a number by a divisor of which it is not an integral multiple (as in 11r3 for 11%3). They conclude with Sawyer's assertion that the idea of a fraction is not a difficult one.
+)
+
+NB. =========================================================
+Lab Section
+1. Draw (by hand) a picture of the list 4 6 8 as it would be produced by DRAW 4 6 8, and use it to find the sum 4+6+8.
+
+2. Repeat Ex1 for the lists 5 6 7 and 11 7, and confirm that each gives the same sum as Ex1.
+
+3. State the results of Ex2 in words, that is, "five plus six plus seven equals ..."
+
+4. Draw the picture of the list 1 2 3 4 5, and of the list 3 3 3 3 3 -- that is, 5 copies of the "middle" number 3. Then confirm (and explain) the fact that the sum of the second picture equals that of the first.
+
+5. Repeat Ex4 for the lists one to nine and one to eleven.
+
+6. Ex5 used only lists with an odd number of items, because a list such as 1 2 3 4 has no "middle" item. Suggest a middle value that can be multiplied by 4 to give the sum 1+2+3+4.
+
+7. The solution to Ex6 is a middle value of 5r2 -- that is, (4+1)%2 --, giving the sum 4*5r2. Use this method for summing other lists of an even number of items.
+
+8. Verify that the expression 4*5r2 of Ex7 is equal to (4%2)*5. Moreover, since 4 is an even number, 4%2 is an integer, and the sum can be written without fractions as 2*5.
+)
+
+NB. =========================================================
+Lab Chapter TABLES
+NB. =========================================================
+Lab Section A. Verb Tables
+We will begin by making tables for some familiar verbs:
+)
+
+a +border a=:1 2 3 4 5 6 7 8 9 10 11 12
+a *border a
+
+NB. =========================================================
+Lab Section B. Reading
+The addition table can be "read" or "interpreted" to determine the result of the addition 7+5 by choosing the row headed by the 7 in the vertical column at the left, and picking from it the 12 that occurs in the column headed by 5.
+
+Verify that this interpretation gives the correct result for each of the additions and subtables given below:
+)
+3+4
+3+4 5 6 7
+4 5 6 7+3
+4 5 6 7 +border 4 5 6 7
+
+NB. =========================================================
+Lab Section
+A table may also be read for patterns, in which case it is better to use the adverb / to display it without its bordering arguments, and perhaps to color it to bring out the pattern. For example:
+)
+0 1 2 3 4 5 +/ 0 1 2 3 4 5
+color 0 1 2 3 4 5 +/ 0 1 2 3 4 5
+
+NB. =========================================================
+Lab Section
+Read items from the following division table, and test the correctness of your results. Also comment on the main diagonal of ones, and on the patterns that appear in rows and columns.
+
+Notice that the uniform sequence from 3r4 to 3r8 in the third row is interrupted by 1r2 replacing the expected 3r6. This results from "simplifying" three-sixths to the equivalent one-half, by "cancelling" the common factor in the 3 (on top) and the 6 (on the bottom). Concerning this, Sawyer says:
+
+"One of the first processes with fractions is 'cancelling'. The only clear idea this seems to produce in many children is that you cross out something on the top, and you cross out something on the bottom, and it makes no difference. This doctrine leads to extraordinary mistakes, very familiar to those who mark examination papers. There is no need for this confusion. The principle of cancellation is one which almost any child can think out for himself."
+)
+a %border x: a
+
+NB. =========================================================
+Lab Section
+Instead of "cancelling" factors from fractions, it might be helpful to see the effect of the converse operation of multiplying by factors. Thus:
+)
+6%3
+6*5
+3*5
+30%15
+6*a
+3*a
+(6*a)%(3*x:a)
+5*a
+(5*a)%(3*x:a)
+
+NB. =========================================================
+Lab Section C. Fractional Arguments
+The sentence b=:1%x:a assigns to the name b a list beginning with one and continuing with the fractions one-half, one-third, one-fourth, etc. Fractions may be used as arguments to verb tables, and the tables +border b and *border b and %border b are worth careful study.
+
+After learning what you can from the tables (and perhaps recording your results and doing experiments to confirm them),
+compare your conclusions with the comments in the following three sections:
+)
+b=:1%x:a
+b
+b +border b
+b *border b
+b %border b
+
+NB. =========================================================
+Lab Section
+Consider first the addition table. The sum of one-half and one-half is two-halves, but this is equivalent to one and is shown in this simpler form.
+
+The sum of one-half and one-third can be obtained by noting that the first is equal to three-sixth and the second is equal to two-sixth; their sum is therefore five-sixths, or 5r6.
+
+Notice also that 1 is equal to 1r1 and that any item on the diagonal should be twice its row (or column) argument. The diagonal should therefore proceed as 2r1 2r2 2r3 2r4 2r5 2r6, etc. However, some of these are expressed in simpler form: 2r1 is 2, 2r2 is 1, 2r4 is 1r2, 2r6 is 1r3, etc.
+)
+
+NB. =========================================================
+Lab Section
+According to Sawyer:
+
+"A comment is desirable on the multiplication of fractions. A language difficulty arises here. If you ask quite a young child 'What is half of a half?' it is quite likely that he will be able to answer the question. He may take a cake, cut it into halves, then cut one half into equal pieces, and know that 'a quarter' is the proper name for what he obtains. On the other hand, if he is given the written problem 'Find 1/2*1/2', he may be completely stuck, and this even though he knows what the multplication sign means in 2*3, and how fractions such as 1/2 and 1/4 are written.
+
+"In fact, there is a very real intellectual difficulty in deciding just what multiplication should mean when fractions are involved. Many of the usual explanations and illustrations of multiplication fail completely when we cease to deal with whole numbers. For example, we may explain 3*4 by drawing 3 groups of 4 objects in each; we can hardly explain 1/2*1/2 by drawing half a group with half an object in each.
+
+"Yet, if we examine examples of multiplication in arithmetic, we shall find many that still make sense when fractions are involved. A gallon of water weighs 10 lb. What will 3 gallons weigh? The answer is 30 lbs., since 30 is 3*10. We may equally well ask, what will 3 1/2 gallons weigh? The natural answer is 35 lbs., since 35 is 3 1/2*10."
+)
+
+NB. =========================================================
+Lab Section D. Negative Arguments
+Additions such as 7+4 have been illustrated by the picture draw 7 4. The subtraction 7-4 (seven minus four, or seven take away four) can be illustrated by the same picture, counting up the ticks for the 7, and then counting backward through the ticks for the 4 to arrive at 3. Thus:
+)
+7+4
+7-4
+draw 7 4
+draw 7-4
+7-7
+draw 7-7
+
+NB. =========================================================
+Lab Section
+But the picture for 7-11 presents a problem because 11 is larger than 7, and the backward counting would have to continue through what we call negative numbers. To picture them we use the ticks N to represent them rather than I. Thus:
+)
+7-11
+draw 7 11
+draw 7-11
+draw 5 4 3 2 1 0 _1 _2 _3 _4 _5
+
+NB. =========================================================
+Lab Section
+The last picture can be counted to show that the sum of all the numbers represented is zero. The same list in the opposite order would require one to begin counting backward through negative numbers, but the process is equally simple:
+)
+draw _5 _4 _3 _2 _1 0 1 2 3 4 5
+
+NB. =========================================================
+Lab Section
+Any list of positive and negative numbers (and zeros) can be summed from their pictures in the same way. Sum the following list, and make and draw similar lists as exercises:
+)
+draw 3 _5 2 4 0 _1
+add 3 _5 2 4 0 _1
+
+NB. =========================================================
+Lab Section E. Subtraction of Negative Numbers
+7-4 gives 3, but how would you picture and find the result of 7-_4; that is, the subtraction of a negative number. We will begin as follows:
+)
+7-4
+7-_4
+draw 7 _4
+
+NB. =========================================================
+Lab Section
+Since we are SUBTRACTING the negative number, we must count FORWARD rather than backward through its picture. This may be thought of as "reversing its sign", making the result equivalent to 7+4. Thus:
+)
+7-_4
+7+4
+
+_7-_4
+_7+4
+draw _7 _4
+
+NB. =========================================================
+Lab Section F. Positive and Negative Arguments
+Since addition, multiplication, and division can be applied to both positive and negative numbers, it will be instructive to revisit, and comment upon, the verb tables applied to negative as well as positive arguments.
+
+We will use the verb i: to generate such arguments:
+)
+c=:x:i:5
+c
+c +border c
+c *border c
+c %border c
+c -border c
+
+NB. =========================================================
+Lab Section
+The multiplication table shows interesting patterns. The zero row (that is, the one headed by 0) is all zero, because 0 times anything is zero. Similarly, the zero column is all zero.
+
+This zero row and zero column cut the table into four quadrants, each quadrant containing numbers of the same sign.
+
+A reason for this may be seen in the fact that each row changes by "counting by" the number that heads it. For example, row 3 begins with _15 and counts by threes through _12, _9, and so on until it reaches (as it must) zero; at which point the increase brings it to the positive numbers 3, 6, and so on.
+
+Columns "count" in a similar manner, accounting for the change of sign when the zero row is crossed. An interesting consequence is that the product of two negative numbers must be positive.
+)
+
+NB. =========================================================
+Lab Section G. Review and Exercises
+Chapter 2 comprises 16 sections on the use of addition, multiplication, and other verb (or function) tables.
+
+SECS 1-3 use a +border a to produce an addition table for the list a, bordered by its row and column arguments for easy reading. They also uses a +/ a to make an unadorned table, and color a +/ a to bring out its patterns (such as diagonals of identical elements) by coloring.
+
+SECS 4-8 use the divide table a %border x:a to bring out the use of "cancellation" to reduce the rationals 2r2 and 2r4 to the simpler equivalents 1 and 1r2. They also show how the sum 1r2+1r3 can be obtained as the equivalent 3r6+2r6, or 5r6.
+
+SECS 9-16 use the picture NNN to represent the negative number resulting from the subtraction 4-7, and use c=:i:3 to produce function tables on both positive and negative arguments. The patterns in these tables are discussed, including the signs in the quadrants of the multiplication table, and a reason for the rule that the product of two negative numbers is positive.
+)
+
+NB. =========================================================
+Lab Section
+1. Make the following tables by hand:
+
+ 1 2 3 4 *border 1 2 3 4
+ 1 2 3 4 */ 1 2 3 4
+ color 1 2 3 4 */ 1 2 3 4
+
+2. Make the following tables by hand:
+
+ c=:x:i:3
+ c *border c
+ c */ c
+ color c */ c
+
+Ex 3. Make the following tables by hand:
+
+ c +border c
+ c %border c
+)
+
+NB. =========================================================
+Lab Chapter PACKS and POWERS
+NB. =========================================================
+Lab Section A. Packs
+In dealing with large numbers of things it is convenient to deal with them in packs of various sizes. For example, eggs and lead pencils are dealt with in packs of a dozen (twelve) and a gross (a dozen dozen).
+
+Similarly, a foot is a pack of 12 inches, a square foot is a pack of 12*12 square inches, and a cubic foot is 12*12*12 cubic inches. Thus:
+)
+12 pack 1
+12 pack 2
+12 pack 0 1 2
+
+NB. =========================================================
+Lab Section
+Examples such as 3 pack 12 and 4 pack 12 could also be entered, but might take a long time to assess. The ideas can be seen more clearly using packs of fewer items:
+)
+3 pack 0 1 2
+2 pack 0 1 2 3 4
+
+NB. =========================================================
+Lab Section
+The number of ticks in 3 pack 1 and 3 pack 2 and 3 pack 3 and 3 pack 4 are seen to be:
+)
+3
+3*3
+3*3*3
+3*3*3*3
+
+NB. =========================================================
+Lab Section B. Powers
+The verb "power" (^) allows us to express the products 3*3 and 3*3*3 and 3*3*3*3 more simply in terms of the number of factors:
+)
+3*3
+3^2
+3*3*3
+3^3
+3*3*3*3
+3^4
+3^2 3 4
+3^0 1 2 3 4
+
+NB. =========================================================
+Lab Section
+The final expression 3^0 1 2 3 4 shows that the power also handles the case of a single factor (that is, 3) and of "no factor", which yields 1.
+
+In the expression 3^4 the three is called the base. The following illustrates other bases:
+)
+a=:0 1 2 3 4 5 6
+1^a
+2^a
+3^a
+4^a
+
+NB. =========================================================
+Lab Section
+Just as the behaviour of the verbs + and * and - were shown   clearly in their tables, so the behaviour of the power may be seen more clearly in its table:
+)
+a ^border a
+6*6*6*6*6*6
+
+NB. =========================================================
+Lab Section
+It is easy to verify that the number of ticks in 3 pack 2 is equal to 3^2, and the same relation of equality holds between other expressions of this form. For example:
+)
+3 pack 0
+3^0
+3 pack 1
+3^1
+3 pack 2
+3^2
+3 pack 3
+3^3
+3 pack 4
+3^4
+2 pack 5
+2^5
+2 pack 8
+2^8
+2*2*2*2*2*2*2*2
+
+NB. =========================================================
+Lab Section
+If we take four cases of 3 pack 2, the number of ticks must be four times the number in 3 pack 2. It is therefore four times three to the power two, that is, 4*3^2. Thus:
+)
+4 of 3 pack 2
+3^2
+4*3^2
+5 of 3 pack 1
+5*3^1
+6 of 3 pack 0
+6*3^0
+(4*3^2)+(5*3^1)+(6*3^0)
+3^2 1 0
+4 5 6*3^2 1 0
+add 4 5 6*3^2 1 0
+
+NB. =========================================================
+Lab Section C. Powers of Ten
+Similar experiments with packs of ten instead of three lead to some insight into the familiar decimal numbers:
+)
+3 of 10 pack 2
+3*10^2
+4 of 10 pack 1
+4*10^1
+5 of 10 pack 0
+5*10^0
+(3*10^2)+(4*10^1)+(5*10^0)
+10^2 1 0
+3 4 5*10^2 1 0
+add 3 4 5*10^2 1 0
+
+NB. =========================================================
+Lab Section
+The sentence add 3 4 5*10^2 1 0 gave the result 345, which we state in words as "three hundred and forty-five", or perhaps as "three hundred forty-five".
+
+Using this as a model, say in words the results of the following sentences:
+
+ add 3 4 5 6*10^3 2 1 0
+ add 3 4 5 6 7*10^4 3 2 1 0
+
+Then look at the results below and, finally, advance to the next session and compare the words given there with your utterances:
+)
+add 3 4 5 6*10^3 2 1 0
+add 3 4 5 6 7*10^4 3 2 1 0
+digits=:3 4 5 6 7
+exponents=:4 3 2 1 0
+add digits*10^exponents
+
+NB. =========================================================
+Lab Section
+3456 is three thousand four hundred fifty-six
+
+34567 is thirty-four thousand five hundred sixty-seven
+)
+
+NB. =========================================================
+Lab Section
+The sentence add digits*10^exponents works because the list exponents provides the correct powers for the list digits.
+
+However, it will not work for the list d=:3 4 5 6. Thus:
+)
+add digits*10^exponents
+d=:3 4 5 6
+add d*10^exponents
+
+NB. =========================================================
+Lab Section D. Exponents
+The exponents needed for a list of digits depend only on the shape (or length) of the list. For example, if d has four elements it requires the exponent list 3 2 1 0. Thus:
+)
+d=:3 4 5 6
+exp d
+10^exp d
+d*10^exp d
+add d*10^exp d
+dec=:+/@(] * 10&^@x:@i.@-@#)
+dec d
+dec 3 4 5 6 7
+
+NB. =========================================================
+Lab Section
+The preceding session showed how to define the verb dec, making use of the "component" verb exp. We will now show how to define (the already defined) verb exp and its components, one of which gives a list of integers (counting numbers) in ascending order and one in descending order:
+)
+exp=:dint@shape
+  dint=:aint on -
+    aint=:i.
+  shape=:$
+aint 4
+dint 4
+shape d
+dint shape d
+exp d
+
+NB. =========================================================
+Lab Section E. Addition
+the same scheme can be used to illustrate why it is possible to do some additions of decimals by simply adding the elements of the lists that represent them:
+)
+d1=:3 1 4 2 7 6
+d2=:5 3 4 6 2 1
+dec d1
+dec d2
+314276+534621
+d1+d2
+dec (d1+d2)
+d1 * 10 ^ exp d1
+d2 * 10 ^ exp d2
+(d1 * 10 ^ exp d1)+(d2 * 10 ^ exp d2)
+add (d1 * 10 ^ exp d1)+(d2 * 10 ^ exp d2)
+
+NB. =========================================================
+Lab Section F. Review and Exercises
+This chapter concerns the use of packs such as a dozen and a gross to deal with large numbers, and the use of the verb power to express the number in a pack as 12^1 for a dozen, and 12^2 for a gross.
+
+SECS 1-5 use 12 pack 0 1 2 to draw pictures of a single item, a dozen, and a gross; and introduces the power function to express the number of units in a pack. Thus:
+
+    12 pack 0 1 2
+ +------------+------------+------------+
+ |I           |IIIIIIIIIIII|IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ |            |            |IIIIIIIIIIII|
+ +------------+------------+------------+
+
+    12^0 1 2
+ 1 12 144
+
+SECS 6-8 show a power table, multiple packs (such as 4*3^2), and sums of multiple packs (such as (4*3^2)+(5*3^1)+(6*3^0)).
+
+SECS 9-15 show the use of multiples of ten-packs in the familiar decimal system, as in add 3 4 5 6*10^3 2 1 0 for the number 3456.
+)
+
+NB. =========================================================
+Lab Section
+1. Draw by hand the picture of a 4-pack of order 2, and compare it with the result of 4 pack 2.
+
+2. Repeat EX1 for other cases, including 4 pack 3 and 3 pack 4.
+
+3. The pictures produced by DRAW become unsatisfactory for large arguments. Study the following results of the function PACK and state how to interpret them.
+
+    DRAW 54
+ IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+    PACK 54
+ 11111
+ 0000
+    PACK 31047
+ 444
+ 3
+
+ 1111
+ 0000000
+
+4. Try PACK with other arguments to test your interpretation of its results.
+
+5. Draw by hand the picture produced by PACK with other arguments, and compare with the computer results.
+
+6. Draw by hand the power table ^ border 0 1 2 3 4, and compare it with the computer result.
+
+7. Write the powers of ten with exponents from zero to six, and compare with the execution of 10^0 1 2 3 4 5 6.
+)
+
+NB. =========================================================
+Lab Chapter SHAPES and EXPERIMENTS
+NB. =========================================================
+Lab Section A. Shapes
+We will return to the question of how to add ANY two decimal numbers, but will now digress to examine the shapes of the lists and tables we have been using.
+
+In the chapter on powers we used the verb shape to give the number of elements in a list; but it can be used more generally to give the number of rows and columns in a table, the three numbers that describe a list of tables, and the four that describe a table of tables. For example:
+)
+DRAW 6
+shape DRAW 6
+3 DRAW 6
+shape 3 DRAW 6
+2 3 DRAW 6 7 8
+shape 2 3 DRAW 6 7 8
+2 3 draw 6 7 8
+shape 2 3 draw 6 7 8
+
+NB. =========================================================
+Lab Section
+The verb tables produced by the adverb border were all boxed, and their shapes were all the same two-by-two (2 2). The adverb / produces unboxed arrays. For example:
+)
+a=:i.5
+a
+a *border a
+shape a *border a
+a */ a
+shape a */ a
+b=:a */ a
+b+b
+b*b
+
+NB. =========================================================
+Lab Section B. Experiments
+As a reminder to ALWAYS experiment, we now suggest returning to the sessions on verb tables and repeating the expressions used there, but with the adverb / replacing border. In particular, perform experiments of the kind illustated by b+b and b*b in the preceding session.
+
+As further fodder for experimentation we show below the definitions of the verbs used thus far, together with two examples of experimentation:
+)
+ADD=:+/@:>
+add=:+/"1
+AND=:;/@:(,:&.(|."1)&,)
+and=:;
+aint=:i.
+box=:]`($:@:(<"2))@.(2&<@:#@:$+.]-:>)
+by=:,.
+copies=:$&.>/
+dec=:+/@(] * 10&^@x:@i.@-@#)
+diag=:/.
+dint=:aint@:-
+DRAW=:(dr1&>) : (dr2&>/)
+  dr1=:(| # 1: {. <&0 |. 'IN'"0)"0
+  dr2=:((-@[ ]\ ])"0 1 dr1)"0
+draw=:box@:DRAW
+exp=:dint@shape
+join=:(] #"1~ 0: = ] = ' '"0)@,.
+of=:#<
+pack=:box@:(($&'I'@(#~))"0/)
+shape=:$
+symbol=:add@(~:&' ')
+
+(aint-dint) 10
+(aint*dint) 10
+
+NB. =========================================================
+Lab Section C. Review and Exercises
+SECS 1-3 suggest a few experiments, and the use of the function shape to examine the results.
+
+EX 1. State the shape of the result of PACK 34067, and confirm your answer by executing shape PACK 34067.
+)
+
+NB. =========================================================
+Lab Chapter MULTI-DIGIT NUMBERS
+NB. =========================================================
+Lab Section A. Carry
+The final section on powers in Chapter 3 showed how the numbers represented by digit lists d1 and d2 could be added by simply adding the digit lists (and then applying the verb dec). We will now illustrate a difficulty that arises in the addition d1+d1, and will then proceed to show how it can be treated by a process called "carrying":
+)
+d1=:3 1 4 2 7 6
+d2=:5 3 4 6 2 1
+dec d1
+dec d2
+314276+534621
+d1+d2
+dec (d1+d2)
+d1 * 10 ^ exp d1
+d2 * 10 ^ exp d2
+(d1 * 10 ^ exp d1)+(d2 * 10 ^ exp d2)
+add (d1 * 10 ^ exp d1)+(d2 * 10 ^ exp d2)
+
+(dec d1)+(dec d1)
+d1+d1
+dec(d1+d1)
+
+NB. =========================================================
+Lab Section
+The difficulty is that the sum d1+d1 contains elements larger than nine, and the result of dec(d1+d1) is NOT the number obtained by simply "squeezing together" the elements of d1+d1 as it was in the case of d1+d2.
+
+We correct this by "normalizing" the sum to get an equivalent list that contains only digits less than ten. Since 12 units is equivalent to dec 1 2, we replace the 12 by 2 and "carry"
+the 1 to the preceding (tens) position to get 6 2 8 5 15 2.
+We then treat the 15 in the tens position similarly, leaving the 5 and carrying the 1 to the hundreds position:
+)
+(dec d1)+(dec d1)
+dec d1+d1
+d1+d1
+dec 6 2 8 4 14 12
+dec 6 2 8 4 15 2
+dec 6 2 8 5 5 2
+
+NB. =========================================================
+Lab Section
+Luckily, carrying is easier to do than to describe: try to follow the steps in the example below, and then copy the beginning list to a paper and repeat the work yourself.
+
+Test the accuracy of your work by applying dec to each of your intermediate results. Also apply dec to each of the intermediate results given here:
+
+ 423 22 13 15 6 1 20 20 28 11
+ 423 22 13 15 6 1 20 20 29 1
+ 423 22 13 15 6 1 20 22 9 1
+ 423 22 13 15 6 1 22 2 9 1
+ 423 22 13 15 6 3 2 2 9 1
+ 423 22 14 5 6 3 2 2 9 1
+ 425 3 4 5 6 3 2 2 9 1
+ 42 5 3 4 5 6 3 2 2 9 1
+ 4 2 5 3 4 5 6 3 2 2 9 1
+)
+
+NB. =========================================================
+Lab Section
+In fact, you should be able to do the repeated carries in your head, starting at the right end and writing down each digit of the normalized result in turn. In other words, you should be able to go directly from:
+
+ 423 22 13 15 6 1 20 20 28 11
+
+ to:
+
+ 4 2 5 3 4 5 6 3 2 2 9 1
+
+Make your own lists of numbers and normalize them, checking your results by entering them in the computer and applying dec to them.
+)
+
+NB. =========================================================
+Lab Section B. Addition
+This gives a simple method for adding any decimal numbers:
+
+ * Write the lists of their digits one below the other
+ * Add corresponding elements of the lists
+ * Normalize the resulting list
+ * Squeeze its digits together.
+
+Thus, to add 4672198 (four million six hundred seventy-two thousand one hundred ninety-eight) to 5943176542 write:
+
+ 5 9 4 3 1 7 6 5 4 2
+       4 6 7 2 1 9 8
+
+ 5 9 4 7 7 14 8 6 13 10
+ 5 9 4 7 8 4 8 7 4 0
+ 5947848740 (five billion nine hundred forty-seven million eight hundred forty-eight thousand seven hundred forty)
+)
+
+NB. =========================================================
+Lab Section
+Since the lists 5 9 4 3 1 7 6 5 4 2 and 4 6 7 2 1 9 8 differ in length, they cannot be added directly on the computer, but the shorter can be lengthened by leading zeros (which do not change the number it represents). Thus:
+)
+p=:5 9 4 3 1 7 6 5 4 2
+q=:4 6 7 2 1 9 8
+r=:0 0 0 4 6 7 2 1 9 8
+p+q
+p+r
+dec q
+dec r
+
+NB. =========================================================
+Lab Section
+The verb AND can be used to extend the shorter argument, and the verb ADD can be applied to the result:
+)
+p
+q
+p AND q
+ADD p AND q
+
+NB. =========================================================
+Lab Section C. Subtraction
+Subtraction may be treated exactly like addition,except that the elements of the second digit list are subtracted -- sometimes giving negative results. Thus, to subtract 4672198 from 5943176542 (using p and r from the preceding section):
+)
+p
+r
+p-r
+dec p-r
+5943176542-4672198
+
+NB. =========================================================
+Lab Section
+The carry process is now slightly complicated by the occurrence of negative elements -- add ten to a negative element, and subtract one from the preceding element.
+
+ 5 9 4 _1 _5 0 4 4 _5 _6
+ 5 9 4 _1 _5 0 4 4 _6 4
+ 5 9 4 _1 _5 0 4 3 4 4
+ 5 9 4 _2 5 0 4 3 4 4
+ 5 9 3 8 5 0 4 3 4 4
+)
+dec 5 9 3 8 5 0 4 3 4 4
+
+NB. =========================================================
+Lab Section
+If a larger number is subtracted from a smaller, the result is a negative number. Moreover, the resulting list will have a negative digit in the leading position, and the carry should then be performed to give negative (or zero) digits in each position.
+
+The negative digit is obtained by subtracting ten from a positive digit, and adding a compensating one to the preceding digit. Thus:
+)
+r-p
+dec _5 _9 _4 1 5 0 _4 _4 5 6
+dec _5 _9 _4 1 5 0 _4 _4 6 _4
+dec _5 _9 _4 1 5 0 _4 _3 _4 _4
+dec _5 _9 _4 2 _5 0 _4 _3 _4 _4
+dec _5 _9 _3 _8 _5 0 _4 _3 _4 _4
+-5 9 3 8 5 0 4 3 4 4
+dec -5 9 3 8 5 0 4 3 4 4
+
+NB. =========================================================
+Lab Section D. Abbreviated Schemes
+Once the procedures for adding and subtracting are understood, the carry can be combined with the addition or subtraction. This requires less writing, but is more subject to error. The absence of intermediate results also makes it more difficult to re-check the work.
+
+The digits of the result can also be "squeezed together", giving the final result rather than the list of digits that represent it:
+
+    dec p+r
+ 5947848740
+    p
+ 5 9 4 3 1 7 6 5 4 2
+    r
+ 0 0 0 4 6 7 2 1 9 8
+
+ 5 9 4 7 8 4 8 7 4 0
+ 5947848740
+
+    dec p-r
+ 5938504344
+    p
+ 5 9 4 3 1 7 6 5 4 2
+    r
+ 0 0 0 4 6 7 2 1 9 8
+
+ 5 9 3 8 5 0 4 3 4 4
+ 5938504344
+)
+
+NB. =========================================================
+Lab Section E. Multiplication
+Before showing the rather simple method for adding multi-digit numbers, we went through several rather complicated steps to justify it; that is, to make clear why and how it worked.
+
+We will now take the opposite approach, first showing a method for multiplication, and leaving it to the student to figure out why it works.
+
+We will, however, offer some hints in later sections, but recommend much experimentation and thought before looking at these hints.
+)
+
+NB. =========================================================
+Lab Section
+To multiply the numbers 234 (two hundred thirty-four) and 6514, we first form the multiplication table for the digit lists that represent them:
+)
+a=:2 3 4
+b=:6 5 1 4
+a *border b
+a */ b
+
+NB. =========================================================
+Lab Section
+We then add the numbers on each of the forward-sloping diagonals (sloping like /), to get the list 12 28 41 31 16 16.
+
+The decimal value of this list is the product of the original arguments. Thus:
+)
+dec 12 28 41 31 16 16
+234*x:6514
+
+NB. =========================================================
+Lab Section
+In order to add the diagonals of tables, we will introduce the adverb diag, and use it as follows:
+)
+add diag a */ b
+s=:add diag 1 2 3 4 5 */ 9 8 7 6 5 4 3 2 1
+s
+dec s
+12345*x:987654321
+
+NB. =========================================================
+Lab Section
+These diagonal sums suffer from the problem that their elements are larger than ten. They should therefore be normalized (by hand) as follows:
+
+ 9 26 50 80 115 100 85 70 55 40 26 14 5
+ 1 2 1 9 2 5 9 2 5 9 2 7 4 5
+)
+dec 9 26 50 80 115 100 85 70 55 40 26 14 5
+dec 1 2 1 9 2 5 9 2 5 9 2 7 4 5
+
+NB. =========================================================
+Lab Section
+The multiplication method may therefore be described as follows:
+
+ *Form the multiplication table for the digit lists
+ *Sum the diagonals
+ *Normalize the sums
+)
+
+NB. =========================================================
+Lab Section F. Basic Multiplication Tables
+In making these multiplication tables by hand, it will be necessary to know the value of products such as 4*8 and 9*3 and 5*0. For this reason it is wise to write down or memorize one or both of the tables shown below.
+
+In learning multiplication tables it is helpful to use the properties that were mentioned in an earlier section, such as the fact that multiplication is commutative, that the rows and columns "count by" 1 and 2 and 3 etc., and that the (backward-sloping) diagonal contains only squares.
+
+Also watch for other patterns that might help.
+)
+d=:i.10
+d
+d *border d
+d */ d
+
+NB. =========================================================
+Lab Section G. Hints
+In the numbers 324 and 6789, the 6 represents six thousands (6000), the 7 represents seven hundreds (700), the 8 represents eight tens (80), and the 9 represents nine units (9); similarly for 324.
+
+We may therefore examine the multiplication table for the lists 300 20 4 and 6000 700 80 9; its elements should sum to the total 324*6789:
+)
+a=:300 20 4
+b=:6000 700 80 9
+a */ b
+add a */ b
+add add a */ b
+324*6789
+
+NB. =========================================================
+Lab Section
+Since the elements may be summed in any order, we may first sum them diagonally:
+)
+c=:a */ b
+c
+add diag c
+add add diag c
+dec 18 33 62 71 5 36
+
+NB. =========================================================
+Lab Section
+The number of zeros (powers of ten) in the diagonal sum increases to the left, and the non-zero parts are the digits of a decimal representation of the product.
+
+Moreover, each diagonal of the table has a common number of zeros, accounting for the number of zeros in the diagonal sums.
+)
+
+NB. =========================================================
+Lab Section
+The product can also be viewed in terms of the ADDITION table of the exponents associated with the digit lists:
+)
+da=:3 2 4
+db=:6 7 8 9
+ea=:exp da
+eb=:exp db
+ea and eb
+p10=:ea +/ eb
+p10
+10^p10
+
+NB. =========================================================
+Lab Section
+The table da */ db may now be multiplied by the "powers of ten" table 10^p10 to give the same table given earlier by the product of a and b:
+)
+(da */ db)and <(10^p10)
+(da */ db) * (10^p10)
+a */ b
+
+NB. =========================================================
+Lab Section H. Division
+Division of a number m by a number n requires finding a number q such that n times q gives m
+
+This, like many problems in math, can be approached very effectively by making a reasonable guess at the result q, comparing the product n*q with m, and using the value of the diference as a guide for improving the guess. For example:
+)
+m=:524450
+n=:1234
+
+q=:400
+q
+n*q
+m
+m-n*q
+
+q=:q+30
+q
+n*q
+m
+m-n*q
+
+q=:q-5
+q
+n*q
+m-n*q
+
+NB. =========================================================
+Lab Section
+In the foregoing example, n divided into m an integer number of times. More generally, the difference m-n*q will be found to be a positive integer less than n, a result that is called the "remainder" on dividing m by n For example:
+)
+m=:524450
+n=:1235
+
+q=:400
+m-n*q
+
+q=:q+20
+q
+m-n*q
+
+q=:q+4
+q
+m-n*q
+
+NB. =========================================================
+Lab Section
+Much like addition and subtraction, the process of division can be abbreviated, perhaps best by using the digit lists ml and nl that represent the arguments m and n For example:
+
+ 1 2 3 5           NB. nl
+ 5 2 4 4 5 0       NB. ml
+ 4 8 12 20         NB. 4*nl
+
+ 1 _6 _8 _16 5 0   NB. ml - 4 times nl (with trailing zeros)
+
+ 0 3 0 4 5 0       NB. Normalized by carries
+ 3 0 4 5 0         NB. Delete leading zero
+ 2 4 6 10          NB. 2*nl
+
+ 1 _4 _2 _5 0      NB. Remaining list less 2 times nl
+ 5 7 5 0           NB. Normalized and leading zero deleted
+ 4 8 12 20         NB. 4*nl
+
+ 1 _1 _7 _20       NB. Remaining list less 4 times nl
+ 8 1 0             NB. Normalized and leading zero deleted
+ 810               NB. Remainder
+
+The quotient is formed from the list of multipliers of nl, that is, 424. Thus:
+)
+(1235*424)+810
+
+NB. =========================================================
+Lab Section
+Division can be abbreviated further by performing the normalization (and dropping of the initial zero) concurrent with the subtraction of the multiples of nl:
+
+ 1 2 3 5      n
+ 5 2 4 4 5 0  m
+ 4 8 12 20    n times 4
+ 3 0 4 5 0    remainder
+ 2 4 6 10     n times 2
+ 5 7 5 0      remainder
+ 4 8 12 20    n times 4
+ 8 1 0        final remainder (less than n)
+)
+
+NB. =========================================================
+Lab Section I. Review and Exercises
+SECS 1-2 show the addition of decimal numbers by adding the lists of their digits, and by using "carry" to normalize any of the resulting sums that exceed 9. Carrying consists of removing all but the final digit, and adding the removal to the preceding position. The process may have to be repeated.
+
+SECS 3-5 show abbreviated methods, and a four-step summary of the process.
+
+SECS 6-11 treat the cases of lists of different lengths, and of negative values resulting from subtraction.
+
+SECS 12-17 show a process for multiplication using diagonal sums of the multiplication table for lists.
+
+SECS 18-23 give the basic multiplication table for the arguments 0-9, and provide a guide to understanding why the multiplication process works.
+
+SECS 24-27 treat division as a process of guessing, guided by subtracting from the numerator the product of the guess with the divisor.
+)
+
+NB. =========================================================
+Lab Section
+1. Use the lists 3 1 4 2 7 6 and 5 3 4 6 2 1 to do by hand the complete addition of the numbers 314276 and 534621. Confirm your result by executing 314276+534621.
+
+2. Repeat EX1 for 628552+628552, and for further examples you wish to choose.
+
+3. Redo EX2 using the abbreviated method.
+
+4. Do by hand the carrying shown in Section 3.
+
+5. Do by hand the example of lists of differing lengths shown in Section 6.
+
+7. Do by hand the multiplication shown in Sections 13-16.
+
+8. Comment on the properties of the table d *TABLE d shown in Section 18. Then execute color d *TABLE d.
+
+9. Review Sections 19-23, and then state in your own words the reason that the multilication process works.
+
+10. Do by hand the division of 524450 by 1235 in the manner used in Section 25.
+
+11. Repeat EX10 using other arguments.
+)
+
+NB. =========================================================
+Lab Chapter PLOTS AND GRAPHS
+NB. =========================================================
+Lab Section A. Line Representation
+We can get some idea of the behaviour of an unfamiliar verb v5=:!&5 by looking at the lists x=:0 1 2 3 4 5 and y=:v5 x Thus:
+)
+v5=:!&5
+x=:0 1 2 3 4 5
+y=:v5 x
+y at x
+open y at x
+
+NB. =========================================================
+Lab Section
+A more immediate feeling for the verb can be obtained by using 1 draw y to represent each number by a vertical line of appropriate length, and by using flip 1 draw y to redraw the lines so that all stand upon the same base. Thus:
+)
+1 draw y
+flip 1 draw y
+
+NB. =========================================================
+Lab Section B.Graphs
+The verb plot provides similar pictures, allowing the specification of either simple vertical "sticks", "lines" between the top points, and both lines and sticks as in:
+
+ 'stick' plot y at x
+ 'line' plot y at x
+ 'line,stick' plot y at x
+
+The picture is displayed in a separate window, and focus may be returned to the execution window by pressing the Escape key, by pressing Alt-Tab, or by clicking the mouse on the x in the upper right corner of the graph.
+
+The stick plot is sometimes called a bar-chart. Try each of the foregoing examples:
+)
+'stick' plot y at x
+
+NB. =========================================================
+Lab Section
+We will use mainly the line and stick case, and therefore define the verb graph as shown below. Use it for similar verbs such as v6=:!&6 as illustrated below:
+)
+graph=:'line,stick'&plot
+v6=:!&6
+x=:0 1 2 3 4 5 6
+graph (v6 x) at x
+
+NB. =========================================================
+Lab Section
+The highest point of the graph of v6 appears at the top of the stick labelled 3 at its base, and at a height 20, as labelled on the vertical line at the left.
+
+The label 5 is called the x-coordinate of the point, and the label 25 is its y-coordinate. The list 5 25 gives both co-ordinates.
+
+Discuss the coordinates in the graph defined below:
+)
+graph (!&7 x) at x=:i.8
+
+NB. =========================================================
+Lab Section
+In math a verb is commonly called a "function", and we will use either word.
+
+Although (f x)at x and open (f x) at x can be studied to understand the behaviour of a function f, the graph of f provides a more striking view of its behaviour. This is analogous to the earlier use of color to bring out the relations shown by a table of numbers.
+
+We will further illustrate the virtues of the graph by applying it to functions that show interesting behaviour. In particular, we will use the functions sin and cos (abbreviations for the sine and cosine of trigonometry):
+)
+x=:0 1 2 3 4 5 6 7
+y=:sin x
+open y at x
+graph y at x
+
+NB. =========================================================
+Lab Section
+We can obtain a more refined view of the function sin by using a finer grid for x, such as 0 1r2 1 3r2 2 ... 13r2 7. We will use i. to generate such a grid:
+)
+x=:(i. 15)%2
+x
+y=:sin x
+graph y at x
+
+NB. =========================================================
+Lab Section
+Experiment with more refined and extended grids such as:
+
+ x=:(i.140)%10
+
+ x=:(i.280)%10
+
+ x=:((i.280)-140)%10
+
+For example:
+)
+x=:(i.175)%100
+y=:sin x
+graph y at x
+
+NB. =========================================================
+Lab Section
+Study of the graphs of the function sin provides an immediate feeling for the function, and raises questions that could be resolved by further study. For example:
+
+Is sin periodic?
+
+Is it an oscillation?
+
+Is it symmetric about the origin (the point x=0)?
+
+If it is periodic, can you determine its approximate period, that is, a value p such that sin (x+p) equals sin x for any value of x?
+
+Try similar experiments on the function cos. For example:
+)
+x=:(i.70)%10
+y=:cos x
+graph y at x
+
+NB. =========================================================
+Lab Section
+Th expression i:4 gives a symmetric list running from negative four to four. Use it to graph various functions for both negative and positive arguments, as illustrated below:
+)
+i:4
+x=:(i:60)%10
+'line' plot (cos x) at x
+
+NB. =========================================================
+Lab Section C. Review and Exercises
+This chapter reverts to drawing a picture of a number, using a picture one tick wide so that the height of the resulting stick is the value of the number. Graphs provide labelling of such sticks, so that their co-ordinates represent the values of arguments and results of a function.
+
+SECS 1-5 use 1 draw y and flip 1 draw y to provide vertical line representations of numbers, and graphs to give similar , but more general, representations using sticks, lines, and combined sticks and lines.
+
+SECS 6-10 treat the use of graphs to bring out the properties of functions, on negative as well as positive arguments.
+
+1. Use squared paper to graph functions from their tables, beginning with the square, square root, and identity functions given below:
+)
+sqr=:*:
+sqrt=:%:
+ident=:sqr on sqrt
+
+x=:i.10
+
+open (sqr x) at x
+
+open (sqrt x) at x
+
+open (ident x) at x
+
+NB. =========================================================
+Lab Section
+2. Use the computer to experiment with the several types of plots and graphs on various functions. Use functions such as f=:4&|, and others that you may find in earlier chapters.
+
+3. Augment the vocabulary prepared at the end of Chapter 3 by reviewing later chapters for new terms.
+)
+
+NB. =========================================================
+Lab Chapter ARRAYS
+NB. =========================================================
+Lab Section A. Terminology
+Just as packs of ten, one hundred, one thousand, and so on were found useful in representing large numbers, so organized arrangements (called arrays) are useful in dealing with large collections of numbers. We will first introduce some terms for talking about arrays.
+
+Lists and tables are examples of arrays. They and other arrays of numbers are produced by the function i. as illustrated below:
+)
+i.4       NB. A list of four elements
+
+i.3 4     NB. A table of three rows and four columns
+
+i.2 3 4   NB. A 3-dimensional array of 2 planes of 3-by-4 tables
+
+NB. =========================================================
+Lab Section
+The expression 0{a selects item 0 from an array, that is, the leading item. An item of a list is one of its numbers, an item of a table is one of its rows, and an item of a 3-dimensional array is one of its planes. For example:
+)
+A1=:i.4
+A2=:i.3 4
+A3=:i.2 3 4
+
+A1;A2;A3
+
+0{A1
+0{A2
+0{A3
+
+1{A2
+2{1{A2
+1{1{1{A3
+
+NB. =========================================================
+Lab Section
+Choosing a single number from A3 requires three selections (as in 1{1{1{A3). We say that A3 has three dimensions or axes (for selection along), and call it a rank-3 array.
+
+A3 has two planes, three rows, and four columns. Its shape is therefore described by the list 2 3 4. Similar remarks apply to other arrays.
+
+The last three examples below illustrate the fact that the shape of the shape of an array is its rank. Thus:
+)
+shape A3
+shape A2
+shape A1
+
+shape shape A3
+shape shape A2
+shape shape A1
+
+NB. =========================================================
+Lab Section
+It may have been noticed that our discussion began with arrays of ranks 1 and 2 (lists and tables), and did not include single numbers such as 5 and 365.
+
+They are called scalar arrays (or simply scalars) and are said to have rank 0, since a scalar has no axis along which to make a selection. Thus:
+)
+A0=:365
+A0;A1;A2;A3
+
+sA0=:shape A0
+sA1=:shape A1
+sA2=:shape A2
+sA3=:shape A3
+
+sA0;sA1;sA2;sA3
+
+(shape sA0);(shape sA1);(shape sA2);(shape sA3)
+
+NB. =========================================================
+Lab Section B. Scalar (Rank-0) Functions
+Functions such as the square (^&2) and cube (^&3) apply to each scalar element of an argument, and are therefore said to be scalar (or rank-0) functions. For example:
+)
+square=:^&2
+cube=:^&3
+
+A0;A1;A2;A3
+(square A0);(square A1);(square A2);(square A3)
+(cube A0);(cube A1);(cube A2);(cube A3)
+
+NB. =========================================================
+Lab Section C. Infinite Rank
+In contrast to a scalar function, the function +/ applies to its entire argument, and its rank is said to be infinite, or unbounded. Thus, +/0 1 2 3 is equivalent to 0+1+2+3, and the adverb / is said to "insert" the function + between items of the array argument:
+)
+A1
+
++/A1
+
+A2
+
++/A2
+
+(0{A2);(1{A2);(2{A2)
+(0{A2)+(1{A2)+(2{A2)
+
+NB. =========================================================
+Lab Section
+In the case of A2 the items are seen to be its row (lists). In the case of A3 the items are the planes:
+)
+A0
++/A0
+A1
++/A1
+A2
+
++/A2
+
+A3
+
++/A3
+
+NB. =========================================================
+Lab Section
+Repeat the examples of the previous session, using multiplication (*) instead of +.
+
+Also try the power function ^ in ^/A3, but DO NOT try ^/A2 because it will take a very long time to complete.
+)
+
+NB. =========================================================
+Lab Section D. Restricted Rank
+The rank conjunction " can be used to restrict the rank of the arrays to which a function applies.
+Thus +/"1 applies to each list (each rank-1 cell) of its argument, producing the sum of each row of the table A2. Thus:
+)
+A2
+
++/"1 A2
+
++/A2
+
+NB. =========================================================
+Lab Section
+The definiion of a function may be displayed by entering its name alone without an argument. The display of the function add used in earlier chapters shows it to be the rank-1 application of the sum function +/ .
+)
+add
+
+add A2
+
+add A3
+
+add add A3
+
+add add add A3
+
+NB. =========================================================
+Lab Section E. Vector Functions
+A function of rank 1 is called a vector function, but we will use the term mainly for functions that are of rank 1 and produce a vector result with the samer number of items as the argument.
+
+The rank-1 function ip=:+/@:*"1 is called the inner product; it multiplies its list arguments and sums the result. If v is a list and m is a square table, then m ip v is a vector function:
+)
+ip=:+/@:*"1
+
+v=:1 2 3
+m=: i.3 3
+m
+m ip v
+
+0 1 2 ip v
+3 4 5 ip v
+6 7 8 ip v
+
+NB. =========================================================
+Lab Section
+We used the name m for the table in the preceding example because in the context of the inner product function a table is commonly called a matrix. For any specified matrix m, the function L=:m&ip"1 is clearly a vector function. It is also called a linear function because it distributes over addition; that is, L v1+v2 is equivalent to (L v1)+(L v2). for example:
+)
+L=:m&ip"1
+L v
+L 3 2 1
+L 4 2 0
+
+(L 3 2 1) + (L 4 2 0)
+
+3 2 1+4 2 0
+L 3 2 1+4 2 0

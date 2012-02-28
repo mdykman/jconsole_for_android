@@ -1,0 +1,244 @@
+LABTITLE=: 'Huffman Coding'
+LABAUTHOR=: 'Roger Hui'
+LABCOMMENTS=: 0 : 0
+Initial Writing: 2004-02-24
+Last Updated: 2004-03-07
+)
+LABERRORS=: 1
+LABWRAP=: 0
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section Introduction
+
+Huffman coding assigns codes to words in a text based on the
+frequency (probability, weight) of occurrence of the words,
+to reduce the space needed to represent the text.  It exploits
+the disparity in word frequencies by assigning short codes
+to the more frequently occurring words, and conversely longer
+codes to the less frequently occurring words.
+
+A simplified version is presented here where the "words" are
+letters and codes are binary (lists of 0s and 1s).
+)
+
+NB. =========================================================
+Lab Section Encoding
+
+The assigning of codes is done by constructing a binary tree
+with minimum weighted path lengths with the words at the
+leaves.  The paths are the codes.
+
+The method is due to David A. Huffman (Kenneth E. Iverson, A
+Programming Language, Wiley, 1962, Section 3.4, Example 3.2;
+Donald Knuth, The Art of Computer Programming, Volume 1,
+Addison-Wesley, 1973, Section 2.3.4.5).  The main logic is
+embodied in the recursive verb hc below.  The arguments are a
+list of weights and a list of the corresponding subtrees.
+hc takes the two subtrees with the smallest weights and makes
+a new subtree from them, whose weight is the sum of the two
+weights.  Initially the weights are the original frequencies
+and the subtrees are the original words.  The recursion stops
+when there is just one subtree (and one weight).
+)
+
+hc=: 4 : 0
+ if. 1=#x do. y
+ else. ((i{x),+/j{x) hc (i{y),<j{y [ i=. (i.#x) -. j=. 2{./:x end.
+)
+
+hcodes=: 4 : 0
+ assert. x -:&$ y           NB. weights and words have same shape
+ assert. (0<:x) *. 1=#$x    NB. weights are non-negative
+ assert. 1 >: L.y            NB. words are boxed not more than once
+ w=. ,&.> y                  NB. standardized words
+ assert. w -: ~.w             NB. words are unique
+ t=. 0 {:: x hc w            NB. minimal weight binary tree
+ ((< S: 0 t) i. w) { <@(1&=)@; S: 1 {:: t
+)
+
+
+NB. =========================================================
+Lab Section
+
+We use a small example to illustrate the workings of the
+Huffman encoding algorithm.  The letters are a b c d e f
+and the corresponding frequencies are 3 1 4 1 5 9.
+
+hc constructs the minimum weighted binary tree t with
+the words at the leaves.
+
+< S: 0 t gives the words in left first traversal.
+
+{:: t gives the paths to the words.
+
+<@(1&=)@; S: 1 {:: t makes a list of the paths in left
+first order. (The 1&= makes the numbers boolean.)
+
+A final index gives the Huffman codes.
+)
+
+A=: 'abcdef'                 NB. letters
+F=: 3 1 4 1 5 9              NB. corresponding frequencies
+
+] t=: 0 {:: F hc ,&.>A       NB. minimum weighted binary tree
+] a=: < S: 0 t               NB. the words in left first traversal
+{:: t                        NB. paths to the words
+] p=: <@(1&=)@; S: 1 {:: t   NB. paths in standard form
+((;a) i. A) { p              NB. Huffman codes for a b c d e f
+] H=: F hcodes A             NB. Huffman codes for a b c d e f
+
+NB. =========================================================
+Lab Section
+
+To encode a given text, find the location of each letter in
+the alphabet A and then index into the list of Huffman
+codes H.  The raze of these codes is the Huffman encoding.
+)
+
+hencode=: 4 : '(>{.x) ;@:{~ (>{:x) i. y'
+
+(A i. 'cab') { H
+; (A i. 'cab') { H
+HA=: H;A
+HA hencode 'cab'
+
+NB. =========================================================
+Lab Section Decoding
+
+The dyad ;: (sequential machine) facilitates conversion from
+Huffman codes back into the original text.  The verb hst
+computes S and B required to effect the decoding.
+
+S is the state transition and output table ("state table"
+for short), a key item in the left argument for ;: .
+
+B is the list such that _2]\B are the letters that correspond
+to the entries in S.  B has '_' for entries in S that do not
+correspond to any letter.
+)
+
+NB. =========================================================
+Lab Section
+
+Each entry of the state table S is a pair of numbers of the
+new state and output code.  The table has outer shape s,2,
+where s is the number of possible states and 2 is the number
+of possible values in Huffman codes (0 and 1).
+
+The table is constructed by considering all possible prefixes
+of the Huffman codes, sorted by length and value.  This is
+the quantity p in the verb hst.  (The sorting is for esthetic
+purposes and is not required for the correct functioning of
+the decoding.)  0 and 1 are then separately appended to each
+prefix, q in the verb hst.  These correspond to the entries
+in S.
+
+If an entry of q is an actual Huffman code, the output code
+is 3 (terminate the current code word) and the new state is 0
+(scan for a new code word); if it does not, then the output
+code is 0 (continue building the current code word) and the
+new state is the row in q that corresponds to the abuilding
+code word.
+
+The last phrase below shows the correspondence between q S B;
+respectively, the code words, the state table (with the new
+state and output codes), and the original letters.
+)
+
+type =: 3!:0
+nullc=: '_'  NB. illegal character (use  {:a. in practice)
+
+hst=: 3 : 0  NB. Huffman decode state transition table
+ 'H A'=. y
+ assert. H-:&#A
+ assert. (1=#$A)*. 2=type A     NB. letters
+ assert. (1=#$H)*.32=type H     NB. corresponding Huffman codes
+ assert. (1=#@$&>H)*.1=type&>H  NB. H-codes are boolean lists
+ assert. H -: ~.H               NB. H-codes must be unique
+ assert. -. a: e. H             NB. H-codes must be non-empty
+ p=. ~. a: , ; <\@}:&.>H        NB. all possible prefixes
+ p=. p /: (#&.>p),.p            NB. sorted by length and value
+ q=. p ,&.>/ 0;1                NB. code words corresponding to S
+ assert. H e. ,q                NB. should contain all the H-codes
+ B=. (H i.,q){A,nullc           NB. plain letter for each state
+ b=. q e. H                     NB. 1 iff an actual Huffman code
+ e=. 1, }. 3 * b                NB. output codes
+ s=. (-.b) * p i. q             NB. state transitions
+ assert. -. (,&.>0 1) e. H      NB. nonce error if (,0) or (,1) are H-codes
+ S=. s,"0 e
+ S;B
+)
+
+'S B'=: SB=: hst HA
+$S
+#B
+(#B) = */ 2{.$S
+
+p=: ~. a: , ; <\@}:&.>H   NB. all possible prefixes
+p=: p /: (#&.>p),.p       NB. sorted by length and value
+q=: p ,&.>/ 0;1           NB. code words corresponding to S
+
+NB. code words, new state and output codes, original letters
+(":q),.' ',.(":<"1 S),.' ',.": <"0 ] _2 ]\B
+
+
+NB. =========================================================
+Lab Section
+
+Having the state table and corresponding letters in hand,
+it is a simple matter to recover the original text:  run the
+sequential machine using function code 3 -- return as result
+the state table indices at the time of output -- and use
+the indices to index into B.
+)
+
+hdecode=: 4 : '(>{:x) {~ (3;{.x);:y'
+
+SB hdecode HA hencode 'cabbed'
+
+NB. =========================================================
+Lab Section Example
+
+Here we use a more extended example.  A is a list of the
+space and the letters of the alphabet.  F is a list of the
+corresponding frequencies based on the book of Isaiah in
+the NIV bible.
+
+For example, the space occurs 34511 times, the letter a
+occurs 10413 times, b 2041 times, etc.  The letter z
+occurs 161 times, much less frequently than the letter a.
+
+H is a list of the Huffman codes for the letters A whose
+frequencies are F.  Thus:
+
+   letter   freq    hcode
+
+   space   34511    0 0
+   a       10413    1 0 0 1
+   b        2041    0 1 1 0 0 0
+   z         161    1 1 0 0 1 0 1 0 0 1
+
+The benchmarks show that hencode and hdecode are quite
+efficient.
+)
+
+A=: ' ',(97+i.26){a.
+F=: 34511 10413 2041 2339 6059 17277 3241 2668 9437 9454 292 1199 7690 3306 8723 11885 2110 39 8739 8780 11621 3883 1351 3953 53 3564 161
+(#A) = #F
+H=: F hcodes A
+H {~ A i. ' abz'
+
+HA=: H;A
+t=: 'the quick brown fox jumps over the lazy dog '
+HA hencode t
+SB=: hst HA
+SB hdecode HA hencode t
+
+x=: 1e6 $ t
+# y=: HA hencode x
+x -: SB hdecode y
+
+ts=: 6!:2 , 7!:2@]
+ts 'HA hencode x'
+ts 'SB hdecode y'

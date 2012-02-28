@@ -1,0 +1,94 @@
+LABTITLE=: 'Binomial Coefficients'
+
+NB. =========================================================
+Lab Section TABLE OR MATRIX
+
+The expression k ! n produces the kth binomial coefficient of order n, and the function bc=: i. !/ i. may be used to produce a table or matrix of binomial coefficients. For example:
+)
+0!5
+
+1!5
+
+2!5
+
+bc=: i. !/ i.
+
+bc 6
+
+NB. =========================================================
+Lab Section
+
+Such a matrix can be used in a variety of interesting ways. For example, its inverse is the matrix of alternating binomials, and its matrix product with a vector of polynomial coefficients (with powers in ascending order) produces the coresponding "expanded" coefficients. For example:
+)
+bct=: bc 6
+
+bct
+
+abct=: %. bct
+
+abct
+
+X=: +/ . *          NB. The matrix product function
+
+bct X abct
+
+c=: 5 1 4 0 2 2
+
+d=: bct X c
+
+x=: 0 1 2 3 4 5 6 7
+
+c p. x              NB. The polynomial with coefficients c
+
+d p. x
+
+c p. x+1
+
+NB. =========================================================
+Lab Section
+
+The alternating binomial coefficients can be used to produce the inverse of expansion. For example:
+)
+abct X d
+
+c
+
+c=abct X d
+
+NB. =========================================================
+Lab Section MANUAL METHODS OF EXPANSION
+
+If the vector c is written as a column to the right of the matrix bct, the product bct X c is easily computed by hand. Moreover, such computation may be less prone to error than commonly used methods. Try the experiment of expanding the vector c by by this method and by any others you may know.
+
+Finally, it is easy to jot down the table bct of any order, because each row is obtained from the preceding row by adding it to a shift of itself.
+
+It may also be interesting to compute the sums of the columns of bct and abct (+/ bct and +/ abct), particularly since the result of the latter is commonly mis-stated.
+)
+
+NB. =========================================================
+Lab Section IDENTITIES
+
+It is clear that the product bct X bct contains sums over products of various binomial coefficients. If, therefore, one could spot and articulate the pattern of the elements of the result, it could be used to state a host of identities, provided that the pattern holds for larger tables.
+
+Try to state the pattern in the following results:
+)
+bct X bct
+
+bct X bct X bct
+
+bct X bct X bct
+
+bct X bct X bct X bct
+
+NB. =========================================================
+Lab Section
+
+Using the fact that M % N denotes the element-by-element division of the matrix M by the matrix N, and the fact that 0%0 is defined to be 0, try to discern the pattern in the following results:
+)
+(bct X bct) % bct
+
+(bct X bct X bct) % bct
+
+(bct X bct X bct) % bct
+
+(bct X bct X bct X bct) % bct

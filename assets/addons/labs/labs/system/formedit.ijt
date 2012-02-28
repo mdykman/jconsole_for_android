@@ -1,0 +1,360 @@
+LABTITLE=: 'Form Editor'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Overview
+The Form Editor helps you design and program Windows forms. The editor reads form definitions from a script file, allows you to modify, test and run the definitions, and then writes the new definitions back to file. The end result is an ordinary script file that contains all the definitions for a form.
+
+Note that several windows may be open during this tutorial, and you should arrange the forms to minimize screen clutter.
+)
+
+NB. =========================================================
+Lab Section Loading the Form Editor
+Since a form is created in a script file, you must have a script window active when using the Form Editor.
+
+Create a new script window, i.e. press Ctrl-N. Then select menu command Edit|Form Editor... to activate the Form Editor. You will be prompted for a form name and type. Enter dice as the new form name, and select baseform.ijs as the form type and press OK.
+)
+
+NB. =========================================================
+Lab Section Design Dialog
+You will see the Design dialog, and your new form. The standard baseform has two push buttons, OK and Cancel, and a menu. The dots in the new form are grid marks.
+
+You may also notice that the script window you opened has some code written into it; when you create a new form, the system copies in the pre-defined form type, and uses that as the basis for your new form. These form types are predefined forms saved in directory system\packages\forms. Once you feel comfortable with the Form Editor, you can modify these standard forms or add your own to suit your own preferences.
+)
+
+NB. =========================================================
+Lab Section Run Button
+You can try out this form, by clicking the View button in the Design dialog. This displays the form as it will appear when you run it normally. The grid marks are not shown.
+
+Press Esc to close the view form.
+)
+
+NB. =========================================================
+Lab Section Cancel Button
+The standard baseform has a message handler pre-defined for the Cancel button. When you press Cancel, the form closes. Other actions, such as pressing the OK button or selecting a menu item, will be ignored, since no appropriate message handler has yet been defined.
+)
+
+NB. =========================================================
+Lab Section
+Load the definitions in the script window into your session by selecting menu item Run/Window, or pressing Ctrl-W. Then run the form by entering:
+
+   dice_run''
+
+Click first on the OK button - nothing will happen. Then click on the Cancel button - the form will close.
+)
+
+NB. =========================================================
+Lab Section Modify the Form
+Next we use the Form Editor to modify the form.
+
+In the dice form, click on the OK button - the border turns red, indicating that this is the currently selected control.
+
+Point to the OK button, and while holding the mouse down, move the button to the right. After you release the mouse, the form expands to accommodate the new position:
+)
+
+NB. =========================================================
+Lab Section
+Try moving the button using the compass buttons at the left of the Design dialog.
+
+Click on any compass button to move the control in the given direction. The control moves along an invisible grid of size shown in the center button. Click on the center button to toggle between grid size 1 and 4.
+
+While the dice form OK button is selected, hold down the shift key and click on the Cancel button. This time the border should turn blue, indicating that this control is also selected, along with the OK button.
+)
+
+NB. =========================================================
+Lab Section
+In the Design dialog, hold down the shift key and click on the right compass button. This aligns the right margin of the Cancel button with the right margin of the OK button. In general, holding down the shift key causes the compass buttons to align the selected controls.
+)
+
+NB. =========================================================
+Lab Section
+If you make a mistake while moving controls, press Undo to revert back to the previous state. You can Undo as many levels as you wish.
+
+To try this out, after aligning the controls, press Undo to revert back, and Redo to re-align them. Undo and Redo can also help you compare two different positions for a control.
+)
+
+NB. =========================================================
+Lab Section
+Finally, with both controls selected (one red, one blue) point to one of the controls, and while holding the mouse button down, move them back to the left. The controls move together. The display shows the current position of the red control.
+
+Click anywhere in the form outside of the buttons to switch off the highlighting.
+)
+
+NB. =========================================================
+Lab Section Event Handlers
+Event handlers are functions that respond to events on the form. The form created so far has only event handlers for form close and for the Cancel button. To view the definition for the Cancel button, hold down the Ctrl key, and click on the dice form Cancel button. The script window you originally opened is displayed, with the cursor at the following entry:
+
+ dice_cancel_button=: 3 : 0
+ dice_close ''
+ )
+)
+
+NB. =========================================================
+Lab Section
+This is an ordinary J verb, named as:
+
+  formname_controlname_controltype
+)
+
+NB. =========================================================
+Lab Section
+Now let us try writing a program to handle a click on the OK button.
+
+Hold down the Ctrl key, and click on the dice form OK button. The script window is now opened at the following entry:
+
+ dice_ok_button=: 3 : 0
+ )
+)
+
+NB. =========================================================
+Lab Section
+This is a template for a J program that will handle a click on the OK button.
+
+Type a new line in the program so that it reads as shown below. This line uses the verb wdinfo to display a Windows information message box. Be careful to type in the program exactly as shown, ensuring that the last line is a single right parenthesis; afterwards, you can experiment with a different message:
+
+ dice_ok_button=: 3 : 0
+ wdinfo 'OK button pressed'
+ )
+)
+
+NB. =========================================================
+Lab Section
+After this is entered, load the script, and run the program by entering:
+
+   dice_run''
+
+Click OK, then Cancel to return to the Design dialog.
+)
+
+NB. =========================================================
+Lab Section Event Handler Errors
+What happens if there is an error in the message handler?
+
+If the handler was defined but has an error in it, a message will display when it is run. To try this out, Ctrl-click the dice form OK button to switch to the script window, and change wdinfo to wdinf, a name that has not been defined:
+
+ dice_button_ok=: 3 : 0
+ wdinf 'OK button pressed'
+ )
+
+Load the form script and run the form. Click on the OK button. The system displays an error message.
+)
+
+NB. =========================================================
+Lab Section
+In some cases, the handler never even gets defined, which happens when the definition is badly formed. To experiment, change the message handler back to use wdinfo, and then delete the last quotation mark. By doing so, you create an error that will prevent the handler from being defined - since J requires that quotation marks be paired:
+
+ dice_button_ok=: 3 : 0
+ wdinfo 'OK button pressed
+ )
+
+You will now get an error message when you try to load the script.
+)
+
+NB. =========================================================
+Lab Section
+Correct this by changing to the script window and restoring the quotation mark.
+
+In the Design dialog, click OK to close the Form Editor and return to the script window.
+)
+
+NB. =========================================================
+Lab Section
+So far, we have created a new form, and added a message handler for the OK button. These definitions are all written to the script window.
+)
+
+NB. =========================================================
+Lab Section Adding a Button
+Next, let us add a button to roll two dice, and a static control to display the result.
+
+Switch back to the script window, run the Form Editor and click the Design dialog New button.
+
+Select a new button, with id roll and caption Roll. Here:
+
+ Class   is the type of control being created
+ Id      is the name used to identify the button to Windows
+ Caption is the text displayed on the button
+)
+
+NB. =========================================================
+Lab Section
+Set the Id to roll and the Caption to Roll.  It is typical to use Ids in lower case, and Captions that start with upper case - but you can use a different convention if you prefer.
+
+Click OK to create the control. Move the new button out of the corner.
+)
+
+NB. =========================================================
+Lab Section
+Next, click the Design dialog New button to create a static control with id values, and move it below the Roll button
+
+Double click on this control to bring up the Control dialog box.
+
+Clear the Caption, then click OK to return to the Design dialog.
+)
+
+NB. =========================================================
+Lab Section Defining the Roll button
+We now write a program for the Roll button that will display the result of two rolls of a dice in the static control. Hold down the Ctrl key, and click on the Roll button to switch to the script window. The window will display:
+
+ dice_button_roll=: 3 : 0
+ )
+)
+
+NB. =========================================================
+Lab Section
+Enter the following program, again being careful to type in the program exactly as shown:
+
+ dice_roll_button=: 3 : 0
+ wd 'set values *',":>:?6 6
+ )
+
+Now close the Design dialog to save the form. Load the script and run the form. Pressing the Roll button displays the dice throw.
+)
+
+NB. =========================================================
+Lab Section
+Press the Roll button to roll the dice again. Then press the Cancel button to exit.
+
+To save the new script window, select menu command File|Save As..., change to the User directory and save the script as dice.ijs.
+)
+
+NB. =========================================================
+Lab Section Using the Form
+To load the form, enter:
+
+  load 'user\dice.ijs'
+
+To run the form, enter:
+
+   dice_run''
+)
+
+NB. =========================================================
+Lab Section
+Suppose you wanted the form to run automatically when you load it. To do so, you should add a command to run the form at the end of the script file. Open the form with:
+
+   open 'user\dice.ijs'
+
+Then scroll to the bottom, and add a last line with the command:
+
+   dice_run''
+
+Close the script window and try running it:
+
+   load 'user\dice.ijs'
+
+The form will load and run.
+)
+
+NB. =========================================================
+Lab Section Using locales
+Forms may be run in any locale, indeed this is recommended where you have many forms that you need to keep distinct. To do so, add a cocurrent or coclass call at the beginning of the form script. For example, open the dice.ijs script,
+and enter at the top of the script:
+
+   cocurrent 'loc1'
+
+Then run the script. This will load the form into a new locale loc1.
+)
+
+NB. =========================================================
+Lab Section
+You can load as many forms as you wish. For example, run the script again to load the form again. You should now have both forms loaded. Minimize the J session to avoid screen clutter, then try using the forms - they run independently.
+)
+
+NB. =========================================================
+Lab Section Form Definitions
+Switch back to the script window and browse the contents. You will notice several definitions that will create objects when the script file is run. A definition 0 : 0 creates a character noun and a definition 3 : 0 creates a verb. The definition consists of all the text up to but not including the line beginning with a right parenthesis: ).
+
+At the beginning of the script file is the definition:
+
+  DICE=: 0 : 0
+  pc dice;
+  menupop "File";
+  menu new "&New" "" "" "";
+  menu open "&Open" "" "" "";
+  menusep ;
+  menu exit "&Exit" "" "" "";
+  menupopz;
+  xywh 132 8 34 12;cc ok button;cn "OK";
+  xywh 132 23 34 12;cc cancel button;cn "Cancel";
+  xywh 21 11 34 14;cc roll button;cn "Roll";
+  xywh 21 31 40 10;cc values static;cn "";
+  pas 6 6;pcenter;
+  rem form end;
+  )
+)
+
+NB. =========================================================
+Lab Section
+This defines a noun DICE that contains all the instructions needed to build the dice form. When you use the Form Editor, it reads in this definition, and allows you to modify it. When you exit from the editor, the new definition is written back to the script file. If you wish, you can modify this definition manually (i.e. outside of the Form Editor), but there is no good reason to do so.
+
+When the dice form is run, this definition is sent to the Window Driver, using verb wd.
+)
+
+NB. =========================================================
+Lab Section
+After the definition for DICE, come definitions of verbs associated with the form. There will always be a definition of the form name_run, which in this case is defined as:
+
+ dice_run=: 3 : 0
+ wd DICE
+ NB. initialize form here
+ wd 'pshow;'
+ )
+
+
+dice_run is the verb that initializes the form. The first command uses wd to send the DICE noun to the Window Driver - this defines the form. The comment line added after this, signifies that you may add additional commands to the Window Driver here, for example, you might want to send a command to select a specific control. Such additional commands you should enter manually, they do not form part of the Form Editor. In this case, there are no additional commands. Finally, the command wd "pshow;" tells the Window Driver to display the form.
+)
+
+NB. =========================================================
+Lab Section
+Finally there are some message handler verbs of the form: name_id_type which are the verbs invoked for specific responses from Windows.
+
+This form contains a single message handler, copied from the base form template:
+
+ dice_cancel_button =: 3 : 0
+ dice_close''
+ )
+
+This verb is run when the Cancel button is pressed, and simply closes the dice form.
+
+You will also see the two definitions you entered, which are run when the OK and Roll buttons are pressed:
+
+ dice_ok_button=: 3 : 0
+ wdinfo 'OK button pressed'
+ )
+
+ dice_roll_button=: 3 : 0
+ wd 'set values *',":>:?6 6
+ )
+)
+
+NB. =========================================================
+Lab Section Event Handlers
+Even for this simple form, several other event handlers can be defined. Here we illustrate two new types of event handler:  close and default event handlers.
+
+Run the Form Editor in the dice.ijs script. Select menu command Window/Code to bring up the Code dialog box. The display shows there are no definitions as yet for exit new and open (their names are indented) - these are the menu selections, but there are message handlers defined for cancel, ok and roll.
+)
+
+NB. =========================================================
+Lab Section
+Check the Event form button.
+
+The display shows that there are no definitions as yet for break, cancel, default, enter or handler, but there is a definition for run and close.
+)
+
+NB. =========================================================
+Lab Section Default Message Handler
+If defined, the default message handler will be invoked when no other appropriate message handler has been defined. This can be quite useful when developing forms - for example, you could define the default handler to display a message box indicating the result from Windows. Also, you could put all the program logic in the default handler, and not write any event handlers for specific events.
+
+Here we illustrate by assigning a utility function that formats and displays the result from Windows.
+
+Select the Design dialog menu command Window/Code to bring up the Code dialog box, select Event type form, highlight default and click on the Code button:
+
+In the script window, define the default handler as follows:
+
+dice_default=: wdqshow
+
+Now load the script and run the form.
+
+Select the menu item File|New. The default handler displays the Windows event data.
+)

@@ -1,0 +1,13 @@
+graphics/graph - change history
+
+== 1.0.0 ==
+ * initial 701 release
+
+== 1.0.1 ==
+ * gtkbox and gtkda renamed as canvas
+
+== 1.0.2 ==
+ * bug fix
+
+== 1.0.3 ==
+ * FONT defauted to PROFONT_jgl_

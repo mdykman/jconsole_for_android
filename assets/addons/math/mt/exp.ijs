@@ -14,7 +14,7 @@ NB.            generator and shape given
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -73,11 +73,11 @@ NB.   m ≥ 0, integer, approximant's degree
 NB.   r - n×n-matrix, r_m(A)
 
 geexpm2r=: 4 : 0
-  rbyvs=. +/ @ (* " 3 1)        NB. multiply report x by each row of x, then sum reports
-  b0b1=. ((0 0 ; 1 0) & {) @ ]  NB. extract (b[0] , b[1]) from y
+  rbyvs=. +/@:*"3 1       NB. multiply report x by each row of x, then sum reports
+  b0b1=. (0 0 ; 1 0)&{@]  NB. extract (b[0] , b[1]) from y
 
   NB. b[i] coeffcients of degree 13 Padé approximant for V (1st row) and U (2nd row)
-  bc=. _2 (|: @ (]\)) (>: x) {. 64764752532480000x 32382376266240000x 7771770303897600x 1187353796428800x 129060195264000x 10559470521600x 670442572800x 33522128640x 1323241920x 40840800x 960960x 16380x 182x 1x
+  bc=. _2 (|:@(]\)) (>: x) {. 64764752532480000x 32382376266240000x 7771770303897600x 1187353796428800x 129060195264000x 10559470521600x 670442572800x 33522128640x 1323241920x 40840800x 960960x 16380x 182x 1x
 
   NB. U=. A*Σ(b[i+1]*(A^i),i=0,2,..,m-1)
   NB. V=.   Σ(b[i  ]*(A^i),i=0,2,..,m-1)
@@ -88,7 +88,7 @@ geexpm2r=: 4 : 0
     NB. - multiply each table in pA by corresp. atom b[i], output: report 2×p×n×n
     NB. - sum multiplied tables, output: report 2×n×n
     NB. - shift 1st table's diagonal by b[0], 2nd table's diagonal by b[1]
-    'V U'=. pA (b0b1 sdiag (rbyvs (0 1 & }.))) bc
+    'V U'=. pA (b0b1 sdiag (rbyvs 0 1&}.)) bc
   else.
     NB. report of A powers (2 4 6)
     pA=. 2 4 6 gepow y
@@ -96,11 +96,11 @@ geexpm2r=: 4 : 0
     NB. V=. (b[8]*(A^2)+b[10]*(A^4)+b[12]*(A^6)) * (A^6)
     NB. U=. (b[9]*(A^2)+b[11]*(A^4)+b[13]*(A^6)) * (A^6)
     NB. VU=. V ,: U
-    VU=. pA (({: @ [) (mp " 2 2) (rbyvs (2 _3 & {.))) bc
+    VU=. pA ({:@[ mp"2 2 (rbyvs 2 _3&{.)) bc
 
     NB. V=.      V + b[6]*A6+b[4]*A4+b[2]*A2+b[0]*I
     NB. U=. A * (U + b[7]*A6+b[5]*A4+b[3]*A2+b[1]*I)
-    'V U'=. VU + pA (b0b1 sdiag (rbyvs ((0 1 ,: 2 3) & (] ;. 0)))) bc
+    'V U'=. VU + pA (b0b1 sdiag (rbyvs (0 1 ,: 2 3)&(] ;. 0))) bc
   end.
   U=. y mp U
 
@@ -147,9 +147,9 @@ geexp=: 3 : 0
     s=. >. 2 ^. normA % {: THETA           NB. find a minimal integer such that ||A/2^s||≤θ[13]
     y=. y % 2 ^ s                          NB. scaling
     y=. 13 geexpm2r y                      NB. use m=13
-    y=. mp~ ^: s y                         NB. undo scaling
+    y=. mp~^:s y                           NB. undo scaling
   end.
-  (^ mu) *  y (] * (% " 1)) d              NB. undo preprocessing
+  (^ mu) *  y (] * %"1) d                  NB. undo preprocessing
 )
 
 NB. ---------------------------------------------------------
@@ -245,7 +245,7 @@ NB. [1] http://icl.cs.utk.edu/lapack-forum/viewtopic.php?p=985#p985
 NB.     LAPACK/ScaLAPACK Development ‹ DGEEVX and left eigenvectors
 NB.     Julien Langou, Fri Dec 22, 2006 5:15 pm
 
-diexp=: (0 & {::) mp (^ @: (1 & {::)) * (2 & {::)
+diexp=: 0&{:: mp ^@:(1&{::) * 2&{::
 
 NB. ---------------------------------------------------------
 NB. heexp
@@ -302,7 +302,7 @@ NB.   E=. geexp A
 NB.   f=. ^ v
 NB.   F=. geexp V
 
-heexp=: ([ mp ((* ct)~ ^))~ & >/
+heexp=: ([ mp ((* ct)~ ^))~&>/
 
 NB. =========================================================
 NB. Test suite
@@ -410,8 +410,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testexp_mt_ 150 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testexp_mt_ 150 150
+NB.     _1 1 0 4 _6 4&gemat_mt_ testexp_mt_ 150 150
 NB. - test by random square complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testexp_mt_ 150 150
 
-testexp=: 1 : 'EMPTY_mt_ [ ((testheexp_mt_ @ (u hemat_mt_)) [ (testdiexp_mt_ @ (u dimat_mt_ u)) [ (testgeexp_mt_ @ u)) ^: (=/)'
+testexp=: 1 : 'EMPTY_mt_ [ (testheexp_mt_@(u hemat_mt_) [ testdiexp_mt_@(u dimat_mt_ u) [ testgeexp_mt_@u)^:(=/)'

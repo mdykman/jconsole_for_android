@@ -1,0 +1,827 @@
+LABTITLE=: 'Object Oriented Programming'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Overview
+This lab is about Object Oriented Programming.
+
+It covers OOP ideas and terminology and shows how to do it.
+)
+PREPARE
+3 : 0''
+fms=. wdforms''
+nos=. (conl 1) -. (2 {"1 fms) #~ (3 {"1 fms) e. 'jijs';'jijx'
+if. #nos do.
+  h=. 'Object Oriented Programming'
+  t=. 'There are some numbered locales that will be deleted when you go through this lab.'
+  wdinfo h;t
+end.
+clear ''
+coerase <'pbc'
+coerase <'pbcx'
+coerase <'pbs'
+coerase <'psn'
+coerase <'pbq'
+PREPARE
+
+NB. =========================================================
+Lab Section
+Lab "Locales" is a prerequisite. However, if you ignore details you can jump right in, and get back to it later.
+
+The lab first loads the locale utilities script, coutil.
+)
+load 'coutil'
+
+NB. =========================================================
+Lab Section What is OOP?
+OOP is modular programming.
+
+Building an application from scratch as a monolith is a recipe for failure.
+
+It is better to build and test small modules, and then combine them to build the application.
+
+It is best when you can use existing modules with a few new modules to build new applications.
+)
+
+NB. =========================================================
+Lab Section
+OOP is a particular way of building with modules.
+
+You can use OOP to build modules and applications in any language. However, there are a few things that are awkward unless supported directly in the language.
+
+J makes OOP easy.
+)
+
+NB. =========================================================
+Lab Section
+OOP is effective. Unfortunately, some people think that if some OOP is good, then more is better.
+
+It is a mistake to think of OOP as an alternative to FP (functional programming),
+
+All languages, at the low level, have FP, and at a higher level, have OOP.
+)
+
+NB. =========================================================
+Lab Section
+J is a strong FP language.
+
+J is also a good OOP language.
+
+If you only use J to build small, functional systems, then you do not need OOP.
+
+If you want to build applications from reuseable modules, then you can make good use of OOP.
+)
+
+NB. =========================================================
+Lab Section Terminology
+We use generic OOP terminology with a slight Java bias.
+
+Class is the term for module.
+
+A class is just a set of definitions.
+
+A class name is the name of a set of definitions.
+
+Method is the term for a class function.
+
+Field is the term for class data.
+)
+
+NB. =========================================================
+Lab Section
+Definitions are stored in script files, so a class is just a script file that has a class name, methods, and fields.
+
+A script that defines a class is a class script.
+)
+
+NB. =========================================================
+Lab Section
+To use a class in an application you build an object from the class.
+
+An object is an instance of a class.
+
+The class is like a blueprint. You build an object from the blueprint.
+)
+
+NB. =========================================================
+Lab Section
+Example: Suppose we want to create some "personal baggage check" objects. We want to be able to put J-nouns into these "pbc"-objects and to get the nouns back again. We may want several different "pbc"-objects; but they will all be of a similar nature, i.e. of the same class.
+
+The next section creates and opens a "pbc"-class script.
+
+Position the IJX and IJS windows so you can work with both.
+)
+
+NB. =========================================================
+Lab Section pbc class
+)
+SCRIPT
+coclass 'pbc'
+
+create=: verb define
+data=: keys=: i.0
+sn=:0
+)
+
+destroy=: codestroy
+
+put=: verb define
+data=: data,<y
+keys=: keys,sn
+_1+sn=: >:sn
+)
+
+get=: verb define
+r=.>(keys i. y){data
+b=. keys~:y
+data=: b#data
+keys=: b#keys
+r
+)
+SCRIPT
+PREPARE
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbc.ijs'
+PREPARE
+open jpath '~temp\pbc.ijs'
+
+NB. =========================================================
+Lab Section
+The first script line is: coclass "pbc"
+
+pbc is the class name.
+
+Class and object utilities are defined in colib.ijs. The co prefix is for "class/object".
+)
+
+NB. =========================================================
+Lab Section
+The class name is pbc.
+
+The p prefix indicates the class is personal and is not intended for distribution to others.
+
+A j prefix indicates it is distributed with J.
+
+Classes intended for distribution should have a prefix to avoid name conflicts. The prefix could be, for example, your initials, or company acronym.
+)
+
+NB. =========================================================
+Lab Section
+The script defines the create, destroy, put, and get methods.
+)
+
+NB. =========================================================
+Lab Section
+A script is just a text file, you need to load it to use it.
+
+Load a class to build the class locale.
+
+The class locale has its class name as its id.
+)
+PREPARE
+coreset''
+PREPARE
+conl 0  NB. list locale names
+
+load '~temp\pbc.ijs'
+
+conl 0  NB. notice new pbc locale
+
+NB. =========================================================
+Lab Section
+The class definitions are in the class locale.
+
+Take a look at the class definitions.
+)
+names_pbc_ ''
+
+create_pbc_
+
+NB. =========================================================
+Lab Section pbc object
+An object is built from a class.
+
+conew builds an object from a class.
+
+The result bc1 is a noun that refers to the new pbc object.
+)
+bc1=: conew 'pbc'
+
+NB. =========================================================
+Lab Section
+An object is a numbered locale.
+
+conew creates a new numbered locale and sets its path to class.
+
+The conew result is the id of the new locale.
+)
+conl 1  NB. list of object locales
+bc1  NB. conew result is the id of the new locale
+copath bc1  NB. bc1 locale has pbc in its path
+
+NB. =========================================================
+Lab Section
+bc1 is an object reference.
+
+Indirect locale names with bc1 refer to names in the object.
+
+foo__bc1 refers to foo in bc1.
+
+Look at some definitions in the object.
+)
+create__bc1
+put__bc1
+sn__bc1  NB. field sn not initialized yet
+
+NB. =========================================================
+Lab Section
+The create method should be called after conew.
+
+create sets fields to initialize the object.
+
+The pbc create method sets fields data, keys, and sn.
+)
+create__bc1 ''
+sn__bc1
+data__bc1
+keys__bc1
+
+NB. =========================================================
+Lab Section
+A pbc object is a Baggage Check. You put baggage in and get a ticket. You use the ticket to get your baggage back.
+
+Field data holds the baggage.
+
+Field keys tracks the corresponding tickets.
+
+Field sn ensures tickets are unique.
+)
+
+NB. =========================================================
+Lab Section
+Check and claim baggage with your pbc object.
+)
+put__bc1 'asdfasdf'
+put__bc1 i.7
+put__bc1 23.6
+get__bc1 1
+get__bc1 0
+
+NB. =========================================================
+Lab Section
+Create and use another pbc object.
+)
+bc2=: conew 'pbc'
+create__bc2 ''
+put__bc2 'qwerqwer'
+put__bc2 i.3
+put__bc2 1j1
+get__bc2 1
+get__bc2 1  NB. invalid ticket gets an error
+
+NB. =========================================================
+Lab Section
+Take a look at names in the base locale.
+
+The names from the pbc class and the two objects do not appear in base.
+
+The only pbc related names in the main application are bc1 and bc2, which are names we chose.
+)
+names ''
+
+NB. =========================================================
+Lab Section
+costate is an object report.
+
+refs are nouns that can be used to reference the object.
+
+id is the locale id.
+
+creator is the locale id where conew was executed.
+
+path is the object copath.
+)
+costate ''
+
+NB. =========================================================
+Lab Section
+)
+conames 1         NB. formatted list of objects
+conl 1            NB. list of objects
+conouns"0 conl 1  NB. nouns for each object
+test=: bc1
+conouns"0 conl 1
+
+NB. =========================================================
+Lab Section
+bc1 and bc2 have the same names defined.
+)
+copathnl__bc1 ''  NB. names in bc1
+copathnl__bc2 ''
+
+NB. =========================================================
+Lab Section
+They have the same method definitions, but have their own field definitions.
+)
+create__bc1
+create__bc2
+
+data__bc1
+data__bc2
+
+NB. =========================================================
+Lab Section
+copathnlx shows where definitions are in the path. It shows that fields are in the bc1 object locale and that methods are in pbc.
+)
+copathnlx__bc1 ''
+
+NB. =========================================================
+Lab Section
+copathnlx in bc2 shows that fields are defined in bc2.
+)
+copathnlx__bc2 ''
+
+NB. =========================================================
+Lab Section
+When you are finished with an object, destroy it.
+
+In some objects, destroy frees up resources used by the object. For example, it could release files or data bases, or destroy objects it had created.
+
+In the pbc class, destroy only needs to call codestroy to destroy the object locale,
+)
+destroy__bc1 ''
+destroy__bc2 ''
+
+NB. =========================================================
+Lab Section object life cycle
+1. create
+     obj =: conew 'class'
+     r =. ... create__obj ...
+
+2. use
+     ... method__obj ...
+     ... field__obj ...
+
+3. destroy
+     destroy__obj ''
+)
+
+NB. =========================================================
+Lab Section create
+The create method is a verb and can be a monad or dyad.
+
+The arguments affect how the object is created.
+
+Often the result is a return code, i.e. 0 for no error.
+)
+
+NB. =========================================================
+Lab Section
+create in some classes has no arguments, or only a right, and does not need to return a result.
+
+In this case, the conew and create can be combined in a dyadic use of conew.
+
+The x conew argument is the create right argument and the create result is ignored.
+)
+NB. dyadic conew is: b [ create__b [ b=:conew 'pbc'
+b =: '' conew 'pbc'
+put__b 'baggage'
+
+NB. =========================================================
+Lab Section coreset
+Sometimes in debugging you want to destroy all objects without using their destroy methods.
+
+coreset destroys all objects, except for those used by session windows. It does not call the destroy methods so will not free up more complicated resources like files.
+)
+q=: '' conew 'pbc'
+conl 1
+coreset ''
+conl 1
+
+NB. =========================================================
+Lab Section extending a class
+What if you have a class that does pretty much what you want, but you need a few changes.
+
+You can define a new class that extends the old class.
+
+The new class inherits definitions from the class it extends and you only need program the changes.
+)
+
+NB. =========================================================
+Lab Section
+We now define a new class pbcx that extends pbc.
+
+The pbcx class will have a new method that gets the first item in the baggage check and does so without a ticket.
+)
+
+NB. =========================================================
+Lab Section
+The next section opens and loads the pbcx class script.
+)
+
+NB. =========================================================
+Lab Section
+)
+SCRIPT
+coclass 'pbcx'
+coinsert 'pbc'
+
+create=: verb define
+create_pbc_ f. y  NB. our parent's create
+NB. do our create stuff here
+0
+)
+
+destroy=: verb define
+NB. destroy our stuff here
+destroy_pbc_ f. y  NB. our parent's destroy
+)
+
+getfirst=: verb def 'get {. keys'
+SCRIPT
+PREPARE
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbcx.ijs'
+PREPARE
+open jpath '~temp\pbcx.ijs'
+load '~temp\pbcx.ijs'
+
+NB. =========================================================
+Lab Section
+The coclass is pbcx.
+
+coinsert makes this class an extension of pbc.
+
+pbcx objects have the pbc definitions and the pbcx definitions.
+)
+
+NB. =========================================================
+Lab Section pbcx class
+Try the pbcx class before looking at its definitions.
+
+You can use a pbcx object like a pbc object, but you can also use its method getfirst.
+)
+bcx1=: conew 'pbcx'
+create__bcx1 ''
+put__bcx1 'testing'
+put__bcx1 i.6
+put__bcx1 'asdf'
+get__bcx1 1
+getfirst__bcx1 ''
+
+NB. =========================================================
+Lab Section
+The bcx1 object has a path of pbcx, pbc, z. This is because bcx1 is a pbcx object and class pbcx extends class pbc.
+)
+costate ''
+
+NB. =========================================================
+Lab Section
+copathnlx gives information about names in an object.
+)
+copathnlx__bcx1 ''
+bcx1
+
+NB. =========================================================
+Lab Section
+Fields data, keys, and sn are defined only in the object.
+
+pbcx marks names defined in the pbcx class. getfirst is defined only in pbcx.
+
+pbc marks names defined in the pbc class. get and put are defined only in pbc.
+
+create and destroy are defined in both pbcx and pbc.
+
+Using names to get this same information:
+
+  names__bcx1 ''
+  CPBC=:<'pbc'
+  names__CPBC ''
+  CPBCX=:<'pbcx'
+  names__CPBCX ''
+)
+
+NB. =========================================================
+Lab Section Destroy
+Destroy an object when you are finished with it.
+)
+destroy__bcx1 ''
+
+NB. =========================================================
+Lab Section
+Normally it is not necessary to destroy the class locale. However, in some cases it might be desirable.
+
+You could call codestroy in the class to destroy it.
+   codestroy_pbcx_ ''
+
+But we are still working with the class, so do not want to destroy it.
+)
+
+NB. =========================================================
+Lab Section create
+Take a look at the create method in pbcx:
+)
+create_pbcx_
+
+NB. =========================================================
+Lab Section
+The create verb in a class that extends another class usually has this form.
+
+Creating a pbcx object should first call create for the pbc class. This initializes fields required by pbc.
+
+Then create should set fields specific to the extended class. In this simple example there are no new fields in pbcx.
+)
+
+NB. =========================================================
+Lab Section
+The concept of calling the parent create method is important.
+
+The pbcx create could have had its own code to initialze key, data, and sn. However, this would make it dependent on the internal implementation of pbc, and the benefit of modularity would be lost.
+)
+
+NB. =========================================================
+Lab Section
+Calling a method (such as create) in the parent class is a little complicated.
+
+You do not need to understand why (create_pbc_ f.) works, but understanding that you must call any parent method this way is crucial.
+)
+
+NB. =========================================================
+Lab Section
+create_pbc_ f. y
+
+f. is an adverb so it executes as: (create_pbc_ f.) y
+
+create_pbc_ is the definition in pbc. If we execute create_pbc_, it sets the current locale to pbc and it would  define the fields in pbc. We want the object locale to stay current so the fields are defined there.
+
+f. returns the definition of its left argument. So we execute the create_pbc_ definition without setting the current locale as pbc and the fields are defined in the object.
+)
+
+NB. =========================================================
+Lab Section extending a class
+How to extend a class:
+ 0. add coinsert parent to the new class script
+
+ 1. call parent create with: create_parent_ f.
+ 2. do your create stuff AFTER you create your parent
+
+ 3. do your destroy stuff BEFORE you destroy your parent
+ 4. call parent destroy with: destroy_parent_ f.
+
+ 5. call parent methods with: method_parent_ f.
+)
+
+NB. =========================================================
+Lab Section objects in object
+An object can contain other objects.
+
+We now define a new pbq class that uses a psn object instead of an sn field.
+
+The next step opens and loads the psn class.
+)
+
+NB. =========================================================
+Lab Section
+)
+SCRIPT
+coclass 'psn'  NB. serial number
+
+create=: verb def 'sn=:0'
+
+destroy=: codestroy
+
+get=: verb def 'sn=:>:sn'
+SCRIPT
+PREPARE
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\psn.ijs'
+PREPARE
+open jpath '~temp\psn.ijs'
+load '~temp\psn.ijs'
+
+NB. =========================================================
+Lab Section
+The next step opens and loads the pbq class.
+)
+
+NB. =========================================================
+Lab Section
+)
+SCRIPT
+coclass 'pbq'
+
+create=: verb define
+data=: keys=: i.0
+mysn=: '' conew 'psn'
+)
+
+destroy=: verb define
+destroy__mysn ''
+codestroy ''
+)
+
+put=: verb define
+t=.get__mysn''
+data=: data,<y
+keys=: keys,t
+t
+)
+
+get=: verb define
+r=.>(keys i. y){data
+b=. keys~:y
+data=: b#data
+keys=: b#keys
+r
+)
+SCRIPT
+PREPARE
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbq.ijs'
+PREPARE
+open jpath '~temp\pbq.ijs'
+load '~temp\pbq.ijs'
+
+NB. =========================================================
+Lab Section
+Study the psn and pbq scripts.
+
+Notice how pbq creates, uses, and destroys a psn object.
+
+The psn object is created in pbq create, used in pbq put, and destroyed in pbq destroy.
+)
+
+NB. =========================================================
+Lab Section
+create and use a pbq object.
+)
+bq1=: '' conew 'pbq'
+put__bq1 'asdf'
+put__bq1 i.7
+get__bq1 1
+
+NB. =========================================================
+Lab Section
+You can work with the object in another object.
+
+Use the psn object in the pbq object.
+)
+w=: mysn__bq1
+w
+sn__w
+sn__w=: 23
+put__bq1 'asdf'
+
+NB. =========================================================
+Lab Section
+Indirect locale names can go through more than one level.
+
+You can use a name that goes directly through 1 or more objects.
+
+sn__mysn__bq1 is read as "sn in mysn in bq1".
+
+A multiple level indirect name like this is parsed as:
+sn__(mysn__bq1)
+
+You can list the names in these with:
+
+   names__bq1''
+   names__mysn__bq1''
+)
+sn__mysn__bq1
+sn__mysn__bq1=: 47
+put__bq1 1234
+
+NB. =========================================================
+Lab Section static field
+Usually each object has its own value of a field. This is what makes an object an instance of a class.
+
+Sometimes you want all objects to use the same value of a field the same way they use the same method definitions.
+
+A field that is shared by all objects is a static field.
+)
+
+NB. =========================================================
+Lab Section
+The next section opens and loads a class definition that has a static field.
+)
+
+NB. =========================================================
+Lab Section
+)
+SCRIPT
+coclass 'pbs'
+
+sn=: 0        NB. static field
+
+create=: verb define
+data=: keys=: i.0
+)
+
+destroy=: codestroy
+
+put=: verb define
+data=: data,<y
+keys=: keys,sn_pbs_
+_1+sn_pbs_=:>:sn_pbs_
+)
+
+get=: verb define
+r=.>(keys i. y){data
+b=. keys~:y
+data=: b#data
+keys=: b#keys
+r
+)
+SCRIPT
+PREPARE
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\pbs.ijs'
+PREPARE
+open jpath '~temp\pbs.ijs'
+load '~temp\pbs.ijs'
+
+NB. =========================================================
+Lab Section
+The pbs class is the same as the pbc class, except that all objects use the sn defined in the class locale, instead of their own private copies. This means that ticket numbers are unique across all pbs objects.
+)
+
+NB. =========================================================
+Lab Section
+Experiment with some pbs objects.
+)
+bs1=: '' conew 'pbs'
+bs2=: '' conew 'pbs'
+[ta=:put__bs1 'aaaaa'
+[tb=:put__bs1 'bbbb'
+[tc=:put__bs2 'cccc'
+get__bs2 ta     NB. bs1 ticket not valid in bs2
+
+copathnlx__bs1 ''
+names__bs1''
+CPBS=:<'pbs'
+names__CPBS ''  NB. sn is now in the pbs locale
+
+NB. =========================================================
+Lab Section class summary
+A class is a set of definitions.
+
+A class name identifies a class.
+
+A class is defined in a class script.
+
+coclass gives the class name.
+
+coinsert is used to extend a class.
+)
+
+NB. =========================================================
+Lab Section object summary
+An object is an instance of a class.
+
+create
+   obj=: conew 'class'
+   ... create__obj ...
+
+      or for simple classes
+
+   obj=: '' conew 'class'
+
+use
+   ... method__obj ...
+   ... fields__obj ...
+
+destroy
+   destroy__obj ''
+)
+
+NB. =========================================================
+Lab Section oop summary
+The programmer defines classes.
+
+The application creates objects of a class. The programmer chooses the name that is used to access the object. The object can contain many methods and fields, but introduces NO names into the application.
+
+It is as easy to have many objects of a class as it is to have one.
+)
+
+NB. =========================================================
+Lab Section summary
+OOP allows modular development of applications.
+
+OOP does not replace functional programming.
+
+Defining classes and using objects is easy and efficient.
+)
+
+NB. =========================================================
+Lab Section
+Using OOP in J:
+
+1. define a class
+  a. create script file for the definitions
+  b. first line is:
+
+     coclass 'pmyclass'
+
+  c. define create to initialize fields
+  d. define destroy (often just codestroy)
+  e. define methods
+
+2. create/use/destroy objects of the class
+)

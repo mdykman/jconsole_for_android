@@ -1,0 +1,1424 @@
+LABTITLE=: 'A J Introduction'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter J
+NB. =========================================================
+Lab Section Introduction
+J is executable mathematical notation.
+
+The fourteen chapters of this lab illustrate
+its use in experimenting with mathematical
+ideas in a variety of topics.
+
+To clarify ideas, enter your own experiments
+(which you may do at any point).
+)
+2+3
+x=: 2
+y=:3
+x+y
+
+NB. =========================================================
+Lab Section Functions
+There is a rich set of primitives.
+)
+2 + 3
+2 - 3
+2 * 3
+2 % 3
+2 ^ 3
+2 ^ 0.5
+_2 ^ 0.5
+2 ^. 3
+
+NB. =========================================================
+Lab Section Arrays
+Functions apply to arrays.
+)
+2 + 5 6 7
+2 3 4 * 5 6 7
+2 3 4 - 5 6 7
+2 3 4 % 5 6 7
+2 3 % 5 6 7    NB. error because arguments do not match
+
+NB. =========================================================
+Lab Section
+Some functions make arrays.
+
+i.n is a list of the first n integers.
+
+s $ v makes an array of shape s using the elements v
+)
+i. 7
+1 + i. 7
+2 ^ i. 7
+(i. 7) ^ 0.5
+3 5 $ 3 1 4 2
+x=:3 5 $ 3 1 4 2
+x * x
+
+NB. =========================================================
+Lab Section Assignment
+An array or function can be assigned a name by using =: (the copula).
+)
+i. 7
+x=:i. 7
+x
+x ^ 2
+power=: ^
+x power 2
+x power 0.5
+
+NB. =========================================================
+Lab Section Monadic or Dyadic
+A function can be monadic or dyadic, depending on whether
+it applies to one argument (on the right) or to two
+(on the left and right).
+)
+2 - 3   NB. Subtraction (dyadic)
+-3      NB. Negation (monadic)
+2 % 3   NB. Division
+% 3     NB. Reciprocal
+2 ^ 3   NB. Power
+^0 1 2  NB. Exponential
+
+NB. =========================================================
+Lab Section More Primitives
+The primitive functions include + - * % as well as ^
+(power), ^. (log), > (greater than), >. (greater-of, or maximum),
++. (or/GCD), *. (and/LCM), | (residue or modulo), etc.
+
+All of these can be monadic or dyadic, and apply to arrays.
+)
+2 ^ 3 4 5 6
+2 ^ 0.5 3 _5
+_2 ^ 0.5 6 7
+
+0 0 1 1 +. 0 1 0 1
+2 3 4 5 +. 10 20 30 40
+2 3 4 5 *. 10 20 30 40
+
+2 3 4 5 | 10 20 30 40
+2 3 4 5 <. 10 20 30 40
+2 3 4 5 >. 10 20 30 40
+
+NB. =========================================================
+Lab Section Insert
+Adverbs modify verbs (functions) to produce new verbs.
+
+For example, the adverb / inserts its verb argument between
+the items of its argument.
+
+Thus, +/ is summation and */ is product. These are the "big sigma"
+and "big pi" of conventional notation. Moreover, / can be
+applied to any function: >./ is maximum, <./ is minimum,
++./ is or or GCD, *./ is and or LCM, etc.
+)
+x=: 1 + i. 7
+x
++/ x
+*/ x
+>./ x
+<./ x
++./ x
+*./ x
+
+NB. =========================================================
+Lab Section Table
+If f is a verb (function), then f/ is a verb, and,
+like any other verb, it can be monadic or dyadic.
+The monadic meaning is "insert". The dyadic meaning is "table",
+that is, a function table.
+
+Function tables are a good way to organize systematic
+experimentation on unfamiliar functions.
+)
+x=:i.9
+x
+x +/ x
+x */ x
+x </ x
+x >/ x
+x >./ x
+x <./ x
+x +./ x
+x *./ x
+x |/ x
+
+NB. =========================================================
+Lab Section
+The Hilbert matrix is a simple function on the addition table.
+As shown below, its pattern is more apparent in the extended precision (rational) domain.
+
+Although Hilbert matrices are notoriously unstable
+under inversion, the matrix inverse (%.) gives an exact
+integer result (as shown below):
+)
+x=:i.7
+x +/ x
+% 1 + x +/ x
+
+y=:i.7x   NB. The final x gives extended precision
+H=:% 1 + y +/ y
+H
+%. H
+
+NB. =========================================================
+Lab Section
+The "triangle" of Pascal is an example of a function
+table, based on the binomial coefficient function ! .
+
+An advantage of treating it as a table rather than as
+a triangle is that matrix operations (such as matrix
+inverse) can be applied to it.
+)
+x=: i. 7
+x !/ x
+m=: x !/ x
+%. m       NB. The alternating binomial coefficients
++/ m
++/ %. m
+
+NB. =========================================================
+Lab Section Prefix
+Prefix is another adverb. f\ applies f to the prefixes
+of the argument.
+
+The monad < (box) is helpful in understanding prefix.
+)
+x=: 1+i.7
+x
++/\ x    NB. Subtotals
+<\ x
+
+*/\ x    NB. Progressive products
+<./\ x
+>./\ x
++./\ x
+*./\ x
+
+NB. =========================================================
+Lab Section Permutations
+The dyadic function x{y indexes y by x If p is
+a permutation p, then p{y permutes y by p.
+)
+p=:9 ?. 9    NB. A random permutation
+p
+p { p
+p { p { p
+6 9$p
+{/ 6 9$p
+{/\ 6 9$p
+
+NB. =========================================================
+Lab Section
+{/ (m,#p) $ p inserts { between m copies of the permutation,
+and computes the m-th power of p.
+
+The corresponding prefixes, {/\ (m,#p) $ p, are the successive powers
+of p.
+)
+p
+p{p
+p{p{p
+
+{/ 6 9 $ p
+
+{/\6 9 $ p
+
+NB. =========================================================
+Lab Section
+C. p computes the cycles of the permutation p. The
+Least Common Multiple (*./) of the cycle lengths
+is the order of the subgroup
+generated by p.
+)
+p
+C. p
+#&> C. p
+*./ #&> C. p
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Patterns: color
+NB. =========================================================
+Lab Section Addition Table
+ The pattern seen in
+ an addition table
+ can be emphasized
+ by producing a
+ window in which
+ equal values in the
+ table are assigned
+ the same color.
+ To continue, press
+ Esc to remove the
+ window, or click
+ the mouse on the
+ main window to
+ return focus to it.
+)
+require 'viewmat'
+color =: viewmat
+x=:i. 5
+x +/ x
+color x +/ x
+
+NB. =========================================================
+Lab Section Subtraction Table
+ The color window can
+ be moved away from
+ text that it may
+ obscure by clicking
+ on the top bar,
+ holding the button
+ down, and dragging
+ it to a new position
+ before releasing
+ the mouse button:
+)
+x -/ x       NB. Subtraction table
+color x -/ x
+
+NB. =========================================================
+Lab Section Multiplication Table
+When applied to a list of positive and negative
+integers, the multiplication table provides an
+interesting pattern.
+)
+pn=: i: _3
+pn
+pn */ pn
+color pn */ pn
+
+NB. =========================================================
+Lab Section
+The monad * is called the "signum" or "sign" function.
+When applied to a multiplication table, it shows
+the pattern of positive and negative results
+produced by multiplication.
+)
+pn
+*pn
+* pn */ pn
+color * pn */ pn
+
+NB. =========================================================
+Lab Section Remainder Table
+3 | 5 gives the "remainder" or "residue" on dividing 3 into 5.
+Study the following remainder table and (before
+advancing to the next panel), try to predict the
+appearance of coloring the 2-residue of the addition
+table given by 2 | (i.8) +/ (i.8).
+)
+y=: 1 + i. 6
+y |/ y
+color y |/ y
+
+NB. =========================================================
+Lab Section Checkerboard
+)
+2 | (i.8) +/ (i.8)
+
+color 2 | (i.8) +/ (i.8)
+
+NB. =========================================================
+Lab Section Fractals
+Residues of binomial coefficient tables provide
+examples of fractals (which "replicate according to their
+own pattern").
+
+This is illustrated in this and the next three panels.
+)
+2 | (i.2) !/ (i.2)
+
+color 2 | (i.2) !/ (i.2)
+
+NB. =========================================================
+Lab Section
+)
+2 | (i.4) !/ (i.4)
+
+color 2 | (i.4) !/ (i.4)
+
+NB. =========================================================
+Lab Section
+)
+2 | (i.16) !/ (i.16)
+
+color 2 | (i.16) !/ (i.16)
+
+NB. =========================================================
+Lab Section
+)
+3 | (i.16) !/ (i.16)
+
+color 3 | (i.16) !/ (i.16)
+
+NB. =========================================================
+Lab Section
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Patterns: Plots
+NB. =========================================================
+Lab Section Simple plot
+The square function (*:) applied to a list x
+may be plotted against its argument as follows:
+)
+require 'plot'
+
+x=: i.5
+y=: *: x
+
+x;y
+
+plot x;y
+
+NB. =========================================================
+Lab Section Stick and Line Plot
+A plot that shows vertical lines to the argument axis
+may be produced similarly as follows.
+)
+PLOT=: 'stick,line'&plot
+
+PLOT x;y
+
+NB. =========================================================
+Lab Section
+Combined plots of two or more functions
+are produced as follows.
+)
+z=: %: x  NB. Square root
+
+x;>y;z
+
+PLOT x;>y;z
+
+NB. =========================================================
+Lab Section
+The sine and cosine functions may be plotted as follows.
+)
+sin=: 1&o.
+cos=: 2&o.
+x=: 0.1 * i: 21
+x
+
+PLOT x;>(sin x);(cos x)
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Patterns: Variation
+NB. =========================================================
+Lab Section Introduction
+More general patterns may be observed by comparing
+successive items produced in applying a function
+to a systematic list argument.
+
+Items may be compared in various ways, notably by
+subtraction and by division.
+)
+] x=:i. 8        NB. The identity function ] displays x
+] y=: x ^ 2
+] z=: 2 ^ x
+
+}. y             NB. Drop first of y
+}: y             NB. Drop last of y
+(}. y) - (}: y)  NB. Subtraction of adjacent items of y
+(}. z) % (}: z)  NB. Ratio of adjacent items of z
+
+NB. =========================================================
+Lab Section Differences and ratios
+We now define functions called dif and rat to
+perform these comparisons.
+)
+dif=: }. - }:
+rat=: }. % }:
+
+dif y
+dif dif y
+
+rat z
+rat rat z
+dif rat z
+
+c=:x*x*x  NB. cube
+dif c
+dif dif c
+dif dif dif c
+
+NB. =========================================================
+Lab Section
+f ^: n is "f to the power n", that is, n applications
+of the function f.
+)
+q=:x*x*x*x*x
+q
+dif dif q
+dif ^:2 q
+
+dif ^: 0 1 2 3 4 5 6 q
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+
+)
+
+NB. =========================================================
+Lab Chapter Series
+NB. =========================================================
+Lab Section Introduction
+In the list a=: 1 3 5 7 9 11, the expression 2{a
+selects the item with the value 5, and 2 is said
+to be its "index".
+
+The function f=: >:@+: gives each element of a as a function
+of its index, and is said to define the "series" a. This
+is true only for arguments in the list i.#a, but if we
+assume (or assert) that f applies to every index, then it
+is said to define an "infinite" series.
+)
+a=: 1 3 5 7 9 11
+2{a
+7{a
+
+f=:>:@+:  NB. >: is increment, and +: is double
+f 2
+f 7
+f i.20
+
+NB. =========================================================
+Lab Section Determining a defining function
+Using the list b=: 0 _2 _4 0 16 50 108 we can define a
+function for the corresponding series. We will use
+repeated application of the difference function
+dif=:}.-}: to obtain the coefficients for the
+falling factorial polynomial ffp=:p.!._1. These matters will be discussed more fully in a subsequent chapter on polynomials.
+)
+b=:0 _2 _4 0 16 50 108
+dif=:}.-}:
+dif^:0 1 2 3 4 b
+c=:0 _2 0 6 0   NB. First column of table of differences
+]nc=: c % !i.#c NB. Normalized coefficients
+ffp=:p.!._1     NB. Falling factorial polynomial
+nc ffp i.7      NB. Reproduces b
+f=: nc&ffp      NB. A function that defines (and extends) the series
+f i. 15
+
+NB. =========================================================
+Lab Section
+ Try further examples, as illustrated below.
+)
+b=: 3+(i.7)^5
+b
+dif^:(i.7) b
+
+c=: {."1 dif^:(i.7) b
+c
+
+(c%!i.#c) ffp i.10
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Polynomials
+NB. =========================================================
+Lab Section Introduction
+The expression 2*x^3 is a monomial (single name),
+and a sum of monomials is a polynomial.
+
+The expression c p. x is a polynomial with "coefficients" c.
+)
+x=:5
+x^3
+2*x^3
+
+x=:0 1 2 3 4 5
+2*x^3
+
+c=:3 1 4 2
+c p. x
+(3*x^0)+(1*x^1)+(4*x^2)+(2*x^3)
+
+NB. =========================================================
+Lab Section
+Polynomials are important for a number of reasons:
+
+ 1. A sum of polynomials is a polynomial
+ 2. A product of polynomials is a polynomial
+ 3. The derivative of a polynomial is a polynomial
+ 4. The integral of a polynomial is a polynomial
+ 5. Polynomials serve to approximate many functions, such as
+   sine, cosine, and exponential.
+)
+c=:1 3 3 1
+d=:4 3 2 1
+e=:1 2 1
+(c p. x)+(d p. x)
+(c+d) p. x
+(c p. x)*(e p. x)
+1 5 10 10 5 1 p. x
+
+(1%!i.10) p. x
+^ x
+
+NB. =========================================================
+Lab Section Sums and products
+Since (e,0) p. x is equivalent to e p. x, coefficients that
+differ in number of items can be added as illustrated below.
+
+Moreover, the coefficients of a product can be obtained from
+the multiplication table by using the adverb /. to sum its diagonals.
+)
+c+(e,0)
+((e,0) p. x) = (e p. x)
+c */ e
+</. c */ e   NB. Box diagonals
++//. c */ e  NB. Sum diagonals
+(1 5 10 10 5 1 p. x) = ((c p. x) * (e p. x))
+
+NB. =========================================================
+Lab Section Derivatives and Integrals
+The derivative of a polynomial is obtained  by multiplying
+each monomial by its exponent, and reducing the exponent by 1.
+
+Equivalently, the coefficients of the derivative of c p. x
+are obtained by multiplying c by the exponents i.#c, and
+dropping the first item.
+)
+c
+i.#c
+c * i. # c
+der=:}. c * i. # c NB. Coefficients of derivative
+der
+require 'plot'
+PLOT=:'stick,line'&plot
+PLOT x;>(c p. x);(der p. x)
+
+NB. =========================================================
+Lab Section
+Conversely, the coefficients of the integral of c p. x
+are obtained by dividing c by 1+i.#c, and appending a leading
+constant of integration (for which we will use 20).
+)
+c
+1+i.#c
+c % 1+i.#c
+int=: 20 , c % 1+i.#c
+int
+PLOT x;>(c p. x);(int p. x)
+
+NB. =========================================================
+Lab Section
+We now define functions DER and INT for the derivative
+and integration of coefficients.
+)
+DER=:}.@(]*i.@#)
+
+INT=:[,(] % >:@i.@#@]) NB. >: is the "increment" function
+
+DER c
+
+20 INT c
+
+DER 20 INT c
+
+NB. =========================================================
+Lab Section
+If ce is a list of coefficients that approximates
+the exponential, then DER ce is approximately equal
+to ce.
+)
+ce=:1 % ! i. 7
+ce
+ce p. 0 1 2 3 4
+^ 0 1 2 3 4
+
+DER ce
+
+DER DER ce
+
+1 INT ce
+
+NB. =========================================================
+Lab Section Falling Factorial
+The falling factorial function is related to the power function,
+obtained as a "variant" of it by using ^ !. _1.
+
+The falling factorial polynomial ffp=: p. !. _1 (used in the
+chapter on series) is a polynomial based on the falling
+factorial rather than the power.
+)
+x=:5
+e=:4
+x^e
+x*x*x*x
+
+ff=: ^!._1  NB. Falling factorial function
+x ff e
+(x-0)*(x-1)*(x-2)*(x-3)
+*/(x-i.e)
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Taylor Series
+NB. =========================================================
+Lab Section Introduction
+A series that can be used as coefficients of a polynomial
+to approximate a function f is called the Taylor series
+for f. Taylor series are provided by the adverb t. as illustrated below.
+)
+^ t. 0  NB. Leading item of Taylor series for the exponential
+^ t.i.7 NB. First seven items of TS for ^
+sin=: 1&o.
+cos=: 2&o.
+
+sin t. i.7
+cos t. i.7
+
+i:3
+(cos t. i.7) p. i:3
+cos i:3
+
+NB. =========================================================
+Lab Section Extended  Precision and Rationals
+The expression ! x: 20 gives factorial 20 to complete
+precision. Moreover, 2 % x:3 gives the result of dividing 2 by
+3 in rational form.
+)
+! 20             NB. Approximation in "scientific notation"
+! x: 20
+
+2%3
+2%x: 3
+
+]a=:% 1 + i. x:6 NB. Reciprocals in rational form
+
+a +/ a           NB. Addition table
+
+NB. =========================================================
+Lab Section
+)
+a
+
+a */ a
+
+a %/ a
+
+^ t. i. x: 10 NB. Taylor series in rational form
+
+NB. =========================================================
+Lab Section Joint display
+A joint display of Taylor series.
+)
+>((^t.);(sin t.);(cos t.)) i. x:10
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Binomial Coefficients
+NB. =========================================================
+Lab Section Introduction
+Matrix products and inverses of binomial coefficient
+tables give interesting results.
+)
+]bct=: (i.7) !/ (i.7)
+]abct=: %. bct NB. Inverse gives alternating binomial coefficients
++/bct          NB. Column sums
+2^i.7
++/abct         NB. Not all zeros
+
+NB. =========================================================
+Lab Section Matrix Products of bct
+)
+mp=: +/ . * NB. Matrix product function
+bct mp abct
+bct mp bct
+bct mp bct mp bct
+
+NB. =========================================================
+Lab Section Identities
+Since the matrix products of abc are sums of products
+of binomial coefficients, any independent expression
+that gives these "powers" of bct yields a host of identities
+concerning binomial coefficients.
+)
+bct4=:bct mp bct mp bct mp bct
+
+bct4       NB. What is the developing pattern?
+
+bct4 % bct NB. pattern clarified by element-by-element division
+
+NB. =========================================================
+Lab Section
+We can now use a subtraction table as an exponent to
+give a result equal to bct4 (the fourth "power" of bct).
+)
+]st=: - (i.7) -/ (x: i.7)
+4 ^ st
+bct * 4 ^ st NB. Enter bct4 to compare with this result
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Geometry
+NB. =========================================================
+Lab Section Tables of coordinates
+A 4-by-3 table can be used to represent coordinates
+of the 4 vertices of a tetrahedron in 3-space, and
+an n-by-2 table represents the n vertices of a polygon.
+)
+]tri=:>0 0;7 4;3 0 NB. Base length 3 and altitude 4
+tri,.0.5           NB. Border with column of halves
+det=:-/ . *        NB. Determinant function
+det tri,.0.5       NB. Signed area (<0 vertices in clockwise order)
+
+area=: det@(,.&0.5)NB. Define area function
+area tri
+
+NB. =========================================================
+Lab Section Area of triangle
+Analysis of this use of the determinant for triangles
+(and tetrahedrons) may be found in Klein "Elementary
+Mathematics From an Advanced Viewpoint".
+
+Because areas of triangles are signed, the area of any
+polygon can be obtained by adding lines to triangulate
+it, and summing the areas.
+)
+]cctri=:0 2 1{tri NB. Counterclockwise triangle
+
+area cctri
+
+NB. =========================================================
+Lab Section Regular pentagon
+A regular pentagon is obtained by appying the cos
+and sin to angles at intervals of 2r5p1 (two-fifths
+of pi), and displayed by applying plot to the
+boxed x and y coordinates.
+)
+cos=:2&o.
+sin=:1&o.
+]pent=:(cos,.sin) 2r5p1 * i. 5
+require 'plot'
+|:pent    NB. Transpose table
+;/|: pent NB. Box rows (columns of pent)
+(fix=: ;/@|:) pent
+plot fix pent
+
+NB. =========================================================
+Lab Section
+The missing line from the last vertex to the first
+can be provided as follows.
+)
+0 1 2 3 4 0{pent
+
+plot fix 0 1 2 3 4 0{pent
+
+NB. =========================================================
+Lab Section Improper polygon
+An interchange of indices 1 and 2 illustrates the possibility
+of an"improper polygon" whose sides cross.
+)
+0 2 1 3 4 0{pent
+
+plot fix 0 2 1 3 4 0{pent
+
+NB. =========================================================
+Lab Section Triangulation
+The pentagon may be triangulated as follows:
+)
+plot fix 0 1 2 3 4 0 2 0 3 0 4{pent
+
+NB. =========================================================
+Lab Section Area of pentagon
+These triangulated components
+of the pentagon can be selected and boxed,
+and their areas can be determined, as follows:
+)
+]bt=: (0 1 2{pent);(0 2 3{pent);(0 3 4{pent)
+
+area&> bt
+
++/ area&> bt NB. Total area of pentagon
+
+NB. =========================================================
+Lab Section Area of concave pentagon
+Although the function area gives signed results
+according to the clockwise or counter-clockwise
+order of the vertices, these areas are all of
+the same sign.
+
+This occurs because pent is a convex polygon,
+and the significance of signed areas is not
+apparent. We will make it so by using a concave
+polygon, obtained by multiplying the second
+vertex of pent by zero.
+)
+]concave=: 1 0 1 1 1*pent
+plot fix 0 1 2 3 4 0{concave
+
+NB. =========================================================
+Lab Section
+The boxed coordinates of the triangular components
+of the concave pentagon are obtained as shown below.
+Their areas are not all of the same sign, but sum to
+give its total area.
+)
+]btc=: (0 1 2{concave);(0 2 3{concave);(0 3 4{concave)
+
+area&> btc
+
++/area&> btc
+
+NB. =========================================================
+Lab Section Displacement and side length
+The displacement from one vertex to the next
+can be obtained by rotating the table of vertices
+up by one place, and subtracting from it the
+original table.
+)
+tri
+1 |. tri
+(1 |. tri)-tri
+
+disp=: 1&|. - ]
+disp tri
+
+NB. =========================================================
+Lab Section
+The lengths of the sides can then be obtained from
+these displacements as the square root of the sum
+of the squares.
+)
+
+length=: %:@(+/)@(]*])"1
+
+]sides=:length disp tri
+
+NB. =========================================================
+Lab Section Heron's formula
+Heron's formula for the (unsigned) area of a
+triangle is the square root of the product
+of the semiperimeter with the semiperimeter
+less each of the sides.
+)
+sp=: %&2 @ (+/)
+sp sides
+
+(sp , sp - ]) sides
+*/ (sp , sp - ]) sides
+%: */(sp , sp - ]) sides
+area tri NB. Compare with signed area
+
+Heron=: %: @ (*/) @ (sp , sp - ])
+Heron sides
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Slope and Rate of Change
+NB. =========================================================
+Lab Section Introduction
+The rate of change of a function is an important attribute:
+for example, the rate of change of the sine is the cosine,
+the rate of change of the exponential is itself,
+and the rate of change of the nth power is n times the
+(n-1)th power.
+
+Although the instantaneous rate of change at a point may be difficult
+to determine, the average rate of change over a non-zero interval i is
+straightforward.
+)
+f=: 3:*]*]        NB. three times the square
+x=:0 1 2 3 4 5
+i=:0.1
+f x
+f x+i
+(f x+i)-(f x)     NB. Rise over interval
+((f x+i)-(f x))%i NB. Average rate of change
+
+NB. =========================================================
+Lab Section Slope
+We use the term "slope" for the average rate of change,
+because the graph of a function at intervals of i exhibits the
+average rate of change as the slopes of the lines connecting
+successive points.
+)
+require 'plot'
+PLOT=:'stick,line'&plot
+i*i.20
+f i*i.20
+PLOT f i*i.20
+
+NB. =========================================================
+Lab Section
+For a small interval the average slope approaches
+the slope AT each point, a result that is called the derivative
+of the function.
+)
+smi=:0.001
+PLOT f smi*i.100
+
+NB. =========================================================
+Lab Section
+The derivative (the slope AT a point) should be given by a zero interval,
+but this is the meaningless division of a zero rise by
+a zero interval.
+
+However, the case of a power function can be analyzed to
+give a simple meaningful result. For example, the cube
+function applied to x+i gives
+
+  (x*x*x)+(3*x*x*i)+(3*x*i*i)+(i*i*i)
+
+ Sutraction of the cube of x gives:
+
+  (3*x*x*i)+(3*x*i*i)+(i*i*i)
+
+ which can be divided by i to yield:
+
+  (3*x*x)+(3*x*i)+(i*i)
+
+ Since i is zero, the last two terms can be dropped to yield
+ 3*x*x (that is, three x squared, or formally, 3:*]*]) for the slope with  zero interval.
+)
+
+NB. =========================================================
+Lab Section
+Similar analysis for other powers gives n*x^(n-1) as the
+derivative of x^n Moreover, the derivative of a multiple of a
+function is the same multiple of the derivative, and the derivative
+of a sum of functions is the sum of their derivatives.
+
+These observations extend the analysis to polynomials, with the simple
+consequence that the derivative of the polynomial c&p. is
+the polynomial d&p., where d=:}. c*i.#c.
+)
+]c=:1&o. t. i. x:8 NB. Taylor series for sin
+
+c*i.#c
+
+]d=:}.c*i.#c       NB. Coefficients for derivative (cos)
+
+d&p. y=:0.1*i:30   NB. Range from about -pi to pi
+
+PLOT y;>(c&p. y);(d&p. y)
+
+NB. =========================================================
+Lab Section
+The foregoing shows that the essential notion of the
+calculus (that is, the derivative) can be treated without
+resort to the general analysis of limits, provided
+that attention is restricted to polynomials or to
+rational functions obtained as the ratio of polynomials.
+
+Since polynomials and rationals can be used to approximate all
+the functions of interest in an introductory course in
+calculus, this is not a serious restriction. This approach to
+the calculus will be pursued in the next chapter.
+)
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Calculus
+NB. =========================================================
+Lab Section Introduction
+We will restrict attention to polynomials, and will
+use the results developed in the chapter on Slopes.
+)
+DER=: }. @ (] * i.@#)     NB. Gives coefficients of derivative
+INT=: [ , (] % >:@i.@#@]) NB. Gives coefficients of integral
+
+c=: 1 3 3 1
+
+DER c
+
+4 INT c                   NB. Constant of integration 4
+
+DER 4 INT c
+
+(DER c) p. x=:i.7         NB. Evaluation of derivative polynomial
+
+c&p. d.1 x                NB. First derivative of c&p.
+
+NB. =========================================================
+Lab Section
+The operator d. gives successive derivatives of various orders
+(using d.1 and d.2 and d.3, etc.), as well as integrals (using
+d._1 d._2 etc.).
+)
+c&p. x
+
+c&p. d.1 x
+
+c&p. d.2 x
+
+c&p. d._1 x
+
+c&p. d._2 x
+
+c&p. d._1 d._1 x
+
+c&p. d._1 d.1 x
+
+NB. =========================================================
+Lab Section
+The Taylor adverb t. gives the coefficients of
+derivatives and integrals.
+
+>From the results shown below it is clear that d._1
+uses a zero constant of integration. The effect of
+any other can be obtained by adding it.
+)
+c&p. d.1 t. i.7
+
+c&p. d.2 t. i.7
+
+c&p. d._1 t. i.7
+
+(4: + c&p. d._1) t. i.7
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Theorems and proofs
+NB. =========================================================
+Lab Section Theorems
+A theorem is an assertion that one expression L,the left limb, is equivalent to another R, and may be expressed as the function T=. L -: R . A theorem may also be called a tautology, a function that yields 1 (true) for any argument. For example:
+)
+L=: +/@i.             NB. Sum of integers
+
+R=: (] * ] - 1:) % 2:
+
+T=: L -: R
+
+(T ; L ; R ; i.) 6
+
+NB. =========================================================
+Lab Section
+We can also assign the name n to the right argument function ] to allow a function such as R1 to be written more readably for a beginner. Thus:
+)
+n=: ]
+
+R=: (n*n-1:)%2:
+
+R 6
+
+NB. =========================================================
+Lab Section Proofs
+A proof is a sequence of equivalent expressions that lead in justifiable steps from a left limb to a right. We will write one expression below another to assert that it is equivalent to the one above it, possibly annotating it with the justification to provide a formal proof:
+
+L        NB. Theorem 1
+
++/@i.    NB. Definition of L
+)
+
+NB. =========================================================
+Lab Section
+The foregoing proof can be illuminated by entering each expression followed by an argument, and observing that each gives the same result. Any mis-step in a proof will likely show an anomolous result.
+
+An expression can be conveniently entered by moving the cursor up to it, pressing enter to bring it to the input area, modifying it by inserting the argument, and then pressing enter. Moreover, partial expressions may be entered to observe their results. Thus:
+)
+L 6
+
++/@i. 6
+
++/@|.@i.6 NB. Sum is associative  and commutative (|. reverses)
+
+(((+/@i.)+(+/@|.@i.)) % 2:)6  NB. Half sum of equal quantities
+
+R 6
+
+(i. + |.@i.) 6 NB. To show that this is indeed a list of n-1
+
+NB. =========================================================
+Lab Section
+How would you express the second step (+/@|.@i.6)
+in conventional notation (without English or arm-waving).
+Remember that Sigma from 5 to 0 is a sum over an empty list)
+
+Reproduce other of the proofs in pure conventional notation.
+)
+
+NB. =========================================================
+Lab Section
+The following is a similar proof that the sum of the first n odd integers equals the square of n:
+
+(odds=: 1: + 2: * i.)        NB. First odd integers
+
++/@(1: + 2: * i.)            NB. Sum of odds
+
+(n + +/@(2: * i.))           NB. Sum of n ones is n
+
+(n + 2: * +/@i.)             NB. Sum of twice is twice sum
+
+(n + 2: * (n * n - 1:) % 2:) NB. Result of preceding theorem
+
+(n + n * n - 1:)             NB. Simple algebra
+
+(n * n)                      NB. Simple algebra
+
+*:                           NB. Definition of square
+)
+
+NB. =========================================================
+Lab Section Induction
+An inductive proof is based (explicitly or implicitly) on a recursive definition of a function. Recursive definition is treated in
+the next chapter.
+)
+
+NB. =========================================================
+Lab Section Selcting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Recursion
+NB. =========================================================
+Lab Section Introduction
+If a function recurs in the expression that defines it, the function is said to be recursively defined. Such a definition must be supplemented by a definition for some specific argument, using an expression that does not make use of the function being defined.
+
+For example, the factorial of the argument j may be defined by j * f j-1 (or more formally by ] * f@<:), supplemented by the definition 1:
+(the constant function 1) for the case j=: 0. Thus:
+)
+f=: 1:`(]*f@<:) @. *
+
+f 5
+
+f"0 i. 6 NB. The function f is applied to each rank-0 cell
+
+NB. =========================================================
+Lab Section
+In the foregoing definition, the signum function * yields 0 if the argument is zero, and 1 if it is greater than zero.
+
+Consequently, the agenda @. chooses the last element of the gerund 1:`(]*f@<:) each time until the argument (repeatedly decremented by <:) becomes zero, in which case it chooses the constant function 1:, thus terminating the process.
+
+Alternatively, the imposition of zero rank could be incorporated in the recursive definition:
+)
+f=: 1:`(]*f@<:) @. * " 0
+
+f i. 6
+
+NB. =========================================================
+Lab Section
+The reference to f within the definition works only because the name f is assigned to the function defined; we may instead use the symbol $: for self-reference to define an anonymous function to which any name may be assigned:
+)
+1:`(]*$:@<:) @. * " 0 i. 6
+
+factorial=: 1:`(]*$:@<:) @. * " 0
+
+factorial i. 6
+
+NB. =========================================================
+Lab Section Quicksort
+Quicksort is an interesting example of the use of recursion: the
+basic procedure is the segregation of
+the items of an argument list according to whether they
+are less than the leading item, equal to it, or greater
+than it.
+
+This procedure is applied recursively to the
+segregated lists, repeating as long as the argument has
+more than one item.
+)
+y=: 52 9 65 41 70 91 52 76 26 4 73 32 63
+
+less=:    ([ < {.) # ]
+equal=:   ([ = {.) # ]
+greater=: ([ > {.) # ]
+
+less y
+(less;equal;greater) y
+
+qs=: ]`($:@less, equal, $:@greater) @. (# > 1:)
+
+qs y
+
+NB. =========================================================
+Lab Section
+Details of the action of the recursive definition
+of quicksort can be analyzed as illustrated below.
+)
+seg=: less;equal;greater
+y
+seg y
+> {. seg y       NB. Select and open first (less-than)box
+seg > {. seg y   NB. Segregate "less-than" list
+; seg > {. seg y NB. Raze the boxed list
+
+> {: seg y       NB. Select and open last (greater-than) list
+seg > {: seg y
+
+NB. =========================================================
+Lab Section
+Continuation may lead to empty boxes.
+)
+seg y
+
+> {. seg y
+seg > {. seg y
+
+> {. seg > {. seg y
+seg > {. seg > {. seg y
+
+; seg > {. seg > {. seg y
+
+NB. =========================================================
+Lab Section Selecting topics
+This is the end of this chapter. To continue with
+the next chapter, advance as usual. But to select any other
+chapter, click on Chapters under the Studio menu.
+)
+
+NB. =========================================================
+Lab Chapter Permutations and Anagrams
+NB. =========================================================
+Lab Section Introduction
+A permutation (re-ordering) of the letters of a word
+is called an anagram, and may be performed by the
+anagram function denoted by A. -- an anagram may or may not be an English word.
+)
+w=:'ART'
+2 A. w
+4 A. w
+!# w  NB. The number of anagrams (permutations) of w
+i.!#w NB. The indices of all !3 anagrams of w
+(i.!#w) A. w
+
+NB. =========================================================
+Lab Section
+The list to be permuted may be numbers, and the result may be
+used to index any list of the correct number of items.
+)
+]top=: (i.6)A.0 1 2 NB. Table of permutations
+
+top { 'ART'
+
+NB. =========================================================
+Lab Section
+The right argument may be any list of items, such as a
+boxed list of words.
+)
+]boxedlist=:'zero';'one';'two'
+
+top{boxedlist
+
+NB. =========================================================
+Lab Section
+This indexed list can also be produced by direct
+use of A. and the two equivalent results will be displayed
+side-by-side (separated by a boxed empty list provided
+by a:).
+)
+(top { boxedlist) ,. a: ,. ((i.6) A. boxedlist)
+
+NB. =========================================================
+Lab Section
+(i.!4) A. 0 1 2 3 (or (i.!4) A. 'ABCD') produces a
+complete permutation table of order 4. Coloring this
+table gives a pattern that "shows why" there are 4*3*2*1
+(that is, !4) permutations of order 4.
+
+The color window is better if expanded (by
+clicking in the middle tiny square at upper right of
+the window).
+)
+NB. require 'graph'
+color=:viewmat
+
+color (i.!4) A. 'ABCD'
+
+NB. =========================================================
+Lab Section
+A list (such as p=: 3 0 4 1 2 5) that is a permutation of its indices is
+called a permutation vector, and p&{ is the corresponding permutation
+function.
+
+This permutation can also be prescribed by stating that position 3
+receives the item from position 1, that that position receives
+from position 0, and that (completing the cycle) receives from position
+3; further that position 4 receives from 2, which receives from 4; and position 5 (a cycle of one) remains in place.
+
+A boxed list of this cycle representation is given by the function C. .
+)
+p=: 3 0 4 1 2 5
+p&{ 'ABCDEF'
+
+C. p
+
+(C. p)&C. 'ABCDEF'
+
+NB. =========================================================
+Lab Section
+We now box each row of the table p4 of permutations of
+order 4, append to the result the cycle representations of p4, and transpose
+the whole for easier reading.
+)
+<"1 p4=: (i.!4) A. i.4
+
+|: (<"1 p4=: (i.!4) A. i.4) ,. (C. p4)
+
+NB. =========================================================
+Lab Section
+This is the end of the lab.
+)

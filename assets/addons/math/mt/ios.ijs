@@ -14,7 +14,7 @@ NB.            matrix edge
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -62,7 +62,7 @@ NB. =========================================================
 NB. Local definitions
 
 NB. convert rIOS to opened (non-boxed) IOS
-rios2oios=: < @ dhs2lios/ " 1 @: |:
+rios2oios=: <@dhs2lios/"1@:|:
 
 NB. =========================================================
 NB. Interface
@@ -72,10 +72,10 @@ NB. Miscellaneous
 
 NB. lIO 1st element e with max(|Re(e)|+|Im(e)|) from list y
 NB. implements BLAS's IxAMAX
-liofmax=: (i.>./) @ sorim
+liofmax=: (i.>./)@sorim
 
 NB. lIO last element e with max(|Re(e)|+|Im(e)|) from list y
-liolmax=: (i:>./) @ sorim
+liolmax=: (i:>./)@sorim
 
 NB. ---------------------------------------------------------
 NB. th2lios
@@ -97,7 +97,7 @@ NB. - monadic case is possible, though awkward:
 NB.     _3 _2 _1 -: th2lios _3
 NB.     5 4 3    -: th2lios  3
 
-th2lios=: ] + (i. @ -)
+th2lios=: ] + i.@-
 
 NB. ---------------------------------------------------------
 NB. dhs2lios
@@ -141,7 +141,7 @@ NB. Notes:
 NB. - rios with columns count less than array's rank is
 NB.   indexing the slice
 
-rios2ios=: < " 1 @ rios2oios
+rios2ios=: <"1@rios2oios
 
 NB. ---------------------------------------------------------
 NB. rios2lios
@@ -174,7 +174,7 @@ NB.   sh=. 10 11 12 13
 NB.   array=. i. sh
 NB.   lios=. sh rios2lios rios
 
-rios2lios=: ((*/\.) @ (1 & (|.!.1)) @ [) (+/ @: *) ((+ (1 & (|.!.0) @ (0 & >))) @ |: @: > @ , @ { @ rios2oios @ ])
+rios2lios=: */\.@(1&(|.!.1))@[ +/@:* (+ 1&(|.!.0)@(0&>))@|:@:>@,@{@rios2oios@]
 
 NB. ---------------------------------------------------------
 NB. liosE
@@ -227,8 +227,8 @@ NB. ***--- ------ ------
 NB. ------ ***--- -***--
 NB. ------ ------ ------
 
-liosE=:  1 : 'dhs2lios_mt_@(((_1-0>.m)- (*((<:|m)&+))~),[)'
-liosW=:  1 : 'dhs2lios_mt_@(((   0<.m)-~(*((<:|m)&+))~),[)'
+liosE=: 1 : 'dhs2lios_mt_@(((_1-0>.m)- (*((<:|m)&+))~),[)'
+liosW=: 1 : 'dhs2lios_mt_@(((   0<.m)-~(*((<:|m)&+))~),[)'
 
-liosN=:  1 : ']dhs2lios_mt_(((-~((<:|m)&+))~(*&(0<.m))),[)'
-liosS=:  1 : ']dhs2lios_mt_(((-~((- |m)&-))~(*&(0>.m))),[)'
+liosN=: 1 : ']dhs2lios_mt_(((-~((<:|m)&+))~(*&(0<.m))),[)'
+liosS=: 1 : ']dhs2lios_mt_(((-~((- |m)&-))~(*&(0>.m))),[)'

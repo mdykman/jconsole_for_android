@@ -1,0 +1,1078 @@
+LABTITLE=: 'Turtle Geometry - JTurtle User Guide'
+LABAUTHOR=: 0 : 0
+L. Fraser Jackson
+I am indebted to Brian M. Schott for
+many helpful comments.  He has a different Turtle graphics
+system which has a range of 3D tools and multiple turtles.
+It can be downloaded from the JWiki.  See
+http://www.jsoftware.com/jwiki/FrontPage
+)
+LABCOMMENTS=: 'Copyright 2006 Version 0.006'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Chapter Introduction
+NB. =========================================================
+Lab Section Is this for you?
+This lab is an introduction to JTurtle for J users with some experience of J at the J Primer level. Even beginners should be able to learn enough to use Turtle Geometry and combine it with other elementary geometric ideas by working through the Lab.  Experienced programmers may prefer to use the help window accessed by   help''  after load 'turtle'. It should be useful to others after running this Lab.
+)
+
+NB. =========================================================
+Lab Section
+Tne classical reference for Turtle Geometry is:
+H. Abelson and A. diSessa, Turtle Geometry: The computer as a medium for exploring mathematics.  MIT Press, 1980.
+
+To load the turtle geometry package, enter:
+)
+
+load 'turtle'
+
+NB. =========================================================
+Lab Section Introduction to JTurtle
+Turtle geometry is based on movements of an object from its current position and leaving a trace of its path. JTurtle is restricted to diagrams in the plane. Have fun by trying out your own ideas at any stage of the Lab.
+
+We augment turtle geometry with functions using the usual cartesian system of referring to points in the plane taught in schools.  This provides functions for drawing nearly all of the diagrams of school plane geometry.
+)
+
+NB. =========================================================
+Lab Section Similarity to Logo
+The functions and statements used are very similar to those  introduced within the language Logo. Most elementary teaching materials based on Logo should be able to be used with the few necessary changes after doing this Lab.
+
+Look at the Chapter headings to give yourself an idea of the subjects covered.
+)
+
+NB. =========================================================
+Lab Section The session window
+The window where the lab is running is the session window.  We also call it the lab window.  To advance the lab you must have focus on the lab window, meaning the cursor must be in that window.  Click in the window to give it focus if necessary after displaying a graph.
+
+The location of the graphics display is dependent on your operating system.  In the next section, if you are using Windows, move the displayed graph to the right of your screen, so you can see the graph window and the Lab text.  If you are using another operating system the graph may be hidden. You may find it easier to move the top of the *.ijx session window to the bottom of the graph.
+
+Click within the lab window to give it focus if necessary.
+)
+
+NB. =========================================================
+Lab Section An example
+
+The J sentence below generates the displayed graph. Its simplicity suggests the graph has a very simple structure. The sentence requests the computer to show a drawing obtained by repeating 20 times the path after the comma. The path draws a pentagon and then turns the turtle heading 18 degrees.
+)
+show repeat 20,(repeat 5 fd 1 rt 72) rt 18
+
+NB. =========================================================
+Lab Section Key ideas
+The J sentence above contains the key ideas for JTurtle.  It consists of a show verb, followed by the path to be displayed.
+
+A show verb clears the screen and does a new drawing starting at the origin with the turtle headed to the top of the screen.  An empty right argument just displays the turtle.  A name in the optional left argument creates a named graph.
+
+Paths are represented in the computer by lists of numbers.  The number of repetitions 20 is joined to a path by the comma.
+)
+
+'pentagons' show repeat 20,(repeat 5 fd 1 rt 72) rt 18
+
+NB. =========================================================
+Lab Section A turtle
+The middle of the bottom side of the small teal coloured triangle is the position of the turtle.  The direction the turtle is facing is called the heading and is from its position to the point of the triangle opposite to the shortest side.  The turtle normally only goes straight forward or straight backwards.
+)
+PREPARE
+gdclose'pentagons'
+PREPARE
+showf ''
+
+NB. =========================================================
+Lab Section Basic Commands  - fd, bk, rt, lt (1 of 2)
+There are four basic verbs or commands to create components of a turtle path.
+
+    fd    moves the turtle forward
+    bk    moves the turtle backwards
+
+These commands must be followed by a distance in the chosen direction.
+
+    rt    turns the turtle towards the right
+    lt    turns the turtle towards the left
+
+These commands must be followed by the number of degrees to turn.
+)
+
+NB. =========================================================
+Lab Section Examples and experiments
+The commands in the next section illustrate some turtle paths.
+
+Moving your cursor back to a line and pressing enter will transfer the line to the bottom of the lab window.  You can then modify the line and when you have the expression you want, execute it by pressing  Enter.
+)
+
+NB. =========================================================
+Lab Section Basic Commands  - fd, bk, rt, lt (2 of 2)
+The showf command has a fixed window with the origin in the center and about a 100 units movement in from the origin. It is a good tool for seeing the effect of specific commands.
+
+Try the following examples
+    showf fd 30
+    showf bk 50
+    showf rt 90
+
+and make changes to them to see what these verbs do.
+)
+
+NB. =========================================================
+Lab Section Starting a diagram - The show verbs
+There are three variants of the show verb.
+
+    show    scales the graph to use nearly all the graph
+            window
+
+    showf   gives a predefined window, which permits
+            movement of 100 units in all directions
+            from the origin at the center of the window
+
+    showp   draws the graph in a plot window, with scales
+            along the axes.  It does not retain the
+            isometric properties of show and showf so a
+            square may convert to a rectangle and a circle
+            to an ellipse.  Rescale the form to fix this.
+            A left argument can specify plot options such as
+            a title, axis labels, etc.
+)
+'a' show  turtle 40
+'b' showf turtle 40
+NB.  these display a turtle shape with long side of 40
+NB.  Move the graphs to the side and leave them open.
+
+NB. =========================================================
+Lab Section Initialising the turtle
+The initial heading is sometimes called heading North.  To the right of the screen is called East, to the left West and to the bottom South.
+)
+
+NB. =========================================================
+Lab Section Multiple steps
+Diagrams with one step are boring.  To make multiple steps just list them in the order you want them done.
+)
+show rt 30 fd 40 rt 60 fd 40 rt 60 fd 40 rt 120 fd 80
+
+NB. =========================================================
+Lab Section Path construction
+The path verbs  fd, bk, rt and lt  construct a path from their right argument.  They expect a right argument which is a scalar or vector.  If it is a scalar it constructs a single step or turn. If it is a vector it uses the first element to define an action which is followed by the path constructed from the expression to its right.
+
+If a path verb is used without a left argument it returns a turtle path.  If it is used with a left argument, it returns the left argument followed by a turtle path.  This result will be processed by the path verb on its left.
+)
+
+NB. =========================================================
+Lab Section Examples and experiments - 2
+Re-execute the lines below to do simple experiments and explore the effect of the actions and adding steps to a path.  You should begin by adding steps at the end of the path.  Then explore adding steps earlier in the path.
+
+Try commands like
+
+    showf rt 30 fd 40 rt 60 fd 40 rt 60 fd 40 rt 120 fd 80
+    showf bk 40 fd 20
+    showf rt 45 fd 50 bk 100 fd 50
+    showf repeat 8 fd 8 lt 45 fd 24 rt 90
+
+Construct a line from northwest to southeast and place the turtle in the middle of the line.
+)
+
+NB. =========================================================
+Lab Section Square and repetition
+show lt 45 fd 100 bk 200 fd 100
+
+draws the line and places the turtle where wanted
+
+To draw a square you repeat four times the action of going forward the length of a side and then turning 90 degrees.
+)
+show repeat 4 fd 10 rt 90    NB.  for a side of length 10
+
+NB. =========================================================
+Lab Section Path representation
+The path can be represented two ways:
+
+In graph 'a' as J functions to be executed
+In graph 'b' as the character representation of steps to be taken on the path to be constructed.
+
+If you enter just the two paths you will see the difference.
+)
+repeat 4 fd 1 rt 90    NB.  is a list of numbers
+'repeat 4 fd 1 rt 90'  NB. is a list of characters
+
+
+'a' show repeat 4 fd 1 rt 90   NB.  draws a square
+'b' show 'repeat 4 fd 1 rt 90' NB.  also draws a square
+
+NB.  The diagrams should be the same
+
+NB. =========================================================
+Lab Section Square and repetition -2
+The expression
+
+repeat 4 fd 10 rt 90
+
+generates a set of numbers which specify the action.
+It creates the path segment of a fd step of 10 units and a rt turn of 90 degrees.  It specifies a constant action the turtle will repeat.
+
+If you enter the expression without a show command it displays the numeric information to construct the path.
+)
+repeat 4 fd 10 rt 90
+'a' show repeat 4 fd 10 rt 90
+
+NB. =========================================================
+Lab Section Repeating text
+J can generate a piece of J code and execute it.  We could spell out all the commands necessary to draw the square and then execute them.  We have a second form of the verb repeat which does this.
+
+Its right argument consists of a list of the number of times the code is to be repeated, a semicolon to link the parts and the code in quotes.
+
+Look at the effect of the pieces below.  Note the line commencing  do repeat ...  gives the same result as in Section 17 above.
+)
+4 ;'fd 10 rt 90'
+repeat 4 ;'fd 10 rt 90'
+do repeat 4 ; 'fd 10 rt 90'
+'c' show repeat 4 ; 'fd 10 rt 90'
+NB.  Move graph'c' so you keep it open - we use it again
+
+NB. =========================================================
+Lab Section Repeating text - 2
+This form permits many interesting paths.  To insert a random step use  (rand s) in place of a number. The parentheses are important. rand is a function which returns a number not a path step.   If s is positive it gives a random number in the interval (0,s).  If s is negative it gives a random number in the interval ((-s%2),s%2).
+
+Run it again to see how it generates different paths.
+
+Try it out in the standard form without the ; and quotes and repeat it to see how it changes from trial to trial.
+)
+show repeat 20 ;'rt 90 fd 1 lt 90 fd (rand _5)'
+
+NB. each time it is executed it gives a different result
+rand 5
+rand 5
+rand 5
+
+NB. =========================================================
+Lab Section
+Make sure you have understood why these simple changes make so much difference.
+)
+
+NB. =========================================================
+Lab Section Repeating text - 3
+The character form also permits modification of a variable during execution. Note we set a in the following command, then use the Left function [  to separate that from the characters to be repeated.
+)
+show repeat 30 ;'fd (a =: a+1) rt 90' [ a =: 0
+
+NB. =========================================================
+Lab Section Repeating text - 4
+It is easy to modify the code for a square to form other regular figues. We otain a triangle by turning the exterior angle 120 degrees, and a pentagon has exterior angle 72 degrees.
+
+The following code generates spirals of triangular and pentagonal shape.
+)
+'a' show repeat 30 ;'fd (a =: a+1) rt 120' [ a =: 0
+'b' show repeat 30 ;'fd (a =: a+1) rt 72' [ a =: 0
+
+NB. =========================================================
+Lab Section Good style in path expressions
+It is often regarded as 'good style' to construct path elements which lead to a natural repetion.  For example construct a shelter of inverted U shape with the turtle facing north and on the opposite leg to its starting position with
+)
+  show shelter =: fd 10 rt 90 fd 5 rt 90 fd 10 rt 180
+
+NB. =========================================================
+Lab Section Saving paths as nouns
+Note how naturally we can now generate repetitions of a shape.
+
+The name shelter represents a noun.  A comma is required to join the two nouns, the number of repetitions and the turtle path in the right argument.
+)
+show repeat 5 , shelter
+
+NB. =========================================================
+Lab Section Regular Polygons
+The verb repeat evaluates the path part of its argument, and repeats paths of that shape.
+
+It can be used to repeat any path even if of irregular shape. Regular polygons are just repetitions of a forward step and a turn. Note use of link to overlay the graphs.  If a graph does not end at the origin an init is required with the next graph.
+Try
+)
+    'a' show tri  =: repeat 3 fd 1 rt 120     NB.  A triangle
+    'b' show squ   =: repeat 4 fd 1 rt 90
+    'c' show pent =: repeat 5 fd 1 rt 72      NB.  A pentagon
+    'd' show hex  =: repeat 6 fd 1 rt 60      NB.  hexagon
+    show sep  =: repeat 7 fd 1 rt 360%7       NB.  septagon
+    show oct  =: repeat 8 fd 1 rt 45          NB.  octagon
+NB. to over lay them
+    show tri;squ;pent;hex;sep;oct
+
+NB. =========================================================
+Lab Section
+The example in Section 3
+
+show repeat 20,(repeat 5 fd 1 rt 72) rt 18
+
+is based on repeating a pentagon followed by a turn of 18 degrees.  Note the comma to join the two noun parts of the argument of repeat.
+
+Try some similar actions for other regular figures.
+)
+'a' show repeat 10 , (repeat 5 fd 1 rt 144) rt 36
+
+'b' show repeat 12 , (repeat 6 fd 1 rt 60) rt 30
+
+NB. =========================================================
+Lab Section Setting coordinates
+ Turtle geometry focuses on changes from the current position.  Often we want to combine these movements with a bigger pattern on the plane, and for that we use movements to coordinate positions.
+
+setxy  x,y    places the turtle at x,y without altering the                 heading
+
+setx   x      sets the x coordinate without altering heading
+
+sety   y      sets the y coordinate without altering heading
+
+seth   h      sets the heading in degrees from North, with                  positive values clockwise
+
+sethm  h      sets the heading in degrees from East, with
+              positive values anticlockwise - the                           mathematics convention
+)
+showf setx 40 sety 80 setx 0 sety 0 setxy _40 _40
+
+NB. =========================================================
+Lab Section Translation movements
+In the previous section we introduced locations defined by two coordinates in a plane. From that perspective it is also often useful to make steps from the current position in either the x-direction or the y-direction. The path verbs plusx, plusy and plusxy make such steps.  Their argument specifies the distance to be moved, and may be positive or negative.  They do not shift the direction or heading of the turtle.
+)
+show plusx 4 plusy 4 plusx _4 plusy _4 plusxy 6 6
+
+NB. =========================================================
+Lab Section Turtle paths and top down thinking
+In J a verb treats the whole expression on its right as its argument.  This means you can generate very complex arguments which depend on both functions and data.  A convenient way to think of the J verb  fd  is to regard it as generating a path consisting of a forward step of specified length, followed by all of the steps in the rest of the argument.  This is a top down way of thinking.  To work out the path J follows a different sequence. It evaluates the steps from the right, and then draws them starting at the left.
+)
+
+NB. =========================================================
+Lab Section
+The path verb  sq  draws a square and returns the turtle to its starting position.
+)
+show sq 4 fd 4 rt 90 fd 4 lt 90 sq 4
+
+NB. =========================================================
+Lab Section Squares
+You can also display an array of paths.  This is based on use of J's rank conjunction.  We can use the adverb  for
+to apply a verb to each item in a list when the resulting paths are all of the same length.
+
+You can observe the definition of 'for' merely by typing its name.
+
+When you use for in a path followed by some other path steps you must enclose the verb, the conjunction for and the argument in parentheses.
+)
+'a' show sq for 1 2 4 5 7 8
+
+'b' show (sq for 1 2 4 5 7 8), poly  1 _72 poly  2 _45 poly  4 _120
+
+NB.  Note the negative angles in this example
+NB.  compare it with the same expression with positive values.
+
+NB. =========================================================
+Lab Section Repeat as a component within a repeat
+If you want to repeat a more complex path you may need to use parentheses. Again note the comma to join the nouns.
+
+The following generates a clock face.
+)
+ show repeat 12  rt 30 fd 1 ,(repeat 3 fd 1 rt 120) fd 2
+
+NB. =========================================================
+Lab Section Penup and pendown
+When using the path commands it is often useful to stop drawing and reposition the pen before drawing starts.  We do this using penup and pendown.
+)
+showf   penup setxy 30 30 pendown sq 20
+
+NB.  Use showf above because it does not rescale the diagram
+NB.  and it preserves the position of the origin showing the
+NB.  movement clearly
+
+NB. =========================================================
+Lab Section
+Penup and pendown are defined as path verbs.  They change the character of the path drawing, but change neither position nor heading.  When the pen is up the path still exists, but is not drawn.
+
+You can abbreviate penup as pu  but cannot use the common Logo turtle abbreviation pd for pendown. Use pdn instead.
+
+The use of pd would conflict with use of a different verb  pd  in the 'plot' package of J which is also available for some functions within JTurtle.
+)
+
+NB. =========================================================
+Lab Section Varying features of the drawings (1 of 3) (2 of 3) (3 of 3)
+The ability to control the pen provides a way of drawing spaced identical objects.
+
+penup and pendown are verbs and if at the end of an expression must have an empty argument, hence use  penup''  or  pendown''.
+)
+'a' show repeat 4 pendown sq 1 pu fd 2 rt 90 fd 2 lt 90
+
+NB. draw a sequence of 10 squares in this pattern.
+
+NB. =========================================================
+Lab Section st and ht
+In printed diagrams you may not want to show the turtle.  The turtle display is controlled by a global variable and can be changed by the functions
+
+     st''    NB.  to show the turtle
+     ht''    NB.  to hide the turtle
+
+They can be used in a path but only affect the display of the turtle in the final diagram.
+
+To control the colour of the turtle path use
+
+     pencolor  rgb
+
+The colors are specified by a set of three integers in the range (0,255).  Standard isigraph color names and their values are listed by the J sentence  toupper COLOR16.
+)
+
+NB. =========================================================
+Lab Section Saving drawings a files
+To save any displayed graph use the function save to save it as a windows .emf file.
+
+To save the 'graph' window, use
+    save  filename
+
+To save another named window use
+   formname  save  filename
+
+If the file name is not given it defaults to
+   jpath 'temp\graph.emf'
+)
+
+NB. =========================================================
+Lab Section Further chapters
+In the Chapter 2 we will explore ways of defining new verbs.  In Chapter 3 you will learn more about varying features of the drawings, including the line color, fill color, line types and  coloring shapes.  Chapter 4 will introduce Boxed objects and a range of ideas for placing multiple shapes on a diagram. It will also illustrate recursion and draw some fractal shapes. Chapter 5 will give more examples including using some geometric forms.
+)
+
+NB. =========================================================
+Lab Chapter Adding New Functions
+NB. =========================================================
+Lab Section Path Functions
+In addition to the standard function definition in J there is a special form to simplify adding path components.
+
+The verb 'to'  constructs verbs to define components which can be included in turtle paths.  It is like the Logo command  TO  as it defines a new function.
+
+The conjunction  'of'  from the script fndef.ijs can also be used but it generates standard J verbs, not verbs restricted to use in turtle paths.
+
+If you are constructing new verbs it is best to use a script window for the definitions and use the Run menu or its key equivalents for testing.
+)
+PREPARE
+load 'turtle'
+PREPARE
+
+NB. =========================================================
+Lab Section Writing new functions with one argument
+Using 'to' to define path verbs.
+
+Suppose we want a component which is a square with sides length 'side' which we can add to a path.  In Logo the following would define a function to draw a square
+
+    to mysquare :side
+    repeat 4 [fd :side rt 90]
+    end
+)
+
+NB. =========================================================
+Lab Section
+In J turtle we define the function  mysquare as follows:
+
+    to 'mysquare side';'repeat 4 fd side rt 90'
+
+The first component in quotes following the to  gives the function name and its arguments.  If you list more than one argument the the verb will use that number of items from the right argument to define the action of the verb.
+
+The second component specifies the path actions to be taken.
+The two components must be linked by a semicolon.
+
+Compared with Logo, the first line is reproduced with quotes around the function name and the arguments.  The body of the definition is in quotes following the semicolon.  Neither the brackets nor colon are needed.
+)
+
+NB. =========================================================
+Lab Section
+In using this method of defining new functions it is best to avoid using x and y as placeholders for the arguments. Use other descriptive names instead.
+)
+
+NB. =========================================================
+Lab Section
+Execution of this function will add a verb  mysquare  to the current locale and enable you to incorporate it in turtle paths.
+
+    show mysquare 2 fd 4 mysquare 2 fd 4 mysquare 2
+
+Define mysquare using the line from the previous section, and enter an expression like that above which uses it in a path.
+
+Then add penup and pendown commands to separate the squares.
+)
+
+NB. =========================================================
+Lab Section Using the new verb
+Verbs defined with  to  can be included in further path verbs. To rotate a square we can define
+    to 'rsquare s';'rt 45 mysquare s lt 45'
+    'rotsq'  show rsquare 2
+
+To have a square with its centre on the x-axis we can translate the start point with locsq which uses setxy
+
+ to 'locsq side';'penup setxy(0.5*1 1 *-side)pendown'''''
+
+Note the double quotes needed to put a quote in a string for the empty argument of pendown.
+
+    to 'tsquare side';'locsq side mysquare side'
+    show tsquare 1 tsquare 2 tsquare 3 tsquare 4
+
+Execute these J sentences.
+
+Use each to generate a set of translated squares.
+)
+PREPARE
+    to 'mysquare side';'repeat 4 fd side rt 90'
+    to 'rsquare s';'rt 45 mysquare s lt 45'
+    to 'locsq side';'penup setxy(0.5*1 1*- side)pendown'''''
+    to 'tsquare side';'locsq side mysquare side'
+    'd' show rsquare 2
+PREPARE
+    show repeat 4  mysquare 1 fd 4 rt 90
+
+NB. =========================================================
+Lab Section Verbs with two or more arguments
+A rectangle is defined by the lengths of two sides.  We could define a rectangle function and use it to construct a diagram.
+
+Note how the two parameters in the argument are entered as a vector
+)
+to 'rect s1 s2';'repeat 2 fd s1 rt 90 fd s2 rt 90'
+show rect 2 4 penup fd 4 rt 90 fd 4 lt 90 pendown rect 4 2
+
+NB. =========================================================
+Lab Section Verbs with control structures
+The 'to' form of path function definition used above handles simple path components.  In general it does not permit conditional steps within the path.  For more complex definitions including those which use J control structures see Chapter 4 Section 5.
+)
+
+NB. =========================================================
+Lab Section A string argument for show
+Using a string argument for show.
+
+The show verbs will also accept a string argument or a noun consisting of a series of path verbs. If you define triangle with
+)
+triangle =: noun define
+fd 3
+rt 120
+fd 3
+rt 120
+fd 3
+rt 120
+)
+
+NB.  then you can display it with
+
+show triangle
+
+NB. =========================================================
+Lab Section
+When a string argument is used it is executed before the show command is called.
+
+In Chapter 1 we saw that the repeat verb also permits a string argument but since it then has a number and string as arguments they must be Linked with a semicolon.
+)
+show repeat 4 ;'fd 3 rt 90'
+
+NB. =========================================================
+Lab Section
+This permits the interesting form of repetition introduced in Chapter 1. You can change a variable within the expression during execution.
+
+The example sets a value of a variable x and the second line  generates a show command which modifies that value during execution.
+)
+x =: 0
+show repeat 40 ;'fd (x=:x+1) rt 90'
+
+NB. =========================================================
+Lab Section Paths using J features
+Path verbs can sometimes be used with the each conjunction but only in cases where the result for different arguments has the same number of turtle commands.
+)
+show tsquare each i.5
+
+NB. =========================================================
+Lab Section
+To create a regular polygon we need to know the number of repetions required for a given angle.  If it is not a divisor of 360 it is the result of the LCM of 360 and the angle, divided by the angle.  We round enough to ensure an integer result.
+
+We use the  'of'  form of function definition for the number of repetitions because we do not want a path function, but just a number returned.
+
+The following illustrate the steps.
+)
+repetitions =: function of 'angle'
+roundint (360 *. angle) % angle
+)
+
+to 'poly side deg';'repeat(repetitions deg) fd side rt deg'
+
+show poly 1 72
+'a' show poly 1 144
+
+NB. =========================================================
+Lab Section
+You get more interesting shapes when the angle is not a divisor of 360.  Note that repetition of any fixed path eventually leads to an unchanging diagram.
+)
+'a' show poly 1 144
+'b' show poly 1 75
+
+NB. =========================================================
+Lab Section Summary on movements
+You have now completed the first steps toward using turtle geometry.  You can move the turtle to anywhere on your screen,  and have it heading in any desired direction.  You can also repeat sequences of steps to generate patterns and define new functions.
+)
+
+NB. =========================================================
+Lab Section Saving graphs
+To save a graph it is usually easiest to save it to a file.  It defaults to a file name of type  .emf  in windows.
+
+   save 'c:\temp\mydiagram'
+
+will save the file as a windows emf file in your temp directory.
+
+To save to the clipboard use
+
+   clip''
+)
+
+NB. =========================================================
+Lab Section Multiple plots on the same graph
+In Logo turtle the  penup  and  pendown  commands are used to begin and start separate plots. See Chapter 4 for other alternatives to using penup and pendown and setxy in each path.
+)
+
+NB. =========================================================
+Lab Chapter Color and other Graphics Controls
+NB. =========================================================
+Lab Section Color
+To change color of the line use the pencolor verb in a path.
+
+You can specify any rgb comination, using three integers up to 255 as the argument for this path verb.
+
+Two examples show how this can be used.
+)
+PREPARE
+load   'turtle'
+PREPARE
+
+show fd 1 rt 90 pencolor BLUE fd 1 rt 90 pencolor GREEN fd 1 rt 90 color AQUA fd 1 rt 90
+
+to 'part s';'fd s rt 20 fd s rt 160'
+'a' show repeat 12 pencolor BLUE part 2 pencolor RED part 2 rt 30
+
+NB. =========================================================
+Lab Section Lines and fill.
+You can use lines or fill.
+
+The fill verb will fill the figure created as a polygon on points drawn.  If there is overlap white space will occur. This can create interesting patterns.  Consider the perspective effect when the diagram 'vase' is enlarged.
+
+To control fill color use  color rgb.  The default is RED.
+)
+'vase' show fill poly 1 138
+'a' show poly 1 138
+'b' show color BLUE fill poly 1 138
+
+NB. =========================================================
+Lab Section
+You can mix lines and fill with path verbs  line and fill.
+)
+show repeat 6 rt 60 fd 1 lt 30 fill poly 1 120  line rt 30 bk 1
+
+NB. =========================================================
+Lab Section Adding text to graphs
+You can add text at any point of a graph. The simplest way to do so is to create point references in the path by adding the path verb  point n  where n is a distinct integer for each point you wish to label.
+)
+NB.  identifying points on a path
+a =: noun define
+fd 40 point 1
+rt 45 fd 10 arcr 20 45 point 2
+fd 23 point 3 solida 5
+arcl 20 45 poly 20 120
+)
+
+show a
+
+NB. =========================================================
+Lab Section
+Note that the points were defined but there is no display identifying them on the graph.
+
+Point labels are 'sticky' in the sense that they are retained until they are redefined in a show command.  Thie enables
+you to redraw a graph without using the labels but retain the
+information about the points.
+)
+
+NB. =========================================================
+Lab Section
+As well as assiting inlabelling this permits use of information about points in drawing the a graph
+)
+'a'show a =: rt 45 fd 3 point 1 rt 30 fd 2 point 2 rt 60 fd 4 point 3
+
+'b' show a, goto 1
+
+NB. =========================================================
+Lab Section
+We can even construct a set of point numbers using the repeat command
+)
+show repeat 5 ; 'point (x=: x-1) fd 2 rt 72' [ x=:6
+
+'b' show goto 2 goto 4 goto 3 goto 1 goto 5 goto 4
+
+NB. =========================================================
+Lab Section
+Labels are added after displaying a graph.
+To create text to display we need to create the labels.
+
+Labels are kept in a list and all items in the list are displayed.
+
+To create the list enter
+
+label 0
+
+This resets the list of labels to be added to the graph.
+)
+label 0
+
+NB. =========================================================
+Lab Section
+To add items to the list we use the same verb label with a list of boxed arguments.
+
+To add a label to the list you use the label verb with a boxed list as its right argument.  Elements of the list are
+
+0    the point number
+
+1    the relative position
+        0  is right of the point
+        1  is centered on the point
+        2  is left of the point
+
+2    the text to be displayed.
+
+     gdtextfont  controls the font used.
+)
+
+NB. =========================================================
+Lab Section
+If the text obscures the graph some adjustment is possible for both the x and y coordinates of the point. The plot coordinates lie in the interval (_1,1) An adjustment of 0.06 is an approximate adjustment to move the default font above, below, right or left of the point and off the path. 0  0.06 _0.06  will move the text at point 0 to 0.06 times the plot window right and down relative to the point on the path.  This first argument of the label verb must have either one or three numbers.
+)
+
+NB. =========================================================
+Lab Section
+To examine the labels entered use  LABELLIST
+
+After a show verb all labelled points in the path are accessible and can be used for labels.
+
+To display the list of labels use
+
+addlabels f   where f defaults to 'graph' if it is empty and 'graph' is displayed.
+
+To set it to display with a particular graph use the graph
+name as a right argument.
+)
+a =: noun define
+fd 40 point 1
+rt 45 fd 10 arcr 20 45 point 2
+fd 23 point 3 solida 5
+arcl 20 45 poly 20 120
+)
+
+show a
+
+NB. =========================================================
+Lab Section
+The path was displayed but no labels.  Now enter some labels and display them.
+)
+label 0
+label 1 0.05 _0.05 ;0;'A'
+label 2 0  0.06 ;1;'B'
+label 3 0 _0.06 ;2;'C'
+addlabels''
+
+NB. =========================================================
+Lab Section
+For projects where there is extensive labelling it is simplest to use a script window to build all the components of the graph, and the labels and to use the  run verb to create displays.
+
+The next section opens a script with an example.
+)
+
+NB. =========================================================
+Lab Section
+In the script a is a character representation of a path.
+
+fig1 is a set of JTurtle commands with adjustments to the locations of the labels.
+
+fig2 is a set of commands with default label positions.
+
+The verb  run  will execute any sequence of commands.
+)
+SCRIPT
+NB. Define a path
+a =: noun define
+fd 40 point 1
+rt 45 fd 10 arcr 20 45 point 2
+fd 23 point 3 solida 5
+arcl 20 45 poly 20 120
+)
+
+NB. Define commands for a labelled path
+fig1 =: noun define
+show a
+label 0
+label 1 0.05 _0.05 ;0;'A'
+label 2 0  0.06 ;1;'B'
+label 3 0 _0.06 ;2;'C'
+addlabels''
+)
+
+NB. Illustration with default positions
+fig2 =: noun define
+'a' show a
+label 0
+label 1;0;'A'
+label 2;1;'B'
+label 3;2;'C'
+addlabels'a'
+)
+
+show a
+SCRIPT
+PREPARE
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp\turtledemo.ijs'
+open jpath '~temp\turtledemo.ijs'
+
+tile_jijs_''
+PREPARE
+
+NB. =========================================================
+Lab Section
+We have run the script and you can use the task bar to display the graph if it is not visible.
+)
+load < jpath '~temp\turtledemo.ijs'
+
+NB. =========================================================
+Lab Section
+    Use the commands
+
+run fig1
+
+    and
+
+run fig2
+
+    to examine the way in which the text positions are modified when you change the first and second arguments of the label verbs.
+)
+
+NB. =========================================================
+Lab Section
+We recommend using  a script and building components of your diagrams in this way as a general means of systematically developing a turtle geometry project and providing excellent control over execution of components.
+)
+
+NB. =========================================================
+Lab Chapter Repeating Shapes and Recursion
+NB. =========================================================
+Lab Section Repeating shapes
+If we mix turtle geometry and cartesian coordinates we can generate complex diagrams very quickly.
+
+Suppose we wish to place a graphic at each point on a grid.
+
+J enables us to find the points on a grid with its Catalogue verb.
+
+To generate the points in a square with x and y in (1,2,3)
+use the following
+
+   {1 2 3;1 2 3
+
+The start verb enables us to place a graphic at each of these points.  The following illustrates the steps
+)
+PREPARE
+load   'turtle'
+PREPARE
+
+{1 2 3;1 2 3
+show ({1 2 3;1 2 3) start sq 0.8
+
+NB. =========================================================
+Lab Section Repeating shapes - 2
+Any list of shapes can be used.  The function start will repeat use of the shapes if it runs out. The example uses a single shape.
+)
+show ({1 2 3;1 2 3) start (rt 18 poly 0.5 144)
+
+NB. =========================================================
+Lab Section Repeating shapes - 3
+Now use a list of shapes one of which is empty
+)
+show ({1 2 3 4 5;1 2 3 4 5 ) start (rt 18 poly 0.5 144);''
+
+NB. =========================================================
+Lab Section Repeating shapes - using complex numbers
+Since complex numbers can be used to specify positions in the plane it is sometimes useful to use complex numbers and the startj  function which expects complex numbers in the left argument.
+
+To generate a grid use an expression of the form
+
+    , a j./ b
+
+and perhaps take segments from it.
+
+The following is an example
+)
+show  (23 {. ,a j./a =. i.10) start sq 0.8
+
+'a' show 1j3 2j4 3j5 4j4 5j3 start sq 0.8
+
+NB. =========================================================
+Lab Section Recursive definitions
+Recursion is a very powerful computing tool and easily applied in turtle geometry.  The following generates a simple tree structure.
+
+It uses the extended form of definition using 'to'. In this form you enter the first part - verb name and argument names  and press Enter.  You then enter commands to generate the path steps required.
+
+You can enter any J commands you like.  The result of the commands must be the path steps which are to begin the turtle path.
+
+The end of the definition is defined by a right parenthesis in the first position in a row.
+)
+NB.  tree0
+
+to 'branch length level'
+if. level = 0 do. i.0 return. end.
+len2 =. 0.6* length
+fd length,lt 45,(branch len2,level-1), rt 90,( branch len2,level-1),lt 45 bk length
+)
+
+'a' show branch 2 5
+
+NB.  Compare
+'b' show branch 2 6
+
+NB. =========================================================
+Lab Section
+The first row of the definition specifies how the recursion ends and returns an empty vector  (i.0) when it ends.
+
+The second row provides an abbreviated expression for the new length at each level of branches.
+
+The final row goes from the root of a branch out to the next level of branches and then back to the root again.
+)
+
+NB. =========================================================
+Lab Section
+Another famous recursive problem is drawing the space-filling curves due to Hilbert.  The functions are defined below.  Note these functions could be defined using the standard J verb definition procedures.
+)
+to 'lhilbert size level'
+if. level = 0 do. i.0 return. end.
+lt 90 ,(rhilbert size,level-1), fd size rt 90 ,(lhilbert size,level-1), fd size, (lhilbert size,level-1), rt 90 fd size, (rhilbert size,level-1),lt 90
+)
+
+to 'rhilbert size level'
+if. level = 0 do. i.0  return. end.
+rt 90 ,(lhilbert size,level-1), fd size lt 90 ,(rhilbert size,level-1), fd size, (rhilbert size,level-1), lt 90 fd size, (lhilbert size,level-1),rt 90
+)
+
+show rhilbert 2 2
+
+NB. =========================================================
+Lab Section
+You can compare a right handed and a left handed curve with
+
+show lhilbert 2 2
+
+show rhilbert 2 2
+
+Notice that they form a reflection in a vertical axis.
+Study the effect of varying the number of levels by increasing the last digit.
+)
+'a' show lhilbert 2 2
+
+'b' show rhilbert 2 3
+
+NB. =========================================================
+Lab Section
+The above has provided a very brief introduction but should have given the reader enough information to explore many of the concepts introduced in books like Abelson and diSessa.  Some further examples are in Chapter 5.
+)
+
+NB. =========================================================
+Lab Chapter Examples and Demos
+NB. =========================================================
+Lab Section Rectangular objects
+For rectangular objects it is usually good programming style to have the turtle finish with the same heading as it started.
+
+Consider the following
+)
+PREPARE
+load   'turtle'
+PREPARE
+
+to 'rowsquare s';'sq  s rt 90 fd s lt 90'
+to 'rowsquares n s';'(repeat n rowsquare s )lt 90 fd (n*s) rt 90 fd s'
+to 'blocksquares r c s';'repeat r rowsquares c,s'
+show blocksquares 3 4 6
+
+NB. =========================================================
+Lab Section Arrows
+To add an arrow at the current turtle position enter
+
+    arrow size
+)
+show repeat 4 fd 10 arrow 1 rt 90
+
+NB. =========================================================
+Lab Section
+To make a solid arrow try the following
+)
+to 'solida s';'fill rt 150 fd s rt 120 fd s rt 120 fd s lt 30'
+show repeat 4 fd 10 solida 1 rt 90
+
+NB. =========================================================
+Lab Section Arcs
+To create an arc with a given radius and angle from the center of the circle use
+
+    arcr  radius,degrees    for turning right
+    arcl  radius,degrees    for turning left
+
+Draw a radius, the arc and the radius back to the center of the circle.
+)
+show fd 10 rt 90 arcr 10 45 arrow 1 rt 90 fd 10
+
+NB. =========================================================
+Lab Section
+This function enables us to draw a famous spiral based on the fibonacci sequence.
+)
+show  arcl "1  [ 1 1 2 3 5 8 13 21 ,.90
+
+NB. =========================================================
+Lab Section Some recursions
+Consider a square where the turtle begins at the middle of the base, and finishes at the middle of the top.
+)
+
+to 'sqpart s';' fd s rt 90 fd (2*s) rt 90 fd s'
+to 'recursivesq s';'lt 90 ,(repeat 3 sqpart s) lt 90'
+show recursivesq 3
+
+NB. =========================================================
+Lab Section
+It is now easy to construct many patterns
+)
+'a' show recursivesq "0] 1 1 1 1 1 1
+'b' show b =: recursivesq "0] 1 2 3 4 5 4 3 2 1
+
+NB.  Note the Shape of b
+$ b
+NB.  convert b to a vector to represent a path
+'c' show repeat 5 ,(,b) rt 72
+
+NB. =========================================================
+Lab Section Some recursions - the snowflake
+To construct the snowflake curve we use two verbs, one for the sides and one to combine them.
+)
+to 'side size level'
+if. level = 0
+ do. fd size  return.
+ else.
+ s3 =. size%3
+ lev1 =. level-1
+ side(s3,lev1) lt 60 side(s3,lev1) rt 120 side (s3,lev1) lt 60 side(s3,lev1)
+end.
+)
+
+to 'snowflake size level';'repeat 3 side size,level rt 120'
+'a' show snowflake 3 2
+'b' show snowflake 3 4
+
+NB. =========================================================
+Lab Section
+The following example provides a pattern of variable sized checkerboard squares.  The result is displayed after you move to the next section.  It may take some time on slower machines.
+
+You can view the script which generated this example after that section.
+)
+
+NB. =========================================================
+Lab Section
+This script assumes more knowledge of J but shows how you can build complex patterns and use multiple colors.
+)
+k=: >:i.5   NB.  Use 5 increasing width columns and rows
+kc =:}: 0,+/\ k0 =: ,k,.|.k  NB.  Interleave them
+
+cONE =: 255 255 0   NB. Set colors Orange and yellow
+cTWO =: 255 155 0
+
+kcol =: 0 1   NB.  Identifiers to select colors
+
+j =: rect each |. each k1 =:{k0;k0  NB. construct program for rectangles
+j =: 100 24$,>j      NB.  Convert to a simple array
+colseq0 =: 100$ (10$0 1),10$1 0   NB. Color sequence starting with cONE
+colseq1 =: 100$ (10$1 0),10$0 1   NB. Color sequence starting with cTWO
+NB.  add color commands to rectangles
+jn0=: (colseq0 { (color cONE fill rt 0),: color cTWO fill rt 0),.j
+jn1=: (colseq1 { (color cONE fill rt 0),: color cTWO fill rt 0),.j
+
+NB.  Generate the starting positions of a single set of rectangles
+js =: ,kc j. / kc
+NB.  generate four blocks of rectangles using changing color pattern
+show ( js,(0j30+js),(30j0+js),30j30+js) start <"1 jn0,jn1,jn1,jn0

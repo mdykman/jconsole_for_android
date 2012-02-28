@@ -7,7 +7,7 @@ NB.           computational dyad
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -92,23 +92,23 @@ NB.
 NB. Application:
 NB. - to test geqrf:
 NB.     NB. to estimate rcond in 1-norm
-NB.     vrcond=. ((_."_)`gecon1 @. (=/@$))@[
+NB.     vrcond=. (_."_)`gecon1@.(=/@$)@[
 NB.     NB. to calc. berr, assuming:
 NB.     NB.   berr := ||A - realA||_1 / (m * ε * ||A||_1)
-NB.     vberr=. ((- (% & norm1) [) % (FP_EPS * (norm1 * #) @ [)) unmqr
+NB.     vberr=. ((- %&norm1 [) % FP_EPS * (norm1 * #)@[) unmqr
 NB.     NB. do the job
 NB.     ('geqrf' tmonad ]`]`vrcond`(_."_)`vberr) A
 NB. - to test getrs:
 NB.     NB. to estimate rcond in ∞-norm
-NB.     vrcond=. ((_."_)`geconi @. (=/@$)) @ (0 {:: [)
+NB.     vrcond=. (_."_)`geconi@.(=/@$)@(0 {:: [)
 NB.     NB. to calc. ferr, assuming:
 NB.     NB.   ferr := ||x - realx||_inf / ||realx||_inf
-NB.     vferr=. ((- (% & normi) [) (1 & {::))~
+NB.     vferr=. ((- %&normi [) 1&{::)~
 NB.     NB. to calc. componentwise berr [LUG 75], assuming:
 NB.     NB.   berr := max_i(|b - A * realx|_i / (|A| * |realx| + |b|)_i)
-NB.     vberr=. ((mp & >/@[) (|@-) (0 {:: [) mp ]) (>./ @ %) (((0 {:: [) (mp & |) ]) + (|@mp & >/@[))
+NB.     vberr=. (mp&>/@[ |@- (0 {:: [) mp ]) >./@% (((0 {:: [) mp&| ]) + |@mp&>/@[)
 NB.     NB. do the job
-NB.     ('getrs' tdyad (0 & {::)`(mp & >/)`]`vrcond`vferr`vberr) (A;x)
+NB.     ('getrs' tdyad (0&{::)`(mp&>/)`]`vrcond`vferr`vberr) (A;x)
 
 tmonad=: 2 : 0
   '`vgety vgeto vrcond vferr vberr'=. n
@@ -123,7 +123,7 @@ tmonad=: 2 : 0
     rcond=. FP_OVFL
   end.
   logline=. fmtlog m ; rcond ; ferr ; berr ; t ; s
-  (logline , LF) ((1!:3) ^: (0 < (#@]))) TESTLOGFILE
+  (logline , LF) ((1!:3)^:(0 < (#@]))) TESTLOGFILE
   TESTLOG=: TESTLOG , logline
   logline (1!:2) 2
   EMPTY
@@ -143,7 +143,7 @@ tdyad=: 2 : 0
     rcond=. FP_OVFL
   end.
   logline=. fmtlog m ; rcond ; ferr ; berr ; t ; s
-  (logline , LF) ((1!:3) ^: (0 < (#@]))) TESTLOGFILE
+  (logline , LF) ((1!:3)^:(0 < (#@]))) TESTLOGFILE
   TESTLOG=: TESTLOG , logline
   logline (1!:2) 2
   EMPTY

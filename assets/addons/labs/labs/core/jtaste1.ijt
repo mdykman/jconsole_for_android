@@ -1,0 +1,297 @@
+LABTITLE=: 'A Taste of J (1)'
+
+NB. =========================================================
+Lab Section First Steps
+You can use J as a calculator - just type sentences into the window and press Enter.
+
+J is ready for input when the message in the status bar at the foot of the screen displays Ready.
+
+Typically, the cursor is indented 3 spaces to distinguish user entries from the response of the computer, which are shown aligned to the left.
+
+For example, add 5 to the three numbers 10 20 30:
+)
+5 + 10 20 30
+
+NB. =========================================================
+Lab Section
+You are encouraged to experiment when going through labs.
+
+You can type in your own sentences, or re-enter sentences by moving the cursor up to the line, pressing Enter, then making any modifications.
+
+Try this now with the sentence 5 + 10 20 30 shown above.
+)
+
+NB. =========================================================
+Lab Section
+The standard mathematical functions are + - * % ^ ^., i.e. plus, minus, times, divide, power and log:
+)
+5 + 10 20 30
+
+5 - 10 20 30
+
+5 * 10 20 30
+
+5 % 10 20 30
+
+5 ^ 10 20 30
+
+5 ^. 10 20 30
+
+NB. =========================================================
+Lab Section
+Note that the symbol for log "^." has two characters. In general, J functions are written with either a single character as in power "^", or with two characters, where the second character is either a period "." or colon ":".
+
+For example, *: squares its argument:
+)
+*: 10 20 30
+
+NB. =========================================================
+Lab Section
+Use =: to assign names.
+
+No result is shown if a sentence is an assignment; otherwise the result is displayed.
+
+Note that character strings are entered using quotes:
+)
+a=: 5
+
+b=: 10 20 30
+
+log=: ^.
+
+plus=: +
+
+square=: *:
+
+sum=: +/
+
+text=: 'hello world'
+
+NB. =========================================================
+Lab Section
+We can now use the assigned names:
+)
+a plus b
+
+square b
+
+sum b
+
+c=: a plus b
+
+sum c
+
+text
+
+NB. =========================================================
+Lab Section Data Manipulation
+J excels at manipulating data. Let us try some examples.
+
+Define a character string t as follows:
+)
+t=: 'earl of chatham'
+
+t
+
+NB. =========================================================
+Lab Section
+Count of t, i.e. number of characters in the string:
+)
+#t
+
+NB. =========================================================
+Lab Section
+Nub of t, i.e. unique characters:
+)
+~. t
+
+NB. =========================================================
+Lab Section
+Count of nub of t:
+)
+# ~. t
+
+NB. =========================================================
+Lab Section
+Sort t in ascending order. "sort" is a predefined utility.
+
+The sort order is the standard ASCII alphabet, where blanks are sorted before other characters:
+)
+sort t
+
+NB. =========================================================
+Lab Section
+Reverse t:
+)
+|. t
+
+NB. =========================================================
+Lab Section
+Duplicate each letter:
+)
+2 # t
+
+NB. =========================================================
+Lab Section
+Make 3 copies of t:
+)
+3 # ,: t
+
+NB. =========================================================
+Lab Section
+Chop t into words.
+
+Note J puts each word in a box - when something is in a box it is treated as a single item, even though it may contain several numbers or characters:
+)
+;: t
+
+NB. =========================================================
+Lab Section
+Sort words in t:
+)
+sort ;: t
+
+NB. =========================================================
+Lab Section
+The utility "each" applies a function to each boxed item. For example, count the length of each word:
+)
+# each ;: t
+
+NB. =========================================================
+Lab Section Numbers
+The above examples apply equally well to numbers.
+
+Other facilities are defined just for numbers. For example, the integer function (i.) generates numbers:
+)
+i.10           NB. first 10 numbers
+
+i.4 3          NB. first 12 numbers in a 4 by 3 table
+
+i.3 4 5        NB. first 60 numbers in a 3 by 4 by 5 table
+
+NB. =========================================================
+Lab Section
+The function +/ sums its argument. It is made up of + (add) with / (insert), meaning insert + between each item of the argument.
+
+So  +/ 10 20 30  means:  10 + 20 + 30.
+
+Similarly */ is "multiply insert", i.e. multiply all elements together.
+)
++/ 10 20 30
+
+*/ 10 20 30
+
+NB. =========================================================
+Lab Section
+Add up the first 10,000 positive integers:
+)
++/i.10001  NB. 10001 - since J starts counting at 0
+
+NB. =========================================================
+Lab Section
+Add up i.3 4 5
+)
++/i.3 4 5
+
+NB. =========================================================
+Lab Section
+"power insert" of 10 20 30 is a big number! It exceeds the representation used by the machine, so J returns infinity.
+
+Can you figure out the other examples below?
+
+(Try 3 ^ 4, then take 2 to the power of this number.)
+
+The 'x' used here means "extended" and instructs J to use extended precision in performing the calculations, instead of converting to floating point.
+)
+^/ 10 20 30
+
+^/ 2 3 4
+
+^/ 2 3 4x
+
+NB. =========================================================
+Lab Section
+Note the "e" notation used in 2.41785e24, meaning:
+
+  2.41785 * 10^24
+
+J has other number notations that use letters:
+)
+3b102     NB. base (102 in base 3)
+
+3r5       NB. ratio (3 % 5)
+
+3j5       NB. complex number
+
+3p5       NB. Pi (3 * Pi ^ 5)
+
+3x5       NB. Exponentional (3 * 2.71828... ^ 5)
+
+NB. =========================================================
+Lab Section
+Examples:
+)
+1p1 2p1     NB. Pi, 2 * Pi
+
+%: -i.6     NB. square roots of minus 0 to minus 5
+
+NB. =========================================================
+Lab Section
+The function ? generates random numbers.
+
+For example, generate 20 random numbers in the range 0-99:
+)
+? 20#100
+
+? 20#100
+
+NB. =========================================================
+Lab Section
+The function "load" reads in definitions from "script" files.
+
+The load will fail if stats/base addon is not installed. Use jal to install the addon if necessary.
+
+For example, read in the stats functions:
+)
+load 'stats'
+
+NB. =========================================================
+Lab Section
+Example:
+)
+dstat ? 20#100
+
+NB. =========================================================
+Lab Section
+normalrand generates random numbers in a normal distribution with mean 0 and standard deviation 1:
+)
+normalrand 6
+
+dstat normalrand 10000
+
+NB. =========================================================
+Lab Section
+Try generating sines, here the arguments are in radians:
+)
+sin=: 1&o.
+sin i.6
+sin i.3 4
+
+NB. =========================================================
+Lab Section
+You can plot numbers directly. The next section plots the sin of i.3 4. The lines are jagged because each point is joined by a straight line and there are very few points.
+)
+
+NB. =========================================================
+Lab Section
+)
+NB. load'plot' if you get a value error on the verb plot.
+plot sin i.3 4
+
+
+NB. =========================================================
+Lab Section
+)
+plot sin 0.2 * i.10 30
+
+

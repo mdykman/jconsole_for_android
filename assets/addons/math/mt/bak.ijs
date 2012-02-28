@@ -11,7 +11,7 @@ NB.            generator and shape given
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -66,10 +66,10 @@ NB. Notes:
 NB. - gebakusl models LAPACK's xGxBAK('S','L')
 NB. - gebakusr models LAPACK's xGxBAK('S','R')
 
-gebaklsl=: ((0 & {::) %"1 (2 & {::)) ; (1 & {::)
-gebaklsr=: ((0 & {::) *"1 (2 & {::)) ; (1 & {::)
-gebakusl=: ((0 & {::) %"2 (2 & {::)) ; (1 & {::)
-gebakusr=: ((0 & {::) *"2 (2 & {::)) ; (1 & {::)
+gebaklsl=: (0&{:: (%"1) 2&{::) ; 1&{::
+gebaklsr=: (0&{:: (*"1) 2&{::) ; 1&{::
+gebakusl=: (0&{:: (%"2) 2&{::) ; 1&{::
+gebakusr=: (0&{:: (*"2) 2&{::) ; 1&{::
 
 NB. ---------------------------------------------------------
 NB. gebaklp
@@ -94,8 +94,8 @@ NB.
 NB. Notes:
 NB. - gebakup models LAPACK's xGxBAK('P')
 
-gebaklp=: C."1~ & >/
-gebakup=: C."2~ & >/
+gebaklp=: C."1~&>/
+gebakup=: C."2~&>/
 
 NB. ---------------------------------------------------------
 NB. Verb:      Balancer used:     Eigenvectors to form:
@@ -128,10 +128,10 @@ NB. Notes:
 NB. - gebakul models LAPACK's xGxBAK('B','L')
 NB. - gebakur models LAPACK's xGxBAK('B','R')
 
-gebakll=: gebaklp @ gebaklsl
-gebaklr=: gebaklp @ gebaklsr
-gebakul=: gebakup @ gebakusl
-gebakur=: gebakup @ gebakusr
+gebakll=: gebaklp@gebaklsl
+gebaklr=: gebaklp@gebaklsr
+gebakul=: gebakup@gebakusl
+gebakur=: gebakup@gebakusr
 
 NB. =========================================================
 NB. Test suite
@@ -181,8 +181,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testbak_mt_ 150 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testbak_mt_ 150 150
+NB.     _1 1 0 4 _6 4&gemat_mt_ testbak_mt_ 150 150
 NB. - test by random square complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testbak_mt_ 150 150
 
-testbak=: 1 : 'EMPTY_mt_ [ (testgebak_mt_ @ u ^: (=/))'
+testbak=: 1 : 'EMPTY_mt_ [ testgebak_mt_@u^:(=/)'

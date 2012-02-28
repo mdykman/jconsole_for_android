@@ -6,23 +6,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderIterator;
-import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.RequestLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
 import org.dykman.j.JInterface;
 import org.dykman.j.OutputListener;
 import org.dykman.j.android.Console.Dimension;
@@ -152,12 +144,15 @@ public class JConsoleApp extends Application {
 	
 
 	public void launchJHS(Context context) {
+		String arg= null;
 		if(!testJHSServer()) {
 			JHSTask task = new JHSTask();
 			task.execute("");
+		} else {
+			arg = "ready";
 		}
 		JHSLauncherTask ltask = new JHSLauncherTask(context);
-		ltask.execute();
+		ltask.execute(arg);
 	}
 	public void setConsoleState(boolean n) {
 		consoleState = n;
@@ -702,19 +697,18 @@ public class JConsoleApp extends Application {
 			this.context = context;
 		}
 		
-		
 		@Override
 		protected String doInBackground(String... params) {
-			HttpClient client = new DefaultHttpClient();
-			long waitFor = 1000;
-			if(params != null && params.length > 0 && "ready".equals(params[0])) {
-				waitFor = 0;
-			}
-			HttpGet get = new HttpGet("http://localhost:65001/jijx");
 			boolean loop = true;
+			if(params != null && params.length > 0 && "ready".equals(params[0])) {
+				ready = true;
+				loop = false;
+			}
+			
 			long start = System.currentTimeMillis();
 			publishProgress(0);
 			// try to wait for JHS to start
+			long waitFor = 1000;
 			while(loop) {
 				try {
 					if(loop && waitFor > 0) Thread.sleep(waitFor);

@@ -1,0 +1,106 @@
+LABTITLE=: 'ODBC: A simple application'
+LABAUTHOR=: 0 : 0
+John D. Baker
+bakerjd@kos.net
+)
+LABCOMMENTS=: 'This lab demonstrates a simple ODBC spreadsheet application.'
+
+NB. =========================================================
+Lab Section Introduction
+Excel is a great tool for entering and editing data. For small data analysis tasks I usually enter the data into Excel and then use J/ODBC to work with data.  This lab demostrates a simple expense account distribution calculation.
+
+First load the ODBC interface.
+)
+load 'dd'
+
+NB. =========================================================
+Lab Section A good spreadsheet layout for ODBC
+This lab uses the spreadsheet
+
+system\examples\data\expense.xls
+
+The next step checks to see if this spreadsheet is registered as an ODBC datasource.  If the spreadsheet is not registered use the ODBC control panel applet to register it with a DSN (data set name) of "expenses"
+)
+NB. check expense dsn - result should be 1
+(<'expenses') e.  {."1 ddsrc ''
+
+NB. =========================================================
+Lab Section
+Before connecting the expense sheet with ODBC take a look at the sheet with Excel or another spreadsheet.  The layout of expense.xls is the best arrangement for extracting data with ODBC.
+
+A good layout has:
+
+* A header column consisting of
+  simple BLANKFREE names in the
+   first row.
+
+* Homogeneous data columns.
+
+After looking at the sheet close it and proceed to the next step.  You must close the spreadsheet or ODBC will not open it.
+)
+
+NB. =========================================================
+Lab Section Defining application verbs and nouns
+Now let us define a few simple verbs and nouns.  The first required item is the name of the expense table.  The data is   stored in Excel "sheet1"
+)
+
+NB. spreadsheet name - stands for ODBC table
+SHEET=: '`sheet1$`'
+
+NB. =========================================================
+Lab Section
+Usually ODBC data needs a little scrubbing once you get it into J.   In this case there will be some trailing blank rows.  This verb removes such blank rows.
+)
+NB. trims blank rows using first date column
+trimblkdates=: ] #~ ' '"_ ~: [: {.&> [: {."1 ]
+
+NB. =========================================================
+Lab Section
+I am using the basic (ddfet) verb to fetch ODBC data.  (ddfet) return date data as a formatted string.  In this case we need to convert the date to integer to extract the month value.
+)
+NB. year month data table from ODBC character timestamps
+ymdfrts=: [: ". ' '"_ (<(<a:),<4 7)} _ 10"_ {. [: > 0: {"1 ]
+
+NB. =========================================================
+Lab Section
+The next two verbs define the expense account distribution calculation.
+)
+NB. total dollars by expense category
+expensedist=: ([: ~. 2: {"1 ]) ,: [: <"0 (2: {"1 ]) +//. [: ; 1: {"1 ]
+
+NB. monthly expense distribution
+monthexpensedist=: 3 : 0
+m =. 1 {"1 ym =. 0 1 {"1 ymdfrts y
+y =. expensedist&.> (b =. ~:m) <;.1 (/:m){y
+(<"1 ym #~ ~: m) ,. (+/@:( ;@:(1&{)) &.> y) ,. (\:&.> {:&.> y) {"1&.> y
+)
+
+NB. =========================================================
+Lab Section
+Finally let define an overall report verb
+)
+NB. computes monthly expense distribution
+expensereport=: 4 : 0
+sh =. ('select * from ',x) ddsel y
+dat =. trimblkdates ddfet sh,_1
+monthexpensedist dat
+)
+
+NB. =========================================================
+Lab Section Running the application
+Computing an expense distribution is now simply a matter of executing the next two statements.
+)
+NB. connect to expense data
+ch =: ddcon 'dsn=expenses'
+
+NB. run report
+SHEET expensereport ch
+
+NB. =========================================================
+Lab Section
+By altering the values in the expense table it is easy to adapt this calculation to suit your own expenses.
+
+To finish close the connection.  You now know how to layout and extract data from spreadsheetS with ODBC.
+)
+NB. disconnect
+dddis ch

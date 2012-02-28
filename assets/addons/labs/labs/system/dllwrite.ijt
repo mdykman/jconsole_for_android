@@ -1,0 +1,531 @@
+LABTITLE=: 'DLL: Writing and Using a DLL'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section overview
+A DLL is a file with procedures. You can load a DLL and call its procedures.
+
+This lab uses an example DLL and source files and shows how to call its procedures. It assumes familiarity with C/C++ and building a DLL.
+
+See online User Manual chapter "DLLs and Memory Management" for reference documentation.
+)
+require 'dll'  NB. DLL utilities
+
+NB. =========================================================
+Lab Section
+system\examples\dllwrite contains files for this lab. DLL dlltest.dll is built for Windows J32 from dlltest.cpp and dlltest.def.
+
+The distributed dlltest.dll is for Windows J32. If you are running J32 on Windows you can just  proceed.
+
+If you are on a different platform you need to build the dlltest shared library for your platform in order to use it in the lab.
+
+Building for Windows J64 is straightforward assuming you have the appropriate 64 bit tools and are familiar with them. Building for Unix requires simple changes to the dlltest.cpp source file (don't include windows.h; don't have DllMain routine; define _stdcall as nothing) and a make file to build libdlltest.so or libdlltest.dylib).
+)
+
+NB. =========================================================
+Lab Section
+The next step opens dlltest.cpp.
+
+Study it and position it so you can refer to it. Whenever a new procedure is mentioned, take a look at its definition.
+)
+
+NB. =========================================================
+Lab Section
+)
+open '~system\examples\dllwrite\dlltest.cpp'
+
+NB. =========================================================
+Lab Section cd
+cd calls a DLL procedure:
+   "filename procedure declaration" cd parameters
+
+The left arg describes the procedure. The declaration has the same information as the C prototype, giving result and parameter types.
+
+DLLs can be written in many languages. The declaration is a simple, language neutral, specification of result and parameter types.
+
+The right argument is a list of boxed parameters.
+)
+
+NB. =========================================================
+Lab Section
+The host operating system has a complicated series of directories it searches if the filename is not fully qualified. This search is different on Win95, NT, WinCE, and UNIX.
+
+A fully qualified filename is recommended.
+
+The filename can be delimited with double quotation marks (") to allow for blanks.
+
+If you are on a platform other than Windows J32 you need to build your own dlltest shared library and you need to edit the definition of dll to have the full path to the dlltest shared library you built (note Unix file name of libdlltest.so or libdlltest.dylib).
+)
+[dll=: '"',jpath '~system\examples\dllwrite\dlltest.dll" '
+
+NB. =========================================================
+Lab Section declaration
+Procedure incval has no result and no parameters. Look at the definition in dlltest.cpp. __stdcall is the calling convention and is discussed later.
+
+The declaration has information from the C prototype.
+ C - void incval()
+ J - n
+
+A C void result is an n (no result) in the declaration.
+
+cd always returns a procedure result. For n it is a boxed 0.
+)
+NB. 'filename procedure declaration' cd parameters
+NB. declaration n - no result
+(dll,'incval n') cd ''
+
+NB. =========================================================
+Lab Section
+getval has an integer result and no parameters.
+ C - int getval()
+ J - i
+)
+NB. declaration i - integer result
+(dll,'getval i') cd ''
+
+NB. =========================================================
+Lab Section
+For repeated use, define verbs with their arguments bound to cd.
+)
+cdm=: 1 : '(dll,m)&cd'    NB. cdm utility adverb
+incval=: 'incval n' cdm    NB. define verb incval
+getval=: 'getval i' cdm    NB. define verb getval
+
+NB. =========================================================
+Lab Section
+)
+incval''
+getval''
+incval''
+getval''
+
+NB. =========================================================
+Lab Section
+inci returns an integer and has an integer parameter.
+ C - int inci(int i)
+ J - i        i
+)
+NB. declaration i i - integer result, integer parameter
+inci=: 'inci i i' cdm
+
+NB. =========================================================
+Lab Section
+cd result is a list of boxes. 1st is the procedure result and the others are copies of the parameters.
+
+Copies of the parameters are returned because they can be modified by the procedure.
+)
+NB. cd result -  (procedure result) , (parameter copy)
+inci 23   NB. scalar is treated as boxed parameter
+inci 123
+
+NB. =========================================================
+Lab Section
+incd has a floating-point result and parameter.
+ C - double incd(double d)
+ J - d           d
+)
+NB. declaration d d - floating-point result and parameter
+incd=: 'incd d d' cdm
+incd 123.5
+
+NB. =========================================================
+Lab Section
+An incorrect declaration can CRASH or CORRUPT MEMORY.
+
+BE CAREFUL WHEN DEVELOPING A PROCEDURE INTERFACE!
+)
+NB. inci declaration MUST be i i to match its C prototype
+NB. declaration d d will crash!
+NB. 'inci d d' cdm 23.5
+
+NB. =========================================================
+Lab Section
+addi returns the integer sum of two integer parameters.
+ C - int addi(int x, int y)
+ J - i        i      i
+)
+NB. i i i - integer result, two integer parameters
+addi=: 'addi i i i' cdm
+addi 23;24
+
+NB. =========================================================
+Lab Section cder
+cder returns information about the last cd: an error number and additional information for some errors.
+)
+inci <23
+cder''      NB. 0 - no error
+
+NB. =========================================================
+Lab Section
+)
+'c:\notafile.dll inci i i' cd <23
+cder''   NB. 1 - file not found
+
+NB. =========================================================
+Lab Section
+)
+'incix i i' cdm 23
+cder''   NB. 2 - procedure not found
+
+NB. =========================================================
+Lab Section
+cder 3 - maximum number of dlls (20) already loaded
+)
+
+NB. =========================================================
+Lab Section
+)
+inci 12
+inci ''
+cder''   NB. 4 - parameter count doesn't match declarations
+inci 1;2;3
+cder''
+
+NB. =========================================================
+Lab Section
+)
+NB. x is invalid declaration
+'inci x i' cdm 23
+cder''   NB. 5 0 - 1st declaration is invalid
+
+NB. =========================================================
+Lab Section
+)
+'inci i x' cdm 23
+cder''   NB. 5 1 - 2nd declaration is invalid
+
+NB. =========================================================
+Lab Section
+)
+NB. declaration i, but parameter is d (floating-point)
+inci 23.5
+cder''   NB. 6 0 - 1st parameter is wrong type
+
+NB. =========================================================
+Lab Section
+)
+addi 123;23.5
+cder''   NB. 6 1 - 2nd parameter is wrong type
+
+NB. =========================================================
+Lab Section cd
+cd does automatic conversion from boolean to integer, or from float to integer, where the float is exactly equal to an integer.
+)
+p=: 23.5 - 19.5
+p
+datatype p
+inci p  NB. p is treated as integer 4
+
+NB. =========================================================
+Lab Section
+)
+NB. boolean parameters converted to integer
+inci 0
+addi 1;1
+
+NB. =========================================================
+Lab Section
+incc has a character result and parameter.
+ C - char incc(char c)
+ J - c         c
+)
+incc=: 'incc c c' cdm
+incc 'b'
+incc 'g'
+
+NB. =========================================================
+Lab Section pointer
+addvi returns an integer. Parameters are an integer and a pointer to a list of integers. The first is a count of the integers in the list. The result is the sum of the integers.
+ C - int addvi(int n, int* p)
+ J - i         i      *i
+)
+NB. integer result, integer count, pointer to integers
+addvi=: 'addvi i i *i' cdm
+addvi 7;i.7
+addvi 5;5$1   NB. boolean converted to integer
+
+NB. =========================================================
+Lab Section
+A declaration of * is for a pointer, i.e. a memory address. It can be followed by a type.
+
+*i means the parameter must be integer. This helps avoid calling the procedure with bad parameters and can avoid a crash or corrupt memory.
+)
+addvi 4;'asdfasdfasdfasdf'
+cder''  NB. 6 1 - 2nd parameter wrong type
+
+NB. =========================================================
+Lab Section
+If you use just * in the declaration, then any type can be used as the parameter. A declaration of * is analogous to C void*.
+)
+addvix=: 'addvi i i *' cdm
+addvix 7;i.7
+addvix 3;'asdfasdfasdf'   NB. pointer to character data
+
+NB. =========================================================
+Lab Section
+A procedure can modify data addressed by a pointer.
+
+incvi returns no result. Its parameters are an integer and a pointer to a list of integers. The integer is a count of integers in the list. The procedure increments each integer in the list.
+
+ C - void incvi(int n, int* p)
+ J - n          i      *i
+)
+NB. no result, integer count, pointer to integers
+incvi=: 'incvi n i *i' cdm
+incvi 7;i.7
+
+NB. =========================================================
+Lab Section
+addvi and incvi use memory addressed by a pointer.
+
+The cd right argument is copied to the cd result. The address of the data for that parameter in the result is used as the parameter to the procedure. When the procedure uses the memory at that pointer it is using the memory in that J array.
+)
+
+NB. =========================================================
+Lab Section
+The addvi count parameter tells the procedure how many integers it can use at the pointer address. If the count causes the procedure to use more memory than is properly addressed by the pointer, it can crash or corrupt memory.
+)
+NB. following sentence can crash
+NB. addvi 1000;i.5
+
+NB. =========================================================
+Lab Section
+A pointer to memory allocated in the J array in the cd result is one way to work with procedure pointer parameters.
+
+You can also use memory addresses.
+)
+
+NB. =========================================================
+Lab Section
+)
+NB. define a few utilities to work with memory.
+toint=: _2&ic   NB. convert char data to integer
+tochar=: 2&ic   NB. convert integer data to char
+a. i. tochar 255+i.4
+toint 123 0 0 0{a.
+toint tochar i.5
+
+NB. =========================================================
+Lab Section
+)
+ptr=: mema 16                NB. allocate 16 bytes (4 ints)
+ptr                          NB. address of 16 bytes
+toint memr ptr,0,16          NB. current contents
+(tochar i.4) memw ptr,0,16   NB. set memory
+toint memr ptr,0,16          NB. new contents
+
+NB. =========================================================
+Lab Section
+If a parameter declared as a pointer is a boxed integer scalar, then that value is used as the pointer.
+
+A NULL pointer is: <0
+)
+4;<<ptr  NB. boxed integer is memory address
+addvi 4;<<ptr  NB. sum 4 integers at ptr
+
+NB. =========================================================
+Lab Section
+)
+toint memr ptr,0,16
+incvi 4;<<ptr   NB. increment 4 integers at ptr
+toint memr ptr,0,16
+addvi 4;<<ptr   NB. sum 4 integers at ptr
+
+NB. =========================================================
+Lab Section
+Referencing memory that is not properly addressed by a pointer can crash or corrupt memory.
+)
+NB. following can crash
+NB. addvi 1000;<<ptr
+
+NB. =========================================================
+Lab Section
+getdata returns the string "static data"
+ C - void getdata(char* c)
+ J - n            *c
+)
+getdata=: 'getdata n *c' cdm
+getdata <'aaaaaaaaaaaaaaaaaaa'
+
+NB. =========================================================
+Lab Section
+getdatap returns the pointer to the string "static data"
+ C - char* getdatap()
+ J - *c
+)
+NB. returns pointer to the string 'static data'
+getdatap=: 'getdatap *c' cdm
+[z=:>{.getdatap ''
+memr z,0,12
+
+NB. =========================================================
+Lab Section
+getdatapx returns the pointer to the string in a parameter.
+ C - void getdatapx(char** p)
+ J - n              *i
+
+A pointer will be stored in the parameter. A pointer is an integer, so the parameter must be an integer.
+
+In general any type** prototype will be a *i declaration.
+)
+getdatapx=: 'getdatapx n *i' cdm
+getdatapx <,0  NB. boxed integer list used as pointer
+
+NB. =========================================================
+Lab Section declaration
+The declaration types c i d and j are the native J types of character, integer, floating-point, and complex. The types c i d and j are respectively: 1 4 8 and 16 bytes.
+
+DLLs can also work with datatypes s (2 byte short integer) and f (4 byte floating-point); these are not native J types and extra work is involved in using them. In general there is no reason to use them, unless you are making use of a DLL or code that already exists.
+)
+
+NB. =========================================================
+Lab Section
+A result of s or f is converted to i or d.
+
+An s or f parameter is converted from i or d for the call.
+)
+incs=: 'incs s s' cdm
+incf=: 'incf f f' cdm
+incs 123
+incf 123.123
+
+NB. =========================================================
+Lab Section s (short integers) and f (floating-point)
+Pointers to s and f data are more complicated. They are not native J types and you have to use J character data if you want the pointer to address data in a J array.
+)
+
+NB. =========================================================
+Lab Section
+)
+NB. no result, s count, pointer to s data
+incvs=: 'incvs n s *s' cdm
+shorts=: 23 0 25 0 { a.  NB. intel byte order
+z=: incvs 2;shorts
+a. i. >2{z   NB. incremented shorts
+
+NB. =========================================================
+Lab Section calling convention
+The procedure calling convention is the rules for how the result and parameters are passed between the caller and the routine.
+
+Using the wrong calling convention can crash or corrupt memory.
+)
+
+NB. =========================================================
+Lab Section
+J supports 2 calling conventions: __stdcall and __cdecl.
+
+__stdcall is the calling convention for the Windows API and is used by most DLL procedures.
+
+__cdecl is the standard C calling convention. It is used for some DLL procedures. The jlapack.dll uses the __cdecl calling convention.
+
+__stdcall is the standard cd calling convention and __cdecl is the alternate.
+)
+
+NB. =========================================================
+Lab Section + % flags
+The cd left argument supports a few flags.
+   "filename procedure [+] [%] declaration" cd parameters
+
++ selects the alternate (__cdecl) calling convention.
+)
+NB. without + , __stdcall would be used and you would crash
+'altinci + i i' cdm 23
+
+NB. =========================================================
+Lab Section fpreset
+The % flag does an fpreset (floating-point state reset) after the procedure call.
+
+Some procedures leave floating-point in an invalid state that causes a crash at some later time. DLLs built with Delphi likely have this problem.
+
+If J crashes on simple expressions after calling a procedure, try adding the % flag.
+)
+
+NB. =========================================================
+Lab Section GetLastError
+Some procedures provide error information with GetLastError.
+
+cderx returns GetLastError and its text for the last cd.
+)
+
+NB. =========================================================
+Lab Section
+Call kernel32.dll DeleteFileA procedure and check GetLastError with cderx.
+)
+DeleteFile=: 'kernel32.dll DeleteFileA i *c' & cd
+DeleteFile <'notafile.jnk'
+cderx''
+
+NB. =========================================================
+Lab Section cdf - unload DLLs
+A DLL is loaded when you first use it. If you build a new version and try to save it, the save will fail because the file is in use. Before you can save a new version you have to unload it from the application.
+
+cdf frees (unloads) DLLs that cd has loaded.
+)
+inci 23   NB. DLL is loaded
+NB. trying to save a new version of dlltest.dll will fail
+cdf''  NB. free cd DLLs
+NB. now you can save the new version
+inci 23  NB. load and use the new version
+
+NB. =========================================================
+Lab Section summary
+   "filename procedure [+] [%] declaration" cd parameters
+
+filename: fully qualified DLL filename
+
+procedure: case sensitive procedure name
+
++ flag selects alternate calling convention, __cdecl instead of __stdcall.
+
+% flag does fpreset after the call.
+)
+
+NB. =========================================================
+Lab Section
+declaration: blank-delimited result and parameter types
+ c character
+ s short integer (2 byte)
+ i integer (4 byte)
+ f short float (4 byte)
+ d float (8 byte)
+ j complex (16 byte) (not as result)
+ * pointer (can be followed by c s i f d j)
+ n no result (result only)
+
+ c i d j are native J types
+ s f are used in J as i and d
+ *s and *f are used in J as strings
+)
+
+NB. =========================================================
+Lab Section
+The cd right arg is a list of boxed procedure parameters. Each item is a parameter and its type must match the corresponding declaration.
+
+A boxed scalar integer parameter is a pointer.
+)
+
+NB. =========================================================
+Lab Section
+The cd result is a list of boxes.
+
+The first item is the procedure result. An n declaration has a 0 result.
+
+The procedure result is followed by a copy of the parameters. The data addressed by pointer parameters can be modified.
+)
+
+NB. =========================================================
+Lab Section
+cder gives information about the last cd call.
+ 0 0 - no error
+ 1 0 - file not found
+ 2 0 - procedure not found
+ 3 0 - too many DLLs loaded (max 20)
+ 4 0 - parameter count does not match declarations
+ 5 n - declaration n invalid
+ 6 n - parameter n type does not match declaration
+
+cderx returns GetLastError and text.
+
+cdf frees (unloads) all cd DLLs.
+)

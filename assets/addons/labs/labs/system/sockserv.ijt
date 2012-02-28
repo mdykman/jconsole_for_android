@@ -1,0 +1,400 @@
+LABTITLE=: 'Socket Driver Server'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Introduction
+There is reference documentation of the Socket Driver in the release documentation available from the J help menu.
+)
+PREPARE
+ASSERT=: 3 : 0
+(-.y)#'Something is wrong!'
+)
+
+toclient=:3 : 'wd''mb Server *'',y,'' Dismiss this dialog, switch to the client session, and continue the lab there.'''
+PREPARE
+
+NB. =========================================================
+Lab Section Socket Driver Server
+A socket is an endpoint in a bi-directional communication channel. The other end can be in the same task, not usually very interesting, in another task on the same machine, or in a task on another machine that is accessed through a TCP/IP connection.
+)
+
+NB. =========================================================
+Lab Section
+J provides support for driving sockets under Windows 9x/NT/2000. The Socket Driver is not available on the Macintosh.
+
+This lab assumes that you are able to access sockets.
+)
+
+NB. =========================================================
+Lab Section
+Script sockets.ijs has definitions for working with sockets. This loads into the jsocket locale, and coinsert puts this locale on the path.
+)
+load'socket'
+coinsert 'jsocket'
+
+NB. =========================================================
+Lab Section
+A socket is identified by an integer handle. The verb sdsocket creates a socket.
+
+All socket verbs have a result whose first item is a result code.
+
+The result of sdsocket'' should be a 0 (no error) and an integer that is the socket handle.
+)
+sdsocket
+r=:sdsocket''
+r
+SK=:1 pick r
+SK
+
+NB. =========================================================
+Lab Section
+When you are through with a socket it should be closed.
+)
+sdclose SK
+
+NB. =========================================================
+Lab Section
+sdcleanup closes all sockets and releases all socket resources.
+)
+sdcleanup''
+
+NB. =========================================================
+Lab Section
+Let us see what an error would look like.
+)
+sdclose 1234
+
+NB. =========================================================
+Lab Section
+sderror converts an error number, the first item of its argument, to an error name that might give an idea about what is wrong.
+)
+sderror sdclose 1234
+
+NB. =========================================================
+Lab Section
+sdcheck checks for an error in the result of a socket verb. If there is an error it signals the error with the error number and name.
+
+If there is no error it returns its argument with the error code removed.
+)
+sdcheck sdclose 1234
+
+NB. =========================================================
+Lab Section
+sdgetsockets returns a list of sockets.
+)
+sdsocket''
+sdsocket''
+sdgetsockets''
+sdcheck sdgetsockets''
+sdcheck sdcleanup''
+sdcheck sdgetsockets''
+
+NB. =========================================================
+Lab Section
+Sockets are used for communication between tasks so to do interesting things you need another task.
+
+This task (session) will be the main one and will act as the server.
+
+The other J task you start will be used as the client.
+
+You will run the server lab in this task and the client lab in the other task.
+
+Coordinating between labs in two tasks can be a little tricky and you will have to pay attention.
+
+Switching between the two tasks will be indicated by a dialog box, as in the next section.
+)
+
+NB. =========================================================
+Lab Section
+)
+wdinfo 'Server';(0 : 0 )
+Start another copy of J to run as the client of this server.
+
+In the new client task run the lab "Socket Driver Server - Client".
+
+Do NOT continue the lab in this server task until instructed to do so by the lab in the client task.
+
+You may now dismiss this dialog and proceed with the above instructions.
+)
+
+NB. =========================================================
+Lab Section
+You should have now started a second J task to use as a client and you should have stepped through the Socket Driver Client lab up to the step that told you to return to this server task.
+
+This session is the socket server.
+)
+
+NB. =========================================================
+Lab Section
+As a server we need to create a socket that will listen for requests from a client.
+)
+load'socket'
+sdcleanup''
+SKLISTEN =: 0 pick sdcheck sdsocket''
+SKLISTEN
+
+NB. =========================================================
+Lab Section
+The first thing is to give the socket an address.
+
+Addresses used with sockets consist of 3 parts: address_family, address_name, port
+
+The first item an integer which indicates the type of address. Currently this is always AF_INET, i.e. address family internet.
+
+The second part is an internet address of a host. An internet address is a string of 1 to 4 numbers separated by dots.
+
+The third part is an integer port.
+)
+
+NB. =========================================================
+Lab Section
+The sdbind verb sets the address for our socket. The empty string for the host name indicates that the socket is bound to any name for this host. A host machine can have more than one name.
+
+The port of 1500 identifies us as a server for port 1500. The port number is arbitrary, but must be known by both the server who offers the service and clients who want that service.
+)
+sdcheck sdbind SKLISTEN ; AF_INET_jsocket_ ; '' ; 1500
+
+NB. =========================================================
+Lab Section
+As a server socket, the socket needs to be set to listen for requests for service.
+
+This is done with sdlisten.
+
+The second value is the number of incoming connections that will be queued by the system.
+)
+sdcheck sdlisten SKLISTEN , 1
+
+NB. =========================================================
+Lab Section
+sdselect is used to see if there are any sockets that need work. For example when a client makes a connection to our listening socket we need to know and will want to accept the connect and then start sending and receiving data.
+
+sdselect with an empty argument returns information about all sockets.
+)
+
+NB. =========================================================
+Lab Section
+The sdselect result is a boxed list. The first element is the result code. The result code is stripped off by sdcheck.
+
+The first item is a list of sockets that have data ready for us to read or are trying to connect to a listening socket.
+
+The second item is a list of sockets that are ready to have data sent.
+
+The last item is a list of sockets that have had an error.
+
+Right now all three lists should be empty.
+)
+sdcheck sdselect''
+
+NB. =========================================================
+Lab Section
+)
+toclient 'The server is listening for incoming connections on the socket.'
+
+NB. =========================================================
+Lab Section
+You should be at this step after you have just finished running the steps on the client to request a connection.
+)
+
+NB. =========================================================
+Lab Section
+The sdselect should now show that the listening socket is ready for a connect.
+)
+SKLISTEN
+sdcheck sdselect''
+
+NB. =========================================================
+Lab Section
+You can now accept the connection from the client.
+
+The result of the accept is a new socket that is cloned from the listening socket.
+
+This new socket is connected to the client and can be used to send and receive data with the client.
+)
+sdcheck sdselect''
+skserver=: 0 pick sdcheck sdaccept SKLISTEN
+skserver
+
+NB. =========================================================
+Lab Section
+The listening socket is still listening for connections. In this example we will only work with the single connection. To simplify things and avoid confusion we will now close the listening socket so that we only have the socket that is connected to the client to worry about.
+)
+sdcheck sdclose SKLISTEN
+
+NB. =========================================================
+Lab Section
+sdselect should now indicate that the new socket is ready for writing.
+
+Writeable sockets are in the second socket list.
+
+The ASSERT verb checks a condition to try to make sure that the client and server labs are in synch and are working properly together. It will display an error if there is a problem.
+)
+sdcheck sdselect''
+
+ASSERT skserver e. 1 pick sdcheck sdselect''
+
+NB. =========================================================
+Lab Section
+sdsend sends data to the other end of the socket connection.
+
+The left argument is the data to send.
+
+The right argument is the socket that sends the data and a flags value that is normally 0.
+
+The result of sdsend is the number of bytes actually sent.
+)
+sdcheck 'welcome to server 1500' sdsend skserver , 0
+
+NB. =========================================================
+Lab Section
+)
+toclient'We now switch back to the client to read the data we sent.'
+
+NB. =========================================================
+Lab Section
+Use sdselect to see if there is data to be read.
+
+The socket should be listed in the first list because it is readable, and again in the second list because it is writeable.
+)
+r=: sdcheck sdselect''
+r
+ASSERT skserver e. 0 pick r
+data=. ; sdcheck sdrecv skserver,1000,0
+data
+
+NB. =========================================================
+Lab Section
+Now the sdselect should indicate that there is no more data available for reading, but that you could write data to the socket.
+)
+sdcheck sdselect''
+ASSERT 0 = # 0 pick sdcheck sdselect''
+
+NB. =========================================================
+Lab Section
+A socket is created as a blocking socket.
+
+This means that an operation such as sdrecv that cannot complete immediately it waits (hangs) until it can be completed.
+
+Right now the sdselect tells us that there is no data ready to read. Since it is a blocking socket if we do an sdrecv now this task will hang until there is data to be read.
+)
+
+NB. =========================================================
+Lab Section
+The sdrecv in the next section will hang this task until there is data to receive. You need to switch to the client task and send some data.
+
+THE NEXT SECTION WILL HANG THIS TASK!
+
+WHEN YOU HANG, SWITCH TO THE CLIENT lab TO SEND SOME DATA.
+)
+
+NB. =========================================================
+Lab Section
+)
+; sdcheck sdrecv skserver,1000,0
+
+NB. =========================================================
+Lab Section
+The use of sockets that block like this is generally not a good idea and it is much better to use a non-blocking socket.
+
+A socket can be marked as non-blocking with the sdioctl.
+
+FIONBIO (Blocking IO) is the control option to set to 1 for a non-blocking socket.
+)
+sdcheck sdioctl skserver,FIONBIO_jsocket_,1
+
+NB. =========================================================
+Lab Section
+Check sdselect to see if there is any data available for reading.
+
+There is no data to read. Previously the sdrecv hung when there was no data to read. Now it will give an immediate result indicating there is no data to read. An attempt to read further will give an error.
+)
+sdcheck sdselect''
+sdcheck sdrecv skserver,1000 0
+
+NB. =========================================================
+Lab Section
+You have marked this end of the socket as non-blocking. This has not changed the other end of the connection. The client still has a blocking socket and the client would hang if it did an sdrecv when there was no data. If both ends want non-blocking sockets, then both ends must explicitly set the socket as non-blocking.
+)
+
+NB. =========================================================
+Lab Section
+You could use sdselect to "poll" for actions to be taken. There is also a parameter to sdselect that gives a timeout value that makes this possible without staying in a tight loop. This form of select waits for a socket that is ready for reading, writing, or has an error and returns when an event occurs. But if there is nothing to do and the timer value has expired, then the sdselect returns so that you do not stay hung in the sdselect.
+)
+
+NB. =========================================================
+Lab Section
+However, we will not explore this use of sdselect because there is a better solution.
+
+sdasync marks a socket as non-blocking AND requests that any change in the state of the socket, such as new data to be read, causes the sentence socket_handler'' to be executed.
+
+This is similar to how window events such as the press of a form button runs sentence wdhandler''.
+)
+
+NB. =========================================================
+Lab Section
+socket_handler is not defined so the first thing to do is to give it a definition so we do not just see a value error when it runs.
+)
+socket_handler=:3 : '''socket_handler run : Check sdselect for stuff to do!!!'''
+
+NB. =========================================================
+Lab Section
+Let us mark our server socket with sdasync.
+)
+sdcheck sdasync skserver
+
+NB. =========================================================
+Lab Section
+)
+toclient 'We now switch to the client to have it send us some data.'
+
+NB. =========================================================
+Lab Section
+You should see that the sentence socket_handler'' was run when the client did the sdsend.
+)
+
+NB. =========================================================
+Lab Section
+)
+toclient ''
+
+NB. =========================================================
+Lab Section
+Even though the client did several sends, we got only one notification that there was a change. That is, socket_handler'' was not executed for each send the client did.
+
+socket_handler is called whenever there is NEW information in the sdselect result. The socket_handler should do an sdselect and it should process all available information. If there was any new information that we might not have processed based on that first sdselect, then the socket_handler will be run again.
+
+If the socket_handler takes care of all processing required by an sdselect then it can depend on the next call to socket_handler to take care of any new information.
+)
+
+NB. =========================================================
+Lab Section
+Let us send a J noun to the client.
+
+3!:1 converts the noun to a internal representation as a character vector that we can use as an argument to sdsend.
+)
+a=.i.2 3 4
+data=: 3!:1 a
+sdcheck data sdsend skserver , 0
+
+NB. =========================================================
+Lab Section
+)
+toclient ''
+
+NB. =========================================================
+Lab Section
+In the simple examples here we have worked with small amounts of data and have made the assumption that the data all goes in one send and is all received in one sdrecv.
+
+In a real application a send of a large amount of data may indicate that only part of the data could be sent. The application has to wait (probably for a socket_handler call) until sdselect indicates the socket is ready for the sending of more data before the rest of the data is sent. Similarly, to receive data in general it is necessary to do more than one receive to get all the data that belongs together.
+)
+
+NB. =========================================================
+Lab Section
+Because data can be sent and received in parts an application needs a convention that indicates what data belongs together. If ascii text is moving back and forth then something as simple as an LF and other control characters can indicate record boundaries. In general adding a count of characters in a record the beginning of a record is probably the most general solution.
+)
+
+NB. =========================================================
+Lab Section
+This is the end of the Socket Driver - Server/Client lab.
+
+You can either close down the other J task now, or continue experimenting with the client-server socket connection on your own.
+)

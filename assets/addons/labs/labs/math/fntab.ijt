@@ -1,0 +1,830 @@
+LABTITLE=: 'Function Tables'
+
+NB. =========================================================
+Lab Section INTRODUCTION
+
+Tables are commonly used in mathematics, not only to organize such data as sines and logs, but, more interestingly, to provide insight, as in the addition and multiplication tables used in elementary school.
+
+Computers now make it more convenient to compute results such as sines and logs than to consult tables, but also make it mor practicable to produce tables for purposes of elucidation and exploration.  This lab explores the use of tables for insight, using the programming language J.
+)
+
+v=: (0,1,2,3,4,5)
+
+v + v         NB. Addition of vectors
+
+v +/ v        NB. Addition table (/ is the table operator)
+
+NB. The symmetry of its table suggests that addition is
+NB. commutative
+
+NB. =========================================================
+Lab Section
+
+Tables of other functions may be produced similarly. In particular, matrix inverse (denoted by %.) applied to the table of binomial coefficients gives the table of alternating binomial coefficients:
+)
+
+(v */ v) ; (v *./ v) ; (v -/ v)  NB. Times, lcm, and diff
+
+binomials=: v !/ v     NB. Table of binomial coefficients
+altbin=: %. binomials
+X=: +/ . *             NB. The matrix product function
+
+binomials ; altbin ; binomials X altbin
+
+NB. =========================================================
+Lab Section BORDERED TABLES
+
+It is sometimes easier to read a function table if it is bordered by its arguments, and we now introduce an operator for this purpose called table. Thus:
+)
+
+a=: 2 3 5 7     NB. (=: may be read as "is" or "are")
+
+b=: 0 1 2 3 4   NB. Exponents
+
+a ^/ b          NB. Powers of primes
+
+a ^table b      NB. Bordered table of powers
+
+NB. =========================================================
+Lab Section
+
+We will sometimes use unadorned tables, which the reader may choose to border by hand or by computer.
+
+We will also use tables in which fractions are represented as rationals, as for example 2r3 for two-thirds.
+)
+
+v (+table ,. -table ,. %table) v NB. Sum, Difference, Quotient
+
+NB. =========================================================
+Lab Section NEGATIVE ARGUMENTS
+
+Multiplication tables for arguments that include negative integers are not commonly seen; they exhibit some simple, but interesting, properties:
+)
+- |. v
+
+}.v
+
+s=: (-|.v) , }.v        NB.Symmetric list
+
+s
+
+mt=: s */ s
+
+mt
+
+NB. Other functions provide interesting tables when
+NB. applied to symmetric arguments. Thus:
+
+s !table s
+
+NB. Examples from earlier sections may provide further
+NB. insights if the argument v is replaced by s.
+
+NB. =========================================================
+Lab Section AMBIVALENCE
+
+In math, the symbol - is used ambivalently to denote subtraction when used dyadically (with two arguments), and to denote negation when used monadically. In J, all functions are ambivalent. In particular, * denotes multiplication when used dyadically, and signum when used monadically, as in the expression * mt below.
+
+The tables mt and * mt show clearly that a zero row and a zero column divide the multiplication table into four quadrants, each of a common sign, providing a visual representation of the rule of signs used in products. Moreover, a vertical passage from one quadrant to another reverses the sign of the left argument and of the result, and horizontal passage reverses the sign of the right argument, facts that provide some justification for the rule.
+)
+mt=: s */ s
+
+mt
+
+* mt
+
+NB. =========================================================
+Lab Section COMPLETION
+
+Functions are commonly completed by extending them to arguments not comprehended in their original definitions. For example, expressing the simple notions of squares and cubes
+              2     3 in the forms x and x suggests the possible extensions to exponents that are negative, non-integral, zero, and complex; completions that provide both insight and power.
+
+The similar completion of the factorial, in the gamma function, is a further familiar example. Completions are normally subjected to careful analysis to ensure that they fit smoothly into the original definitions. Consider, for example, the summation function, denoted in math by a capital Greek Sigma, and in J by +/, used monadically. Thus
+)
++/2 3 5 7    NB. Sum over primes
+
+2+3+5+7
+
+i. 5         NB. First five non-negative integers
+
++/ i. 5
+
++/ i. 0
+
+NB. =========================================================
+Lab Section
+
+The last example above concerns the case of an empty vector, a case not comprehended in the simple notion of inserting the function + between successive items in a list. The result in J is a zero, a completion that might appear to be "obvious".
+
+But what is the rationale for the completions of the following functions?
+)
+*/ i.0          NB. Times on empty vector
+
+<./ 3 2 5 7     NB. Minimum over
+
+<./ i.0         NB. Minimum over empty vector (_ is infinity)
+
+NB. The rationale may be illustrated as follows:
+
+a=: 2 3 5 7 11
+
+k=: 3
+
+k{.a     NB. Take k items of a
+
+k}.a     NB. Drop k items of a
+
+(*/a) ; (*/k{.a) ; (*/k}.a) ; (*/k{.a) * (*/k}.a)
+
+(*/a) = (*/k{.a) * (*/k}.a)    NB. A tautology
+
+NB. =========================================================
+Lab Section
+
+For the case k=:0, the expression k{.a yields an empty vector, and the definition adopted for */i.0 extends the foregoing identity to this case, thus:
+)
+k=:0
+
+k (*/@] ; */@{. ; */@}. ; */@{. * */@}.) a
+
+NB. Similarly for the minimum function, whose neutral is
+NB. infinity (denoted here by _):
+
+(<./a) ; (<./k{.a) ; (<./k}.a) ; (<./k{.a)<.(<./k}.a)
+
+NB. =========================================================
+Lab Section
+
+These results suggest (correctly) that the result of f/i.0 is the "identity element" or "neutral" of the function f, the neutral of f being that argument n for which n f x yields x for any argument x The case of the minimum function <. is particularly interesting, since infinity might well be DEFINED as its neutral.
+
+Function tables can suggest the manner of completion of a function. For example, what value would you suggest for the blank entry (at 0 f 0) in order to complete the following function?
+
+                     *
+  +--+-------------------------+
+  |  |   _3  _2   _1 0  1 2   3|
+  +--+-------------------------+
+  |_3|_1r27 1r9 _1r3 1 _3 9 _27|
+  |_2| _1r8 1r4 _1r2 1 _2 4  _8|
+  |_1|   _1   1   _1 1 _1 1  _1|
+  | 0|    _   _    _    0 0   0| *
+  | 1|    1   1    1 1  1 1   1|
+  | 2|  1r8 1r4  1r2 1  2 4   8|
+  | 3| 1r27 1r9  1r3 1  3 9  27|
+  +--+-------------------------+
+
+Obvious possibilities include _ and 0 and 1 and _. "indeterminate". Since this is a portion of the power table (^), and since some math texts insist that zero to the power zero is undefined, the indeterminate might suggest itself.
+
+However, further analysis will suggest the value 1, used in J, for the following reasons:
+
+                                           0    1    2
+ Expressions for polynomials of the form c x +c x +c x
+                                          0    1    2
+and
+         k
+ SIGMA c x  would otherwise fail to evaluate properly for
+         k
+
+a zero argument x
+
+2. If one argument is made to approach its limit as a function of the other (as in x^p x), and if p is any polynomial other than identically zero, then LHopitals Rule can be used to show that the indeterminate 0^0 must be 1.
+)
+
+
+
+NB. =========================================================
+Lab Section
+
+Again, suggest a completion for the following function table:
+
+                    *
+  +--+----------------------------+
+  |  |  _3   _2 _1  0  1    2    3|
+  +--+----------------------------+
+  |_3|   1  3r2  3 __ _3 _3r2   _1|
+  |_2| 2r3    1  2 __ _2   _1 _2r3|
+  |_1| 1r3  1r2  1 __ _1 _1r2 _1r3|
+  | 0|   0    0  0     0    0    0| *
+  | 1|_1r3 _1r2 _1  _  1  1r2  1r3|
+  | 2|_2r3   _1 _2  _  2    1  2r3|
+  | 3|  _1 _3r2 _3  _  3  3r2    1|
+  +--+----------------------------+
+
+If this is recognized as part of the divide (%) table, the indeterminate might again be suggested. However, the pattern of the table clearly suggests 0, as consistent with the rest of the row and "midway between" the negative and positive infinities in the column. Moreover, the analysis by E.E. McDonnell in "Zero Divided by Zero", APL76, published by ACM, makes a strong case for the zero used in J.
+)
+
+NB. =========================================================
+Lab Section COMMUTATION
+
+The commute operator ~ commutes a function to which it is applied, to produce a related function with arguments interchanged. For example:
+)
+3 % 4
+
+4 %~ 3
+
+into=: %~
+
+3 4 5 into 6 12 10
+
+from=: -~
+
+3 4 5 from 6 12 10
+
+NB. A table of the function f~ is clearly the transpose
+NB. of the table of f. For example:
+
+i=: i. 5
+
+i (-/ ; -~/ ; */ ; *~/ ; */ = *~/) i
+
+NB. =========================================================
+Lab Section
+
+Whereas the tables -/ and -~/ differ, those for */ and *~/ agree. Such symmetry of a function table occurs for any commutative function. The table of the non-commutative subtraction is skew-symmetric, and the table of divide is also "skew" in the sense illustrated below:
+)
+  k=: 1 2 3 4
+
+ st=: k -/ k        NB. Subtraction table
+
+cst=: k -~/ k       NB. Commuted subtraction table
+
+ dv=: k %/ k        NB. Divide table
+
+cdv=: k %~/ k       NB.Commuted divide table
+
+st ; cst ; st + cst
+
+dv ; cdv ; dv * cdv
+
+NB. The relations <, <: (less or equal), >, >:, =, and ~:
+NB. (notequal) and their commutes also provide interesting
+NB. function tables. For example:
+
+s <:table s
+
+NB. =========================================================
+Lab Section MATRICES
+
+The matrices represented by function tables provide interesting results. for example:
+)
+i=: 0 1 2 3 4
+
+goe=: i >:/ i          NB. Greater or equal table
+
+goe ; %. goe           NB. Greater or equal and its inverse
+
+NB. =========================================================
+Lab Section
+
+The inverse matrix %. goe is a difference matrix, in a sense to be established. The matrix product function produces sums (+/) over the element-by-element products (*) of rows of the left argument with columns of the right. The function may be defined using the inner product or dot operator as follows:
+)
+X=: +/ . *      NB. The space before the dot is essential
+
+goe X (%. goe)  NB. Product of inverses is an identity matrix
+
+pr=: 2 3 5 7 11      NB. Primes
+
+partials=: goe X pr  NB. Partial sums or subtotals
+
+partials
+
+(%. goe) X partials  NB. Differences of partial sums
+
+NB. =========================================================
+Lab Section
+
+The binomial coefficients function !, whose table appears in the introduction, can also be construed as the "outof" function, as illustrated below:
+)
+outof=: !
+
+3 outof 5
+
+NB. The number of distinct ways of choosing 3 things from 5
+
+5 outof 3
+
+NB. The number of distinct ways of choosing 5 things from 3
+
+NB. =========================================================
+Lab Section
+
+>From this it appears that the zeros in the binomial coefficients table are meaningful; nonetheless, they are normally suppressed (from the commuted table !~/) in the presentation of the triangle of Pascal, presumably in the interest of readability.
+
+The result is that the triangle of Pascal does not represent a matrix, although the matrix represented by the table of binomial coefficients is eminently useful. For example:
+)
+   i=: 0 1 2 3 4 5
+
+ bct=: i !/ i
+
+abct=: %. bct  NB. Inverse is table of alternating binomials
+
+bct ; abct
+
++/ bct         NB. The sums over the binomial coefficients
+
+2^i            NB. are the powers of two 1 2 4 8 16 32
+
++/ abct        NB. The sums over the alternating binomials
+
+NB. This last result is sometimes mis-stated (as in the
+NB. National Bureau of Standards Handbook of Mathematical
+NB. Functions, page 10) as identically zero.
+
+NB. =========================================================
+Lab Section
+
+The "expansion" of the coefficients of a polynomial is easily stated as a matrix product with a binomial coefficients table. For example:
+)
+
+c=: 4 0 1 3 2 1
+
+x=: i.8
+x
+
+c p. x              NB. Polynomial with coefficients c
+
+d=: bct X c         NB. Expanded coefficients
+
+d
+
+d p. x
+
+c p. x+1
+
+abct X d            NB. Inverse restores coefficients
+
+e=: abct X c
+e
+
+e p. x
+
+c p. x-1
+
+NB. =========================================================
+Lab Section POWERS
+
+The  term power is commonly used for the function denoted in
+.               n
+mathematics by x , and in J by x^n, i.e. using the symbol ^ introduced for this purpose by de Morgan. But the term is also used for the operator ^:, with f^:n signifying n applications of the monadic function f.
+.                     2
+Note that in math sin  does not denote two applications of the sine function. The relation between the two notions may be visualized by construing the power function as repeated application of multiplication. Thus:
+)
+2^3 8
+
+2*2*2 8
+
+*/2 2 2 8
+
+*/3#2        NB. Product over three copies of two 8
+
+NB. Although the definition as repeated multiplication
+NB. does not comprehend the case of a zero exponent,
+NB. the completion is correctly provided by the neutral
+NB. of multiplication. Thus:
+
+*/0#2
+
+2^0
+
+NB. =========================================================
+Lab Section
+
+The uniformity of the completion for zero and negative arguments may be seen in the following results, wherein passing from the exponent k to k+1 multiplies the result by 5, while passing from k to k-1 divides it by 5:
+)
+s=: 4 -~ i.9
+
+s
+
+5^s
+
+NB. =========================================================
+Lab Section
+
+We will illustrate the use of the power operator ^: on the function f=: bct&X, which is "the matrix product with left argument bct". Thus, using the values of bct and c from the section on MATRICES:
+)
+
+i=: 0 1 2 3 4 5
+
+bct=: i !/ i
+
+c=: 4 0 1 3 2 1
+
+X=: +/ . *
+
+f=: bct&X
+
+f f c
+
+c2=: f f c
+
+c2 p. x
+
+c p. x+2
+
+
+NB. The operator ^: produces a power of its function left
+NB. argument, or a collection of powers:
+
+f ^: 2 c
+
+f^: 0 1 2 3 4 c
+
+NB. =========================================================
+Lab Section
+
+The powers of f are more interesting when applied to an identity matrix:
+)
+I=: i =/ i
+
+] powers=: f^: 0 1 2 3 I
+
+NB. =========================================================
+Lab Section
+
+It is interesting to examine these matrices to see if they form a recognizable pattern. They do indeed, but the pattern is easier to spot if each is divided (element-by-element) by the binomial coefficient table bct. Thus:
+)
+powers %"2 bct
+
+NB. Rank-2 divide applies to each rank-2 item (each matrix)
+
+NB. =========================================================
+Lab Section
+
+The original result can be produced by the following expression, which makes no use of the matrix product, and could therefore apply for non-integer values as well:
+)
+bct (*"2) 0 1 2 3 (^"0 2)  0 >. i -~/ i
+
+NB. =========================================================
+Lab Section
+
+We will now use the power operator to produce a table of binomial coefficients. If c is the vector of binomial coefficients of order 3, coefficients of order 4 may be obtained from it as follows:
+)
+c=: 1 3 3 1
+
+0,c
+
+c,0
+
+(0,c)+(c,0)
+
+NB. This process may be embodied in a function as follows:
+
+next=: 0&,+,&0
+
+next c
+
+p=: i.6
+
+next ^: p 1
+
+NB. =========================================================
+Lab Section PATTERN SPOTTING
+
+Pattern-spotting may be greatly aided by computer calculations, as illustrated by the emergence of a pattern in the matrix-product-powers of the binomial coefficient table bct under element-by-element division by bct itself.
+
+We will now suggest a few general tools. Try to discern patterns in the following lists, and then examine the subsequent calculations on them:
+)
+a=: 2 1 2 2 4 2 4 2 4 6 2 6 4 2 4 6 6 2 6 4
+
+b=: 2 5 10 17 28 41 58 77 100 129 160 197 238 281 328 381 440 501 568 639
+
+c=: 2 _1 1 0 2 _2 2 _2 2 2 _4 4 _2 _2 2 2 0 _4 4 _2
+
+sum=: +/\         NB. Subtotals
+
+dif=: sum^:_1     NB. Differences are inverse of subtotals
+
+sum a
+
+dif b
+
+sum sum c
+
+NB. =========================================================
+Lab Section
+
+The compact, organized, display of groups of tables can also be helpful. Consider, for example, the table of powers used in an earlier section:
+)
+bct=: i !/ i
+
+I=: i =/ i
+
+X=: +/ . *
+
+f=: bct&X
+
+powers=: f^: 0 1 2 3 I
+
+box=: <"2    NB.Box rank-2 arrays (matrices)
+
+box powers
+
+2 2 $ box powers
+
+NB. =========================================================
+Lab Section TAYLOR SERIES
+
+For many functions, it is possible to apply an operator to obtain the coefficients of a polynomial that approximates the function. This operator is called a Taylor series operator, and is denoted by t. . We will begin with polynomial functions, for which the approximation is exact. Thus:
+)
+c=: 4 0 1 3 2 1  NB. Coefficients used in earlier Section
+
+x=: i. 8
+
+c p. x
+
+f=: c&p.
+
+f x
+
+f t. 0 2                 NB. Coefs 0 and 2 of Taylor series
+
+tcf=: f t. i=: 0 1 2 3 4 5 6 7 8   NB. First 9 Taylor coefs
+tcf
+
+tcf p. x
+
+g=: f@>:                 NB. Function f atop increment
+
+g x
+
+tcg=: g t. x
+tcg
+
+tcg p. x
+
+c p. x+1
+
+NB. =========================================================
+Lab Section
+
+The Taylor series that approximate the exponential and the trigonometric functions show interesting patterns. For example:
+)
+exp=: ^
+
+sin=: 1&o.
+
+cos=: 2&o.
+
+exp t. k=: i.7
+
+(exp t. , sin t. ,: cos t.) k
+
+NB. The non-zero coefficients may be recognized as
+NB. reciprocal factorials, and a display of the reciprocals
+NB. shows the pattern more clearly:
+
+% exp t. k
+
+%(exp t. , sin t. ,: cos t.) k
+
+NB. =========================================================
+Lab Section
+
+Finally, the operator t: gives weighted Taylor coefficients (that is, each multiplied by the appropriate factorial), and its results show the pattern even more clearly. The less familiar hyperbolic sine and hyperbolic cosine may also be added to this list. Their series do not alternate in sign:
+)
+(exp t: , sin t: ,: cos t:) k
+
+sinh=: 5&o.
+
+cosh=: 6&o.
+
+(exp t: , sinh t: , sin t: , cosh t: ,: cos t:) k
+
+(exp t: ,: sinh t: + cosh t:) k
+
+NB. =========================================================
+Lab Section
+
+The last result illustrates the fact that the exponential is the sum of the hyperbolics. Such patterns can be explored further by applying these functions to complex arguments, using the function j. that multiplies its argument by the square root of minus one. For example:
+)
+j. a=: 0.1*i.5
+
+cosh j. a
+
+cos a
+
+cosh@j. a
+
+NB. =========================================================
+Lab Section
+
+The division of one polynomial by another produces a rational function. The Taylor operators apply to such rational functions, sometimes producing surprising patterns. For example:
+)
+r1=: 1&p. % 1 1&p.
+
+r1 k=: i. 8
+
+r1 t. k
+
+r2=: 1 4 6 4 1&p. % 1 2 1&p.
+
+r2 k
+
+r2 t. k
+
+r3=: 0 1&p. % 1 _1 _1&p. NB. Expressed in math as z/1-z-z2
+
+r3 t. k                  NB. Fibonacci numbers
+
+NB. =========================================================
+Lab Section CONTINUED FRACTIONS
+
+The expression:
+
+   3 + 1
+       -
+       7 is commonly used as an approximation to pi. An even better approximation is given by:
+
+   3 + 1
+       -
+       7 + 1
+           -
+           15 + 1
+                -
+                1
+
+Such an expression is called a continued fraction, and can be completely characterized by the list of integers, in this case, 3 7 15 1. In J it might be evaluated as:
+)
+3 + 1 % 7 + 1 % 15 + 1 % 1
+
+NB. Using the reciprocal (monadic %) it may be written
+NB. more simply:
+
+3 + % 7 + % 15 + % 1
+
+NB. =========================================================
+Lab Section
+
+Using reduction by a hook it may be written as a function of the integer list:
+)
+cf=: (+%)/
+
+cf 3 7 15 1
+
+cf\ 3 7 15 1
+
+NB. =========================================================
+Lab Section
+
+The final expression above uses the scan operator \, used previously to give partial sums, to give all the convergents. The following examples, taken from the MAA publication by C.D. Olds [3], give results that will perhaps be recognized:
+)
+cf\ 1 1 1 1 1 1 1 1 1
+
+cf\ 1 2 2 2 2 2 2
+
+cf 3 , 3 6 , 3 6 , 3 6
+
+cf 5 , 2 1 1 2 10
+
+%: 2 11 29
+
+gm=: 1.61765      NB. Approximation to the Golden Mean
+
+gm * gm -1
+
+NB. =========================================================
+Lab Section
+
+A process for deriving a continued fraction expansion will be illustrated by the case of pi:
+)
+]x =: o. 1
+
+]x=: 3 , % 0.14159
+
+]x=: 3 7 , % 0.06265
+
+]x=: 3 7 15 , % 0.9617
+
+]x=: 3 7 15 1 , % 0.03983
+
+NB. An expansion function may therefore be defined and used
+NB. as follows:
+
+cfex=: }: , <.@{: , 1: % {: - <.@{:
+
+cfex pi=: o.1
+
+cfex cfex pi
+
+cfex ^: 0 1 2 3 4 5 6 pi
+
+NB. =========================================================
+Lab Section EVOLUTES
+
+The table e=: 3 3 $ 6 5 4 7 0 3 8 1 2 is an example of a spiral or evolute, which can be rolled clockwise like a (rectangular) snowball, accreting successive integers to form a larger spiral. Thus:
+)
+] e=: 3 3 $ 6 5 4 7 0 3 8 1 2  6 5 4 7 0 3 8 1 2
+
+stick=: ] , >:@i.@{:@$ + >./@,
+
+roll=: |:@|.
+
+snow=: roll@stick ^:2
+
+stick e
+
+roll stick e
+
+(] ; snow ; snow^:2 ; snow^:4) e
+
+NB. =========================================================
+Lab Section
+
+The spirals having an even number of sides are necessarily lop-sided, and we will concentrate on the following 5-by-5 table:
+)
+]spiral =: snow^:2 e
+
+NB. =========================================================
+Lab Section
+
+It should be possible to use the pattern shown in the table as a guide in defining a more direct solution to the generation of a spiral.
+
+In his paper on Volutes in Vector, Vol 13 # 2, E.E. McDonnell analyzes solutions by six different authors, including one in Concrete Mathematics by Graham, et al. One interesting approach is to ravel the table to produce a permutation vector which can then be used to permute the list i. 25, and finally reshape the result into a table:
+)
+perm=: ,spiral
+
+perm
+
+5 5 $ perm { i. 25
+
+NB. =========================================================
+Lab Section
+
+Of course, the problem of how to generate this permutation remains, and forms the bulk of the discussion of McDonnell. He remarks that there are sixteen related spirals: zero to three rolls produce tables that "end" at four different corners; reversal (|.) reverses the sense to produce a clockwise spiral, and subtraction, i.e. from 24 in the case of the 5-by-5 table, produces an involute. Examples of each case, and all cases, are produced as follows:
+)
+box=: <"2       NB. Box rank-2 arrays (matrices)
+
+box spiral , (|.spiral) , (roll spiral) ,: (24-spiral)
+
+invol=: */@$ - 1: + ]       NB. Involute from evolute
+
+all=: invol^:0 1"2@(|.^:0 1"2)@(roll^:0 1 2 3)
+
+$ all spiral
+
+$ box all spiral
+
+$ , box all spiral
+
+4 4 $ , box all spiral
+
+NB. =========================================================
+Lab Section COMPLEX NUMBERS
+
+In mathematics, complex numbers are written in the form 3+4i, where i denotes the "imaginary" square root of negative 1. In J they are treated as follows:
+)
+]i=: 2 %: _1
+
+3 + 4 * i
+
+j. 4
+
+3 j. 4
+
+%: _1                  NB. Primitive third root of _1
+
+r=: %: & _1
+
+,. r a=: 2 3 4 5 6     NB. Some primitive roots of _1
+
+NB. =========================================================
+Lab Section
+
+Since the nth power of r n is _1, the 2*nth power is 1, and powers therefore repeat in cycles of 2*n This is illustrated by the left panel of the following table.
+
+The middle panel shows the real and imaginary parts that result from the function +., and the right panel shows them in a more readable form, formatted to 7 spaces per column, with 3 digits following the decimal point:
+)
+t=: (r 3) ^ i. 8
+
+(,. ; +. ; 7j3&":@+.) t
+
+NB. =========================================================
+Lab Section
+
+The even powers in this table form a significant pattern, which may be more easily recognized in the formatted table for the cases of 2, 3, 4, and 6:
+)
+
+poly=: 7j3&": @ +. @ (r ^ +:@i.)"0
+
+<@poly 2 3 4 6
+
+NB. =========================================================
+Lab Section
+
+The list of all 2*n distinct powers of the nth root of _1 provides interesting results when used as argument in function tables for product and quotient. For example:
+)
+
+r=: %:&_1
+
+all=: r ^ i.@+:
+
+a3=: all 3
+
+a3
+
+t=: a3 */ a3       NB. Times table
+
+d=: a3 %/ a3       NB. Divide table
+
+t
+
+(1=t) ; (_1=t) ; (1=d) ; (_1=d)

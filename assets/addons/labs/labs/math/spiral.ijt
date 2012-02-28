@@ -1,0 +1,72 @@
+LABTITLE=: 'Spirals'
+
+NB. =========================================================
+Lab Section LINK AND PLOT
+
+The function ; links its vector arguments to form a list of boxed vectors. Thus:
+)
+load 'trig'
+
+cos 1                   NB. Cosine of  radian arguments
+
+cos 1 2 3.14
+
+cosd 0 30 45 60         NB. Cosine of degree arguments
+
+(sind 0 30 45 60) ; (cosd 0 30 45 60)
+
+circle=: cosd ; sind
+
+circle 0 30 45 60
+
+NB. =========================================================
+Lab Section
+
+The function circle yields coordinates of points on a unit circle, as may be seen in the following plot for angles from 0 to 12 degrees:
+
+After viewing the plot, press Alt F4 to return focus from the plot window:
+)
+load 'plot'
+
+plot circle 10 * 0 1 2 3 4 5 6 7 8 9 10 11 12
+
+NB. =========================================================
+Lab Section INTEGER LISTS
+
+The function i. produces a vector of the first non-negative integers, as in the next example shown.
+
+Note that the plot of the circle is correct according to the scales of the plot, although it may appear flattened because of the aspect ratio of the screen.
+)
+i. 13     NB. First 13 non-negative integers
+
+plot circle i. 270
+
+NB. =========================================================
+Lab Section THREE DIMENSIONS
+
+The function:
+
+   spiral=: cosd ; sind ; %:
+
+produces tables of vectors in three dimensions, the z coordinate being the square root (%:) of the argument. For example:
+)
+spiral=: cosd ; sind ; %:
+
+spiral 0 10 20 30
+
+plot spiral i. 1000
+
+NB. =========================================================
+Lab Section NON-CIRCULAR SPIRALS
+
+Functions other than sine and cosine may be used. In particular, the exponential (^) applied to negative arguments can be used to produce a decaying spiral. For example:
+)
+decay=: ^@(%&_500)
+
+desin=: decay * sind
+
+decos=: decay * cosd
+
+despi=: decos ; desin ; %:
+
+plot despi i. 1000

@@ -1,0 +1,1807 @@
+LABTITLE=: 'Circuit Theory I'
+LABAUTHOR=: 0 : 0
+John C. Wilson
+Comments to  J Forum  or johnwilson@pocketmail.com
+)
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Chapter Introduction
+NB. =========================================================
+Lab Section Circuit Theory I
+
+Circuit Theory I
+ Introduction, definition and operations.
+
+Circuit Theory II
+ Classification
+
+Please note: Circuit Theory II requires the addon LAPACK, obtainable
+at the JSoftware website.
+)
+PREPARE
+NB. Definitions for Circuit Theory I
+
+ures =: (- |.)"1        NB. a circuit (unit resistor)
+
+rci =: ({~ (?@#)) "1    NB. random choice of an item from vector
+qc =: rci @ i: "0       NB. random choice from i:n
+rac =: qc @: $ ~ "0 1   NB. random array of shape y from i: x
+ra =: 2&rac "1          NB. random array of shape y from i: 2
+
+res =: ures : (*ures)                     NB. resistor
+dp =: +/ . *                              NB. dot product
+
+M =: >1 _1 0; 1 3 _4; _2 _2 4
+ex14 =: M&dp "1                           NB. 3-terminal circuit
+
+zero =: 0"0                   NB. The open circuit
+
+sq =: *:                      NB. square
+n2 =: (+,-) @ sq @ (-/) "1    NB. a 2-terminal nonlinear circuit
+
+sort =: /:~
+ramp =: (-sort)"1             NB. n-terminal circuit
+
+load 'plot'
+plot3 =: conjunction : '''surface'' plot m&{&.tr v"1 >{y'
+tr =: |:                      NB. transpose
+load 'numeric'
+
+mean =: +/ % #                NB. arithmetic mean
+cf =: -mean                   NB. circuit: centering function
+diff =: - 1&|.                NB. circuit: differencer
+
+sq =: *: "1
+cube =: ^&3
+VOLS =: */\
+
+c2c =: cf@sq@cf
+c3c =: cf@cube@cf
+mc3c =: -@c3c
+d3c =: diff@cube@cf
+md3c =: -@d3c
+cvd =: cf@VOLS@diff
+
+ics =: 6 _2 _4 "1             NB. A 3-terminal current source
+ans =: , (- @ (+/))           NB. append neg sums
+trig =: ans @ sq @ (1 2&o.) @ (3 _2 _1&dp)
+
+P =: > 1 1 2 0 _1 0; 0 _1 _1 _1 1 0; _1 0 _1 1 0 0
+Q =: > 2 _1 _1; _1 2 _1; _1 _1 2
+ex18 =: (P&dp)@(,sq)@(dp&Q)
+
+exp =: ^"1
+
+P =: _1e_6 * >40 _38 _2; _38 50 _12; _2 _12 14
+Q =: _40 * > 1 0 0; 0 1 0; _1 _1 0
+npn =: (P&dp)@exp@(dp&Q)             NB. transistor
+
+P =: _1e_11* >1 _1; _1 1
+Q =: _40* >1 0;_1 0
+diode =: (P&dp)@exp@(dp&Q)           NB. diode
+
+sc =: 1e6&res                 NB. A 2-terminal short circuit
+vccs3 =: (> 0 0 0; 1 0 _1; _1 0 1)&dp
+vccs4 =: (> 0 0 0 0;0 0 0 0;1 _1 0 0;_1 1 0 0)&dp
+
+Grad =: adverb : 'tr@(u D.1)'       NB. Gradient
+
+mea =: >./@: | @ ,    NB. max |element of an array
+dbm =: % mea          NB. divide array by max elt
+
+Apprx =: conjunction : 0
+ J =. (u f.)Grad n
+ b =. (u n)-J dp n
+ (b&+)@(J&dp)
+)
+
+Nia =: adverb : '- ((0.1&*)@((u %.(u f. Grad))))'
+Newton =: adverb : 'u f. Nia^:_'    NB. Newton solution
+solve =: adverb : '(u,(+/))f. Newton'
+
+iv14 =: ics + vccs3 + ex14
+
+id =: =&i.             NB. identity matrix
+matrix =: conjunction : 'tr u"1 id n'
+transpose =: conjunction : '((u"1 id n)&dp)"1'
+under =: conjunction : '(v f. transpose(#y))@u@v y'
+map =: conjunction : '(u f.)under(n&{)'
+
+rvd =: ((2&res)map 0 1)+(vccs4 map 1 2 0 2)+(diff map 2 1 0)
+twores =: (2&res map 1 2)+(res map 0 1)
+tir =: (2&res map 0 1)+(res map 2 3)
+
+apply =: 128!:2
+CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
+
+NB. load 'convert'         NB. to get mfv (matrix from vector)
+
+interc =: conjunction : 0  NB. g interc t
+ z =. (#y)$0              NB. eg, (g0`g1`g2)interc(t0;t1;t2)
+ for_k. n do.
+   z =. z+((u @. k_index)f. map(>k_index}n))y
+ end.
+)
+
+eachg =: adverb : 0      NB. "each" for gerunds
+ z =. (#y)$,:<0         NB. eg, (f0`f1`f2)eachg(y0;y1;y2)
+ for_k. y do.
+   t =. (u @. k_index)&.> k
+   z =. t k_index}z
+ end.
+)
+
+expand =: #^:_1
+r1b =: (,@[ expand ]) ($~ $) [   NB. replace 1's in boolean x by y
+ti =: (2&!)^:_1                  NB. inverse of triangular numbers
+ut =: </~ & i.                   NB. upper triangular matrix
+setut =: ut@ti@# r1b ]@-         NB. set upper triangle to y
+insdiag =: + (id@# r1b -@(+/))   NB. add (-+/y) into the diag of y
+szm =: insdiag@(+ tr)@setut      NB. symmetric 0-sum matrix
+
+rzv =: zsv@ra                   NB. rzv s    random zero sum vector of length s
+                                NB.  or random zero column sum matrix
+zsv =: (*#) -"1  +/             NB. make zero sum (integer from integer arg)
+ rzm =: zsm@ra                  NB. rzm s: random zero sum matrix of shape s
+zsm =: zsv&.tr @ zsv            NB. zsm M: make zero sum matrix from M
+rcrsm =: qc@:(0&{) + tr@rzv@:|. NB. rndm cst row sum matrix
+
+restr1 =: conjunction : 0         NB. restriction of g to t
+ 't s' =. n
+ g =. u f.
+ vt =. y
+ v =. (/:&(t,s))@(vt&,)           NB. v as a fn of vs
+ vs =. (((s&{)@g@v f.)Newton) 0"0 s
+ ct=. (t&{)@g@v vs
+ vs;ct                            NB. returns both vs and ct
+)
+
+restr =: conjunction : '(1&pick)@(u f. restr1 n)'
+NB. End of definitions from Circuit Theory I
+PREPARE
+
+NB. =========================================================
+Lab Section Circuit Theory
+
+This presentation of elementary DC circuit theory is unusual.
+It differs from conventional treatments in the mathematical
+model used for a circuit.
+
+In the conventional treatment a physical circuit is modeled
+as a directed linear graph together with a function that
+describes the voltage-current relation in each of its
+branches, together with Kirchhoff's laws. This is an internal
+view of circuits rather than an external view.
+
+The model presented here is the voltage-current relation at
+the terminals of the circuit; in other words, its external
+behaviour. For simplicity I take this relation to be a
+function from voltage to current. This function is a mapping
+in n-space having two simple properties related to
+Kirchhoff's laws.
+
+I begin with the observation that a multiterminal electric
+device responds to each assignment of the voltages on its
+terminals by drawing into (or expelling from) each terminal a
+well defined current. The algebraic sum of the currents drawn
+is always zero and if the voltage reference is changed the
+currents are unaffected. I take these observations as the
+axioms of an electric circuit.
+)
+
+NB. =========================================================
+Lab Section Notation.
+
+The notation used is also unusual: it is a programming
+language, and therefore executable on a computer. This
+provides for easy experimentation. In particular, it allows
+the reader to experiment with any bits of notation
+introduced. For example:
+)
+v=: (1,2,3)
+v
++/v             NB. Sum over v
+v=: 1 2 3 4     NB. Assign new value to v
++/v
+
+NB. =========================================================
+Lab Section Summary
+
+This lab, Circuit Theory I, includes the formal definition of
+a circuit and the operations that transform old circuits into
+new circuits.
+
+Chapter 2 gives the definition of a circuit as a mapping from
+voltage vectors to current vectors which has two properties:
+(1) the current vectors always add to zero; (2) voltage
+vectors which differ by a scalar map to the same current.
+
+Chapter 3 defines two mathematical operations that correspond
+to the way in which we combine circuits to make new ones:
+interconnection and restriction.
+
+The next lab, Circuit Theory II, deals with the
+classification of circuits and the relationships between
+classes.
+)
+
+NB. =========================================================
+Lab Section Units of measurement.
+Voltage, current, conductance and power are measured in
+volts, amperes, mhos (or siemens) and watts, respectively.
+Any other consistent set of units may be used (for instance,
+V, mA, mS and mW).
+)
+
+NB. =========================================================
+Lab Section Terminology
+
+The "definitions", "laws" and "theorems" of conventional
+circuit theory naturally are stated in terms of two-terminal
+elements. Because the present theory deals with multiterminal
+devices, the same names that are associated with these laws
+and theorems have been used for their multiterminal
+generalizations. My choice of terminology may be
+controversial.
+
+The two key properties of a circuit that I have called the
+"voltage" and "current" laws are obviously intimately related
+to Kirchhoff's voltage and current laws. I have avoided
+applying Kirchhoff's name to them because it seems to confuse
+people. Presumably functions having these properties might be
+called "Kirchhoff functions": I have seen no evidence that
+this has been suggested in the past.
+
+The various circuit classes that I have identified seem
+interesting: the names I have given them should be taken as
+merely suggestions.
+)
+
+NB. =========================================================
+Lab Chapter Circuits
+NB. =========================================================
+Lab Section Definition of a circuit
+
+The following definition is intended to model the behaviour
+of an ordinary multiterminal electric circuit with DC
+voltages and currents. It is a matter of observation that the
+currents drawn at the terminals of such a circuit, and the
+voltages imposed on those terminals, satisfy two conditions:
+the net current drawn is zero, and the voltage reference
+level is immaterial.
+
+Definition.
+
+An n-terminal circuit  g  is a function which maps the set of
+all real n-element voltage vectors into n-element current
+vectors and which has the following two properties. For every
+n-element vector  v  and scalar  a ,
+   The current law:       (+/g v) -: 0"1 v
+   The voltage law:       (g v+a) -: g v
+)
+
+NB. =========================================================
+Lab Section Example: ures
+
+Here is a 2-terminal circuit. It is a unit, or 1 mho
+resistor. To be more precise, it describes the behaviour of a
+unit resistor. But it also describes the behaviour of
+infinitely many other physical circuits that in conventional
+terms we would say are "equivalent" to a unit resistor.
+
+This is characteristic of our theory: each circuit (in our
+sense) represents the equivalence class of all physical
+circuits whose external behaviour is identical.
+)
+ ures =: (- |.)"1          NB. a circuit
+ ] v =: ?2#100             NB. random volage
+ ] a =: ?100               NB. random scalar
+ (ures v);(ures v+a)       NB. voltage law
+ +/ures v                  NB. current law
+
+NB. =========================================================
+Lab Section Discussion of definition
+
+Although the language is that of functions, the appropriate
+mental image is of an object with numbered terminals
+protruding from it. If c =: g v  the voltage  i{v  is applied
+to terminal i (i=0,...,n-1) and the current  i{c  flows into
+terminal i .
+
+Note that the current direction is just a convention, and it
+only applies to the interpretation. If you think of current
+as electron flow, you would regard  i{c  as the current out
+of terminal i. This would be equally valid: only the
+interpretation would change, not the mathematics.
+
+The "n" in the definition of a circuit is part of the
+specification of the domain (and range) of the function.
+
+The term "circuit" as used here includes all of what in
+conventional treatments of the subject might be called
+"network", "device", "component" or "element". I use these
+terms as synonyms for "circuit".
+)
+
+NB. =========================================================
+Lab Section Example: the 4-terminal version of ures
+
+The function  ures  is actually a circuit with an arbitrary
+number of terminals. For example here we use it as a
+4-terminal circuit.
+)
+ ] v =: ?4$10
+ (ures v);(ures v+a);(+/ures v)
+
+NB. =========================================================
+Lab Section
+
+Let us use lots of data and check the definition literally.
+
+The function  ra n  produces a random array (of size n) of
+positive and negative integers.
+
+The function "assert" fails if its argument is 0, and
+succeeds if its argument is 1.
+)
+PREPARE
+ rci =: ({~ (?@#)) "1    NB. random choice of an item from vector
+ qc =: rci @ i: "0       NB. random choice from i:n
+ rac =: qc @: $ ~ "0 1   NB. random array of shape y from i: x
+ ra =: 2&rac "1          NB. random array of shape y from i: 2
+PREPARE
+ v =: ra 1000 4                     NB. 1000 4-element vectors
+ a =: ra 1000                       NB. 1000 scalars
+ assert (ures v+a) -: ures v        NB. voltage law
+ assert (+/@ures v) -: 0"1 v        NB. current law
+
+NB. =========================================================
+Lab Section Example:  res
+
+We can define a more general resistor.
+)
+ res =: ures : (*ures)
+ res 3 1                           NB. 1 mho resistor
+ 7 res 3 1                         NB. 7 mho resistor
+ r5 =: 5&res                       NB. 5 mho resistor
+ r5 2 _1
+
+NB. =========================================================
+Lab Section Example: ex14
+
+Here is a more interesting 3-terminal circuit, based on a
+matrix:
+)
+ dp =: +/ . *                              NB. dot product
+ ] M =: >1 _1 0; 1 3 _4; _2 _2 4
+ ex14 =: M&dp "1                           NB. 3-terminal circuit
+ (ex14 _3 2 4) ; (ex14 _3 2 4 + 56.4)      NB. voltage law
+ +/ ex14 _3 2 4                            NB. current law
+
+NB. =========================================================
+Lab Section Example: zero
+
+A set of isolated terminals forms the zero (or open)
+circuit.
+
+The 1-terminal version of zero is the only 1-terminal
+circuit.
+)
+ zero =: 0"0             NB. The open circuit
+ zero 4 6 2 _5
+ zero 6
+
+NB. =========================================================
+Lab Section Example: n2
+
+Here is a nonlinear 2-terminal circuit based on the square
+function.
+
+
+Exercise. Plot n2
+
+Technically, this requires plotting both c0 and c1 against v0
+and v1, but by the current law we know that c1 = -c0 and by
+the voltage law we can set v1 to zero. So we will just plot
+c0 vs v0 for v1=0 .
+)
+sq =: *:                      NB. square
+n2 =: (+,-) @ sq @ (-/) "1    NB. a 2-terminal nonlinear circuit
+n2 2 5
+n2 3 1
+n2 2 5 + 3 1                  NB. Example of nonlinearity
+
+load 'plot'
+v0 =: i:10
+c0 =: 0{"1 n2 v0,.0
+'title n2: c0 vs v0 (v1=0)' plot v0;c0
+
+NB. =========================================================
+Lab Section Is it a circuit?
+
+It is very unlikely that any electrical engineer would
+recognize the last example as a circuit, but it satisfies the
+axioms and there doesn't seem to be any basis for rejecting
+it other than the fact that a physical example doesn't exist.
+)
+
+NB. =========================================================
+Lab Section Example: ramp circuit
+
+Here is another unusual circuit of arbitrary valence, based
+on the sorting function.
+
+Plot the 2-terminal version of the ramp circuit.
+)
+ sort =: /:~
+ ramp =: (-sort)"1             NB. n-terminal circuit
+ ramp 7 3
+ ramp 3 7
+
+ v0 =: i:10
+ c0 =: 0{"1 ramp v0,.0
+ 'title ramp: c0 vs v0 (v1=0)' plot v0;c0
+
+NB. =========================================================
+Lab Section
+
+Use 3-dimensional plotting to try to understand what the
+3-terminal version of ramp does. (Hint: since the voltage
+reference level is irrelevant, set v2 = 0 and vary only v0
+and v1.)
+
+The function  plot3  can be used to plot any of the currents
+of a 3-terminal circuit, on the understanding that one of the
+terminal voltages is zero. The axis running top-left to
+bottom-right is the first nonzero voltage; bottom-left to
+top-right is the second nonzero voltage.
+)
+PREPARE
+plot3 =: conjunction : '''surface'' plot m&{&.tr v"1 >{y'
+PREPARE
+tr =: |:                       NB. transpose
+load 'numeric'
+
+v0 =: v1 =: steps _4 4 30
+(1 plot3 ramp)v0;v1;0          NB. c1
+
+NB.  Try also:
+NB. (0 plot3 ramp)v0;v1;0      NB. c0
+NB. (2 plot3 ramp)v0;v1;0      NB. c2
+
+NB. =========================================================
+Lab Section Example: cf and diff
+
+The function  mean  computes the arithmetic mean of the
+elements of a vector argument.
+
+The centering function  cf  is a circuit with an arbitrary
+number of terminals.
+
+diff is another simple circuit with an arbitrary number of
+terminals. Notice that the 2-terminal version of  diff  is
+identical to  ures .
+)
+
+ mean =: +/ % #               NB. arithmetic mean
+
+ cf =: -mean                  NB. circuit: centering function
+ cf 2 5 8 _2                  NB. the 4-terminal version
+
+ diff =: - 1&|.               NB. circuit: differencer
+ diff 2 8 3 5 0               NB. 5-terminal differencer
+ (diff 3 7);(ures 3 7)
+
+NB. =========================================================
+Lab Section Examples based on cf and diff
+
+We can use the functions  cf  and  diff  to create any number
+of new circuits. If  f  is any function mapping arbitrary
+n-element vectors to n-element vectors, then the function
+   g =: cf@f@cf   is a circuit.
+
+The function  diff  can be used in a similar way. Here are
+some examples. They are all have an arbitrary number of
+terminals.
+
+Plot the 2- and 3-terminal versions of some of them.
+)
+
+ sq =: *: "1
+ cube =: ^&3
+ VOLS =: */\
+
+ c2c =: cf@sq@cf
+ c3c =: cf@cube@cf
+ mc3c =: -@c3c
+ d3c =: diff@cube@cf
+ md3c =: -@d3c
+ cvd =: cf@VOLS@diff
+
+NB. =========================================================
+Lab Section Example: current source
+
+So far, all our circuits have had the property that o -: g o
+where  o is the zero vector.
+
+Here is a 3-terminal circuit that doesn't have that property.
+
+Clearly for this to be a circuit, the constant vector must
+add to 0.
+)
+ ics =: 6 _2 _4 "1   NB. A 3-terminal current source
+ ics 3 1 9
+ ics 0 0 0
+
+NB. =========================================================
+Lab Section Example: a "trigonometric" circuit
+
+Here is another 3-terminal circuit that doesn't have the
+property that o -: g o .
+)
+ ans =: , (- @ (+/))               NB. append neg sums
+ trig =: ans @ sq @ (1 2&o.) @ (3 _2 _1&dp)
+ v =: 9 4 1
+ (trig 0 0 0);(trig v);(trig v+2.21);(+/trig v)
+
+v0=: v1 =: steps _1 1 30
+(1 plot3 trig)v0;v1;0
+
+NB. =========================================================
+Lab Section Circuits based on  (P&dp)@f@(dp&Q)
+
+A constant column sum matrix is a matrix all of whose column
+sums are equal. A zero column sum matrix is a matrix all of
+whose column sums are zero.
+
+Zero column sum matrices may be used in creating circuits. A
+function of the form g =: (P&dp)@f@(dp&Q) is an n-terminal
+circuit if
+ P is an n by m zero column sum matrix,
+ Q is an n by p zero column sum matrix, and
+ f is any mapping from p-dimensional vectors to m-dimensional
+vectors.
+
+Exercise.  Show that such a function is a circuit. (The fact
+that Q is a zero column sum matrix ensures that the voltage
+law is satisfied. The current law is satisfied because P is
+also a zero column sum matrix.)
+
+Here is an example.
+)
+] P =: > 1 1 2 0 _1 0; 0 _1 _1 _1 1 0; _1 0 _1 1 0 0
+] Q =: > 2 _1 _1; _1 2 _1; _1 _1 2
+ex18 =: (P&dp)@(,sq)@(dp&Q)
+v =: 9 4 1
+(ex18 v);(ex18 v+6.7);(+/ex18 v)
+
+v0=: v1 =: steps _1 1 30
+(0 plot3 ex18)v0;v1;0
+
+NB. =========================================================
+Lab Section Example: transistor
+
+No doubt many of these examples seem artificial, but nothing
+could appear more contrived than the following use of the
+exponential function, and yet the result is a version of the
+Ebers-Moll model of an NPN transistor.
+
+The terminals (0,1,2) are the (emitter, collector, base)
+respectively.
+)
+exp =: ^"1
+
+] P =: _1e_6 * >40 _38 _2; _38 50 _12; _2 _12 14
+] Q =: _40 * > 1 0 0; 0 1 0; _1 _1 0
+npn =: (P&dp)@exp@(dp&Q)             NB. transistor
+
+npn 0 5 0.2
+
+
+vb =: steps 0 0.4 30               NB. base voltage
+vc =: steps 1 5 30                 NB. collector voltage
+(2 plot3 npn)0;vc;vb               NB. base current
+
+NB. =========================================================
+Lab Section Example: diode
+
+The diode is similar, but with different P and Q.
+
+The terminals (0,1) are (cathode, anode).
+)
+] P =: _1e_11* >1 _1; _1 1
+] Q =: _40* >1 0;_1 0
+diode =: (P&dp)@exp@(dp&Q)
+
+diode 0 0.6
+diode 0.6 0
+
+v1 =: steps _0.7 0.7 30
+c1 =: 1{"1 (diode"1) 0,.v1
+'' plot v1;c1
+
+NB. =========================================================
+Lab Section Limitations of the function model
+
+Multi-valued functions.
+
+The function model of circuits will not deal with physical
+circuits whose voltage-current relationship is not strictly a
+function. Examples would be a glow tube or a four layer diode
+where there are two or more possible values of the current
+corresponding to a given voltage. A possible way to handle
+such circuits is to break the voltage-current relation into
+two or more pieces, each of which is a function.
+)
+
+NB. =========================================================
+Lab Section
+
+Functions with restricted domain.
+
+Other "circuits" that are not permitted by our definition are
+those which impose restrictions on the voltages. Some
+examples are idealizations, such as the short circuit, the
+transformer, the ideal voltage source and controlled voltage
+sources. We can approximate these objects arbitrarily well
+by acceptable circuits.
+
+For example, the 2-terminal short circuit is not a circuit in
+our terminology because it does not define a current for
+every voltage vector, just those with equal elements. However
+a b mho resistor  b&res  approximates a short circuit
+arbitrarily closely if  b is sufficiently large. Although the
+current is defined for all voltage vectors, it will be finite
+only for those with nearly equal elements. If something else
+to which the short circuit is attached keeps the currents
+small then the voltages must fall into line. (We haven't
+addressed the question of "attaching" circuits to each other
+yet, but presumably the reader can see where we are going.)
+
+The same idea can be used to approximate the other circuits
+mentioned above. We will look at them at the end of Part II.
+
+Exercise. Find a circuit sc4 which approximates a 4-terminal
+short circuit, where terminal 0 is shorted to terminal 2 and
+terminal 1 is shorted to terminal 3 .
+)
+ sc =: 1e6&res     NB. A 2-terminal short circuit
+
+ sc 3 4            NB. very large currents
+ sc 3.000001 3     NB. reasonable currents
+
+NB. =========================================================
+Lab Section
+
+Controlled sources.
+
+Conventional expositions of circuit theory commonly use
+2-terminal objects known as "controlled sources" or
+"dependent sources" to create circuits. The current drawn by
+a controlled source is not determined solely by the voltage
+on its own terminals, but by voltages or currents elsewhere.
+Such objects are therefore not "2-terminal circuits" in our
+terminology: their description requires reference to at least
+a third terminal. Here is a 3-terminal voltage-controlled
+current source.
+
+Notice that v1 is irrelevant and c0 is always 0.
+)
+ NB. A 3-terminal voltage-controlled current source.
+ vccs3 =: (> 0 0 0; 1 0 _1; _1 0 1)&dp
+
+ vccs3  3 1 9
+
+v0=: v1 =: steps _1 1 30
+(1 plot3 vccs3)v0;v1;0
+
+NB. =========================================================
+Lab Section
+
+Here is a 4-terminal voltage-controlled current source.
+)
+ vccs4 =: (> 0 0 0 0;0 0 0 0;1 _1 0 0;_1 1 0 0)&dp
+
+ vccs4  5 1 3 _2
+
+NB. =========================================================
+Lab Section The derivative of a circuit.
+
+We can apply the derivative conjunction to circuits. The
+result will be a matrix valued function.
+
+The (i,j)th element of the matrix  g Grad v  is the
+derivative of the ith current with respect to the jth
+voltage.
+
+The derivative of a circuit can also be useful in
+approximating it with a simpler circuit.
+)
+ Grad =: adverb : 'tr@(u D.1)'     NB. Gradient
+
+ (vccs3 Grad) 3 1 9
+ n2 Grad 3 7
+ n2 Grad 2 1
+
+NB. =========================================================
+Lab Section
+
+Theorem. Let  g  be an arbitrary differentiable n-terminal
+circuit. Then for every n-element vector  v , the matrix  (g
+Grad v)  is a 0-sum matrix (that is, a matrix whose row and
+column sums are all zero).
+)
+
+NB. =========================================================
+Lab Section Example: derivative of a transistor
+
+Here is the derivative of the transistor (npn) at 0 5 0.2 .
+
+This is a zero-sum matrix.
+)
+ p =: 0 5 0.2
+ npn Grad p
+
+NB. =========================================================
+Lab Section
+
+It is instructive to look at the relative values of the
+elements of the derivative of  npn .
+
+The form of this is characteristic of an inverting current
+amplifier: the emitter current varies 20 times faster than
+the base current for voltages in the neighbourhood of p , and
+the two currents are "out of phase", one increasing while the
+other decreases.
+
+
+Exercise. Show experimentally that the last sentence remains
+true over a very wide range of voltages.
+)
+ mea =: >./@: | @ ,    NB. max abs element of an array
+ dbm =: % mea          NB. divide array by max elt
+ dbm npn Grad p
+
+NB. =========================================================
+Lab Section Non differentiable circuits.
+
+Of course, not all circuits are differentiable.
+
+An example is  ramp  defined above.  The matrix
+
+  ramp Grad 2 1 1
+
+is not 0-sum. Also, compare the values of  ramp Grad  at
+nearby points.
+)
+
+ ramp Grad 2 1 1
+ ramp Grad 2 1 1.000001
+ ramp Grad 2 1 0.999999
+
+NB. =========================================================
+Lab Section Approximating a nonlinear circuit
+
+We can use the derivative to approximate a circuit g in the
+neighbourhood of a given operating point p.
+
+ (g v)
+ (g p) + (g Grad p) dp (v-p)                NB. approximately
+ ((g p)-(g Grad p) dp p) + (g Grad p) dp v
+ b + J dp v
+
+where
+
+ J =: g Grad p                 NB. "J" = "Jacobian matrix"
+ b =: (g p) - J dp p
+
+The point of doing this is that the approximation is what I
+will later call a "battery", which is a simpler circuit to
+deal with than a nonlinear  g . Here is an operation that
+creates an approximation to a circuit:
+)
+ Apprx =: conjunction : 0
+  J =. (u f.)Grad n
+  b =. (u n)-J dp n
+  (b&+)@(J&dp)
+ )
+
+NB. =========================================================
+Lab Section Approximating a transistor
+
+We use  Apprx  to compute an approximation to the
+transistor  npn .
+)
+ p =: 0 5 0.2            NB. the "operating point"
+ h =: npn Apprx p        NB. the approximating circuit
+
+ (npn p);(h p)           NB. they match at p
+
+ v=: 0 5 0.21            NB. a point close to p
+ (npn v);(h v)           NB. compare
+
+NB. =========================================================
+Lab Section Newton's iteration
+
+In what follows we will need sometimes to find a zero of a
+nonlinear function: for instance, the function f below. (Note
+that this is not a circuit.)
+
+To find a zero of f we can approximate it using the
+derivative and then find a zero of the resulting
+approximation. This operation, credited to Newton, results in
+a function which maps an approximation into a (hopefully)
+better one. The adverb that converts a function such as f
+into the corresponding iterating function  f Nia  is
+
+   Nia =: adverb : '-(u %.(u f. Grad))'
+
+It often works better, with very nonlinear functions, to
+deliberately slow the convergence. In the following version
+of Nia, we step only 1/10 of the way indicated by Newton's
+iteration:
+)
+ f =: 3 1 5 6"1 + |.@cube    NB. a nonlinear functiion
+ f 5 2 1 0
+
+ Nia =: adverb : '- ((0.1&*)@((u %.(u f. Grad))))'
+
+NB. =========================================================
+Lab Section Newton's iteration: example
+
+Now try applying this to  f  in order to find a zero of f :
+)
+ p =: 1 2 3 4          NB. starting point
+ f p
+
+ f Nia p               NB. one iteration
+ f Nia^:2 p            NB. two iterations
+ f(f Nia^:2 p)         NB. checking: not close yet!
+
+
+ ] v =: f Nia^:_ p     NB. Iterate until it converges:
+ f v                   NB. checking
+
+NB. =========================================================
+Lab Section Newton's iteration adverb
+
+Finally we define an adverb that converts f into the function
+that maps a starting approximation into the point of
+convergence.
+
+This method of solving equations is primitive, but it will do
+for our purposes. The iteration may fail for some starting
+points while succeeding for others. It fails either because
+of a domain error in computing %. or else it goes on
+iterating forever without converging (in this case you will
+have to "break" the calculation).
+)
+ Newton =: adverb : 'u f. Nia^:_'    NB. Newton solution
+
+ v =: f Newton p
+ f v                                  NB. checking
+
+NB. =========================================================
+Lab Section Circuit analysis
+
+In the present context, the conventional problem of "solving"
+or analysing a circuit is to find a v such that (g v) -: o
+where o =: 0"0 v .  In any interesting case, g o is not o :
+in conventional terms g "contains" some kind of source.
+Notice that by the voltage law a solution of a circuit cannot
+be unique. This causes exactly the sort of failure I
+mentioned in the preceding section. One way of making the
+solution unique in most cases (but not all cases) is to
+require that the sum of the elements of v be zero. That is,
+instead of finding a zero of g we find a zero of the function
+g,+/ .
+)
+ g =: 2 3 _5"1 + cf@cube@cf    NB. a circuit to be solved
+ p =: 4 2 1                    NB. initial approximation
+ ] v =: (g,+/) Newton p        NB. Solving
+ g v                           NB. checking
+ +/v                           NB. checking the extra condition
+
+NB. =========================================================
+Lab Section Adverb: solve
+
+We can write an adverb  solve  that does this neatly.
+
+WARNING! This (solve) is not guaranteed to find a solution
+even if one exists. It will work in many cases, however.
+
+
+Exercise.  Invent a circuit that has two isolated parts. At
+least one part must "contain" a source in the sense mentioned
+above. Attempt to solve the circuit using the above
+technique. Why does it not work?
+
+Exercise.  A different possible extra condition on the
+solution of a circuit would be to require {.v or {:v to be 0.
+Try these on the preceding example and investigate why J does
+not detect convergence.
+
+Exercise.  Define a simple circuit which has no solution.
+Answer.  The current source  g =: 1 2 _3"1 .
+)
+ solve =: adverb : '(u,(+/))f. Newton'
+
+ g solve p              NB. a zero of g
+ g(g solve p)           NB. checking
+
+NB. =========================================================
+Lab Chapter Operations on Circuits
+NB. =========================================================
+Lab Section Introduction
+
+In the preceding chapter we looked at circuits without
+considering how they may have come into existence. Some of
+the circuits were pretty bizarre: this was to emphasize our
+concern with only the external behaviour of a circuit.
+
+There have been none of the usual diagrams of batteries
+connected to light bulbs. In fact the concept of
+interconnecting components to form circuits has not appeared
+at all. In particular, we have no way yet of even connecting
+resistors in series or parallel.
+
+In this chapter we will introduce several operations by which
+new circuits may be created from old. These operations model
+the physical operations of interconnecting components and of
+the permanent suppression of a subset of the terminals of a
+circuit.
+)
+
+NB. =========================================================
+Lab Section Parallel interconnection
+
+Consider two physical n-terminal circuits, g and h , wired in
+parallel. Each terminal i of g is soldered to the
+corresponding terminal i of h to form terminal i of a new
+circuit f .
+
+If we place the voltages v on the terminals of f , the same
+voltages will be imposed on each of the components g and h .
+The currents drawn by f will be the sum of the currents drawn
+by g and h . Therefore if the circuits are modeled as
+functions according to our definition, (f v) -: (g v)+(h v) .
+Thus the circuit f =: g+h is the result of connecting g and h
+in parallel.
+
+Theorem. If  g  and  h  are n-terminal circuits, then so is
+g+h .
+
+Of course parallel interconnection need not be limited to two
+circuits.
+)
+
+NB. =========================================================
+Lab Section Parallel interconnection: example
+
+As an example, here is the parallel interconnection of a 1
+mho resistor and a 2 mho resistor.
+
+Exercise. Show that f is a 3 mho resistor.
+)
+ f =: 1&res + 2&res
+ f 7 2
+
+NB. =========================================================
+Lab Section
+
+Here is a 3-terminal circuit that is the parallel
+interconnection of a current source, a 3-terminal
+voltage-controlled current source, and the circuit  ex14 .
+)
+ iv14 =: ics + vccs3 + ex14
+
+ iv14 4 2 1
+ iv14 0 0 0
+
+NB. =========================================================
+Lab Section Linear functions
+
+We need to digress slightly in order to define linear
+functions and their transposes. This is not because we are
+interested in linear circuits at the moment -- that comes in
+Part II -- but because linear functions are useful in
+creating new circuits out of old (possibly nonlinear) ones.
+
+A rank-1 function f mapping n-element vectors into m-element
+vectors is linear if and only if for every linear combination
+c dp X of n-element vectors, (f c dp X) -: c dp f X .
+)
+ f =: diff "1                  NB. a rank-1 linear function
+ X =: ra 700 5                 NB. 700 5-element vectors
+ c =: ra 700                   NB. 700 coefficients
+ assert (f c dp X) -: c dp f X
+
+NB. =========================================================
+Lab Section Linear function: matrix
+
+A linear function is characterized by its matrix.
+
+Theorem. If  f  is a rank-1 linear function mapping n-element
+vectors into m-element vectors then
+
+  f-:(tr f id n)&dp"1
+
+where  id n  is an identity matrix of order n
+
+Proof.  For every n-element vector  v ,
+ f v
+ f v dp id n                 NB. identity matrix
+ v dp f id n                 NB. linearity of f
+ (tr f id n)dp v             NB. transpose of a vector
+ (tr f id n)&dp"1 v          NB. tacit function
+)
+ id =: =&i.             NB. identity matrix
+ n =: 5
+ ] M =: tr f id n
+
+ (f;M&dp"1)ra 5
+
+ v =: ra 100 5          NB. 100 5-element vectors
+ (f v)-:(M&dp"1 v)
+
+NB. =========================================================
+Lab Section
+
+The adverb  matrix  computes the matrix of a linear function.
+)
+ F =: ra 2 4
+ f =: F&dp"1           NB. f is a linear function
+ ] v =: ra 4
+ f v
+
+ matrix =: conjunction : 'tr u"1 id n'
+ f matrix 4            NB. the matrix of f
+ F -: f matrix 4
+
+NB. =========================================================
+Lab Section Transpose of a linear function
+
+Definition. The transpose of the linear function  F&dp  is
+the function  (tr F)&dp .
+
+
+Obviously the matrix of the transpose of f is the transpose
+of the matrix of f .
+)
+ transpose =: conjunction : '((u"1 id n)&dp)"1'
+
+ n =: 4 [ m =: 2
+ f =: (ra m,n)&dp         NB. a linear function
+ (f transpose n)ra m      NB. transpose of f
+ f transpose n matrix m   NB. its matrix
+ f matrix n               NB. the matrix of f
+
+ ((f transpose n)transpose m)matrix n
+
+NB. =========================================================
+Lab Section The conjunction "under"
+
+We are now getting closer to the use of linear functions in
+transforming circuits.
+
+Definition. If  f  is a linear function from Rn to Rm and  g
+is a function from Rm to Rm, then the function  (g under f)
+is defined as  (f transpose n)@g@f .
+)
+ under =: conjunction : '(v f. transpose(#y))@u@v y'
+
+ f =: (ra 5 4)&dp
+ v =: 3 4 1 _2
+ (sq under f)v
+ (f transpose 4)sq f v
+
+NB. =========================================================
+Lab Section U-preserving function
+
+Definition.   A linear function  f  from Rm to Rn will be
+called  u-preserving  if there exists a scalar  b  such that
+(f m#1) -: b*n#1
+
+It should be obvious that the matrix of a u-preserving linear
+function is a constant row sum matrix.
+)
+ ] M =: >5  9 _3 _3;_2  6 _6 10;11 _5  7 _5
+ f =: M&dp
+ f 4#1
+ +/"1 f matrix 4
+
+NB. =========================================================
+Lab Section Circuit: g under f
+
+We now have a new way to define new circuits from old.
+
+Theorem.  If  g  is an n-terminal circuit and  f  is a
+u-preserving linear function from Rm to Rn then the function
+(g under f)  is an m-terminal circuit.
+
+Proof. (This is a matter of verifying that the current and
+voltage laws hold for  g under f .)
+
+
+The circuit  g under f  corresponds to transforming the
+voltages with  f , computing the currents, and then
+transforming the currents with  f transpose .
+
+Here we make a new 4-terminal circuit by transforming the
+3-terminal version of  diff .
+)
+ h =: diff under f             NB. a new circuit
+
+ ] w =: ra 4                   NB. random voltage
+ (h w);(h w+?100)              NB. voltage law
+ +/h w                         NB. current law
+
+NB. =========================================================
+Lab Section Mapping: g under(t&{)
+
+There is not necessarily any physical interpretation of  (g
+under f)  in general. There is, however, a very simple
+interpretation in the case where  f =: t&{  and  t  is a list
+of integers. The function  t&{  is linear and u-preserving.
+)
+ f =: 0 1 3 1 &{
+
+ f 1 1 1 1 1
+ ] v =: ra 5
+ f v
+ f matrix 5
+
+NB. =========================================================
+Lab Section
+
+Let  g  be an n-terminal circuit and  t  be an n-element
+vector from i.p . Then we can create a new p-terminal circuit
+h consisting of just a set of p terminals together with  g
+connected to the terminals  t .
+
+We will call the n-element list  t  the wiring specification.
+Specifically,  j{t  is the terminal of  h  to which terminal
+j  of  g  is wired.
+
+If a p-element voltage vector  e  is applied to the terminals
+of  h , the voltage vector applied to  g  is   v =: t&{ e .
+
+Consequently, the currents drawn by  g  are  c =: g t&{ e .
+
+And the currents drawn by the terminals of  h  are  i =: (t&{
+transpose n)g t&{ e .
+
+Thus  h =: g under(t&{) e .
+
+This is the circuit which corresponds to mapping the
+terminals of  g  to a new set of terminals according to the
+wiring specification  t .
+)
+ t =: 0 1 3 1
+ h =: diff under(t&{)        NB. mapping diff by t
+
+ e =: 10 _9 _2 7 3           NB. voltages on h
+ h e                         NB. currents into h
+
+ t&{ e                       NB. voltages on g
+ diff t&{ e                  NB. currents into g
+ (t&{transpose 5)diff t&{ e  NB. currents into h
+
+NB. =========================================================
+Lab Section Mapping: discussion
+
+It should be clear that this operation does not provide for
+wiring a terminal of g to more than one terminal of h : this
+is just as well because it would restrict the domain of h to
+vectors having the corresponding elements equal, and a
+circuit cannot have its domain restricted. Nor does it
+provide for leaving any terminal of g unconnected: leaving
+terminals unconnected is a quite distinct operation, as we
+shall see ("Restriction").
+
+There is no reason why several terminals of g may not be
+connected to the same terminal of h .  The current equation,
+i=:(t&{transpose n)c  provides for this possibility. The
+previous example illustrated it.
+)
+
+NB. =========================================================
+Lab Section Conjunction: map
+
+It will be convenient to define a new conjunction  map
+combining the effects of  under  and  &{ .
+
+
+
+Example. Terminals 1 and 3 of the 4-terminal
+voltage-controlled current source (vccs4) may be coalesced,
+or shorted together, to produce a 3-terminal circuit by
+mapping the terminals.
+
+This is identical to the 3-terminal voltage-controlled
+current source (vccs3).
+)
+ map =: conjunction : '(u f.)under(n&{)'
+
+ h =: vccs4 map 0 2 1 2
+ h _3 12 0
+ (h-:vccs3)"1 ra 5 3    NB. test on random 3-element vectors
+
+NB. =========================================================
+Lab Section Interconnection: definition
+
+Definition.   Using these two operations, sum (or parallel
+connection) and mapping, we can define the more general
+interconnection of the circuits  g0, g1, ...  with respect to
+t0, t1, ...  as the circuit h =: (g0 map t0)+(g1 map t1)+ ...
+. Here we are mapping each of the component circuits
+appropriately to the new set of terminals and then connecting
+them all in parallel.
+
+Theorem.   Every interconnection of circuits is a circuit.
+
+Proof.  This follows from the fact that sums and mappings of
+circuits are circuits.
+)
+
+NB. =========================================================
+Lab Section Interconnection: rvd
+
+We can connect together a 2 mho resistor, a 4-terminal VCCS
+and a 3-terminal diff to create a new 3-terminal circuit
+called  rvd .
+
+You should draw the wiring diagram for this interconnection.
+)
+ rvd =: ((2&res)map 0 1)+(vccs4 map 1 2 0 2)+(diff map 2 1 0)
+ rvd 4 2 7
+
+NB. =========================================================
+Lab Section Interconnection: two resistors in series
+
+We can interconnect two resistors end-to-end  to form a
+three-terminal circuit twores .
+
+
+Exercise.  Find explicit expressions for the currents
+twores v .
+)
+ twores =: (2&res map 1 2)+(res map 0 1)
+ twores 4 3 1
+
+NB. =========================================================
+Lab Section Interconnection: two isolated resistors
+
+Here we create a 4-terminal circuit from the same two
+resistors, but leave them without a terminal in common (an
+"unconnected interconnection"!).
+
+
+Exercise.  Add a resistor to the base lead (terminal 2) of
+the transistor  npn  to get a 4-terminal circuit.
+
+Exercise.  Justify the statement that the current source
+ics  is the result of interconnecting two 2-terminal current
+sources, of 4 and 6 amps.
+)
+ tir =: (2&res map 0 1)+(res map 2 3)
+ tir 4 3 1 0
+
+NB. =========================================================
+Lab Section Interconnection: programs
+
+Here are 2 different ways of creating an interconnection in
+J.
+
+1. Using "apply" (128!:2) on a listing of mapped components.
+)
+ apply =: 128!:2
+ CFL =: &((+/)@:apply)      NB. adverb: Circuit From Listing
+ load 'convert'             NB. to get mfv (matrix from vector)
+
+ L =: LF mfv  0 : 0         NB. Listing of components & connections
+res map 2 4
+npn map 0 2 1
+diode map 0 3
+2&res map 3 1
+)
+
+ h =: L CFL                 NB. the new circuit (interconnection)
+ v =: ra 5
+ h v
+
+NB. =========================================================
+Lab Section
+
+2. Using a gerund and an explicit loop to sum the currents.
+)
+ interc =: conjunction : 0  NB. g interc t
+  z =. (#y)$0              NB. eg, (g0`g1`g2)interc(t0;t1;t2)
+  for_k. n do.
+    z =. z+((u @. k_index)f. map(>k_index}n))y
+  end.
+ )
+
+ F=: res`npn`diode`(2&res)
+ T=: 2 4;0 2 1;0 3;3 1
+ h =: F interc T
+ h v
+
+NB. =========================================================
+Lab Section Analysis of an interconnection
+
+Theoretically, an interconnection, once created, is simply a
+function, and any enquiry as to its composition may be met
+with a blank stare. In practice however, as long as the
+specification of the interconnection is retained (in the form
+of the constituent circuits and the wiring specifications),
+we can analyse an interconnection to find the voltages and
+currents associated with the components.
+)
+ g =: (2&res)`vccs4`diff
+ t =: 0 1;1 2 0 2;2 1 0
+
+NB. =========================================================
+Lab Section
+
+Assuming that the voltage  v  is applied to the terminals of
+the interconnection, the voltages on each of the components
+are as shown here.
+)
+ v =: 4 2 7
+
+ t{each <v         NB. component voltages
+
+NB. =========================================================
+Lab Section
+
+The adverb  eachg  allows the verbs of a gerund to be applied
+itemwise to a boxed list:
+
+Now we can compute the currents into each of the components:
+)
+ eachg =: adverb : 0      NB. "each" for gerunds
+  z =. (#y)$,:<0         NB. eg, (f0`f1`f2)eachg(y0;y1;y2)
+  for_k. y do.
+    t =. (u @. k_index)&.> k
+    z =. t k_index}z
+  end.
+ )
+
+ g eachg t{each <v     NB. component currents
+
+NB. =========================================================
+Lab Section Solution of an interconnection
+
+An interconnection may be solved and then analysed.
+
+Example. Here we add a current source to the
+resistor-vccs-diff circuit:
+)
+ g =: (1 _4 3"1)`(2&res)`vccs4`diff
+ t =: 0 1 2;0 1;1 2 0 2;2 1 0
+ h =: g interc t           NB. interconnection of 4 circuits
+
+ h 3 5 1
+ ] v =: h solve 0 0 0      NB. A solution of h
+ h v                       NB. verifying
+ ,. t{each <v              NB. component voltages (formatted for viewing)
+ g eachg t{each <v         NB. component currents
+
+NB. =========================================================
+Lab Section
+
+As a final example of the solution of an interconnection,
+here is a 6-terminal circuit which in its obvious realization
+would be built from 13 (2-terminal) resistors, 6 current
+sources and 2 diodes. The function  szm  produces a symmetric
+zero-sum matrix from the elements of its upper triangle.
+)
+PREPARE
+ expand =: #^:_1
+ r1b =: (,@[ expand ]) ($~ $) [   NB. replace 1's in boolean x by y
+ ti =: (2&!)^:_1                  NB. inverse of triangular numbers
+ ut =: </~ & i.                   NB. upper triangular matrix
+ setut =: ut@ti@# r1b ]@-         NB. set upper triangle to y
+ insdiag =: + (id@# r1b -@(+/))   NB. add (-+/y) into the diag of y
+ szm =: insdiag@(+ tr)@setut      NB. symmetric 0-sum matrix
+PREPARE
+
+ ] G =: szm -2 _2 _1 _1 _2 _1 1 _2 _1 2 2 _1 _1 0 0
+ g0 =: G&dp                          NB. 13 resistors
+ g1 =: _29 _11 25 _5 13 7"1          NB. 6 current sources
+ g =: g0`g1`diode`diode              NB. components
+ t =: (i.6);(i.6);0 3;2 5            NB. wiring specs
+ h =: g interc t                     NB. the interconnection
+ ] v =: h solve 6#0                  NB. solution
+ h v                                 NB. verifying
+ ,. g eachg t{each< v                NB. component currents
+
+NB. =========================================================
+Lab Section Interconnection: final comment
+
+Before leaving interconnection, it is important to understand
+that every interconnection exists regardless of what circuits
+the components may be, and the value of the interconnection
+at any  v  may be computed directly.
+)
+
+NB. =========================================================
+Lab Section Restriction: Introduction
+
+We will now turn our attention to the second major operation,
+after interconnection, by which new circuits may be obtained
+from old: we attempt to leave some subset of the terminals of
+a circuit permanently unconnected, thereby ensuring that the
+currents on those terminals are henceforth zero (perhaps by
+clipping them off and painting them over with an insulating
+paint). The resulting object is clearly not the same as the
+original circuit since it has a smaller number of terminals.
+Furthermore it may not even be a "circuit" as we have defined
+it, either because the currents on the suppressed terminals
+refuse to be zero or because the currents on the retained
+terminals are not uniquely determined by the voltages on
+those terminals.
+)
+
+NB. =========================================================
+Lab Section Restriction: Definition
+
+Here is a formal definition of the operation of the
+restriction of a circuit to a subset of its terminals.
+
+Definition.  Let  g  be an n-terminal circuit. Let the vector
+i.n (corresponding to the terminals of  g ) be partitioned
+into two vectors  t  and  s . (That is, (i.n)-:(sort t,s) ).
+Then the restriction of  g  to  t  is a function  r  that
+exists if and only if for every (#t)-element vector  vt ,
+ (1)  there exists an n-element vector  v  such that
+(t{v)-:vt and  (s{g v)-: 0"0 s , and
+
+ (2) for every  v  satisfying (1), the vector  ct =: t{g v
+is unique.
+
+Then  r vt  is defined to be  ct .
+)
+
+NB. =========================================================
+Lab Section Restriction: Example
+
+Let's try to make some sense of this definition.
+
+Suppose we choose  g , t , s  and  vt  as below.
+
+(The function  rzm  produces a random zero-sum matrix.)
+)
+PREPARE
+rzv =: zsv@ra                   NB. rzv s    random zero sum vector of length s
+                                NB.  or random zero column sum matrix
+zsv =: (*#) -"1                 NB. make zero sum (integer from integer arg)
+ rzm =: zsm@ra                  NB. rzm s: random zero sum matrix of shape s
+zsm =: zsv&.tr @ zsv            NB. zsm M: make zero sum matrix from M
+rcrsm =: qc@:(0&{) + tr@rzv@:|. NB. rndm cst row sum matrix
+PREPARE
+
+g =: (rzm 5 5)&dp           NB. sample 5-terminal circuit
+t =: 0 2 3                  NB. terminals to retain
+s =: 1 4                    NB. terminals to suppress
+vt =: 3 1 0                 NB. voltage on retained terminals
+
+NB. =========================================================
+Lab Section
+
+Now we try to find a value of  v  such that
+
+ (t{v) -: vt
+ (s{g v) -: 0"0 s
+
+We start by computing a random  v  satisfying the first
+requirement.
+
+Can we now adjust  s{v  so that  cs =: s{g v  is zero?
+)
+] v =: vt t}ra 5              NB. random v with  (t{v)-:vt
+s{g v                         NB. s{g v is not zero
+
+NB. =========================================================
+Lab Section
+
+To solve the problem we define a function  foo  that computes
+ cs  for a given  vs .
+
+Then use Newton's iteration to find a zero of this function.
+)
+foo =: monad : 's{ g y s}v'
+foo ra 2               NB. generally not zero
+vs =: foo Newton ra 2
+foo vs                 NB. zero as required
+
+NB. =========================================================
+Lab Section
+
+We can now reconstruct  v  and compute the corresponding
+currents.
+
+ct is the current vector corresponding to  vt . In other
+words if  r  is the restriction of  g  to  t  then
+  (r vt) -: ct .
+)
+v =: (vt,vs)/:(t,s)
+g v
+s{g v                  NB. zero as required
+] ct =: t{g v          NB. currents of the restriction of g to t
+
+NB. =========================================================
+Lab Section Restriction: Uniqueness?
+
+We have not addressed the issue of the uniqueness of  ct .
+Indeed this may be hard to do in practice, and it may not be
+important in practical problems, but for any theoretical
+purpose the uniqueness is required, for instance in order to
+prove the closure theorem:
+
+Theorem.  Every restriction of a circuit is itself a circuit
+
+
+As we will see in later chapters, in the case of linear
+circuits and batteries there is an algorithm for restriction
+that identifies the non uniqueness if it occurs.
+)
+
+NB. =========================================================
+Lab Section Restriction: conjunction "restr"
+
+Here is a crude numerical implementation of the operation of
+restriction.  Application of the first conjunction will give
+vs and ct for a given g , t , s and vt .
+
+Application of restr selects just the ct .
+
+
+WARNING! This is crude and will not always work. It is only
+intended to illustrate the operation of restriction.
+)
+restr1 =: conjunction : 0         NB. restriction of g to t
+ 't s' =. n
+ g =. u f.
+ vt =. y
+ v =. (/:&(t,s))@(vt&,)           NB. v as a fn of vs
+ vs =. (((s&{)@g@v f.)Newton) 0"0 s
+ ct=. (t&{)@g@v vs
+ vs;ct                            NB. returns both vs and ct
+)
+
+restr =: conjunction : '(1&pick)@(u f. restr1 n)'
+
+NB. =========================================================
+Lab Section Restriction: example of "restr"
+
+Applying these conjunctions to the previous example:
+)
+g restr1(t;s) vt            NB. vs;ct
+vs =: 0 pick (g restr1(t;s))vt
+v =: (vt,vs)/:(t,s)
+s{g v                       NB. cs is 0
+
+r =: g restr(t;s)           NB. restriction
+r vt                        NB. current on retained terminals
+
+NB. =========================================================
+Lab Section Restriction:  twores
+
+We have connected two 2-terminal resistors in series to form
+a 3-terminal circuit  twores , but until now we have had no
+operation by which the middle terminal in this circuit might
+be suppressed to give a 2-terminal result. Clearly this is a
+new circuit because a function on 2-element vectors cannot be
+the same as one on 3-element vectors.
+
+The result is a 2/3 mho resistor.
+)
+r =: twores restr(0 2;,1)
+r 1 0
+
+NB. =========================================================
+Lab Section Restriction:  failure
+
+Terminals can't always be suppressed. Here is a case where
+condition (1) of the restriction definition fails: the
+currents refuse to be zero.
+
+Example  A current source, ics . No current is ever 0
+whatever the voltages are, so none of the terminals of this
+circuit can be suppressed: i.e., no restrictions of a current
+source exist.
+
+In this case the problem shows up when we try to evaluate the
+restriction for any voltage.
+)
+r =: ics restr(0 1;,2)
+NB. try r 0 1
+
+NB. =========================================================
+Lab Section Restriction:  failure (non existence)
+
+Here is a more subtle case.
+
+Find the restriction of the 3-terminal voltage-controlled
+current source vccs3 to terminals 0 and 2 . Here  t =: 0 2
+and  s =: ,1 . Informally, the device satisfies the following
+equations.
+   c0 = 0
+   c1 = v0 - v2
+   c2 = v2 - v0
+
+In order to suppress terminal 1 of this circuit we must make
+c1 = 0  permanently. But we can't do that unless  v0 = v2  ;
+in other words, not for arbitrary  v0  and  v2 . So the
+restriction of  vccs3  to terminals 0 and 2 does not exist.
+
+If you think in physical terms, imagine painting over
+terminal 1 of  vccs3  and then placing arbitrary voltages on
+terminals 0 and 2 , as you'd have to be able to do with a
+2-terminal circuit. Clearly  c1  won't be zero in general,
+and the paint will burn.
+)
+
+NB. =========================================================
+Lab Section Restriction:  failure (non uniquenes)
+
+We encounter a different problem if we try to suppress
+terminal 0 of  vccs3 . Since  c0  is always zero we have no
+trouble painting it over. But underneath the paint,  v0  can
+take on any value whatever - it floats - and its value
+affects  c1  and  c2 . Thus  c1  and  c2  are not determined
+uniquely by the voltages  v1  and  v2  as required for a
+circuit. So the restriction of  vccs3  to terminals 1 and 2
+does not exist.
+)
+
+NB. =========================================================
+Lab Section Restriction:  exercise
+
+Exercise.  The restriction of  vccs3  to terminals 0 and 1
+does exist. What is it?
+)
+
+NB. =========================================================
+Lab Section Restriction:  several terminals
+
+So far we have attempted to suppress just one terminal at a
+time. In the next example we suppress several at once. This
+example also illustrates that it isn't actually necessary
+that the voltages on the suppressed terminals be uniquely
+determined as long as this non uniqueness doesn't affect the
+currents on the retained terminals.
+
+Find the restriction to terminals 0 and 1 of  tir , two
+isolated resistors. For this circuit we have, informally,
+
+   c0 =  2*(v0 - v1)
+   c1 = _2*(v0 - v1)
+   c2 =  1*(v2 - v3)
+   c3 = _1*(v2 - v3)
+
+We can suppress terminals 2 and 3 by setting  c2  and  c3  to
+0 . This implies that  v2 = v3 , so that one of the
+voltages, v3  say, can be set arbitrarily, and then  v2  must
+be set equal to  v3 . Then  c0  and  c1  are determined
+uniquely by  v0  and  v1  as required for a 2-terminal
+circuit.
+
+   c0 =  2*(v0 - v1)
+   c1 = _2*(v0 - v1)
+
+It is clear that in this case the restriction is simply the
+remaining 2 mho resistor.
+
+   r =: 2&res
+
+Under the paint, the 1 mho component can "float" to any
+voltage whatever (as long as both ends are the same), but the
+result doesn't affect the retained part.
+)
+
+NB. =========================================================
+Lab Section Restriction:  transistor
+
+Here is a straightforward example of suppressing a terminal
+of a nonlinear circuit.
+
+The restriction of the transistor circuit  npn  to (1,2) (the
+collector and base) is obtained by setting  c0=0  and solving
+for  v0 . The result is
+
+   v0 =: v2 - (%40)* ^. (%20)* 1 + 19* ^ -40*v1-v2
+
+This expression may be evaluated for all values of  v1  and
+v2 . Therefore condition (1) is satisfied and the
+corresponding currents can be computed directly.
+)
+v1 =: 0
+v2 =: 0.3
+] v0 =: v2 - (%40)* ^. (%20)* 1 + 19* ^ -40*v1-v2
+npn v0,v1,v2
+
+NB. the value of the restriction at (0,0.3):
+1 2{ npn v0,v1,v2
+
+NB. =========================================================
+Lab Section
+
+Exercise. Plot  c1  against  v1-v2  for the above
+restriction.
+
+Exercise. Compute the explicit expression for the above
+restriction and observe that it is of the same form as a
+diode.
+)
+
+NB. =========================================================
+Lab Section Restriction:  exercises
+
+Exercise.  Compute the results of suppressing each one of the
+other two terminals of a transistor.
+
+Exercise.  Try suppressing all combinations of the terminals
+of the 4-terminal voltage-controlled current source  vccs4 .
+)
+
+NB. =========================================================
+Lab Section Restriction: exercises
+
+Exercise.  Derive the formula for the "conductance equivalent
+to two conductances in series". (Interconnect two resistors;
+suppress the common terminal). Generalize by induction to the
+case of any number of resistors in series.
+
+Exercise.  Derive the formula for a Wye-Delta transformation.
+(Interconnect three resistors in a Y; suppress the common
+terminal). Generalize to any number of resistors in a star.
+
+Exercise.  There is a fairly simple formula for a Delta-Wye
+transformation, but is this a unique inverse to the Wye-Delta
+transformation? (Is there more than one wye that transforms
+to a given delta?)
+)
+
+NB. =========================================================
+Lab Section Reducing the number of terminals
+
+Exercise. Is restriction the only way to reduce the number of
+terminals of a circuit?
+
+Answer.  No. Interconnection may coalesce two or more
+terminals. Be sure you understand the difference.
+)
+
+NB. =========================================================
+Lab Section Restriction vs interconnection
+
+Restriction is a more complicated operation than
+interconnection. Any interconnection of circuits is
+permissible (i.e., exists), and we can express the result
+explicitly. For example, it is not, as it used to be said,
+"forbidden" to connect two different-valued current sources
+directly together, end-to-end, to create a three-terminal
+circuit. However restriction is defined implicitly and many
+restrictions do not exist: what is "forbidden" are certain
+restrictions. In the example of the current sources,
+suppressing any terminal will cause something to burn.
+)
+
+NB. =========================================================
+Lab Section Summary
+
+You are now theoretically equipped to create and analyse
+circuits of arbitrary size and complexity.
+
+However, the purpose of introducing this way of looking at
+circuits is to make a true mathematical theory of them. To do
+this we need to classify circuits and study the relationships
+among the various classes.
+
+To begin that study, continue with the lab "Circuit Theory
+II".
+)

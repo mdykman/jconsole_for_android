@@ -1,0 +1,789 @@
+LABTITLE=: 'Graphics - gl2 commands'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section gl2
+This lab is an overview of drawing on a canvas control.
+
+Plot, grid, and printing are all built in J drawing on an
+canvas control.
+)
+SCRIPT
+require'gl2'   NB. load gl2 definitions in jgl2 locale
+coinsert'jgtk jgl2' NB. allow use of gl2... without _jgl2_
+gl2lab=: 0
+
+gl2lab_run=: 3 : 0
+gl2lab=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2lab;'gl2lab'
+gtk_widget_set_name gl2lab;'gl2lab'
+consig gl2lab;'destroy';'gl2lab_close'
+NB. gsel arg to select gl2 target
+GHANDLE=: glcanvas_jgl2_ 'gl2lab';'g';200 200;coname''
+gtk_container_add gl2lab,canvas__GHANDLE
+gl2lab_g_paint''
+gtk_widget_show_all gl2lab
+)
+
+NB. create form (or just repaint if it already exists)
+gl2lab=: 3 : 0
+if. wdisparent 'gl2lab' do.
+ glclear''        NB. clear out old drawing
+ gl2lab_g_paint'' NB. new drawing
+ glpaint''        NB. copy to screen
+else.
+ gl2lab_run''
+end.
+)
+
+gl2lab_close=: 3 : 0
+gtk_widget_destroy ::0: gl2lab
+cbfree''
+0
+)
+
+SCRIPT
+PREPARE
+goto=: 3 : 'lab_jlab_ 0[NDX_jlab_=:(<.#SECTIONDATA_jlab_)<.0>.<:y'
+gl2boiler=: toHOST SCRIPT_jlab_
+gl2labijs=: <jpath '~temp/gl2lab.ijs'
+gl2lab_update=: 3 : 0
+t=.gl2boiler,toHOST SCRIPT_jlab_
+t 1!:2 gl2labijs
+smsel_jijs_ gl2labijs
+try. smwrite_jijs_ t catch. open gl2labijs end.
+load gl2labijs
+)
+sleep=: 6!:3
+erase'gl2lab_g_paint'
+PREPARE
+
+NB. =========================================================
+Lab Section
+gl2 commands draw on a canvas control.
+
+gl2 commands are loaded in the jgl2 locale. This avoids cluttering up the base locale with the gl2 names. For convenience we coinsert jgl2 so the names can be accessed directly from the base locale.
+)
+require'gl2'   NB. load gl2 definitions in jgl2 locale
+coinsert'jgtk jgl2' NB. allow use of commands from base
+glrect_jgl2_   NB. command to draw rectangle
+glrect         NB. with coinsert you don't need _jgl2_
+
+NB. =========================================================
+Lab Section
+gl2lab.ijs creates form gl2lab with a canvas g that fills the form and is resized as the form is resized.
+
+Study the gl2lab script.
+
+gl2lab_g_paint draws the control. As it has no drawing commands the control is the default white.
+)
+SCRIPT
+NB. paint for canvas g on form gl2
+gl2lab_g_paint=: 3 : 0
+''
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab'' NB. create form with canvas
+
+NB. =========================================================
+Lab Section
+gl2lab_g_paint is called in gl2lab_run after the canvas control is created and just before pshow.
+
+This step loads the script and runs gl2lab to create the form.
+
+Study gl2lab_g_paint at the end of the script.
+)
+SCRIPT
+NB. draw for canvas g on form gl2
+gl2lab_g_paint=: 3 : 0
+glrgb 255 0 0       NB. RGB red
+glbrush ''          NB. red brush
+glrect 10 30 50 100 NB. red rectangle
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+gl2lab_g_paint draws a red rectangle.
+
+0 0 is the upper left corner and positive x values run to the right and positive y values run down.
+
+The units are pixels.
+
+The red rectangle has its upper left corner at 10 30 and has a width and height of 50 100.
+)
+
+NB. =========================================================
+Lab Section
+Drawing is done to a memory buffer.
+
+gl2lab_g_paint is called before the form is shown and draws on the memory buffer. When the form is shown the memory buffer is copied to the screen.
+)
+
+NB. =========================================================
+Lab Section
+A rectangle is drawn with the pen and filled in with the brush.
+
+Study the script and note that the rectangle outline is drawn with the default pen which is thin and black.
+
+The glrgb arguments are the Red Blue Green values in the range 0 to 255.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 0 255 0       NB. green
+glbrush ''          NB. green brush
+glrect 10 30 50 100 NB. rectangle - default pen, green brush
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+The gl2lab script in most steps is complete and self contained and you can edit it to try your own drawing experiments.
+
+Edit the script to change the green rectangle to be blue. Run the script (Ctrl+w) and then run gl2lab'' to create a new form from the new definitions.
+)
+
+NB. =========================================================
+Lab Section
+Study the drawing commands in the script to see how they draw what you see.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 0 0 255
+glbrush ''          NB. blue brush
+glrgb 255 0 0       NB. red
+glpen 10,PS_SOLID   NB. red pen, 10 pixels wide, solid
+glrect 10 30 50 100 NB. rectangle - fat red pen, green brush
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+glbrushnull selects a null brush that doesn't fill in the rectangle.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 255 0 0
+glbrush''
+glrect 20 20 50 50  NB. red rectangle
+glrgb 0 0 0
+glpen 5,PS_SOLID    NB. fat black pen
+glbrushnull''
+glrect 10 30 50 100 NB. rectangle - fat black pen, no brush
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+Most steps in this lab are self contained and do not depend on previous or later steps. Use goto to jump around in the lab. For example, to see the previous steps again, enter:
+
+   goto 9
+)
+
+NB. =========================================================
+Lab Section
+Study the script to see how the 3 rectangles are drawn.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+xywh=. 10 30 20 20
+glrect xywh
+glrect xywh+10
+glrect xywh+30
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+Drawing commands like glrect and glellipse are rank 1 and can take matrix arguments.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+xywh=. 10 30 20 20
+glellipse xywh (+"1 0) 10*i.50
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+Text can be drawn.
+ glfont creates a font
+ gltextxy sets upper left corner for the text
+ gltext draws the text
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glfont'arial 12'
+glrgb 255 0 0
+gltextcolor''
+gltextxy 50 50
+gltext 'how now brown cow'
+xywh=. 10 30 20 20
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+glqextent returns width and height for its text argument and this can be used for positioning text.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glfont 'arial 12'
+pos=. 30 30
+gltextxy pos      NB. upper left corner for text
+t=. 'How'
+gltext t
+fwh=.glqextent t  NB. width and height of 'how'
+gltextxy pos+fwh  NB. x y for lower right corner of t
+glfont 'arial 24'
+gltext 'Now'
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+Unicode characters can be displayed.
+
+See User Manual chapter Unicode for information on working with unicode text.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glfont 'arial 12'
+pos=. 30 30
+gltextxy pos      NB. upper left corner for text
+t=. 'How'
+gltext t
+fwh=.glqextent t  NB. width and height of 'how'
+gltextxy pos+fwh  NB. x y for lower right corner of t
+glfont 'arial 24'
+gltext 'ĀāĂăĄ'
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+This example shows some phrases in Chinese.
+
+You may need font files for this to display correctly:
+ Control Panel|Regional and Languages|Languages|
+ install files for East Asian languages
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glfont 'arial 16'
+h=.{:glqextent''
+gltext '今天天氣很好'
+gltextxy 0,1*h
+gltext'Today''s weather is good.'
+gltextxy 0,2*h
+gltext '沒有問題'
+gltextxy 0,3*h
+gltext'No problem.'
+gltextxy 0,4*h
+gltext '這首歌很好聴'
+gltextxy 0,5*h
+gltext'This song is very nice.'
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+smoutput has been added to the paint handler to display in the ijx window every time the handler is called.
+
+Resize the form and note that the paint handler is called to repaint the form based on its new size.
+
+Note: Windows - depending on your settings you will get an event with every move or only when you release the button.
+ Control Panel|Display|Appearance|Effects|
+ Show window contents while dragging
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+smoutput'paintcount: ',":paintcount=:>:paintcount
+xywh=. 10 30 20 20
+glellipse xywh (+"1 0) 10*i.50
+)
+
+paintcount=: 0
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+Cover/uncover the form and minimize/restore and note that the paint handler is not called.
+)
+
+NB. =========================================================
+Lab Section
+A new memory buffer is created for the control the first time it is required and whenever the size changes.
+
+The default state of a new memory buffer is:
+ pixels all white
+ thin black pen
+ null brush
+ 0 0 text location
+ black textcolor
+ default font - always do a glfont for text.
+)
+
+NB. =========================================================
+Lab Section
+When the size of the control changes the size of the memory buffer needs to be changed.
+
+When the new memory buffer of the new size is created it is initialized in an initial state.
+
+This means gl2lab_g_paint needs to be run again and the host calls gl2lab_g_paint as an event handler to do the painting.
+
+gl2lab_g_paint is run directly by your J program to paint the memory buffer before first showing the control on the screen. And then gl2lab_g_paint is run everytime the size of the control changes.
+
+Sometimes when run as an event handler it will do the same painting commands as before (but to a memory buffer of a different size). More often, the drawing (e.g. plot) does calculations based on the control size to do the drawing.
+)
+
+NB. =========================================================
+Lab Section
+This example does a drawing that depends on the size of the control.
+
+gl2lab_g_paint also uses smoutput to display in the ijx window each time it is run. Note that it is run the first time when the form is created.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+smoutput'paintcount: ',":paintcount=:>:paintcount
+wh=.glqwh''       NB. get width height
+glrgb 255 0 0
+glbrush''
+glrect 20 20,wh-40
+gllines 20 20,wh-20
+glfont 'arial 12'
+gltextxy 50 50
+gltext 'wh: ',":wh
+)
+
+paintcount=: 0
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+Resize the form and see how the drawing is scaled to fit the control. Also notice how each time the size changes that gl2lab_g_paint is run and displays the new paintcount.
+
+Note that cover/uncover of the control minimize/restore don't change the size and just copy the current memory buffer to the screen and that gl2lab_g_paint is not called.
+)
+
+NB. =========================================================
+Lab Section
+gllines draws lines between points.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+gllines 20 20 80 130 150 50 NB. line connecting points
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab'' NB. black line connecting 3 points
+
+NB. =========================================================
+Lab Section
+newdata generates y pairs of xy coordinates. The x values move left to right and the y values are random so the lines form a simple line graph.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 0 255 0
+glpen 3,PS_SOLID
+gllines D
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+newdata=: 3 : ',(20*,.i.y),.20+?y$200'
+[D=: newdata 10
+gl2lab''
+
+NB. =========================================================
+Lab Section
+You can update the control directly.
+
+Study redraw in the script.
+
+Other forms and controls may have been active as targets, so the first thing redraw does is select our control as the target for gl2 commands. The glsel argument of GHANDLE is set when the control is created.
+
+Running gl2lab_g_paint in redraw does the drawing to the memory buffer. The final glpaint copies the memory buffer to the screen.
+
+Try running redraw'' a few times.
+
+The new data is drawn on top of the old data.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 0 255 0
+glpen 3,PS_SOLID
+gllines D
+)
+
+redraw=: 3 : 0
+D=: newdata 20
+glsel GHANDLE NB. canvas target
+gl2lab_g_paint''
+glpaint'' NB. update screen
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+redraw'' NB. try running this line a few times
+
+NB. =========================================================
+Lab Section
+In the previous example of redraw the new drawing was on top of the previous.
+
+Sometimes this is what you want, but sometimes you want to start afresh.
+
+If you paint to the same memory buffer (not a new buffer from resizing) and you don't want the old stuff then you'll need to do glclear to clear the buffer.
+
+Note that glclear has been added to redraw.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 0 255 0
+glpen 3,PS_SOLID
+gllines D
+)
+
+redraw=: 3 : 0
+D=: newdata 20
+glsel GHANDLE    NB. canvas target
+glclear''        NB. reinitialize the memory buffer
+gl2lab_g_paint''
+glpaint''        NB. update screen
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+redraw'' NB. try running this line a few times
+
+NB. =========================================================
+Lab Section
+animate in this example does redraw in a loop with a sleep delay.
+)
+SCRIPT
+redraw=: 3 : 0
+D=: newdata 20
+glsel GHANDLE    NB. canvas target
+glclear''        NB. reinitialize the memory buffer
+gl2lab_g_paint''
+glpaint''        NB. update screen
+)
+
+animate=: 3 : 0
+for. i.y do.
+ redraw''        NB. paint entire control with new data
+ sleep 0.1
+end.
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+animate 20     NB. update new data every 0.1 seconds
+
+NB. =========================================================
+Lab Section
+You can update only part of the screen. If only a small part of the screen is changed, this can be more efficient than painting everything.
+
+Study redraw and animate in the script.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 0 255 0
+glpen 3,PS_SOLID
+gllines D
+)
+
+redraw=: 3 : 0
+glsel GHANDLE    NB. canvas target
+pos=. 50 50
+glrgb 0 255 0
+glbrush''
+glrect pos,100 22
+glfont 'arial 11'
+gltextxy pos+20 2
+gltext 'testing: ',":y
+glpaint''
+)
+
+animate=: 3 : 0
+for_i. i.y do.
+ redraw i        NB. update small area
+ sleep 0.1
+end.
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+
+animate 30      NB. update small area every 0.1 seconds
+
+NB. =========================================================
+Lab Section
+gl2 commands don't specify the canvas control. There is an implicit target for gl2 commands as follow:
+
+gl2 target is selected canvas on selected form.
+
+A form is selected by: create (wd pc) form; event on the form; or a wd psel command.
+
+A canvas is selected on a form by: create (wd cc) canvas; event on the canvas; or a glsel command.
+)
+
+NB. =========================================================
+Lab Section
+In most cases the gl2 target is automatically selected for you by the system. For example:
+
+Create a form and canvas and gl2 commands automatically go to the new canvas on the new form.
+
+A canvas event (paint, mouse, character) selects the form and the canvas.
+)
+
+NB. =========================================================
+Lab Section
+If the situation is more complicated and the system hasn't already selected your form and canvas, then you need to explicity select the target for your gl2 commands. For example:
+
+If there are 2 canvas controls on a form, you need to explicitly select a target if you don't know that it is already selected.
+
+If another form (with or without a canvas control) was selected then you need to explicity set the target for your gl2 commands.
+)
+
+NB. =========================================================
+Lab Section
+You can explicitly set the target by doing a psel and a gsel. The wd command psel and gsel can take id arguments or handles. As ids are not unigue it is probably better to use the handles.
+
+glsel ID selects the first canvas with that ID on the selected form.
+
+glsel HANDLE selects the form that has the canvas with that handle and then selects the canvas.
+
+To select a canvas it is best to use glsel HANDLE.
+)
+
+NB. =========================================================
+Lab Section
+The next example creates two forms each with two canvass.
+)
+
+NB. =========================================================
+Lab Section
+)
+run=: 3 : 0
+gl2lab0=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2lab0;'form 0'
+gtk_widget_set_name gl2lab0;'gl2labdouble'
+consig gl2lab0;'destroy';'gl2labdouble_close'
+GHANDLE00=: glcanvas_jgl2_ 'gl2labdouble;'g0';200 100;coname''
+GHANDLE01=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
+box=. gtk_vbox_new 0 0
+gtk_container_add gl2lab0,box
+gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0
+gtk_box_pack_start box,canvas__GHANDLE11, 0 0 0
+gtk_widget_show_all gl2lab0
+
+gl2lab1=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2lab1;'form 1'
+gtk_widget_set_name gl2lab0;'gl2labdouble'
+consig gl2lab1;'destroy';'gl2labdouble_close'
+GHANDLE10=: glcanvas_jgl2_ 'gl2labdouble';'g0';200 100;coname''
+GHANDLE11=: glcanvas_jgl2_ 'gl2labdouble';'g1';200 100;coname''
+box=. gtk_vbox_new 0 0
+gtk_container_add gl2lab1,box
+gtk_box_pack_start box,canvas__GHANDLE10, 0 0 0
+gtk_box_pack_start box,canvas__GHANDLE11, 0 0 0
+gtk_widget_show_all gl2lab1
+
+NB. xywh=. ".wd'qformx'
+NB. wd'pmovex ',":xywh+0,(3{xywh),0 0
+
+)
+
+NB. RGB draw GHANDLExy
+draw=: 4 : 0
+glsel y
+glrgb x
+glbrush''
+glrect 10 10 50 50
+glpaint''
+)
+run'' NB. create 2 forms each with 2 canvass
+255 0   0   draw GHANDLE00     NB. form 0 canvas 0
+0   255 0   draw GHANDLE01     NB. form 0 canvas 1
+0   0   255 draw GHANDLE10     NB. form 1 canvas 0
+192 192 192 draw GHANDLE11     NB. form 1 canvas 1
+
+NB. try you own examples of draw
+
+NB. =========================================================
+Lab Section
+The two forms are closed.
+)
+gtk_widget_destroy gl2lab0
+gtk_widget_destroy gl2lab1
+
+NB. =========================================================
+Lab Section
+glqpixels reads pixel values from the memory buffer.
+
+Study readpixels in the gl2lab script.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glrgb 255 0 0
+glbrush ''
+glrgb 0 0 255
+glpen 10,PS_SOLID
+glpolygon 0 0 200 200 100 0 0 100 200 100
+)
+
+readpixels=: 3 : 0
+glsel GHANDLE    NB. canvas target
+glqpixels y  NB. get pixels
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+pixels=: readpixels 0 0 200 200 NB. get pixels in rectangle
+$pixels NB. each pixel is an integer RGB value
+~.pixels NB. nub has blue,white, and red pixels
+256 256 256#:~.pixels
+
+NB. =========================================================
+Lab Section
+glpixels draws pixels.
+
+The pixels from the previous step are modified (non-white pixels changed to a random color) and drawn.
+
+Run gl2lab a few times to see the pixels change.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+white=.256#.3#255
+NB. get indexes of non white pixels
+i=. (pixels~:white)#i.#pixels
+NB. replace those pixels with random colors
+newp=.(?(#i)#white) i}pixels
+glpixels 10 10 200 200,newp
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+The pixels are saved as file gl2lab.bmp. Try using this bmp file in some other application such as word.
+)
+require'bmp' NB. define writebmp
+(200 200$pixels) writebmp jpath'~temp/gl2lab.bmp'
+
+NB. =========================================================
+Lab Section
+glcmd takes an integer string of commands of the form:
+ count,command,....args....
+
+The command number is the x from the 11!:x in the corresponding gl2 command. For example: glrgb is 2032 and glect is 2031
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glcmds 5 2032 255 0 0 6 2031 10 10 50 50
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+
+NB. =========================================================
+Lab Section
+Experiment with your own drawing commands. Edit the paint event handler in the gl2lab script. Run the script with Ctrl+w and then recreate the form with gl2lab''.
+
+Look at Help|gl2 Commands for documentation.
+
+You've seen most of the gl2 commands in this lab. Study the documentation for info on all the possibilities.
+)
+SCRIPT
+gl2lab_g_paint=: 3 : 0
+glfont'arial 12'
+gltextxy 5 5
+glrgb 255 0 0
+gltextcolor''
+gltext'add your own commands'
+NB. add your drawing commands here
+NB. for example:
+NB.  glrect      x y w h
+NB.  glellipse   x y w h
+NB.  gllines     list of xy pairs
+NB.  glpolygon   list of xy pairs
+NB. try them with various brushes and pens
+NB.   glrgb 255 0 0
+NB.   glpen 5,PS_SOLID
+NB.   glrgb 0 0 255
+NB.   glbrush''
+NB.   glbrushnull''
+)
+SCRIPT
+PREPARE
+gl2lab_update''
+PREPARE
+gl2lab''
+

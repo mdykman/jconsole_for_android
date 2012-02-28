@@ -13,7 +13,7 @@ NB. ms        Minimum in sum of vectors
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2005-2011 Henry Rich, Igor Zhuravlev
+NB. Copyright 2005-2011 Henry Rich, Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -46,9 +46,12 @@ NB. Miscellaneous
 
 negneg=: -@]^:(0>[)                                             NB. if x<0 then -y else y endif
 negpos=: -@]^:(0<:[)                                            NB. if x≥0 then -y else y endif
+
 copysign=: -@]^:((=-)&*)                                        NB. if x<0 then -|y| else |y| endif
-sorim=: +/"1 @: |  @: +.                                        NB. sum of real and imaginary parts' modules, |Re(y)| + |Im(y)|
-soris=: +/"1 @: *: @: +.                                        NB. sum of real and imaginary parts' squares, Re(y)^2 + Im(y)^2
+
+sorim=: +/"1@:| @:+.                                            NB. sum of real and imaginary parts' modules, |Re(y)| + |Im(y)|
+soris=: +/"1@:*:@:+.                                            NB. sum of real and imaginary parts' squares, Re(y)^2 + Im(y)^2
+
 fmtlog=: ;@:(26 17 17 17 17 _16&(({.{.@('d<n/a>'&(8!:2)))&.>))  NB. log string format
 
 NB. ---------------------------------------------------------
@@ -71,7 +74,7 @@ NB.   Eupd = rank-1 array (e0upd,e1upd,...)
 NB.
 NB. Application:
 NB. - process each table in the report individually:
-NB.     0 1 2 ((+: &. +:)`(-: &. -:)`(*: &. +:) ag) i. 3 4 4
+NB.     0 1 2 (+:&.+:)`(-:&.-:)`(*:&.+:) ag i. 3 4 4
 NB.
 NB. References:
 NB. [1] [Jforum] gerund apply

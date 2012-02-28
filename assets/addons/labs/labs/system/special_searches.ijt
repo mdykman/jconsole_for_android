@@ -1,0 +1,242 @@
+LABTITLE=: 'Special Searches'
+LABAUTHOR=: 'Roger Hui'
+LABWIDTH=: 56
+LABWRAP=: 0
+LABCOMMENTS=: 'original writing: 2005-02-09; last changed: 2005-02-23'
+
+NB. ====================================================
+Lab Chapter    Introduction
+NB. ====================================================
+Lab Section Introduction
+
+Some common search phrases are "recognized" by the
+system and are implemented by special code, resulting in
+savings in time and space.  This lab discusses the
+following groups of such phrases:
+
+f i. 1:   first place where x f y
++./@:f    does x f y anywhere?
+i.<./     where the minimum first occurs
+m&i.      fixing the left argument of i.
+)
+PREPARE
+ts=: 6!:2 , 7!:2@]  NB. time and space
+PREPARE
+NB. ====================================================
+Lab Chapter    f i. 1:
+NB. ====================================================
+Lab Section f i. 1:
+
+The phrase  x (> i. 1:) y  finds the first place where x
+is greater than y .
+)
+] x=: 10 ?.@$ 288
+] y=: 10 ?.@$ 388
+x (>i.1:) y
+(x>y) i. 1
+
+NB. ====================================================
+Lab Section
+
+x (>i.1:) y is a fork, equivalent to the following:
+)
+x (>i.1:) y
+(x > y) i. (x 1: y)  NB. definition of a fork
+(x > y) i. 1         NB. constant verb 1:
+
+NB. ====================================================
+Lab Section
+
+Finding the first place where x is greater than y is
+done conventionally by the phrase  (x>y)i.1 .
+x>y compares x and y for all elements, creating a
+Boolean list in so doing, then finds the first 1 in the
+list.  The time savings in  x(>i.1:)y  come from
+comparing only as many elements as necessary to find the
+first 1, while avoiding creating the Boolean list.  The
+space savings come from not having to create the list.
+
+If a "hit" comes at the beginning, the search ends
+instantaneously.  Even if a hit comes at the end, the
+time savings are by a factor of at least 2.  In either
+case the space used is constant instead of linear.
+)
+ts=: 6!:2 , 7!:2@]  NB. time and space
+
+ratio=: 4 : 0
+ t0=. ts 'x (>i.1:) y'  NB. with special code
+ t1=. ts '(x>y)i.1'     NB. without special code
+ t0,t1,t1%t0
+)
+
+NB. time-space with special code, without special code, ratios
+
+x=: 1e5 ?@$ 2e9
+x ratio 0    NB. found at the beginning
+x ratio 2e9  NB. found at the end
+
+x=: 1e6 ?@$ 2e9
+x ratio 0    NB. found at the beginning
+x ratio 2e9  NB. found at the end
+
+NB. ====================================================
+Lab Section
+
+Other forks similar to (>i.1:) are likewise recognized
+and are supported by special code:
+
+a. various propositions:  = ~: < <: >: > E. e.
+b. finding first place or last place:  i. i:
+c. finding 1 or 0
+
+That is,
+   f i. 1:    first place where     x f y
+   f i. 0:    first place where not x f y
+   f i: 1:    last  place where     x f y
+   f i: 0:    last  place where not x f y
+
+Some restrictions apply:
+- Special code is available only for Boolean, integer,
+  floating point, literal, and symbol arguments
+- Special code is used only for atoms and lists if f is
+  not e.
+- If f is E. , special code only for   E.i.1:
+)
+
+NB. ====================================================
+Lab Section
+Some examples to illustrate the use of these searches:
+)
+NB. index of first vowel
+'boustrophedonic' (e.i.1:) 'aeiou'
+NB. index of last  vowel
+'boustrophedonic' (e.i:1:) 'aeiou'
+NB. index of first consonant
+'boustrophedonic' (e.i.0:) 'aeiou'
+NB. index of last  consonant
+'boustrophedonic' (e.i:0:) 'aeiou'
+NB. index of the word "ago"
+'ago' (E.i.1:) 'fourscore and ten years ago, our fathers'
+
+NB. ====================================================
+Lab Chapter    +./@:f
+NB. ====================================================
+Lab Section +./@:f
+
+Another group of recognized search phrases are:
+   + /@:f    number of places where x f y
+   +./@:f    x f y anywhere?
+   *./@:f    x f y everywhere?
+   I. @:f    indices where x f y
+
++./@:f and *./@:f will do only as many comparisons as
+needed to determine the answer.  +/@:f  and  I.@:f  will
+necessarily do all the comparisons.  Therefore, the
+amount of savings from the special code is data
+dependent.  It is possible for there to be little or no
+savings.
+
+Alternative phrasings ([: +/ f , and @ instead of @: for
+f with infinite ranks) are also recognized.
+)
+
+x=: 1e6 ?@$ 2e9
+y=: 1e6 ?@$ 2e9
+t=: 0 2$0
+t=: t,%/ts&> '+ / x > y'; 'x + /@:> y'
+t=: t,%/ts&> '+./ x > y'; 'x +./@:> y'
+t=: t,%/ts&> '*./ x > y'; 'x *./@:> y'
+t=: t,%/ts&> 'I.  x > y'; 'x  I.@:> y'
+NB. time-space ratios for (no special code) % (special code)
+0j2 ": t
+
+NB. ====================================================
+Lab Chapter    i.<./
+NB. ====================================================
+Lab Section i.<./
+
+The following monads are recognized and implemented by
+special code, for integer or floating point lists:
+   i.<./   index where the minimum first occurs
+   i.>./   index where the maximum first occurs
+   i:<./   index where the minimum last  occurs
+   i:>./   index where the maximum last  occurs
+)
+x=: 1e6 ?@$ 2e9
+ts 'x i. <./x'
+ts '(i.<./) x'
+
+NB. ====================================================
+Lab Chapter    m&i.
+NB. ====================================================
+Lab Section m&i.
+
+Certain verbs in the "index of" family with a fixed noun
+argument m are supported by special code.  That is,
+   m&i.        m&(i.!.0)
+   m&i:        m&(i:!.0)
+   -.&m        -.!.0&m
+   e.&m        e.!.0&m
+   (e.i.0:)&m  + /@e.&m
+   (e.i.1:)&m  +./@e.&m
+   (e.i:0:)&m  *./@e.&m
+   (e.i:1:)&m   I.@e.&m
+are supported by special code, so that for most m and y
+the phrase  m&i. y  takes time proportional to the size
+of y . ("Most" means amenable to hashing or some other
+fast pre-processing technique.) There is no improvement
+in performance with just one application; there can be a
+substantial improvement in performance with repeated
+applications.
+)
+
+NB. ====================================================
+Lab Section
+
+Some examples to illustrate the point about "one
+application" versus "repeated applications".  In the
+following benchmarks:
+
+appl1     1 search
+appl1s    1 search   with special code
+appl3     3 searches
+appl3s    3 searches with special code
+)
+m =: 1e6 ?@$ 1e6
+y0=: 1e5 ?@$ 1e6
+y1=: 1e5 ?@$ 1e6
+y2=: 1e5 ?@$ 1e6
+
+appl1 =: 3 : 'm i. y0'
+appl1s=: 3 : ('f=. m&i.'; 'f y0')
+appl3 =: 3 : ('m i. y0'; 'm i. y1'; 'm i. y2')
+appl3s=: 3 : ('f=. m&i.'; 'f y0'; 'f y1'; 'f y2')
+
+ts 'appl1  0'
+ts 'appl1s 0'
+ts 'appl3  0'
+ts 'appl3s 0'
+
+NB. ====================================================
+Lab Section
+
+The difference in time is particularly striking if the
+repeated applications are on small arguments.  Thus:
+)
+m=: 1e6 ?@$ 1e6
+y=: 10 ?@$ 1e6
+f=: m&i.
+ts 'm i. y'
+ts 'f y'
+
+NB. ====================================================
+Lab Section
+
+Creating the verb  m&i.  now takes more time and space,
+comparable to what is required for one execution of i.~m
+However, these costs are amortized over repeated
+applications.
+)
+m=: 1e6 ?@$ 2e9
+ts 'f=: m&i.'
+ts 'i.~m'

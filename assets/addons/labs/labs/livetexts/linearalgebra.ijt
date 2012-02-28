@@ -1,0 +1,3187 @@
+LABTITLE=: 'Linear algebra (Schaum)'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter SYSTEMS OF LINEAR EQUATIONS
+NB. =========================================================
+Lab Section 1. Introduction
+
+This lab is written as a companion to Seymour Lipshutz "LINEAR ALGEBRA" of Schaum's Outline Series, published by McGraw Hill, 1991, ISBN 0-07-038007-4. It will be referred to here by the author's initials SL.
+
+The use of the computer makes it possible to experiment with
+mathematical ideas with ease and precision, sometimes expanding on the text-book treatment, and often providing new insights. You are always in control of the computer and may enter any experiment you wish, concluding each entry by pressing the Enter key.
+
+Although texts in the Schaum Outline Series are not commonly
+adopted for college courses, one of them is chosen here
+for the following reasons:
+
+1. Adopted texts in Linear Algebra are so various that
+   there appear to be none that are widely used.
+
+2. Designed as aids to students in a variety of courses,
+   the Schaum Outline Series provide broader treatments
+   than most other texts.
+)
+PREPARE
+
+require 'plot'
+color=:viewmat
+
+decimal=:x:^:_1
+
+E1=:<@(<:@]) C. [
+E2=:[ * 1: + -@{.@] |. -@#@[ {. <:@{:@]
+E3=:{:@]`(<@:<:@({.@] , 1&{@]))`(=@i.@#@[)} +/ . * [
+
+csub=:<:@] {"1 [  NB. Column subscript
+rsub=:<:@] { [  NB. Row subscript
+sub=:(<:@] { [)`(([ (<:@] { [) >@{.@]) (<:@] {"1 [) >@{:@])@.(<:@#@$@[ *. #@]>1:)  NB. Subscript
+
+fullparens=:5!:6@<
+test=:3: digits ] mp |:
+block=:(+&$ {. [) + -@(+&$) {. ]
+BLOCK=:block&.>/
+ip=:+/@:*"1    NB. Inner product (rank 1)
+mp=:+/ . *     NB. Matrix product
+det=:-/ . *    NB. Determinant
+per=:+/ . *    NB. Permanent
+pol=:|.@:[p.]  NB. Polynomial in descending order
+first1=:</\    NB. Suppress all ones after first in 0-1 vector
+dfr=:] * 180"_ % 1p1"_   NB. Degrees from radians
+rfd=:] * 1p1"_ % 180"_   NB. Radians from degrees
+sin=:1&o.
+cos=:2&o.
+arcsin=:_1&o.
+arccos=:_2&o.
+sind=:sin@:rfd
+cosd=:cos@:rfd
+arcsind=:dfr@:arcsin
+arccosd=:dfr@:arccos
+
+digits=:j./@(".@(j.@[ ": +.@:]))"0
+ID=:=@:i.@:#
+
+BF=:1 : 0
+:
+x mp m mp y
+)
+
+QF=: BF~
+
+   charp=:3 : 0  NB. Characteristic polynomial coeffs
+mp=.+/ . *
+ID=.=@:i.@:#
+trace=.+/@((<0 1)&|:)
+a0=.>@:(0&{)  NB. Select and open from c;F;M
+a1=.>@:(1&{)
+a2=.>@:(2&{)
+F=.a2 mp a1 + ID@:a2 * {.@:a0 * 1: < #@:a0  NB. Next iterate
+c=. (-@:trace@:F % #@:a0),a0  NB. Next coefficients
+STEP=.c;F;a2  NB. Complete step of Frame
+a0@:(STEP^:(#@:a2))@:(1:;ID;]) y
+)
+
+ECHELON=:3 : 0
+erem=:(] - (0: , 1: }. {."1 % {.@:{.) */ {.)@:sortdm
+  sortdm=:]\:|  NB. Put rows in descending order on mag
+TI=:[ {@:(<@:([ }. i.@:])"0) $@:]  NB. Truncated indices
+estep=:(erem@:(TI { ]))`TI`]}  NB. Complete step of echelon
+erec=:]`(>:@:[ erec estep)@.(>:@:[<<./@:$@:])
+  NB. Recursive definition of all steps
+0 erec y
+)
+
+TO=:x:@(-/@(?.@((2: , [) $ >:@])))  NB. A random function
+SYM=:]+|:
+HERM=:]++@:|:
+load 'plot'
+roots=:>@:{:@:p.
+
+orth=:{: - (({: ip }:) % }: ip }:) mp }:
+
+gets=:orth@:{.`(<:@:[)`]}
+
+all=:]`([ gets <:@:[ all ])@.([ > 0:)
+
+G_S=:# all ]
+
+JACOBI=:3 : 0 ^:_  NB. Limit of application of single step jac
+jac=:(R@:angle@:(IOR{])ins ])syt]  NB. Single step
+ syt=:|:@:[ mp ] mp [  NB. A symmetric transformation
+ ins=:[`(IOR@:])`(ID@:])}  NB. Insert rotation in identity
+ IOR=: <"1@:(,"0/~)@:imax  NB. Index of rectangle
+  imax=:($#:1:>.,i.>./@:,)@:((|*</~@:i.@:#))  NB. Index of max mag
+ angle=:-:@:(_3&o.@:(2: * -@:ur2 % -/@:diag2))  NB. Angle required
+  diag2=:0 3&{@:,  NB. Diagonal of 2-by-2 matrix
+  ur2=:1&{@:,  NB. Upper right of 2-by-2
+ R=:(cos,-@:sin),.sin,cos  NB. Rotation by radian argument
+jac y
+)
+
+nr=:rsub&1
+
+zc=:0:,}.@(csub&1)
+
+RED=:]-zc */ nr
+
+NORM=:] E2 1:,1:% sub&1 1
+
+RED1=:RED@NORM
+
+REST=:-@# |."1 ]
+
+ROTATE=:1: |. 1: |."1 ]
+
+gauss=:ROTATE@RED1
+
+GAUSS=:REST@(gauss^:#)
+
+dsm=:JACOBI sm=:SYM -/2 4 4 TO 8
+
+GRAM_SCH=:3 : 0
+gsrow=:{: - (({: ip }:) % }: ip }:) mp }:
+gssub=:gsrow@:{.`(<:@:[)`]}
+gsall=:]`([ gssub <:@:[ gsall ])@.([ > 1:)
+(#y)gsall y
+)
+
+
+PREPARE
+
+NB. =========================================================
+Lab Section
+
+We will closely follow the development in SL, making frequent explicit reference to sections and examples. We will, however, introduce certain key notions such as matrix, inner product, and functions (also called mappings in Chapter 9) earlier than is done in SL. The reasons are two-fold:
+
+1. In the array programming language used here, they are
+   very easy to introduce.
+
+2. They provide tools that simplify the treatment of
+   other topics.
+
+We will now introduce the use of the computer by actual examples, clarifying them by comments (set off by NB. -- for Nota Bene -- and not executed).
+
+Remember that you can enter your own examples, and need fear nothing worse than a (sometimes helpful) error message.
+)
+
+NB. =========================================================
+Lab Section
+
+In using the computer, it will be necessary to use expressions in an unfamiliar notation. However, it is important to focus on the topics treated, not on the mode of expression. In other words, be content if you understand what an expression does, and how to experiment with closely related expressions.
+
+For example, the expression (and result):
+
+    3+4
+ 7
+
+correctly indicate that + denotes addition, and it is fruitless to worry about "how the computer does it".
+
+This is equally true for adding arguments other than integers, using decimal notation (such as 3.5) or rational notation (such as 7r2). For example:
+)
+3.5+4.5  NB. Decimal notation
+7r2+9r2  NB. Rational notation
+1r2+1r3
+1r2*1r3
+
+NB. =========================================================
+Lab Section
+
+Further examples:
+)
+x=:3         NB. Read as "x is 3" (Like "Let x=3" in math)
+x+4
+y=:1 2 3 4   NB. Lists (vectors) may be used
+x+y
+y+y
+y*y          NB. * denotes times
+y^y          NB. ^ denotes power
+^&3 y        NB. Cube (Power with right argument 3)
+cube=:^&3
+cube y
+!y           NB. ! denotes factorial
+caf=:cube@:! NB. Cube atop (applied to the result of) factorial
+caf y
+cube@:- y    NB. Negative numbers are denoted by leading _
+
+NB. =========================================================
+Lab Section
+
+The expression f@:g is read as "f atop g" and yields a function that is equivalent to applying f atop (that is, to the result of) g.
+
+The effect of the operator @: is called "composition" in SL, but the term "atop" will allow us to distinguish it from other forms of composition, such as ^&3, that combines the power function ^ with a right argument to form the "cube" function.
+
+The definition of a function such as cube may be displayed by simply entering
+its name without an argument:
+)
+^&3 y
+cube y
+2&^ y           NB. 2 to the power
+cube@:(2&^) y
+f=:cube@:(2&+)  NB. Cube of 2 plus
+f y
+f
+cube
+
+NB. =========================================================
+Lab Section
+
+Complete definitions of the "primitive" functions (such as + and ^) and operators (@: and &) can be obtained by pressing key F1 to display the Vocabulary, and clicking the mouse on the desired item. To return to execution of the lab, press Esc (or perhaps Alt-Tab).
+
+The definition displayed shows two parts:
+
+1. A monadic case that concerns a single argument
+   (as in Negation for -y)
+
+2. A dyadic case that concerns two arguments
+   (as in Subtraction for x-y)
+)
+5-y  NB. Dyadic case
+-y   NB. Monadic case
+
++/2 3 5 7          NB. Monadic case gives "insert"
+2+3+5+7
+1 2 3 4 +/ 2 3 5 7 NB. Dyadic case gives addition table
+y ^/ y             NB. Power table
+
+NB. =========================================================
+Lab Section
+
+Mnemonic names can be assigned to operators such as @: and & as illustrated below.
+
+Also note that the function lin=:a&ip distributes over addition: lin (x+y) is equivalent to (lin x)+(lin y). This is the essential characeristic of a linear function:
+)
+on=:@:       NB. Assign a mnenomic name to @:
+
+with=:&      NB. Assign a mnenomic name to &
+
+ip=:+/@:*"1  NB. Inner product
+
+a=:3 1 4 2
+b=:1 5 2 3
+
+a ip b
+
+lin=:3 1 4 2 & ip
+
+y=:4 1 2 3
+
+(x+y) ; (lin x+y) ; (lin x) ; (lin y) ; ((lin x)+(lin y))
+
+NB. =========================================================
+Lab Section
+
+SL uses subscripts to select elements of
+vectors (as in Section 1.2) and double subscripts for
+matrices (as in Section 3.2). We will use three distinct indexing functions:
+
+1. rsub for selecting rows of a matrix
+
+2. rcol for selecting columns of a matrix
+
+3. sub for selecting individual elements of a matrix:
+)
+M=:4 4 $ 0 1 1 0 , _2 _1 0 0 , 1 1 0 1, _2 _2 _1 2
+M  NB. A 4-by-4 matrix (_2 denotes negative 2)
+
+M rsub 1    NB. Select first row
+
+M rsub 2 4  NB. Select rows 2 and 4
+
+M csub 1
+
+M csub 2 4
+
+NB. =========================================================
+Lab Section
+)
+(M csub 2 4) rsub 2 4
+
+x=:2 3 5 7 11
+
+x sub 2
+
+x sub 2 3
+
+M sub 1 2      NB.  Element in first row and second column
+
+1 2;3 4
+
+M sub 1 2;3 4  NB. Rows 1 and 2 and columns 3 and 4
+
+NB. =========================================================
+Lab Section 2. Linear Equations, Solutions
+
+The square function is denoted by *: and its inverse (the square root) by %: .
+
+The equation (*: x)=10 can therefore be solved by applying %: to 10. Thus:
+)
+%: 10
+x=:%: 10
+*:x
+(*: x)=10  NB. A relation (such as =) yields 1 if true.
+
+NB. =========================================================
+Lab Section
+
+If we do not have the inverse function available, we might solve the equation (*: x)=10 by one of various methods, such as making successive guesses (guided by successive results):
+)
+x=:4
+*: x        NB. Too large (result exceeds the target 10)
+*: x=:3     NB. Too small
+x=:(3+4)%2
+x
+*:x
+*:x=:3.1
+*:x=:3.16
+(*:x=:3.1625)-10 NB. Residual (Becomes 0 for a solution)
+
+NB. =========================================================
+Lab Section
+
+Solving an equation can therefore be viewed as a method of finding an inverse to a function; perhaps not a general inverse, but just its result when applied to a particular argument (10 in the foregoing example). This fact accounts for much of the interest in solving equations.
+
+Not knowing an inverse to the function lin used earlier, we
+can find its inverse applied to the argument 29 by (rather unguided) guessing as follows:
+)
+lin=:+/@:(*&3 1 4 2)
+x=:1 2 3 4
+lin x
+x=:1 3 3 4
+lin x
+x=:1 2 4 4  NB. lin of this x gives the target 29
+lin x
+
+NB. =========================================================
+Lab Section
+
+                                    EXERCISES
+
+1. Enter the expressions:
+
+   b=:5 4 0 2
+   y=:2 0 3 4
+   ip=:+/@:*"1
+   b&ip y
+
+Then enter different values for y to obtain a solution to the equation (b&ip y)=17
+
+2. Enter c=:1 2 _4 1 and c&ip 3 2 1 0 and c&ip 1 2 4 5 to check the assertions in Example 1.1(b) of SL.
+
+3. Enter similar expressions for further examples in Section 1.2 of SL.
+)
+
+NB. =========================================================
+Lab Section 3. Linear Equations in Two Unknowns
+
+Press Esc to continue after a plot.
+
+The equation 2x+y=4 of SL can be re-expressed (in the same conventional notation) as y=:4-2x, and plotted as follows:
+)
+x=:_3 _2 _1 0 1 2 3
+y=:4-2*x
+x;y          NB. Produces boxed vectors
+load 'plot'
+plot x;y
+
+NB. =========================================================
+Lab Section
+
+The plot of Fig 1-2 (a) of SL may be made by applying the function open (>) to the boxed vectors y1;y2 to produce a two-rowed matrix (table), and plotting it against the argument x Thus:
+)
+y1=:x+3
+y2=:(3-x)%2
+y1;y2
+
+>y1;y2
+
+plot x;>y1;y2
+
+NB. =========================================================
+Lab Section
+
+The expression m mp n yields the matrix product of matrices m and n; it is defined as the matrix of inner products of EACH ROW of m with EACH COLUMN of n Thus:
+)
+m=:>1 6 4;4 1 0;6 6 8
+n=:>3 4 7 ; 0 0 4 ; 6 0 3
+m;n
+]q=:m mp n  NB. Identity function (]) displays after assignment
+q sub 3 1
+ip=:+/@:*"1
+(m rsub 3) ip (n csub 1)
+
+NB. =========================================================
+Lab Section
+
+The system L1: 2x+5y=8 and L2: 3x-2y=-7 of Example 1.7 of SL may be expressed in terms of the matrix m=:>2 5;3 _2 and the "target" vector b=:8 _7.
+
+The assertion that x=:_1 and y=:2 is a solution can be tested as follows:
+)
+]m=:>2 5;3 _2
+b=:8 _7
+x=:_1
+y=:2
+x,y
+m mp x,y
+(m mp x,y)=b
+
+NB. =========================================================
+Lab Section
+
+The elimination process shown in this same example in SL may be expressed as follows:
+)
+L1=:2  5  8
+L2=:3 _2 _7
+3*L1
+_2*L2
+(3*L1) + (_2*L2)
+38%19
+
+NB. =========================================================
+Lab Section
+
+                           EXERCISES
+
+1. Treat Examples 1.7 (b) and (c) of SL similarly.
+
+2. Enter mp and determine the significance of the dot operator (.) used in its definition. (The related inner product function ip is sometimes called the dot product.)
+)
+
+NB. =========================================================
+Lab Section 4. Systems of Linear Equations,Equivalent Systems, Elementary Operations
+
+
+The system    x+ 2y- 4z= -4
+             5x+11y-21z=-22
+             3x- 2y+ 3z= 11
+ of Example 1.9 of SL may be treated as follows:
+)
+L1=: 1   2  _4    _4
+L2=: 5  11 _21   _22
+L3=: 3  _2   3    11
+
+L2=:(_5*L1)+L2
+L3=:(_3*L1)+L3
+>L1;L2;L3
+L3=:(8*L2)+L3
+>L1;L2;L3
+
+NB. =========================================================
+Lab Section
+We will illustrate the elementary operations E1, E2, and E3 of SL as follows:
+)
+]m=:i.4 5
+
+m E1 2 4     NB. Interchange rows 2 and 4
+
+m E2 2 10    NB. Multiply row 2 by 10
+
+m E3 2 4 10  NB. Replace row 2 by row 2 plus row 4 times 10
+
+m;(m E1 2 4);(m E2 2 10);(m E3 2 4 10)
+
+NB. =========================================================
+Lab Section 5. Extended Precision and Rationals
+
+The extended precision function x: makes no apparent change
+to its argument, but functions applied to it are
+computed to extended precision and (where appropriate) are
+treated as rational numbers. As illustrated by Answer 1.54 at
+the end of Chapter 1 of SL, operations on matrices are often
+easier to follow when expressed in rationals. Moreover, the function
+decimal can be used to give the decimal approximation. Thus:
+)
+n=:x:m=:3 3 $ 1 6 4 4 1 0 6 6 8 3 4 7 0 0 4 6
+m;n
+%.m
+
+%.n
+
+decimal %.n
+
+(det n),(det %.n)
+
+NB. =========================================================
+Lab Section 6. Random Numbers
+
+To avoid misleading results due to a poor choice of examples,
+it is important to use (pseudo-) random arrays, as generated by
+the function TO illustrated below.
+)
+]m=:3 3 TO 19    NB. 3-by-3 of integers less than 20 in magnitude
+
+m%3              NB. m is in extended precision
+
+%.m
+
+]a=: 2 3 3 TO 19
+
+j./a             NB. Random complex matrix
+
+NB. =========================================================
+Lab Section 7. Systems in Triangular and Echelon Form
+
+The pattern of a system in echelon or triangular form may be brought out by comparing its matrix with zero, or by coloring it. Press Esc to remove color window to proceed.
+
+The solution can be obtained by back substitution as illustrated below:
+)
+L=:>7 _5 1 _1 5;0 _3 _3 _8 2;0 0 9 8 _1;0 0 0 8 2
+
+L;(0~:L)  NB. ~: denotes "not-equal" (Also try 0=L)
+
+]t=:2%8
+
+]z=:(_1 - 8*t)%9
+
+]y=:(2-((_3*z)+(_8*t)))%_3
+
+]x=:(5-((_5*y)+(1*z)+(_1*t)))%7
+
+color L
+
+NB. =========================================================
+Lab Section 8. Systems in Triangular and Echelon Form
+
+Collecting x,y,z,t in a vector u we will test the first two equations, obtaining small, but non-zero, residues instead of the expected zeros. If, however, we replace u by the vector v of exact rational values we get exact zeros:
+)
+u=:0.0833333 _1 _0.333333 0.25
+
+L mp u,_1
+
+12*u
+
+v=:1r12 _1 _1r3 1r4
+
+L mp v,_1
+
+NB. =========================================================
+Lab Section 7. Gaussian Elimination
+
+We will approach Gaussian elimination by first illustrating
+the use of the elementary row operations E2 and E3 to
+eliminate (i.e., reduce to zero) all subdiagonal elements of
+the first column of a matrix.
+
+E3 is used to add (negative) multiples of the first row, but to
+simplify the multipliers required we first use E2 to normalize
+the first row, multiplying it by the reciprocal of its leading element. Thus:
+)
+]M=:- 4 6 TO 19
+
+]M1=: M E2 1 1r8
+
+]M2=: M1 E3 2 1 _2
+
+NB. Continued
+
+NB. =========================================================
+Lab Section
+)
+M3=: M2 E3 3 1 _15
+M4=: M3 E3 4 1 _14
+
+,.M;M1;M2;M3;M4
+
+NB. =========================================================
+Lab Section
+
+Since the required multiples of the normalized first row are the (negated)
+elements of the first column,
+we might subtract from the normalized matrix M1 the multiplication
+table formed by its first column and first row. Thus:
+)
+col=: M1 csub 1
+
+row=: M1 rsub 1
+
+col */ row
+
+M1-col */ row
+
+NB. =========================================================
+Lab Section
+
+The result looks fine except that the process has (for obvious reasons) zeroed
+the first row. This can be corrected by replacing the leading
+element of col by zero. Thus:
+)
+]zcol=:0,}.col
+
+zcol */ row
+
+M1-zcol */ row
+
+nr=:rsub&1
+nr M
+
+zc=:0:,}.@(csub&1)
+zc M
+
+RED=:]-zc */ nr
+RED M1
+
+NB. =========================================================
+Lab Section
+
+We now define a function NORM to normalize the
+first row, and apply the function RED
+to the normalized result:
+)
+NORM=:] E2 1:,1:% sub&1 1
+
+NORM M
+
+RED NORM M
+
+RED1=:RED@NORM
+
+RED1 M
+
+NB. =========================================================
+Lab Section
+
+We could now use modifications of the function RED1 to
+continue the Gaussian elimination on successive diagonal
+"pivot elements" and "pivot rows", to obtain  the echelon form of SL. The back substitution of SL could then be applied (as a further succession of elementary row operations).
+
+We will instead
+rotate the result upward and to the left by one position
+to bring the next pivots into leading place, and then re-apply RED1
+unchanged. Thus:
+)
+ROTATE=:1: |. 1: |."1 ]
+
+gauss=:ROTATE@RED1
+
+gauss M
+
+gauss gauss M
+
+gauss^:4 M
+
+NB. =========================================================
+Lab Section
+
+The rotations to the left have brought the
+resulting identity matrix around to the right end, and it must be restored by a corresponding right rotation (using a negative left argument).
+
+Moreover, the power 4 used in the last expression is the number of rows of the argument, and must be replaced by the function # as shown below.
+
+Finally, it should be noted that the
+matrix formed by the product table
+of the column and row applied to ALL
+rows, and therefore performed the back substitution (on rows above the
+diagonal of the original matrix) together with the forward elimination:
+)
+REST=:-@# |."1 ]
+
+GAUSS=:REST@(gauss^:#)
+
+GAUSS M
+
+NB. =========================================================
+Lab Section 8. Inverse from Gaussian Elimination
+
+We will now use the matrix m from Example 1.12 of Section 1.6 of SL, and form a system N by appending to it not the vector 10 1 4, but the corresponding identity matrix ID m
+
+The result of applying GAUSS to m,.ID m then includes the matrix inverse to m Thus:
+)
+m=:x: 3 3$2 1 _2 3 2 2 5 4 3
+N=:m ,. ID m
+r=:GAUSS N
+N;r
+
+mi=:r csub 4 5 6
+mi;mi mp m
+
+m4=:4 4 TO 19
+r4=:GAUSS m4,.ID m4
+m4 mp r4 csub 5 6 7  8
+
+NB. =========================================================
+Lab Section 9. The Matrix Inverse Function %.
+The function %. produces the inverse directly. The denominators are the determinant of m (or some integer fraction of it). The determinant is treated in Chapter 7 of SL.
+)
+]mi=:%.m
+
+det=: -/ . *
+
+det m
+
+mi mp m
+
+det mi
+
+NB. =========================================================
+Lab Section 10. Homogeneous Systems of Linear Equations
+For the following matrix m, the system S=:m,.0 0 0 0 is homogeneous and has the unique solution 0 0 0 0.
+
+The function det=:-/ . * gives the determinant of a matrix argument (as defined in Chapter 7 of SL). The solution of a homogeneous system for any matrix (such as m) having a non-zero determinant is uniquely zero. Thus:
+)
+]m=:>4 _3  0  0 ; 3  5 _2 _2 ; _5  1  0 _4 ; 5  5  0 _2
+
+(det=:-/ . *) m
+
+S=:m,.0 0 0 0
+
+S mp 0 0 0 0,_1  NB. A solution of all zeros
+
+S mp 1 2 3 4,_1  NB. Not a solution
+
+NB. =========================================================
+Lab Section
+As stated in SL, a homogeneous system for which a linear combination of the rows is zero has multiple solutions.
+
+Similarly, the determinant of a matrix is zero if a linear combination of its rows is zero. In particular, the determinant of a matrix with two identical rows is zero. Thus:
+)
+]n=: 0 1 1 3 { m
+
+0 1 _1 0 mp n  NB. A linear combination of the rows of n
+
+det n
+
+NB. =========================================================
+Lab Chapter VECTORS IN Rn AND Cn, SPATIAL VECTORS
+NB. =========================================================
+Lab Section 1. Introduction
+
+If m is a matrix and a and b are vectors, then a mp m is a sum of scalar multiples of the row vectors of m, and m mp b is a sum of multiples of columns. For example:
+)
+mp=:+/ . *  NB. matrix product
+
+]m=:i.3 4
+
+a=:2 1 5
+
+b=:3 0 1 4
+
+a mp m      NB. a must be conformable with m
+
+(2*m rsub 1)+(1*m rsub 2)+(5*m rsub 3)
+
+m mp b
+
+(3*m csub 1)+(0*m csub 2)+(1*m csub 3)+(4*m csub 4)
+
+NB. =========================================================
+Lab Section 2. Vectors in Rn
+
+A vector of the constants 1 and 2 and 3 can be entered either as 1 2 3 or as 1,2,3. Constants such as one-half and pi and one-half pi can be written in the forms 1r2 and 1p1 and 1r2p1 (Other constants may be found by using the menu Help).
+
+However, a vector with an element such as %:3 (square root of 3) must be entered using the comma (called catenation). Thus, the vectors in Example 2.1 of SL may be written as follows:
+)
+0,1
+
+(0,1)=0 1
+
+(1,_3)=1 _3
+
+1,2,(%:3),4
+
+_5,1r2,0,1p1
+
+_5 1r2 0 1p1
+
+NB. =========================================================
+Lab Section 3. Vector Addition and Scalar Multiplication
+
+Theorem 2.1 of SL may be illustrated as follows:
+)
+'u v w k'=:3 2 1;2 3 5;4 0 7;6
+
+u
+
+v
+
+w
+
+k
+
+((u+v)+w);(u+(v+w))
+
+(u+0);u
+
+(u+(-u))=0
+
+(u+v);(v+u);(k*(u+v));((k*u)+(k*v))
+
+NB. =========================================================
+Lab Section 4. Vectors and Linear Equations
+
+We will continue to use the matrix product to express weighted sums of the vectors that make up a matrix. For example:
+)
+'v1 v2 v3'=:1 7 4 ; 5 2 0 ; 6 6 9
+
+mr=:>v1;v2;v3    NB. Matrix of the rows v1,v2,v3
+
+mc=:v1,.v2,.v3   NB. Matrix of columns v1,v2,v3
+
+mr;mc
+
+x=:3 2 _1
+
+x mp mr          NB. Sum of multiples of rows of mr
+
+mc mp x          NB. Sum of multiples of columns of mc
+
+mr mp x          NB. Sum of multiples of columns of mr
+
+NB. =========================================================
+Lab Section 5. Dot (Scalar) Product
+
+Applied to vector arguments the inner product and the matrix product are equivalent. For example:
+)
+1 2 3 4 ip 2 3 5 7
+
+1 2 3 4 mp 2 3 5 7
+
+NB. =========================================================
+Lab Section 6. Norm of a Vector
+
+The norm of a vector is the square root of the inner product with itself. Thus:
+)
+norm=:%:@:(]ip])
+
+norm 3 _12 _4
+
+norm 3 4
+
+norm 3 _4
+
+v=:3 4
+
+v % norm v  NB. The normalization of v
+
+norm (v % norm v)
+
+NB. =========================================================
+Lab Section
+
+As stated in SL, the cosine of the angle between two vectors is their inner product divided by the product of their norms:
+The functions sind, cosd, arcsind, and arccosd are the trigonometric functions in degrees:
+)
+'a b'=:1 0 ; 1 1
+
+(a ip b) ; (a *&norm b) ; (a (ip % (*&norm)) b)
+
+angle=:arccosd@:(ip % (*&norm))
+
+(a angle b) , (cosd a angle b)
+
+1 0 0 angle 0 0 1    NB. x axis and z axis
+
+cosd                 NB. cos is cosine in radians
+
+rfd 0 45 90 135 180  NB. Radians from degrees (see dfr)
+
+NB. =========================================================
+Lab Section 7. Located Vectors, Hyperplanes, and Lines in Rn
+The function F=:cos;sin uses the trigonometric functions (on radians), and F i.5 gives the coordinates of a rough circle.
+
+Press Esc after a plot.
+)
+F=:cos;sin
+
+F i.4
+
+>F i.4
+
+load 'plot'
+
+plot F i.10              NB. A rough circle
+
+NB. =========================================================
+Lab Section
+
+The plot may look more like an ellipse, but the scale on the plot shows it to be a circle. Moreover, a finer grid gives a better-looking figure:
+)
+grid=:(i.100)%10
+
+plot F grid
+
+NB. =========================================================
+Lab Section
+
+The function of Example 2.9 of SL may be defined as F=:cos;sin;] but the results must be projected onto a plane for plotting. We will do this by adding multiples of the last coordinate to the others, choosing the multiples as the negative of the square root of 2 so that the z-axis will appear to extend toward us at an angle of 45 degrees:
+)
+]I=:>1 0;0 1    NB. Identity matrix in 2-space
+
+]W=:I,.-%:2
+
+F=:cos;sin;]
+
+>F i.5
+
+]W mp > F i. 5
+
+plot ;/W mp > F grid  NB. ;/ boxes for plot
+
+NB. =========================================================
+Lab Section
+
+The effect of the third coordinate is too pronounced to make an interesting plot, and we will now try a similar function in which it is scaled down by a factor of ten:
+)
+G=:cos;sin;%&10
+
+plot ;/W mp >G grid
+
+NB. =========================================================
+Lab Section
+
+In the expressions f d.1 and f d.2 the operator d. gives specified derivatives of a function f. Experiment with its use as illustrated below:
+)
+H=:sin d.1;sin;%&10
+
+map=:;/@:(W&mp@:>)
+
+plot map H grid
+
+NB. =========================================================
+Lab Section
+
+                           EXERCISES
+
+1. Enter and plot each of the following functions. First try to predict the appearance of the plot, then plot it, and finally explain its actual appearance:
+
+ I=:sin d.2;sin;%&10
+
+ J=:sin d.1;sin;%&10 d.1
+
+ K=:sin d.1;sin;%&10 d.2
+
+ L=:sin d.1;sin;%:
+
+ M=:cos;sin@:+:;%&10
+)
+
+NB. =========================================================
+Lab Section 8. Spatial Vectors, ijk Notation in R3
+
+The unit vectors i, j, k will be defined as in SL, and then used to form the identity matrix I. The vector u of Example 2.10 of SL may then be expressed in terms of either the unit vectors or the identity matrix as follows:
+)
+i=:(1,0,0)
+j=:(0,1,0)
+k=:(0,0,1)
+
+]I=:>i;j;k
+
+]u=:(3*i)+(5*j)+(_2*k)
+
+3 5 _2 mp I
+
+NB. =========================================================
+Lab Section
+
+>From the definition of the cross product in SL, it is clear that it may be performed by rotating the arguments in oposite directions and multiplying them. The entire process is captured in the definition of the function cross below:
+)
+(rl=:1&|.)  v=:4 _3 7  NB. Rotate to left
+
+(rr=:_1&|.) u=:3 5 _2  NB. Rotate to right
+
+cross=:(rl@:[ * rr@:]) - (rr@:[ * rl@:])
+
+]c=:u cross v      NB. The cross product of u and v
+
+(c mp u),(c mp v)  NB. Perpendicular to both u and v
+
+v cross u          NB. cross is skew symmetric
+
+u cross u          NB. cross of vector with itself is zero
+
+NB. =========================================================
+Lab Section
+
+As stated in SL, the  triple product w mp u cross v gives the volume (actually the signed volume) of the parallelepiped defined by the three vectors. As illustrated below, this can be expressed more neatly in terms of the matrix formed by the three vectors:
+)
+w=:1 6 4
+
+w mp u cross v
+
+volume=:mp`cross/
+
+]m=:>w;u;v
+
+volume m
+
+volume 1 0 2{m  NB. Permutation affects the sign
+
+det m           NB. Determinant gives same result
+
+NB. =========================================================
+Lab Section 9. Complex Numbers
+
+The complex number represented in SL by 3+4i is represented here by 3j4, a single entity (like 3.4), not an expression involving a function. Thus:
+)
+a=:i.5
+
+%:a
+
+]b=:%:-a
+
+]c=:a+%:-a
+
+(+. ; *.)c NB. Real and imaginary parts; size and angle
+
+NB. =========================================================
+Lab Section
+
+The magnitude of a number is the square root of the sum of the squares of the real and imaginary parts. The conjugate of a number is the same number with the sign of the imaginary part reversed:
+)
+|c  NB. Magnitude
+
+| p=:0j1 0j_1 1j0 _1j0  NB. Units. All have unit magnitude
+
+p*/p
+
+conj=:+ x=:3j4
+
+x * conj  NB. Product with conjugate is real
+
+NB. =========================================================
+Lab Section
+)
+3 j. 4
+
+]m=:2 3 3 TO 8
+
+]n=:j./m
+
+det n
+
+%.n
+
+%.%.n
+
+NB. =========================================================
+Lab Section 10. Vectors in Cn
+
+In this section SL defines the inner product on complex arguments not as u ip v, but as u ip +v, where the monadic + is the conjugate function. To make a clear distinction, we will define functions cip (complex inner product), and cmp (complex matrix product) as follows:
+)
+cip=:[ ip +@:]   NB. Complex inner product
+cmp=:[ mp +@:]   NB. Analogous complex matrix product
+a=: j./2 4 TO 8
+b=: j./2 4 TO 19
+
+]m=:>a;b         NB. Matrix of complex numbers
+
+a ip b
+
+a cip b
+
+a cip a          NB. Result is necessarily real
+
+ip/m             NB. Equivalent to a ip b
+
+cip/m
+
+m mp |:m
+
+m cmp |:m        NB. Diagonal elements are necessarily real
+
+NB. =========================================================
+Lab Chapter MATRICES
+NB. =========================================================
+Lab Section 1-6 Introduction  -- Matrices and Systems of Linear equations
+
+Because matrices were introduced early, there is little need for further comment on these sections. We will instead discuss means for obtaining full information on notation; both the defined functions (such as the matrix product mp), and the underlying notation:
+
+1. Enter names'' to get a table of all names that have been assigned referents. Then enter any one of these names alone (without an accompanying argument) to display its definition.
+
+2. Press the key F1 to display the vocabulary. Then use the mouse to click on any desired entry in the vocabulary. Note that for any function f, the display will show both a monadic definition (for the case f y), and a dyadic definition (for the case x f y). Use Esc or Control-Tab to remove the display.
+
+3. Or bring a definition up directly by placing the cursor just to the left of a symbol and pressing F1 while holding down the Ctrl key.
+
+4. For general information on the grammar and other aspects of the notation click on the Help menu.
+
+5. For helpful labs and demos click on the Studio menu
+)
+
+NB. =========================================================
+Lab Section
+The blocking of matrices in SL is a form of tesselation:
+)
+tes=:,:~@:[ < ;. 3 ]  NB. Case 3 of the cut operator (;.)
+]p=:i.4 6
+
+]q=:2 3 tes p         NB. Tesselation, or tiling
+4 3 tes i. 12 6
+
+NB. =========================================================
+Lab Section
+
+The matrix products of the submatrices produced by tiling are illustrated by the following:
+)
+]a=:i.4 4
+
+]b=: 2 2 tes a
+
+'b00 b01 b10 b11'=:,b
+
+b00;b11;((b00 mp b00)+(b01 mp b10))
+
+2 2 tes a mp a
+
+NB. =========================================================
+Lab Chapter SQUARE MATRICES, ELEMENTARY MATRICES
+NB. =========================================================
+Lab Section 1-3. Introduction -- Diagonal and Trace, Identity Matrix
+
+We now define a function ID such that ID x gives the identity matrix of order n, where n is the number of items in x (the number of rows if x is a matrix, and the number of elements if x is a vector or scalar).
+
+The trace of a matrix m is the sum over all elements of m*ID m
+)
+ID=:=@:i.@:#
+
+m=:i.5 5
+
+
+m;(ID m);(m*ID m);(+/,m*ID m)
+
+trace=:+/@:,@:(] * ID)
+
+trace m
+
+NB. =========================================================
+Lab Section 4. Powers of Matrices, Polynomials in Matrices
+
+The function f=:+:^:3 is the third power of the double function (+:), and the power operator ^: can be applied similarly to a matrix product function of the form g=:m&mp, as illustrated below:
+)
++:+:+:a=:0 1 2 3 4
+
+(f=:+:^:3) a
+
+bc=:a !/ a  NB. Matrix of binomial coefficients
+
+I=:=ID bc
+
+g=:bc&mp
+
+m;(g I);(g^:2 I);(g^:3 I)
+
+NB. =========================================================
+Lab Section
+)
+p=:g^:0 1 2 3 I  NB. An array of four powers of g
+
+q=:2 3 4 5 * p
+
+$q           NB. Multiples are a 3-dimensional array
+
+;/q          NB. Which we display in compact boxed form
+
++/q          NB. And sum as follows
+
+NB. =========================================================
+Lab Section
+
+                            EXERCISES
+
+1. Try to state the pattern shown by the successive powers of the binomial coefficient matrix bc.
+
+2. Enter ;/p%"2 bc to divide each table (element-by-element) by the table bc, and state the pattern observed in the result.
+
+3. Enter r=: bc&mp^:_1 I and try to predict (or at least interpret) the result r.
+
+4. r is a table of alternating binomial coefficients. Predict the result of r mp bc .
+)
+
+NB. =========================================================
+Lab Section 5-6. Invertible (Nonsingular) matrices -- Special Types of Matrices
+
+The construction of diagonal and triangular matrices are illustrated below:
+)
+d=:6 0 9 1
+
+i=:i.#d
+
+I=:i =/ i        NB. Identity matrix
+
+diag=:d*I        NB. Diagonal matrix
+
+but=: i <:/ i    NB. Boolean (0 1) upper triangle
+
+rm=:4 4 TO 9  NB. Random matrix
+
+ut=:rm*but       NB. Upper triangle
+
+I;diag;but;rm;ut
+
+NB. =========================================================
+Lab Section
+
+Comment on the following results:
+)
+rm
+
+symtest=: ] -: |:
+
+symtest rm
+
+sym=:]+|:
+
+sym rm
+
+symtest sym m
+
+NB. =========================================================
+Lab Section
+
+The matrix A of Example 4.7 of SL may be treated as follows:
+)
+A=:>1r9 8r9 _4r9;4r9 _4r9 _7r9;8r9 1r9 4r9
+
+B=:|:A
+
+A;B;(A mp B)
+
+NB. =========================================================
+Lab Section 8. SQUARE BLOCKS
+
+The function block defined below uses the function {. to provide an "overtake" of its right argument, extending it by zeros.
+
+A blocked matrix may be used to multiply segments of a non-square argument by different matrices, as illustrated below:
+)
+'a b'=:(1+i.2 2);(2+i.3 3)
+
+block=:(+&$ {. [) + -@:(+&$) {. ]
+
+a block b
+
+]c=:b,.=@:i.@:# b  NB. Append identity to form non-square
+
+c mp b block b     NB. Each part of c multiplied by b
+
+NB. =========================================================
+Lab Section
+
+The block may be used repeatedly, as in a block b block c. But for more than two blocks it is more convenient to use a function over a list of boxed matrices as shown below:
+)
+BLOCK=:block&.>/
+
+'a b c'=:(2+i.2 2);(3+i.3 3);(4+i.4 4)
+
+a
+
+BLOCK a;b;c
+
+NB. =========================================================
+Lab Section 11. Congruent Symmetric Matrices, Law of Inertia
+
+Refer to Section 1.8 for the use of elementary operations and the use of a matrix bordered by an identity matrix.
+
+The elementary matrices of Example 4.11 of SL may be entered as follows:
+)
+EL1=:>1 0 0;0 0 1;0 1 0
+
+EL2=:>1 0 0;0 _6 0;0 0 1
+
+EL3=:>1 0 0;0 1 0;_4 0 1
+
+EL1;EL2;EL3;(EL1 mp EL2 mp EL3)
+
+NB. =========================================================
+Lab Section
+
+We will first define a transformation matrix ct and its transpose rt, and apply them to the argument A to reproduce the diagonalized result of Example 4.14 of SL. The result of rt and its use as pre-multiplier in a matrix product may be compared with the recipes (-2R1+R2 goes to R2, etc.). The comments below clarify the definition of ct:
+)
+]A=:>1  2 _3;2  5 _4;_3 _4  8  NB. Symmetric matrix from SL
+
+w1=:[ (0: - ] % {) [ {"1 ] NB. k w1 A: weights for col k of A
+
+w2=:1:`[`w1}         NB. k w2 A amends w1 (1 in posn k)
+
+ct=:w2`[`(ID@:])}    NB. Amend identity (insert result w2)
+
+rt=:|:@:ct           NB. Transpose of ct
+
+cds=: rt mp ] mp ct        NB. k cds A -- step in diagonalizing A
+(0 cds A);(1 cds 0 cds A)  NB. Steps in diagonalization (cf. SL)
+(0 w1 A);(0 w2 A);(0 ct A)
+
+NB. =========================================================
+Lab Section
+
+In SL, the matrix that can be used to perform the diagonalization is obtained by appending an identity matrix to the argument, and applying the process to it as well. This requires that the post multiplication by ct be replaced by ct augmented (as a block) by the identity matrix. Thus:
+)
+B=: A,.ID A
+
+CDS=:rt mp ] mp ct block ID@:]
+
+0 CDS B
+
+1 CDS 0 CDS B
+
+P=:3 (}."1) 1 CDS 0 CDS B  NB. Last square matrix of result
+P
+
+P mp A mp |:P  NB. Diagonalization by matrix product
+
+NB. =========================================================
+Lab Section
+
+We will now use CDS in a complete recursive definition:
+)
+cd=:CDS`([ CDS <:@:[ cd ])@.(0: < [)
+CD=:<:@:#@:] cd ]
+2 cd B
+CD B
+
+m=:5 5 TO 8     NB. Arbitrary matrix (extended precision)
+sm=:m+|:m       NB. Arbitrary symmetric matrix
+]SM=:sm,.ID sm
+CD SM
+
+x:^:_1 CD SM    NB. Decimal approximation
+
+NB. =========================================================
+Lab Section
+
+To display either of the last two matrices in more readable form, we will define a function digits to truncate the elements to a specified number of digits following the decimal point, as in 3 digits CD SM. This function will often prove useful, especially in the case of near-zero results (such as 123e_24) that are produced by round-off in some calculations.
+
+The function digits is defined below in terms of the format function ": and the "do" or "execute" function "., and the "under" function &.; however, you need not study the definition in order to use it.
+)
+digits=: ".@:(j.@:[ ": ])&.+."0
+
+2 digits CD SM
+
+NB. =========================================================
+Lab Section
+
+The function digits works on complex numbers as well as real:
+)
+CM=:j./(2 4 4 TO 1e5)%1e3
+
+CM
+
+2 digits CM
+
+NB. =========================================================
+Lab Section
+
+Congruent diagonalization will be used in later chapters, and we will therefore use the operator f. to define a fixed form of the function CD. In this fixed form, all dependence on component functions such as w1 will be removed, by replacing each component function by its definition. Consequently any inadvertent re-definition of names such as  w1 and ct will not affect the fixed form. Thus:
+)
+CDF=:CD f.
+m=:x:-/2 6 6 TO 8
+m=:m+|:m
+]M=: m,.ID m
+
+2 digits CD M
+
+2 digits CDF M
+
+NB. =========================================================
+Lab Section 12. Quadratic Forms
+
+The quadratic form of SL can be written as x mp A mp x, but the expression can also be viewed as a function of the one argument x This function is determined by the parameter A, and we will define an operator (or adverb) QF such that the expression A QF produces the desired function.
+
+However, we will first define a bilinear form operator BF that is linear in each of its arguments and will be used in Chapter 13. We then define the operator QF by applying to it the reflexive operator ~ illustrated below:
+)
+BF=:1 : 0
+:
+x mp m mp y
+)
+QF=: BF~
+]A=:(]+|:)4 4 TO 9  NB. Sum with transpose is symmetric
+v=:4 3 2 1
+x=:2 3 5 7
+(v A BF x);(v mp A mp x);((2*v) A BF x);(v A BF (3*x))
+(A QF x);(x mp A mp x)
+(x ^ x);(^~x)
+
+NB. =========================================================
+Lab Section 13. Similarity
+
+The similarity transformation of Example 4.18 of SL may be expressed as PI mp A mp P, where PI is the inverse of P:
+)
+P=:x:>2 _1;1 1    NB. Extended precision
+
+A=:>3 _4;5 2
+
+]PI=:%.P
+
+]B=:PI mp A mp P
+
+NB. =========================================================
+Lab Section 14. LU Factorization
+
+Example 4.19 of SL may be carried out as follows:
+)
+A=:x:>1 2 _3;_3 _4 13;2 1 _5  NB. Extended precision
+
+R1=:>1 0 0;3 1 0;_2 0 1       NB. First row transformation
+
+R2=:>1 0 0;0 1 0;0 3r2 1      NB. Second
+
+U=:R2 mp R1 mp A              NB. Give upper triangle
+
+L=:A mp %.U                   NB. A times U inverse gives L
+
+R2;R1
+
+A;L;U;(L mp U)
+
+NB. =========================================================
+Lab Section
+
+The expression 2 4 4 TO 19 produces a rank-3 array of 2 matrices, and j./2 4 4 TO 19 gives a matrix of complex numbers. Thus:
+)
+j./2 4 4 TO 19
+
+4 TO 19       NB. A random vector
+
+j./2 4 TO 19  NB. A random complex vector
+
+NB. =========================================================
+Lab Section
+
+In later chapters we will have frequent need of symmetric and Hermitian matrices, and we now define functions SYM and HERM for this purpose.
+
+A symmetric matrix agrees with its transpose, a property possessed by any matrix added to its transpose. The transpose of a Hermitian matrix is the conjugate of its tranpsose. Any matrix added to the conjugate of its transpose is Hermitian:
+)
+SYM=:]+|:
+HERM=:]++@:|:
+
+m=: 4 4 TO 19
+
+m;cm=:j./2 4 4 TO 19
+(SYM m);(HERM m)
+(SYM cm);(HERM cm)
+
+NB. =========================================================
+Lab Chapter VECTOR SPACES
+NB. =========================================================
+Lab Section 1-5. Introduction--Linear combinations, Linear Spans
+Method 2 of Example 5.4 of SL obtains a sequence of row-equivalent matrices, culminating in a matrix in echelon form. We will embody the basic step in the function rem1 -- subtracting from the argument the outer product of the leading column by the leading row, with the column first modified by dividing by its leading element and then replacing that leading element by zero.
+
+As illustrated below, rem1 works on the example A used by SL but, because of a division by zero, it fails on the matrix B=:i.3 3. To rectify this, we define rem to first sort the matrix so that the rows occur in descending order on magnitude:
+)
+rem1=:]-(0:,1:}.{."1%{.@:{.)*/{.  NB. Reduces first col
+A=:>1 2 _1 3;2 4 1 _2;3 6 3 _7    NB. Matrix used in SL
+A;(rem1 A)
+
+sortdm=:]\:|
+
+rem=:(]-(0:,1:}.{."1%{.@:{.)*/{.)@:sortdm
+
+B=:i.3 3
+B;(rem1 B);(sortdm B);(rem B)
+
+NB. =========================================================
+Lab Section
+The function ECHELON reduces its argument to echelon form. We will use it in a few examples (and recommend further experimentation) before examining its inner workings.
+
+The product over the diagonal of the echelon form of a square matrix M gives its determinant. Why may its determinant differ in sign from the determinant of M?
+)
+(ECHELON A);(ECHELON B)
+
+]M=: 5 5 TO 9
+
+ECHELON M
+
+ECHELON decimal M
+
+NB. =========================================================
+Lab Section
+The echelon function applies to complex matrices as well as real:
+)
+C=:j./2 5 5 TO 9
+C
+
+5 digits ECHELON C
+
+NB. =========================================================
+Lab Section
+We begin examination of the formal definition of the echelon process by entering ECHELON alone (without an argument) to display its definition. It begins by defining the function erem to reduce the first column as already discussed. We can experiment with the component functions to elucidate the entire definition. For example:
+)
+ECHELON
+M=:4 4 TO 8
+
+M;(sortdm M);(erem M)
+
+1 TI M
+
+NB. =========================================================
+Lab Section
+In the function estep, TI is used to select the portion of the matrix to which rem is applied (rem@:(TI { ])), and again to specify the portion of the matrix that is to be replaced by its result.
+
+The amend operator (}) controls this replacement. Its definition may be found in the Vocabulary by pressing F1.
+)
+1 TI M
+
+2 TI M
+
+(2 TI M) { M
+
+M;(0 estep M);(1 estep 0 estep M)
+
+NB. =========================================================
+Lab Section
+A function definition is said to be recursive if the function being defined recurs in its own definition. For example, the factorial is often defined recursively as follows:
+
+  factorial n is n times factorial(n-1)
+
+                  AND
+
+            factorial 0 is 1
+
+The general form of the recursion used in the function erec is f`g@.condition, in which f is executed if the result of the condition is 0, and g is executed if the result is 1. We will illustrate this by a recursive definition of the factorial function:
+)
+f=:]*factorial@:(]-1:)
+
+g=:1:  NB. 1: is a constant function (1 for any argument)
+
+condition=:]=0:
+
+factorial=:f`g@.condition
+
+factorial 4
+
+factorial"0 i.10  NB. Rank 0 (from "0) applies to each
+
+NB.  Also expressible directly as:
+
+NB.  factorial=:(]*factorial@:(]-1:))`1:@.(]=0:)
+
+NB. Verify by copying, removing NB. and entering
+
+NB. =========================================================
+Lab Section 9. Sums and Direct Sums
+The space spanned by the rows of the matrix U,V is the union or sum of the space spanned jointly by U and V.
+
+If the inner (or matrix) product of two vectors is zero, they are said to be perpendicular, and the space common to them (their intersection) is only the zero vector. The intersections of U and V are given by the matrix product of U with the transpose of V. Thus:
+)
+U=:3 5 TO 8
+
+V=:2 5 TO 19
+
+SUM=:U,V
+
+U;V;SUM
+
+(ECHELON U);(ECHELON V);(ECHELON SUM)
+
+U mp |: V
+
+NB. =========================================================
+Lab Section
+The spaces spanned by two distinct selections of rows from an identity matrix are clearly orthogonal, as are any linear combinations of each. For example:
+)
+I=:=i.7  NB. Identity matrix of order 7
+
+I1=: I rsub 3 2 5
+
+I2=: I rsub 4 1 7 6
+
+I1;I2;I1 mp |:I2
+
+G1=:(3 3 TO 8) mp I1
+
+G2=:(4 4 TO 8) mp I2
+
+G1;G2;G1 mp |: G2
+
+NB. =========================================================
+Lab Section 10. Coordinates.
+A square table C is a basis for a space of #C dimensions if its rows are independent; in other words, if its determinant is non-zero. If p is a conformable vector, then p mp C gives a point in the space. Moreover, if q is any point in the space, then its "coordinates" c (such that c mp C yields q) may be obtained by multiplying q by the inverse of C. Thus:
+)
+]C=:x: -/2 5 5 TO 8
+
+det C
+]p=:5 TO 8
+p mp C
+]q=:5 TO 19
+
+]INV=:%.C
+
+]c=:q mp INV
+c mp C
+
+NB. =========================================================
+Lab Section 11. Change of Basis
+If S and T are two non-singular square matrices, they may serve as bases for (#S)-space.
+The matrix inverse function (%.) may be used to derive the transformation between them as follows:
+)
+S=:|5 5 TO 8   NB. Non-negative
+
+T=:5 5 TO 8
+
+S;T;(det S);(det T)
+
+as=:1 2 3 4 5  NB. Coordinates in basis S
+
+as mp S        NB. Point represented by as
+
+P=:S mp %.T    NB. Transformation matrix
+
+ap=:as mp P    NB. Coordinates in basis T
+
+ap mp T        NB. Same point
+
+NB. =========================================================
+Lab Chapter INNER PRODUCT SPACES, GS_ORTHOGONALITY
+NB. =========================================================
+Lab Section 1-3. Introduction -- Cauchy-Schwartz Inequality
+Since the inner product of a vector with itself is non-negative, its square root (the norm) is  real. The Cauchy-Schwartz inequality is a tautology, and its result is always 1. Thus:
+)
+N=: %:@:(]ip])                           NB. Norm
+
+csi=: *:@:ip <: *:@:([ip[) * *:@:(]ip])  NB. C-S Inequality
+
+N 3 4
+N 3 _4
+N 12 5
+N 1 1 1 1 1 1 1 1 1
+
+S=:5 5 TO 8
+
+S;(S csi"1/ S) NB. C-S on each row with each column
+
+N"1 S          NB. Lengths of the rows of S
+
+N"1 S-1|.S     NB. Distances between adjacent points of S
+
+NB. =========================================================
+Lab Section 4. Orthogonality
+
+Since the matrix product of a matrix with its inverse is the identity matrix, the inverse is the orthogonal complement of the matrix. For example:
+)
+T=:%.S
+S;T;S mp T
+
+x:^:_1 T   NB. Decimal form of rationals
+
+_23 % 101
+
+NB. =========================================================
+Lab Section 5. Orthogonal Sets and Bases, Projections
+
+For any matrix m, we can use m ip"1 m to determine the inner product of each row with itself (which is zero only if all elements are zero). Moreover, we can obtain the inner products between each pair of rows from the matrix product of m with its transpose. Thus:
+)
+]m=:x:>1 0 0 0;0 2 0 0;0 0 3 0;1 2 3 4
+
+m ip"1 m
+
+n=:|:m
+
+m;n;m mp m  NB. All rows mutually orthogonal except last
+
+NB. =========================================================
+Lab Section
+The Gram-Schmidt process (embodied in G_S) takes linear combinations of the rows of its argument to produce a result that is orthogonal. Before examining the definition of G_S, we will experiment with its use.
+
+If M is non-singular and OM=:G_S M is the orthogonalized result, then TM=:(%.M) mp OM gives the matrix TM that defines the linear transformation that produces OM. Moreover, we will see that the determinant of TM is 1, and that M and OM have the same determinants. Thus:
+)
+M=:4 4 TO 9  NB. Extended precision
+OM=:G_S M
+TM=:OM %. M  NB. Equivalent to (%.M) mp OM
+M;OM;(OM mp |:OM)
+TM
+
+(det M),(det OM),(det TM)
+test=:3: digits ] mp |:  NB. Test of orthogonality
+test OM
+
+NB. =========================================================
+Lab Section
+
+G_S applies to complex arguments as well as real. For example:
+)
+]CM=:j./2 7 7 TO 19
+
+2 digits OCM=:G_S CM  NB. Show OCM to 2 digits
+
+2 digits TCM=:OCM%.CM
+
+(det CM);(det OCM);(det TCM)
+
+NB. =========================================================
+Lab Section
+We now examine the definition of G_S, first entering G_S alone to display its definition. We may then experiment with (and display) the component functions. Thus:
+)
+]M=:4 4 TO 8
+
+G_S
+
+4 all M
+
+all
+
+2 gets M  NB. Row 2 gets replacement orthogonal to preceding row
+
+test=:] mp |:  NB. test for orthogonality
+
+test 2 gets M  NB. Rows 1 and 2 are orthogonal
+
+NB. =========================================================
+Lab Section
+As illustrated below, k gets M replaces row k by the result of
+the function orth applied to the first k rows of the argument.
+
+The function orth produces a linear combination of rows
+that is orthogonal to the preceding rows. Thus:
+)
+gets
+
+orth
+
+2{.M  NB. First two rows of M
+
+orth 2{.M
+
+2 gets M
+
+test 2 gets M
+
+NB. =========================================================
+Lab Section
+
+Application of gets with increasing left arguments yields
+matrices with an increasing number of orthogonal rows:
+)
+3 gets 2 gets M
+
+test 3 gets 2 gets M
+
+4 gets 3 gets 2 gets M
+
+test 4 gets 3 gets 2 gets M
+
+NB. =========================================================
+Lab Section
+
+The function all is recursive; it applies gets with successively
+decreasing left argument indices as long as they remains greater than zero
+([ gets <:@:[ all ]), at which point it yields the final result (]).
+
+The function gets applies the amend operator (}) to a gerund
+formed by tying three functions together. These functions determine
+the result to be inserted (orth@:{.), the (zero-origin) index of the row to be
+inserted (<:@:[), and the matrix into which it is to be inserted (]):
+
+The function orth subtracts from the last row of
+its argument ({:) its inner product
+with each of the preceding rows (}:) divided by the inner product
+with itself (}: ip }:), all used as the left argument of a matrix
+product with the preceding rows:
+)
+G_S
+
+all
+
+gets
+
+orth
+
+NB. =========================================================
+Lab Section 7. Inner Products and Matrices
+The following concerns Examples 6.14 and 6.16 of SL, and uses the function CD of Section 4.11:
+)
+A=:x:>1 0 _1;0 1 _2;_1 _2 8  NB. Example 6.14
+
+A;A,.ID A
+
+CD A,.ID A
+
+n=:>1 1 1;0 1 _1;2 _1 _1  NB. Numerator for Example 6.16
+
+d=:%:>3 3 3;2 2 2;6 6 6   NB. Denominator
+
+P=: n%d
+
+n;d;P
+
+P mp |:P                  NB. Verify that P is orthonormal
+
+NB. =========================================================
+Lab Section 8. Complex Inner Product Spaces
+All functions in J apply to complex arguments. For example:
+)
+a=:0 1 2 3 4 5 6
+%:a                NB. Square root
+
+]b=:%:-a           NB. Imaginary numbers
+]c=:a+b            NB. Complex numbers
+
++c                 NB. Conjugates
+
+|c                 NB. Magnitudes
+
+a j. a             NB. Complex from real
+
+]m=:j./2 3 3 TO 8  NB. Random complex and inverse
+
+]n=:%.m
+(10 digits m mp n) ; (10 digits n mp m)
+
+NB. =========================================================
+Lab Section
+The real and imaginary parts of a complex number can be interpreted as coordinates of a point in 2-space. For example, the roots of _1 can be used to plot regular polygons, as illustrated below for the hexagon:
+)
+r6=:6%:_1      NB. The primitive sixth root of _1
+
+r=:r6^2*i.6    NB. The even powers of the root
+
+hex=:,c=:+.r   NB. Coords and ravelled coords of hexagon
+
+(,.r);c        NB. Coords r as a column
+
+load 'plot'
+red=:255 0  0
+gdopen ''
+red gdpolygon hex
+gdshow''       NB. Esc to remove the plot and continue
+
+NB. =========================================================
+Lab Section
+Multiplication of r by the root r6 rotates the resulting hexagon by 30 degrees, and the result can be plotted together with the original hexagon as follows:
+)
+rhex=:,+.r6*r
+
+2 digits hex ,:rhex
+
+gdopen ''
+red gdpolygon hex,:rhex
+gdshow''
+
+NB. =========================================================
+Lab Section 9. Normed Vector Spaces
+
+The three norms defined in SL may be expressed as follows:
+)
+N0=:>./@:|           NB. Infinity-norm
+
+N1=:+/@:|            NB. One-norm
+
+N2=:%:@:(+/)@:(]*+)  NB. Two-norm (or N2=:%:@:(+/)@:*:@:|)
+
+a
+
+(N0;N1;N2) a
+
+b
+
+(N0;N1;N2) b
+
+NB. =========================================================
+Lab Chapter DETERMINANTS
+NB. =========================================================
+Lab Section 1-2. Introduction -- Determinants of Orders One and Two
+
+We will denote the determinant function by det, defined by det=:-/ . * in which the dot operator applies to an alternating sum (-/) of products (*) over certain elements of the argument.
+
+The permanent is defined similarly as per=:+/ . * , that is, an ordinary sum of the same products. Although the permanent (and dot products with other functions) are not used in linear functions, they are useful in other areas of mathematics. Thus:
+)
+]A=:>5 4;2 3         NB. Example 7.1 a of SL
+
+det=:-/ . *
+
+det A
+
+per=:+/ . *
+
+per A
+
+'a11 a12 a21 a22'=:,A   NB. assign names to elements of A
+
+(a11*a22)-(a12*a21)
+
+(a11*a22)+(a12*a21)
+
+NB. =========================================================
+Lab Section 3. Determinants of Order Three
+
+Arguments of order three are treated similarly:
+)
+A=:>2 1 1 ; 0 5 _2 ; 1 _3 4   NB. Example 7.3 of SL
+
+det A
+
+'a11 a12 a13 a21 a22 a23 a31 a32 a33'=:,A
+m1=:2 2$ a22,a23,a32,a33
+m2=:2 2$ a21,a23,a31,a33
+m3=:2 2$ a21,a22,a31,a32
+
+d=:((a11*det m1)-(a12*det m2))+(a13*det m3)
+
+A;m1;m2;m3;d
+
+]B=:A E1 2 3  NB. Interchange of rows
+
+det B         NB. Reverses sign of determinant
+
+per A
+per B         NB. Sign of permanent not affected
+
+NB. =========================================================
+Lab Section 4. Permutations
+
+The expression A rsub 1 3 2 may be also be used to
+perform the permutation A E1 2 3, and the vector 1 3 2 is an example of a permutation vector (or permutation). We will make a table of all six (!3) permutations of order 3.
+
+Since the rows are placed in lexical order, each can be identified by its row index,
+and this fact is used in the function PER=:<:@] A. [ as illustrated below:
+)
+]P3=:>1 2 3;1 3 2;2 1 3;2 3 1;3 1 2;3 2 1
+P3 rsub 2
+A rsub P3 rsub 2
+PER=:<:@] A. [
+a=:2 3 5
+a PER 2
+a PER 1 2 3 4 5  6
+
+NB. =========================================================
+Lab Section
+
+Permutations may also be applied to words to produce anagrams.
+For example:
+)
+word=:'ART'
+
+word PER 3
+
+word PER 1 2 3 4 5 6        NB. All permutations of 'ART'
+
+]|:P4=:'ABCD' PER (1+i.!4)  NB. All perms or order 4 (transposed)
+
+NB. =========================================================
+Lab Section
+
+1+i.4 3 2 produces an array of 4 planes of 3 by 2 matrices, and 1 2 3 4 PER (1+i. 4 3 2) produces a corresponding 4 by 3 by 2 array of 4-element permutation vectors.
+
+The function <"2 boxes each rank two element (that is, matrix) to produce a result that displays the structure of the permutations:
+)
+1+i.4 3 2
+t4=:1 2 3 4 PER (1+i. 4 3 2)
+
+$ t4
+
+NB. Continued
+
+NB. =========================================================
+Lab Section
+)
+<"2 t4
+
+NB. =========================================================
+Lab Section
+
+In effecting the permutation p=: 3 5 1 4 2 (written as 35142 in Example 7.6 of SL), the 2 must be moved to the right of the two elements that it is greater than (0 and 1) and is said to require two inversions. Likewise, the 4 requires three inversions, and the 3 requires one.
+
+The total number of inversions is therefore 2+3+1, or 6. The parity of this number (that is, 2|6, the remainder on dividing 6 by 2) is even, and the permutation p is therefore said to be even. SL denotes the function for determining parity by sgn, and we will develop its formal definition:
+)
+p=:3 5 1 4 2
+f=:{.>]   NB. Compare the leading item with each item
+f p
+g=:+/@:f  NB. Sum the number of comparisons that are true
+g p       NB. Number of inversions needed for leading item
+g\. p     NB. Suffix operator applies g to each suffix of p
++/ g\.p   NB. Total number of inversions
+2|+/g\.p  NB. Parity of p
+sgn=:2:|+/@:(+/@:({.>])\.)  NB. the sign or parity function
+(sgn p),(sgn 1 0 2 3 4)
+]p2=:1+20?.20    NB. A random permutation of order 20
+sgn p2         NB. Its parity
+
+NB. =========================================================
+Lab Section
+
+We will provide a second computation based on the cycle
+representation of a permutation given by CYCLES=:>:&.>@(C.@:<:).
+
+A cycle of length n effects n-1 inversions, and the total
+number of inversions is therefore the sum of the lengths, after
+reducing each by 1. Thus:
+)
+CYCLES=:>:&.>@(C.@:<:)
+
+CYCLES p
+
+SGN=:2:|+/@:(<:@:#&>@:CYCLES)
+
+SGN p
+
+sgn p
+
+NB. =========================================================
+Lab Section 5-6. Determinants of Arbitrary Order -- Properties of Determinants
+We will use det=:-/ . * to test some of the theorems in SL:
+)
+A=:4 4 TO 8          NB. A random matrix of order 4
+A;(det A);(det |:A)  NB. Theorem 7.1
+B=:0 1 1 2 { A       NB. B has two identical rows
+B;(det B)            NB. Theorem 7.2
+M=:A E2 3 3          NB. Multiply third row by 3
+(det M),(3*det A)    NB. Theorem 7.3
+%.B                  NB. Inverse gives domain error (Thm 7.4)
+
+C=:4 4 TO 19         NB. A second random matrix
+
+((det A)*(det C)) , det A mp C
+
+S=: (%.A) mp C mp A  NB. A matrix similar to C
+(det S) , (det C)    NB. Theorem 7.7
+
+NB. =========================================================
+Lab Section 7. Minors and Cofactors
+A few functions for experimenting with minors and cofactors:
+)
+]A=:>2 3 4;5 6 7;8 9 1      NB. The matrix of Example 7.8 of SL
+MINORS=:1&(|:\.)"2^:2       NB. Minors (SL calls the dets minors)
+BOXEDMINORS=: <"2@:MINORS   NB. Boxes give more compact view
+minors=:det@:MINORS
+chess=:*/~@:(# $ 1 _1"_)    NB. Chessboard pattern of signed 1's
+cofactors=:chess * minors   NB. The signed minors
+BOXEDMINORS A
+(chess A);(cofactors A)
+B=:>5 4 2 1;2 3 1 _2;_5 _7 _3 9;1 _2 _1 4  NB. Example 7.9 of SL
+(];chess;cofactors;det)B
+
+NB. =========================================================
+Lab Section 8. Classical Adjoint
+)
+adj=:|:@:cofactors
+
+A=:>2 3 _4;0 _4 2;1 _1 5  NB. The matrix of Example 7.10 of SL
+
+B=:adj A                  NB. The adjoint of A
+
+A;B
+
+(A mp B);(B mp A);(det A)*ID A     NB. Theorem 7.9 of SL
+
+(4 digits B%det A);(4 digits %.A)  NB. Theorem 7.9 of SL
+
+NB. =========================================================
+Lab Section
+
+We will now re-do the examples of the preceding session but using extended precision to obtain the rational results of Example 7.11 of SL. Compare the results with those of the preceding session:
+)
+A=:x: A                          NB. Extended precision
+
+B=:adj A                         NB. The adjoint of A
+
+A;B
+
+(A mp B);(B mp A);(det A)*ID A   NB. Theorem 7.9
+
+(B%det A);(%.A)                  NB. Theorem 7.9
+
+NB. =========================================================
+Lab Section 9. Applications to Linear Equations, Cramer's Rule
+
+The application of Cramer's Rule as described in SL requires the insertion of the desired result vector to replace successive columns of the matrix of coefficients. For this we will
+use a function f, defined in terms of the amend operator } (used earlier), applying
+} to a gerund that gives the replacing item ({:@:]), the index of the position to be
+replaced ([), and the array into which it is to be placed (}:@:], that is, all but the last item).
+
+Because we must insert columns rather than rows we first transpose the argument
+and finally re-transpose the result, using the "under" operator &. in the phrase &.|: .
+Finally, we will use "0 2 to apply the function with left rank 0,
+thus generating a matrix for each element of the left argument.
+
+We will illustrate the use of Cramer's method by solving the system of Example 7.12 of SL:
+)
+]S=:>2 1 _1 3;1 1 1 1;1 _2 _3 4  NB. System Example 7.12 of SL
+
+f=:{:@:]`[`(}:@:])}&.|:"0 2  NB. Put objective in col spec by [
+
+<"2 t=:0 1 2 f S             NB. Modified and boxed for display
+NB. Continued
+
+NB. =========================================================
+Lab Section
+)
+num=:det t               NB. Numerators for Cramer's expression
+den=:det C=:}:"1 S       NB. Matrix of coefficients and its det
+cs=:num % den            NB. Cramer's solution; compare with SL
+<"2 t                    NB. Boxed matrices
+C;(det C);num;den;cs;(C mp cs)  NB. C mp cs is objective of S
+
+NB. =========================================================
+Lab Section 10. Submatrices, General Minors, Principal Minors
+
+Minors may be selected by lists of indices, using A rsub i to select rows, and A csub i to select columns. For example:
+)
+A=:i.6 6
+i=:1 3 5               NB. Odd indices of A
+R=:A rsub i            NB. Odd rows of A
+C=:A csub i            NB. Odd columns
+PM=:(A rsub i) csub i  NB. A principal minor
+
+NB. A sub i;i          An alternate expression for PM
+
+A;R;C;PM
+
+all=:1+i.#A            NB. All indices of A
+ci=:all -. i           NB. Complementary indices (all less i)
+cj=:all -. j=:1 2 6    NB. Another set of indices
+
+all;i;ci;j;cj
+
+NB. Continued
+
+NB. =========================================================
+Lab Section
+)
+M=:A sub i;j          NB. A general minor
+CM=:A sub ci;cj       NB. Complementary minor
+
+M;CM
+
+NB. =========================================================
+Lab Section 11. Block Matrices and Determinants
+
+The following treats Example 7.15 of SL, and illustrates similar properties of a random block matrix:
+)
+M=:>2 3 4 7 8;_1 5 3 2 1;0 0 2 1 5;0 0 3 _1 4;0 0 5 2 6
+i=:1 2
+j=:3 4 5
+B1=:M sub i;i
+B2=:M sub j;j
+M;B1;B2
+
+(det B1),(det B2),((det B1)*(det B2)),(det M)
+
+A=:3 3 TO 8
+B=:4 4 TO 8
+AB=:A block B
+A;B;AB
+(det A),(det B),((det A)*(det B)),(det AB)
+
+NB. =========================================================
+Lab Section 12. Determinants and Volume
+
+A 3-by-2 matrix can represent the coordinates of a triangle. If bordered by a column of 1's its determinant gives twice the area of the triangle; if bordered by a column of 1r2's, the determinant gives the area.
+
+The results are actually signed areas, the results being positive if the coordinates when plotted appear in counter-clockwise order, and negative otherwise:
+)
+t=:>0 0;0 1;1 0  NB. A triangle of easily computed area
+t1=:t,.1         NB. Bordered by 1
+t2=:t,.1r2       NB. Bordered by 1r2
+
+t;t1;t2;(det t1);(det t2)
+
+t2 E1 1 2        NB. Alter by interchanging first two points
+t2a;(det t2a)    NB. Sign depends on parity of permutation
+
+NB. Continued
+
+NB. =========================================================
+Lab Section
+
+We continue with the area of a random triangle:
+)
+rt=:3 2 TO 8     NB. A random triangle
+
+rt;(rt,.1r2);(det rt,.1r2)
+
+NB. =========================================================
+Lab Section
+
+Similar remarks apply to polyhedra in spaces of any dimension n For example, a tetrahedron (in 3-space) is represented by a 4-by-3 matrix, and is bordered by 1r6 (the multiplicative factor being the reciprocal of factorial n).
+
+The sign of the volume is positive if the triangle of the last three coordinates is in clockwise order when viewed down from the first. For example:
+)
+tet=:>0 0 0;0 0 1;0 1 0;1 0 0
+
+tet1=:tet,.1r6
+
+tet;tet1;(det tet1)
+
+rtet=:4 3 TO 8    NB. Random tetrahedron
+
+rtet1=:rtet,.1r6
+
+rtet;rtet1;(det rtet1);(det rtet1 E1 2 3)
+
+NB. =========================================================
+Lab Section 13. Multilinearity and Determinants
+We will illustrate the multilinear and alternating properties of the determinant using a field of six random four-element vectors. Thus:
+)
+F=:6 4 TO 8
+R=:F rsub 1 3 3 4  NB. Matrix with repeated (identical) rows
+F;R;(det R)
+
+A=:F rsub 1 2 3 4
+B=:F rsub 2 1 3 4  NB. Row interchange
+
+(det A),(det B)    NB. Changes sign of determinant
+
+C=:F rsub 1 6 3 4  NB. Differs from A only in the second row
+D=:A+0 1 0 0*C     NB. 2nd row is sum of 2nd rows of A and C
+
+A;C;D;((det A),(det C),(det D),((det A)+(det C)))
+NB. Continued
+
+NB. =========================================================
+Lab Section
+)
+]E=:1 1 5 1*A
+
+(det E),(5*det A)
+
+NB. =========================================================
+Lab Chapter EIGENVALUES and EIGENVECTORS, DIAGONALIZATION
+NB. =========================================================
+Lab Section 1. Introduction
+
+If PI=:%.P is the inverse of a matrix P, then D=:PI mp E mp P is a similarity transformation of E, and the main concern of this chapter is determining a matrix P such that D is a diagonal matrix.
+
+We will first illustrate the converse; beginning with a diagonal matrix D, applying a similarity transformation to it to obtain a non-diagonal matrix E, and applying the inverse transformation to it to again produce the diagonal matrix (with all off-diagonal elements zero). Thus:
+)
+PI=:%.P=:4 4 TO 8
+
+D=:3 1 4 2 * ID P
+
+D;P;PI
+
+E=:P mp D mp PI
+
+F=:PI mp E mp P
+
+E;D;F
+
+NB. =========================================================
+Lab Section 2. Polynomials in Matrices
+
+The results of the expressions M mp M and M mp M mp M are said to yield the second and third powers of the matrix M. More generally, the first power of M is M itself, the zeroth power is the identity matrix, and the -kth power of M is the kth power of the inverse of M.
+
+We will first illustrate the use of the power operator ^: and then use
+it to define a function pomp (power of matrix product) such that M pomp k gives
+the kth power of M. Thus:
+)
++: a=:x:0 1 2 3 4  NB. The double function
+
++: ^:2 a           NB. Second power of +: (that is, +:@:+:)
+
++:^:_2 _1 0 1 2 a  NB. Other powers of +:
+
+NB. Continued
+
+NB. =========================================================
+Lab Section
+)
+]M=:4 4 TO 10  NB. A random 4-by-4 matrix
+
+M&mp I=:ID M  NB. M with mp applied to the identity
+
+M&mp^:2 I     NB. Seond power of M with mp on the Identity
+
+M mp^:2 I     NB. The same, using the dyadic case of mp^:2
+
+NB. =========================================================
+Lab Section
+
+The power operator (^:) with a gerund right argument produces the desired power function pomp:
+)
+pomp=:mp^:([`]`(ID@:[))  NB. Power of matrix product fn
+
+]M=:!/~i.4  NB. Matrix of binomial coefficients
+
+M pomp 1 2 3
+
+M  mp M mp M
+
+NB. Continued
+
+NB. =========================================================
+Lab Section
+)
+i:2
+
+M pomp i:2
+
+NB. =========================================================
+Lab Section
+Example 8.1 of SL may now be expressed as follows:
+)
+A=:>1 2;3 4
+
+A pomp 2 1 0
+
+c=:1 _5 _2      NB. Coeffs of cp as given in Example 8.1
+
+c*A pomp 2 1 0  NB. Terms of poly in A (powers descending)
+
++/c*A pomp 2 1 0  NB. Sum to zero as expected
+
+NB. =========================================================
+Lab Section 3. Characteristic Polynomial, Cayley-Hamilton Theorem
+We will define a function CP for the characteristic polynomial det(tIn-A) of SL, and use the matrices D and E of Section 1 to illustrate that any diagonal element of D is a root of the polynomial.
+
+To see the entire display of the grid, use the up arrow to move the cursor up into it, and the right and left arrows to scan over it. Press Esc to remove the plot of the polynomial:
+)
+CP=:det@:(([ * ID@:]) - ])"0 2
+
+D;E
+
+3 CP E  NB. A root of the characteristic polynomial
+
+5 CP E  NB. Not a root
+
+0 1 2 3 4 5 CP E
+
+0 1 2 3 4 5 CP D  NB. Diagonal matrix has same roots
+
+grid=:(i.26)%x:5  NB. A finer grid for plotting
+
+NB. To see table of coordinates enter grid,:grid CP E
+
+plot grid;grid CP E
+
+NB. =========================================================
+Lab Section
+We will supplement the SL methods for the characteristic polynomial (cp) by Frame's method, embodied in the function charp (characteristic polynomial coefficients), and will illustrate its use on the matrix E of the preceding panel.
+)
+c=:charp E
+
+E;c
+
+NB. =========================================================
+Lab Section
+The zero sum of c times the powers of E shows that E satisfies its characteristic polynomial. The result carries on to the following panel:
+)
+powers=:>E pomp 0 1 2 3 4
+
+powers
+
+NB. =========================================================
+Lab Section
+)
+(c*powers);(+/c*powers)
+
+NB. =========================================================
+Lab Section
+The polynomial function p. provided in J uses ascending powers (with coefficient k associated with power k) because it is better suited to power series than the descending powers used in SL. Its behavior is detailed below, and illustrated in the expression c p. grid to again plot the characteristic polynomial of E.
+
+If we have occasion to use descending powers in agreement with an expression in SL, we will use the function pol defined below:
+)
+d=:1 2 3 4  NB. A vector of coefficients
+x=:5
+d p. x      NB. Polynomial in x with coefficients d
+i.#d        NB. Exponents of polynomial terms
+x^i.#d      NB. Powers (in ascending order)
+d*x^i.#d    NB. Terms
++/d*x^i.#d  NB. Equivalent to d p. x
+
+c           NB. Coefficients from previous panel
+
+roots=:3 1 4 2       NB. Characteristic roots of E
+c p. roots
+
+pol=:|.@:[ p. ]
+1 _10 35 _50 24 pol roots
+plot grid;c p. grid  NB. Compare with plot of cp
+
+NB. =========================================================
+Lab Section 4. Eigenvalues and Eigenvectors
+If plotted, the scalar multiple s*v (for scalar s and vector v) is seen to be in the same direction as v, stretched by the factor s. If m is a vector and the matrix product m mp v is a scalar multiple of v, then v is called a "proper", or "characteristic" vector of m More commonly it is called an "eigenvector" of m (from the German eigen=own). The scalar multiplier is called an eigenvalue of m
+
+We will illustrate this using matrices E and P from Section 1, and using a vector v taken as the first column of the matrix P. Note that the columns of any matrix product m mp n are the results of m mp ci for each of the column vectors ci of n
+)
+v=:1 _5 4 _6  NB. First column of P
+E;P;,.v
+E mp v  NB. v is an eigenvector of E
+3*v     NB. Result therefore agrees with a scalar multiple
+E mp P  NB. P is a matrix of eigenvectors of E
+(E mp P)%P  NB. Since each col of E mp P is a scl multiple
+
+NB. =========================================================
+Lab Section
+For a revealing demonstration of the behavior of eigenvectors, click on Studio to drop its menu, click on Demos, and then click on eigenpictures. Then click on Run, and use the mouse to move the vector around on the plot that is displayed.
+
+Click on Help, and read the entire description. Then click on Examples and choose one of the matrices offered there. Press Esc to remove the demonstration.
+)
+
+NB. =========================================================
+Lab Section
+If d is a diagonal matrix, the product m mp d multiplies each column of m by the scalar element of the corresponding column of d. We will use this fact, together with the fact that E was defined as PI mp D mp P (for diagonal D and PI as the inverse of P) to demonstrate why P is the matrix of eigenvectors of E:
+
+This demonstration will take the form of a sequence of equivalent expressions, each followed by a comment that justifies the equivalence. It continues in the next panel:
+)
+E;D
+
+<(E mp D)
+
+P;PI;(PI mp P)
+
+NB. =========================================================
+Lab Section
+)
+e1=:E mp P
+e2=:(P mp D mp PI) mp P    NB. Definition of E in Section 1
+e3=:P mp D mp PI mp P      NB. Matrix product is associative
+e4=:(P mp D) mp (PI mp P)  NB.             "
+e5=:P mp D                 NB. PI mp P is the identity matrix
+e1;e2;e3;e4;e5
+
+NB. =========================================================
+Lab Section 5. Computing Eigenvalues and Eigenvectors, Diagonalizing Matrices
+The first step of Diagonalization Algorithm 8.5 of SL is to find the characteristic polynomial of a matrix. For this we will use the function charp defined in Section 3, and illustrate its use to find the coefficients of the characteristic polynomial of the matrix E.
+
+The second step is to find the roots of the polynomial. For this we will use the monadic case of the polynomial function p., which gives both the multiplier and roots of a polynomial equivalent to its argument of coefficients. The multiplier is the coefficient of the highest order term (the last):
+)
+]c=:charp E
+
+c p. i.6      NB. Evaluation of the characteristic poly
+'m r'=: p. c  NB. Multiplier and roots of equivalent poly
+m;r
+x=:7
+c p. x
+m * */x-r  NB. multiplier times product over x-roots
+]d=:5*c    NB. Coeff whose highest order term in not 1
+d p. x
+'md rd'=:p. d
+md
+md * */x-rd
+
+NB. =========================================================
+Lab Section
+We will now follow the diagonalization process of Example 8.6 of SL:
+)
+A=:>4 2;3 _1
+c=: charp A   NB. Gives coeffs of characteristic poly
+
+'m r'=:p. c   NB. The roots r are the eigenvalues of A
+c;m;r
+A5=:A-5*ID A  NB. 5 is an eigenvalue of A (as shown in r)
+A;A5;det A5   NB. Test that the determinant of A5 is zero
+
+GRAM_SCH A5   NB. Gram-Schmidt (Sec 6.5) gives basis of A5
+b=: 0{GRAM_SCH A5  NB. First row is a basis vector for A5
+b mp v1=:2 1  NB. A solution for b is an eigenvector of A
+A mp v1       NB. Test A mp v gives a scalar multiple of v
+5*v1
+0{GRAM_SCH A-_2*ID A
+6 2 mp v2=: _2 6
+A mp v2
+_2 * v2
+
+NB. =========================================================
+Lab Section 6. Diagonalizing Real Symmetric Matrices
+In this section we will develop a function JAC to apply Jacobi's method for diagonalizing any symmetric matrix to produce its eigenvalues (along the diagonal). It can also be used to produce the matrix of eigenvectors, and will prove useful in experiments.
+
+Jacobi's method proceeds by applying a sequence of rotations in two dimensions. A rotation preserves all lengths in a figure to which it applies, as illustrated by the rotation of the hexagon in Section 6.6.
+
+A rotation matrix is a matrix rm such that m mp rm produces a rotation of m We will use the function R=:(cos,-@:sin),.(sin,cos) to produce rotation matrices: applied to an angle (in radians) it produces a rotation matrix for that angle. For example, an angle of thirty degrees (one-sixth pi radians, represented by the constant 1r6p1) is given by R 1r6p1. We will illustrate this by applying it to the hexagon  of Section 6.6:
+)
+R=:(cos,-@:sin),.(sin,cos)
+R 1r6p1
+hex=:+.(6%:_1)^2*i.6
+4 digits hex mp R 1r6p1
+load 'plot'
+gdopen''
+255 0 0 gdpolygon ,hex mp R 1r6p1
+gdshow''
+
+NB. =========================================================
+Lab Section
+Jacobi's method is embodied in the function JACOBI. We will first show some experiments with its use, and then examine its definition:
+)
+m=: SYM 4 4 TO 8  NB. A symmetric matrix
+d=: JACOBI m      NB. Diagonalization of m by symmetric transformation
+tm=:d %.m         NB. The matrix of the linear transformation to d
+
+m;(3 digits d);(3 digits tm)
+
+2 digits m mp tm
+
+(det m),(det d),(det tm)
+
+2 digits dn=:JACOBI n=:SYM 10 10 TO 19
+
+NB. =========================================================
+Lab Section
+We now examine the definition of JACOBI, first displaying its definition and then using from it the single step jac:
+)
+JACOBI
+
+m
+
+jac m NB. Zeros in plane of largest element of m
+
+3 digits jac m  NB. Suppress near-zeros for better view
+
+NB. =========================================================
+Lab Section
+)
+3 digits jac jac m  NB. Second plane of zeros
+
+3 digits jac jac jac m  NB. Non-zeros re-introduced
+
+3 digits jac^:_ m  NB. Limit of process
+
+imax m  NB. Index of off-diagonal maximum in magnitude
+IOR m  NB. Indices of rectangle determined by imax
+]sr=: (IOR{]) m  NB. Selected rectangle from m
+
+NB. =========================================================
+Lab Section
+As analyzed by Ralston (Anthony Ralston, A First Course in Numerical Analysis, McGraw-Hill, 1965), the angle needed to diagonalize a 2-by-2 symmetric matrix is one-half the arctangent of twice the negative of the upper right element divided by the difference of the diagonal elements.
+
+This is expressed in the function angle:
+)
+angle
+
+]sa=: angle sr  NB. Angle of rotation for rectangle
+
+R sa  NB. Plane rotation matrix for sa
+
+jac
+
+]grot=:(R@:angle@:(IOR{])ins ]) m  NB. Rotation matrix in Identity
+
+3 digits grot syt m  NB. Apply rotation
+
+NB. =========================================================
+Lab Section
+)
+jac m  NB. Equivalent to single step
+
+(|:grot) mp m mp grot
+
+NB. =========================================================
+Lab Section 7. Minimum Polynomial
+A minimal polynomial can be obtained from the roots of the characteristic polynomial. This can be done by applying Frame's method (charp) to obtain its coefficients, and then applying p. to obtain its roots.
+
+We will illustrate this using the matrix m of preceding sections. Compare these roots with the diagonal of the matrix JAC m
+
+Provide further illustrations using complex symmetric matrices:
+)
+m=:SYM 5 5 TO 9  NB. A random symmetric matrix
+
+]c=: charp m
+
+'mult roots'=:p. c
+
+roots
+
+(JACOBI m)*ID m
+
+NB. =========================================================
+Lab Chapter LINEAR MAPPINGS
+NB. =========================================================
+Lab Section 1-2 Introduction -- Mappings
+SL uses the term "mapping" as a synonym for "function", but we will continue to use the latter term. Moreover, we will call a function that applies to a vector to produce a vector of the same number of elements a "vector function".
+
+For example, +/ is not a vector function because it produces a scalar sum; but +/\ is, because it sums each prefix of the argument to produce an equal number of items. Thus:
+)
+v=:0 1 2 3 4 5
++/v       NB. Sum; not a vector function
+
+ps=:+/\   NB. Prefix sums (subtotals); a vector function
+ss=:+/\.  NB. Suffix sums; a vector function
+
+ps v
+
+ss v
+
+(ps+ss) v  NB. A vector function
+
+(ps*ss) v
+
+NB. =========================================================
+Lab Section
+We denote the composition of functions f and g by f@:g. Composition is associative, as illustrated below:
+)
+ss ps v
+
+ss@:ps v
+
+f=:ss@:ps
+
+f v
+
+(ss@:ps)@:f v
+
+ss@:(ps@:f) v
+
+ss ps ss ps v
+
+NB. =========================================================
+Lab Section 3. Linear Mappings
+SL states that a function F is linear if it satisfies the two relations:
+
+   F(v+w)=F(v)+F(w)  For vectors v and w
+
+   F(kv)=kF(v)       For scalar k
+
+ps is an example of a linear function, and is, in fact, a linear VECTOR function. Strictly speaking, PS=:ps"1 is a linear vector function, since the expression "1 ensures that it applies to each vector of a matrix argument. For example:
+)
+PS=:ps"1
+SS=:ss"1
+v=:0 1 2 3 4 5
+w=:3 1 4 1 5 9
+k=:3
+
+PS (v+w)
+(PS v)+(PS w)
+
+PS (k*v)
+k*PS (v)
+
+m4=:i.4 4
+m4;(PS m4);(SS m4)
+
+NB. =========================================================
+Lab Section
+If m is a square matrix of order n, then mp&m is a linear vector function on vectors of n elements. Moreover, if L is a linear vector function and I is an identity matrix of order n, then m=L I gives the matrix that represents L; that is, mp&m is equivalent to L on a vector of n elements, or on each of the row vectors of a matrix argument. For example:
+)
+I=:ID v
+
+m=:PS I  NB. Matrix that represents the function PS
+
+f=:mp&m  NB. The matrix representation of PS
+
+m;I;(PS v);(f v)
+
+(SS I);(mp&(SS I) v);(SS v);((PS+SS) I)
+
+NB. =========================================================
+Lab Section 4. Kernel and Image of a Linear Mapping
+In Example 9.6, SL defines a linear function F as F(x,y,s,t)=(x-y+s+t,x+2s-t,x+y+3s-t). We willl define it as a matrix product, apply it to an identity matrix to obtain its image, and use the function ECHELON to produce the basis shown in the example in SL:
+)
+]m=:|:>1 _1 1 1;1 0 2 _1;1 1 3 _3
+
+F=:mp&m
+I=:ID m
+
+F I
+
+ECHELON F I
+
+NB. =========================================================
+Lab Section 5. Singular and Nonsingular Linear Mappings, Isomorphisms
+A function F is nonsingular if the basis ECHELON F I has no zero rows. Equivalently, if F=:mp&m, then F is nonsingular if the determinant of m is not zero. For example:
+)
+rm=:5 5 TO 9  NB. A random matrix
+RF=:mp&rm
+]image=:RF ID rm
+ECHELON image
+det rm
+
+]n=:0 1 2 3 3{rm
+ECHELON mp&n ID n
+det n
+
+NB. =========================================================
+Lab Section 6. Operations With Linear Mappings
+We will illustrate the use of sums and compositions of linear
+mappings F and G, using F+G for the former, and F@:G for the
+latter. Moreover, for any scalar k, the scalar multiple
+function H=:k&* is also a linear mapping:
+)
+x=:4 TO 29
+
+mf=:4 4 TO 9
+
+x;mf;mg=:4 4 TO 19
+
+F=:mp&mf
+
+G=:mp&mg
+
+H=:3.14&*
+
+(F x);(G x)
+
+((F x)+(G x));((F+G) x)
+
+NB. =========================================================
+Lab Section
+)
+>(F G x);(F@:G x)
+
+>(F H x);(F@:H x)
+
+>((F x)+(H x)),((F+H) x)
+
+((F@:G)+(F@:H)) x
+
+F@:(G+H) x
+
+L=:F@:G+F@:H
+
+L x
+
+NB. =========================================================
+Lab Section 7. Algebra A(V) of Linear Operators
+We will use the linear functions F, G, and H to illustrate some of the properties of operators:
+)
+L1=:F@:(G+H)
+L2=:(F@:G+F@:H)
+L1 x  NB. Agreement illustrates distributivity
+L2 x
+
+L3=:(G+H)@:F
+L4=:G@:F+H@:F
+(L3,:L4) x  NB. Distributivity
+
+L5=:(F@:G)@:H
+L6=:F@:(G@:H)
+(L5,:L6) x  NB. Associativity of composition
+
+L6=:(F+G)+H
+L7=:F+(G+H)
+(L6,:L7) x       NB. Associativaty of addition
+
+(F,:G) x
+(F;G) x
+
+NB. =========================================================
+Lab Section 8. Invertible Operators
+The functions F, G, and H are all invertible. Moreover,  the power operator ^: can be used in the expression F^:_1 to obtain the function inverse to F. For convenience, we will also define the operator INV=:^:_1 as a special case of ^: :
+)
+FI=:F^:_1     NB. F inverse
+x;(FI x)
+(F FI x);(F FI x)
+
+INV=:^:_1     NB. The inverse operator
+F INV x
+
+FG=:F@:G      NB. Composed function
+
+x;(FG x);(3 digits FG INV x)
+
+(FG FG INV x)
+
+square=:*:    NB. Not a linear function
+
+(square x);(square INV x);(square square INV x)
+
+NB. =========================================================
+Lab Chapter MATRICES AND LINEAR MAPPINGS
+NB. =========================================================
+Lab Section 1-5
+Because of the early introduction of matrices we have aleady developed all of the tools needed in this chapter, and will therefore pass directly on to the next.
+)
+
+NB. =========================================================
+Lab Chapter CANONICAL FORMS
+NB. =========================================================
+Lab Section 1-5. Introduction -- Primary Decomposition
+Using the function BLOCK of Section 4.8, the direct-sum matrix shown in Theorem 11.5 can be expressed in the form >BLOCK A1;A2;A3. For example:
+)
+BCT=:i. !/ i.     NB. Binomial coefficient table
+
+A1=:BCT 2
+
+A2=:BCT 3
+
+A3=:BCT 4
+
+M=:>BLOCK A1;A2;A3
+
+M;(M mp M);(M mp M mp M)
+
+NB. =========================================================
+Lab Section 6. Nilpotent Operators
+Theorem 11.10 of SL shows N as a block matrix each of whose blocks is a band matrix, with a super-diagonal band of 1s. We will define a function band, whose left argument specifies the location of off-diagonal bands. Thus:
+)
+band=:(i.@:] =/ i.@:] - [)"0
+(0 band 5);(1 band 5);(_1 band 5);(0 1 band 5)
+(<3 4 mp 0 1 band 5),.BLOCK (0 band 4);(1 band 3)
+s;(s mp s);(s mp s mp s);(s mp s mp s mp s=:1 band 4)
+
+NB. =========================================================
+Lab Section 7. Jordan Canonical Form
+The Jordan canonical form is a block of single Jordan boxes, each box being a simple band matrix. Thus:
+)
+J=:<@:(([,1:) mp 0 1&band@:])"0
+
+3 2 5 J 4 5 1
+
+]M=:>BLOCK 3 2 5 J 3 4 1  NB. M is in Jordan canonical form
+
+(det M),(*/3 2 5 ^ 3 4 1)  NB. Det is product over diagonal
+
+NB. =========================================================
+Lab Section
+M and its symmetric transform PI mp M mp P have the same determinant:
+)
+]P=:8 8 TO 8          NB. Random matrix
+
+PI=:%.P               NB. Inverse
+3 digits Q=:PI mp M mp P
+
+P mp Q mp PI  NB. Inverse transformation restores Jordan
+
+(det Q),(det M),(det P),(det PI)
+
+NB. =========================================================
+Lab Section
+We will now illustrate the complex roots of a Jordan form, using charp to obtain the coefficients, and p. to get the corresponding roots:
+)
+p. 1 2 3 4  NB. Multiplier and roots for coeffs 1 2 3 4
+
+,.> 1{ p. 1 2 3 4  NB. The roots displayed in a column
+
+charp Q  NB. The characteristic coefficients
+
+c=:2160 _6912 9576 _7496 3623 _1106 208 _22 1
+
+r=:,.>1{p. c
+
+r;|r
+
+NB. =========================================================
+Lab Section 8. Canonical Forms
+The companion  matrix of a monic polynomial, referred to in Theorem 11.12 of SL, is formed by appending the negative of the truncated coefficients (truncated by dropping the unit coefficient of the high-order term) to a matrix with one sub-diagonal band. This is defined by the function comp, and extended (in COMP) to any polynomial by normalizing the coefficients to an equivalent (that has the same roots), and dropping the high-order term. Thus:
+)
+comp=:(0:,=@:i.@:<:@:#),. -
+COMP=:comp@:}:@:(]%{:)
+,.c;tc=:}:c      NB. Monic and truncated monic
+
+]d=:3*c          NB. Equivalent but not monic
+
+(comp tc);(COMP d)
+>(charp comp tc);(charp COMP d)
+
+NB. =========================================================
+Lab Section 9-10. Rational Canonical Form -- Quotient Spaces
+We will first show an example of the representation by blocked companion matrices referred to in Lemma 11.13 of SL, using coefficients c1 and c2, and applying charp to produce the coefficients c3 of the blocked matrix. To show their agreement, we then display c3 together with the coefficients of the product of the normalized polynomials nc1 and nc2:
+)
+c1=:x:1 2 3 4
+c2=:x:5 6 7
+BLOCK (COMP c1);(COMP c2)
+c3=:charp >BLOCK (COMP c1);(COMP c2)
+nc1=:charp COMP c1  NB. Normalized coefficients (monic)
+nc2=:charp COMP c2
+
+nc1*/nc2               NB. Multiplication table
+
+>c3;pr=:+//.nc1*/nc2   NB. Diag sums give product poly
+
+x=:0 1 2 3 4 5
+>(pr p. x);((nc1 p. x)*(nc2 p. x))
+
+NB. =========================================================
+Lab Chapter LINEAR FUNCTIONALS and the DUAL SPACE
+NB. =========================================================
+Lab Section 1-2 Introduction -- Linear Functionals and the Dual Space
+A functional produces a scalar result. We will illustrate functionals by the trace of a matrix, and by the quadratic form A QF (defined is Section 4.12). The trace is linear, but the quadratic form is not:
+)
+]A=:SYM 4 4 TO 8  NB. A symmetric matrix
+
+(<0 1) |: A       NB. Axes 0 and 1 run together to give diag
+
+trace=:+/@:((<0 1)&|:)
+
+(trace A);(trace 2*A);(2*trace A)
+
+BF=:1 : 0  NB. Bilinear Form operator
+:
+x mp m mp y
+)
+
+QF=: BF~   NB. Quadratic Form operator
+x=:2 3 5 7
+(A QF x);(A QF 2*x);(2*A QF x)
+
+NB. =========================================================
+Lab Section 1-4. Introduction -- Second Dual Space
+We will use 12.1 of Solved Problems of SL to illustrate a dual basis. It gives {v1=(1 -1 3),v2=(0 1 -1),v3=(0 3 -2)}, which we will incorporate as the row vectors of the matrix V, and derives the vectors {a=(1 0 0),b=(7 -2 -3),c=(-2 1 1)}, which we will incorporate as the column vectors of a matrix A representing the dual space. Thus:
+)
+v1=:1 _1 3
+v2=:0 1 _1
+v3=:0 3 _2
+]V=:>v1;v2;v3
+
+a=: 1  0  0
+b=: 7 _2 _3
+c=:_2  1  1
+]A=:a,.b,.c
+
+V mp A
+
+%.V
+
+NB. =========================================================
+Lab Section 5-6. Annihilators -- Transpose of a Linear Mapping
+In 12.9 of Solved Problems of SL, the following row vectors are given, together with a back-solution for the columns of the annihilator W0. Thus:
+)
+v1=:1 2 _3 4
+v2=:0 1 4 _1
+]W=:>v1;v2
+
+c1=:11 _4 1 0
+c2=:6 _1 0 _1
+
+]W0=:c1,.c2
+
+W mp W0
+
+NB. =========================================================
+Lab Chapter BILINEAR, QUADRATIC, and HERMITIAN FORMS
+NB. =========================================================
+Lab Section 1-3. Introduction -- Bilinear Forms and Matrices
+We will repeat the definition of the bilinear form operator BF used in the definition of the quadratic form operator QF in Section 4.12, and illustrate its bilinearity for both symmetric and non-symmetric arguments:
+)
+BF=:1 : 0
+:
+x mp m mp y
+)
+S=:SYM A=:5 5 TO 8
+
+A;S
+
+x=:0 1 2 3 4
+y=:2 3 5 7 11
+
+(x A BF y);((2*x) A BF y);(x A BF (3*y));((2*x) A BF (3*y))
+
+(x S BF y);((2*x) S BF y);(x S BF (3*y));((2*x) S BF (3*y))
+
+NB. =========================================================
+Lab Section 4. Alternating Bilinear Forms
+We will use the skew-symmetric matrix SK=:A-|:A to illustrate an alternating binomial form:
+)
+]SK=:A-|:A
+
+x SK BF y
+
+(x SK BF x);(y SK BF y)
+
+]rm=:5 5 TO 19  NB. Random matrix
+
+rm SK BF |:rm   NB. Diagonal all zero
+
+NB. =========================================================
+Lab Section 5-6. Symmetric Bilinear Forms, Quadratic Forms -- Real Symmetric Bilinear Forms, Law of Inertia
+We will define the quadratic form operator QF in terms of the bilinear form operator BF, and illustrate its use on the symmetric matrix S of the first panel:
+)
+QF=:BF~
+
+x
+
+S QF x
+
+x S BF x
+
+x mp S mp x
+
+y
+
+S QF y
+
+NB. =========================================================
+Lab Section 5-7. Symmetric Bilinear Forms, Quadratic Forms -- Hermitian Forms
+We will use the function JACOBI (for the Jacobi method of diagonalizing a symmetric matrix defined in Section 8.21) in defining a function for the signature:
+)
+]S2=:SYM 7 7 TO 19
+
+4 digits q=:JACOBI S2
+
+d=:(<0 1)&|:   NB. Diagonal function
+
+d q
+
+* d q          NB. * is the signum function
+
+signature=:+/@:*@:d@:JACOBI
+
+signature S2
+
+NB. =========================================================
+Lab Chapter LINEAR OPERATORS ON INNER PRODUCT SPACES
+NB. =========================================================
+Lab Section 1.Introduction
+We will begin by defining three linear functions (or operators as they are called in SL), and will illustrate their linearity by applying them to two arbitrary vectors. PS produces partial sums (subtotals), RP produces a random permutation, and CP gives a complex result whose real and imaginary parts are the results of PS and RP. Thus:
+)
+PS=:+/\"1
+RP=:(?.~@:# { ])"1
+CP=:(PS j. RP)"1
+
+x=:3 2 1 4
+y=:2 3 5 7
+
+(PS x);(PS y);((PS x)+(PS y));(PS (x+y))
+
+(RP x);(RP y);((RP x)+(RP y));(RP (x+y))
+
+2 2$(CP x);(CP y);((CP x)+(CP y));(CP (x+y))
+
+((RP@:PS x)+(RP@:PS y));(RP@:PS x+y)
+
+NB. =========================================================
+Lab Section 2-3. Adjoint Operators --
+SL says that "The following example [Example 14.1] shows that the adjoint operator has a simple description within the context of matrix mappings". To follow this approach, we must first obtain the matrix representations of our linear functions, by applying them to the identity matrix. Thus:
+)
+(ID x);(CP ID x)
+
+tc=:|:@:+ CP ID x  NB. Transposed conjugate of matrix rep of PS
+
+tc
+
+CPADJ=:mp&tc  NB. Adjoint of CP
+
+(CPADJ x);(CP y)
+
+(CP x);(CPADJ y)
+
+NB. =========================================================
+Lab Section
+According to SL, the inner product of (CD x) with y should equal the inner product of x with (ADJ y). However, the inner product used is the complex inner product defined in Section 2.10 of SL, for which we used the function cip defined below. Thus:
+)
+cip=:[ ip +@:]
+  ip=:+/@:*"1
+
+(CP x) cip y
+
+x cip (CPADJ y)
+
+NB. =========================================================
+Lab Section
+We will use these results to define an operator ADJ that applies to a function to produce its adjoint:
+)
+ADJ=:1 : 0
+] mp |:@:+@:u@:ID
+)
+
+CP ADJ
+
+CP ADJ x
+
+CPADJ x  NB. Earlier function agrees with result of operator ADJ
+
+PS ADJ x
+
+x cip (PS y)
+
+(PS ADJ x) cip y
+
+((PS+CP) ADJ x) cip y
+
+x cip ((PS+CP) y)
+
+NB. =========================================================
+Lab Section
+Theorem 14.2 of SL states that the adjoint of a sum is the sum of the adjoints, and that the adjoint of a scalar multiple is the scalar multiple of the adjoint. We illustrate the theorem as follows:
+)
+(PS+CP) ADJ x
+
+((PS ADJ)+(CP ADJ)) x
+
+(3: * CP) ADJ x
+
+(3: * (CP ADJ)) x
+
+NB. =========================================================
+Lab Section 4. Self-Adjoint Operators
+The matrix representation of the sum of the prefix sums PS and the suffix sums (SS=:+/\."1) is symmetric, and the function q=:PS+SS is therefore self-adjoint. Thus:
+)
+SS=:+/\."1
+
+PS x
+
+SS x
+
+q=:PS+SS
+
+q x
+
+q ADJ x
+
+(q ID x);(q ADJ ID x)
+
+NB. =========================================================
+Lab Section 5-7. Orthogonal and Unitary Operators
+The random permutation function RP is not self-inverse when applied to the four-element vector x, but happens to be when applied to a six-element argument. It will therefore serve to illustrate a unitary function:
+)
+x6=:i.6
+z6=:x6 j. x6
+x6;z6
+
+RP x6
+
+RP RP x6
+
+RP (RP ADJ) x6
+
+RP (RP ADJ) z6
+
+NB. =========================================================
+Lab Section 8. Positive Operators
+The function CP is non-singular (as may be verified by evaluating the determinant of its matrix representation), and the function PD=:(CP ADJ)@:CP is therefore positive definite. We will test this by appplying it to some random arguments:
+)
+PD=:(CP ADJ)@:CP
+
+CP ID x
+
+det CP ID x
+
+x7=:-/?.2 7 $ 10
+z7=:j./-/?.2 2 7$20
+
+x7;z7
+
+(x7 cip PD x7);(z7 cip PD z7)
+
+]d=:det CP ID x7
+
+(d * +d),(det PD ID x7)
+
+NB. =========================================================
+Lab Section 9-11. Diagonalization and Canonical Forms in Euclidean Spaces --
+The JACOBI function used for diagonalizing a real symmetric matrix in Section 8.6 does not apply to a complex matrix. We may, however, use the function charp to determine the coefficients of the characteristic polynomial of a complex matrix M, and from it the roots (eigenvalues).
+
+We then show that M satisfies its characteristic equation by subtracting from it a root multiplied by the identity matrix and showing its determinant to be (nearly) zero:
+)
+]M=:j./-/?.2 2 4 4$10
+
+charp M
+
+'m r'=:p. charp M
+r
+
+]r0=:{.r
+
+]N=:M-r0*ID M
+
+(det N);(| det N)
+
+NB. =========================================================
+Lab Section
+The matrix HM=:M+|:+M is Hermitian. We will use it to illustrate the fact that the eigenvalues of an Hermitian matrix are real:
+)
+]HM=:M+|:+M
+
+charp HM
+
+p. charp HM
+
+NB. =========================================================
+Lab Chapter APPENDIX
+NB. =========================================================
+Lab Section 1-3
+The Euclidean algorithm is defined and illustrated below:
+)
+EUCLID=:4 : 0
+q=.''
+num=.x
+n=.-#den=:y
+while. ((#num)>:(#den)) do.
+q=.(({:num)%({:den)),q
+num=.}:(n}.num),(n{.num)-den*({.q)
+end.
+q;num
+)
+num=:1 2 3 4 5
+den=:4 3 2
+'quo rem'=:num EUCLID den
+quo;rem
+
+NB. =========================================================
+Lab Section
+We will test the quotient and remainder in two ways -- by using them as the coefficients of polynomials, and by defining a polynomial product function for coefficients:
+)
+num p. x=:i.7  NB. Original polynomial
+
+(rem p. x)+((quo p. x)*(den p. x))
+
+(rem&p. + quo&p. * den&p.) x
+
+pp=:+//.@:(*/)  NB. Polynomial product
+
+c=:quo pp den
+c;(c+rem,0 0 0);num

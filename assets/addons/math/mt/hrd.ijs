@@ -10,9 +10,9 @@ NB. testgghrd  Test gghrdx by general matrices given
 NB. testhrd    Adv. to make verb to test gxhrdxxx by matrices
 NB.            of generator and shape given
 NB.
-NB. Version: 0.7.0 2011-08-06
+NB. Version: 0.8.0 2011-10-29
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -280,13 +280,13 @@ gghrdl=: 4 : 0
     while. j > >: i do.                        NB. (h+s-i-2)-vector (desc) h+s-1:i+2
       lios=. j - 1 0
       NB. step 1: rotate columns lios to kill A[i,j]
-      'y cs'=. rot rotga y ; (< 0 ; liosr1a ; lios) ; 0
-      y=. (< 1 ; liosr1b ; lios) (cs & rot) upd y
+      'y cs'=. rot&.|: rotga y ; (< 0 ; liosr1a ; lios) ; 0
+      y=. (< 1 ; liosr1b ; lios) cs&(rot&.|:) upd y
       dZ0=. dZ0 , cs , lios
       lios=. j - 0 1
       NB. step 2: rotate rows lios to kill B[j-1,j]
-      'y cs'=. (rot &. |:) rotga y ; (< 1 ; lios ; liosc2b) ; < < a: ; _1
-      y=. (< 0 ; lios ; liosc2a) (cs & (rot &. |:)) upd y
+      'y cs'=. rot rotga y ; (< 1 ; lios ; liosc2b) ; < < a: ; _1
+      y=. (< 0 ; lios ; liosc2a) cs&rot upd y
       dQ0=. dQ0 , cs , lios
       NB. step 3: update IOS
       liosr1b=. (j-2) , liosr1b
@@ -354,13 +354,13 @@ gghrdu=: 4 : 0
     while. i > >: j do.                        NB. (h+s-j-2)-vector (desc) h+s-1:j+2
       lios=. i - 1 0
       NB. step 1: rotate rows lios to kill A[i,j]
-      'y cs'=. (rot &. |:) rotga y ; (< 0 ; lios ; liosc1a) ; < < a: ; 0
-      y=. (< 1 ; lios ; liosc1b) (cs & (rot &. |:)) upd y
+      'y cs'=. rot rotga y ; (< 0 ; lios ; liosc1a) ; < < a: ; 0
+      y=. (< 1 ; lios ; liosc1b) cs&rot upd y
       dQ0=. dQ0 , cs , lios
       lios=. i - 0 1
       NB. step 2: rotate columns lios to kill B[i,i-1]
-      'y cs'=. rot rotga y ; (< 1 ; liosr2b ; lios) ; _1
-      y=. (< 0 ; liosr2a ; lios) (cs & rot) upd y
+      'y cs'=. rot&.|: rotga y ; (< 1 ; liosr2b ; lios) ; _1
+      y=. (< 0 ; liosr2a ; lios) cs&(rot&.|:) upd y
       dZ0=. dZ0 , cs , lios
       NB. step 3: update IOS
       liosc1b=. (i-2) , liosc1b
@@ -437,8 +437,8 @@ NB.   (  a  a  a  a  a  a     )    (  h  h  h  h  h  h        )
 NB.   (  a  a  a  a  a  a  a  )    (  a  a  h  h  h  h  a     )
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ #) -: po) Q
-NB.   H -: A (mp~ mp (ct @ ])) Q
+NB.   ((idmat@#) -: po) Q
+NB.   H -: A (mp~ mp ct@]) Q
 NB. where
 NB.   HQf=. gehrdl A
 NB.   H=. 1 trl 0 _1 }. HQf
@@ -527,8 +527,8 @@ NB.   (                    a  )    (                    a  )
 NB.                                (     τ1 τ2 τ3 τ4       )
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ #) -: (mp~ ct)) Q
-NB.   H -: A ((ct @ ]) mp mp) Q
+NB.   ((idmat@#) -: (mp~ ct)) Q
+NB.   H -: A (ct@] mp mp) Q
 NB. where
 NB.   HQf=. gehrdu A
 NB.   H=. _1 tru _1 0 }. HQf
@@ -618,7 +618,7 @@ NB.   D - n×n-matrix, general
 NB.   n=. # C
 NB.   hs=. 0 , n
 NB.   I=. idmat n
-NB.   'B Z0'=. (trl ,: unglq) @ gelqf D
+NB.   'B Z0'=. (trl ,: unglq)@gelqf D
 NB.   A=. C (mp ct) Z0
 NB.   'H T Q1 Z1'=. hs gghrdlvv A , B , I ,: Z0
 NB.   'H T dQ0 dZ0'=. hs gghrdlvv A , B , ,:~ I
@@ -627,9 +627,9 @@ NB. TODO:
 NB. - implement blocked version
 
 gghrdlnn=: [: : (0 {:: gghrdl)
-gghrdlnv=: [: : (({: @ ]) ((0 {:: ]) , (rotscll (2 {:: ]))) (gghrdl }:))
-gghrdlvn=: [: : (({: @ ]) ((0 {:: ]) , (rotscll (1 {:: ]))) (gghrdl }:))
-gghrdlvv=: [: : ((2 }. ]) ((0 {:: ]) , (rotscll &: >"2 0 }.)) (gghrdl (2 & {.)))
+gghrdlnv=: [: : (   {:@]  ((0 {:: ]) , (rotscll 2 {:: ]  )) (gghrdl   }:))
+gghrdlvn=: [: : (   {:@]  ((0 {:: ]) , (rotscll 1 {:: ]  )) (gghrdl   }:))
+gghrdlvv=: [: : ((2 }. ]) ((0 {:: ]) , (rotscll&:>"2 0 }.)) (gghrdl 2&{.))
 
 NB. ---------------------------------------------------------
 NB. Verb:           Syntax:
@@ -694,22 +694,27 @@ NB.   D - n×n-matrix, general
 NB.   n=. # C
 NB.   hs=. 0 , n
 NB.   I=. idmat n
-NB.   'Q0 B'=. (ungqr ,: tru) @ geqrf D
+NB.   'Q0 B'=. (ungqr ,: tru)@geqrf D
 NB.   A=. Q0 (mp~ ct)~ C
 NB.   'H T Q1 Z1'=. hs gghrduvv A , B , Q0 ,: I
 NB.   'H T dQ0 dZ0'=. hs gghrduvv A , B , ,:~ I
 NB.
 NB. Application:
 NB. - model LAPACK's xGGHRD('N','I'):
-NB.     gghrduni=: gghrdunv (, (idmat @ c))
+NB.     NB. 'H T dZ0'=. hs gghrduni A ,: B
+NB.     gghrduni=: gghrdunv (, idmat@c)
 NB. - model LAPACK's xGGHRD('I','N'):
-NB.     gghrduin=: gghrduvn (, (idmat @ c))
+NB.     NB. 'H T dQ0'=. hs gghrduin A ,: B
+NB.     gghrduin=: gghrduvn (, idmat@c)
 NB. - model LAPACK's xGGHRD('I','I'):
-NB.     gghrduii=: gghrduvv (,~^:2~ (idmat @ c))
+NB.     NB. 'H T dQ0 dZ0'=. hs gghrduii A ,: B
+NB.     gghrduii=: gghrduvv (,~^:2~ idmat@c)
 NB. - model LAPACK's xGGHRD('I','V'):
-NB.     gghrduiv=: gghrduvv ((1 & A.) @ , (idmat @ c))
+NB.     NB. 'H T dQ0 Z1'=. hs gghrduiv A , B ,: Z0
+NB.     gghrduiv=: gghrduvv (1&A.@, idmat@c)
 NB. - model LAPACK's xGGHRD('V','I'):
-NB.     gghrduvi=: gghrduvv (, (idmat @ c))
+NB.     NB. 'H T Q1 dZ0'=. hs gghrduvi A , B ,: Q0
+NB.     gghrduvi=: gghrduvv (, idmat@c)
 NB.
 NB. References:
 NB. [1] G. H. Golub and C. F. Van Loan, Matrix Computations,
@@ -727,9 +732,9 @@ NB. TODO:
 NB. - implement blocked version [2]
 
 gghrdunn=: [: : (0 {:: gghrdu)
-gghrdunv=: [: : (({: @ ]) ((0 {:: ]) , (rotsclu (2 {:: ]))) (gghrdu }:))
-gghrduvn=: [: : (({: @ ]) ((0 {:: ]) , (rotsclu (1 {:: ]))) (gghrdu }:))
-gghrduvv=: [: : ((2 }. ]) ((0 {:: ]) , (rotsclu &: >"2 0 }.)) (gghrdu (2 & {.)))
+gghrdunv=: [: : (   {:@]  ((0 {:: ]) , (rotsclu 2 {:: ]  )) (gghrdu }:  ))
+gghrduvn=: [: : (   {:@]  ((0 {:: ]) , (rotsclu 1 {:: ]  )) (gghrdu }:  ))
+gghrduvv=: [: : ((2 }. ]) ((0 {:: ]) , (rotsclu&:>"2 0 }.)) (gghrdu 2&{.))
 
 NB. =========================================================
 NB. Test suite
@@ -749,8 +754,8 @@ NB. where
 NB.   A - n×n-matrix
 NB.
 NB. Formula:
-NB. - Q^H * H * Q = A : berr := ||A - Q^H * H * Q|| / (ε * ||A|| * n)
-NB. - Q * H * Q^H = A : berr := ||A - Q * H * Q^H|| / (ε * ||A|| * n)
+NB. - Q^H * H * Q = A : berr := ||A - Q^H * H * Q|| / (FP_EPS * ||A|| * n)
+NB. - Q * H * Q^H = A : berr := ||A - Q * H * Q^H|| / (FP_EPS * ||A|| * n)
 
 testgehrd=: 3 : 0
   require :: ] '~addons/math/lapack/lapack.ijs'
@@ -758,10 +763,10 @@ testgehrd=: 3 : 0
 
   rcond=. gecon1 y
 
-  ('2b1100 & gehrd_jlapack_' tmonad ((];1:;#)`(,&>/)`(rcond"_)`(_."_)`((norm1@(- (((_1 & tru)@:(}:  )) (] mp  (mp  ct)) unghru)))%((FP_EPS*#*norm1)@[)))) y
+  ('2b1100&gehrd_jlapack_' tmonad ((];1:;#)`(,&>/)`(rcond"_)`(_."_)`(norm1@(- (_1&tru@:(}:  ) (] mp  (mp  ct)) unghru)) % (FP_EPS*#*norm1)@[))) y
 
-  ('gehrdl'                  tdyad ((0,#)`]       `]`(rcond"_)`(_."_)`((norm1@(- ((( 1 & trl)@:(}:"1)) (] mp~ (mp~ ct)) unghrl)))%((FP_EPS*#*norm1)@[)))) y
-  ('gehrdu'                  tdyad ((0,#)`]       `]`(rcond"_)`(_."_)`((norm1@(- (((_1 & tru)@:(}:  )) (] mp  (mp  ct)) unghru)))%((FP_EPS*#*norm1)@[)))) y
+  ('gehrdl'                tdyad ((0,#)`]       `]`(rcond"_)`(_."_)`(norm1@(- ( 1&trl@:(}:"1) (] mp~ (mp~ ct)) unghrl)) % (FP_EPS*#*norm1)@[))) y
+  ('gehrdu'                tdyad ((0,#)`]       `]`(rcond"_)`(_."_)`(norm1@(- (_1&tru@:(}:  ) (] mp  (mp  ct)) unghru)) % (FP_EPS*#*norm1)@[))) y
 
   EMPTY
 )
@@ -800,19 +805,19 @@ NB.       B - upper triangular
 testgghrd=: 3 : 0
   prep=. (,~ <@(2&{.))~ _2&(<\)                                                                   NB. L,R: 'AB HT dQ0dZ0'=. (A,B,I,:I) prep (H,T,dQ0,:dZ0)
   safenorm=. FP_SFMIN >. norm1"2                                                                  NB. compute 1-norm safely: ||M|| := max(||M||_1 , FP_SFMIN)
-  cdiff1=: 2 : '(0 & {::) safenorm@:- ((((u@{.@]) mp"2 (mp"2 (v@{:)))&>/)@}.)'                    NB. L: (ct cdiff1 ]) : ||A - dQ0^H * H * dZ0|| , ||B - Q1^H * T * dZ0||
+  cdiff1=: 2 : '(0&{::) safenorm@:- ((((u@{.@]) mp"2 (mp"2 (v@{:)))&>/)@}.)'                      NB. L: (ct cdiff1 ]) : ||A - dQ0^H * H * dZ0|| , ||B - Q1^H * T * dZ0||
                                                                                                   NB. R: (] cdiff1 ct) : ||A - dQ0 * H * dZ0^H|| , ||B - Q1 * T * dZ0^H||
-  adiff2=: 1 : '(safenorm @ (<: upddiag) @ (u ct)"2) @ (2 & {::)'                                 NB. L: (mp~ adiff2) : ||I - dQ0^H * dQ0|| , ||I - dZ0^H * dZ0||
+  adiff2=: 1 : '(safenorm@(<: upddiag)@(u ct)"2)@(2&{::)'                                         NB. L: (mp~ adiff2) : ||I - dQ0^H * dQ0|| , ||I - dZ0^H * dZ0||
                                                                                                   NB. R: (mp  adiff2) : ||I - dQ0 * dQ0^H|| , ||I - dZ0 * dZ0^H||
-  denom1=. safenorm @ (0 & {::)                                                                   NB. ||A|| , ||B||
-  getn=. c @ (0 & {::)                                                                            NB. n
+  denom1=. safenorm@(0&{::)                                                                       NB. ||A|| , ||B||
+  getn=. c@(0&{::)                                                                                NB. n
   safediv=. ((({:<.(%/@}:))`((<./@(}:*(1,{:)))%(1&{))@.(1>(1&{)))`(%/@}:)@.(</@}:))%(FP_PREC*{:)  NB. compute u%d safely: u_by_d=. safediv (u,d,n)
-  cberr01=. 2 : 'safediv"1 @: ((u cdiff1 v) ,. denom1 ,. getn)'                                   NB. L: (ct cberr01 ]) : (berr0 , berr1) for L
+  cberr01=. 2 : 'safediv"1@:((u cdiff1 v) ,. denom1 ,. getn)'                                     NB. L: (ct cberr01 ]) : (berr0 , berr1) for L
                                                                                                   NB. R: (] cberr01 ct) : (berr0 , berr1) for R
   aberr23=. 1 : '((<. (u adiff2))~ % (FP_PREC * ])) getn'                                         NB. L: (mp~ aberr23) : (berr2 , berr3) for L
                                                                                                   NB. R: (mp  aberr23) : (berr2 , berr3) for R
-  vberrl=: (>./ @ ((ct cberr01 ]) , (mp~ aberr23)) @ prep) f.
-  vberru=: (>./ @ ((] cberr01 ct) , (mp  aberr23)) @ prep) f.
+  vberrl=: (>./@((ct cberr01 ]) , (mp~ aberr23))@prep) f.
+  vberru=: (>./@((] cberr01 ct) , (mp  aberr23))@prep) f.
 
   I=. idmat c y
   ABl=. (,: trl)/ y
@@ -857,8 +862,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testhrd_mt_ 150 150
 NB. - test by random square real matrices with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testhrd_mt_ 150 150
+NB.     _1 1 0 4 _6 4&gemat_mt_ testhrd_mt_ 150 150
 NB. - test by random square complex matrices:
 NB.     (gemat_mt_ j. gemat_mt_) testhrd_mt_ 150 150
 
-testhrd=: 1 : 'EMPTY_mt_ [ ((testgghrd_mt_ @ u @ (2&,)) [ (testgehrd_mt_ @ u)) ^: (=/)'
+testhrd=: 1 : 'EMPTY_mt_ [ (testgghrd_mt_@u@(2&,) [ testgehrd_mt_@u)^:(=/)'

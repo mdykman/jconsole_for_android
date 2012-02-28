@@ -1,0 +1,10 @@
+api/gdiplus - change history
+
+== 1.0.0 ==
+ * j701
+
+== 1.0.1 ==
+ * api/gdiplus: add api
+
+== 1.0.2 ==
+ * platform specific manifest

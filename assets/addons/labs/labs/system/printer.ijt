@@ -1,0 +1,217 @@
+LABTITLE=: 'Print'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Printing
+This lab covers J printing.
+
+You should be familiar with the window driver and gl2 commands.
+
+You should also be familiar with the high level utilities provided by the "print" package as covered in lab Print Basics.
+)
+SCRIPT
+require'gl2'
+coinsert'jgl2'
+
+NB. print 'page one'
+NB. print 'page one';'page two'
+NB. 'print job args' print 'One';'Two'
+print=: 3 : 0
+'' print y
+:
+DATA=: boxopen y
+PRINT_MORE=: #DATA
+wdpclose 'print'             NB. close old print form
+wd 'pc print; cc g isigraph'
+glprint x                    NB. start printing
+)
+
+print_g_print=: 3 : 0
+smoutput 'print event page pass: ',sysdata
+'page pass'=.".sysdata
+select. pass
+case. _1 do. NB. printing finished - cleanup
+ wd'pclose'
+case. 0 do.  NB. is there data to print?
+ glprintmore PRINT_MORE
+case. 1 do.  NB. print page
+ print_draw ''
+case. 2 do.  NB. banding - print page again
+ wd'mb Print *Printer banding not supported'
+end.
+)
+
+print_draw=: 3 : 0
+data=. >{.DATA   NB. data for this page
+DATA=: }.DATA    NB. remaining data to print
+PRINT_MORE=: #DATA
+
+WH=: wh=. glqprintwh''  NB. printable area in twips
+PAPER=: glqprintpaper'' NB. paper wh and xy offset in twips
+
+glrect 0 0,wh
+gllines 0 0,wh
+
+glfont 'arial 11'
+gltextxy 1400 1440 NB. 1 inch over and down
+gltext data
+)
+SCRIPT
+PREPARE
+printlabijs=: <jpath '~temp\printlab.ijs'
+(toHOST SCRIPT_jlab_) 1!:2 printlabijs
+PREPARE
+
+NB. =========================================================
+Lab Section
+This lab will print to the default printer. Use menu command File|Print Setup to change the default printer.
+)
+
+NB. =========================================================
+Lab Section
+Script printlab demonstrates all aspects of printing.
+
+The script loads gl2 and makes the definitions available directly with coinsert.
+
+The script defines 3 verbs:
+
+print - creates isigraph and starts printing
+
+print_g_print - print event handler
+
+print_draw - gl2 commands for drawing each page
+)
+PREPARE
+open printlabijs
+load printlabijs
+PREPARE
+
+NB. =========================================================
+Lab Section
+print creates form print with isigraph g. The form is not shown and is destroyed when printing is finished.
+
+print left arguments are discussed in later sections. A monadic call or an empty left argument gets default behaviour.
+)
+
+NB. =========================================================
+Lab Section
+print_g_print is the event handler. It is called in multiple passes for each page.
+
+The event sysdata has the page and pass numbers.
+
+Pass _1 indicates print job is finished and the form and other resources can be closed and released.
+
+Pass 0 asks if there is more data to print. A glprintmore 0 indicates there is no more data to print.
+
+Pass 1 is for doing the gl2 drawing commands for the page.
+
+Pass 2 (and greater) is for doing the printing over again, exactly the same as in pass 1, to print the next band. Band printing is never done in Jwdp (j.exe) and is rarely required in Jwdp (j.jar). Normally print event handlers don't handle Pass 2.
+)
+
+NB. =========================================================
+Lab Section
+print_draw is called by the handler to draw a page.
+
+gl2 command units in a print event handler are in twips. A twip is a 20th of a point.
+
+Font size (glfont) is in points.
+
+glqprintwh gives the width and height in twips of the printable area and are used in printlab to draw a rectangle and a diagonal.
+
+glqprintpaper gives paper width, height, and offsets to the printable area in twips.
+)
+
+NB. =========================================================
+Lab Section
+This steps prints a test page. Each host call of the print event handler displays the page and pass numbers.
+)
+print'print test'
+
+NB. =========================================================
+Lab Section
+Try printing a few more pages; For example,
+   print 'One';'Two'
+)
+
+NB. =========================================================
+Lab Section
+wd command qprinters lists all printers.
+
+The first entry is the default printer. The second entry is the system default printer. The default printer is system default when J starts. The remaining entries list all printers. File|Print Setup can change the default printer.
+)
+wd'qprinters'
+
+NB. =========================================================
+Lab Section
+print (glprint) takes optional left parameters:
+[jobname [printer [filename [name value...]]]]
+
+See Help|gl2 Commands for details.
+
+jobname appears in the host print queue manager. "" gets a default of "J PRINT".
+
+printer selects a printer(must be in wd'qprinters'). "" gets the default printer.
+
+filename, if not "", redirects the printing to filename.
+
+The name value pairs set options such as orientation and copies.
+
+   print ''
+   print '"my job"'
+   print '"my job" "hp deskjet 950c"'
+   print 'job1 "hp deskjet 950c" c:\temp\foo.prn'
+   print ' "" "" "" orientation 2 copies 3'
+
+Orientation 1 is portrait and 2 is landscape.
+)
+'"landscape job" "" "" orientation 2' print 'landscape'
+
+NB. =========================================================
+Lab Section
+There are some restrictions in Jwdp (the portable Java front end).
+
+printer parameter is not supported and must be "". You can only print to the default. Use the print dialog (wd'mbprinter') to change the default printer.
+
+filename parameter is not supported and must be "". You can request a print to file in the print dialog and the next print will request a filename.
+
+orientation and copies are the only names supported (name value pairs). The print dialog can be used to set other options.
+)
+
+NB. =========================================================
+Lab Section
+Other than twips instead of pixels, drawing for printing is the same as drawing for the screen.
+
+Details on drawing (for example, formatted text) are not covered here as the focus is on getting stuff to paper.
+
+See other labs and documentation for information on how to draw.
+)
+
+NB. =========================================================
+Lab Section
+You can print plots.
+
+First let's create a simple plot.
+
+The plot is created in color and will print to a color printer. If you don't have a color printer, add 'COLOR BLACK' as a left argument to plot to create a plot suitable for your printer.
+)
+require'plot trig numeric'
+plot (sin steps 0 10 100),:cos steps 0 10 100
+
+NB. =========================================================
+Lab Section
+Call pd with the print command.
+)
+pd 'print'
+
+NB. =========================================================
+Lab Section
+mbprinter runs the Print common dialog.
+)
+wd'mbprinter'
+
+NB. =========================================================
+Lab Section
+mbprinter pd_printsetup runs the Print Setup common dialog.
+)
+wd'mbprinter pd_printsetup'
+

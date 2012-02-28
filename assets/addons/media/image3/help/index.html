@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>Release 3 of the J Image Addon Index</TITLE>
+</HEAD>
+<BODY>
+<b>Release 3 of the Image Addon: Help Front Page</b><br>
+by Zachary X. Reiter and Clifford A. Reiter (reiterc@lafayette.edu)<br>
+June 2003<br>
+<p>
+Like the other releases of the image addon for J, this addon gives utilities for reading and writing images in a variety of formats
+from J. While the emphasis is on 24 bit images, there is some support for movies and 8-bit images. We have found the addon very useful and use it regularly. However, some variants of the image and movie types may not be successfully read. Moreover, the software is powerful, so users should be prudent and work on files that have been backed up. 
+</p><p>
+<p><b>The Main Scripts</b></p>
+The main utilities are organized into 4 scripts (each requiring those above it):
+<ul>
+<li><i>image3.ijs</i> which has functions for reading and writing most of the supported image formats.</li>
+<li><i>movie3.ijs</i> which has functions for reading and writing quicktime (tm) movies which are jpeg or png sequences, and some support for <i>*.avi</i> files.</li>
+<li><i>html_gallery8.ijs</i> which has functions for automatically creating or updating galleries of images.</li>
+<li><i>prevare.ijs</i> which is a form that provides tools handy for interactively preparing, previewing, creating and supplementing the html galleries.</li>
+</ul> 
+The addon utilities are implemented with a combination of  J defined functions and 
+<i>*.dll</i> or <i>*.so</i> library functions created from several open sources. There are also several auxilary scripts used for a variety of tasks: viewing images and data, creating raster images of text, wrapping images onto an annulus for CD labels, and giving samples of possible usage.
+</p><p>
+<p><b>Image3 Addon Labs</b></p>
+The help sections (see links below) describe the main addon features. However, three labs are also available to introduce the addon features.
+<ul>
+<li>Image 3 Addon, <i>image3.ijt</i> The basic image i/o functions and a quick glimpse of some other facilities.</li>
+<li>Image 3 Addon Movie, <i>movie.ijt</i> The movie utilities</li>
+<li>Image 3 Addon Html, <i>html_gallery8.ijt</i> Html gallery building and maintenance.</li> 
+</ul>
+<p><b>Image3 Addon Help Contents</b></p>
+<ul>
+<li><a href="image3.html">image3</a> has functions for reading and writing most of the supported image formats along with some basic utilities.</li>
+<li><a href="view_m.html">view_m</a> has functions for displaying images and data.</li>
+<li><a href="movie3.html">movie3</a> has functions for reading and writing quicktime (tm) movies which are jpeg or png sequences.</li>
+<li><a href="html_gallery8.html">html_gallery8</a> has functions for automatically creating and updating galleries of images.</li>
+<li><a href="prevare.html">prevare.ijs</a> defines a form that provides tools handy for interactively preparing, previewing, creating and supplementing the html galleries. This utility may also use the textimage (<i>text_image.ijs</i>), annular insertion (<i>anins.ijs</i>), and viewing (<i>view_m.ijs</i>) scripts for some facilities.</li>
+<li><a href="copyrights.html">Open Sources and Copyrights</a> gives details about the open sources used to create the image3.dll (image3.so) libraries</li>
+<li><a href="release3.html">Release 3 Changes</a> lists the main changes from image2</li>
+</ul>
+<p><b>Some Auxiliary Scripts</b></p>
+<ul>
+<li><i>filter1.ijs</i> which gives some filters for correcting image defects. See the examples at the end of the script.</li>
+<li><i>color_space.ijs</i> which gives tools for converting between color spaces. See the examples at the end of the script.</li>
+<li><i>transform_m.ijs</i> which gives tools for correcting barrel distortion and doing tilt and small rotation adjustments. See <a href="transform_m.html">Transform image help file</a></li>
+<li><i>anins2.ijs</i> is used by prevare to map a rectangular image onto an annulus</li>
+<li><i>text_image.ijs</i> is used by prevare to create text as a raster image</li>
+<li><i>sample1.ijs</i> shows some typical steps used to work with a new directory of digital images</li>
+<li><i>sample2.ijs</i> shows some typical steps used to work with an html gallery that is updated regularly</li>
+</ul>
+
+</body> 
+</HTML>

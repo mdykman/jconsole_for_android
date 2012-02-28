@@ -51,10 +51,9 @@ EMPTY
 )
 3 : 0''
 select. UNAME
-case. 'Linux' do. libsqlite=: 'libsqlite3.so.0'
+case. 'Linux' do. libsqlite=: > IFANDROID { 'libsqlite3.so.0' ; 'libsqlite.so'
 case. 'Darwin' do. libsqlite=: 'libsqlite3.0.dylib'
 case. 'Win' do. libsqlite=: 'sqlite3.dll'
-case. 'Android' do. libsqlite=: 'libsqlite.so'
 end.
 i.0 0
 )

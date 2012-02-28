@@ -1,0 +1,845 @@
+LABTITLE=: 'Teacher''s Aide'
+LABAUTHOR=: 'Kenneth E. Iverson'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter PURPOSE
+NB. =========================================================
+Lab Section Introduction
+We will use the computer not to further burden the accepted
+curriculum, but to provide the teacher with a simple general
+aide to help in the teaching of it.
+
+This help includes such things as evaluating results of
+exercises; showing graphs and collections of graphs;
+and coloring multiplication and other function tables to emphasize
+the patterns that occur in them.
+)
+PREPARE
+9!:3 (5)
+load'graph plot'
+PLOT=:'stick,line'&plot
+color=:viewmat
+bare=:/~~
+sin=:1&o.
+cos=:2&o.
+exp=:^
+min=:<.
+max=:>.
+rem=:|
+fod=:|:
+foh=:|.
+fov=:|."1
+sub=:{~
+
+for=:;
+sum=:+/
+prod=:*/
+max=:>.
+min=:<.
+maxof=:max/
+minof=:min/
+
+open=:>
+box=:<
+
+nouns=:0
+verbs=:3
+adverbs=:1
+x1=:0.5*i:7
+x2=:0.1*i:30
+t1=:- bare 1 2 3
+PREPARE
+
+NB. =========================================================
+Lab Chapter FUNCTION TABLES
+NB. =========================================================
+Lab Section Bare and Bordered Tables
+In the following examples we will use NB. (Nota Bene) to
+append comments -- which are not treated as part of the
+preceding expression. For example:
+)
++ table 1 2 3 4 5 NB. An addition table (with arguments)
+
++ bare 1 2 3 4 5  NB. A bare addition table
+
+NB. =========================================================
+Lab Section
+ The arguments included in the
+ addition table make it easy
+ to interpret, but the bare
+ table makes it easier to
+ concentrate on the relations
+ between the sums.
+
+ We now show the use of color
+ to emphasize these relations.
+
+ Press the key
+ Esc to remove
+ the color window
+ so that you may
+ proceed to the
+ next panel.
+)
++ bare 1 2 3 4 5
+
+color + bare 1 2 3 4 5 NB. Color equal values alike
+
+NB. =========================================================
+Lab Section Experiments
+To experiment with this facility, type the
+following expressions, pressing the Enter
+key to execute each of them:
+
+   - table 1 2 3 4 5 6 7
+
+   color - bare 1 2 3 4 5 6 7
+
+   1 2 3 4 5 6 7 - 4
+
+   * table 1 2 3 4 5 6 7 - 4
+
+   color * bare 1 2 3 4 5 6 7 - 4
+)
+
+NB. =========================================================
+Lab Section
+In the preceding panel you could have avoided
+typing (and mistyping) the entries by using the
+up-arrow key to move the cursor up to an expression,
+pressing enter to bring it down to the "input area"
+(where it may be modified by typing and by using the left and right
+arrows and the delete key), and again pressing Enter to
+execute it. Try this on the following:
+
+   i:4 NB. A list of integers from _4 to 4
+
+   color * bare i:4
+
+   < table 1 2 3 4 5 6 7      NB. A comparison table
+
+   color < bare 1 2 3 4 5 6 7 NB. Esc removes color window
+
+   = table 1 2 3 4 5 6 7
+
+   color = bare 1 2 3 4 5 6 7
+)
+
+NB. =========================================================
+Lab Section Selecting chapters
+You may also use the Up Arrow or Page Up to review earlier panels, and
+Down Arrow or Page Down to move back down.
+
+To begin at the beginning of any chapter, click on Studio, then on Chapters
+(in the dropped menu), then on the desired chapter.
+)
+
+NB. =========================================================
+Lab Chapter GRAMMAR
+NB. =========================================================
+Lab Section Mathematics as a Language
+Although the notation of mathematics is commonly
+recognized as a language, it is not common to examine
+its grammar. Nevertheless, it can be helpful to explore some
+analogies with English -- in the expression sin(1.57),
+the function sin performs an action upon the number
+1.57, analogous to the action of a verb upon a noun.
+
+Moreover, in the expression + table 1 2 3 4 5, table
+modifies the verb + to produce a related verb. It is
+therefore analogous to an adverb.
+
+This simple notion of modifying a verb
+to produce a related verb (fruitful in both
+math and English) is often made
+difficult by introducing it very late, commonly
+in the treatment of differential equations, where it is
+called an operator (or Heaviside operator).
+
+Finally, the assignment of a name to a noun (as in Let
+x=3), is analogous to the introduction of a pronoun.
+To call this name a "variable" can be misleading,
+especially in a case such as Let pi=3.1416, where
+its value is clearly not intended to vary.
+)
+
+NB. =========================================================
+Lab Section Assignment and Equality
+In math, the distinction between the COMPARISON
+pi=3.1416, and the ASSIGNMENT of the value
+3.1416 to the name pi, is made by writing
+Let pi=3.1416 for the latter. Programming languages simply
+use a similar symbol, and no Let -- (we will use =:
+and refer to it by the proper English term "copula"). For example:
+)
+x=:3 NB. The copula =: assigns a value to the pronoun x
+x < 4
+x<1 2 3 4 5 6
+x=1 2 3 4 5 6 NB. Equality comparison
+x=:5          NB. Assigns a new value to the pronoun
+x=1 2 3 4 5 6 NB. Comparison using the new value
+
+x=: i: 3
+color * bare x
+
+NB. =========================================================
+Lab Chapter LITERAL ARGUMENTS
+NB. =========================================================
+Lab Section Relations
+It is commonly assumed that mathematics is about
+numbers. So it is, but it would be more accurate
+to say that math is about relations, and that relations
+are observable as patterns -- matters
+emphasized in the foregoing uses of
+numbers and tables of numbers. To emphasize this
+point further we will introduce non-numeric
+arguments called literals.
+
+We may say that MAY is the sister of AMY, but we
+say that 'MAY' is an anagram of 'AMY', using quotes
+to indicate that we are speaking about two three-letter
+words, not about two girls. In the following examples
+we will apply the anagram function A. to various words:
+)
+1 A. 'AMY' NB. An anagram, but not an English word or name
+0 1 2 3 4 5 A. 'AMY' NB. All six anagrams of 'AMY'
+color 0 1 2 3 4 5 A. 'AMY'
+
+NB. =========================================================
+Lab Section Number of Anagrams
+The foregoing color window illustrated why
+there are exactly 3*2*1 distinct anagrams
+(permutations) of a list of three elements.
+We may therefore expect to see 4*3*2*1 (factorial
+4) anagrams of a four-letter word.
+
+(Click the middle button of the color window
+to alternately maximize and minimize its size.)
+)
+!4   NB. Factorial 4 (4*3*2*1)
+
+i.!4 NB. 24 integers beginning at 0
+
+color (i.!4)A. 'OPST'
+
+NB. =========================================================
+Lab Section Permutations
+Having made the point of using non-numeric arguments
+to explore relations, we may now remark that the
+anagram function applies to lists of numbers as
+well as to lists of literals.
+
+Anagrams of numeric lists are commonly called permutations:
+)
+(i.!4)A.1 2 3 4
+
+color (i.!4)A.1 2 3 4
+
+NB. =========================================================
+Lab Section Orientations of Tables
+The table (i.!4)A.1 2 3 4 may be more readable if
+"flipped on its diagonal" to show the rows as columns.
+We provide three functions which together
+provide all possible orientations of a table:
+)
+t1=:- bare 1 2 3
+t1
+fod t1 NB. Flip on diagonal (- is non-commutative)
+foh t1 NB. Flip on horizontal axis
+fov t1 NB. Flip on vertical axis
+
+NB. =========================================================
+Lab Section Selection and Subscripts
+Subscripts are commonly used to index lists
+and tables. We will use the function sub as
+illustrated below -- it uses indices beginning at 0 rather
+than at 1:
+)
+x=:2 3 5 7 11
+x sub 0
+x sub 2 4
+
+t1 sub 1             NB. Select row
+(fod t1) sub 1       NB. Select column
+
+fod (fod t1) sub 2 0 NB. Select columns
+
+NB. =========================================================
+Lab Chapter PLOTS
+NB. =========================================================
+Lab Section Bare and Lined Plots
+Graphs (or plots) are an effective way to display
+the results of a function. To use a grid x1 for plotting
+sin x1, we will write plot x1 for sin x1, as illustrated below:
+)
+x1=:0.5*i:7
+x1
+plot x1 for sin x1
+
+NB. =========================================================
+Lab Section
+Finer grids may also be used. Moreover, the alternative function PLOT
+adds vertical lines from each point:
+)
+x2=:0.1*i:30
+
+PLOT x2 for sin x2
+
+NB. The names x1 and x2 will be used repeatedly,
+NB. and you should not assign new values to them.
+
+NB. =========================================================
+Lab Section Multiple Plots
+Several curves can be plotted together in various
+ways. For example, fod x1 + bare 0 1 2 3 gives a table
+which, when its sines are plotted, shows sines
+displaced in phase:
+)
+fod x1 + bare 0 1 2 3 NB. "flip on diagonal" (also called "transpose")
+
+plot x1 for sin fod x1 + bare 0 1 2 3
+
+NB. =========================================================
+Lab Section
+Curves may also be plotted together in the
+manner illustrated below:
+)
+>(sin x1);(cos x1);(cos x1+0.2)
+
+plot x1 for >(sin x1);(cos x1);(cos x1+0.2)
+
+NB. =========================================================
+Lab Section Plots Against Other Than the Grid
+The expression plot x2 for sin x2 may be said to
+plot sin x2 "against" x2. Since sin x2 is normally plotted
+against x2, it appears unnecessary to include "x2 for"
+in the expression. However, sin x2 can also be plotted
+against other functions to produce unusual results:
+)
+plot (cos x2) for (sin x2)
+
+NB. =========================================================
+Lab Section
+The result is a circle (as indicated by the
+scales on the plot) even though it might appear
+to be an ellipse. This appearance can be modified
+by clicking on the lower edge of the plot and holding
+the mouse button to drag it up or down.
+
+Incidentally, the entire graph can be moved out
+of the way of text by similarly clicking on the top
+bar.
+)
+
+NB. =========================================================
+Lab Section
+Try any other interesting cases known from mathematics.
+For example:
+)
+plot (sin x2) for (sin 2*x2)
+
+NB. =========================================================
+Lab Section Surface Plots
+Corresponding points of a collection of curves
+can be joined together to form a surface. For example:
+)
+'surface' plot sin x1 + bare 0 1 2 3 4 5 6
+
+NB. =========================================================
+Lab Chapter PUZZLES
+NB. =========================================================
+Lab Section Puzzle 1
+Certain puzzling things that occur in mathematics
+are due, at least in part, to the notation
+used. We will discuss a few examples.
+
+1. In high school algebra, why do we not use
+mnemonic names and abbreviations such as age and
+wgt, rather than limiting ourselves to single
+letters such as x and y?
+
+The answer is that we ruled out multi-letter
+names by adopting the "convenient" abbreviation xy for the
+product of x and y -- denoted by x*y in most
+programming languages. In other words, age
+would be interpreted as a*g*e, and pi as p*i.
+
+Since the work is limited to single-letter names, students may miss the important fact that
+algebra introduces into mathematics the use
+of NAMES, rather than the use of LETTERS.
+)
+
+NB. =========================================================
+Lab Section
+Moreover, if x and y have the values 3 and 4,
+then it should be possible to write 34 or 3y
+or x3 for the product of x and y given by the
+case xy. Only the case 3y would be understood
+as the intended product.
+
+The important principle of the substitutability
+of equivalent values in mathematical expressions
+is therefore contravened by the convention concerning xy.
+)
+
+NB. =========================================================
+Lab Section Puzzle 2
+2. Because a*(b+c) is equivalent to (a*b)+(a*c),
+we say that multiplication "distributes" over
+addition.
+
+Because * is "commutative" [that is, its result remains unchanged
+if its arguments are interchanged, or "commuted"], (b+c)*a is also equivalent to (a*b)+(a*c).
+We will test these assertions by assigning values to
+the three names:
+)
+a=:2
+b=:3
+c=:5
+
+a*(b+c)
+(a*b)+(a*c)
+
+(b+c)*a
+(b*a)+(c*a)
+
+NB. =========================================================
+Lab Section
+Using % to denote "divided by", we will explore
+the question of whether division distributes over addition:
+)
+a%(b+c)
+(a%b)+(a%c)
+
+(b+c)%a
+(b%a)+(c%a)
+
+NB. =========================================================
+Lab Section
+The first identity fails, but the second
+does not. This is sometimes addressed by
+saying that "division distributes to the left,
+but not to the right".
+
+More precisely, we may say that "divide and a right
+argument a" is a function of one argument (written
+as %&a, and read aloud as "divide and a" or "divide with a") that distributes over addition, but that
+the function a&% does not. For example:
+)
+%&a (b+c)
+
+(%&a b)+(%&a c)
+
+g=: a&% NB. Assign a name to the other case
+
+g (b+c)
+
+(g b)+(g c)
+
+NB. =========================================================
+Lab Section
+From this it appears clearer to speak of the distributivity
+of a monadic function (one applied to a single
+argument) such as %&a, than of the distributivity
+of the dyadic function from which it may be derived.
+
+In particular, we may say that a linear function
+is one that distributes over addition -- a statement
+that presents a strong reason for the importance of
+linear functions.
+)
+
+NB. =========================================================
+Lab Section Puzzle 3
+3. If a list of five numbers is partitioned by
+taking the first three and dropping the first three,
+then the sums of the parts may be added to give the
+same result as the sum over the original list. For example:
+)
+x=:1 2 3 4 5
+3 take x
+sum 3 take x
+
+3 drop x
+sum 3 drop x
+
+(sum 3 take x)+(sum 3 drop x)
+sum x
+(sum 0 take x)+(sum 0 drop x)
+
+NB. =========================================================
+Lab Section
+The final example used 0 to partition x into an
+empty list and the entire list, raising the question
+of what meaning should be ascribed to the sum
+over an empty list.
+
+Not surprisingly, the result must be 0, because
+0 is the "identity element" of addition, that is, a number
+which added to any x gives x An identity element
+of a function is also called its "neutral".
+
+We will now explore the corresponding case of multiplication:
+)
+(prod 3 take x)*(prod 3 drop x)
+prod x
+(prod 0 take x)*(prod 0 drop x)
+
+prod 0 take x
+
+NB. =========================================================
+Lab Section
+In this case, the product over the empty list
+is not 0, but 1 -- the neutral of multiplication.
+
+This very useful inclusion and treatment of empty lists is not
+commonly made in mathematical notation.
+
+Experiment with
+the dyadic function min and its monadic counterpart
+minof to find the neutral of the minimum function.
+In particular, test whether it indeed behaves as a neutral.
+)
+
+NB. =========================================================
+Lab Section
+The experiments concerning the identity element
+of minimum suggest that it might be used
+as the DEFINITION of infinity (denoted here by _).
+)
+
+NB. =========================================================
+Lab Section Puzzle 4
+4. Need for the treatment of empty lists
+arises in many ways. For example, a binomial
+coefficient (commonly denoted by an n above a k with enclosing
+parentheses, and denoted here by k!n) is commonly
+defined by a fraction with a denominator of k factors -- that
+is: k(k-1)...(1).
+
+But what is to be made of the case k=:0, that is,
+a product over an empty list? The needed result is
+of course 1, as developed in the foregoing panels.
+)
+n=:4
+k=:2
+k!n
+
+0 1 2 3 4 5 6 ! 4
+
+NB. =========================================================
+Lab Section
+Tables of the binomial coefficient function appear as:
+)
+! table 0 1 2 3 4 5 6
+
+! bare 0 1 2 3 4 5 6
+
+NB. =========================================================
+Lab Section Puzzle 5
+5. Although x/y and 3/4 are commonly used to denote
+division, there may be little agreement
+about the meanings of x/y/z and xy/z and x/yz,
+because they depend on the order of execution in the
+phrases.
+
+Since 3/4 is also used to denote the fraction (or
+rational) three-quarters (as in the phrase "a 3/4 inch
+drill") the phrases 3/4/z and x/3/4 raise further questions,
+because a fraction 3/4 must be so interpreted before
+any division takes place.
+)
+
+NB. =========================================================
+Lab Section
+The treatment of rationals may be clarified
+by using 3r4 to denote the rational three-quarters.
+For example:
+)
+z=:1 1r2 1r3 1r4 1r5 1r6
++ table z
+* table z
+
+NB. =========================================================
+Lab Section
+)
+% table z
+max table z
+color max bare z
+
+NB. =========================================================
+Lab Section
+3 rem 5 gives the remainder on dividing 5 by 3.
+Produce and color a remainder table for the
+integer argument 0 1 2 3 4 5.
+
+Repeat for the rational argument z. Also observe the color window
+produced by the following:
+)
+color 3 rem 0 1 2 3 4 5 6 7 8
+
+NB. =========================================================
+Lab Chapter POLYNOMIALS AND TAYLOR SERIES
+NB. =========================================================
+Lab Section Ascending versus Descending Powers
+In high school, polynomials are commonly
+treated in terms of descending powers,
+beginning with some highest order n
+
+Since power series are polynomials with an
+indefinite number of terms, it is essential
+that they use ascending powers, and a student may
+consider them a new subject -- not recognizing them
+as polynomials with the order of the coefficients
+reversed.
+
+We will use the polynomial function p. based
+on ascending powers. For example:
+)
+0 0 1 p. x1 NB. The cube
+
+plot x2 for 0 1 0 _1r6 0 1r120 0 _1r5040 p. x2
+
+NB. =========================================================
+Lab Section The Taylor Adverb
+The adverb t. applied to the function sin
+yields a function that may in turn be applied
+to a list of indices to give the Taylor series
+for the sin.
+
+The coefficients derived below
+may be compared with those used in the preceding panel:
+)
+sin t. i.8    NB. Decimal approximations
+
+sin t. i. 8r1 NB. Rational argument gives rationals
+
+c=:cos t. i.13r1
+c
+plot x2 for c p. x2
+
+NB. =========================================================
+Lab Section
+The monadic function 3 1 4 2&p. is a specific
+polynomial (defined by the coefficients 3 1 4 2),
+and +: and -: and *: are the double, halve, and square
+functions. We will now determine their Taylor series:
+)
+3 1 4 2&p. t. i. 7
+
++: t. i. 7
+
+-: t. i. 7
+
+*: t. i. 7
+
+^  t. i. 9r1 NB. The exponential
+
+NB. =========================================================
+Lab Section Roots of Polynomials
+If the values of a polynomial c&p. are zero for a list
+of arguments r, then the items of r are said to
+be roots of the polynomial:
+)
+
+c=:2 _1 _2 1 NB. A list of coefficients
+x=:i:3       NB. A list of arguments
+x
+
+c&p. x       NB. Application of a polynomial
+
+r=:_1 1 2
+c&p. r
+
+NB. =========================================================
+Lab Section
+A product of the differences between the argument
+and the roots is equivalent to the original
+polynomial, as illustrated below:
+)
+x - bare r
+fod x - bare r
+
+prod fod x - bare r NB. Product over differences
+
+c&p. x
+
+NB. =========================================================
+Lab Section
+It is sometimes said that any polynomial can
+be expressed as such a product of differences
+with the roots, but this is true only if the
+last (highest order) coefficient is 1. In
+other cases it is necessary to use this last
+coefficient as a multiplier. For example:
+)
+d=:2*c
+d
+d&p. x
+d&p. r
+2 * prod fod x - bare r
+d&p. x
+
+NB. =========================================================
+Lab Section
+The function p. may be applied (monadically)
+to a list of coefficients to obtain the corresponding
+multiplier and roots. Moreover, the function p. is
+self-inverse, and may be applied to the result of p. d
+to obtain d:
+)
+d
+mar=: p. d NB. Multiplier and roots
+mar
+mar sub 0
+open mar sub 0
+open mar sub 1
+p. mar
+
+NB. =========================================================
+Lab Section
+Finally, mar=: p. d may be used as a left argument of the
+polynomial function p., and (except for tiny differences
+due to round-off errors) mar p. x agrees with d p. x:
+)
+mar p. x
+d p. x
+
+NB. =========================================================
+Lab Chapter DERIVATIVES AND INTEGRALS
+NB. =========================================================
+Lab Section Derivative Adverbs
+The adverbs d.1 and d.2 and so on produces derivatives.
+For example:
+)
+plot x2 for sin d.1 x2
+
+NB. =========================================================
+Lab Section Integral Adverbs
+Similarly d._1 and d._2 and so on produce integrals:
+)
+PLOT x2 for sin d._1 x2 NB. Integral of sin is -cos
+
+NB. =========================================================
+Lab Section Identity Adverb
+The adverb d.0 is the identity. Moreover, collections
+of adverbs may be applied, but the result must be
+flipped on the diagonal. For example:
+)
+plot x2 for fod sin d. _1 0 1 x2
+
+NB. =========================================================
+Lab Section Experiments
+Try other cases and comment on the results. For example:
+
+plot x2 for fod sin d. 0 4 x2
+
+plot x2 for fod (sin * cos) d. 0 1 x2
+
+plot x2 for fod (sin + cos) d. 0 1 x2
+
+plot x2 for fod (sin - cos) d. 0 1 x2
+
+plot x2 for fod (sin % cos) d. 1 x2
+
+plot x2 for fod exp d. 0 1 x2  NB. Exponential = its deriv.
+
+plot x2 for fod (sin % exp) x2 NB. Decaying sin
+
+plot x2 for fod (sin % exp on -:) x2 NB. Decay at 1/2 rate
+)
+
+NB. =========================================================
+Lab Section Coefficients of Derivatives of Polynomials
+The derivative of the polynomial c&p. is another
+polynomial d&p., where d is obtained from c by
+multiplying by its (zero-origin) indices, and then dropping the
+first element. For example:
+)
+c=:4 1 3 2
+# c    NB. number of items of c
+i.#c   NB. Zero origin indices of c
+c*i.#c NB. Product with indices
+
+d=:1 drop c*i.#c
+d
+x=:i:3
+x
+plot x for > (c&p. x);(d&p. x)
+
+NB. =========================================================
+Lab Section
+The function p.. has just been adopted, and does not work
+in early versions of this system. Applied monadically to a list
+of coefficients, it gives the coefficients of the derivative polynomial.
+
+Moreover, the dyadic use ct p.. c gives the
+coefficients of the integral with constant term
+ct. For example:
+)
+c
+p.. c   NB. Fails in early versions of J
+3 p.. c
+
+NB. =========================================================
+Lab Chapter REVIEW
+NB. =========================================================
+Lab Section Names
+We will begin a review by listing the names of the nouns
+(variables) and verbs (functions) used, and by entering
+some of the names to display their values
+(some of which you may remember):
+)
+names nouns
+
+x1
+
+t1
+
+NB. =========================================================
+Lab Section
+Similarly, we will display the names of the verbs, and
+enter some of them to see their definitions in terms of
+the underlying language used here:
+)
+names verbs
+
+box
+
+box x1 NB. Boxes x1
+
+< x1   NB. < is equivalent to box
+
+sin    NB. 1 and o. (compare with 1&% used for reciprocal)
+
+1&% 1 2 3 4 5
+
+1&% 1 2 3 4 5r1
+
+cos    NB. Compare with sin
+
+NB. =========================================================
+Lab Section
+The definitions of sin (1&o.) and cos (2&o.) suggests that
+they are just two of several possible monadic functions
+derived from the dyadic function o.
+
+You may test this by entering the plots of some of the
+other cases listed below:
+
+plot x2 for 3&o. x2 NB. Tangent function
+
+plot x2 for 4&o. x2
+
+plot x2 for 5&o. x2 NB. Hyperbolic sine
+)
+
+NB. =========================================================
+Lab Section
+To learn more about the circle function o., press the key F1
+to display the entire vocabulary, and then click on the o. entry.
+
+Use the vocabulary similarly to learn more about verbs such as
+% and ^ and about adverbs such as / and & .
+)

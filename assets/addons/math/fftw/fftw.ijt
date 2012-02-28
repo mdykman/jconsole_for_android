@@ -1,0 +1,191 @@
+LABTITLE=: 'Fast Fourier Transform'
+LABWINDOWED=: 0
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section FFTW
+Fast Fourier Transform routines in J are based on the FFTW library, i.e. the Fastest Fourier Transform in the West.
+
+FFTW is a comprehensive collection of fast C routines for computing the discrete Fourier transform (DFT) in one or more dimensions, of both real and complex data, and of arbitrary input size.
+
+FFTW was developed at MIT by Matteo Frigo and Steven G. Johnson, and a full description is available at the FFTW home page: http://theory.lcs.mit.edu/~fftw/
+
+FFTW is licensed under the GNU General Public License, see addons/math/fftw/gpl.htm.
+)
+
+NB. =========================================================
+Lab Section Source Files
+The FFTW routines are packaged in file libfftw3-3.dll, which includes the complete set of complex number routines in FFTW.
+
+These routines are accessible to J through the J DLL call mechanism as documented in User Manual chapter "Dlls and Memory Management".
+)
+
+NB. =========================================================
+Lab Section
+The scripts and other files for FFTW are in subdirectory math/fftw of the addons directory, i.e.
+)
+jpath '~addons/math/fftw'
+
+NB. =========================================================
+Lab Section Loading FFTW
+Load the fftw.ijs script to access FFTW.
+
+The main definitions for FFTW are read into locale jfftw.
+
+Two verbs are defined in the z locale:
+
+   fftw     forward FFT
+   ifftw    backward FFT
+)
+load 'math/fftw'
+
+NB. =========================================================
+Lab Section Examples
+Here is a simple example:
+)
+fftw i.8
+
+NB. =========================================================
+Lab Section
+This example is easily verified by direct computation in J.
+
+The discrete FFT for vector f is given by:
+
+            N-1
+  F(k) = sigma f(n) exp ((- j 2 pi n k)/N)     k = 0 ... N-1
+            n=0
+
+The verb dfft defined below implements the above expression, and matches the result of fftw. However, it is very inefficient for large arguments.
+
+Note that we remove small rounding errors by using the verb clean from the numeric script.
+)
+dfft=: 3 : '+/ y * ^ (#y) %~ (- o. 0j2 ) * */~ i.#y'
+
+require 'numeric'
+clean (dfft - fftw) i.8
+
+NB. =========================================================
+Lab Section
+The inverse FFT is given by:
+
+   ifftw
+
+or equivalently:
+
+   fftw inverse
+
+Note that the inverse is normalized, so that the inverse FFT returns the original data.
+)
+ifftw fftw i.8
+
+fftw inverse fftw i.8
+
+NB. =========================================================
+Lab Section
+Doing a FFT followed by an inverse FFT returns the original data, so that the following expression is everywhere zero:
+
+   dat - ifftw fftw dat
+
+In practice, there may be small rounding errors.  Again, we use clean to remove these.
+)
+
+A=: ?.~ 8
+
+A - ifftw fftw A
+
+clean A - ifftw fftw A
+
+NB. =========================================================
+Lab Section
+In general, the arguments to fftw and ifftw are complex, multidimensional arrays.
+
+The next section computes the FFT on a random complex, 6-dimensional array of shape 3 4 5 6 7 8. This may take a few seconds to run.
+)
+
+NB. =========================================================
+Lab Section
+)
+A=: j./ ?. 1 + i. 2 3 4 5 6 7 8
+
+$A
+
+$B=: fftw A
+
+$C=: ifftw B
+
++/ , clean A - C      NB. A matches C
+
+NB. =========================================================
+Lab Section Other Facilities
+The verbs fftw and ifftw should cover practically all uses of FFTW.
+
+However, there are two other facilities that are designed to optimize repeated uses of the FFTW library on arguments of the same shape, which are supported by the utilities in the jfftw locale:
+
+   saved plans
+   performance measures
+)
+
+NB. =========================================================
+Lab Section
+When using the underlying facilities directly, take care to ensure the arguments given are correct. Calling DLL procedures incorrectly can crash your system or corrupt memory.
+)
+
+NB. =========================================================
+Lab Section Saved Plans
+The verbs fftw and ifftw dynamically create and destroy plans. If you are calling an FFT on same sized arrays repeatedly, you can create and reuse a plan, destroying it when no longer required.
+
+In the following example, a plan is created for a 2 3 4 array, and FFT is called twice using it:
+)
+shape=: 2 3 4
+data=: j./? 1+ i.2, shape                   NB. random data
+
+NB. get data in right shape for library call and allocate
+NB. space for output.
+in=: (,|:data)
+out=: in * 0
+
+[P=: createplan_jfftw_ shape;in;out;_1;64   NB. create plan
+
+NB. execute plan.  Result goes to out, which we must reshape
+fftwexecute_jfftw_ P
+|: (|.shape) $ out
+
+data=: j./? 1+ i.2, shape                   NB. new random data
+
+in=: (,|:data) a: } in                      NB. in-place update of input
+data
+
+fftwexecute_jfftw_ P                        NB. reuse existing plan
+|: (|.shape) $ out
+
+destroyplan_jfftw_ P                        NB. destroy plan
+
+NB. =========================================================
+Lab Section Performance Measures
+The final argument to the verb createplan is a flag, 0=MEASURE or 64=ESTIMATE, where ESTIMATE is the default.
+
+Plans created with the MEASURE flag are optimized for a given array size. It takes much longer to create such plans than with ESTIMATE, and so you would do this only when a large number of FFTs are to be calculated for the same array shape.
+
+When creating plans with the ESTIMATE flag you may set up the input either before or after creating the plan.  But when creating plans with the MEASURE flag, you must set up the input after creating the plan.
+
+The next section creates a plan with a performance measure. It will take a little longer to run, most of the time being spent creating the plan.
+)
+
+NB. =========================================================
+Lab Section
+)
+shape=: 2 3 4
+in=: (*/ shape) $ 1j1                       NB. input must hold complex
+values
+out=: in * 0
+
+[P=: createplan_jfftw_ shape;in;out;_1;0    NB. create plan
+
+NB. populate input after creating plan.
+data=: j./? 1+ i.2, shape
+in=: (,|:data) a: } in
+
+fftwexecute_jfftw_ P                        NB. execute plan
+|: (|.shape) $ out                          NB. result goes to out
+
+destroyplan_jfftw_ P                        NB. destroy plan

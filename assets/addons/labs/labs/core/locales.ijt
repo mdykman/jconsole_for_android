@@ -1,0 +1,769 @@
+LABTITLE=: 'Locales'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Overview
+This lab shows how to program with locales. Locales are used in modular programming, an effective way to build large applications.
+
+Building an application as a monolith is a recipe for failure. It is better to build and test small modules, and then combine them to build the application.
+)
+
+NB. =========================================================
+Lab Section
+Names can be a problem in an application built by simply adding modules together.
+
+Name conflict is the most visible problem. Different modules can have different definitions for the same name.
+
+An equally serious problem is just dealing with the sheer number of names in a single set.
+)
+
+NB. =========================================================
+Lab Section
+The point is:
+
+Each module has its own names.
+
+Combining modules in a single set of names loses modularity and causes name conflicts.
+
+We want to keep the modular sets of names in execution in the application.
+)
+
+NB. =========================================================
+Lab Section
+A locale is a set of names and their definitions that is available for execution.
+
+An application can have several locales. In particular it can have different locales for different modules.
+
+Locales preserve the modularity of modules in execution in the application.
+)
+
+NB. =========================================================
+Lab Section
+This lab discusses the basic facilities provided by locales, and shows how they can be used to do modular programming.
+
+Lab "Object Oriented Programming" shows how a certain model of working with locales can be used to do OOP.
+
+The lab first loads utilities in coutil.ijs:
+)
+load 'coutil'
+
+NB. =========================================================
+Lab Section plot example
+First a quick example of locales in action.
+
+plot is a module of hundreds of definitions. These definitions are loaded into their own locale, so we do not see their names in the main application.
+
+The next step plots the data in d. If the plot is opened in a separate window, close it after you have seen the plot, close it and continue the lab.
+)
+clear ''      NB. erase all names
+d=: ?1+i.50
+names ''      NB. list names
+load 'plot'   NB. load plot module
+names ''      NB. no new names
+
+NB. =========================================================
+Lab Section
+)
+plot d
+
+NB. =========================================================
+Lab Section locale
+All global definitions are in a locale.
+
+A J session can have several locales, and thereby can have several sets of globals.
+)
+
+NB. =========================================================
+Lab Section colib
+The 18!:x foreigns work with locales.
+
+colib.ijs defines utilities using 18!:x and in general you will not use 18!: directly.
+
+colib utilities start with a prefix of co. The co is for class/object which is OOP terminology. One use of locales is in providing OOP.
+)
+
+NB. =========================================================
+Lab Section current locale
+Erase all names to start with a clean slate, and define a few.
+
+Since all globals are in a locale, these definitions are in a locale.
+)
+clear '' NB. erase all
+a=: 23
+b=: 20
+f=: +
+a f b
+
+NB. =========================================================
+Lab Section locale name
+The locale used by execution is called the current locale.
+
+Definitions are found and set in the current locale.
+
+names returns names in the current locale.
+
+a, b, and f are defined in current locale.
+)
+names ''
+a
+b
+f
+
+NB. =========================================================
+Lab Section coname
+A locale is identified by a name.
+
+Initially base (locale name base) is the current locale.
+
+coname returns the boxed name of the current locale.
+
+Note that after each lab section is run, the current locale is reset to base.
+)
+coname ''
+
+NB. =========================================================
+Lab Section cocurrent
+cocurrent sets the current locale.
+
+Set foo as current and clear out old definitions.
+)
+cocurrent 'foo'
+clear 'foo'
+names ''
+
+NB. =========================================================
+Lab Section
+Define a, b, and f in the foo locale.
+)
+cocurrent 'foo'
+a=: 200
+b=: 100
+f=: -
+coname ''
+names ''
+a f b
+
+NB. =========================================================
+Lab Section
+We have definitions of a, b, and f in two locales.
+)
+cocurrent 'base'
+a , b , a f b
+cocurrent 'foo'
+a , b , a f b
+
+NB. =========================================================
+Lab Section
+Execution uses names FROM the current locale.
+)
+23+7              NB. no names, no locale is used
+cocurrent 'base'  NB. base current
+a , 7             NB. a in base
+cocurrent 'foo'   NB. foo current
+a , 7             NB. a in foo
+
+NB. =========================================================
+Lab Section locale name
+You can execute a name IN another locale by suffixing the name with the locale name bracketed with _ characters.
+
+The name a_foo_ is read "a in locale foo".
+
+You can use any kind of name (noun, verb,...) with a locale suffix to refer to the name in a locale.
+)
+cocurrent 'base'
+a
+a_foo_
+a , a_foo_
+f_foo_
+
+NB. =========================================================
+Lab Section
+A name with a locale name suffix is called a locative.
+)
+cocurrent 'base'
+f            NB. name
+f_foo_       NB. locative
+1 f 4
+1 f_foo_ 4
+
+NB. =========================================================
+Lab Section
+Execution of a locative first sets the locale of the name as the new current locale.
+
+It then executes the name in the new current locale.
+
+When execution of the name finishes, the current locale is reset.
+
+Locative execution:
+ set current / execute name (in current) / reset
+
+Or, more briefly:
+ set/execute/reset
+)
+
+NB. =========================================================
+Lab Section
+If the locative is a noun, set/execute/reset is the same as just getting the value from the locale.
+)
+a
+a_foo_
+a , a_foo_ , a , a_foo_
+
+NB. =========================================================
+Lab Section
+set/execute/reset is more interesting when the name uses other names.
+
+Executing t_foo_ :
+ 0. set     - set foo as current
+ 1. execute - execute t (in foo) which sets q (in foo)
+ 2. reset   - reset current (as base)
+
+When t_foo_ is executed it sets q in foo, not q in base.
+)
+cocurrent 'base'
+t_foo_ =: verb def 'q=: y'
+t_foo_ 456
+q_foo_
+q          NB. q isn't defined in base
+
+NB. =========================================================
+Lab Section
+Define verb g in both base and foo. The definitions are the same and both reference a global abc.
+)
+cocurrent 'foo'
+g=: verb def 'abc + y'
+cocurrent 'base'
+g=: verb def 'abc + y'
+
+NB. =========================================================
+Lab Section
+Setting base as current and executing g uses the value of abc in base.
+)
+cocurrent 'base'
+abc =: 10
+g 5
+
+NB. =========================================================
+Lab Section
+Setting foo as current and executing g in foo uses the value of abc in foo.
+)
+cocurrent 'foo'
+abc=: 100
+g 5
+
+NB. =========================================================
+Lab Section
+The interesting case is when execution starts in base and g_foo_ is executed.
+
+Executing g_foo_ uses the global abc in foo.
+)
+cocurrent 'base'
+abc
+abc_foo_
+g_foo_ 5
+
+NB. =========================================================
+Lab Section
+Executing g_foo_ sets foo as current and executes g in foo. When execution comes to the name abc, it gets the definition from current, foo. When execution of g finishes, current is restored to the previous locale, base.
+)
+cocurrent 'base'
+g_foo_ 10
+a_foo_ =: 47
+a , g_foo_ 10
+coname ''
+
+NB. =========================================================
+Lab Section
+Define verb h in foo to return the current locale.
+
+See how execution moves from base, to foo, and back.
+)
+cocurrent 'base'
+h_foo_ =: verb def 'coname'''''
+(coname'') , (h_foo_ ''), (coname '') , (h_foo_ '') , coname ''
+
+NB. =========================================================
+Lab Section execution stack
+The execution stack is the record of the names, locales, and local variables in execution.
+
+Curiously, local (no e!) names used in executing explicit definitions are part of the execution record and are not stored in a locale.
+
+The execution stack is not a part of any locale.
+)
+
+NB. =========================================================
+Lab Section
+If aa calls bb which calls cc, then during execution the stack records this information.
+
+Snapshots of the stack would show:
+
+                   cc
+     bb            bb(calls cc)  bb(resumes)
+ aa  aa(calls bb)  aa            aa           aa(resumes)
+)
+
+NB. =========================================================
+Lab Section
+As well as tracking who calls who, the stack also tracks the current locale.
+
+When a locative is executed, the stack records the current locale name and sets the new current.
+
+When execution of a locative finishes, the stack information is used to reset the current locale of the caller and then resumes execution.
+)
+
+NB. =========================================================
+Lab Section
+If aa calls bb which calls cc_foo_ which calls dd, then when dd is in execution the stack looks like:
+
+ dd
+ cc_foo_
+ bb
+ aa
+
+cc_foo_ sets current to foo and dd is therefore a name in foo.
+)
+
+NB. =========================================================
+Lab Section
+Let us make the definitions to see this.
+)
+cocurrent 'base'
+aa=: verb def 'bb 0'
+bb=: verb def 'cc_foo_ 0'
+cc_foo_ =: verb def 'dd 0'
+dd_foo_ =: verb def '13!:18$0' NB. return stack
+
+NB. =========================================================
+Lab Section
+Study the output of running the example.
+
+In the ijx window execute:
+
+   aa 0
+
+The result is the stack when dd executes.
+)
+cocurrent 'base'
+NB. execute sentence:   aa 0
+
+NB. =========================================================
+Lab Section
+The result should be:
+    aa 0
+ dd 0
+ cc_foo_ 0
+ bb 0
+ aa 0
+)
+
+NB. =========================================================
+Lab Section summary so far
+A locale is a set of global definitions.
+
+Execution uses definitions from the current locale.
+
+A locative is a name with a suffix bracketed by _ characters.
+
+Executing a locative sets a new current locale. When execution of the name finishes, current is reset.
+
+The stack records who called who and which locale is current. The stack also records the local definitions of explicit definitions.
+
+coname returns the current locale.
+cocurrent sets the current locale.
+)
+
+NB. =========================================================
+Lab Section base
+The base locale is current when J starts.
+
+You can use a locative to refer to a name in the base locale just as you would with any other locale.
+)
+PREPARE
+cocurrent'base'
+PREPARE
+a=: 123
+a
+a_base_
+a_base_ =: 234
+a
+
+NB. =========================================================
+Lab Section
+t in foo is defined to set global a in the base locale.
+)
+t_foo_ =: verb def 'a_base_ =: y'
+t_foo_ 345
+a
+
+NB. =========================================================
+Lab Section
+A locative with no locale name between the bracketing _ characters is treated as if it had the name base.
+
+abc__ is the same as abc_base_
+
+Treating __ as _base_ is for compatibility with earlier versions, and in general you should use _base_ .
+)
+a=: 3
+a
+a_base_
+a__
+a__ =: 23
+a
+
+NB. =========================================================
+Lab Section direct locale name
+Locatives such as f_foo_ are "direct locatives".
+
+A direct locative suffix explicitly gives the locale name.
+)
+
+NB. =========================================================
+Lab Section indirect locale name
+An indirect locative suffix is the name of a variable that contains the locale name.
+
+An indirect locative suffix is separated from the name by two _ characters.
+
+q is defined as the boxed locale name foo.
+
+q can be used in indirect locatives.
+)
+q=: <'foo'
+a_foo_
+a__q
+f_foo_
+f__q
+
+NB. =========================================================
+Lab Section
+a_foo_ is read as "a in foo".
+
+a__q is read as "a in indirect q", or casually as "a in q".
+)
+
+NB. =========================================================
+Lab Section
+Indirect locatives make it easier to program with locales. In particular it avoids the use of ". "execute".
+
+Indirect locatives are essential in using locales in OOP.
+
+It is difficult to give a simple example of the use of indirect locatives outside of OOP.
+
+The following example is artificial, but does point out some interesting things.
+)
+
+NB. =========================================================
+Lab Section
+Assume two libraries of statistical routines. One set of definitions is defined in locale s1 and the other in s2.
+
+There is an r verb in both that returns random numbers. The s1 definition of r is ?, and the s2 definition skews by having a minimum of 2.
+)
+r_s1_ =: ?
+r_s2_ =: 2 & >. @ ?    NB. skewed random
+test=: dyad def 'r__s y [ s=. <x'
+
+NB. =========================================================
+Lab Section
+The test x indicates which library version of r to use.
+)
+d=: 20#5
+'s1' test d
+'s2' test d
+
+NB. =========================================================
+Lab Section
+Without indirect locatives the solution would have to use ". or conditional execution.
+)
+test2=: dyad def '". ''r_'' ,x , ''_ y'''
+
+'s1' test2 d
+'s2' test2 d
+
+NB. =========================================================
+Lab Section path
+We have said execution gets definitions from the current locale. This is not the whole picture.
+
+If a name is not defined in the current locale, execution searches for it in the locales in the CURRENT PATH and the first definition found is used as if it were defined in the current locale.
+)
+
+NB. =========================================================
+Lab Section
+A path is a list of locales and every locale has a path.
+
+When a locale is created it has a path of the z locale.
+
+copath returns the path of a locale.
+
+The current path is the path of the current locale.
+)
+copath 'foo'
+coname ''          NB. name of current locale
+copath coname ''   NB. current path
+
+NB. =========================================================
+Lab Section z
+ Erase qwert in base and define qwert in z.
+
+Execution of qwert in base looks for a definition in base. When it is not found, the search continues in the locales in the current path. z is in the path, so the qwert definition in z is used.
+)
+erase 'qwert'
+qwert
+qwert_z_ =: 'from z'
+qwert
+
+NB. =========================================================
+Lab Section
+The definition of qwert from z is used as if it had been defined in base. base remains the current locale and there is no change of current to z.
+
+Executing a locative changes current and we use the phrase "name IN locale".
+
+We use the phrase "name FROM locale" if execution uses a definition from a locale in the current path.
+
+Executing a name FROM a path locale does not change the current locale.
+)
+
+NB. =========================================================
+Lab Section
+A name can be defined in more than one locale in the current path. The first definition is used.
+)
+qwert               NB. defined in z
+qwert=: 'in base'   NB. defined in base and z
+qwert               NB. first one is used
+qwert_z_
+
+NB. =========================================================
+Lab Section
+Assignment is always in the current locale.
+)
+ggg=: 'ggg from base'
+ggg_z_ =: 'ggg from z' NB. z current, then assigns ggg
+ggg
+ggg_z_
+ggg=: 123
+ggg
+ggg_z_
+erase 'ggg'  NB. erase ggg in base
+ggg          NB. not in base, so comes from z
+erase 'ggg_z_'
+ggg
+
+NB. =========================================================
+Lab Section
+Verb p is defined in z.
+
+If it is executed IN base (the definition comes FROM z), the value of K is the value of K from base.
+
+If p is executed IN z, then z is current and the value of K is the value from z.
+)
+erase 'p'   NB. erase p in base
+k=: 'K from base'
+k_z_ =: 'K from z'
+p_z_ =: verb def 'k'
+p 0
+p_z_ 0
+
+NB. =========================================================
+Lab Section
+Now that you understand paths and the z locale, something that might have been a mystery before can be cleared up.
+
+names lists names in the current locale.
+
+When we list the names of verbs in the current (base) locale notice that the verb names is not listed. Yet it can be executed!
+)
+names verb  NB. names of type verb
+
+NB. =========================================================
+Lab Section
+names is not defined in base, but is defined in z.
+
+The definition of names from z is executed as if it were in base.
+
+Similarly, names is not defined in foo. Executing names_foo_ sets foo as current and executes names. names is not defined in foo, so the definition from z is used.
+)
+names verb
+names_base_ verb
+names_foo_ verb
+
+NB. =========================================================
+Lab Section IN and FROM summary
+Execution is IN the current locale.
+
+cocurrent and locatives (direct and indirect) set the current locale.
+
+Execution gets definitions FROM the current locale and the locales in the current path.
+
+Execution looks for a definition only in the current path.
+
+A definition FROM the path does not set a new current locale and executes as if it were in the current locale.
+)
+
+NB. =========================================================
+Lab Section copath
+Create two new locales.
+)
+a_m_ =: 'a from m'
+b_mm_ =: 'b from mm'
+copath 'm'
+copath 'mm'
+a_m_
+b_mm_
+
+NB. =========================================================
+Lab Section
+Dyad copath sets a new path. The left argument is a list of boxed locale names.
+
+Locale m has a path set as mm and z.
+
+b is not defined in m and the definition from mm, which is in the path, is used.
+)
+('mm';'z') copath 'm'
+copath 'm'
+b_m_
+
+NB. =========================================================
+Lab Section
+a and b are both valid names when used in m The a definition comes from m and the b definition comes from mm.
+
+names only lists names in the current locale. names does not search down the path for all names that could be used.
+)
+a_m_
+b_m_
+names_m_ ''
+
+NB. =========================================================
+Lab Section
+copathnl lists names defined in the current locale and its path.
+
+copathnl does not include names defined in z. There are quite few and it is generally not useful to list them.
+)
+copathnl_m_ ''
+
+NB. =========================================================
+Lab Section
+copathnlx returns a result which shows which path locales have definitions for a name. Names in z are not reported.
+)
+copathnlx_m_ ''
+
+NB. =========================================================
+Lab Section
+Add another locale and change the path of m to include it.
+
+The copathnlx result shows:
+ a is defined in the m and mmm
+ b is defined in mm
+ c is defined in mmm
+)
+a_mmm_ =: 'a in mmm'
+c_mmm_ =: 'c in mmm'
+('mm';'mmm';'z') copath 'm'
+copathnlx_m_ ''
+
+NB. =========================================================
+Lab Section path summary
+A locale path is a list of locale names.
+
+The current path is the path of the current locale.
+
+Execution gets definitions from the current locale and locales in the current path.
+
+copath 'abc'         - returns path of the locale
+
+path copath 'abc'    - sets path of the locale
+)
+
+NB. =========================================================
+Lab Section conl 0
+conl 0    - returns list of locale names
+
+conames 0 - returns formatted list of locale names
+)
+conl 0
+conames 0
+
+NB. =========================================================
+Lab Section coerase
+coerase erases a locale.
+
+Erasing a locale that is on the execution stack is tricky. In this case the locale is actually erased when it is no longer on the stack.
+)
+conames 0
+coerase <'foo'
+conames 0
+
+NB. =========================================================
+Lab Section cocreate
+So far all locales had names that started with an alphabetic and were chosen by the programmer.
+
+cocreate creates a locale with an name of digits.
+
+cocreate is intended primarily for use in OOP and we will just take a quick look here.
+)
+w=: cocreate ''
+w
+'the locale name is: ' , >w
+
+NB. =========================================================
+Lab Section
+cocreate returns a new, previously unused, name of digits.
+
+A locale name that references a locale created with cocreate will cause an error if used after the locale is erased. This avoids bugs where a reference is used after a locale is erased.
+)
+[w=. cocreate ''
+coerase w
+cocreate ''
+
+NB. =========================================================
+Lab Section
+Locales with names starting with an alphabetic are "named locales".
+
+Locales with names with only digits are "numbered locales".
+
+In OOP terminology a named locale is a class and a numbered locale is an object.
+)
+
+NB. =========================================================
+Lab Section
+A numbered locale name can be used just like a named locale name.
+)
+w=: <'200'
+abc_200_ =: 123
+abc__w
+abc__w=: 'testing'
+abc_200_
+
+NB. =========================================================
+Lab Section
+)
+cocreate ''
+cocreate ''
+conl 0    NB. named
+conl 1    NB. numbered
+conl ''   NB. both
+
+NB. =========================================================
+Lab Section
+coreset erases all numbered locales, except for those used by session windows.
+)
+conl 1
+coreset''
+conl 1
+
+NB. =========================================================
+Lab Section 18!:x
+Locales are used by direct and indirect locatives and by the 18!:x foreigns.
+
+Summary of 18!:x and colib.ijs definitions:
+ 18!:1   conl        - 0/1  named/numbered
+ 18!:2   copath      - return path : set path
+ 18!:3   cocreate    - create numbered
+ 18!:4   cocurrent   - set current
+ 18!:5   coname      - return current
+ 18!:55  coerase     - erase
+)
+
+NB. =========================================================
+Lab Section summary
+Locales are useful in modular programming. You can load different sets of definitions in different locales. There are no name conflicts, yet you can use them all together in execution.
+
+Lab "Object Oriented Programming" builds on this lab to show how locales are used in OOP, the next level of modular programming.
+)

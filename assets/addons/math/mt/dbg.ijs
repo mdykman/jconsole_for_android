@@ -4,7 +4,7 @@ NB. dbg  Conj. to force verb to show debug info
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -29,7 +29,7 @@ coclass 'mt'
 NB. =========================================================
 NB. Local definitions
 
-gshapes=: $`($(;<)($ L: 0)) @. (0 < L.)  NB. get shapes
+gshapes=: $`($(;<)($ L: 0))@.(0 < L.)  NB. get shapes
 
 NB. ---------------------------------------------------------
 NB. dbg1
@@ -94,4 +94,4 @@ NB. Application:
 NB. - to debug verb '*' in verb (+/ .*) try:
 NB.     C=. A (+/ .(* dbg_mt_ '*')) B
 
-dbg=: 2 : 'u`(u dbg1_mt_ n)`(u dbg2_mt_ n) @. DEBUG_mt_'
+dbg=: 2 : 'u`(u dbg1_mt_ n)`(u dbg2_mt_ n)@.DEBUG_mt_'

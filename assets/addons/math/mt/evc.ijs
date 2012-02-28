@@ -9,9 +9,9 @@ NB. testtgevc   Test tgevcxxx by general matrices given
 NB. testevc     Adv. to make verb to test tgevcxxx by
 NB.             matrices of generator and shape given
 NB.
-NB. Version: 0.7.0 2011-08-06
+NB. Version: 0.8.0 2011-10-29
 NB.
-NB. Copyright 2011 Igor Zhuravlev
+NB. Copyright 2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -131,15 +131,15 @@ tgevcly=: 4 : 0
         if. *.`<:/ (j { cond2) , abs1wj do.
           work=. work % abs1wj
         end.
-        work=. j (-@(%&(j{di))) upd work
+        work=. j -@(%&(j{di)) upd work
         abs1wj=. sorim j { work
         if. j > 0 do.
           NB. w = w + y[j] * (a*S[:,j] - b*P[:,j]) with scaling
-          if. ((abcoeffa mp & (j&{) abrwork) >: (bignum % abs1wj)) *. (1 < abs1wj) do.
+          if. ((abcoeffa mp&(j&{) abrwork) >: (bignum % abs1wj)) *. (1 < abs1wj) do.
             work=. work % abs1wj
           end.
           workadd=. (((je { ios) { abcoeff) * j { work) * (((0,],0:),:(2 1,])) j) ({.@(1 0 2&|:)) ;. 0 y
-          work=. (i. j) (+`-/@(,&workadd)) upd work
+          work=. (i. j) +`-/@(,&workadd) upd work
         end.
         j=. <: j
       end.
@@ -278,9 +278,9 @@ NB.   X   - k×n-matrix, some or all of right eigenvectors
 NB.   k   - integer in range [0,n]
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   (tgevcll -:      tgevcur &.: (|:"2)) SP
-NB.   (tgevclr -:      tgevcul &.: (|:"2)) SP
-NB.   (tgevclb -: 1 A. tgevcub &.: (|:"2)) SP
+NB.   (tgevcll -:      tgevcur&.:(|:"2)) SP
+NB.   (tgevclr -:      tgevcul&.:(|:"2)) SP
+NB.   (tgevclb -: 1 A. tgevcub&.:(|:"2)) SP
 NB.   (E2 mp Y mp S) -: (E1 mp Y mp P)
 NB.   (S mp (ct X) mp E2) -: (P mp (ct X) mp E1)
 NB. where
@@ -326,9 +326,9 @@ NB.   X   - n×k-matrix, some or all of right eigenvectors
 NB.   k   - integer in range [0,n]
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   (tgevcul -:      tgevclr &.: (|:"2)) SP
-NB.   (tgevcur -:      tgevcll &.: (|:"2)) SP
-NB.   (tgevcub -: 1 A. tgevclb &.: (|:"2)) SP
+NB.   (tgevcul -:      tgevclr&.:(|:"2)) SP
+NB.   (tgevcur -:      tgevcll&.:(|:"2)) SP
+NB.   (tgevcub -: 1 A. tgevclb&.:(|:"2)) SP
 NB.   (E2 mp (ct Y) mp S) -: (E1 mp (ct Y) mp P)
 NB.   (S mp X mp E2) -: (P mp X mp E1)
 NB. where
@@ -340,9 +340,9 @@ NB. - tgevcul models LAPACK's xTGEVC('L','S')
 NB. - tgevcur models LAPACK's xTGEVC('R','S')
 NB. - tgevcub models LAPACK's xTGEVC('B','S')
 
-tgevcul=: ($:~ i.@c) : ((([;tgevci) tgevcs  @ tgevclx           ]) &.: (|:"2))
-tgevcur=: ($:~ i.@c) : ((([;tgevci) tgevcs  @          tgevcly  ]) &.: (|:"2))
-tgevcub=: ($:~ i.@c) : ((([;tgevci) tgevcs"2@(tgevclx,:tgevcly) ]) &.: (|:"2))
+tgevcul=: ($:~ i.@c) : ((([;tgevci) tgevcs  @ tgevclx           ])&.:(|:"2))
+tgevcur=: ($:~ i.@c) : ((([;tgevci) tgevcs  @          tgevcly  ])&.:(|:"2))
+tgevcub=: ($:~ i.@c) : ((([;tgevci) tgevcs"2@(tgevclx,:tgevcly) ])&.:(|:"2))
 
 NB. ---------------------------------------------------------
 NB. tgevcllb
@@ -375,9 +375,9 @@ NB.   YQ  - n×n-matrix, left eigenvectors Y*Q
 NB.   XZ  - n×n-matrix, right eigenvectors X*Z
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   (tgevcllb -: tgevcurb &.: (|:"2        )) SP , Q2
-NB.   (tgevclrb -: tgevculb &.: (|:"2        )) SP , Z2
-NB.   (tgevclbb -: tgevcubb &.: (|:"2@:(1&A.))) SP , Q2 ,: Z2
+NB.   (tgevcllb -: tgevcurb&.:(|:"2        )) SP , Q2
+NB.   (tgevclrb -: tgevculb&.:(|:"2        )) SP , Z2
+NB.   (tgevclbb -: tgevcubb&.:(|:"2@:(1&A.))) SP , Q2 ,: Z2
 NB.   D                         -: B mp Z0
 NB.   D                         -: BZ0f unmlqrn B
 NB.   A                         -: BZ0f unmlqrc C
@@ -453,9 +453,9 @@ NB.   QY  - n×n-matrix, left eigenvectors Q*Y
 NB.   ZX  - n×n-matrix, right eigenvectors Z*X
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   (tgevculb -: tgevclrb &.: (|:"2        )) SP , Q2
-NB.   (tgevcurb -: tgevcllb &.: (|:"2        )) SP , Z2
-NB.   (tgevcubb -: tgevclbb &.: (|:"2@:(1&A.))) SP , Q2 ,: Z2
+NB.   (tgevculb -: tgevclrb&.:(|:"2        )) SP , Q2
+NB.   (tgevcurb -: tgevcllb&.:(|:"2        )) SP , Z2
+NB.   (tgevcubb -: tgevclbb&.:(|:"2@:(1&A.))) SP , Q2 ,: Z2
 NB.   D                         -: Q0 mp B
 NB.   D                         -: Q0fB unmqrln B
 NB.   A                         -: Q0fB unmqrlc C
@@ -501,9 +501,9 @@ NB. - tgevculb models LAPACK's xTGEVC('L','B')
 NB. - tgevcurb models LAPACK's xTGEVC('R','B')
 NB. - tgevcubb models LAPACK's xTGEVC('B','B')
 
-tgevculb=: ((i.@c ([;tgevci) 2&{.) tgevcs  @( tgevclx mp 2{]                    ) ]) &.: (|:"2)
-tgevcurb=: ((i.@c ([;tgevci) 2&{.) tgevcs  @(                   tgevcly mp _1{] ) ]) &.: (|:"2)
-tgevcubb=: ((i.@c ([;tgevci) 2&{.) tgevcs"2@((tgevclx mp 2{]),:(tgevcly mp _1{])) ]) &.: (|:"2)
+tgevculb=: ((i.@c ([;tgevci) 2&{.) tgevcs  @( tgevclx mp 2{]                    ) ])&.:(|:"2)
+tgevcurb=: ((i.@c ([;tgevci) 2&{.) tgevcs  @(                   tgevcly mp _1{] ) ])&.:(|:"2)
+tgevcubb=: ((i.@c ([;tgevci) 2&{.) tgevcs"2@((tgevclx mp 2{]),:(tgevcly mp _1{])) ])&.:(|:"2)
 
 NB. =========================================================
 NB. Test suite
@@ -524,46 +524,46 @@ NB.   berr := max(berr0,berr1)
 NB. where
 NB.   ||M|| := max(||M||_1 , FP_SFMIN)
 NB.   ||v|| := max(|Re(v(i))|+|Im(v(i))|)
-NB.   α(i)  - i-th eigenvalue, also i-th element on S
+NB.   e1(i) - i-th eigenvalue, also i-th element on S
 NB.           diagonal
-NB.   β(i)  - i-th eigenvalue, also i-th element on P
+NB.   e2(i) - i-th eigenvalue, also i-th element on P
 NB.           diagonal
 NB.   l(i)  - i-th left eigenvector
 NB.   lb(i) - i-th back transformed left eigenvector
 NB.   r(i)  - i-th right eigenvector
 NB.   rb(i) - i-th back transformed right eigenvector
 NB.   - tgevcll:
-NB.       berr0 := max(||l(i) * (β(i)*S - α(i)*P)  || / (FP_PREC * max(|| β(i)*S   ||,|| α(i)*P   ||)))
+NB.       berr0 := max(||l(i) * (e2(i)*S - e1(i)*P)  || / (FP_PREC * max(|| e2(i)*S   ||,|| e1(i)*P   ||)))
 NB.       berr1 := max(| ||l(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevclr:
-NB.       berr0 := max(||r(i) * (β(i)*S - α(i)*P)^H|| / (FP_PREC * max(||(β(i)*S)^H||,||(α(i)*P)^H||)))
+NB.       berr0 := max(||r(i) * (e2(i)*S - e1(i)*P)^H|| / (FP_PREC * max(||(e2(i)*S)^H||,||(e1(i)*P)^H||)))
 NB.       berr1 := max(| ||r(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevclb:
 NB.       berr0 := berr(tgevcll)
 NB.       berr1 := berr(tgevclr)
 NB.   - tgevcllb:
-NB.       berr0 := max(||l(i) * (β(i)*H - α(i)*T)  || / (FP_PREC * max(|| β(i)*H   ||,|| α(i)*T   ||)))
+NB.       berr0 := max(||l(i) * (e2(i)*H - e1(i)*T)  || / (FP_PREC * max(|| e2(i)*H   ||,|| e1(i)*T   ||)))
 NB.       berr1 := max(| ||lb(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevclrb:
-NB.       berr0 := max(||r(i) * (β(i)*H - α(i)*T)^H|| / (FP_PREC * max(||(β(i)*H)^H||,||(α(i)*T)^H||)))
+NB.       berr0 := max(||r(i) * (e2(i)*H - e1(i)*T)^H|| / (FP_PREC * max(||(e2(i)*H)^H||,||(e1(i)*T)^H||)))
 NB.       berr1 := max(| ||rb(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevclbb:
 NB.       berr0 := berr(tgevcllb)
 NB.       berr1 := berr(tgevclrb)
 NB.   - tgevcul:
-NB.       berr0 := max(||(β(i)*S - α(i)*P)^H * l(i)|| / (FP_PREC * max(||(β(i)*S)^H||,||(α(i)*P)^H||)))
+NB.       berr0 := max(||(e2(i)*S - e1(i)*P)^H * l(i)|| / (FP_PREC * max(||(e2(i)*S)^H||,||(e1(i)*P)^H||)))
 NB.       berr1 := max(| ||l(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevcur:
-NB.       berr0 := max(||(β(i)*S - α(i)*P)   * r(i)|| / (FP_PREC * max(|| β(i)*S   ||,|| α(i)*P   ||)))
+NB.       berr0 := max(||(e2(i)*S - e1(i)*P)   * r(i)|| / (FP_PREC * max(|| e2(i)*S   ||,|| e1(i)*P   ||)))
 NB.       berr1 := max(| ||r(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevcub:
 NB.       berr0 := berr(tgevcul)
 NB.       berr1 := berr(tgevcur)
 NB.   - tgevculb:
-NB.       berr0 := max(||(β(i)*H - α(i)*T)^H * l(i)|| / (FP_PREC * max(||(β(i)*H)^H||,||(α(i)*T)^H||)))
+NB.       berr0 := max(||(e2(i)*H - e1(i)*T)^H * l(i)|| / (FP_PREC * max(||(e2(i)*H)^H||,||(e1(i)*T)^H||)))
 NB.       berr1 := max(| ||lb(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevcurb:
-NB.       berr0 := max(||(β(i)*H - α(i)*T)   * r(i)|| / (FP_PREC * max(|| β(i)*H   ||,|| α(i)*T   ||)))
+NB.       berr0 := max(||(e2(i)*H - e1(i)*T)   * r(i)|| / (FP_PREC * max(|| e2(i)*H   ||,|| e1(i)*T   ||)))
 NB.       berr1 := max(| ||rb(i)|| - 1 |) / (FP_PREC * n)
 NB.   - tgevcubb:
 NB.       berr0 := berr(tgevculb)
@@ -573,16 +573,16 @@ NB. Notes:
 NB. - berrxx are non-iterative and are require O(N^3) RAM
 
 testtgevc=: 3 : 0
-  vberrll=:  (     normir@:((((  norm1r@:((mp"1 2 (-/"3))~     )                                           )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:( norm1       "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.((     normir@:<:@:normitr%FP_PREC*c)@])
-  vberrlr=:  (     normir@:((((                                   norm1r@:((mp"2 1~(-/"3))~+    )          )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:(       normi "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.((     normir@:<:@:normitr%FP_PREC*c)@])
-  vberrlb=:  (>./@:normir@:((((((norm1r@:( mp"1 2        ~   {.),:norm1r@:((mp"2 1       ) + @{:))~(-/"3))~)(>./@:%)(FP_PREC*(FP_SFMIN>.|:@:(>./"2)@:((norm1,normi)"2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.((>./@:normir@:<:@:normitr%FP_PREC*c)@])
+  vberrll=:  (     normir@:((((  norm1r@:((mp"1 2 (-/"3))~     )                                           )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:( norm1       "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.(     normir@:<:@:normitr%FP_PREC*c)@]
+  vberrlr=:  (     normir@:((((                                   norm1r@:((mp"2 1~(-/"3))~+    )          )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:(       normi "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.(     normir@:<:@:normitr%FP_PREC*c)@]
+  vberrlb=:  (>./@:normir@:((((((norm1r@:( mp"1 2        ~   {.),:norm1r@:((mp"2 1       ) + @{:))~(-/"3))~)(>./@:%)(FP_PREC*(FP_SFMIN>.|:@:(>./"2)@:((norm1,normi)"2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.(>./@:normir@:<:@:normitr%FP_PREC*c)@]
 
-  vberrul=:  (     normir@:((((  norm1r@:((mp"1 2 (-/"3))~ct   )                                           )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:( normi       "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.((     normir@:<:@:normitc%FP_PREC*c)@])
-  vberrur=:  (     normir@:((((                                   norm1r@:((mp"2 1~(-/"3))~|:   )          )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:(       norm1 "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.((     normir@:<:@:normitc%FP_PREC*c)@])
-  vberrub=:  (>./@:normir@:((((((norm1r@:( mp"1 2        ~ct@{.),:norm1r@:((mp"2 1       ) |:@{:))~(-/"3))~)(>./@:%)(FP_PREC*(FP_SFMIN>.|:@:(>./"2)@:((normi,norm1)"2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.((>./@:normir@:<:@:normitc%FP_PREC*c)@])
+  vberrul=:  (     normir@:((((  norm1r@:((mp"1 2 (-/"3))~ct   )                                           )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:( normi       "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.(     normir@:<:@:normitc%FP_PREC*c)@]
+  vberrur=:  (     normir@:((((                                   norm1r@:((mp"2 1~(-/"3))~|:   )          )      % (FP_PREC*(FP_SFMIN>.    (>./"1)@:(       norm1 "2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.(     normir@:<:@:normitc%FP_PREC*c)@]
+  vberrub=:  (>./@:normir@:((((((norm1r@:( mp"1 2        ~ct@{.),:norm1r@:((mp"2 1       ) |:@{:))~(-/"3))~)(>./@:%)(FP_PREC*(FP_SFMIN>.|:@:(>./"2)@:((normi,norm1)"2)@[)))~((_2&{.)*"_ 1|:@|.@:(diag"2)@(2&{.)))~))>.(>./@:normir@:<:@:normitc%FP_PREC*c)@]
 
-  rcondl=. <./ trlcon1"2 SPl=. 2 {. SPQZHTl=. (([ (((0,[) hgezqsvv (, ,:~@idmat)~) , ]) ((gghrdlnn~ (0&,))~((unmlqrc~ ,: trl@:(}:"1)@]) gelqf)/))~ c) y
-  rcondu=. <./ trucon1"2 SPu=. 2 {. SPQZHTu=. (([ (((0,[) hgeqzsvv (, ,:~@idmat)~) , ]) ((gghrdunn~ (0&,))~((unmqrlc~ ,: tru@  }:   @]) geqrf)/))~ c) y
+  rcondl=. <./ trlcon1"2 SPl=. 2 {. SPQZHTl=. (([ (((0,[) hgezqsvv (, ,:~@idmat)~) , ]) ((gghrdlnn~ 0&,)~((unmlqrc~ ,: trl@:(}:"1)@]) gelqf)/))~ c) y
+  rcondu=. <./ trucon1"2 SPu=. 2 {. SPQZHTu=. (([ (((0,[) hgeqzsvv (, ,:~@idmat)~) , ]) ((gghrdunn~ 0&,)~((unmqrlc~ ,: tru@  }:   @]) geqrf)/))~ c) y
 
   ('tgevcll'  tmonad (]          `]`(rcondl"_)`(_."_)`vberrll)) SPl
   ('tgevclr'  tmonad (]          `]`(rcondl"_)`(_."_)`vberrlr)) SPl
@@ -625,8 +625,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testevc_mt_ 150 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testevc_mt_ 150 150
+NB.     _1 1 0 4 _6 4&gemat_mt_ testevc_mt_ 150 150
 NB. - test by random square complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testevc_mt_ 150 150
 
-testevc=: 1 : 'EMPTY_mt_ [ (testtgevc_mt_ @ u @ (2&,)) ^: (=/)'
+testevc=: 1 : 'EMPTY_mt_ [ testtgevc_mt_@u@(2&,)^:(=/)'

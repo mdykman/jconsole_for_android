@@ -1,0 +1,181 @@
+LABTITLE=: 'A Taste of J (2)'
+
+NB. =========================================================
+Lab Section First Steps
+Look at the following J sentences; can you figure them out? The sentences are shown indented 3 spaces; the result, if any, is shown aligned to the left margin.
+
+These simple sentences illustrate some of the core facilities of J, that will be described in this lab.
+)
+tab=: /~
+
+(];*.tab;!tab) _2+i.7
+
+NB. =========================================================
+Lab Section
+To start, note that "verbs" (i.e. functions) in J can apply to several data items at once. Indeed, the basic datatype is an array, and J verbs are designed to apply to arrays. For example, the following adds two lists of numbers:
+)
+2 3 5 + 10 20 30
+
+NB. =========================================================
+Lab Section Adverbs
+The "adverb" in J takes a verb argument and returns another verb, typically related. The behaviour is much like in English: "run quickly", is the verb "run", modified by the adverb "quickly".
+
+The J adverb / results in a verb that applies to each pair of elements, compare with above:
+)
+2 3 5 +/ 10 20 30
+
+NB. =========================================================
+Lab Section
+Thus, +/ forms an addition table, and similarly, */ forms a multiplication table:
+)
+2 3 5 */ 10 20 30
+
+NB. =========================================================
+Lab Section
+Try entering:
+
+   2 3 5 %/ 10 20 30
+)
+
+NB. =========================================================
+Lab Section
+The adverb ~ applies a verb with the same argument on the left as on the right, thus the following two expressions are equivalent:
+)
+0 1 2 3 + 0 1 2 3
+
++~ 0 1 2 3
+
+NB. =========================================================
+Lab Section
+We can combine two adverbs. The following applies the +/ addition table with the same argument on left and right:
+)
++/~ 0 1 2 3
+
+NB. =========================================================
+Lab Section
+Since /~ is to be used again, we give it a name "tab". This is not required, but is helpful in reading later expressions.
+)
+tab=. /~
+
++ tab 0 1 2 3
+
+* tab 0 1 2 3
+
+NB. =========================================================
+Lab Section
+Try entering:
+
+   ^ tab 0 1 2 3
+)
+
+NB. =========================================================
+Lab Section Integer
+The verb i. (integer) generates the first n numbers.
+
+Try entering:
+
+   i. 3 4
+
+   i. 3 4 5
+)
+i.7
+
+NB. =========================================================
+Lab Section Negative Numbers
+Negative numbers are shown with a leading underscore character, which is not the same as "-", the minus verb.
+)
+_2+ i.7
+
+NB. =========================================================
+Lab Section Combining Verbs
+Now lets look at the expression in parentheses:
+
+   ];*.tab;!tab
+
+Ignoring the semicolons for the moment, the expression contains 3 verbs:
+
+] is the identity verb:
+)
+] _2+i.7
+
+NB. =========================================================
+Lab Section
+*. is the least common multiple verb, so *.tab is the corresponding table. For example, the LCM of 3 and 4 is 12:
+)
+3 *. 4
+
+*.tab _2+i.7
+
+NB. =========================================================
+Lab Section
+! is the combinations verb. m!n is the number of ways of taking m combinations of n objects; so !tab is the corresponding table. For example, 2!4 is 6.
+
+Note that if you look at the lower right part of the table, you can see a copy of the triangle of Pascal.
+)
+2!4
+
+!tab _2+i.7
+
+NB. =========================================================
+Lab Section
+The expression in parentheses:
+
+  ];*.tab;!tab
+
+is therefore seen to be of the form:
+
+  f;g;h
+
+for verbs f g and h. It happens that ; is also a verb, so this expression is a list of 5 verbs!
+
+To understand this, consider a simpler list of 3 verbs commonly seen in mathematics. Suppose f and g are functions, then:
+
+   (f + g) x
+
+is typically defined to be
+
+   f(x) + g(x)
+
+In J, this concept is extended to any type of function. Given verbs f g and h, then:
+
+   (f g h) x
+
+is defined as
+
+   (f x) g (h x)
+
+Example:
+)
+(] + %) 1 2 3 4   NB. % is the reciprocal
+
+NB. =========================================================
+Lab Section
+A list of 3 verbs together is called a fork, and defines a new verb.
+
+Here is another example. The verb ; links its arguments together, putting each in a box. The following is the fork: identity linked with reciprocal.
+)
+(] ; %) 1 2 3 4
+
+NB. =========================================================
+Lab Section
+J interprets a list of 5 verbs by creating a fork from the rightmost 3 verbs, then another fork from the new verb and the two remaining verbs.
+
+It may be seen that:
+
+  (];*.tab;!tab)
+
+is a verb that returns the identity; the LCM table; and the combinations table; all linked together.
+
+Lets try it with a different argument:
+)
+(];*.tab;!tab) 3+i.7
+
+NB. =========================================================
+Lab Section Table Utility
+Since verb tables are so useful for exploration, J has a standard utility adverb called "table" that creates a table bordered by its arguments.
+
+For example:
+)
+!table 3+i.7             NB. right argument only
+
+0 1 2 3 !table 3+i.7     NB. left and right arguments

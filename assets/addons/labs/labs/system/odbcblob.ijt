@@ -1,0 +1,164 @@
+LABTITLE=: 'ODBC: Binary large objects - BLOBS'
+LABAUTHOR=: 0 : 0
+John D. Baker
+bakerjd@kos.net
+)
+LABCOMMENTS=: 'This lab illustrates a technique for inserting binary large objects into ODBC databases.'
+LABERRORS=: 1
+
+NB. =========================================================
+Lab Section BLOBS and ODBC
+Many databases that can be accessed by ODBC support long binary and long character datatypes.  Long types are used to store images, arbitrary files and other large chunks of data.  In this lab we will show a simple method that can be used to store and retrieve J nouns as SQL blobs.
+)
+
+NB. =========================================================
+Lab Section
+The method is simple but how well it works is entirely dependent of the underlying ODBC driver and host database.
+This lab uses the ACCESS/97 (SR2) driver and SQLserver 7 driver. Under NT the ACCESS/97 driver can handle about 400,000 hex bytes. With SQL Server 7 this method has been applied to 16 megabyte hex blobs.
+
+To get started define some simple utilities.
+)
+NB. encode J nouns as hexadecimal character lists
+inhex =: [: , 3!:3
+
+NB. decode hexadecimal character lists
+dehex =:  [: 3!:2 ] $~ (# % 8:) , 8:
+
+NB. quote J char lists
+quote =: ''''&,@(,&'''')@(#~ >:@(=&''''))
+
+NB. =========================================================
+Lab Section Why use hexadecimal?
+(inhex) and (dehex) convert arbitrary J nouns to and from hexadecimal lists. The hexadecimal list representation is used because it can represent any J noun in a character format that is free of control characters, quotes, null bytes and other characters that often cause SQL parsing problems.
+)
+hexdat =: inhex dat =: (i. 2 3);'boo';3j7 4j9;2 3$2x^2 3 4
+
+dat -: dehex hexdat
+
+NB. =========================================================
+Lab Section Load ODBC
+)
+NB. load and initialize the ODBC interface script
+load 'dd'
+
+NB. =========================================================
+Lab Section
+NOTE: to run this lab you must register the following data source with the ODBC control panel applet. The next section checks it is correctly registered.
+
+DSN     DRIVER and DATA LOCATION
+-----------------------------------------
+jblob   Access file  ~system\examples\data\jblob.mdb
+)
+NB. check ODBC dsn registration - result should be 1
+(<'jblob') e. {."1 ddsrc 0
+
+NB. =========================================================
+Lab Section Putting blobs
+Connect to the ACCESS J blob database.
+)
+ch =: ddcon 'dsn=jblob'
+
+NB. =========================================================
+Lab Section
+The first step is inserting blobs.  This step defines a simple verb that shows how this can be done.
+)
+putblob =: 4 : 0
+sql =. 'insert into blobs (jjname,jjvalue) values ('
+sql =. sql,(quote x),',',(quote inhex ".x),')'
+sql ddsql y
+)
+
+NB. =========================================================
+Lab Section
+Define and insert some blobs.
+)
+b1 =: i. 2 3 4
+b2 =: ;:'go ahead store me as a blob'
+b3 =: ?1000$100
+b4 =: 2x^1000
+
+(;:'b1 b2 b3 b4') putblob&.> ch
+
+NB. =========================================================
+Lab Section
+List the names in the blob-base
+)
+sh=: 'select jjname from blobs' ddsel ch
+ddfet sh,_1
+
+NB. =========================================================
+Lab Section Getting blobs
+This step defines a (getblob) verb.
+)
+getblob =: 4 : 0
+sql=.'select jjvalue from blobs where jjname = '
+sql=.sql,quote x
+dat=.ddfet(sql ddsel y),_1
+dehex ,>dat
+)
+
+NB. =========================================================
+Lab Section
+Retrieve some blobs.
+)
+b1 -: 'b1' getblob ch
+b2 -: 'b2' getblob ch
+b3 -: 'b3' getblob ch
+b4 -: 'b4' getblob ch
+
+NB. =========================================================
+Lab Section Deleting blobs
+Clear the blobs.
+)
+NB. empty test blob table
+'delete from blobs' ddsql ch
+
+NB. how many deleted
+ddcnt ch
+
+NB. disconnect
+dddis ch
+
+NB. =========================================================
+Lab Section Large blobs
+The remainder of this lab uses the SQL Server 7 driver to show that this method can effectively scale to very large blobs.  If you do not have access to an SQL Server database stop here.  If you do have appropriate access you have to define a simple table with the same structure as the jblob.mdb ACCESS database.  I assume you have defined this table and registered it as an ODBC datasource.  I have defined such a table in the (jdant) datasource.
+)
+ch2 =: ddcon 'dsn=jdant'
+
+NB. =========================================================
+Lab Section
+Show columns of blobs table.
+)
+'blobs' ddcol ch2
+
+NB. =========================================================
+Lab Section
+Store blobs in SQL server table
+)
+(;:'b1 b2 b3 b4') putblob&.> ch2
+
+NB. =========================================================
+Lab Section
+Define a large blob and store in the SQL server table.
+)
+bigblob =: ?1000000#10000
+
+'bigblob' putblob ch2
+
+NB. =========================================================
+Lab Section
+Fetch the blob and compare to original.
+)
+baseblob =: 'bigblob' getblob ch2
+
+baseblob -: bigblob
+
+NB. =========================================================
+Lab Section
+So much for blobs!
+)
+NB. clear test table
+'delete from blobs' ddsql ch2
+
+NB. disconnect datasource
+dddis ch2

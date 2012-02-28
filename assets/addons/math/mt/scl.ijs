@@ -4,7 +4,7 @@ NB. scl  Try to scale without overflow or underflow
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -83,11 +83,11 @@ NB.      3.1) find scaled ratio (f/t)
 NB.           3.1.1) form scaling vector
 NB.                    ftscl := ioft { (1,1,FP_SFMIN)
 NB.           3.1.2) scale (f,t) down by ftscl
-NB.                    (f,t) := ftscl (* ^: |io|) (f,t)
+NB.                    (f,t) := ftscl (*^:|io|) (f,t)
 NB.           3.1.3) find scaled ratio
 NB.                    ft := f/t
 NB.      3.2) scale A up or down
-NB.             B := FP_SFMIN (* ^: io) A
+NB.             B := FP_SFMIN (*^:io) A
 NB.      3.3) scale A by ratio
 NB.             B := ft * B
 NB.
@@ -96,8 +96,8 @@ NB. - models LAPACK's xLASCL('G'), when A is a matrix
 NB. - models LAPACK's xDRSCL, when A is a vector and t=1
 
 scl=: 4 : 0
-  ioft=. ((FP_SFMIN |:@:(*^:2 1) |.) I."1 0 ])@:| x
+  ioft=. ((FP_SFMIN |:@:(*^:2 1) |.) I."1 0 ]) | x
   io=. -/ ioft
-  (%~/ (({&(1 1,FP_SFMIN)) ioft) *^:(| io) x) * (FP_SFMIN&* ^: io y)
+  (%~/ (ioft { (1 1,FP_SFMIN)) *^:(| io) x) * (FP_SFMIN&*^:io y)
 )
 NB. scl=: ((],(0>:-),(0&>:))@(-&2)@((I.~(FP_SFMIN&*^:2 1 _1 _2))/)@:|@[) ((*&>)`(%&>)/@:((FP_SFMIN&*@[&0&.>)"0)) ((;(;~/))~)

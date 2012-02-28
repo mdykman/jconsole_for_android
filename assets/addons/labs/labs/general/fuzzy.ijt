@@ -1,0 +1,419 @@
+LABTITLE=: 'Fuzzy Logic'
+LABAUTHOR =: 'Brian Schott'
+LABERRORS=: 1
+
+NB. =========================================================
+Lab Section Overview
+This lab shows how to create a  linguistic inference system using fuzzy sets. Such systems of linguistic variables are referred to as fuzzy logic systems.
+
+First we describe the concept of membership with nonfuzzy and fuzzy sets.  Then we tackle fuzzy membership for scalar and array fuzzy sets, and later inference with array sets.
+)
+PREPARE
+or =: >.
+and =: <.
+
+TERMS =: <;._2 noun define
+unknown
+rather verylow
+neither veryhigh nor verylow
+not veryhigh
+not verylow
+above medium
+below medium
+moreorless veryhigh
+moreorless medium
+moreorless verylow
+veryhigh
+(above medium) but not veryhigh
+medium
+(below medium) but not verylow
+verylow
+rather veryhigh
+sharply veryhigh
+high
+low
+sharply verylow
+below high
+above low
+low to high
+not above medium
+not below medium
+neither (moreorless veryhigh) nor (moreorless verylow)
+below low
+above high
+neither (sharply verylow) nor (sharply veryhigh)
+low to (rather veryhigh)
+(rather verylow) to high
+medium to rather veryhigh
+medium to rather verylow
+(rather verylow) to low
+(rather veryhigh) to high
+neither verylow nor moreorless veryhigh
+neither veryhigh nor moreorless verylow
+neither verylow nor sharply veryhigh
+neither veryhigh nor sharply verylow
+neither (sharply verylow) nor moreorless veryhigh
+neither (sharply veryhigh) nor moreorless verylow
+moreorless low
+moreorless high
+not moreorless veryhigh
+not moreorless verylow
+(below high) but not verylow
+(above low) but not veryhigh
+medium to high
+medium to low
+moreorless high to low
+)
+
+LABEL =: (POSS  ` BEGIN  ) @. POSSIB
+POSS =: 'possibly '& , @ (LABEL @ NORMALIZE)
+  NORMALIZE =: %>./
+  POSSIB =:  0.65 & <: @: (>./)
+
+BEGIN =: verb define
+CONVEXX =. ((MAXSCAN <. MAXSCAN &. |.) )y
+CONCAVEITY =.   CONVEXX - y
+CONC =. (>./ CONCAVEITY)<0.49
+if. CONC
+do. CONVEX y
+else.
+('(', (LABEL CONVEXX) ,') except (', (LABEL CONCAVEITY),')')
+end.
+)
+
+FORMAT =: ":
+
+FUZ=: (2&*)@:(0.5&-)@:((+/@:|@:(_0.5&+))%#)
+
+CONVEX =: verb define
+NORMALSUB =. (FUZ y) < 0.51
+yn =. y * y > 0.75
+yf =. yf % >./yf =. (y * y <: 0.75)>0.5 * y > 0.75
+if. NORMALSUB
+do. NORMAL y
+else.
+('(', (LABEL yn) ,') or possibly (', (LABEL yf) ,')')
+end.
+)
+
+NORMAL =: verb define
+z =. LCOR - ($LCOR)$(LOC y),IMP y
+f=.". z=. ;PRINT {./: (2*({."1 z)^2)+({:"1 z)^2
+sqr =. +/(y - f)^2
+FUZZ =. (+/ (y - fuzzily f)^2)<sqr
+,>;(-1+FUZZ){.'fuzzily ';z
+)
+
+
+LOC =: 0.5"_+WTAVG%#
+  WTAVG=:(SUM@(* INDEX) % SUM)
+    SUM =: +/
+    INDEX =: i: @<.@ -:@#
+
+PREPARE
+
+
+
+NB. =========================================================
+Lab Section Set Membership
+Membership in a fuzzy set is a matter of degree, traditionally quantified as a real fraction between 0 and 1, inclusive.
+In contrast, membership in a crisp (nonfuzzy) set, is all or nothing, which can be represented by 1 and 0.
+
+
+For example the set of odd integers is a crisp set. For example define a nonfuzzy set i to be integers as follows: i =: i: 6 . The set i is called the Universe of Discourse.
+Then the memberships of the nonfuzzy SUBset of odd integers can be generated with the verb oddQ =: 2&| . The J phrase (,:~ oddQ) i produces a row of memberships above a row of universal set values.
+We consider here nonfuzzy universal sets and fuzzy subsets. The latter are often referred to more simply as fuzzy sets.
+)
+
+] i =: i: 6
+oddQ =: 2&|
+(,:~ oddQ) i
+
+gt1Q =: >&1
+(,:~ gt1Q) i
+
+NB. =========================================================
+Lab Section Fuzzy Set Membership
+A possible verb for generating fuzzy memberships for the set "about 2" is given below. The meaning of the modifier "about" depends on the context.
+For example, in the current context the J verb about2Q is workable. Notice that 2 has full membership (1.0) and others integers have gradually lesser memberships with floor of 0.0.
+The plot shows the isosceles triangle shaped membership function about2Q with a base of twice 4 is produced by about2Q . Compare it with the similar verb about0Q .
+The set i is discrete. The verb about2Q would also apply to real-valued sets, but we consider only discretized real-valued sets.
+)
+
+fs =: fuzzySubset =: ,:~
+
+about2Q =: -.@(%&4)@(4&<.)@(|@(-&2))
+(fs about2Q) i
+
+load 'plot'
+'yrange 0 1' plot ;/|. (fs about2Q) i
+
+about0Q =: -.@(%&4)@(4&<.)@(|@(-&0))
+(fs about0Q) i
+
+NB. =========================================================
+Lab Section Fuzzy Set Membership (cont'd)
+When the set itself is understood, the list of memberships alone are adequate for representation. Eg, consider just about2Q i , without fs.
+
+)
+
+about2Q i
+
+
+NB. =========================================================
+Lab Section Conjunction and Disjunction
+*. and +. can be used for conjunction and disjunction for crisp sets, but are usually not adequate for fuzzy sets.
+<. and >. are often used for fuzzy set conjunction and disjunction. They generalize *. and +. to a fuzzy context.
+)
+
+(fs gt1Q *. oddQ) i
+(fs gt1Q +. oddQ) i
+
+(fs about2Q <. about0Q) i
+(fs about2Q >. about0Q) i
+
+'yrange 0 1' plot |.fs ((about2Q >. about0Q),:about2Q <. about0Q) i
+
+NB. =========================================================
+Lab Section Trapezoid membership function Generation
+The dyadic verb "trap" creates trapezoid shaped membership functions. Each trapezoid is defined by  a 4-tuple (aa, bb, cc, dd).
+The 4-tuple is the righthand argument for the dyad trap; the lefthand argument is the vector of universal set values.
+
+The "core" of a fuzzy membership function are the values which correspond to a membership value of 1.0.
+The "support" of a fuzzy membership function are the values which correspond to a membership value > 0.0.
+
+)
+
+NB.     ______
+NB.    /      \
+NB.   /        \
+NB. _/          \____
+NB. aa bb    cc dd
+NB.
+
+trap =: (ns`ls`co`rs`ns) @. ag"0 1
+
+ag =: ge`2:@. (2: <: ge - le)
+  ge =:  +/"1@(>:/)
+  le =: 4: - +/&.|."1@(<:/)
+
+ls =: leftsupp =:(([-aa)%bb-aa)
+rs =: rightsupp =:((dd-[)%dd-cc)
+co =: core =: 1:
+ns =: nonsupport =: 0:
+
+aa =: {.@]
+bb =: 1&{@]
+cc =: _2&{@]
+dd =: {:@]
+
+(i.16) ([ fs trap/) 2 6 8 10 NB. The right side must be nondecreasing integers
+'yrange 0 1' plot ;/|.(i.16) ([ fs trap/) 2 6 8 10
+
+i ([ fs trap/) _2 2 2 6  NB. "about 2" from above
+
+
+NB. =========================================================
+Lab Section Language Primitives Generation
+Linguistic vocabularies can be created by modifying a small set of primary terms. The ideas shown follow mostly the work of Frederick Wenstop.
+We will assume a real variable with a discretized domain 0(10)100 which might measure the age of a US citizen.
+Seven primary (context free) terms anchor this language: verylow, low, medium, high, veryhigh, unknown, undecided.
+The array primvals contains the membership values and the universal set.
+)
+
+deftraps =: ".@,;._2  noun define
+ 0  0  1  5
+_2  2  3  7
+ 0  4  6 10
+ 3  7  8 12
+ 5  9 10 10
+ 0  0 10 10
+_1 _1 _1 _1
+)
+
+primvals =:|:(i.11)    (trap/,.10"_*[)deftraps
+'verylow low medium high veryhigh unknown undecided age' =: primvals
+
+age fs verylow
+age fs low
+age fs medium
+age fs high
+age fs veryhigh
+age fs (medium >. high)
+
+NB. =========================================================
+Lab Section Language Modifiers
+The primitive terms of a fuzzy linguistic systems can be hedged or modified and combined to produce richer phrases.
+Modifiers include: sharply, moreorless, indeed, possibly, fuzzily, not, neither, nor, above, below, and rather. The verbs below suggest how these modifiers can be coded in J.
+
+)
+
+sharply =: ^& 4
+moreorless =: ^& 0.25
+indeed =: ((0.5&>)*INDEEDTMP) + ((0.5&<:) * (INDEEDTMP &. -.))
+  INDEEDTMP =: (4&*)@(^&3)
+possibly =: %&2
+fuzzily =: ((0.5&>)*FUZTMP) + ((0.5&<:) * (FUZTMP &. -.))
+  FUZTMP =: (0.6&*)@(^&0.25)
+not =: -.
+neither =: -.
+nor =: >.
+above =: [: |. 1: , [: }. 1: - [: >./\ |.
+below =: above &. |.
+rather =: 3 : 'Z%(>./Z=.y - 0.85 * A % (>./A=.(^A%(>./A=.(A*y)-0.6*A=.y >:0.6))-1))'
+
+NB. "old" and "young" are primitives relevant to the context "age".
+old =: veryhigh
+young =: verylow
+
+age fs not sharply old
+age fs possibly above young
+
+NB. =========================================================
+Lab Section Language Conjunctives
+Conjunctives or combiners include: and, but, or, except, and to.
+
+)
+
+and =: <.
+but =: and
+or =: >.
+except =: 0&>.@-
+to =: (TOTMP`(TOTMP~)) @. (LOC@[ < LOC@])
+  TOTMP =: MAXSCAN@] <. (MAXSCAN&.|.)@[
+    MAXSCAN =: >./\
+  LOC =: 0.5"_+WTAVG%#
+    WTAVG=:(SUM@(* INDEX) % SUM)
+      SUM =: +/
+      INDEX =: i: @<.@ -:@#
+
+
+age fs verylow to medium
+
+NB. =========================================================
+Lab Section Implication and Modus Ponens
+Classical modus ponens follows the pattern below for making inferences.
+Given the 2 premises:
+   X is A implies Z is C
+   X is A
+
+We can conclude that:
+   Z is C
+
+Fuzzy modus ponens can follow the pattern below for making inferences.
+
+Given that:
+   X is A implies Z is C
+   X is A'
+
+We can conclude that:
+   Z is C',
+      where C' is like C to the extent that A' is like A
+
+We will abbreviate this fuzzy modus ponens as follows.
+
+   Cp =: Ap with A implies C
+)
+
+
+implies =: (not@[or])"0/  NB. (A->C)<->(notA or C)
+
+NB. this implication membership array is used later in modus ponens
+verylow implies veryhigh
+(_,age),age ,. verylow implies veryhigh
+
+NB. =========================================================
+Lab Section Implication and Modus Ponens (cont'd)
+)
+
+with =: >./ . and
+or =: >.
+and =: <.
+
+age fs verylow with verylow implies veryhigh NB. notice the result is NOT "veryhigh"
+age fs (1,10#0) with verylow implies veryhigh NB. notice the result is "veryhigh"
+
+NB. =========================================================
+Lab Section Alternative Conjunctives
+Fuzzy logics are quite varied. For example we investigate new definitions of "or" and "and".
+<. and >. are often used for fuzzy set conjunction and disjunction.
+Another common pair are (0:>. +-1:)"0  and (1:<.+)"0 . We explore some consequences next.
+
+)
+
+(fs about2Q      <.       about0Q) i
+(fs about2Q (0:>. +-1:)"0 about0Q) i
+
+(fs about2Q      >.   about0Q) i
+(fs about2Q (1:<.+)"0 about0Q) i
+
+or =: (1:<.+)"0
+and =: (0:>. +-1:)"0
+age fs verylow with verylow implies veryhigh
+age fs (1,10#0) with verylow implies veryhigh
+
+NB. =========================================================
+Lab Section Linguistic Location and Imprecision
+Once an inference is produced yielding a vector of membership function values,
+it is often desirable to convert to more natural language results, a process of linguistic approximation.
+Linguistic approximation is based on a linguistic vector's relationships to archtypical linguistic terms like those in TERMS.
+The membership functions of the phrases in TERMS vary with respect to two key features, Location and Imprecision.
+Plotting the results of the verbs LOC and IMP applied to these phrases shows their coverage of these features.
+
+)
+LOC =: 0.5"_+WTAVG%#
+  WTAVG=:(SUM@(* INDEX) % SUM)
+    SUM =: +/
+    INDEX =: i: @<.@ -:@#
+
+IMP =: SUM % #
+
+LCOR =: (LOC,IMP) @:".&> TERMS
+'point;pensize 4' plot ;/|:LCOR
+
+
+NB. =========================================================
+Lab Section Basic Linguistic Approximation
+Linguistic Approximation is process of translating a fuzzy membership function vector into a natural language phrase.
+The verb BASIC demonstrates Linguistic Approximation for the basic phrases in TERMS. This topic is especially like Frederick Wenstop's work.
+
+)
+BASIC =: verb define
+z =. LCOR - ($LCOR)$(LOC y),IMP y
+PRINT {./: (2*({."1 z)^2)+({:"1 z)^2
+)
+
+PRINT =: verb define
+>y { TERMS
+)
+
+BASIC 0 0 0 0 0 0 0.25 0.5 0.75 1 1
+
+NB. =========================================================
+Lab Section Basic Linguistic Approximation (cont'd)
+By playing with the last four integers (within 0 and 49) on the next command you can see the contents of TERMS.
+
+)
+(5j2&":,BASIC)@".@> TERMS{~0 10 16  49
+
+
+NB. =========================================================
+Lab Section Linguistic Approximation
+The verb LABEL performs rather elaborate recursive Linguistic Approximation.
+
+)
+
+age fs verylow with verylow implies veryhigh
+LABEL verylow with verylow implies veryhigh
+
+NB. =========================================================
+Lab Section summary
+
+Some very simple examples of fuzzy logic which extend propositional logic have been shown.
+Fuzzy logic has been evolving since about 1965, and has many accomplishments and much more to accomplish.
+The linguistic system here is greatly simplified. Notably, the hedge term "very" here is very different from Wenstop's original.
+Here we have looked at a variant of fuzzy logic that is quite different from that used in its most prolific area:
+fuzzy logic controllers.
+FLCs traditionally employ a slightly distinct inference system not based on material implication and modus ponens,
+but on the disjunctive syllogism argument form.
+)

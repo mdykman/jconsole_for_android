@@ -1,0 +1,367 @@
+LABTITLE=: 'Families of Functions'
+
+NB. =========================================================
+Lab Section INTRODUCTION
+The adoption of the notations
+
+    2      3
+   x  and x
+
+for the square and the cube functions united these two monadic functions in a single dyadic "power" function. Moreover, the notation suggested fruitful extensions from the exponents 2 and 3 to negative, fractional, and even complex, numbers.
+
+Adopting De Morgans symbol ^ for the power, we can bring the expression for powers to the form used for other dyadic functions, as in x+3 and x-3 and x*3. Thus:
+)
+5^2
+5^3
+5^2 3 0.5
+
+(5^2)*(5^3)
+5^5
+
+5^_3
+(5^_3)*(5^3)
+
+NB. =========================================================
+Lab Section
+
+As illustrated above, the power function unites a variety of monadic functions in a single family, providing insight into relations among the family members, as well as economy of notation.
+
+In what follows, we will define further families based on the power function, including polynomials, rationals, rising and falling factorial functions, hypergeometrics, the exponential, and circular and hyperbolic sines and cosines.
+
+Further information on any notation used may  be obtained by pressing the F1 key to display the vocabulary, and using the mouse to click on the desired item.
+
+For example, look up the function ^ used in this section, and the function p. and the operators & and t. to be used in subsequent sections.
+)
+
+NB. =========================================================
+Lab Section POLYNOMIALS
+
+.               2     3              3
+The functions 3x  + 2x and 3 + 2x + x  are examples of polynomials, which are united in a single family under the dyadic function p. as illustrated below:
+)
+x=: 2
+
+(3*x^2)+(2*x^3)
+
+0 0 3 2 p. x
+
+3+(2*x)+(x^3)
+
+3 2 0 1 p. x
+
+NB. =========================================================
+Lab Section OPERATORS
+
+An operator applies to verbs and nouns, i.e. functions and variables, to produce a function. In what follows, we will use operators to define new families, but will also introduce the Taylor operator (t.) for the purpose of clarifying the definitions and uses of certain functions.
+
+We begin with some simple examples of operators:
+)
+f=: 0 0 3 2 & p.   NB. &(And or With) bonds the argument with p.
+
+f x
+
+g=: 3 2 0 1 & p.
+
+g x
+
+f g x
+
+h=: f@g          NB. @ (Atop) applies f atop the result of g
+
+h x
+
+NB. =========================================================
+Lab Section
+
+Taylor operator
+
+The expression f t. produces a function which applied to indices produces corresponding coefficients of a polynomial f. Thus f t. 0 gives the leading (zeroth) coefficient, and f t. 0 1 2 3 4 5 6 7 8 gives the first 9.
+)
+i=: 0 1 2 3 4 5 6 7 8
+
+f t. i
+
+g t. i
+
+(f@g) t. i
+
+(f*g) t. i            NB. Product of polynomials
+
+0 0 9 12 4 3 2 0 0 p. x
+
+(f x)*(g x)
+
+(f*g) x
+
+(f+g) t. i           NB. Sum of polynomials
+
+NB. =========================================================
+Lab Section EXPERIMENTS
+
+To gain deeper understanding, experiment with variations on the expressions used in each section. For example, enter the last expression from the preceding section, that is:
+
+   (f+g) t. i
+
+Then enter the following two sentences, separately:
+
+   i.4
+
+   (f+g) t. i.4
+
+To facilitate accurate re-entry, use the up arrow key to move the cursor up to any desired expression on the screen and then press the ENTER key to bring it down to the entry area for possible revision before again pressing ENTER to execute it.
+
+Revision may be done by using the backspace key and the left and right arrow keys.
+)
+
+NB. =========================================================
+Lab Section
+
+Do not hesitate to enter any experiment that occurs to you -- the worst that can occur is an error message of some kind. However, do not waste too much time on expressions whose results you do not understand. It is better to return to them after gaining more familiarity with the language.
+)
+
+NB. =========================================================
+Lab Section
+
+Try some of the following experiments concerning the production of multiplication tables, and return to them with new functions encountered in later sections, such as the rising factorial rf=: ^!.1. Thus:
+)
+i.5
+
+2 3 5 7 */ i.5       NB. A multiplication table
+
+2 3 5 7 *table i.5   NB. Bordered by args for easy reading
+
+(i. */ i.) 5
+
+*/~@i. 5
+
+NB. =========================================================
+Lab Section EXPONENTIAL FUNCTION
+
+.               x
+The expression e  is commonly used to denote the exponential function. As suggested by the notation, the result is a quantity e raised to the power of the argument x
+
+The quantity e is called the number of Euler, and is denoted here by 1x1 . Thus:
+)
+e=: 1x1
+
+e
+
+i=: 0 1 2 3 4 5 6
+
+e^i
+
+exp=: e&^
+
+exp i
+
+exp t. i
+
+1 % exp t. i         NB. % denotes division
+
+!i      NB. The coefficients are the reciprocal factorials
+
+NB. =========================================================
+Lab Section
+
+The symbol ^ has been used thus far to denote a function of two arguments. Used monadically (with only one argument) it denotes the function e&^, that is, the exponential. Thus:
+)
+^ i
+
+^ t. i
+
+NB. =========================================================
+Lab Section
+
+The exponential will now be used to generate a family of functions that includes the familiar sine and cosine, as well as the less familiar hyperbolic sine and hyperbolic cosine.
+
+To obtain the hyperbolics we will employ the odd and even operators; to obtain the trigonometric functions we will apply the hyperbolics to complex arguments.
+)
+
+NB. =========================================================
+Lab Section EVEN AND ODD PARTS
+
+The expression f@- applies f atop negation, and the result of f@- x is therefore the result of applying f to the negative of x
+
+The function g=: f + f@- is therefore an "even" function such that g x equals g -x Graphically, this implies that g is "reflected in the vertical axis". For example:
+)
+f=: 3 1 4 2 5 & p.
+
+g=: f + f@-
+
+i=: 0 1 2 3 4 5 6
+
+g i
+
+g -i
+
+g t. i    NB. Non-zero coefficients only in even positions
+
+NB. =========================================================
+Lab Section
+
+Similarly, the function h=: f - f@- is odd, and its graph is reflected in the origin.
+
+The even and odd parts of f are defined to be one-half of the functions g and h, so that their sum gives the original function. The operators even=: ..- and odd=: .:- give these even and odd parts. For example:
+)
+even=: ..-
+
+odd=: .:-
+
+ep=: f even
+
+op=: f odd
+
+ep i
+
+op i
+
+(ep+op) i
+
+f i
+
+ep t. i
+
+NB. =========================================================
+Lab Section
+
+The even and odd parts of the exponential function are the hyperbolic cosine and hyperbolic sine, respectively. Thus:
+)
+cosh=: ^ even
+
+sinh=: ^ odd
+
+y=: 0 1 2 3 4
+
+cosh y
+
+sinh y
+
+((cosh y)^2) - ((sinh y)^2)
+
+NB. =========================================================
+Lab Section COS AND SIN
+
+The ordinary cosine and sine may be expressed by applying the corresponding hyperbolic to an imaginary argument.
+
+The expression ix is commonly used to denote the "imaginary" value obtained by multiplying x by the square root of minus one i.e. denoted here by 0j1. We will instead use j.x, where j. denotes a function that multiplies its argument by the square root of minus one. For example:
+)
+y=: 0 1 2 3 4 5
+
+j. y
+
+cos=: cosh@j.
+
+cos y
+
+sin=: sinh&.j.
+
+sin y
+
+NB. =========================================================
+Lab Section
+
+It should be noted that although the cos function was defined by cosh@j., the sin was defined by a  different operator &.. To appreciate the reason for this try applying sinh@j. to y, and then use F1 to examine the definition of the "dual" operator &..
+)
+
+NB. =========================================================
+Lab Section STOPES
+
+The product */x+i.n will be called a "stope" because the n factors x+i.n rise like the steps of a mine stope following a sloping vein of ore. The corresponding function */@([+i.@]) is also called a "rising factorial function". For example:
+)
+x=: 6
+n=: 4
+
+i.n
+
+x+i.n
+
+*/x+i.n
+
+rf=: */@([+i.@])
+
+x rf n
+
+NB. =========================================================
+Lab Section
+
+A falling factorial may be defined analogously by multiplying the integers i.n by _1; and the power function itself can be obtained by multiplying by zero. Thus:
+)
+*/x+_1*i.n     NB. Falling factorial
+
+*/x+1*i.n      NB. Rising factorial
+
+*/x+0*i.n      NB. Power function
+
+NB. =========================================================
+Lab Section
+
+These definitions may be united in a single family by the "fit" operator !. as illustrated below:
+)
+rf=: ^!.1
+
+ff=: ^!._1
+
+po=: ^!.0
+
+x (rf,po,ff) n
+
+NB. =========================================================
+Lab Section STOPE POLYNOMIALS
+
+The fit operator can be similarly applied to the polynomial function p. to produce polynomials based upon falling and rising factorials as well as upon the power function. Thus:
+)
+ffp=: p.!._1    NB. Falling factorial polynomial
+
+rfp=: p.!.1     NB. Rising factorial polynomial
+
+1 2 3 (ffp,p.,rfp) 5
+
+5 ff 0 1 2
+
++/ 1 2 3 * 5 ff 0 1 2
+
+NB. =========================================================
+Lab Section RATIONAL FUNCTIONS
+
+If f and g are polynomials, their quotient q=:f%g is a rational function. For example:
+)
+f=: 1 2 1&p.
+
+g=: 1 3 3 1&p.
+
+q=: f%g
+
+x=: 0 1 2 3 4 5 6
+
+q x
+
+q t. x
+
+(g%f) x
+
+(g%f) t. x
+
+(0 1&p. % 1 _1 _1&p.) t. i.6 5
+
+NB. =========================================================
+Lab Section
+
+The table of Fibonacci numbers in the preceding section illustrates the fact that the Taylor coefficients of rational functions present surprising and interesting patterns. For further discussion of this see the "CONCRETE MATH COMPANION", available from website www.jsoftware.com.
+)
+
+NB. =========================================================
+Lab Section HYPERGEOMETRICS
+
+The hypergeometric operator H. applies to lists to produce a rational function whose limiting value, for a large number of terms, may represent a wide variety of important functions. For example:
+)
+1 H. 1 i.6       NB. The exponential function
+
+1 H. 1 t. i.6
+
+NB. =========================================================
+Lab Section
+
+Although the hypergeometric function is a ratio of two polynomials, the limbs of the ratio are normally expressed as products over rising factorials, which are equivalent to polynomials. For further details on the definition of the operator H., use key F1 to display the vocabulary, and select the appropriate item.
+
+For further discussion of the hypergeometric see Section 15 of the National Bureau of Standards "Handbook of Mathematical Functions", edited by Abramowitz and Stegun.
+)

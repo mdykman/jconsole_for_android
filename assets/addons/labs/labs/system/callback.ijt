@@ -1,0 +1,342 @@
+LABTITLE=: 'DLL Callback'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section dll callback
+This lab shows how to use a DLL callback.
+
+Labs "DLL: Using System DLLs (file examples)", "DLL: Writing and Using A DLL" and User Manual chapter "DLLs and Memory Management" are prerequisites and some familiarity with the Win API, C programming and C data types is assumed.
+
+A bad declaration or parameters for a dll call or a dll callback can CRASH or CORRUPT MEMORY.
+)
+require 'dll'      NB. dll utilities
+require 'winapi'   NB. Win API utilities
+erase 'cdcallback' NB. ensure undefined
+
+NB. =========================================================
+Lab Section
+A dll can callback to the caller. For example:
+
+  J calls dll       ->
+                        dll runs
+                    <-  dll callback to J
+  J callback runs
+  J returns         ->
+                        dll runs
+                    <-  dll returns to J
+  J runs
+)
+
+NB. =========================================================
+Lab Section
+The Win API function EnumWindows uses a callback.
+
+EnumWindows enumerates all top-level windows by passing each window handle, in turn, to a callback function. EnumWindows continues until all are enumerated or the callback returns 0.
+
+BOOL EnumWindows(WNDENUMPROC lpEnumFunc, LPARAM lParam);
+
+ lpEnumFunc - address of callback function
+ lParam - application-defined value
+)
+
+NB. =========================================================
+Lab Section
+When J calls EnumWindows, the first parameter is the address of the callback a function in J. The callback function is defined as:
+
+BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam);
+
+ hwnd - window handle
+ lParam - app-defined value (same as from EnumWindows call)
+
+To continue enumeration, the callback returns 1.
+)
+
+NB. =========================================================
+Lab Section
+  J calls EnumWindows ->
+                          EnumWindows runs
+                      <-  calls callback in J
+  J callback runs
+  J returns 1         ->
+                          ...
+                          EnumWindows calls J for
+                          each window or until the
+                          J callback returns 0
+                          ...
+                      <-  EnumWindow returns
+  J runs
+)
+
+NB. =========================================================
+Lab Section
+We need the address of a callback function for EnumWinodws. This is the address of a C function built when the J engine was compiled.
+
+EnumWindows needs only one callback. But in general there could be an infinite number of different callbacks with different arguments and it is not practical to compile all of them.
+)
+
+NB. =========================================================
+Lab Section
+Although there are many different types of parameters, they are all passed at the lowest level as integers. A bit, byte, character, unicode character, short integer, and integer are all passed as integers. A floating point value is passed as 2 integers. Everything else is passed as a pointer that can be treated as an integer.
+
+At this low level we do not care what the integers are, just how many of them there are.
+)
+
+NB. =========================================================
+Lab Section
+EnumWindowsProc has two parameters and both are passed as integers. We need a callback that takes two integer arguments.
+
+cdcb returns the address of a compiled C routine that handles the number of integers in the cdcb argument.
+
+The cdcb callbacks return an integer result. All C data types except floating point can be returned in an integer.
+)
+cdcb 2 NB. address of C routine with 2 integer arguments
+
+NB. =========================================================
+Lab Section
+)
+cdcb2=: cdcb 2 NB. cdcb2 is a C callback with 2 integer args
+
+NB. =========================================================
+Lab Section
+)
+EnumWindows=: 'EnumWindows'win32api
+
+NB. =========================================================
+Lab Section
+EnumWindows has 2 args:
+
+  cdcb2 - address of callback with 2 iteger args
+  app-defined value - unused, use 123
+)
+EnumWindows cdcb2 ; 123 NB. gets cdcallback value error
+
+NB. =========================================================
+Lab Section
+Look at the error above. The C callback called J verb cdcallback with 2 integer arguments.
+
+The first integer is the window handle and the second is the app-defined value.
+
+An error in the callback returns 0 to the dll. In this case a 0 result from the callback causes EnumWindows to stop enumeration.
+)
+
+NB. =========================================================
+Lab Section
+We need to define cdcallback.
+
+An easy way to see each callback is to write the args to the screen.
+
+cdcallback is defined to write its args to the screen and return 1 to continue the enumeration.
+)
+output=: 2&((1!:2)~) NB. write to screen
+cdcallback=: 1:[output
+
+NB. =========================================================
+Lab Section
+EnumWindows will run cdcallback for each top-level window. There are a frightening number of these and there will be many lines of output that ends with the final boxed result of the cd call.
+
+Next section runs:
+   EnumWindows cdcb2 ; 123
+)
+
+NB. =========================================================
+Lab Section
+)
+EnumWindows cdcb2 ; 123
+
+NB. =========================================================
+Lab Section
+We can collect the results of the enumeration in a global.
+)
+callbackr=: i.0 0 NB. empty global result
+cdcallback=: 3 : '1[callbackr=:callbackr,y'
+
+NB. =========================================================
+Lab Section
+)
+callbackr=: i.0 0       NB. empty global result
+EnumWindows cdcb2 ; 123 NB. results in global callbackr
+$callbackr
+
+NB. =========================================================
+Lab Section
+)
+10{.callbackr
+
+NB. =========================================================
+Lab Section
+Window titles will make the example more interesting.
+
+gettext calls GetWindowText to get the window title.
+
+format formats the window handle with its title.
+)
+GetWindowText=: 'GetWindowText'win32api
+gettext=: 3 : '(>{.r){.>2{r=.GetWindowText y;(30$'' '');30'
+format=: 3 : '(6":a),,'' '',gettext a=.{.y'
+format ".wd'qhwndx' NB. handle and title of J app window
+
+NB. =========================================================
+Lab Section
+Define cdcallback to collect the window handle and title.
+)
+cdcallback=: 3 : '1[callbackr=:callbackr,format y'
+callbackr=: i. 0 0
+EnumWindows cdcb2 ; 123
+
+NB. =========================================================
+Lab Section
+)
+15{.callbackr NB. many top-level windows have no title
+
+NB. =========================================================
+Lab Section
+enumtop is defined to return top-level handles and titles.
+
+cdcallback is defined locally just before it is used.
+
+Global callbackr is erased and a normal result is returned
+)
+enumtop=: 3 : 0
+callbackr=: i.0 0
+cdcallback=. 3 : '1[callbackr=: callbackr,format y'
+EnumWindows cdcb2;123
+r[erase'callbackr'[r=.callbackr
+)
+
+NB. =========================================================
+Lab Section
+)
+15{.enumtop''
+
+NB. =========================================================
+Lab Section
+EnumChildWindows enumerates child windows of a window. We can call EnumChildWindows from within the EnumWindows callback. You can do a dll call from within a callback that in turn has another callback.
+
+Local definitions of cdcallback allow each dll call to call the appropriate cdcallback definition.
+)
+
+NB. =========================================================
+Lab Section
+EnumChildWindows is similar to EnumWindows except it has an additional arg, the window to enumerate.
+)
+EnumChildWindows=: 'EnumChildWindows'win32api
+
+NB. =========================================================
+Lab Section
+Note how EnumChildWindows is called in the EnumWindows callback and how cdcallback is set before each call so that the appropriate one is used.
+)
+enumall=: 3 : 0
+callbackr=: i.0 0
+cdcallback=. ewcallback NB. EnumWindows callback
+EnumWindows cdcb2;23
+r[erase'callbackr'[r=.callbackr
+)
+
+ewcallback=: 3 : 0 NB. EnumWindows callback
+callbackr=: callbackr,format y
+cdcallback=. ecwcallback NB. EnumChildWindows callback
+1[EnumChildWindows ({.y);cdcb2;321
+)
+
+ecwcallback=: 3 : 0 NB. EnumChildWindows callback
+1[callbackr=:callbackr,'      ',format y
+)
+
+NB. =========================================================
+Lab Section
+)
+all=: enumall'' NB. enumerate all windows
+NB. all is displayed in the next section
+
+NB. =========================================================
+Lab Section
+)
+all
+
+NB. =========================================================
+Lab Section
+Now let us look at EnumDateFormats and its callback.
+
+EnumDateFormats enumerates date formats. EnumDateFormats takes two args: LCID which is the language and a type.
+
+LCID 0 is the default langauge. Type 1 is short formats and 2 is long.
+
+The callback has a single argument. It is passed as an integer, and is the address of a string terminated by a 0.
+)
+
+NB. =========================================================
+Lab Section
+(cdcb 1) is the address of the C callback with 1 integer arg.
+)
+NB. LCID dateformats type
+dateformats=: 4 : 0
+callbackr=: i.0 0
+'kernel32 EnumDateFormatsA i i i i'&(15!:0) (cdcb 1);x;y
+r[erase'callbackr'[r=.callbackr
+)
+
+NB. =========================================================
+Lab Section
+cdcallback is called with 1 integer arg that is the address of the format string. memr reads the string from the address. The 1 result continues the enumeration.
+)
+cdcallback=: 3 : '1[callbackr=: callbackr, memr y,0,_1'
+
+NB. =========================================================
+Lab Section
+)
+0 dateformats 1 NB. default language, short formats
+
+NB. =========================================================
+Lab Section
+)
+0 dateformats 2 NB. default language, long formats
+
+NB. =========================================================
+Lab Section
+Many callbacks are called with an app-defined value. This value was given as an arg to the dll and then is used as an arg to the callback. Typically this value is used by the callback to locate state information.
+
+Since J callbacks have state easily established by the cdcallback verb you will usually not need to use the app-defined value for this.
+)
+
+NB. =========================================================
+Lab Section
+A dll with multiple callbacks will call the same cdcallback verb for each callback and cdcallback needs to distinguish between them. This is easy if there are a different number of args. If there are the same number of args, distinguish by: arg values (e.g., app-defined values), or by sequence state information (e.g., callback A is always called before B).
+)
+
+NB. =========================================================
+Lab Section
+J callbacks are defined for 0 through 9 integer args.
+
+J callbacks return an integer result. This covers no result and all data types that can be represented in an integer. A J callback can not return a floating point result (it could return a pointer to a floating point result).
+
+J callbacks are tied to one instance of J.
+)
+
+NB. =========================================================
+Lab Section
+Summary of J callback limitations:
+
+ 0. cdcallback can not disinguish which callback was called
+ 1. max 9 integer args
+ 2. no floating point result
+ 3. only 1 J instance
+
+These limitations could be removed in future releases if experience shows they are in fact serious.
+)
+
+NB. =========================================================
+Lab Section
+Script system\packages\winapi\browse.ijs uses shell32 function BrowseForFolder with a callback. Study the script to see how the callback is used.
+
+The main verb defined by the script is browse. The x arg is 0 for directory and 1 for file and the y arg is title;path;CSIDL.
+
+The CSIDL values are defined in the script. CSIDL 0 is the Desktop.
+)
+
+NB. =========================================================
+Lab Section
+)
+load '~system\packages\winapi\dirbrowse.ijs'
+0 dirbrowse 'Choose Directory';'c:\';0
+1 dirbrowse 'Select File';'';0

@@ -1,0 +1,1579 @@
+LABTITLE=: '''Neural Networks -- Feedforward w/ Backpropagation'''
+LABAUTHOR=: 'Brian Schott with Raul Miller'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Chapter Overview
+NB. =========================================================
+Lab Section Overview
+Neural nets are often used to "recognize" some feature of a
+set of data.  Typically, there's no simple or closed form
+solution to these sorts of problems, but it's relatively easy
+to obtain sample data.
+
+An example might be terrain classification based on image
+data coming back from a NASA camera mounted on some remote
+probe.
+
+However, for the purposes of this discussion, we will be    
+using problems for which we know the solutions. Our neural
+nets may not be as accurate as the known solution, even after
+training, we're just using these cases as something that's
+easy to recognize, so we can acquaint you with some basic 
+neural net concepts.
+)
+
+NB. =========================================================
+Lab Section Logical "And" network
+Like an idiot savant (IS), a feedforward neural net (FF)
+provides answers to questions on a very narrowly defined
+domain and both an IS and an FF are totally unable to inform
+others of how they yielded their answer or why the answer
+is correct -- if the answer is actually correct. Especially
+for a few tedious and repetitive problems, FFs can give
+helpful answers with very efficient computations which are
+performed by a feedforward processor such as the dyadic J
+verb "ff" below, when it is supplied with a well formulated
+question (a J noun or pronoun: 0 1 below) and another noun
+whose contents completely specify its FF ("FFand" below). In
+J, if "FFand" is a feedforward neural net which knows how to
+compute dyadic logical "and", an FF query might look like the
+ones following. Later we will look further into ff and FFand.
+)
+PREPARE
+
+qrl  =: 7^5   NB. initial random seed value
+tick =: [ <.@%~ (* 3 : 'qrl=:(<:2^31)|(7^5)*qrl')@]  
+roll =: (<:2^31)&tick"0
+
+X =: +/ . *
+step      =: 0&<
+actOut   =: step
+opf  =: >@{.             NB. open first
+bias     =: 1&,               NB. prepend 1
+w        =: opf@]             NB. weights
+
+outFwdPrv    =: bias@[               NB. output of prev   layer
+outFwdHid    =: outFwdPrv actHid@X w NB. output of hidden layer(s)
+outFwdExt    =: outFwdPrv actOut@X w NB. output of output layer
+
+fwMore =: 1: < #@]
+fwEnd  =: <@outFwdExt
+fwCont =: outFwdHid ; outFwdHid fw }.@]
+fwCont =: outFwdHid ([;  fw )}.@]
+fw      =: fwEnd`fwCont @. fwMore
+
+ff =: >@{:@fw
+
+PREPARE
+
+0 1 ff FFand =: <,._0.3 0.2 0.2
+1 1 ff FFand
+
+NB. =========================================================
+Lab Section Logical "Or" network
+Similarly, if "FFor" is a feedforward neural net which knows
+how to compute dyadic logical "or" this might look like the
+following in J.
+)
+0 1 ff FFor =: <,._0.1 0.2 0.2
+0 0 ff FFor
+
+NB. =========================================================
+Lab Section Logical "Or" and "And" network
+By stitching together the previous values for "or" and "and"
+we get a FF which tells us both outputs.
+)
+0 1 ff FForAnd =: < _0.1 0.2 0.2 ,._0.3 0.2 0.2
+0 0 ff FForAnd
+
+NB. =========================================================
+Lab Section Training pattern for Logical "And"
+FFs are developed -- "trained" -- using a process called
+backpropagation which repeatedly uses available samples --
+"patterns"  -- of output-input pairs. Useful patterns for
+training "FFand" could be supplied with the array containing
+4 rows, each with 1 output value and 2 input values of the
+pronoun "AND".
+)
+]AND =: (,.~*./"1),/@:>@{;~0 1
+
+NB. =========================================================
+Lab Section Training  Logical "And"
+The most basic backpropagation or backprop training process
+for neural nets can be coded by a dyadic verb, say "trn"
+below, which takes as its arguments a list of patterns and
+its current status as an FF. The result of the verb "trn"
+with its arguments is a revised FF, hopefully better than its
+input FF. Returning to the example above, assume that
+"FFand0" is the original untrained version of "FFand",
+containing a fixed set of connected neurons, and no
+trained knowledge, but a collection of randomly generated
+neuronal connections. Using "trn" in J, one round of
+training of FFand0 might look like the following.
+)
+PREPARE
+opl  =: >@{:             NB. open last
+last =: {:@]
+prev =: _2&{@]           NB. get next to last
+forward   =: ] |:@,: fw
+FORWARD   =: (''"_ ; [),forward
+
+outBckExt =: opl@last
+outBckPrv =: bias@opl@prev    NB. prev output with bias
+inBckExt  =: outBckPrv X wOld
+inBckPrv  =: outBckPrv X wOld
+desout   =: [
+errExt  =: desout-outBckExt
+errPrv  =: [
+derivOut =: 1:
+
+wOld     =: opf@last
+wAdjExt =: outBckPrv */ derivOut@:inBckExt * errExt
+wAdjHid =: outBckPrv */ derivHid@:inBckPrv * errPrv
+LrnRate   =: 0.25
+wNewExt =: wOld+LrnRate&*@wAdjExt
+wNewHid =: wOld+LrnRate&*@wAdjHid
+
+bpBegin_proc =: wNewExt;(}.@wNewExt X errExt) bp }:@]
+bpBegin      =: (<@wNewExt) ` bpBegin_proc @. bpMore
+bpMore       =: 1: < #@]     
+bpEnd        =: ''"_
+bpCont       =: wNewHid  ; (}.@wNewHid  X errPrv) bp }:@]
+bp            =: bpEnd`bpCont @. bpMore
+
+firstl    =: {.@[  
+nnoinput  =: -@<:@#@>@{.@]
+desired   =: nnoinput }."1 _ firstl
+input     =: nnoinput {."1 _ firstl
+weights   =: ]
+
+TRN       =: desired BACKWARD input FORWARD weights
+trnMore  =: 0: < #@[
+trnCont  =:  }.@[ trn TRN
+trnEnd   =: ]
+trn       =: trnEnd`trnCont @. trnMore
+
+BACKWARD      =: }.@|.@bpBegin
+
+PREPARE
+
+]FFand1 =: AND trn FFand0 =: <,._0.2 0.1 0
+
+NB. =========================================================
+Lab Section
+And a more realistic repeated training of FFand0 might 
+use J's power conjunction ^: .
+)
+AND&trn^:1 5 10 FFand0
+]FFand =: AND&trn^:10 FFand0
+
+NB. =========================================================
+Lab Section Validating a network
+During the training process of a FF, validation of the
+FF-in-training is always important. Ideally, training and
+validation are done with two separate pattern collections,
+say "train.pat" and "validation.pat". Because AND has only
+four cases, there is no difference between the two pattern
+collections. Qualitative validation can be done by
+juxtaposing or subtracting trained output and validation
+output. Such subtraction of the two values is the basis of
+most error measures. Displays of many error and juxtaposed
+values can be very effective. A basic non-graphic display is
+suggested by the following J expression in which the three
+columns are 
+
+   (desired output - trained output),
+   (desired output),
+   (trained output) .
+)
+AND ({.@[(-,,)])"1 AND (}.@["1 ff"1 ]) FFand1
+AND ({.@[(-,,)])"1 AND (}.@["1 ff"1 ]) FFand
+
+NB. =========================================================
+Lab Section More detail follows
+Notice that the numeric values in FFand of Section 2 are
+different from the numeric values in FFand of Section 7,
+and that both FFand's produce excellent results. This
+could be called one of the features of FF's, but it belies
+the fact that FF's cannot explain themselves.
+
+The Sections which follow attempt to provide more detail of
+how the various verbs like "ff" and "trn" are coded, and how
+some of the initialization and parameterization of FFs are 
+accomplished, in J.
+)
+
+NB. =========================================================
+Lab Chapter Perceptrons
+NB. =========================================================
+Lab Section Perceptrons
+A perceptron is a special FF with only two layers: input and
+output.
+)
+
+NB. =========================================================
+Lab Section Feedforward Neural Network
+Our first neural network is a 2 1 network; each atom 
+in this notation indicates the number of nodes in a 
+network layer. With only two layers this network is 
+called a perceptron. The first layer, the "input" layer, 
+contains 2 nodes and an extra node j0 called a "bias" node 
+(which is not counted in the "2 1" notation). The second
+layer, the "output" layer, contains only one node.
+
+Except for the output layer, all FF layers contain an
+extra node called a bias node that will be described
+further later. Bias nodes are not enumerated in the 
+notation scheme above; thus this is a 2 1 network, not
+a 3 1 network. 
+
+(Non-bias) input layer nodes produce as output exactly the
+same value that they are input. "Bias" nodes have no input
+values and yield the value 1 as output. Like other nodes,
+bias nodes are connected to all nodes in the next layer
+except any bias nodes in the next layer.
+
+The "output" layer contains only one node; no bias node.
+Like nodes in any non-input layer, the node in the output
+layer yields as output a value which is computed by its
+so-called "activation function" using the aggregation of 
+all its incoming values.
+
+output(k):    k1
+             / | \
+            /  |  \
+ input(j): j0  j1  j2
+
+The ascii drawing above shows 3 connections
+j0-k1, j1-k1, j2-k1 of our simple 2 1 FF network.
+These three connections correspond to the three numeric
+values contained in "FFand" above and are called
+connection weights. 
+)
+
+NB. =========================================================
+Lab Section Output node steps
+The node in the output layer first sums its input values and
+then applies the sum to the node's "activation function."
+Then the result (or output) of any output node is determined
+according to the definition of the activation function. When
+there are hidden layers, the nodes in them are processed in
+two such sub-steps, also.
+
+We will deal with these sub-steps (summing and activation)
+separately, but later. First we must discuss the connection
+weights.
+)
+
+NB. =========================================================
+Lab Section Connection weights
+Adjacent layers of feedforward networks are connected in a
+"fanout" fashion: every node in one layer fans out to connect
+to every node in the next layer. Fanning out was NOT easy to
+see in this 2 1 network because there is only one node in the
+only "next" layer.
+
+Every connection between adjacent layers has associated with
+it a "connection weight," which is multplied by the node's
+output value to produce the input value for the node in the
+next layer. In the 2 1 network we are exploring (you may
+recognize it as "FFor" from earlier), there are three
+connection weights: ,._0.1 0.2 0.2 .
+
+Later we will discuss methods for finding workable values for
+connection weights for specific problems.
+)
+
+NB. =========================================================
+Lab Section Summing connection weights
+Our perceptron network is designed to model the logical "or"
+and takes only binary values as inputs. The possible inputs
+are limited in this network to the four cases: 0 0, 0 1, 1 0,
+and 1 1.
+
+Recall that in the 2 1 network we are exploring, there are
+three connection weights: ,._0.1 0.2 0.2 . The four 
+possible inputs to the node in the output layer can be
+computed with matrix product as shown here.
+)
+X =: +/ . *
+bias =: 1&,
+(0 0 , 0 1 , 1 0 ,: 1 1) (bias"1@[ X ]) ,._0.1 0.2 0.2
+
+NB. =========================================================
+Lab Section Perceptron activation functions
+In the classic perceptron, the activation function is a step
+function. Step functions yield 1 for input (sums) greater
+than 0 and yield 0 otherwise.
+
+In practice the activation function is applied to the nodes'
+summed inputs, but for now we will we just validate that the
+verb "step" performs correctly as an activation function with
+inputs provided by i: 3 .
+)
+step =: 0&<
+(,: step)     i: 3
+(,: step) 0.1*i: 3
+
+NB. =========================================================
+Lab Section Step function and "Or"
+The step function is applied to the output nodes' inputs to
+yield node outputs. Notice that for binary input values the
+network here exactly reproduces ("recognizes") the logical
+"or".
+)
+(0 0 , 0 1 , 1 0 ,: 1 1) (bias"1@[ step@X ]) ,._0.1 0.2 0.2
+
+NB. =========================================================
+Lab Section Step function and "And"
+By changing the previous connection weights from
+   ,._0.1 0.2 0.2 to
+   ,._0.3 0.2 0.2 ,   
+
+for binary input values the network here reproduces the
+logical "and".
+)
+(0 0 , 0 1 , 1 0 ,: 1 1) (bias"1@[ step@X ]) ,._0.3 0.2 0.2
+
+NB. =========================================================
+Lab Section "Or" and "And"
+By stitching together the previous connection weights for "or" and
+"and"
+   _0.1 0.2 0.2 ,._0.3 0.2 0.2 ,   
+
+for binary input values the network reproduces both the
+logical "or" and "and".
+)
+(0 0 , 0 1 , 1 0 ,: 1 1) (bias"1@[ step@X ]) _0.1 0.2 0.2,._0.3 0.2 0.2
+
+NB. =========================================================
+Lab Section Faulty "Or"
+Imagine for a moment that we have an almost correct "or"
+network, and we will explore a manner for refining it. Notice
+that the connections weights for the following network come
+close, but fail.
+)
+0 0 (bias@[ step@X ]) ,._0.1 0.1 0.2 NB. produces 0
+0 1 (bias@[ step@X ]) ,._0.1 0.1 0.2 NB. produces 1
+1 0 (bias@[ step@X ]) ,._0.1 0.1 0.2 NB. NOT 1
+1 1 (bias@[ step@X ]) ,._0.1 0.1 0.2 NB. produces 1
+
+NB. =========================================================
+Lab Section Delta rule for learning
+One simple rule for updating perceptron connection weights is
+called the "delta rule."
+
+In the NB.s which follow, the postfixed letters (those 
+following the underline character, "_") are subscripts, 
+but they refer to a generic node in the respective layer, not
+to the entire layer at once. 
+
+   NB. weightChange_jk is  0.01 * output_j * error_k
+   NB. where weightChange_jk are between layers j and k,
+   NB. output_j are yields from nodes in layer j,
+   NB. error_k is desiredOutput_k - oldOutput_k
+   NB. 0.01 is a small "learning rate" used here
+
+   NB. in this case, the only error is for network input 1 0
+   NB. so in the delta rule
+   NB. output_j is (bias 1 0), and
+   NB. error_k is (1 - 0), and
+   NB. we abbreviate weightChange_jk as wc
+)
+]wc =: ,. 0.01 * (bias 1 0) */ (1 - 0)    NB. notice / (Table)
+0 0 (bias@[ step@X ]) wc + ,._0.1 0.1 0.2 NB. produces ?
+0 1 (bias@[ step@X ]) wc + ,._0.1 0.1 0.2 NB. produces ?
+1 0 (bias@[ step@X ]) wc + ,._0.1 0.1 0.2 NB. produces 1
+1 1 (bias@[ step@X ]) wc + ,._0.1 0.1 0.2 NB. produces ?
+
+NB. =========================================================
+Lab Section Perceptron delta rule recap
+In the previous section we revised a slightly flawed set of
+connection weights using the delta rule. While the delta rule
+was only explicitly applied to the third data pattern, it was
+really applied to the other data patterns, even ones for 
+which the term "error_k" equalled exactly 0. Such collateral
+consequences need to be managed.
+
+The revision required only one correction step, luckily.
+Otherwise repeated applications of the delta rule would have
+been required, until all data patterns worked. In such a
+process the multiple-item patterns are referred to as batches
+or epochs. 
+
+The delta rule previews the major step in a topic covered
+later, backpropagation.
+
+Also, notice that the final revised connection weights found
+here are different from the ones originally used for logical
+"or" (,._0.1 0.2 0.2), but they also work fine. Generally,
+connection weights are not unique.
+)
+
+NB. =========================================================
+Lab Chapter Training a Perceptron for an Unknown Pattern
+NB. =========================================================
+Lab Section Unknown dyadic relationship
+We will attempt to develop a neural network for a dyadic verb
+"unknown" for which samples are easily generated in the
+following manner. 
+
+Based on the FF output/input pair results of the experiments
+below you may well be able to figure out "unknown", even
+without cheating. But let's see if the neural network can be 
+trained to do it.
+
+(Notice that |: is used periodically in the experiments for
+this and later examples, only to format the results for 
+better space usage on the window.)
+)
+PREPARE
+
+unknown =: ([ + +:@])"0
+
+PREPARE
+
+CP =: {@(,&<)  NB. Cartesian product
+                           CP~ 2 3 _1
+|:                     >@,@CP~ 2 3 _1  NB. input duples
+            unknown/ "1>@,@CP~ 2 3 _1  NB. output singles
+|:UNK =: (,~unknown/)"1>@,@CP~ 2 3 _1  NB. output-input triples
+
+NB. =========================================================
+Lab Section Architecture of the unknown net
+The architecture of the neural network will be almost the
+same as it has been for the perceptron. But now we are
+dealing with real net inputs and outputs so the activation
+functions must be revised. We will try a simple "identity"
+(or "linear") activation function. 
+
+Also, with an unknown relationship it is customary to
+initialize the connection weights with a random number
+generator. To get random fractions in a range between
+[-y,+y] and rounded off to one decimal postion, "rn" from
+the following verbs can be used.
+
+(To make sure all users select the same initial connection
+weights we will re-seed the random number generator first
+using qrl  =: 7^5 , as shown here. Also, "roll" is used 
+in place of J's primitive "?" to produce system-independent 
+results)
+
+Compare the ACTUAL and DESIRED values to assess the
+considerable error in the initial neural network.
+)
+PREPARE
+
+UNK =: (,~unknown/)"1>@,@CP~ 2 3 _1
+X =: +/ . *
+bias =: 1&,
+step =: 0&<
+
+PREPARE
+
+qrl  =: 7^5        NB. re-seed the random number generator
+tick =: [ <.@%~ (* 3 : 'qrl=:(<:2^31)|(7^5)*qrl')@]  
+roll =: (<:2^31)&tick"0
+
+times10 =: 10&*
+inflate =: >:@+: 
+rn =: (roll--:@<:)@ inflate &.: times10
+|: b =: ,. rn 3#2
+identity =: ]
+NB. next is ACTUAL net output; then DESIRED net output
+6j1":|:   (}."1 UNK) (bias@[ identity@X ])"1 _ b
+
+6j1":     ({."1 UNK)
+
+NB. =========================================================
+Lab Section Computing error
+Recall that desired net output and actual net output were
+calculated as follows. The difference between the two is
+referred to as "error". We prepare to streamline this error
+calculation in this Section.
+)
+NB. next is ACTUAL net output; then DESIRED net output
+6j1":|:   (}."1 UNK) (bias@[ identity@X ])"1 _ b
+6j1":     ({."1 UNK)
+
+NB. =========================================================
+Lab Section Streamling the Computing of Error
+The pattern for computing error for a network is as follows.
+(While it may seem that this pattern is the negative of
+error, this pattern allows us to simply add to adjust,
+rather than to subtract.)
+
+   error = (desired output) - (actual output)
+
+We streamline this error calculation in this Section. This
+involves using the # of the right argument ("nnoinput") to
+partition the rows of the left arguments of "desired" and
+"input". 
+)
+nnoinp    =: -@<:@#@]  NB. negated number of input values
+desire    =: nnoinp }."1 _ [
+inp       =: nnoinp {."1 _ [
+actual    =: bias@inp identity@X ]
+error     =: desire  - actual
+
+NB. restated ACTUAL net output; then DESIRED net output
+6j1":|:   UNK actual"1 _ b
+6j1":|:   UNK desire"1 _ b
+
+NB. streamlined error
+6j1":|:   UNK error"1 _ b
+
+NB. =========================================================
+Lab Section Adjusting for error
+To adjust for error the delta rule requires that we multiply
+the node output of the previous layer times the error of the
+current layer's nodes' output using */ (the outer product). 
+In the simple case being considered now, for which the 
+previous layer is the input layer, the output of the 
+previous layer's nodes is simply a bias term with the net's
+(and nodes') input values (contained in UNK).
+)
+previous =: bias@inp
+adjustment =: previous */ error
+
+6j1":|:          UNK previous"1 _ b
+6j1":|:        UNK adjustment"1 _ b
+     |: 0.01 * UNK adjustment"1 _ b
+
+NB. =========================================================
+Lab Section Adjustment, one case at a time 
+The weight adjustment verb "wNew" puts together all the
+components of the delta rule.  
+
+The pattern of the adjustment verb "wNew" is as follows,
+where most of its components have been discussed above.
+
+   (new w) = (old w) + (learning rate) * adjustment
+   adjustment = (output prev layer)*/error
+   error = (desired output) - (actual output)
+)
+wOld =: ]
+wNew =: wOld + 0.01"_ * adjustment
+
+|:         UNK       wOld"1 _ b
+|:  0.01 * UNK adjustment"1 _ b
+|:         UNK       wNew"1 _ b
+
+NB. =========================================================
+Lab Section 
+In the previous Section we saw how to adjust the connection
+weights for all of the sample patterns. Each of the 9 columns
+of the following printout shows the adjusted connection
+weights suggested by one of the 9 sample patterns, as if that
+pattern were the only adjustment made. We will come back to
+these multiple independent patterns later, but first we will
+investigate the most basic type of connection weight
+"training": updating the connection weights after each sample
+value, before applying the next sample item.
+)
+
+NB. =========================================================
+Lab Section Recursive training
+Notice that TRAIN returns only the first value of wNew. 
+This admittedly uneconomical computation is the basis of our 
+basic network training scheme, as it enables a recursive 
+algorithm to process each revised result using only the 
+first item of the (repeatedly beheaded) left argument.
+
+In the actual algorithm, the wastefulness of this demo is 
+eliminated.
+)
+
+TRAIN      =: [:{. wNew"1 _
+trainMore  =: 0: < #@[
+trainCont  =:  }.@[ train TRAIN
+trainEnd   =: ]
+train      =: trainEnd`trainCont @. trainMore
+
+
+|:         UNK       wNew"1 _ b
+           UNK       TRAIN    b
+
+NB. =========================================================
+Lab Section 
+This section shows how to step through the recursive
+results of the "train" suite of verbs.
+)
+
+      (,:{.UNK)      train    b
+      ( 2{.UNK)      train    b
+      ( 3{.UNK)      train    b
+
+      ( 9{.UNK)      train    b
+
+NB. =========================================================
+Lab Section Repeated training
+Using the J conjunction "Power" (^:) we can repeatedly
+subject the sample groups to training. The learning rate
+embedded in these verb definitions was 0.01 and controls the
+speed of learning. Considering the evolution pattern of these
+connection weights suggests that in the limit they approach
+,.0 1 2 .
+)
+;/ UNK&train^:1 2 3 b
+;/ UNK&train^:50 150 250 b
+
+NB. =========================================================
+Lab Section Peaking at unknown
+Peaking at the verb "unknown" which was used to define the
+patterns in the noun "UNK," you will recognize the linear
+function f(x,y)=x+2y, for which the limiting connection
+weights provide a perfect match. This kind of perfect match
+is almost never achievable in trained realworld neural nets,
+as we will see later when the net architecture is not
+perfect, as it was here.
+)
+unknown
+
+NB. =========================================================
+Lab Section Batch training
+We now return to the multiple independent adjustments
+afforded by the 9 sample pattern values.
+)
+average =: +/ % #
+batchTrain =: wOld + 0.1"_ * [: average adjustment"1 _
+
+|:      UNK adjustment"1 _ b
+average UNK adjustment"1 _ b
+        UNK batchTrain     b
+
+NB. =========================================================
+Lab Section
+Repeated batch training can be accomplished. Notice that the
+learning rate embedded in batch learning is larger (0.1) than
+for the casewise training (0.01). Still, the results are very
+similar.
+
+Batch training is slightly more efficient, especially in J,
+and is generally preferred in practice.
+)
+;/ UNK&batchTrain^:1 2 3 b
+;/ UNK&batchTrain^:50 150 250 b
+
+;/ UNK&train     ^:50 150 250 b
+
+NB. =========================================================
+Lab Chapter Beyond Perceptrons
+NB. =========================================================
+Lab Section Limits of simplicity
+The examples up till now have been so simple that they could
+almost be solved manually. But as we will see next, even
+simple examples can not be modelled with 2-layer neural
+networks. Expanding to networks with more than 2 layers adds
+some complications to be overcome with more formalization and
+intermediate data management, as will be dealt with soon.
+)
+
+NB. =========================================================
+Lab Section "Xor"
+Limited to only two layers, perceptrons cannot be built to
+reproduce logical "xor". It was discovered that by inserting
+a hidden layer between the input and output layer of a
+perceptron, that if enough nodes are put in the hidden
+layer, almost any common relation can be modeled.
+
+Experiment with the connection weights to convince yourself
+that the perceptron cannot reproduce the logical "xor".
+Notice that the connections weights for logical "or" come
+close, but fail.
+)
+PREPARE
+
+unknown =: ([ + +:@])"0
+CP =: {@(,&<)
+UNK =: (,~unknown/)"1>@,@CP~ 2 3 _1
+X =: +/ . *
+bias =: 1&,
+step =: 0&<
+
+PREPARE
+0 0 (bias@[ step@X ]) ,._0.1 0.2 0.2 NB. produces 0
+0 1 (bias@[ step@X ]) ,._0.1 0.2 0.2 NB. produces 1
+1 0 (bias@[ step@X ]) ,._0.1 0.2 0.2 NB. produces 1
+1 1 (bias@[ step@X ]) ,._0.1 0.2 0.2 NB. NOT 0
+
+NB. =========================================================
+Lab Section Beyond the Perceptron
+We now concentrate on node connections and their labeling and
+the initialization and creation of their weights. In practice
+the weights cannot be determined with any certainty. Rather,
+plausible initial weight values are set -- often using random
+fractions -- and then "backpropagation" is used to refine
+those values.
+)
+
+NB. =========================================================
+Lab Section Layers, Nodes, Connections
+A feedforward neural network can be identified by its number
+of layers and the number of nodes in each layer. In this work
+a 2 3 1 feedforward neural net has 3 layers (because there   
+are three numbers in its list); the first number in the list
+gives the number of nodes in its "input" layer; the last 
+number in the list gives the number of nodes in its "output"
+layer; if there are addition numbers in the middle of the
+list, then they are "hidden" layers.  So the 2 3 1
+feedforward network example has 2 nodes in its input layer --
+j1 and j2, 3 nodes in its only hidden layer -- i1 and i2 and
+i3, and 1 node in its output layer -- k1. As you can infer,
+in this simple feedforward net the input nodes are named with
+the prefix "j", the hidden nodes are named with the prefix
+"i", and the output node is named with the prefix "k".
+
+(Following historical precedent, layers are labeled in the
+sequence j-i-k, instead of the sequence i-j-k; Perceptrons 
+used only j-k.)
+)
+
+NB. =========================================================
+Lab Section Labeling nodes
+As stated earlier, layers other than the output layer are
+routinely augmented with a bias node, which in this case
+adds node j0 in the input layer and i0 in the (only) hidden 
+layer. The connections in this 2 3 1 network are listed to 
+the right in the text graphic below. Notice that connections 
+are BETWEEN layers, not IN layers.
+
+output(k):       k1
+                          4x1 connections
+                                    i0-k1,i1-k1,i2-k1,i3-k1
+hidden(i): i0 i1 i2 i3
+                          3x3 connections j0-i1,j1-i1,j2-i1
+                                          j0-i2,j1-i2,j2-i2
+                                          j0-i3,j1-i3,j2-i3
+
+ input(j): j0   j1 j2
+
+With paper and pencil explicitly complete the 2 3 1 network
+CONNECTIONS in the sketch above and notice the fanning out of
+connections between the input and hidden layer.
+)
+
+NB. =========================================================
+Lab Chapter Generating Random Initial Connection Weights
+NB. =========================================================
+Lab Section Number of connection weights
+To automate the creation of connection weights, first we
+create a list of boxes containing the shapes of connection
+weights for the 2 3 1 network and the 2 1 network with the
+verb shapeNodes.
+
+In the Perceptron examples, boxing was not needed, and was
+omitted to simplify the discussion. 
+)
+shapeNodes =: 2&(<@:+&1 0\)
+
+shapeNodes 2 3 1
+shapeNodes 2   1  NB. perceptron
+
+NB. =========================================================
+Lab Section Constant connection weights
+The verb initNodes uses the verb shapeNodes to create a list
+of boxes containing connection weight arrays of the desired
+shapes.  In the examples below, the number 0.3 is used
+arbitrarily.
+)
+initNodes =:  shapeNodes@] $ each [
+0.3 initNodes 2 3 1
+0.3 initNodes 2   1
+
+NB. =========================================================
+Lab Section Generating random fractions
+Instead of a common connection weight (such as 0.3 above),
+random connection weights are typically used. 
+
+Recall from a previous Section that to get random fractions in
+a range between [-y,+y] and rounded off to one decimal
+postion, the following verbs can be used.
+)
+times10 =: 10&*
+inflate =: >:@+: 
+rn =: (roll--:@<:)@ inflate &.: times10
+
+rn 10#5
+
+NB. =========================================================
+Lab Section Generating random connection weights
+Now to get random connection weights, the verbs rn and
+initNodes are combined in the verb rn_nodes. Notice that in
+each array the number of rows corresponds to the number of
+nodes, including bias nodes, in the PREVIOUS layer; the number
+of columns corresponds to the number of nodes in the NEXT layer.
+
+(For now, to make sure all users see the same random
+fractions, we will re-seed the random number generator with
+9!:1]7^5 , as shown here.)
+)
+qrl  =: 7^5    NB. re-seed rng
+rn_nodes =: 1&rn_nodes : ([: (rn each) initNodes)
+
+]a =: 0.2 rn_nodes 2 3 1
+NB.remember this a; it is used later
+
+NB. =========================================================
+Lab Chapter Automating BackProp
+NB. =========================================================
+Lab Section Overview of Automating BackProp
+In this Chapter in essence we construct and study the
+following essential verb-train, TRN, which is repeatedly
+executed for backpropagation.
+
+   TRN =: desired BACKWARD input FORWARD weights
+
+The three helper verbs -- desired, input and weights --
+extract essential values for the anchor verbs in TRN:
+BACKWARD and FORWARD.
+
+The verb TRN is the kernel of the recursive verb trn to
+which you were introduced in the first Chapter. Hopefully
+the excerpt below (repeated from Chapter 1) will serve as
+a reminder of the verb trn and its inputs; the inputs of
+TRN are similar.
+)
+PREPARE
+
+qrl  =: 7^5   NB. initial random seed value
+tick =: [ <.@%~ (* 3 : 'qrl=:(<:2^31)|(7^5)*qrl')@]  
+roll =: (<:2^31)&tick"0
+
+X =: +/ . *
+step      =: 0&<
+actOut   =: step
+opf  =: >@{.             NB. open first
+bias     =: 1&,               NB. prepend 1
+w        =: opf@]             NB. weights
+
+outFwdPrv    =: bias@[               NB. output of prev  layer
+outFwdHid    =: outFwdPrv actHid@X w NB. output of hidden layer(s)
+outFwdExt    =: outFwdPrv actOut@X w NB. output of output layer
+
+fwMore =: 1: < #@]
+fwEnd  =: <@outFwdExt
+fwCont =: outFwdHid ; outFwdHid fw }.@]
+fwCont =: outFwdHid ([;  fw )}.@]
+fw      =: fwEnd`fwCont @. fwMore
+
+ff =: >@{:@fw
+
+shapeNodes =: 2&(<@:+&1 0\)
+initNodes  =:  shapeNodes@] $ each [
+times10    =: 10&*
+inflate    =: >:@+: NB. @times10
+rn         =: (roll--:@<:)@ inflate &.: times10
+rn_nodes   =: 1&rn_nodes : ([: (rn each) initNodes)
+
+opl  =: >@{:             NB. open last
+last =: {:@]
+prev =: _2&{@]           NB. get next to last
+forward   =: ] |:@,: fw
+FORWARD   =: (''"_ ; [),forward
+
+outBckExt =: opl@last
+outBckPrv =: bias@opl@prev    NB. prev output with bias
+inBckExt  =: outBckPrv X wOld
+inBckPrv  =: outBckPrv X wOld
+desout   =: [
+errExt  =: desout-outBckExt
+errPrv  =: [
+derivOut =: 1:
+
+wOld     =: opf@last
+wAdjExt =: outBckPrv */ derivOut@:inBckExt * errExt
+wAdjHid =: outBckPrv */ derivHid@:inBckPrv * errPrv
+LrnRate   =: 0.25
+wNewExt =: wOld+LrnRate&*@wAdjExt
+wNewHid =: wOld+LrnRate&*@wAdjHid
+
+bpBegin_proc =: wNewExt;(}.@wNewExt X errExt) bp }:@]
+bpBegin      =: (<@wNewExt) ` bpBegin_proc @. bpMore
+bpMore       =: 1: < #@]     
+bpEnd        =: ''"_
+bpCont       =: wNewHid  ; (}.@wNewHid  X errPrv) bp }:@]
+bp            =: bpEnd`bpCont @. bpMore
+
+firstl    =: {.@[  
+nnoinput  =: -@<:@#@>@{.@]
+desired   =: nnoinput }."1 _ firstl
+input     =: nnoinput {."1 _ firstl
+weights   =: ]
+
+TRN       =: desired BACKWARD input FORWARD weights
+trnMore  =: 0: < #@[
+trnCont  =:  }.@[ trn TRN
+trnEnd   =: ]
+trn       =: trnEnd`trnCont @. trnMore
+
+BACKWARD      =: }.@|.@bpBegin
+
+PREPARE
+
+]AND =: (,.~*./"1),/@:>@{;~0 1
+FFand0 =: <,._0.2 0.1 0             NB.   initialized
+AND trn FFand0                      NB.   trained once
+
+NB. =========================================================
+Lab Section
+The first part of the verb-train TRN is "input FORWARD
+weights". Because of its results, you can think of this first
+part as being named "actualOutputAndWeights". Conceptually,
+TRN is then processed in the following 2-step manner.
+
+   actualOutputAndWeights =. input FORWARD weights
+   TRN =: desired BACKWARD actualOutputAndWeights
+
+Using a specific example of net input and weights, and
+applying the feedforward procedure embedded in FORWARD,
+actualOutputAndWeights produces the incumbent network's
+output, along with the incumbent network's weights, all in a
+boxed structure which is expected by the verb BACKWARD. In
+the overall verb TRN the actualOutput part of
+actualOutputAndWeights is subtracted from the desired net
+output (the left tine of the fork "desired BACKWARD
+actualOutputAndWeights"), and that estimate of "error" is
+used to update the current weights by applying gradient
+descent as embodied in the "generalized delta rule," which is
+embedded in BACKWARD.
+
+The first part of this Chapter describes the fork anchored by
+FORWARD and its outputs. The remaining part of this Chapter
+describes the fork anchored by BACKWARD and then the overall
+verb TRN in its context.
+)
+
+NB. =========================================================
+Lab Section Accumulating node inputs with matrix product
+Recall that the quantitative input to each node can be
+computed as the matrix product of the previous layer's
+nodes and the connection weights, where the previous layer's
+bias node output is always exactly one (1). For example if
+the output of the input layer of our 2 3 1 net were 2 _1 and
+the connection weights were given in the first box of "a"
+above, then the quantitative inputs to 3 nodes in the hidden
+layer could be computed as follows.
+)
+
+X        =: +/ . *  
+bias     =: 1&,              NB. prepend 1
+opf      =: >@{.             NB. open first
+w        =: opf@]            NB. weights
+qrl  =: 7^5    NB. reseed rng
+a =: 0.2 rn_nodes 2 3 1
+2 _1 (bias@[ X w) a
+
+NB. =========================================================
+Lab Section A linear activation function
+To greatly simplify matters, temporarily we continue to
+assume that the output of any node is just its input. In
+neural networks terminology this means the "activation
+function" is the identity or linear function f(x)=x . To
+formalize activation function definition in this system we
+create the verbs actHid and actOut in the following manner to
+accomplish this simplification. The three examples below
+show
+
+   (a) the outputs of the input layer 1 2 _1, 
+
+   (b) the outputs of the hidden layer _0.3 _0.2 _0.6,
+excluding the bias node's output, (and then we use that 
+result to compute ...) 
+
+  (c) the output of the output layer _0.02 .
+)
+linear =: ]
+actHid =: linear
+actOut =: linear
+
+ 2 _1 (bias@[           ) a
+ 2 _1 (bias@[ actHid@X w) a
+(2 _1 (bias@[ actHid@X w) a) (bias@[ actOut@X w) }.a
+
+NB. =========================================================
+Lab Section Recap of the linear activation function
+The final net output in the last section was _0.02 and the 
+net input which produced that output was 2 _1 . Imagine that 
+the netwas meant to model the linear function f(x,y)=x+2y .
+In that case the desired result would be f(2,_1)=2+2(_1)=0,
+and the desired output of the output layer would be 0. The
+current connection weights of our (flawed) 2 3 1 network
+produced _0.02 which is different from the desired value, 0.
+
+	But remember that the flawed connection weights were
+generated with a random number generator and have not been
+revised.
+
+	Next we will create a suite of verbs to automate the
+feedforward sequence of calculations discussed here and shown
+in the previous Section.
+)
+
+NB. =========================================================
+Lab Section Computing node outputs
+Using some new definitions we automate earlier computations
+and can compute the quantitative outputs of the nodes of any
+hidden or output layer. The processing method anticipates our
+recursive approach.
+
+The verb naming scheme used here deserves some explanation.
+Up till now we have discussed three different kinds of
+network layers: input, hidden, and output. While that remains
+valid, layers are processed in 2-layer windows. In these
+windows, processing verbs differ only with respect to whether
+the output is for a hidden layer or for the output layer. So
+we drop the j, i, k distinction and use one of the two
+suffixes, "Hid", or "Ext" corresponding to hidden and
+(external) output layers. In addition, to refer to the result
+of the previous window (or to the verb's data inputs -- for
+consistency's sake we treat the original input much like we
+treat the result of any window, even though we don't actually
+have any stages before the input layer) we define a verb with
+the suffix "Prv".
+)
+outFwdPrv =: bias@[ NB. includes bias with output of previous window
+outFwdHid =: outFwdPrv actHid@X w   NB. output of a hidden layer
+outFwdExt =: outFwdPrv actOut@X w   NB. output of an output layer
+
+ 2 _1 outFwdPrv a
+ 2 _1 outFwdHid a
+(2 _1 outFwdHid a) outFwdExt }. a  NB. notice the drop, }.
+
+NB. =========================================================
+Lab Section Automating the feedforward process
+The feedforward process "fw" can be implemented as follows.
+Notice the drop primitive (}.) in the definition of fwCont.
+This primitive enables the suite of verbs anchored by "fw" to
+step through the sequence of connection weights. While the
+network explored here has only 3 layers, the recursive fw
+works for m layers, where m must be 2 or greater.
+)
+fwMore =: 1: < #@]
+fwEnd  =: <@outFwdExt  
+fwCont =: outFwdHid ; outFwdHid fw }.@]
+fw      =: fwEnd`fwCont @. fwMore
+
+         2 _1 fw a
+
+NB. =========================================================
+Lab Section
+In this Section you can optionally see a trace of the last
+computation by moving the cursor to the "trace" line and 
+pressing the "return" key twice.
+
+3 trace '2 _1 fw a' NB. traces recursive steps
+)
+PREPARE
+
+require jpath '~addons/general/misc/trace.ijs'
+
+PREPARE
+
+NB. =========================================================
+Lab Section Automating the feedforward process cont'd
+So the output of the hidden layer nodes is _0.3 _0.2 _0.6 
+and the output of the output node is _0.02 for this simple
+2 3 1 feedforward net. 
+
+The pattern of the recursive verb "fw" with its pieces --
+fwMore, fwCont, and fwEnd -- is worth understanding because
+it used later in slightly revised forms for backpropagating,
+training and testing connection weights in neural nets.
+
+Actually the verb fwCont can be made slightly more efficient
+by computing outFwdHid only once as shown in the revised
+definition here.
+)
+fwCont =: outFwdHid ([;  fw )}.@]
+2 _1 fw a NB. same result as before
+
+NB. =========================================================
+Lab Section Preparing feedforward output for backprop
+A feedforward neural network is often trained to have
+desirable connection weights by the "backprop" or
+"backpropagation" procedure which compares the actual output
+values of the current network with ideal desired output
+values and revises the connection weights using the error
+gradient. Such training requires that the result of the verb
+"fw" be combined with its argument. fw can be extended in the
+desired manner with the following verbs.
+
+The result of FORWARD is an array of boxed values of shape
+(n,2), where n is the number of layers in the network. The
+array contains boxed connection weights in its first column
+and boxed layer outputs (less any bias node outputs) in its
+second column.
+)
+forward =: ] |:@,: fw 
+FORWARD =: ((''"_ ; [),forward)
+
+2 _1 FORWARD a  NB. remember this result too, for later
+
+NB. =========================================================
+Lab Section
+You can see that the overall value output by the neural
+network is _0.02, not the correct value of 0.0 . Training is
+required to revise the connection weights to produce correct
+output values. Later, backpropagation is developed for
+training.
+)
+
+NB. =========================================================
+Lab Section Adjusting connection weights
+In the system described herein, verbs that adjust connection
+weights are often given names prefixed with "w". The two
+verbs defined next -- wNewExt and wNewHid -- and their
+components suggest the naming pattern as well as the
+adjustment pattern. There are two such verbs because the
+adjustment mechanism is slightly different for external
+connection weights which are adjacent to their output layer
+-- the suffix "Ext" is appended to their name; and for
+internal connection weights which are not adjacent to the
+output layer -- the suffix "Hid" is appended to their name. A
+multipicative learning rate parameter -- LrnRate  -- modifies
+the amount of any adjustment.
+
+The adjustment pattern (see the verbs wNewExt and wNewHid
+below), which is based on the "generalized delta rule," is: 
+
+(new weight) = (old weight) + (learning rate) * (adjustment)
+
+where "adjustment" embodies the gradient descent method which
+is coded in verbs whose names are prefixed with "wAdj"
+below, and which requires the derivatives of activation
+functions. These derivatives are coded in the verbs with
+names prefixed with "deriv" in later Sections.
+)
+LrnRate =: 0.1 
+lrnRate =: LrnRate"_
+wNewExt =: wOld+lrnRate*wAdjExt NB. generalized delta rule
+wNewHid =: wOld+lrnRate*wAdjHid NB. generalized delta rule
+
+NB. =========================================================
+Lab Section Adjusting connection weights cont'd
+To experiment with the verbs wNewExt and wNewHid, matters
+will be simplified if you first redefine the default verbs
+actHid and derivHid as follows. The wNewExt and wNewHid verbs
+have the result of FORWARD as their right argument and
+desired layer outputs as their left arguments. Because we are
+trying to model f(x,y)=x+2y, and because 2+2(_1)=0, the
+desired output of the output layer is 0. 
+
+The desired output of the HIDDEN layer is computed in a
+complicated manner that depends on the error output of the
+OUTPUT layer, which was 0.02. In this case the desired
+output of the HIDDEN layer is recursively calculated using a
+later defined process and is 
+
+   0.02 * 0 0.2 _0.2 = 0 0.004 _0.004. 
+
+This last product is computed using the error of the output
+level (0-_0.02=0.02) and the initial connection weights of
+the non-bias nodes between the hidden and output layers
+(0 0.2 _0.2).
+)
+PREPARE
+opf  =: >@{.             NB. open first
+opl  =: >@{:             NB. open last
+last =: {:@]    
+prev =: _2&{@]           NB. get next to last
+
+wOld      =: opf@last
+wAdjExt   =: outBckPrv */ derivOut@:inBckExt * errExt
+wAdjHid   =: outBckPrv */ derivHid@:inBckPrv * errPrv
+outBckExt =: opl@last
+outBckPrv =: bias@opl@prev    NB. prev output with bias
+inBckExt  =: outBckPrv X wOld    
+inBckPrv  =: outBckPrv X wOld
+desout    =: [
+errExt    =: desout-outBckExt
+errPrv    =: [
+
+
+actOut =: linear
+derivOut =: derivLin =: 1:
+
+PREPARE
+
+actHid =: linear
+derivHid =: derivLin =: 1:
+
+0              wNewExt   2 _1 FORWARD a
+0 0.004 _0.004 wNewHid }:2 _1 FORWARD a
+
+NB. =========================================================
+Lab Section Details of adjusting connections weights
+The entire LEFT argument of wNewExt and wNewHid is used, but
+the same verbs use only 2-row "windows" of their RIGHT
+argument. To better understand the verbs wNewExt and wNewHid,
+in this Section we employ some utility verbs which read these
+2-row windows.
+
+The right argument of wNewExt and wNewHid is a rank 2 array
+of boxed values that was described above as the output for
+the verb FORWARD; the shape of the array is (n,2), where n is
+the number of layers in the network remaining to be processed
+in the recursion process which begins with all layers and
+removes the outermost layer in each recursion step. 
+
+Only a 2-row window of the right argument is used by the
+verbs wNewExt and wNewHid: the bottom two rows. 
+
+Using utility verbs the 3 results below portray
+   (a) the entire right argument,
+   (b) the first 2-row window accessed, and
+   (c) the second 2-row window accessed.
+)
+prev     =: _2&{@]  NB. get next to last from the right
+last     =: {:@]    NB. get the     last from the right
+
+                               2 _1 FORWARD a
+0              (prev,:last)    2 _1 FORWARD a
+0 0.004 _0.004 (prev,:last)  }:2 _1 FORWARD a
+
+NB. =========================================================
+Lab Section Gradient adjustment
+The details of the weight adjustment verbs -- wAdjExt and
+wAdjHid -- portray the gradient adjustment (prior to the
+learning rate being applied).  
+
+The pattern of the gradient adjustment verbs is
+
+adjustment = (output prev layer)*/(deriv of input)*error
+
+First examine the composite results.
+
+   wAdjExt means weight adjustment for the external layer
+   wAdjHid means weight adjustment for  an internal layer
+)
+wNewExt                       NB. generalized delta rule
+wNewHid                       NB. generalized delta rule
+wOld     =: opf@last
+wAdjExt  =: outBckPrv */ derivOut@:inBckExt * errExt
+wAdjHid  =: outBckPrv */ derivHid@:inBckPrv * errPrv
+derivOut =: derivLin 
+
+                                2 _1 FORWARD a
+0              (wOld;wAdjExt)   2 _1 FORWARD a
+0 0.004 _0.004 (wOld;wAdjHid) }:2 _1 FORWARD a
+
+NB. =========================================================
+Lab Section More details of adjusting connections weights
+Now look at more of the details by inspecting the verbs
+contained in the verb-trains defining the composite results.
+Remember that the output of one layer is different from the
+input to the next layer, because the connection weights must
+be applied and summed to get the inputs from the previous
+outputs.
+)
+outBckExt =: opl@last         NB. output from external layer
+outBckPrv =: bias@opl@prev    NB. output from previous layer
+inBckExt  =: outBckPrv X wOld NB.  input from external layer
+inBckPrv  =: outBckPrv X wOld NB.  input from previous layer
+desout    =: [
+errExt  =: desout - outBckExt NB.  error from external layer
+errPrv  =: [                  NB.  error from previous layer
+
+0              (outBckExt;inBckExt;errExt)  2 _1 FORWARD a
+0              (outBckPrv)                  2 _1 FORWARD a
+0 0.004 _0.004 (outBckPrv;inBckPrv;errPrv)}:2 _1 FORWARD a
+
+NB. =========================================================
+Lab Section Backprop recursion
+The recursion process is managed by the suite of verbs with
+"bp"; the suite of verbs is begun with the verb "bpBegin" and
+then the recursion process is continued with the main verb
+bp. While the network explored here has only 3 layers, the
+recursive bpBegin works for m layers, where m must be 2 or
+greater.
+)
+bpBegin_proc =: wNewExt;(}.@wNewExt X errExt) bp }:@]
+bpCont       =: wNewHid;(}.@wNewHid X errPrv) bp }:@]
+bpMore       =: 1: < #@]
+bpEnd        =: ''"_
+bpBegin      =: (<@wNewExt) ` bpBegin_proc @. bpMore
+bp           =: bpEnd       ` bpCont       @. bpMore
+
+0 bpBegin temp =: 2 _1 FORWARD a
+
+NB. =========================================================
+Lab Section
+In this Section you can optionally see a trace of the last
+computation by moving the cursor to the "trace" line and
+pressing the "return" key twice.
+
+3 trace '0 bpBegin temp'
+)
+PREPARE
+
+require jpath '~addons/general/misc/trace.ijs'
+
+PREPARE
+
+NB. =========================================================
+Lab Section Backprop recursion cont'd
+Finally the result of the recursive "bp" suite of verbs is
+cleaned up with the verb BACKWARD.
+)
+BACKWARD =: }.@|.@bpBegin
+0 BACKWARD 2 _1 FORWARD a  NB. shows revised a
+
+NB. =========================================================
+Lab Section Training the net
+Training using a list of examples is performed recursively
+with a verb-suite named "trn" which contains a main
+processing stage based on the verb TRN and its utility verbs
+which are shown next. The verb-train TRN contains the
+previously mentioned verbs BACKWARD and FORWARD. The right
+argument of TRN is a list of boxed arrays of the current
+connection weights. The left argument of TRN is a rank 2
+array for which each item (ie, each row) is a pair of values:
+desired net output value(s) and corresponding net input
+value(s). Notice that the utility verbs of TRN access only
+the first item (row) of the left argument; later we see that
+the recursion process of trn drops off (beheads) the left
+argument in each recursion step.
+
+Here we discuss the training of a single pattern with the
+verb-train TRN; later we discuss training a pattern set with
+the verb-suite trn, which contains TRN.
+)
+TRN     =: desired BACKWARD input FORWARD weights
+firstl    =: {.@[
+nnoinput  =: -@<:@#@>@{.@]   
+desired   =: nnoinput }."1 _ firstl
+input     =: nnoinput {."1 _ firstl
+weights =: ]
+
+(,: 0 2 _1) (],:TRN) a  NB. shows a and revised a
+(,: 0 2 _1) (desired ; input ; <@weights) a
+
+NB. =========================================================
+Lab Chapter Developing FF for f(x,y) = x+2y
+NB. =========================================================
+Lab Section Creating data for f(x,y) = x+2y
+For the training process, create 25 output-input
+examples ("patterns") of the linear function f(x,y)=x+2y
+using the verb lin.
+)
+PREPARE
+
+X =: +/ . *
+step      =: 0&<
+actOut   =: step
+opf  =: >@{.             NB. open first
+bias     =: 1&,               NB. prepend 1
+w        =: opf@]             NB. weights
+
+outFwdPrv    =: bias@[               NB. output of prev   layer
+outFwdHid    =: outFwdPrv actHid@X w NB. output of hidden layer(s)
+outFwdExt    =: outFwdPrv actOut@X w NB. output of output layer
+
+fwMore =: 1: < #@]
+fwEnd  =: <@outFwdExt
+fwCont =: outFwdHid ; outFwdHid fw }.@]
+fwCont =: outFwdHid ([;  fw )}.@]
+fw      =: fwEnd`fwCont @. fwMore
+
+ff =: >@{:@fw
+
+shapeNodes =: 2&(<@:+&1 0\)
+initNodes  =:  shapeNodes@] $ each [
+times10    =: 10&*
+inflate    =: >:@+: NB. @times10
+rn         =: (roll--:@<:)@ inflate &.: times10
+rn_nodes   =: 1&rn_nodes : ([: (rn each) initNodes)
+
+firstl    =: {.@[
+nnoinput  =: -@<:@#@>@{.@]
+desired   =: nnoinput }."1 _ firstl
+input     =: nnoinput {."1 _ firstl
+weights =: ]
+
+opl  =: >@{:             NB. open last
+last =: {:@]
+prev =: _2&{@]           NB. get next to last
+forward   =: ] |:@,: fw
+FORWARD   =: (''"_ ; [),forward
+
+outBckExt =: opl@last
+outBckPrv =: bias@opl@prev    NB. prev output with bias
+inBckExt  =: outBckPrv X wOld
+inBckPrv  =: outBckPrv X wOld
+desout   =: [
+errExt  =: desout-outBckExt
+errPrv  =: [
+linear =: ]
+actHid =: linear
+actOut =: linear
+derivHid =: 1:
+derivOut =: 1:
+
+wOld     =: opf@last
+wAdjExt =: outBckPrv */ derivOut@:inBckExt * errExt
+wAdjHid =: outBckPrv */ derivHid@:inBckPrv * errPrv
+LrnRate   =: 0.25
+wNewExt =: wOld+LrnRate&*@wAdjExt
+wNewHid =: wOld+LrnRate&*@wAdjHid
+
+bpBegin_proc =: wNewExt;(}.@wNewExt X errExt) bp }:@]
+bpBegin      =: (<@wNewExt) ` bpBegin_proc @. bpMore
+bpMore       =: 1: < #@]     
+bpEnd        =: ''"_
+bpCont       =: wNewHid  ; (}.@wNewHid  X errPrv) bp }:@]
+bp            =: bpEnd`bpCont @. bpMore
+
+firstl    =: {.@[  
+nnoinput  =: -@<:@#@>@{.@]
+desired   =: nnoinput }."1 _ firstl
+input     =: nnoinput {."1 _ firstl
+weights   =: ]
+
+TRN       =: desired BACKWARD input FORWARD weights
+trnMore  =: 0: < #@[
+trnCont  =:  }.@[ trn TRN
+trnEnd   =: ]
+trn       =: trnEnd`trnCont @. trnMore
+
+BACKWARD      =: }.@|.@bpBegin
+
+
+qrl  =: 7^5    NB. reseed rng
+a =: 0.2 rn_nodes 2 3 1
+
+PREPARE
+
+lin  =: ([++:@])"0
+grid =: +`(*i.)/   NB. grid b,s,n is From b step s for n
+CP   =: {@(,&<)    NB. Cartesian product
+
+5{.LIN  =: (,~lin/)"1>@,@CP~@ grid 0 0.25 5  NB. x+2y
+
+NB. =========================================================
+Lab Section Training the net with the Power conjunction ^:
+The suite of verbs with "trn" recursively step through the
+list of left argument values to perform the training. Notice
+the main computation involves the previously mentioned TRN
+and that the power conjunction enables repeated training
+runs.
+)
+
+TRN     =: desired BACKWARD input FORWARD weights
+trnMore =: 0: < #@[
+trnCont =:  }.@[ trn TRN
+trnEnd  =: ]
+trn     =: trnEnd`trnCont @. trnMore
+
+LIN trn a
+LIN&trn^:0 1 2 3 50 a
+
+NB. =========================================================
+Lab Section Primitive validation
+We can use "fw" with 2 _1 to validate the trained network's
+ability to produce the value 0.  We can also use FORWARD"1 to
+see the feedforward results of the 25 cases used for
+training. The trained network does pretty well on this simple
+task, qualitatively speaking.
+
+The computation below using fw is a form of "validation"
+because the (x,y)=(2,_1) is different from the points used
+for training. The last computation is a form of "testing"
+because the points used are also those used for training.
+)
+newa =: LIN&trn^:50 a
+                        >&{: 2 _1 fw newa
+_5]\             {."1 LIN                 NB. desired output
+_5]\,opl@last"2( }."1 LIN) FORWARD"1 newa NB. actual output
+
+NB. =========================================================
+Lab Section Primitive testing
+To quantitatively test the trained connection weights, the
+recursively defined variable "test" is used; test repeatedly
+executes the verb TEST. The result is a list of error values.
+Summing the absolute values of the error rates gives an
+overall measure of the accuracy of the tuned network.
+But true validation should really be done with holdout
+patterns, rather than the patterns used to do the training.
+
+)
+TEST =: desired - input outBckExt@forward weights
+testCont =:   TEST,}.@mkarray@[ test  ]
+testMore =: 1: < #@mkarray@[
+testEnd =: TEST
+test =: testEnd`testCont @. testMore
+
+mkarray =: ,:`]@.(2:<:#@$)
+newa =: LIN&trn^:50 a
+_5]\,  LIN test newa
++/@:|  LIN test newa
+
+NB. =========================================================
+Lab Section Common activation functions and their derivatives
+Common activation functions are the "sigmoid" (or
+"logistic") function, the "linear" (or "identity") function,
+and the "step" function. In addition, the derivatives of
+activation functions are needed. Common activation functions
+and their derivatives are listed next.
+
+You can experiment with these activation functions as
+follows.
+)
+NB. POTENTIAL activation functions and their derivs are DEFINED
+sigmoid  =: %@:>:@^@-
+derivSig =: (] * -.@])&sigmoid
+linear   =: ]
+derivLin =: 1:
+step     =: 0&<
+derivStp =: 1: NB. a kludge, really deriv is 0:
+
+(,linear,step,: sigmoid) i:3   NB. first row echoes inputs
+(,derivLin,derivStp,: derivSig) i:3
+
+NB. =========================================================
+Lab Section Default activation functions and their derivatives
+Default activation function assignment verbs used here are
+listed next.
+)
+NB. ACTUAL activation functions and their derivs are ASSIGNED
+actHid   =: sigmoid
+derivHid =: derivSig
+actOut   =: linear      
+derivOut =: derivLin
+
+(, actHid , derivHid , actOut ,: derivOut) i:3
+
+NB. =========================================================
+Lab Section Training the net with the sigmoid activation
+We retrain with the previous patterns using the more common
+activation function and its derivative: sigmoid. Our
+expectations relative to the previous training are not very
+high because the sample is derived from a linear function.
+)
+LIN trn a
+LIN&trn^:0 1 2 3 50 a
+
+NB. =========================================================
+Lab Section Primitive validation and testing of sigmoid case
+As we see below, the results are not quite as good using the
+sigmoid activation function in this specific case.
+)
+newa =: LIN&trn^:50 a
+>&{: 2 _1 fw newa                      NB. weak, 0 is desired
+_5]\             {."1 LIN                  NB. desired output
+_5]\,opl@last"2( }."1 LIN) FORWARD"1 newa  NB. actual  output
+
+_5]\,LIN test newa
++/@:|LIN test newa
+
+NB. =========================================================
+Lab Chapter Just a Start
+NB. =========================================================
+Lab Section Just a start
+This scratches the surface and is misleading in its gross
+simplicity. There are excellent resources for designing and
+training neural nets. My favorite on the web is Warren
+Sarle's FAQ.
+)
+

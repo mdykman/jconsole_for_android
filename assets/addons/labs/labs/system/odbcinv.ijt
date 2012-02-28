@@ -1,0 +1,240 @@
+LABTITLE=: 'ODBC: Inverting SQL data'
+LABAUTHOR=: 0 : 0
+John D. Baker
+bakerjd@kos.net
+)
+LABCOMMENTS=: 'This lab shows how to invert SQL column data.'
+LABERRORS=: 1
+
+NB. =========================================================
+Lab Section What is data inversion?
+Data inversion is a simple technique that has been used for years.  It is particularily effective when combined with array oriented languages like J.  This lab shows how to invert columns from OBDC databases and discusses why you might want to apply this technique.
+)
+
+NB. =========================================================
+Lab Section
+Load the ODBC interface script:
+)
+NB. load and initialize the ODBC interface script
+load 'dd'
+
+NB. =========================================================
+Lab Section Check lab datasources
+NOTE: to run this lab you must register the following data sources with the ODBC control panel applet. The next section checks these are correctly registered.
+
+ DSN     DRIVER and DATA LOCATION
+ -----------------------------------------
+
+ jdata   FoxPro or Dbase driver directory
+         \j5\system\examples\data\
+
+ messier EXCEL driver and spreadsheet file
+         \j5\system\examples\data\messier.xls
+
+)
+
+NB. =========================================================
+Lab Section
+)
+NB. check DSN's used by lab.  If all datasources
+NB. are registered a list of 1's is returned.
+(;:'jdata messier') e. {."1 ddsrc ''
+
+NB. =========================================================
+Lab Section SQL tables and records
+The data in SQL databases is organized as tables of records.  Each row corresponds to a single record and each record consists of one or more fields or columns.  For example the first record of the (tdata) table in the (jdata) ODBC data source is:
+)
+NB. connect jdata - jdata must be a registered with ODBC
+ch =: ddcon 'dsn=jdata'
+
+NB. select all records in table tdata
+sh =: 'select * from tdata' ddsel ch
+
+NB. display first record
+ddfet sh
+
+NB. end statement
+ddend sh
+
+NB. =========================================================
+Lab Section An example where inverted data would help
+Suppose we wanted to quickly calculate the sex ratio (M/F) of all the people in (tdata).  To do this we must scan all the records of (tdata) and extract the sex field.
+)
+NB. select all records
+sh =: 'select sex from tdata' ddsel ch
+
+NB. fetch all records
+dat =: ddfch sh,_1
+
+NB. compute sex ratio
+(+/'M'=dat)%#dat =: ,>dat
+
+NB. =========================================================
+Lab Section
+For a tiny table like (tdata) selecting and fetching all records is not a problem.  For large tables this simple step can be quite time consuming.  For example an ACCESS table I was recently working with had over 300,000 rows. Fetching one integer column, (using direct column binding), from this database takes roughly 30 seconds on a 400mhz PC. ESSENTIALLY ALL OF THIS TIME IS CONSUMED BY ONE ODBC DLL CALL! By inverting this column and saving it as a J noun file the same data can be accessed roughly a 1000 TIMES FASTER!  Order of magnitude performance improvements is worth a little programming.
+)
+
+NB. =========================================================
+Lab Section Inversion utilities
+To illustrate the technique of inversion this lab uses the example (jdata) source.  The following method scales. I have applied the exact same code fragments to million record databases.  The limiting factor is machine memory.
+
+To get started define two simple utilities:
+)
+NB. read a J noun (array) from file
+readnoun =: 3!:2@(1!:1&(]`<@.(32&>@(3!:0))))
+
+NB. write a J noun (array) to file
+writenoun =: ([: 3!:1 [) (1!:2 ]`<@.(32&>@(3!:0))) ]
+
+NB. =========================================================
+Lab Section
+(readnoun) and (writenoun) read and write J noun files. There are no restrictions on the type of data that can be saved.  Any J array can be stored and retrieved.
+)
+NB. write array to file
+(5 5$(i. 2 2);'any data') writenoun jpath '~temp\any.ijn'
+
+NB. read array from file
+readnoun jpath '~temp\any.ijn'
+
+NB. =========================================================
+Lab Section Inverting tdata
+Now lets invert the columns of tdata.  For this first example I will use ddfch.  You can achieve higher performance and completely control J datatype conversions with ddbind and ddfetch.  A second example will illustrate ddbind and ddfetch.
+)
+NB. select all the rows of tdata
+sh =: 'select * from tdata' ddsel ch
+
+NB. get the names of fetched columns and use to
+NB. create a series of unboxed nouns
+cols =: ddcnm sh
+(cols) =: ddfch sh,_1
+
+NB. =========================================================
+Lab Section
+Save the columns of tdata.
+)
+NB. define a save columns verb and use it
+savecols =: 13 : '(". y) writenoun jpath ''~temp\'',(y-.'' ''),''.ijn'''
+
+NB. save all tdata columns
+savecols&> cols
+
+NB. =========================================================
+Lab Section
+List the contents of the save directory.  Each column of tdata will appear as a single *.ijn file.
+)
+require 'dir'
+
+dir jpath '~temp\*.ijn'
+
+NB. =========================================================
+Lab Section Getting inverted data
+The data can be read back with readnoun.  This is basically the technique of inversion.  Writing entire columns of data as simple lists.
+)
+NB. get the sex and recompute the sex ratio
+dat =: readnoun jpath '~temp\sex.ijn'
+
+(+/'M'=dat)%#dat =: ,dat  NB. data is not boxed
+
+NB. =========================================================
+Lab Section Using ddbind and ddfetch to invert data
+For very large tables it is better to use ddbind and ddfetch instead of ddfch.  ddfch trims and converts incoming data.  In some cases, for example with date data, the conversion will take a fair amount of time. With ddbind and ddfetch you can completely control the fetch and convert procedure.
+
+Let us invert some columns of tdata using ddbind and ddfetch.
+)
+NB. select all rows
+sh =. 'select * from tdata' ddsel ch
+
+NB. bind and fetch rows
+ddbind sh
+ddfetch sh
+
+NB. =========================================================
+Lab Section
+The fetched data is loaded into the jdd locale in a series of noun BIND_sh_col where sh is the statement handle and col is the column number.
+)
+NB. get the data for column 1 - data is not trimed and
+NB. is the shape of the default input buffer.
+$ dat =: dddata sh,1
+
+NB. =========================================================
+Lab Section
+Since ddfetch does not apply any trims or conversions you must trim the data.  The actual number of rows returned by the last fetch operation is returned by ddrow.
+)
+NB. number of rows in last fetch
+rcnt =: ddrow sh
+
+NB. trim and write to noun file
+(rcnt{.dddata sh,1) writenoun fn=:jpath '~temp',(>0{ddcnm sh),'.ijn'
+
+NB. read data back
+$ dat =: readnoun fn
+
+NB. =========================================================
+Lab Section Custom datatype conversion before inversion
+As a final example lets invert a datetime column from an Excel spreadsheet. Datetime columns are represented in ODBC with C structures. It is often useful to apply different datetime conversions if you are only interested in part of the date.
+
+NOTE: this spreadsheet also illustrates the best layout for  accessing spreadsheet data from ODBC.
+)
+dddis ch
+
+NB. attach to the Messier Object spreadsheet
+ch =: ddcon 'dsn=messier'
+
+NB. =========================================================
+Lab Section
+List the columns in the "observed" sheet.
+)
+NB. list Observerd columns - trailing $ required for
+NB. Excel sheet names.
+'observed$' ddcol ch
+
+NB. =========================================================
+Lab Section What are Messier objects?
+Let us count how many Messier objects seen by month.  Messier objects are mostly galaxies, globular clusters, and nebulas first listed by Joseph Messier in the 18th century as an aid to comet hunters. Many famous astronomical objects are on this list.  M1 is the Crab Nebula. M31 is the Andromeda Galaxy - easily seen in the northern hemisphere.
+)
+NB. dates of object observations
+sh =: 'select seen from "observed$"' ddsel ch
+
+NB. bind fetch and trim
+ddbind sh
+ddfetch sh
+seen =: (ddrow sh) {. dddata sh,1
+
+NB. =========================================================
+Lab Section Converting date data
+The date data is unconverted and is pretty ugly stuff.
+)
+NB. raw inverted date data
+5 {. seen
+
+NB. =========================================================
+Lab Section ODBC locale date utilities
+There are some utilities for converting ODBC date data in the system locale jdd.  The datetime verb dts converts date data to a (yyyy mm dd hr mn sec) integer table.
+
+fmtdts returns the default character format.
+)
+dts_jdd_ 5 {. seen
+
+fmtdts_jdd_ 5 {. seen
+
+NB. =========================================================
+Lab Section
+In most cases the integer format is most usesful.  For the Messier observations we have:
+)
+month    =: 1 {"1 dts_jdd_ seen   NB. observation month
+freqdist =: ~.@] ,: #/.~          NB. freq distribution
+
+freqdist month
+
+NB. =========================================================
+Lab Section
+There is no month 8224, (this value indicates a null),
+The other months are valid.  I have seen more Messier
+objects in August than any other month.  Note the
+absence of winter dates.  Yes I am a WUSS!
+
+The moral of this story is plain. For serious large scale J calculations inverting SQL column data is a simple and effective method for speeding up access to data.
+)
+
+NB. close data source
+dddis ch

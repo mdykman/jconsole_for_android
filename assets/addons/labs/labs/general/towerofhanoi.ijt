@@ -1,0 +1,261 @@
+LABTITLE=: 'The Tower of Hanoi'
+LABAUTHOR=: 'Roger Hui'
+LABWIDTH=: 51
+LABWRAP=: 0
+LABFOCUS=: 1
+
+NB. ===============================================
+Lab Section The Problem
+The Tower of Hanoi problem is to move a set of n
+different-sized disks from one peg to another,
+moving one disk at a time, using an intermediate
+peg if necessary.  At all times no larger disk may
+sit on top of a smaller disk.
+
+For example, moving 3 disks from peg 0 to peg 1
+can be done as follows:
+
+move disk 0 from peg 0 to peg 1
+move disk 1 from peg 0 to peg 2
+move disk 0 from peg 1 to peg 2
+move disk 2 from peg 0 to peg 1
+move disk 0 from peg 2 to peg 0
+move disk 1 from peg 2 to peg 1
+move disk 0 from peg 0 to peg 1
+
+The description of the moves can be shortened if
+we observed that in moving a disk from peg A to
+peg B, it is always the top disk on peg A that
+is moved.  Thus the 3-disk problem can be solved
+as follows:
+
+0 1
+0 2
+1 2
+0 1
+2 0
+2 1
+0 1
+
+Legend has it that a group of priests has been
+solving the 64-disk problem since the beginning
+of time, and when they finish, the world will
+come to an end.
+)
+
+NB. ===============================================
+Lab Section An Initial Solution
+There is a simple recursive solution to the n-disk
+problem:  First, move disks 0 to n-2 from peg 0 to
+peg 2, then move disk n-1 from peg 0 to peg 1,
+then move disks 0 to n-2 from peg 2 to peg 1.
+If there is just one disk, the one disk can be
+moved from peg 0 to peg 1 straightaway.
+
+This can be implemented as a dyadic verb: the right
+argument is the number of disks; the left argument
+are 3 integers of the pegs (from, to, via).
+)
+H=: 4 : 0
+ if. 1>:y do.
+  (y,2)$x
+ else.
+  ((0 2 1{x) H y-1), (2{.x), ((2 1 0{x) H y-1)
+ end.
+)
+
+0 1 2 H 3
+
+NB. ===============================================
+Lab Section
+From the definition of H, it is easy to see that
+the n-disk problem requires <:2^n moves.  If n=1,
+there is one move (1=<:2^1).  If n=k-1 required
+<:2^k-1 moves, then n=k requires the following
+numbers of moves:
+
+ <:2^k-1    ((0 2 1{x) H y-1)
+ 1          (2{.x)
+ <:2^k-1    ((2 1 0{x) H y-1)
+
+for a total of <:2^k moves.  A similar argument
+shows that the n-disk problem requires <:2^n calls
+of the verb H .
+)
+0 1 2 #@H"1 0 i.10
+<: 2 ^ i.10
+
+NB. ===============================================
+Lab Section Singly Recursive Solutions
+The two recursive steps in H differ only in the
+labelling of the pegs. Therefore we can replace
+them with a single recursive call, and do two
+relabellings of the pegs to get the effect of two
+recursions.  That is verb H1 below.
+
+Moreover, in verb H1 the left argument is unchanged
+in the recursion; that is, the left argument is
+always 0 1 2, and can be elided.
+
+We saw previously that on the n-disk problem the
+doubly recursive H required <:2^n calls.  In the
+singly recursive H1 and H2, the n-disk problem
+requires n calls.  Benchmarks on the 10-disk
+problem demonstrate the difference this makes.
+)
+H1=: 4 : 0
+ if. 1>:y do.
+  (y,2)$0 1{x
+ else.
+  ({&0 2 1 , 0 1"_ , {&2 1 0) x H1 y-1
+ end.
+)
+
+H2=: 3 : 0
+ if. 1>:y do.
+  i.y,2
+ else.
+  ({&0 2 1 , 0 1"_ , {&2 1 0) H2 y-1
+ end.
+)
+
+0 1 2 (H -: H1)"1 0 i.10
+(0 1 2&H -: H2)"0 i.10
+
+ts=: 6!:2 , 7!:2@]   NB. time and space
+ts '0 1 2 H 10'
+ts '0 1 2 H1 10'
+ts 'H2 10'
+
+NB. ===============================================
+Lab Section Non-Recursive Solutions
+We now proceed to derive non-recursive solutions
+to the problem.
+
+The results of verbs H, H1, and H2 are rows of the
+6-row matrix A (the 6 different ways of moving from
+peg i to peg j where i and j can be 0, 1, or 2).
+Thus a more efficient representation for the
+solutions is to encode the moves as row indices
+of A, the integers from 0 to 5.
+)
+A=: 6 2 $ 0 1 0 2 1 0 1 2 2 0 2 1
+A
+
+A i. H2 1
+A i. H2 2
+A i. H2 3
+A i. H2 4
+A i. H2 5
+
+NB. ===============================================
+Lab Section
+Judicious alignment of the indices reveals a pattern:
+
+1:   0
+2: 1 0 5
+
+2:   1   0   5
+3: 0 1 3 0 4 5 0
+
+3:   0   1   3   0   4   5   0
+4: 1 0 5 1 2 3 1 0 5 4 2 5 1 0 5
+
+4:   1   0   5   1   2   3   1   0   5   4   2   5   1   0   5
+5: 0 1 3 0 4 5 0 1 3 2 4 3 0 1 3 0 4 5 0 4 3 2 4 5 0 1 3 0 4 5 0
+
+To get from  A i. H2 n-1  to  A i. H2 n , merge
+(intersperse) the result for n with 1 5 2 if n is
+even and with 0 3 4 if n is odd.  Thus:
+)
+H3=: 3 : 0
+ if. 1>:y do.
+  y$0
+ else.
+  }: , ((2^y-1)$(2|y){1 5 2,:0 3 4) ,. 0,~H3 y-1
+ end.
+)
+
+H3 3
+(A i. H2 3) -: H3 3
+(A&i.@H2 -: H3)"0 i.10
+
+NB. ===============================================
+Lab Section
+H3 n works by appending an atom to the result of
+H3 n-1 ; then stitching a list, repetitions of
+1 5 2 or 0 3 4; then ravelling; then dropping the
+last (previously appended) atom.
+
+The list of numbers to be stitched (repetitions of
+0 3 4 or 1 5 2) depends only on n, and on H3 n-1
+not at all.  This suggests a different method of
+directing the computation:  Compute the lists xi
+of numbers to be stitched for 1, 2, 3, ..., up to n,
+and then apply an appropriate verb f between them:
+
+ xn f ... f x3 f x2 f x1
+ > f&.> / xn ; ... ; x3 ; x2 ; x1
+
+Moreover, we can avoid incorporating into f the
+appending and dropping of atoms, if we start out
+with an "extra" atom and drop it only at the end:
+
+ > f&.> / xn ; ... ; x3 ; x2 ; x1
+ }: > g&.> / xn ; ... ; x3 ; x2 ; x1 ; atom
+
+In H4 below, the verb g is ,@,. (ravel stitch).
+)
+H4 =: }: @ > @ (,@,.&.>/) @ (< ,~ 2&^@i. $&.>&|. $&(0 3 4;1 5 2))
+
+(H3 -: H4)"0 i.10
+
+arg=: < ,~ 2&^@i. $&.>&|. $&(0 3 4;1 5 2)
+arg 1
+arg 2
+arg 3
+arg 4
+arg 5
+
+NB. ===============================================
+Lab Section
+There is another possibility. The pattern in H4 is:
+
+ }: > g&.> / xn ; ... ; x3 ; x2 ; x1 ; atom
+
+In an intermediate stage, when g is being applied,
+
+ xi g yi
+
+g "knows" from yi alone what xi has to be:
+the length of yi determines the length of xi,
+and the leading atom of yi (0 or 1) determines
+whether 1 5 2 or 0 3 4 should be ravel-stitched.
+This suggests another solution: a monad is applied
+n times to the atom 1.
+)
+H5=: [: }: (,@,.~ # $ {. { (1 5 2,:0 3 4)"_)^:(]`1:)
+
+(H4 -: H5)"0 i.10
+
+rsa=: ,@,.~ # $ {. { (1 5 2,:0 3 4)"_
+rsa 1
+rsa rsa 1
+rsa rsa rsa 1
+rsa^:(3) 1
+H5 3
+
+NB. ===============================================
+Lab Section Conclusion
+The Tower of Hanoi problem can be solved in a
+variety of ways, with a wide variation in efficiency.
+
+H   double recursion
+H1  single recursion
+H2  single recursion monad
+H3  single recursion, atomic representation
+H4  non-recursive, insert
+H5  non-recursive, power
+)
+0j8 0 ": ts;._1 '/0 1 2 H  10/0 1 2 H1 10/H2 10/H3 10/H4 10/H5 10'
+

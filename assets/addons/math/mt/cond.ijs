@@ -7,7 +7,7 @@ NB.         matrix in a given norm
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -60,7 +60,7 @@ NB.
 NB. TODO:
 NB. - implement more practical norm-estimation approach
 
-con=: 2 : '(* & (% @ u)) v'
+con=: 2 : '*&(%@u) v'
 
 NB. ---------------------------------------------------------
 NB. gecon1

@@ -1,0 +1,154 @@
+LABTITLE=: 'Rotations'
+
+NB. =========================================================
+Lab Section ROTATIONS
+The function:
+
+   length=: %:@:(+/@:*:)"1
+
+yields the length of a vector to which it is applied, first squaring (*:) the elements, then summing (+/) the squares, and finally taking the square root (%:), thus:
+)
+length=: %:@:(+/@:*:)"1
+
+length 3 4
+
+length 3 4 12
+
+NB. =========================================================
+Lab Section LENGTH
+The function:
+
+   X=: +/ . *
+
+is the matrix product.
+
+If m is a matrix, and v is a vector, the result of m X v may differ from v in both length and direction.
+
+However, if m is a matrix whose row and column sums are of length 1, then the result of m X v has the same length as v The operation is called a rotation, and m is called a rotation matrix. For example:
+)
+X=: +/ . *
+
+v=: 3 4
+
+m=: > 1 2;2 1
+m
+
+m X v
+
+length m X v
+
+length v
+
+c=: % %: 2        NB. Reciprocal of square root of 2
+
+m=: > (c, c);((-c),c)
+
+m
+
+length m          NB. Lengths of rows of m
+
+|: m              NB. Transpose of m
+
+length |: m       NB. Lengths of columns of m
+
+m X v
+
+length m X v
+
+NB. =========================================================
+Lab Section ROTATION
+The function:
+
+   r=: (sind , -@:cosd) ,. (cosd , sind)
+
+produces a rotation matrix. The angle of rotation it produces is determined by the argument of r. For example:
+)
+load 'plot trig'
+
+r=: (cosd , -@:sind) ,. (sind , cosd)
+
+m=: r 45
+
+m
+
+m X v
+
+y=: (r 90) X v
+
+y
+
+y X v       NB. 90-degree rotation produces a perpendicular vector
+
+NB. =========================================================
+Lab Section ROTATION MATRICES
+If m =. r a is a rotation matrix in 2-space, then the matrix 1 0 0,0 0,.m produces a corresponding rotation about the x axis in 3-space. For example:
+)
+r 30
+
+rx30=: 1 0 0,0 0,.r 30
+
+rx30
+
+w=: 3 4 5
+
+rx30 X w
+
+length w
+
+length rx30 X w
+
+NB. =========================================================
+Lab Section ROTATION IN 3-SPACE
+If the rows and columns of a rotation about x are permuted to bring the 1 to the y or z position, the result is a rotation about the corresponding axis. For example:
+)
+ry45=: 1 0 2 { 1 0 2 ({"1) 1 0 0,0 0,.r 45
+
+rz60=: 1 2 0 { 1 2 0 ({"1) 1 0 0,0 0,.r 60
+
+ry45
+
+ry45 X w
+
+rz60
+
+rz60 X w
+
+NB. =========================================================
+Lab Section ROTATION ABOUT y AND z
+The matrix product of two rotations is again a rotation, and a general rotation can therefore be produced as a product of rotations about each of the three axes. For example:
+)
+rall=: rx30 X ry45 X rz60
+
+rall
+
+length rall
+
+rall X w
+
+NB. =========================================================
+Lab Section PRODUCT OF ROTATIONS
+We will now define a general rotation function GR whose left argument is a quoted list of axes, such as "yxz" or "yz" or "x"or "xyxyx", and whose right argument is a list of angles in degrees. Thus:
+)
+GR=: 4 : 0
+res=: (i. =/ i.) 3       NB. Initialize res as identity matrix
+p=: >0 1 2;1 0 2;1 2 0   NB. Permutations for axes
+
+while. 0<# x do.
+
+cp=. ('xyz'i.{:x){p                 NB. Current permutation
+cr=. cp {"1 cp { 1 0 0,0 0,.r {: y  NB. Current rotation
+res =. cr X res
+x=. }: x
+y=. }: y
+end.
+
+res
+)
+
+'xyz' GR 30 45 60
+
+'yx' GR 45 60
+
+'y' GR 45
+
+'xyxyx' GR 1 2 3 4 5

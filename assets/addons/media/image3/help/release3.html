@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+<TITLE>Release Notes for the Image3 Addon</TITLE>
+</HEAD>
+<BODY>
+<b>Release Notes for the Image3 Addon</b><br>
+by Zachary X. Reiter and Clifford A. Reiter<br>
+June 2003<br>
+<p>
+Some minor changes were required due to differences between J5.01a and J5.01b and J5.02a. 
+Those, and some other minor changes are described in 
+<a href="release3c.html">Image 3 addon release notes for J5.02a</a>
+</p><p>
+Like the other releases of the image addon for J, this addon gives utilities for reading and writing images in a variety of formats
+from J. While the emphasis is on 24 bit images, there is some support for movies and 8-bit images. We have found the addon very useful and use it regularly. However, some variants of the image and movie types may not be successfully read. Moreover, the software is powerful, so users should be prudent and work on files that have been backed up. 
+</p><p>
+The main utilities are organized into 4 scripts:<br>
+<i>image3.ijs</i>, <i>movie3.ijs</i>, <i>html_gallery8.ijs</i>, and <i>prevare.ijs</i><br>
+See the Image3 lab and other help files for details.
+</p>
+<dir>Major Changes in Release 3</dir>
+<ul>
+<li> Simple Quicktime (tm) movies are supported (*.mov); these include sequences of *.jpg and *.png's. This makes the libraries much larger. </li>
+<li> Reading simple (*.avi) animations is possible; for example, we can read the 
+frames from *.avi files produced by a Fujifilm 602 digital camera.</li>
+<li><tt>prevare</tt> replaces <tt>rotform</tt> and includes facilities to:
+   <ol>
+   <li> Preview images from a image list </li>
+   <li> Rotate and delete images as necessary </li>
+   <li> Create html galleries via menus</li>
+   <li> Make raster images of text</li>
+   <li> Select images for special processing</li>
+   <li> Create web-size image galleries of selections</li>
+   <li> Create cd-label images from selections </li>
+   <li> View images "full" size by double clicking on the pre-view image </li>
+   </ol>
+<li>Paletted 8-bit image writes now accepted by most
+   image formats and are saved as 8-bit images for *.bmp and *.png. Paletted *.bmp and *.png files may also be read.</li>
+<li>Quantization to 8-bits is available.</li>
+<li>Functions for updating galleries while preserving image descriptors and other html information are part of the main html script.</li>
+</ul>
+<dir>Minor Changes in Release 3:</dir>
+<ul>
+<li>bug in reading certain 8-bit bmp's fixed; less memory used for reading most 24 bit images</li>
+<li>small memory leak in png writes fixed</li>
+<li><tt>raw_read_image</tt> on png bug fixed</li>
+<li>extra <tt>&lt/tr&gt&lt/table&gt</tt> in default html galleries fixed </li>
+<li>missing thumbnails are handled more gracefully when <tt>thumb_wh</tt> is 0</li>
+<li><tt>Fcopy</tt> function changed; <tt>Fmove</tt> added</li>
+<li><tt>dir_to_lc</tt> preserves file time stamp</li>
+<li><tt>resize_image</tt> is significantly faster and now works on 2-dimensional arrays of indices as well as the standard 3-dimensional arrays. </li>
+<li><tt>exif_info</tt> function accesses exif camera data</li>
+</ul>
+<hr>
+Link to:<br>
+<a href="release2.html">
+Release 2 of the J image addon; release notes</a><br>
+<a href="index.html">
+Image3 Main Help</a>
+</HTML>

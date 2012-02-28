@@ -1,0 +1,11 @@
+graphics/viewmat - change history
+
+== 1.0.0 ==
+ * initial 701 release
+
+== 1.0.1 ==
+ * J701 beta release
+
+== 1.0.2 ==
+ * opengl color RGB byte order with R in the lowest byte
+ * viewmat: gtk+3 compatible

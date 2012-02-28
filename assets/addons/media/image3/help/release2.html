@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<TITLE>Release Notes for the Image2 Addon</TITLE>
+</HEAD>
+<BODY>
+[This release is outdated]<br>
+Release Notes for the Image2 Addon<br>
+by Zachary X. Reiter and Clifford A. Reiter<br>
+August 2001<br>
+<br>
+Like the first release of the image addon, this addon <br>
+gives utilities for reading and writing some 24 bit image<br>
+formats from J. Html image gallery building tools are<br>
+included. See the scripts and the <tt>image2.ijt</tt> lab <br>
+for documentation.<br>
+</p><p>
+Major changes in Release 2
+</p><p>
+Revised choice of open source code for jpeg and png<br>
+read/write, but most of the high level functions behave<br>
+in the same manner.<br>
+</p><p>
+<dir>Major new features:</dir>
+<ul><li>Available for both Win and Linux platforms</li>
+<li>Library (*.dll, *.os) calls are direct, so temporary<br>
+   files are no longer used; </li>
+<li>Jpeg read/writes are typically faster</li>
+<li>Png read/writes are dramatically faster</li>
+<li>Library file smaller (win image1: three ddls totaled 656k<br>
+                         win image2: one dll totals 288k)</li>
+<li>some 24 bit Portable aNyMap support: *.pnm, *.pgm, *.ppm</li>
+<li>limited support for grayscale images as h by w by 1 arrays</li>
+<li>lossless jpeg transforms (rotations/flips) available</li>
+<li>rot_form.ijs gives form for rotating images interactively <br>
+       (windows version is wd based, linux is tcl/tk based)</li>
+<li>Sample scripts included</li>
+</ul>
+<dir>Minor changes:</dir>
+<ul><li><tt>bmp_to_jpeg</tt> and other type-to-type conversions are replaced by<br>
+   a single verb <tt>conv_image</tt>. <br>
+   The image1 addon command  [opt] bmp_to_jpeg in.bmp;out.jpg  becomes<br>
+                             [opt] conv_image in.bmp;out.jpg</li>
+<li>Png options are numbers, 0-9, which trade speed for better <br>
+   compression</li>
+<li>Error in <tt>read_tga</tt> fixed</li>
+<li>Bug in default thumbnail names fixed</li>
+<li>Bug in <tt>fn_to_lc</tt> fixed</li>
+</ul>
+</body>
+</HTML>

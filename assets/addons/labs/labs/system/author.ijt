@@ -1,0 +1,191 @@
+LABTITLE=: 'Lab Author'
+LABAUTHOR=: 0 : 0
+Peter Rabbit
+email: peter@potter.com
+)
+LABCOMMENTS=: 'This lab illustrates the use of Lab Author.'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter Chapter One
+NB. =========================================================
+Lab Section Section 1
+This lab illustrates the Lab Author system. It is best run from within the Lab Author system itself.
+
+If you have run this from Studio|Labs..., close it down, then run Studio|Author... and open file system\author.ijt.
+
+If you are in Lab Author, then click the >> button to move to the next section.
+)
+
+NB. =========================================================
+Lab Section
+Note that by default, the text written to the J session is folded to the lab width.
+)
+
+NB. =========================================================
+Lab Section Section 2
+To experiment with this lab without saving the original, select menu File|Save As, and save the lab with another name.
+
+
+For example save it in the J temp subdirectory as temp.ijt.
+)
+
+NB. =========================================================
+Lab Section Section 3
+For a description of the Labs system, and Lab Author, read the help file from the Help menu.
+)
+
+NB. =========================================================
+Lab Section Section 4
+This is Section 4, Chapter One of the lab.
+)
+
+NB. =========================================================
+Lab Section
+This is also Section 4 of the lab.
+
+The same section title can be used for consecutive sections. If so, "(ctd)" is shown after the section name.
+
+You can rearrange, insert and delete sections from the Section menu command.
+)
+
+NB. =========================================================
+Lab Section Lab Header
+The chapter name is shown only if the lab has chapters.
+
+This lab has only one chapter, so you can redefine the lab to not use chapters by editing the Lab Header.
+
+Try this from menu option Edit|Lab Header...
+)
+
+NB. =========================================================
+Lab Section
+Other parameters in the Lab Header are:
+
+Title (required) and Author (optional) - shown when the lab is started.
+
+Comments (optional) - not shown when the lab is started.
+
+more...
+)
+
+NB. =========================================================
+Lab Section
+Allow Text Wrap and Text Width. By default this is on, and means that any text is wrapped to the specified text width, default 61.
+
+Continue after errors: set on if you intend to demonstrate errors in your J code, otherwise errors are signalled to the user. By default this is 0, off.
+
+No session output: set on if you do not want any output written to the jx session, default off. This may be appropriate for labs with no code examples.
+)
+
+NB. =========================================================
+Lab Section Text + Code
+The split screen shows the lab text at the top, and code at the bottom. The code is executed when you press Run. Try this now - press Run.
+
+Run does not advance to the next section.
+)
+[a=: <\p: i.6
+
++/ each a
+
+NB. =========================================================
+Lab Section
+When you press Run, if wrapping is on, the text section is also reformatted to the wrap width. If wrapping is off, you can press the Wrap button to wrap the text.
+
+You can set the wrap width from the Edit|Lab Header... screen. The default is 61.
+
+  Text that is indented is not wrapped.
+  For example, this useful for J code.
+
+Experiment with different widths. If necessary, use Edit|Font... to change the font.
+)
+;/ i.2 3 4
+
+NB. =========================================================
+Lab Section PREPARE
+Use keyword PREPARE to include J code that is executed invisibly. This allows you to prepare the J session when the lab section is run.
+
+In the following, AA is first defined, then <AA is run in the session. Note that the code defining AA does not appear in the session.
+)
+PREPARE
+AA=: 1 2 3
+PREPARE
+<AA
+
+NB. =========================================================
+Lab Section
+A typical use of PREPARE is for Labs that create forms, where you must ensure that wd commands are sent to the correct form. You can then include a wd "psel..." command in the PREPARE section.
+
+For example, the following creates a form with an edit control, and the next section attempts to write text to the edit control. No psel command is given and the wd command fails.
+
+If necessary, rearrange windows so as to make the form visible.
+)
+wd 'pc myform closeok'
+wd 'xywh 3 8 50 12'
+wd 'cc myedit edit'
+wd 'pcenter;pshow'
+
+NB. =========================================================
+Lab Section
+Now try to write the edit control, without a psel command.
+
+Press Run now.
+)
+wd 'set myedit *some text'
+
+NB. =========================================================
+Lab Section
+This works correctly if the psel command is given first.
+
+Press Run now.
+
+Close the form before continuing with the Lab.
+)
+PREPARE
+wd 'psel myform'
+PREPARE
+wd 'set myedit *some text'
+
+NB. =========================================================
+Lab Section SCRIPT
+Use keyword SCRIPT to define a variable "SCRIPT_jlab_".
+
+For example, this provides a mechanism for building scripts on the fly.
+
+Note both the SCRIPT and PREPARE keywords are used here to create the script file.
+)
+PREPARE
+NB. close myform if still open
+wd :: ] 'psel myform;pclose'
+PREPARE
+SCRIPT
+NB. This script was built by the Lab Author lab.
+AA=: 100 200 300
+foo=: 4 : 0
+x + 2 * y
+)
+SCRIPT
+PREPARE
+SCRIPT_jlab_ fwrite jpath '~temp\t11.ijs'
+PREPARE
+0!:1 <jpath '~temp\t11.ijs'
+AA
+10 foo AA
+
+NB. =========================================================
+Lab Section Text Files
+Lab files are plain text files, and you can create and edit them with any text editor, or from within the J session.
+
+For example, the following shows the first few lines of the current lab file.
+
+The comment lines NB. === ... are put in by Lab Author and are ignored when running the Lab.
+)
+PREPARE
+require'files'
+PREPARE
+fread (jpath '~system\extras\labs\system\author.ijt');0 500
+
+NB. =========================================================
+Lab Section Running the Lab
+To run the lab in the normal way, select menu File|Run Lab.
+)

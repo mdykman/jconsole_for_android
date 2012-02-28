@@ -1,0 +1,5 @@
+general/primitives - change log
+
+== 1.0.0/1 ==
+ * initial release for J7
+

@@ -1,0 +1,314 @@
+LABTITLE=: 'Client/Server (Simple Socket)'
+LABAUTHOR=: 'Eric Iverson'
+LABERRORS=: 1
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section Overview
+This lab introduces the Simple Socket Client/Server classes.
+
+The server class is implemented by jsss.ijs. This class manages all the server socket details. It listens for new connections; reads the data from a client until it has a complete request; runs the request; and then sends the result to the client.
+
+jsss.ijs must be extended with definitions of server methods and possibly a few redefintions for a particular application.
+
+jsss_demo.ijs is an example extension that implements a  server application with a few methods.
+
+To build a server application you don't need to worry about the socket details as these are taken care of by the jsss class. You only need to implement the server methods.
+)
+
+NB. =========================================================
+Lab Section
+The client class is implemented by jssc.ijs. This class manages all the client socket details. As a client you just create a client object from the jssc class and call the server methods. The client calls server methods with an argument and they return a result just like any other verb (except that they are executed in the server task).
+)
+
+NB. =========================================================
+Lab Section
+The server can be running in a separate task on the same machine or on any other machine that is accessible to a socket connection through a network.
+
+The server can handle multiple, simultaneous clients. A database manager is a typical server application.
+)
+
+NB. =========================================================
+Lab Section
+The server and client classes can be used in any J Front End (Jconsole or Jwd) on any platform (Windows, Unix, PocketPC).
+
+The Windows only sdasync facility is not used. The use of sdasync is discouraged. It is not portable, doesn't work in Jconsole, is less efficient than sdselect, is atypical socket programming, and may be decommitted in future releases.
+)
+
+NB. =========================================================
+Lab Section
+The server sleeps in an infinite loop with select. New connections are accepted and requests serviced as required. On a new connection it creates a server object for that client. It reads data from a client socket until it has a complete request, processes the request, and sends the result to the client.
+)
+
+NB. =========================================================
+Lab Section
+Since the server is always in the select loop (waiting for a socket event or proceesing events) it is not ready for keyboard or wd events.
+
+Normally a production server would run in Jconsole because of its lower overhead and simpler environment. In development with only test clients it may be convenient to run it in Jwd so you can use the J IDE.
+
+The server keyboard and wd is not used for managing or debugging the server. The server is managed by a client that has enabled a 'super user' interface.
+)
+
+NB. =========================================================
+Lab Section Server
+We'll start a server in a separate task and play with it as a client from here.
+
+Start a command line console and run Jconsole (jconsole.exe in Windows and either jconsole or the shell script jc in Unix). As the J directory probably isn't in your path you may need to provide the full path in the command line.
+
+Verify that J is running in the console by trying some simple sentences.
+)
+
+NB. =========================================================
+Lab Section
+In the Jconsole session load the server script by running the following sentence:
+
+   load '~system\classes\cs\jsss_demo.ijs'
+)
+
+NB. =========================================================
+Lab Section
+In the server task initialize and start the server loop by running the following sentence:
+
+   init 1200  NB. listen for connections on port 1200
+)
+
+NB. =========================================================
+Lab Section
+If the server started properly it will have reported:
+
+server initialized - running select loop now
+
+The server is asleep in a select waiting for socket events. The caret will be at the left margin and the keyboard will not work (except for break which will interrupt the loop).
+)
+
+NB. =========================================================
+Lab Section Client
+We'll now act as a client of the server you just started.
+
+First we load the client class definitions.
+)
+load '~system/classes/cs/jssc.ijs'
+
+NB. =========================================================
+Lab Section
+If the server isn't properly started the next section will hang when it tries to connect to the server. If it hangs you can interrupt with break.
+)
+
+NB. =========================================================
+Lab Section
+We establish a connection to the server with a client object.
+)
+c=: 1200 conew 'jssc' NB. create client object for port 1200
+
+NB. =========================================================
+Lab Section
+c is the client object and we can now run server methods.
+
+test__c packages up the argument, sends it through the socket connection to the server, and waits for the result. The server reads the request, calls its test method with the argument, and sends the result back to the client.
+)
+test__c 'asdf' NB. server method that returns its argument
+
+NB. =========================================================
+Lab Section
+The server is the demo server and has just a few example methods implemented. Note that the server methods are verbs and are dyadic.
+)
+reverse__c '1 c 8 time'
+reverse__c i.5
+reverse__c i.2 3
+3 reverse__c i.5
+2 3 4 matrix_product__c 3 4 5
+
+NB. =========================================================
+Lab Section
+The cmdlist method returns the names of commands.
+)
+cmdlist__c''
+average__c i.23
+
+NB. =========================================================
+Lab Section Super User
+The client interface can be extended to include privileged 'super user' commands that provide server management and debugging.
+
+The first step is to use the su method to enable super user methods and to define them. The argument to su is the server password.
+)
+su__c 'fubar' NB. template server password is fubar
+
+NB. =========================================================
+Lab Section
+The su_list method returns the su command names.
+)
+su_list__c''
+
+NB. =========================================================
+Lab Section
+su_interrupt breaks the server out of its select loop. This stops the server from accepting new connections and from servicing clients and allows you to use immediate execution in the server. This is not normally required, but might be necessary in some debugging situations.
+
+After you do an su_interrupt you can start the server again with its run verb.
+)
+su_interrupt__c'' NB. break out of the sdselect loop
+
+NB. =========================================================
+Lab Section
+Check the server task and verify that it displayed
+
+loop ended - restart loop by running: run''
+
+and that it is now ready for sentences from the keyboard.
+Restart the loop by running:
+
+   run''
+
+If you don't restart the server loop the next client request will hang.
+)
+
+NB. =========================================================
+Lab Section
+su_execute runs a sentence in your clients object in the server task. This powerful facility can be used for debugging the server. General management and debugging facilities would be built in as su methods, but execute gives the super user complete control.
+)
+su_execute__c 'names 0' NB. nouns in our server object
+su_execute__c 'names__ 0' NB. nouns in server base locale
+
+NB. =========================================================
+Lab Section
+)
+su_execute__c'sockets__' NB. server client sockets
+su_execute__c'servers__' NB. server client objects
+
+NB. =========================================================
+Lab Section Logfile
+By default the server appends transaction information to a text file. The server can be started with additional parameters to init to change the logfile name ('' for no logging).
+)
+su_execute__c 'logfile__'
+
+NB. =========================================================
+Lab Section
+Read the logfile. Note that the file read is done in the server and the result is returned to client. The server could be on another machine and the logfile is on that machine.
+
+The columns after the date are socket and client obect numbers.
+)
+su_execute__c '1!:1 <logfile__' NB. read server logfile
+
+NB. =========================================================
+Lab Section
+The logfile is cleared when the server is started. Your production use of a server may want to rename the old logfile before starting to preserve the previous session.
+)
+
+NB. =========================================================
+Lab Section Client create parameters
+We started the client with just a port parameter and it used default values for other parameters. The client create parameters are:
+
+port host timeout dodefine
+
+port is the server port number.
+
+host is the server network id. By default it is localhost. You can provide either the name (e.g. 'Frodo') or the ip address for the host (e.g. '192.168.1.3').
+
+timeout is used in select loops. The timeout allows the system to respond to a break request. The default timeout is 5000 (5 seconds).
+)
+
+NB. =========================================================
+Lab Section
+dodefine 1 (default) requests a list of server methods from the server and defines cover verbs. Use dodefine 0 to avoid this non-trivial initialization overhead.
+)
+
+NB. =========================================================
+Lab Section
+Let's create a new client to the server with a dodefine of 0.
+)
+d=: 'jssc' conew~ 1200;'localhost';5000;0
+
+NB. =========================================================
+Lab Section
+Since dodefine was 0, the client object didn't get a list of commands and didn't build verb covers for them.
+)
+test__d 'asdf' NB. error because dodefine was 0
+
+NB. =========================================================
+Lab Section
+Since the covers were not defined you need to make the call at a lower level.
+)
+'test' call__d <'asdf'
+'reverse' call__d <i.5       NB. monad
+'reverse' call__d (<3),<i.6  NB. dyad
+
+NB. =========================================================
+Lab Section Destroy
+When you destroy a client object the socket is closed and the client object is destroyed. The server knows when the socket is closed and it will run the stop method and then destroy its client object.
+)
+destroy__d '' NB. destroy the client object
+
+NB. =========================================================
+Lab Section Shutdown
+As super user you can shutdown the server.
+
+Verify in the server console that the J task has ended.
+)
+su_shutdown__c ''
+
+NB. =========================================================
+Lab Section
+Now the client object will show that the connection has been broken.
+)
+test__c'asdf'
+
+NB. =========================================================
+Lab Section
+When a client object is finished it should be destroyed.
+)
+destroy__c''
+
+NB. =========================================================
+Lab Section Class scripts
+The jssc.ijs script is about 60 lines. You can use it to access servers without ever looking at it, but it might be interesting to skim through it.
+
+The jsss.ijs script is about 230 lines. It is worthwhile to look at the entire script, but only the last 10 or so lines  require study and affect how you will build your own server.
+)
+
+NB. =========================================================
+Lab Section Template script
+The jsss_demo.ijs script is the script you will have to study in order to build your own server application.
+
+This section opens the script and you should read through it quickly to get an overview.
+)
+open jpath'~system\classes\cs\jsss_demo.ijs'
+
+NB. =========================================================
+Lab Section
+To build your own server application save a copy of jsss_demo.ijs as your server class. Then edit it as required. Start playing by adding a few simple server methods. More advanced servers will have definitions for the init, end, start, and stop methods and will probably include state information.
+)
+
+NB. =========================================================
+Lab Section
+Bill Lam provided the forum with a nice example for an ODBC server that can be built with the following script:
+
+   require '~system\classes\cs\jsss.ijs'
+   cocurrent'jsss'
+   require'dd'
+
+NB. define cmd_ddxxx for each ddxxx_jdd_
+   t=. >((<'dd')=2{.each n)#n=.nl_jdd_ 3
+   0!:100 ( 'cmd_',"1 t ,"1 ' =: ',"1 t ,"1 '_jdd_') -."1 ' '
+)
+
+NB. =========================================================
+Lab Section
+Save the script from the previous section as file temp\odbc.ijs and start a jconsole server with the following:
+
+   load '~temp\odbc.ijs'
+   init 1200
+
+You can use the odbc server from another J session. For example, assuming
+you have registed jdata for the database system\examples\data\jdata.mdb:
+
+   load '~system\classes\cs\jssc.ijs'
+   c=: 1200 conew 'jssc'
+   ch=: ddcon__c 'dsn=jdata'
+   sh=: ch ddsel__c~ 'select * from tdata'
+   ]rc=: ddfch__c sh,_1
+   dddis__c ch
+)
+
+NB. =========================================================
+Lab Section Feedback
+Your feedback to improve the code (performance, robustness, functionality, and elegance) is welcome!
+)

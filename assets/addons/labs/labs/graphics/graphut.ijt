@@ -1,0 +1,273 @@
+LABTITLE=: 'Graph Utilities'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section Introduction
+This lab describes the graph utilities (Graph) included with J. These apply to Windows GDI graphics, not OpenGL graphics.
+
+GDI graphics are drawn in a canvas control. A set of "gl2" commands, defined in script system\main\gl2.ijs and documented in the User Manual - Window Driver Command Reference, provide the basic functionality for this control. These commands closely match the underlying Windows GDI API.
+
+The Graph utilities are a set of cover functions for the most commonly used gl2 commands, that simplify drawing into the control.
+)
+
+NB. =========================================================
+Lab Section Loading the Graph utilities
+To load Graph, enter:
+
+   load 'graph'
+
+For this lab, we will also use the numeric and trig utilities:
+)
+load 'graph'
+
+load 'numeric trig'
+
+NB. =========================================================
+Lab Section Lab windows
+The lab will display several windows. You can rearrange and resize these windows as required.
+
+The windows can be left open as you step through the lab. However, you can also close them if you wish - they will be re-created when they are next used.
+)
+PREPARE
+coinsert 'jgtk jgl2'
+gdreset''
+gl2demo=: 0
+PREPARE
+
+NB. =========================================================
+Lab Section Drawing with gl2 commands
+We now look at an example of drawing to a canvas control using the gl2 commands directly. The example draws a red square in the middle of the control.
+
+The next section opens up a script, gl2demo, that will draw the picture. You may need to rearrange the windows to see the script.
+
+Examine the script, then run it to draw the picture.
+)
+
+NB. =========================================================
+Lab Section
+)
+SCRIPT
+gl2demo_run=: 3 : 0
+gl2demo=: gtk_window_new GTK_WINDOW_TOPLEVEL
+gtk_window_set_title gl2demo;'gl2demo'
+gtk_widget_set_name gl2demo;'gl2demo'
+consig gl2demo;'destroy';'gl2demo_close'
+gloc=: glcanvas_jgl2_ 'gl2demo';'g';200 200;coname''
+gtk_container_add gl2demo,canvas__gloc
+gtk_widget_show_all gl2demo
+)
+
+gl2demo_g_paint=: 3 : 0
+wh=. glqwh_jgl2_''
+glrgb_jgl2_ 255 0 0
+glbrush_jgl2_''
+glrect_jgl2_ (wh,wh) * 300 300 400 400 % 1000
+)
+
+gl2demo_close=: 3 : 0
+gl2demo=: 0
+cbfree''
+)
+
+gl2demo_run''
+SCRIPT
+PREPARE
+(toHOST SCRIPT_jlab_) 1!:2 <jpath '~temp/gl2demo.ijs'
+open jpath '~temp/gl2demo.ijs'
+tile_jijs_''
+PREPARE
+
+NB. =========================================================
+Lab Section Drawing with graph utilities
+The next section draws the same square using Graph.
+)
+PREPARE
+3 : 0''
+if. 0=wdisparent 'gl2demo' do.
+  load '~temp/gl2demo.ijs'
+end.
+PREPARE
+
+NB. =========================================================
+Lab Section
+)
+RED gdrect gddraw _0.4 _0.4 0.8 0.8
+
+NB. =========================================================
+Lab Section Drawing space
+Note that the rectangle is defined in the gl2demo script as:
+
+   300 300 400 400
+
+and in Graph as:
+
+   _0.4 _0.4 0.8 0.8
+
+These numbers are the (x,y) coordinates of the bottom left corner, and the (w,h) width and height. The gl2demo script uses a drawing space with notional xywh of 0 0 1000 1000.
+
+Graph uses a drawing space with xywh of _1 _1 2 2. This is more convenient for experimentation.
+
+Also, Graph has alternate drawing verbs with names ending in "01". These draw to a space with xywh of 0 0 1 1.
+)
+
+NB. =========================================================
+Lab Section
+For example, here is another way of drawing the square, using the "01" version of the gdrect verb. This time the color is blue.
+)
+BLUE gdrect01 gddraw 0.3 0.3 0.4 0.4
+
+NB. =========================================================
+Lab Section Aspect Ratio
+Another difference between the gl2demo and Graph is that pictures drawn with Graph are isotropic, i.e. they preserve the aspect ratio of the image when it is scaled. The gl2demo picture is anisotropic.
+
+You can see this by resizing the gl2demo and graph windows. If you have closed the gl2demo form, just re-run the gl2demo.ijs script to show it.
+)
+
+NB. =========================================================
+Lab Section
+If you wish, you can close down the gl2demo script and form windows now.
+)
+
+NB. =========================================================
+Lab Section Graph commands
+All Graph utilities have names beginning gd, Graph Driver.
+
+There are 4 types of commands:
+
+   gdopen          open a graph window
+   gdcolor, etc.   state-setting commands, e.g. set color
+   gdrect,  etc.   drawing commands
+   gdshow          show command
+)
+PREPARE
+closewindows_jijs_ ''
+tile_jijs_ ''
+PREPARE
+
+NB. =========================================================
+Lab Section
+To illustrate, here is a verbose way of drawing the square:
+)
+gdopen ''                 NB. open graph window
+gdcolor GREEN             NB. set color
+gdrect _0.4 _0.4 0.8 0.8  NB. define rectangle
+gdshow''                  NB. show it
+
+NB. =========================================================
+Lab Section
+To simplify this, note first that drawing commands such as gdrect take an optional left argument that is the color. So you could enter:
+)
+gdopen ''                 NB. open graph window
+YELLOW gdrect _0.4 _0.4 0.8 0.8  NB. define rectangle
+gdshow''                  NB. show it
+
+NB. =========================================================
+Lab Section
+Next, note that most uses of Graph start with gdopen'' and end with gdshow''.
+
+In such cases, you can use the adverb gddraw, which wraps its argument between calls to gdshow and gdopen, as in the earlier example:
+)
+RED gdrect gddraw _0.4 _0.4 0.8 0.8
+
+NB. =========================================================
+Lab Section
+Graph drawing commands have rank 1, so that a matrix represents a graphic object for each row, for example:
+)
+
+(RED,:GREEN) gdrect gddraw _0.4 _0.4 0.8 0.8,:0.4 0.4 0.2 0.5
+
+NB. =========================================================
+Lab Section
+The drawing commands also accept arguments of boxed lists, and step through each in turn, for example:
+)
+(BLUE;PURPLE) gdrect gddraw _0.4 _0.4 0.8 0.8;0.4 0.4 0.2 0.5
+
+NB. =========================================================
+Lab Section gdopen
+If a non-empty argument is given to gdopen, it is the name of the parent window. This allows you to draw more than one window at a time.
+
+Move the "def" window away to reveal the "abc" window.
+)
+gdopen 'abc'
+gdshow AQUA gdrect _0.4 _0.4 0.8 0.8
+
+gdopen 'def'
+gdshow TEAL gdpolygon ,0.7 * (cos,.sin) 2p1 * int01 5
+
+NB. =========================================================
+Lab Section
+Use gdpencolor to set pen color, and gdcolor to set the brush color.
+)
+gdopen''
+gdcolor GREEN
+gdrect01 0.1 0.1 0.2 0.4
+gdpen 10 0
+gdpencolor RED
+gdlines ,0.7 * (cos,.sin) 4p1 * int01 5
+gdshow''
+
+NB. =========================================================
+Lab Section
+Use gdfont to set text font, gdtextcolor to set text color,
+and gdtext to draw text.
+
+The arguments to gdtext are:
+
+   position;alignment;text
+
+where alignment is 0=left,1=center,2=right
+)
+gdopen''
+gdfont 'arial 12 bold'
+gdtextcolor RED
+gdtext01 0.5 0.7;1;'red centered'
+BLUE gdtext01 0.5 0.5;0;'blue left'
+GREEN gdtext01 0.5 0.3;2;'green right'
+gdshow''
+
+NB. =========================================================
+Lab Section
+Here are the state-setting commands:
+
+  gdcolor      set color
+  gdfont       set text font
+  gdpen        set pen size and style
+  gdpencolor   set pen color
+  gdtextolor   set text color
+)
+
+NB. =========================================================
+Lab Section
+Here are the drawing commands. Each has a matching verb ending in "01".
+
+  gdarc        draw arc
+  gdchord      draw chord
+  gdellipse    draw ellipse
+  gdlines      draw lines
+  gdpie        draw pie-shaped wedge
+  gdpixel      draw pixel
+  gdpolygon    draw polygon
+  gdrect       draw rectangle
+  gdroundr     draw rounded rectangle
+  gdtext       draw text
+
+The arguments are the same as for the corresponding gl... verb, e.g. gdrect has the same argument as glrect. See the online help, User Manual - Window Driver Command Reference.
+)
+
+NB. =========================================================
+Lab Section
+Here are the remaining commands:
+
+  gdadd        wrap gd add drawing command
+  gdbmp        save to bitmap file
+  gdclip       save to clipboard (windows only)
+  gddraw       wrap gd drawing command
+  gdemf        save to emf file (windows only)
+  gdopen       open/clear graphics window
+  gdshow       show graph
+)
+
+NB. =========================================================
+Lab Section
+For examples of using Graph, see the lab "Fractals, Visualization & J".
+)

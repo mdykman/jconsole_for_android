@@ -17,7 +17,7 @@ IFWINE=: IFWIN > 0-:2!:5'_'
 
  
 if. IFANDROID do.
-  UNAME=: 'Android'
+  UNAME=: 'Linux'
 elseif. IFUNIX do.
   UNAME=: (2!:0 'uname')-.10{a.
 elseif. 1 do.
@@ -27,7 +27,8 @@ end.
 
 jcwdpath=: (1!:43@(0&$),])@jpathsep@((*@# # '/'"_),])
 jsystemdefs=: 3 : 0
-0!:0 <jpath '~system/defs/',y,'_',(tolower UNAME),(IF64#'_64'),'.ijs'
+xuname =. > IFANDROID { UNAME ; 'Android'
+0!:0 <jpath '~system/defs/',y,'_',(tolower xuname),(IF64#'_64'),'.ijs'
 )
 18!:4 <'z'
 'TAB LF FF CR DEL EAV'=: 9 10 12 13 127 255{a.
@@ -1581,26 +1582,30 @@ end.
 EMPTY
 )
 dfltbrowser=: verb define
-select. UNAME
-case. 'Win' do. ''
-case. 'Darwin' do. 'open'
-case. do.
-  try.
-    2!:0'which google-chrome'
-    'google-chrome' return. catch. end.
-  try.
-    2!:0'which chromium-browser'
-    'chromium-browser' return. catch. end.
-  try.
-    2!:0'which firefox'
-    'firefox' return. catch. end.
-  try.
-    2!:0'which konqueror'
-    'konqueror' return. catch. end.
-  try.
-    2!:0'which netscape'
-    'netscape' return. catch. end.
-  '' return.
+if. IFANDROID do.
+  return.
+else.
+  select. UNAME
+  case. 'Win' do. ''
+  case. 'Darwin' do. 'open'
+  case. do.
+    try.
+      2!:0'which google-chrome'
+      'google-chrome' return. catch. end.
+    try.
+      2!:0'which chromium-browser'
+      'chromium-browser' return. catch. end.
+    try.
+      2!:0'which firefox'
+      'firefox' return. catch. end.
+    try.
+      2!:0'which konqueror'
+      'konqueror' return. catch. end.
+    try.
+      2!:0'which netscape'
+      'netscape' return. catch. end.
+    '' return.
+  end.
 end.
 )
 Folder=: ''
@@ -1834,9 +1839,11 @@ a=. (,&'=: ',sub @ (3 : j)) each y
 )
 xedit=: xedit_j_
 wcsize=: 3 : 0
-if. (-.IFGTK+.IFJHS) *. UNAME-:'Linux' do.
+if. IFANDROID do.
+  Cwh_j_
+elseif. (-.IFGTK+.IFJHS) *. UNAME-:'Linux' do.
   |.@".@(-.&LF)@(2!:0) :: (Cwh_j_"_) '/bin/stty size 2>/dev/null'
-else.
+elseif. do.
   Cwh_j_
 end.
 )

@@ -1,0 +1,367 @@
+LABTITLE=: 'Regular Expressions Builder'
+
+NB. =========================================================
+Lab Section Regular Expressions Builder
+This lab describe the utilities in the regbuild.ijscript.
+
+You can step through the entire lab, or jump ahead to a particular section.  The sections are:
+   - Regular Expression Construction, verbs to help
+     create regular expressions
+   - An Example, shows an example of using the definitions
+     in regbuild.ijs to create a complex pattern to solve an
+     problem
+   - Word Formation in J, describes the definitions in
+     regj.ijs which help create regular expressions to
+     search J code
+
+It is recommended that you first run through the "Regular Expressions" lab to understand regular expressions and the J verbs which use them.
+)
+PREPARE
+load 'convert'
+PREPARE
+
+NB. =========================================================
+Lab Section Regular Expression Construction
+We first load the regbuild.ijs script.
+)
+load '~system\packages\regex\regbuild.ijs'
+
+NB. =========================================================
+Lab Section
+regbuild.ijs has some verbs used to build up larger patterns by joining smaller ones together with the regular expression notation.
+)
+p1=: 'abc'
+
+p2=: 'defg'
+
+p1 or p2
+
+NB. =========================================================
+Lab Section
+All aspects of the regular expression notation can be generated from these verbs.
+
+The previous steps showed joining two patterns together as alternatives.
+
+The following shows patterns with character classes.  The set verb creates a pattern which represents a set from the argument.  The not verb can also be used to invert the set of characters.
+
+Predefined sets exist for all the defined character classes.
+)
+set 'abc'        NB. matches one of the letters a, b, or c.
+
+set not 'abc'    NB. matches a character except a, b, or c.
+
+Alpha            NB. matches an alphabetic character
+
+NB. =========================================================
+Lab Section
+Lower case class names are defined as the text which represents a class of characters, but without the set notation ([]) around it.  This allows you to create more complex sets using the defined classes.
+)
+Alpha           NB. set
+
+alpha           NB. portion of set
+
+set alpha       NB. same as Alpha
+
+set alpha,'_'   NB. set of alphabetic or '_'
+
+set not digit   NB. set of all characters except alpha
+
+NB. =========================================================
+Lab Section
+Repetitions of patterns can be represented in one of the following ways:
+
+  verb       meaning            regex notation
+  anyof      0 or more of       *
+  someof     1 or more of       +
+  optional   0 or 1 of          ?
+  of         n to m of          {n,m}
+)
+anyof 'abc'
+
+someof 'abc'
+
+optional 'abc'
+
+3 5 of 'abc'
+
+NB. =========================================================
+Lab Section
+Note that in the previous example the verbs wrapped the patterns in parentheses to make the control of repetitions apply to the entire pattern.  Simple tacking on an asterisk, for example, would result in a pattern such as "abc*", which represents the letters "ab" followed by 0 or more "c"s.
+
+It is not always necessary to add the parentheses, as is illustrated in the following examples:
+)
+optional 'x'
+
+anyof set 'aeiou'
+
+sub 'abc' or 'def'             NB. sub makes a subexpression
+
+optional sub 'abc' or 'def'    NB. which isn't duplicated.
+
+NB. =========================================================
+Lab Section
+The by verb puts two patterns together as a pattern which will match text which has the first pattern immediately followed by the second.
+
+It, too, will conditionally enclose a pattern in parentheses if necessary,in this case, it is necessary for patterns of the form pat1|pat2.
+)
+'pat1' by 'pat2'
+
+Alpha by anyof Alnum
+
+'command=' by 'move' or 'copy'
+
+NB. =========================================================
+Lab Section
+A couple other definitions exist to help create regular expressions.
+)
+white     NB.  matches whitespace (someof Blank)
+
+owhite    NB.  matches optional whitespace (anyof Blank)
+
+sol       NB.  start of line
+
+eol       NB.  end of line
+
+any       NB.  any character
+
+bkref 1   NB.  subexpression back-reference
+
+NB. =========================================================
+Lab Section
+The plain verb makes a pattern from plain text by delimiting the characters in the pattern which would be interpreted as special.
+)
+plain 'type filename.ext|more'
+
+NB. =========================================================
+Lab Section
+The verb, between, inserts its left argument between each item in the right:
+)
+owhite
+
+owhite between 'abc'
+
+owhite between '[[:alpha:]]*';'[[:digit:]]+';'[[:alnum:]]+'
+
+NB. =========================================================
+Lab Section
+Any characters after a nul character (0{a.) in the pattern is ignored.  The nb verb uses this to place comments into a regular expression pattern:
+)
+n=: rxcomp 'strings of digits' nb '[[:digit:]]+'
+
+n
+
+n rxall 'abc 123 def 456 ghi'
+
+rxinfo n
+
+rxfree n
+
+NB. =========================================================
+Lab Section
+Finally, the setchars verb takes a pattern containing a single set as an argument and returns all elements of a. which are contained in that set:
+)
+setchars Alpha
+
+setchars '[a-m[:digit:]]'
+
+NB. =========================================================
+Lab Section An Example
+In this section we will work through an example to build a regular expression to parse text containing  keyword=value pairs.
+)
+
+NB. =========================================================
+Lab Section
+We will define a keyword to have rules similar to J names: it starts with alphabetic character and may be followed by any number of alphanumeric characters.
+)
+key=: Alpha by anyof Alnum
+
+key
+
+NB. =========================================================
+Lab Section
+A value can be a quoted string, as in a J character constant: it starts and ends with quotes and, in between, contains any number of either a non-quote, or two quotes.
+
+For more simple values, we will also allow simple strings which do not contain blanks or quotes.
+
+We start by defining the simple string:
+)
+Q=: ''''
+
+sstring=: someof set not ' ',Q
+
+sstring
+
+NB. =========================================================
+Lab Section
+Now the definition for the quoted string:
+)
+qstring=: Q by (anyof (Q by Q) or set not Q) by Q
+
+qstring
+
+NB. =========================================================
+Lab Section
+So, a value matches either of these two patterns:
+)
+value=: qstring or sstring
+
+value
+
+NB. =========================================================
+Lab Section
+A pattern which matches a complete  key=value  pair is defined below.
+
+Note that the by verb automatically put the value portion of the pattern in parentheses.
+)
+kvpair=: owhite between key;'=';value
+
+kvpair
+
+NB. =========================================================
+Lab Section
+Below we define a representative argument string to illustrate this and try the pattern to find the first match:
+)
+str=: '   email  =joe@home.ca  alias=N/A'
+str=: '  age = 42   name= ''Smokin'''' Joe''   ',str
+
+str
+
+kvpair rxmatch str
+
+NB. =========================================================
+Lab Section
+The resulting match has three parts: the entire match of the pattern, and the two subexpressions: the first is the entire value part; the second a piece of the qstring pattern, which did not participate in the match and hence is _1 0.
+)
+
+NB. =========================================================
+Lab Section
+We want both the keyword and value parts, so we redefine kvpair to make them subexpressions.
+
+Note that the sub verb is not required for the value part, but explicitly using it makes the creation of this pattern clearer.
+)
+kvpair=: (sub key) by owhite by '=' by owhite by (sub value)
+
+kvpair
+
+NB. =========================================================
+Lab Section
+We repeat the match, and use the result to extract the significant portions from the string:
+)
+kvpair
+
+str
+
+kvpair rxmatch str
+
+(kvpair rxmatch str) rxfrom str
+
+NB. =========================================================
+Lab Section
+We can now select the pieces we actually want.  This gives us the keyword/value pair from the first match.  We can do this explicitly after applying rxmatch, or we can let rxmatch do it:
+)
+(1 2&{"2 kvpair rxmatch str) rxfrom str
+
+((kvpair;1 2) rxmatch str) rxfrom str
+
+NB. =========================================================
+Lab Section
+Repeating this for all matches is simply a matter of changing rxmatch to rxmatches:
+)
+str
+
+((kvpair;1 2) rxmatches str) rxfrom str
+
+NB. =========================================================
+Lab Section
+By simple selecting the first subexpression (the keyword) we can apply a verb to just that part.  We use the toupper verb from convert.ijs.
+)
+(kvpair;,1) toupper rxapply str
+
+NB. =========================================================
+Lab Section
+Note that the regular expressions built here could be generated (using these verbs) during the runtime of the application.  Alternatively, the utilities can be used to generate and experiment with them -- once the final patterns are derived they can be cut and pasted directly into applications.
+)
+
+NB. =========================================================
+Lab Section Word Formation in J
+The tokenizing of a J sentence can be described in terms of regular expressions.
+
+The following sections describe various J parts of speech in terms of regular expressions.  You can experiment with them with definitions already made. The definitions are available in the script system\packages\regex\regj.ijs
+)
+
+NB. =========================================================
+Lab Section
+We will define a verb "try" to illustrate pattern matches.
+)
+try=: dyad define
+y ,: ' ^' #~ 0 >. {. x rxmatch y
+)
+
+'[[:digit:]]+' try 'first digits 234  24545 345'
+
+NB. =========================================================
+Lab Section
+As mentioned earlier, a name in J is an alphabetic character followed by any number of alphanumeric or underscore characters:
+)
+j=: ;:'x y m n u v'
+Jname=: (Alpha,anyof set alnum,'_') or ;or&.>/ plain&.> j
+Jname
+
+Jname try '5{.m5 i.10'
+
+NB. =========================================================
+Lab Section
+Assignment in J is either a "=." or "=:" string:
+)
+Jassign=: '=' by set '.:'
+Jassign
+
+Jassign try '1 2 3,n=.i.10'
+
+NB. =========================================================
+Lab Section
+A number in J starts with a digit or underscore, and is followed by any number of alphanumberics, underscores, or dots.
+
+   Jnum=: '[[:digit:]_][[:alnum:]_.]*'
+
+A numeric constant is one or more J numbers separated with blanks.  In the following it is describes as a number followed by any number of numbers or spaces.
+)
+Jnum=: (set digit,'_') by anyof set alnum,'_.'
+Jnum
+
+Jnumconst=: Jnum by anyof Jnum or white
+Jnumconst
+
+Jnumconst try 'm=.2 3$0'
+
+NB. =========================================================
+Lab Section
+A character string in J starts with a single quote, and is followed by a series of either non-quotes characters, or double-quote strings, followed by a terminating quote.
+)
+Q=. ''''
+Jcharconst=: Q by (anyof (Q by Q) or set not Q) by Q
+Jcharconst
+
+Jcharconst try '4{.|.''don''''t stop short'',x'
+
+NB. =========================================================
+Lab Section
+The Jsol and Jeol patterns match the start and end of a line of J. The start can include any number of blanks, and the end can include blanks and an optional comment.
+
+The jline verb defined below adds both these patterns to the start and end of a pattern.
+
+The final line shows a pattern which matches a line of J which does a single assignment of a noun to a numeric item.
+)
+Jsol=: sol by owhite
+Jsol
+
+Jeol=: owhite by (optional (plain 'NB.') by anyof any) by eol
+Jeol
+
+jline=: Jsol&by @ (by&Jeol)
+
+pat=: jline owhite between Jname;Jassign;Jnum
+
+pat try 'a=. 123'
+
+pat try 'a=. 1 2 3'

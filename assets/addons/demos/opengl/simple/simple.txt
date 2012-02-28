@@ -1,0 +1,5 @@
+directory: addons/demos/opengl/simple
+
+This directory contains simple examples of
+using OpenGL, as referenced in the OpenGL
+tutorial.

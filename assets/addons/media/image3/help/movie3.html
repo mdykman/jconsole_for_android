@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<TITLE>The Movie3 Script</TITLE>
+</HEAD>
+<BODY>
+<b>The Movie3 Script</b><br>
+by Zachary X. Reiter and Clifford A. Reiter<br>
+October 2002<br>
+<p>
+The image3 addon script, <i>movie3.ijs</i>, contains the main functions used for reading and writing <i>*.mov</i> files which are sequences of jpeg or png images. Also, sequences of jpeg images in *.avi files may be read.
+
+<p><b>Image Compatability Functions</b></p>
+For reading purposes, these simple <i>*.mov</i> files are treated as images, in which case the default is to read the first frame which is convenient for automatically creating thumbnails. For example, that frame is read as the result of <tt>read_image</tt>.
+<ul>
+<li><tt>[track frame] mov_wh 'filename' </tt>results in the width and height of an image</li>
+<li><tt>[track frame] raw_read_mov 'filename' </tt>reads frame image as an h by w by 3 array of bytes</li>
+<li><tt>[track frame] read_mov 'filename' </tt>reads frame image as an h by w by 3 array of integers</li>
+<li><tt>[frame] avi_wh 'filename' </tt>results in the width and height of an image</li>
+<li><tt>[frame] raw_read_avi 'filename' </tt>reads frame image as an h by w by 3 array of bytes</li>
+<li><tt>[frame] read_avi 'filename' </tt>reads frame image as an h by w by 3 array of integers</li>
+</ul>
+<p><b>Main Movie Functions</b></p>
+<ul>
+<li><tt>[track ] mov_l 'filename' </tt>results in the length of a track</li>
+<li><tt> avi_l 'filename' </tt>results in the length (number of frames) in the movie</li>
+<li><tt>qt_read_all_frames 'filename' </tt> results in a L by h by w by 3 array of bytes file where L is the number of frames in the movie.</li>
+<li><tt>[framerate] fseq_to_png_mov (boxed_list_of_in_filenames);'out_filename' </tt>creates a png <i>*.mov</i> from the listed sequence of files. The listed files may have any supported image type; in particular, they need not be png images.</li>
+<li><tt>[framerate] fseq_to_jpeg_mov (boxed_list_of_in_filenames);'out_filename' </tt>creates a jpeg <i>*.mov</i> from the listed files</li>
+<li><tt> [options] mk_zoom 'fn_image_in';'fn_movie_out'</tt> uses a file as an image source and creates a jpeg *.mov zoom of the given width and height with the  given ending upper left corner; those parameters are specified by the optional left argument: <tt>[endxy_pixels,vid_wh,num_frames,frame_rate]</tt></li>
+<li><tt>[track] f on_frames 'infile';'outfile' </tt> applies <tt>f</tt> to the frames in the given track and outputs the resulting modified movie</li>
+<li><tt> 'infile' mov_to_fseq extension outfileprefix </tt> writes the frames of the movie to the file sequence with the given prefix, the given extension, and with frame numbers as a name suffix.</li>
+<li><tt> 'infile' avi_to_fseq extension outfileprefix </tt> writes the frames of the movie to the file sequence with the given prefix, the given extension, and with frame numbers as a name suffix.</li>
+</ul>
+
+<p><b>Lossless Transformations</b></p>
+Various lossless transformations are available for jpeg movie *.mov manipulation. 
+<pre>
+qtjpeg_flip_h      qtjpeg_ll_flip_h        
+qtjpeg_flip_v      qtjpeg_ll_flip_v     
+qtjpeg_rot_180     qtjpeg_ll_rot_180        
+qtjpeg_rot_90      qtjpeg_ll_rot_90     
+qtjpeg_transpose   qtjpeg_ll_transpose  
+qtjpeg_transverse  qtjpeg_ll_transverse       
+qtjpeg_rot_270     qtjpeg_ll_rot_270
+qtjpeg_xform                              
+</pre>
+For example,<br>
+<tt>
+qtjpeg_rot_90 'inmovie.mov';'outmovie.mov'</tt> results in a movie which is a 90 degree clockwise rotation of the input movie.
+<p>Numerous lower level functions appear in the script. It is the source for those details. The Movie lab illustrates the use of several of the main functions. </p>
+<hr>
+Link to:<br>
+<a href="index.html">
+Image3 Main Help</a>
+</body>
+</HTML>

@@ -1,0 +1,28 @@
+LABTITLE=: 'Volume'
+
+NB. =========================================================
+Lab Section Volume of Tetrahedron
+
+Enter tet1 to display a table of coordinates of a
+tetrahedron. Then enter tet1,.1r6 to border it
+with a column of one-sixths, and enter
+det tet1,.1r6 to get the magnitude of
+the determinant of the resulting square matrix.
+This is the volume of the tetrahedron.
+
+See Klein "Elementary Mathematics From An Advanced
+Viewpoint". Also see the lab AREA.
+
+Repeat the experiment for the tetrahedra tet2, tet3, tet4.
+)
+PREPARE
+det=:|@(-/ .*)
+tet1=:?4 3$9
+tet2=:?4 3$9
+tet3=:?4 3$9
+tet4=:?4 3$9
+PREPARE
+
+tet1
+tet1,.1r6
+det tet1,.1r6

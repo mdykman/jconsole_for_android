@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.3  Build Number: 11  Date: 11 Jun 2011 13:53:01
+NB. Version: 0.9.7  Build Number: 8  Date: 16 Jan 2012 16:59:51
 (9!:41)0
 coclass'ajodtools'
 coinsert'ajodutil'
@@ -16,7 +16,7 @@ GROUPSUITES=:<;._1 ' Groups Suites'
 IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mj mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
 JODLOADEND=:'NB.</JOD_Load_Scripts>'
 JODLOADSTART=:'NB.<JOD_Load_Scripts>'
-JODTOOLSVMD=:'0.9.3';11;'11 Jun 2011 13:53:01'
+JODTOOLSVMD=:'0.9.7';8;'16 Jan 2012 16:59:51'
 LF=:10{a.
 OK00400=:'load script saved ->'
 OK00401=:'file saved ->'
@@ -51,7 +51,7 @@ p=.e=.''
 end.
 if.1=#p do.
 if.badrc b =.(;p{c)addloadscript1 y do.b return.else.b =.>1{b end.
-d=.toHOST;(<b)p}c
+d=.toHOST;(<(LF}.~LF-:{.b),b)p}c
 elseif.0=#p do.
 b=.(0{f),(<LF,'buildpublic_j_ 0 : 0',LF),(0{y),(<'  '),(1{y),(<LF,')',LF),1{f
 d=.toHOST e,(2#LF),WARNING00400,LF,;b

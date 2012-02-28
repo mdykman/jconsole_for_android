@@ -19,9 +19,9 @@ NB.            definite tridiagonal matrix given
 NB. testtri    Adv. to make verb to test xxtrixx by matrix of
 NB.            generator and shape given
 NB.
-NB. Version: 0.7.0 2011-08-06
+NB. Version: 0.8.1 2011-10-29
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -106,13 +106,13 @@ getrilu1pstep=: 3 : 0
   'pfx sfx'=. y
   'j n'=. $ pfx
   j=. j - TRINB
-  U0i=. (,.~ j , TRINB) (];.0) pfx
-  U1i=. (- TRINB,(# sfx)) {. pfx
+  U0i=. (,.~ j , TRINB) ];.0 pfx
+  U1i=. (- TRINB , # sfx) {. pfx
   Ri=. (-TRINB) {. pfx
-  Ri=. ((i. TRINB) </ ((i. n) - j)) } Ri ,: 0  NB. spec code
+  Ri=. ((i. TRINB) </ (i. n) - j) } Ri ,: 0  NB. spec code
   Ri=. Ri - U1i mp sfx
   Ri=. U0i trsmu1x Ri
-  ((-TRINB) }. pfx) ; (Ri , sfx)
+  ((-TRINB) }. pfx) ; Ri , sfx
 )
 
 NB. ---------------------------------------------------------
@@ -176,13 +176,13 @@ getripl1ustep=: 3 : 0
   'pfx sfx'=. y
   'n j'=. $ pfx
   j=. j - TRINB
-  L0i=. (,.~ j , TRINB) (];.0) pfx
+  L0i=. (,.~ j , TRINB) ];.0 pfx
   L1i=. (- (c sfx),TRINB) {. pfx
   Ci=. (-TRINB) {."1 pfx
   Ci=. (((i. n) - j) >/ i. TRINB) } Ci ,: 0  NB. spec code
   Ci=. Ci - sfx mp L1i
   Ci=. L0i trsmxl1 Ci
-  ((-TRINB) }."1 pfx) ; (Ci ,. sfx)
+  ((-TRINB) }."1 pfx) ; Ci ,. sfx
 )
 
 NB. ---------------------------------------------------------
@@ -241,13 +241,13 @@ NB.      5.3) link sfx(i+1) to pfx(i+1)
 getripu1lstep=: 3 : 0
   'pfx sfx'=. y
   'n j'=. $ pfx
-  U0i=. ((j , 0) ,: (2 # TRINB)) (];.0) sfx
+  U0i=. ((j , 0) ,: 2 # TRINB) ];.0 sfx
   U1i=. (j , TRINB) {. sfx
   Ci=. TRINB {."1 sfx
-  Ci=. (((i. n) - j) </ (i. TRINB)) } Ci ,: 0  NB. spec code
+  Ci=. (((i. n) - j) </ i. TRINB) } Ci ,: 0  NB. spec code
   Ci=. Ci - pfx mp U1i
   Ci=. U0i trsmxu1 Ci
-  (pfx ,. Ci) ; (TRINB }."1 sfx)
+  (pfx ,. Ci) ; TRINB }."1 sfx
 )
 
 NB. ---------------------------------------------------------
@@ -307,13 +307,13 @@ NB.      5.3) link sfx(i+1) to pfx(i+1)
 getriul1pstep=: 3 : 0
   'pfx sfx'=. y
   'j n'=. $ pfx
-  L0i=. ((0 , j) ,: (2 # TRINB)) (];.0) sfx
+  L0i=. ((0 , j) ,: 2 # TRINB) ];.0 sfx
   L1i=. (TRINB , j) {. sfx
   Ri=. TRINB {. sfx
-  Ri=. ((i. TRINB) >/ ((i. n) - j)) } Ri ,: 0  NB. spec code
+  Ri=. ((i. TRINB) >/ (i. n) - j) } Ri ,: 0  NB. spec code
   Ri=. Ri - L1i mp pfx
   Ri=. L0i trsml1x Ri
-  (pfx , Ri) ; (TRINB }. sfx)
+  (pfx , Ri) ; TRINB }. sfx
 )
 
 NB. =========================================================
@@ -379,10 +379,10 @@ NB.
 NB. TODO:
 NB. - fret would be sparse
 
-trtril=:  %     `(icut@(2:}~ <@:-@((1 1 {:: ]) mp (1 0 {:: ]) mp 0 0 {:: ]))@(<@$:`<`<;.1~ ;~@((1:`]`([ ($!.0) 1:)} (>.@-:))@#)))@.(1 < #)
-trtril1=: (1:"0)`(icut@(2:}~ <@:-@((1 1 {:: ]) mp (1 0 {:: ]) mp 0 0 {:: ]))@(<@$:`<`<;.1~ ;~@((1:`]`([ ($!.0) 1:)} (>.@-:))@#)))@.(1 < #)
-trtriu=:  %     `(icut@(1:}~ <@:-@((0 0 {:: ]) mp (0 1 {:: ]) mp 1 1 {:: ]))@(<@$:`<`<;.1~ ;~@((1:`]`([ ($!.0) 1:)} (>.@-:))@#)))@.(1 < #)
-trtriu1=: (1:"0)`(icut@(1:}~ <@:-@((0 0 {:: ]) mp (0 1 {:: ]) mp 1 1 {:: ]))@(<@$:`<`<;.1~ ;~@((1:`]`([ ($!.0) 1:)} (>.@-:))@#)))@.(1 < #)
+trtril=:  %     `(icut@(2:}~ <@:-@((1 1 {:: ]) mp (1 0 {:: ]) mp 0 0 {:: ]))@(<@$:`<`<;.1~ ;~@(1:`]`([ ($!.0) 1:)} (>.@-:))@#))@.(1 < #)
+trtril1=: (1:"0)`(icut@(2:}~ <@:-@((1 1 {:: ]) mp (1 0 {:: ]) mp 0 0 {:: ]))@(<@$:`<`<;.1~ ;~@(1:`]`([ ($!.0) 1:)} (>.@-:))@#))@.(1 < #)
+trtriu=:  %     `(icut@(1:}~ <@:-@((0 0 {:: ]) mp (0 1 {:: ]) mp 1 1 {:: ]))@(<@$:`<`<;.1~ ;~@(1:`]`([ ($!.0) 1:)} (>.@-:))@#))@.(1 < #)
+trtriu1=: (1:"0)`(icut@(1:}~ <@:-@((0 0 {:: ]) mp (0 1 {:: ]) mp 1 1 {:: ]))@(<@$:`<`<;.1~ ;~@(1:`]`([ ($!.0) 1:)} (>.@-:))@#))@.(1 < #)
 
 NB. ---------------------------------------------------------
 NB. getrilu1p
@@ -431,7 +431,7 @@ NB.           which will be processed by partitioned
 NB.           algorithm:
 NB.             pfx := A[0:I*TRINB-1,0:n-1]
 NB.      6.3) do iterations i=0:I-1 :
-NB.             'pfx sfx'=. getrilu1pstep ^: I (pfx ; sfx)
+NB.             'pfx sfx'=. getrilu1pstep^:I (pfx ; sfx)
 NB.      6.4) extract sfx produced by the last iteration
 NB.      6.5) apply permutation P to the rows of sfx by
 NB.           obversed applying of inversed permutation P^H,
@@ -446,7 +446,7 @@ getrilu1p=: 3 : 0
   y=. trtril trl LU1
   y=. (</~ i. n) } y ,: LU1  NB. spec code
   I=. <. n % TRINB
-  ip (C.^:_1) 1 {:: getrilu1pstep ^: I ((TRINB * I) ({. ; ([ (tru1 trsmu1x trl) }.)) y)
+  ip (C.^:_1) 1 {:: getrilu1pstep^:I (TRINB * I) ({. ; ([ (tru1 trsmu1x trl) }.)) y
 )
 
 NB. ---------------------------------------------------------
@@ -496,7 +496,7 @@ NB.           y, which will be processed by partitioned
 NB.           algorithm:
 NB.             pfx := A[0:n-1,0:I*TRINB-1]
 NB.      6.3) do iterations i=0:I-1 :
-NB.             'pfx sfx'=. getripl1ustep ^: I (pfx ; sfx)
+NB.             'pfx sfx'=. getripl1ustep^:I (pfx ; sfx)
 NB.      6.4) extract sfx produced by the last iteration
 NB.      6.5) apply permutation P to the columns of sfx by
 NB.           obversed applying of inversed permutation P^H,
@@ -520,7 +520,7 @@ getripl1u=: 3 : 0
   y=. trtriu tru L1U
   y=. (>/~ i. n) } y ,: L1U  NB. spec code
   I=. <. n % TRINB
-  ip (C.^:_1"1) 1 {:: getripl1ustep ^: I ((TRINB * I) (({."1) ; (-@[ (trl1 trsmxl1 tru) (}."1))) y)
+  ip (C.^:_1"1) 1 {:: getripl1ustep^:I (TRINB * I) ({."1 ; (-@[ (trl1 trsmxl1 tru) }."1)) y
 )
 
 NB. ---------------------------------------------------------
@@ -570,7 +570,7 @@ NB.           of y, which will be processed by partitioned
 NB.           algorithm:
 NB.             sfx := A[0:n-1,n%TRINB:n-1]
 NB.      6.3) do iterations i=0:I-1 :
-NB.             'pfx sfx'=. getripu1lstep ^: I (pfx ; sfx)
+NB.             'pfx sfx'=. getripu1lstep^:I (pfx ; sfx)
 NB.      6.4) extract pfx produced by the last iteration
 NB.      6.5) apply permutation P to the columns of pfx by
 NB.           obversed applying of inversed permutation P^H,
@@ -585,7 +585,7 @@ getripu1l=: 3 : 0
   y=. trtril trl U1L
   y=. (</~ i. n) } y ,: U1L  NB. spec code
   I=. <. n % TRINB
-  ip (C.^:_1"1) 0 {:: getripu1lstep ^: I ((TRINB | n) ((((2 # [) {. ]) trsmxu1 (trl@:({."1))) ; (}."1)) y)
+  ip (C.^:_1"1) 0 {:: getripu1lstep^:I (TRINB | n) ((((2 # [) {. ]) trsmxu1 trl@:({."1)) ; }."1) y
 )
 
 NB. ---------------------------------------------------------
@@ -635,7 +635,7 @@ NB.           y, which will be processed by partitioned
 NB.           algorithm:
 NB.             sfx := A[n%TRINB:n-1,0:n-1]
 NB.      6.3) do iterations i=0:I-1 :
-NB.             'pfx sfx'=. getriul1pstep ^: I (pfx ; sfx)
+NB.             'pfx sfx'=. getriul1pstep^:I (pfx ; sfx)
 NB.      6.4) extract pfx produced by the last iteration
 NB.      6.5) apply permutation P to the rows of pfx by
 NB.           obversed applying of inversed permutation P^H,
@@ -650,7 +650,7 @@ getriul1p=: 3 : 0
   y=. trtriu tru UL1
   y=. (>/~ i. n) } y ,: UL1  NB. spec code
   I=. <. n % TRINB
-  ip (C.^:_1) 0 {:: getriul1pstep ^: I ((TRINB | n) ((((2 # [) {. ]) trsml1x (tru@{.)) ; }.) y)
+  ip (C.^:_1) 0 {:: getriul1pstep^:I (TRINB | n) ((((2 # [) {. ]) trsml1x tru@{.) ; }.) y
 )
 
 NB. ---------------------------------------------------------
@@ -681,8 +681,8 @@ NB. - is similar to LAPACK's DSYTRI and ZHETRI, but uses
 NB.   another factorization, see hetrfx
 NB. - calls to pttril and pttriu are interchangeable here
 
-hetripl=: (/: @ (0 & {::)) fp (pttril @ (2 & {::)) ((ct @ ]) mp mp) (trtril1 @ (1 & {::))
-hetripu=: (/: @ (0 & {::)) fp (pttril @ (2 & {::)) ((ct @ ]) mp mp) (trtriu1 @ (1 & {::))
+hetripl=: (/:@(0&{::)) fp pttril@(2&{::) (ct@] mp mp) trtril1@(1&{::)
+hetripu=: (/:@(0&{::)) fp pttril@(2&{::) (ct@] mp mp) trtriu1@(1&{::)
 
 NB. ---------------------------------------------------------
 NB. Verb:     Factorization used:          Syntax:
@@ -712,8 +712,8 @@ NB. Notes:
 NB. - potril models LAPACK's xPOTRI('L'), but uses direct,
 NB.   not iterative matrix product
 
-potril=: (mp~ ct) @ trtril
-potriu=: (mp~ ct) @ trtriu
+potril=: (mp~ ct)@trtril
+potriu=: (mp~ ct)@trtriu
 
 NB. ---------------------------------------------------------
 NB. Verb:     Factorization used:         Syntax:
@@ -789,7 +789,7 @@ NB. References:
 NB. [1] Moawwad El-Mikkawy, El-Desouky Rahmo. A new recursive
 NB.     algorithm for inverting general tridiagonal and
 NB.     anti-tridiagonal matrices.
-NB.     Applied Mathematics and Computation 204 (2008) 368–372
+NB.     Applied Mathematics and Computation 204 (2008) 368-372
 NB.     http://dx.doi.org/10.1016/j.amc.2008.06.053
 NB. [2] [Jprogramming] ravel items (,.) of empty list (i.0)
 NB.     Igor Zhuravlov, 2010-06-05 10:08:56
@@ -799,10 +799,10 @@ NB. TODO:
 NB. - pttriu
 NB. - A should be sparse
 
-pttril=: ($:~ pttrfl) : ((4 : 0) ^: (((0:`(+@])`(_1&diag)`,.`((-@,. (1&(|.!.0)))~ }.)`diag fork3)@])`(0>.<:@#@])`((EMPTY"_`,.@.(0<#) @ ((]`- ag) @ (*/\)&.|.) @ (((, (%@(_1&{ :: ])))~ +)~&>/) @ ((_1&diag&.>)`(diag&.>) ag) @ [))))
+pttril=: ($:~ pttrfl) : ((4 : 0)^:(((0:`(+@])`(_1&diag)`,.`((-@,. 1&(|.!.0))~ }.)`diag fork3)@])`(0>.<:@#@])`(EMPTY"_`,.@.(0<#)@((]`- ag)@(*/\)&.|.)@(((, %@(_1&{ :: ]))~ +)~&>/)@((_1&diag&.>)`(diag&.>) ag)@[)))
   io=. -c y
   pi=. io { x
-  ((io (>: upd) (+/"1) ((}. pi) (*"1) (2 {."1 y))) % ({. pi)) ,. y
+  ((io (>: upd) +/"1 (}. pi) *"1 (2 {."1 y)) % {. pi) ,. y
 )
 
 NB. =========================================================
@@ -823,7 +823,7 @@ NB. where
 NB.   A - n×n-matrix, lower triangular
 NB.
 NB. Formula:
-NB.   berr := ||I - A * A^_1|| / (ε * ||A|| * ||A^_1|| * n)
+NB.   berr := ||I - A * A^_1|| / (FP_EPS * ||A|| * ||A^_1|| * n)
 
 testtrtri=: 3 : 0
   L1=. |: U1=. tru1 U=. |: y
@@ -832,12 +832,12 @@ testtrtri=: 3 : 0
   rcondU=.  trucon1  U
   rcondU1=. tru1con1 U1
 
-  ('128!:1'  tmonad (]`]`(rcondU "_)`(_."_)`((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))))) U
+  ('128!:1'  tmonad (]`]`(rcondU "_)`(_."_)`(norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]))) U
 
-  ('trtril'  tmonad (]`]`(rcondL "_)`(_."_)`((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))))) y
-  ('trtril1' tmonad (]`]`(rcondL1"_)`(_."_)`((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))))) L1
-  ('trtriu'  tmonad (]`]`(rcondU "_)`(_."_)`((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))))) U
-  ('trtriu1' tmonad (]`]`(rcondU1"_)`(_."_)`((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))))) U1
+  ('trtril'  tmonad (]`]`(rcondL "_)`(_."_)`(norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]))) y
+  ('trtril1' tmonad (]`]`(rcondL1"_)`(_."_)`(norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]))) L1
+  ('trtriu'  tmonad (]`]`(rcondU "_)`(_."_)`(norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]))) U
+  ('trtriu1' tmonad (]`]`(rcondU1"_)`(_."_)`(norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]))) U1
 
   EMPTY
 )
@@ -854,17 +854,17 @@ NB. where
 NB.   A - n×n-matrix
 NB.
 NB. Formula:
-NB.   berr := ||I - A * A^_1|| / (ε * ||A|| * ||A^_1|| * n)
+NB.   berr := ||I - A * A^_1|| / (FP_EPS * ||A|| * ||A^_1|| * n)
 
 testgetri=: 3 : 0
   rcond=. gecon1 y
 
-  ('%.'        tmonad (] `]`(rcond"_)`(_."_)`(           (norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@])))   ))               y
+  ('%.'        tmonad (] `]`(rcond"_)`(_."_)`(           norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]   )))               y
 
-  ('getrilu1p' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; getrflu1p) y
-  ('getripl1u' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; getrfpl1u) y
-  ('getripu1l' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; getrfpu1l) y
-  ('getriul1p' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; getrful1p) y
+  ('getrilu1p' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; getrflu1p) y
+  ('getripl1u' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; getrfpl1u) y
+  ('getripu1l' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; getrfpu1l) y
+  ('getriul1p' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; getrful1p) y
 
   EMPTY
 )
@@ -881,13 +881,13 @@ NB. where
 NB.   A - n×n-matrix, Hermitian (symmetric)
 NB.
 NB. Formula:
-NB.   berr := ||I - A * A^_1|| / (ε * ||A|| * ||A^_1|| * n)
+NB.   berr := ||I - A * A^_1|| / (FP_EPS * ||A|| * ||A^_1|| * n)
 
 testhetri=: 3 : 0
   rcond=. hecon1 y
 
-  ('hetripl' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; hetrfpl) y
-  ('hetripu' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; hetrfpu) y
+  ('hetripl' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; hetrfpl) y
+  ('hetripu' tmonad (}.`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; hetrfpu) y
 
   EMPTY
 )
@@ -905,13 +905,13 @@ NB. where
 NB.   A - n×n-matrix, Hermitian (symmetric) positive definite
 NB.
 NB. Formula:
-NB.   berr := ||I - A * A^_1|| / (ε * ||A|| * ||A^_1|| * n)
+NB.   berr := ||I - A * A^_1|| / (FP_EPS * ||A|| * ||A^_1|| * n)
 
 testpotri=: 3 : 0
   rcond=. pocon1 y
 
-  ('potril' tmonad ((1 & {::)`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; potrfl) y
-  ('potriu' tmonad ((1 & {::)`]`(rcond"_)`(_."_)`((0 {:: [) ((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))) ]))) (; potrfu) y
+  ('potril' tmonad ((1&{::)`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; potrfl) y
+  ('potriu' tmonad ((1&{::)`]`(rcond"_)`(_."_)`((0 {:: [) (norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]) ]))) (; potrfu) y
 
   EMPTY
 )
@@ -930,12 +930,12 @@ NB.   A - n×n-matrix, Hermitian (symmetric) positive
 NB.       definite tridiagonal
 NB.
 NB. Formula:
-NB.   berr := ||I - A * A^_1|| / (ε * ||A|| * ||A^_1|| * n)
+NB.   berr := ||I - A * A^_1|| / (FP_EPS * ||A|| * ||A^_1|| * n)
 
 testpttri=: 3 : 0
   rcond=. ptcon1 y
 
-  ('pttril' tdyad ((pttrfl@])`]`]`(rcond"_)`(_."_)`((norm1@(<: upddiag)@mp)%(FP_EPS*(*&norm1)*(#@]))))) y
+  ('pttril' tdyad ((pttrfl@])`]`]`(rcond"_)`(_."_)`(norm1@(<: upddiag)@mp % FP_EPS * *&norm1 * #@]))) y
 
   EMPTY
 )
@@ -963,8 +963,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testtri_mt_ 150 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testtri_mt_ 150 150
+NB.     _1 1 0 4 _6 4&gemat_mt_ testtri_mt_ 150 150
 NB. - test by random square complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testtri_mt_ 150 150
 
-testtri=: 1 : 'EMPTY_mt_ [ ((testpttri_mt_ @ (u ptmat_mt_)) [ (testpotri_mt_ @ (u pomat_mt_)) [ (testhetri_mt_ @ (u hemat_mt_)) [ (testgetri_mt_ @ u) [ (testtrtri_mt_ @ (u trlmat_mt_))) ^: (=/)'
+testtri=: 1 : 'EMPTY_mt_ [ (testpttri_mt_@(u ptmat_mt_) [ testpotri_mt_@(u pomat_mt_) [ testhetri_mt_@(u hemat_mt_) [ testgetri_mt_@u [ testtrtri_mt_@(u trlmat_mt_))^:(=/)'

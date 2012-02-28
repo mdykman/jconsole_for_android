@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<TITLE>The Image3 Script</TITLE>
+</HEAD>
+<BODY>
+<b>The Image3 Script</b><br>
+by Zachary X. Reiter and Clifford A. Reiter<br>
+October 2002<br>
+<p>
+The image3 addon script, <i>image3.ijs</i>, contains the main functions used for reading, writing and converting image files. While the emphasis is on 24 bit images, there is some support for movies and 8-bit images. File extensions of <i>*.bmp</i>, <i>*.jpg</i>, <i>*.jpeg</i>, <i>*.png</i>, <i>*.pnm</i>, <i>*.tga</i>, <i>*.pgm</i>, and <i>*.ppm</i> are the listed image types which may be read (although not every variant of the image formats is necessarily supported). Movie <i>*.mov</i> and <i>*.avi</i> support requires loading the script <i>movie3.ijs</i>.
+
+<p><b>The Data Forms for Images are:</b></p>
+<ol>
+<li>h by w by 3 array of integers (range 0-255): this is the main data form</li>
+<li>h by w by 3 array of bytes (characters): compact data form</li>
+<li>h by w by 1 array of integers (range 0-255) or bytes: Grayscale image</li>
+<li><tt>(p;B)</tt> where <tt>p</tt> is an integer palette of RGB values (0-255) and <tt>B</tt> is an h by w array of indices into the palette. </li>
+</ol>
+The left argument (adverb) of <tt>write_image</tt> may be data in any of those forms. The grayscale format is primarily intended for access to Jpeg grayscale images. Paletted images are promoted to 24 bit images before being saved except for <i>*.bmp</i> and <i>*.png</i> files which are saved as 8-bit images.
+</p>
+
+<p><b>The Main Functions</b></p>
+The syntax for using the main functions follows. The filename extension is used to determine the image file type both for reading and writing images. 
+See the Image3 lab for active illustrations and the script itself for many utilities which are used indirectly.<br>
+<ul>
+<li><tt>read_image 'imagefile' </tt> results in an h by w by 3 array of integers representing the rgb triples for each pixel</li>
+<li><tt>raw_read_image 'imagefile' </tt> results in an h by w by 3 array of bytes representing the rgb triples for each pixel</li>
+<li><tt>[options] data write_image 'filename' </tt>where data has one of the above image data forms and the options are specific to the image type.</li>
+<li><tt>image_wh 'filename' </tt>results in the width and height of the image</li>
+<li> <tt>[options] conv_image 'in_filename';'out_filename' </tt>reads an image and writes the result to a file</li>
+</ul>
+See also the section on Palette Utilities for reading paletted images.
+
+<p><b>General and File List Utilities</b></p>
+Pathnames are assumed to always end with a directory seperator.
+<ul>
+<li><tt> wh_bounds resize_image B</tt> which resizes the 2 or 3 dimensional array <tt>B</tt> 
+into an image fitting into the <tt>wh_bounds</tt> while preserving the aspect ratio of the original image.</li>
+<li><tt>'pattern' files_in 'path' </tt>results in the images in the given directory matching the given pattern. For example: <tt> 'pic*.bmp' files_in 'my_images\'</tt></li>
+<li><tt>file_selector fseq_adjoin path1;path2[...] </tt> uses <tt>file_selector</tt> to select files from each directory in the list of directories and moves those selected files to a list in the first directory. Files moved from other directories are renamed with sequencial suffices. This is useful for merging directories of digital camera pictures with overlapping file names into one directory with a single sequence of names.</li> 
+<li><tt>fn_num_suffix 'filename' </tt>results in the numeric suffix of a filename; empty if none.</li>
+<li><tt>num new_fn_seq oldfilenameseq  </tt>results in a filename sequence with numeric suffix "num" and name similar to the first name in the name sequence.</li>
+<li><tt>nx_fn 'filename' </tt>results in the filename with numeric suffix, if any, incremented; otherwise, the same filename is given.</li>
+<li><tt>numdig nfmt n </tt> formats <tt>n</tt> with leading 0's and "numdig" number of digits (default 3).</li>
+<li><tt>short_fn 'filename' </tt>results in the filename with path removed up to the level given by the left argument. The default argument is 0 which gives a pathless name.</li>
+<li><tt>path_fn 'filename' </tt>results in the path of the full filename.</li>
+<li><tt>fn_ext 'filename' </tt>results in the extention of the filename.</li>
+<li><tt>'new_ext' ch_ext 'filename' </tt>results the filename with the extention changed to the left argument.</li>
+<li><tt>to_lc 'string' </tt>changes any uppercase characters in <tt>'string'</tt> to lower case.</li>
+<li><tt>default_th_nm d_fn_ck y</tt> checks (rank 1) that <tt>y</tt> is a filename/thumbnail pair; if not, ending blanks in the filename are removed and the left function, <tt>defaut_th_nm</tt> is applied  to produce the thumbnail name.</li>
+<li><tt>exif_info 'filename' </tt>gets the exif data (camera exposure data for the image), if any, from the image specified by the filename.</li>
+</ul>
+<p><b>Palette Utilities</b></p>
+The script also contains some utilities for working with paletted images:
+<ul>
+<li><tt> Hue y</tt> gives a pure hue (along the "line" segments from red-yellow-green-cyan-blue-magenta and back to red) as y runs from 0 to 1.</li>
+<li><tt> [pal_sz] quantize_image B</tt> results in a paletted image with no more than
+<tt>pal_sz<:256</tt> number of entries. </li>
+<li><tt> [pal_sz [sampling]] quantize_image_nn B</tt> results in a paletted image with no more than <tt>pal_sz<:256</tt> number of entries. The algorithm is based upon neural nets. Sampling may be set to in the range 1-30 with lower numbers giving improved quality and requiring more processing time.</li>
+<li><tt>'p b'=:pal_read_bmp 'file.bmp'</tt> reads a paletted *.bmp file resulting in the palette <tt>p</tt> and the indices <tt>b</tt></li>
+<li><tt>'p b'=:pal_read_png 'file.png'</tt> reads a paletted *.png file resulting in the palette <tt>p</tt> and the indices <tt>b</tt></li>
+</ul>
+<p><b>The jpeg Options</b></p>
+<p>The jpeg options are, in order, jpeg_quality, progressive, grayscaling; their default values are:</p>
+<pre>
+jpeg_quality=: 75  Range (1-100), default is 75
+progressive=:      Default is 0 (false), 1 is true
+gray_scaling=:  0  NB.  _1 never (promote to rgb) 
+                   NB.   0 preserve;ie, use trailing axis; (default)
+                   NB.   1 always (make gray)
+                   NB.   2 when gray, save as gray scale
+</pre>
+<p>Using <tt>jpeg_quality</tt> near 100 results in large, high quality image files; values near 75 are average quality and much smaller. Values near 0 result in very small images, but the quality is extremely poor.
+</p>
+
+<p><b>The png Options</b></p>
+<p>Png options allow improvements in file size (usually only small changes occur) in exchange for longer processing.</p>
+<pre>
+png_compression=: _1  NB. default (seems to be 6)
+                      NB. 0 best speed
+                      NB. 9 best compression
+</pre>
+
+<hr>
+Link to:<br>
+<a href="index.html">
+Image3 Main Help</a>
+</body>
+</HTML>

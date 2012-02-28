@@ -27,7 +27,7 @@ NB.            generator and shape given
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -192,7 +192,7 @@ NB.   (idmat n) (-: (clean@:((}."1)))) (( 1 trl1 gerqf A) unmr2rn ((ct ungrq ger
 NB.   (idmat n) (-: (clean@:((}."1)))) (( 1 trl1 gerqf A) unmr2rc ((   ungrq gerqf A) ,.~ 0))
 NB. where
 NB.   2 -: # $ A  NB. A is a 2-rank array (i.e. matrix)
-NB.   -:/ @ $ A   NB. A is a square matrix (it's not
+NB.   -:/@$ A     NB. A is a square matrix (it's not
 NB.               NB.   necessary and is assumed just
 NB.               NB.   to simplify assertions)
 NB.   n=. # A     NB. size of matrix A
@@ -275,25 +275,25 @@ NB. Notes:
 NB. - assigning MQNB=:1 transforms this verbs to their
 NB.   non-blocked counterparts
 
-unmlqlnstep=:                          (0 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # #@(0&({::))                                                      )) larfblcfr 1 {:: ]
-unmlqlcstep=:                          (0 {:: ])              ((, ~ (MQNB*_1  _)&rt)~            ;~ (MQNB*_1  0)&}.@[)  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # #@(0&({::))                                                      )) larfblnfr 1 {:: ]
-unmlqrnstep=:                          (0 {:: ])              ((,.~ (MQNB* _ _1)&rt)~            ;~ (MQNB* 0 _1)&}.@[)  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # c@(0&({::))                                                      )) larfbrcfr 1 {:: ]
-unmlqrcstep=:                          (0 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # c@(0&({::))                                                      )) larfbrnfr 1 {:: ]
+unmlqlnstep=:                          (0 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # #@(0&({::))                                                    )) larfblcfr 1 {:: ]
+unmlqlcstep=:                          (0 {:: ])              ((, ~ (MQNB*_1  _)&rt)~            ;~ (MQNB*_1  0)&}.@[)  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # #@(0&({::))                                                    )) larfblnfr 1 {:: ]
+unmlqrnstep=:                          (0 {:: ])              ((,.~ (MQNB* _ _1)&rt)~            ;~ (MQNB* 0 _1)&}.@[)  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # c@(0&({::))                                                    )) larfbrcfr 1 {:: ]
+unmlqrcstep=:                          (0 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])  (  ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ 2 # c@(0&({::))                                                    )) larfbrnfr 1 {:: ]
 
-unmqllnstep=:                          (1 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown @ -~ {:)~ >:@{:))~ $)~ #&>))) larfblnbc 0 {:: ]
-unmqllcstep=: (((<@(_1-(MQNB|<:@(c@[-#@(1 {:: ])))))`0:`]) }) (((1 {:: ]) , ~ ({.  ~ (0&({::)))) ;~ (}.  ~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown @ -~ {:)~ >:@{:))~ $)~ #&>))) larfblcbc 0 {:: ]
-unmqlrnstep=: (((<@(_1-(MQNB|<:@(c@[-c@(1 {:: ])))))`0:`]) }) (((1 {:: ]) ,.~ ({."1~ (0&({::)))) ;~ (}."1~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown @ -~ {:)~ >:@{:))~ $)~ c&>))) larfbrnbc 0 {:: ]
-unmqlrcstep=:                          (1 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown @ -~ {:)~ >:@{:))~ $)~ c&>))) larfbrcbc 0 {:: ]
+unmqllnstep=:                          (1 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown@-~ {:)~ >:@{:))~ $)~ #&>))) larfblnbc 0 {:: ]
+unmqllcstep=: (((<@(_1-(MQNB|<:@(c@[-#@(1 {:: ])))))`0:`]) }) (((1 {:: ]) , ~ ({.  ~ (0&({::)))) ;~ (}.  ~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown@-~ {:)~ >:@{:))~ $)~ #&>))) larfblcbc 0 {:: ]
+unmqlrnstep=: (((<@(_1-(MQNB|<:@(c@[-c@(1 {:: ])))))`0:`]) }) (((1 {:: ]) ,.~ ({."1~ (0&({::)))) ;~ (}."1~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown@-~ {:)~ >:@{:))~ $)~ c&>))) larfbrnbc 0 {:: ]
+unmqlrcstep=:                          (1 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])~ ([ ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ ((((((<:@-) {.)~ {.) ,  ((MQNB arounddown@-~ {:)~ >:@{:))~ $)~ c&>))) larfbrcbc 0 {:: ]
 
-unmqrlnstep=:                          (0 {:: ])              ((, ~ (MQNB*_1  _)&rt)~            ;~ (MQNB*_1  0)&}.@[)  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # #@(0&({::))                                                      )) larfblnfc 1 {:: ]
-unmqrlcstep=:                          (0 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # #@(0&({::))                                                      )) larfblcfc 1 {:: ]
-unmqrrnstep=:                          (0 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # c@(0&({::))                                                      )) larfbrnfc 1 {:: ]
-unmqrrcstep=:                          (0 {:: ])              ((,.~ (MQNB* _ _1)&rt)~            ;~ (MQNB* 0 _1)&}.@[)  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # c@(0&({::))                                                      )) larfbrcfc 1 {:: ]
+unmqrlnstep=:                          (0 {:: ])              ((, ~ (MQNB*_1  _)&rt)~            ;~ (MQNB*_1  0)&}.@[)  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # #@(0&({::))                                                    )) larfblnfc 1 {:: ]
+unmqrlcstep=:                          (0 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # #@(0&({::))                                                    )) larfblcfc 1 {:: ]
+unmqrrnstep=:                          (0 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # c@(0&({::))                                                    )) larfbrnfc 1 {:: ]
+unmqrrcstep=:                          (0 {:: ])              ((,.~ (MQNB* _ _1)&rt)~            ;~ (MQNB* 0 _1)&}.@[)  (  ];.0~ ::(];.0~ _&(3:})) ((MQNB*_ 1) ,:~ 2 # c@(0&({::))                                                    )) larfbrcfc 1 {:: ]
 
-unmrqlnstep=: (((<@(_1-(MQNB|<:@(#@[-#@(1 {:: ])))))`0:`]) }) (((1 {:: ]) , ~ ({.  ~ (0&({::)))) ;~ (}.  ~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown @ -~ {.)~ >:@{:))~ $)~ #&>))) larfblcbr 0 {:: ]
-unmrqlcstep=:                          (1 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown @ -~ {.)~ >:@{:))~ $)~ #&>))) larfblnbr 0 {:: ]
-unmrqrnstep=:                          (1 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown @ -~ {.)~ >:@{:))~ $)~ c&>))) larfbrcbr 0 {:: ]
-unmrqrcstep=: (((<@(_1-(MQNB|<:@(#@[-c@(1 {:: ])))))`0:`]) }) (((1 {:: ]) ,.~ ({."1~ (0&({::)))) ;~ (}."1~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown @ -~ {.)~ >:@{:))~ $)~ c&>))) larfbrnbr 0 {:: ]
+unmrqlnstep=: (((<@(_1-(MQNB|<:@(#@[-#@(1 {:: ])))))`0:`]) }) (((1 {:: ]) , ~ ({.  ~ (0&({::)))) ;~ (}.  ~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown@-~ {.)~ >:@{:))~ $)~ #&>))) larfblcbr 0 {:: ]
+unmrqlcstep=:                          (1 {:: ])              ((,   (MQNB* 1  _)&rt)             ;  (MQNB* 1  0)&}.@])~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown@-~ {.)~ >:@{:))~ $)~ #&>))) larfblnbr 0 {:: ]
+unmrqrnstep=:                          (1 {:: ])              ((,.  (MQNB* _  1)&rt)             ;  (MQNB* 0  1)&}.@])~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown@-~ {.)~ >:@{:))~ $)~ c&>))) larfbrcbr 0 {:: ]
+unmrqrcstep=: (((<@(_1-(MQNB|<:@(#@[-c@(1 {:: ])))))`0:`]) }) (((1 {:: ]) ,.~ ({."1~ (0&({::)))) ;~ (}."1~ (0&({::))))~ ([ ];.0~ ::(];.0~ _&(2:})) ((MQNB*1 _) ,:~ ((((((<:@-) {:)~ {.) ,~ ((MQNB arounddown@-~ {.)~ >:@{:))~ $)~ c&>))) larfbrnbr 0 {:: ]
 
 NB. =========================================================
 NB. Interface
@@ -342,7 +342,7 @@ NB.                         processed by blocked algorithm
 NB.           3.1.2) find I, the number of iterations:
 NB.                    I := ⌈k/MQNB⌉
 NB.           3.1.3) do iterations:
-NB.                    'pfxaB sfxaB'=. Qf (unmlqxxstep ^: I) (pfxaC;sfxaC)
+NB.                    'pfxaB sfxaB'=. Qf (unmlqxxstep^:I) (pfxaC;sfxaC)
 NB.           3.1.4) unbox and merge pfxaB and sfxaB to produce aB,
 NB.                  being B augmented by trash vector:
 NB.                    aB=. pfxaB ,  sfxaB    NB. ln,lc
@@ -354,20 +354,20 @@ NB.        B=. }:   C    NB. ln,lc
 NB.        B=. }:"1 C    NB. rn,rc
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ c) (-: clean) (unmlqln (ct @ ((<:@c) unglq ]))) @ gelqf) A
-NB.   ((idmat @ c) (-: clean) (unmlqlc       ((<:@c) unglq ]) ) @ gelqf) A
-NB.   ((idmat @ c) (-: clean) (unmlqrn (ct @ ((<:@c) unglq ]))) @ gelqf) A
-NB.   ((idmat @ c) (-: clean) (unmlqrc       ((<:@c) unglq ]) ) @ gelqf) A
+NB.   (idmat@c (-: clean) (unmlqln ct@(<:@c unglq ]))@gelqf) A
+NB.   (idmat@c (-: clean) (unmlqlc    (<:@c unglq ]))@gelqf) A
+NB.   (idmat@c (-: clean) (unmlqrn ct@(<:@c unglq ]))@gelqf) A
+NB.   (idmat@c (-: clean) (unmlqrc    (<:@c unglq ]))@gelqf) A
 NB.
 NB. Notes:
 NB. - implements LAPACK's DORMLQ, ZUNMLQ
 NB. - unml2{lc,ln,rc,rn} and unmlq{lc,ln,rc,rn} respectively
 NB.   are topologic equivalents
 
-unmlqln=: }:   @ ((unml2ln`(, &>/@(  unmlqlnstep^:(>.@(MQNB %~ #@[)) (;~ 0& {.                                          ) ))@.(MQNB < #@[)~  tru1            @({.  ~     0 _1&(ms $) ))~ ,   &0)
-unmlqlc=: }:   @ ((unml2lc`(, &>/@([ unmlqlcstep^:(>.@(MQNB %~ #@[)) (( {.     ;   }.  )~   (MQNB arounddown @ (_1 + #)))~))@.(MQNB < #@[)~  tru1            @({.  ~     0 _1&(ms $) ))~ ,   &0)
-unmlqrn=: }:"1 @ ((unml2rn`(,.&>/@([ unmlqrnstep^:(>.@(MQNB %~ #@[)) ((({."1~) ;  (}."1~))  (MQNB arounddown @ (_1 + #)))~))@.(MQNB < #@[)~  tru1            @({.  ~     0 _1&(ms $) ))~ ,.  &0)
-unmlqrc=: }:"1 @ ((unml2rc`(,.&>/@(  unmlqrcstep^:(>.@(MQNB %~ #@[)) (;~ 0&({."1)                                       ) ))@.(MQNB < #@[)~  tru1            @({.  ~     0 _1&(ms $) ))~ ,.  &0)
+unmlqln=: }:  @((unml2ln`(, &>/@(  unmlqlnstep^:(>.@(MQNB %~ #@[)) (;~ 0& {.                                        ) ))@.(MQNB < #@[)~  tru1        @({.  ~     0 _1&(ms $) ))~ ,   &0)
+unmlqlc=: }:  @((unml2lc`(, &>/@([ unmlqlcstep^:(>.@(MQNB %~ #@[)) (( {.     ;   }.  )~   (MQNB arounddown@(_1 + #)))~))@.(MQNB < #@[)~  tru1        @({.  ~     0 _1&(ms $) ))~ ,   &0)
+unmlqrn=: }:"1@((unml2rn`(,.&>/@([ unmlqrnstep^:(>.@(MQNB %~ #@[)) ((({."1~) ;  (}."1~))  (MQNB arounddown@(_1 + #)))~))@.(MQNB < #@[)~  tru1        @({.  ~     0 _1&(ms $) ))~ ,.  &0)
+unmlqrc=: }:"1@((unml2rc`(,.&>/@(  unmlqrcstep^:(>.@(MQNB %~ #@[)) (;~ 0&({."1)                                     ) ))@.(MQNB < #@[)~  tru1        @({.  ~     0 _1&(ms $) ))~ ,.  &0)
 
 NB. ---------------------------------------------------------
 NB. Verb      Action   Side   Tran  Syntax
@@ -414,7 +414,7 @@ NB.                         algorithm
 NB.           3.1.2) find I, the number of iterations:
 NB.                    I := ⌈k/MQNB⌉
 NB.           3.1.3) do iterations:
-NB.                    'pfxaB sfxaB'=. Qf (unmqlxxstep ^: I) (pfxaC;sfxaC)
+NB.                    'pfxaB sfxaB'=. Qf (unmqlxxstep^:I) (pfxaC;sfxaC)
 NB.           3.1.4) unbox and merge pfxaB and sfxaB to produce aB,
 NB.                  being B augmented by trash vector:
 NB.                    aB=. pfxaB ,  sfxaB    NB. ln,lc
@@ -426,20 +426,20 @@ NB.        B=. }.   C    NB. ln,lc
 NB.        B=. }."1 C    NB. rn,rc
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ #) (-: clean) (unmqlln (ct @ ((<:@#) ungql ]))) @ geqlf) A
-NB.   ((idmat @ #) (-: clean) (unmqllc       ((<:@#) ungql ]) ) @ geqlf) A
-NB.   ((idmat @ #) (-: clean) (unmqlrn (ct @ ((<:@#) ungql ]))) @ geqlf) A
-NB.   ((idmat @ #) (-: clean) (unmqlrc       ((<:@#) ungql ]) ) @ geqlf) A
+NB.   (idmat@# (-: clean) (unmqlln ct@(<:@# ungql ]))@geqlf) A
+NB.   (idmat@# (-: clean) (unmqllc    (<:@# ungql ]))@geqlf) A
+NB.   (idmat@# (-: clean) (unmqlrn ct@(<:@# ungql ]))@geqlf) A
+NB.   (idmat@# (-: clean) (unmqlrc    (<:@# ungql ]))@geqlf) A
 NB.
 NB. Notes:
 NB. - implements LAPACK's DORMQL, ZUNMQL
 NB. - unm2l{lc,ln,rc,rn} and unmql{lc,ln,rc,rn} respectively
 NB.   are topologic equivalents
 
-unmqlln=: }.   @ ((unm2lln`(, &>/@([ unmqllnstep^:(>.@(MQNB %~ c@[)) (( {.     ;~  }.    )~ (MQNB                  - c ))~))@.(MQNB < c@[)~ (tru1~ (-~/ @ $))@({."1~ -@(_1  0&(ms $))))~ , ~ &0)
-unmqllc=: }.   @ ((unm2llc`(, &>/@(  unmqllcstep^:(>.@(MQNB %~ c@[)) (;  0& {.                                          ) ))@.(MQNB < c@[)~ (tru1~ (-~/ @ $))@({."1~ -@(_1  0&(ms $))))~ , ~ &0)
-unmqlrn=: }."1 @ ((unm2lrn`(,.&>/@(  unmqlrnstep^:(>.@(MQNB %~ c@[)) (;  0&({."1)                                       ) ))@.(MQNB < c@[)~ (tru1~ (-~/ @ $))@({."1~ -@(_1  0&(ms $))))~ ,.~ &0)
-unmqlrc=: }."1 @ ((unm2lrc`(,.&>/@([ unmqlrcstep^:(>.@(MQNB %~ c@[)) ((({."1~) ;~ (}."1~))  (MQNB                  - c ))~))@.(MQNB < c@[)~ (tru1~ (-~/ @ $))@({."1~ -@(_1  0&(ms $))))~ ,.~ &0)
+unmqlln=: }.  @((unm2lln`(, &>/@([ unmqllnstep^:(>.@(MQNB %~ c@[)) (( {.     ;~  }.    )~ (MQNB                - c ))~))@.(MQNB < c@[)~ (tru1~ -~/@$)@({."1~ -@(_1  0&(ms $))))~ , ~ &0)
+unmqllc=: }.  @((unm2llc`(, &>/@(  unmqllcstep^:(>.@(MQNB %~ c@[)) (;  0& {.                                        ) ))@.(MQNB < c@[)~ (tru1~ -~/@$)@({."1~ -@(_1  0&(ms $))))~ , ~ &0)
+unmqlrn=: }."1@((unm2lrn`(,.&>/@(  unmqlrnstep^:(>.@(MQNB %~ c@[)) (;  0&({."1)                                     ) ))@.(MQNB < c@[)~ (tru1~ -~/@$)@({."1~ -@(_1  0&(ms $))))~ ,.~ &0)
+unmqlrc=: }."1@((unm2lrc`(,.&>/@([ unmqlrcstep^:(>.@(MQNB %~ c@[)) ((({."1~) ;~ (}."1~))  (MQNB                - c ))~))@.(MQNB < c@[)~ (tru1~ -~/@$)@({."1~ -@(_1  0&(ms $))))~ ,.~ &0)
 
 NB. ---------------------------------------------------------
 NB. Verb      Action   Side   Tran  Syntax
@@ -485,7 +485,7 @@ NB.                         processed by blocked algorithm
 NB.           3.1.2) find I, the number of iterations:
 NB.                    I := ⌈k/MQNB⌉
 NB.           3.1.3) do iterations:
-NB.                    'pfxaB sfxaB'=. Qf (unmqrxxstep ^: I) (pfxaC;sfxaC)
+NB.                    'pfxaB sfxaB'=. Qf (unmqrxxstep^:I) (pfxaC;sfxaC)
 NB.           3.1.4) unbox and merge pfxaB and sfxaB to produce aB,
 NB.                  being B augmented by trash vector:
 NB.                    aB=. pfxaB ,  sfxaB    NB. ln,lc
@@ -497,20 +497,20 @@ NB.        B=. }:   C    NB. ln,lc
 NB.        B=. }:"1 C    NB. rn,rc
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ #) (-: clean) (unmqrln (ct @ ((<:@#) ungqr ]))) @ geqrf) A
-NB.   ((idmat @ #) (-: clean) (unmqrlc       ((<:@#) ungqr ]) ) @ geqrf) A
-NB.   ((idmat @ #) (-: clean) (unmqrrn (ct @ ((<:@#) ungqr ]))) @ geqrf) A
-NB.   ((idmat @ #) (-: clean) (unmqrrc       ((<:@#) ungqr ]) ) @ geqrf) A
+NB.   (idmat@# (-: clean) (unmqrln ct@(<:@# ungqr ]))@geqrf) A
+NB.   (idmat@# (-: clean) (unmqrlc    (<:@# ungqr ]))@geqrf) A
+NB.   (idmat@# (-: clean) (unmqrrn ct@(<:@# ungqr ]))@geqrf) A
+NB.   (idmat@# (-: clean) (unmqrrc    (<:@# ungqr ]))@geqrf) A
 NB.
 NB. Notes:
 NB. - implements LAPACK's DORMQR, ZUNMQR
 NB. - unm2r{lc,ln,rc,rn} and unmqr{lc,ln,rc,rn} respectively
 NB.   are topologic equivalents
 
-unmqrln=: }:   @ ((unm2rln`(, &>/@([ unmqrlnstep^:(>.@(MQNB %~ c@[)) (( {.     ;   }.    )~ (MQNB arounddown @ (_1 + c)))~))@.(MQNB < c@[)~  trl1            @({."1~    _1  0&(ms $) ))~ ,   &0)
-unmqrlc=: }:   @ ((unm2rlc`(, &>/@(  unmqrlcstep^:(>.@(MQNB %~ c@[)) (;~ 0& {.                                          ) ))@.(MQNB < c@[)~  trl1            @({."1~    _1  0&(ms $) ))~ ,   &0)
-unmqrrn=: }:"1 @ ((unm2rrn`(,.&>/@(  unmqrrnstep^:(>.@(MQNB %~ c@[)) (;~ 0&({."1)                                       ) ))@.(MQNB < c@[)~  trl1            @({."1~    _1  0&(ms $) ))~ ,.  &0)
-unmqrrc=: }:"1 @ ((unm2rrc`(,.&>/@([ unmqrrcstep^:(>.@(MQNB %~ c@[)) ((({."1~) ;  (}."1~))  (MQNB arounddown @ (_1 + c)))~))@.(MQNB < c@[)~  trl1            @({."1~    _1  0&(ms $) ))~ ,.  &0)
+unmqrln=: }:  @((unm2rln`(, &>/@([ unmqrlnstep^:(>.@(MQNB %~ c@[)) (( {.     ;   }.    )~ (MQNB arounddown@(_1 + c)))~))@.(MQNB < c@[)~  trl1        @({."1~    _1  0&(ms $) ))~ ,   &0)
+unmqrlc=: }:  @((unm2rlc`(, &>/@(  unmqrlcstep^:(>.@(MQNB %~ c@[)) (;~ 0& {.                                        ) ))@.(MQNB < c@[)~  trl1        @({."1~    _1  0&(ms $) ))~ ,   &0)
+unmqrrn=: }:"1@((unm2rrn`(,.&>/@(  unmqrrnstep^:(>.@(MQNB %~ c@[)) (;~ 0&({."1)                                     ) ))@.(MQNB < c@[)~  trl1        @({."1~    _1  0&(ms $) ))~ ,.  &0)
+unmqrrc=: }:"1@((unm2rrc`(,.&>/@([ unmqrrcstep^:(>.@(MQNB %~ c@[)) ((({."1~) ;  (}."1~))  (MQNB arounddown@(_1 + c)))~))@.(MQNB < c@[)~  trl1        @({."1~    _1  0&(ms $) ))~ ,.  &0)
 
 NB. ---------------------------------------------------------
 NB. Verb      Action   Side   Tran  Syntax
@@ -558,7 +558,7 @@ NB.                         algorithm
 NB.           3.1.2) find I, the number of iterations:
 NB.                    I := ⌈k/MQNB⌉
 NB.           3.1.3) do iterations:
-NB.                    'pfxaB sfxaB'=. Qf (unmrqxxstep ^: I) (pfxaC;sfxaC)
+NB.                    'pfxaB sfxaB'=. Qf (unmrqxxstep^:I) (pfxaC;sfxaC)
 NB.           3.1.4) unbox and merge pfxaB and sfxaB to produce aB,
 NB.                  being B augmented by trash vector:
 NB.                    aB=. pfxaB ,  sfxaB    NB. ln,lc
@@ -570,20 +570,20 @@ NB.        B=. }.   C    NB. ln,lc
 NB.        B=. }."1 C    NB. rn,rc
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ c) (-: clean) (unmrqln (ct @ ((<:@c) ungrq ]))) @ gerqf) A
-NB.   ((idmat @ c) (-: clean) (unmrqlc       ((<:@c) ungrq ]) ) @ gerqf) A
-NB.   ((idmat @ c) (-: clean) (unmrqrn (ct @ ((<:@c) ungrq ]))) @ gerqf) A
-NB.   ((idmat @ c) (-: clean) (unmrqrc       ((<:@c) ungrq ]) ) @ gerqf) A
+NB.   (idmat@c (-: clean) (unmrqln ct@(<:@c ungrq ]))@gerqf) A
+NB.   (idmat@c (-: clean) (unmrqlc    (<:@c ungrq ]))@gerqf) A
+NB.   (idmat@c (-: clean) (unmrqrn ct@(<:@c ungrq ]))@gerqf) A
+NB.   (idmat@c (-: clean) (unmrqrc    (<:@c ungrq ]))@gerqf) A
 NB.
 NB. Notes:
 NB. - implements LAPACK's DORMRQ, ZUNMRQ
 NB. - unmr2{lc,ln,rc,rn} and unmrq{lc,ln,rc,rn} respectively
 NB.   are topologic equivalents
 
-unmrqln=: }.   @ ((unmr2ln`(, &>/@(  unmrqlnstep^:(>.@(MQNB %~ #@[)) (;  0& {.                                          ) ))@.(MQNB < #@[)~ (trl1~ (-~/ @ $))@({.  ~ -@( 0 _1&(ms $))))~ , ~ &0)
-unmrqlc=: }.   @ ((unmr2lc`(, &>/@([ unmrqlcstep^:(>.@(MQNB %~ #@[)) (( {.     ;~  }.    )~ (MQNB                  - # ))~))@.(MQNB < #@[)~ (trl1~ (-~/ @ $))@({.  ~ -@( 0 _1&(ms $))))~ , ~ &0)
-unmrqrn=: }."1 @ ((unmr2rn`(,.&>/@([ unmrqrnstep^:(>.@(MQNB %~ #@[)) ((({."1~) ;~ (}."1~))  (MQNB                  - # ))~))@.(MQNB < #@[)~ (trl1~ (-~/ @ $))@({.  ~ -@( 0 _1&(ms $))))~ ,.~ &0)
-unmrqrc=: }."1 @ ((unmr2rc`(,.&>/@(  unmrqrcstep^:(>.@(MQNB %~ #@[)) (;  0&({."1)                                       ) ))@.(MQNB < #@[)~ (trl1~ (-~/ @ $))@({.  ~ -@( 0 _1&(ms $))))~ ,.~ &0)
+unmrqln=: }.  @((unmr2ln`(, &>/@(  unmrqlnstep^:(>.@(MQNB %~ #@[)) (;  0& {.                                        ) ))@.(MQNB < #@[)~ (trl1~ -~/@$)@({.  ~ -@( 0 _1&(ms $))))~ , ~ &0)
+unmrqlc=: }.  @((unmr2lc`(, &>/@([ unmrqlcstep^:(>.@(MQNB %~ #@[)) (( {.     ;~  }.    )~ (MQNB                - # ))~))@.(MQNB < #@[)~ (trl1~ -~/@$)@({.  ~ -@( 0 _1&(ms $))))~ , ~ &0)
+unmrqrn=: }."1@((unmr2rn`(,.&>/@([ unmrqrnstep^:(>.@(MQNB %~ #@[)) ((({."1~) ;~ (}."1~))  (MQNB                - # ))~))@.(MQNB < #@[)~ (trl1~ -~/@$)@({.  ~ -@( 0 _1&(ms $))))~ ,.~ &0)
+unmrqrc=: }."1@((unmr2rc`(,.&>/@(  unmrqrcstep^:(>.@(MQNB %~ #@[)) (;  0&({."1)                                     ) ))@.(MQNB < #@[)~ (trl1~ -~/@$)@({.  ~ -@( 0 _1&(ms $))))~ ,.~ &0)
 
 NB. ---------------------------------------------------------
 NB. Verb      Action   Side   Tran  Syntax
@@ -616,15 +616,15 @@ NB. Algorithm:
 NB.   In:  HQf C
 NB.   Out: B
 NB.   1) shift HQf down to produce Qf:
-NB.        Qf=. |. !. 0 HQf
+NB.        Qf=. |.!.0 HQf
 NB.   2) call correspondent unmlqxx to do the job:
 NB.        B=. Qf unmlqxx C
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ c) (-: clean) (unmhrlln (ct @ unghrl)) @ gehrdl) A
-NB.   ((idmat @ c) (-: clean) (unmhrllc (ct @ unghrl)) @ gehrdl) A
-NB.   ((idmat @ c) (-: clean) (unmhrlrn (ct @ unghrl)) @ gehrdl) A
-NB.   ((idmat @ c) (-: clean) (unmhrlrc (ct @ unghrl)) @ gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrlln ct@unghrl)@gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrllc ct@unghrl)@gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrlrn ct@unghrl)@gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrlrc ct@unghrl)@gehrdl) A
 NB.
 NB. Notes:
 NB. - input's and output's shapes are the same
@@ -636,10 +636,10 @@ NB.     H(0:f-1) = H(f+s-1:n-1) = I .
 NB.   This approach delivers excessive calculations in rare
 NB.   case ((f>0) OR (f+s<n)).
 
-unmhrlln=: (unmlqln~ (|. !. 0))~
-unmhrllc=: (unmlqlc~ (|. !. 0))~
-unmhrlrn=: (unmlqrn~ (|. !. 0))~
-unmhrlrc=: (unmlqrc~ (|. !. 0))~
+unmhrlln=: (unmlqln~ |.!.0)~
+unmhrllc=: (unmlqlc~ |.!.0)~
+unmhrlrn=: (unmlqrn~ |.!.0)~
+unmhrlrc=: (unmlqrc~ |.!.0)~
 
 NB. ---------------------------------------------------------
 NB. Verb      Action   Side   Tran  Syntax
@@ -672,15 +672,15 @@ NB. Algorithm:
 NB.   In:  HQf C
 NB.   Out: B
 NB.   1) shift HQf to the right to produce Qf:
-NB.        Qf=. 0 _1 |. !. 0 HQf
+NB.        Qf=. 0 _1 |.!.0 HQf
 NB.   2) call correspondent unmqrxx to do the job:
 NB.        B=. Qf unmqrxx C
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   ((idmat @ c) (-: clean) (unmhrlln (ct @ unghrl)) @ gehrdl) A
-NB.   ((idmat @ c) (-: clean) (unmhrllc (ct @ unghrl)) @ gehrdl) A
-NB.   ((idmat @ c) (-: clean) (unmhrlrn (ct @ unghrl)) @ gehrdl) A
-NB.   ((idmat @ c) (-: clean) (unmhrlrc (ct @ unghrl)) @ gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrlln ct@unghrl)@gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrllc ct@unghrl)@gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrlrn ct@unghrl)@gehrdl) A
+NB.   (idmat@c (-: clean) (unmhrlrc ct@unghrl)@gehrdl) A
 NB.
 NB. Notes:
 NB. - implements LAPACK's DORMHR, ZUNMHR
@@ -692,10 +692,10 @@ NB.     H(0:f-1) = H(f+s-1:n-1) = I .
 NB.   This approach delivers excessive calculations in rare
 NB.   case ((f>0) OR (f+s<n)).
 
-unmhruln=: (unmqrln~ (0 _1 & (|. !. 0)))~
-unmhrulc=: (unmqrlc~ (0 _1 & (|. !. 0)))~
-unmhrurn=: (unmqrrn~ (0 _1 & (|. !. 0)))~
-unmhrurc=: (unmqrrc~ (0 _1 & (|. !. 0)))~
+unmhruln=: (unmqrln~ 0 _1&(|.!.0))~
+unmhrulc=: (unmqrlc~ 0 _1&(|.!.0))~
+unmhrurn=: (unmqrrn~ 0 _1&(|.!.0))~
+unmhrurc=: (unmqrrc~ 0 _1&(|.!.0))~
 
 NB. =========================================================
 NB. Test suite
@@ -715,51 +715,51 @@ NB.   C - m×n-matrix, is used as multiplier
 NB.
 NB. Formula:
 NB. - for LQ:
-NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (ε * ||C|| * s)
-NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (ε * ||C|| * s)
-NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (ε * ||C|| * s)
-NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (ε * ||C|| * s)
+NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (FP_EPS * ||C|| * s)
+NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (FP_EPS * ||C|| * s)
+NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (FP_EPS * ||C|| * s)
+NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (FP_EPS * ||C|| * s)
 NB. - for QL:
-NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (ε * ||C|| * m)
-NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (ε * ||C|| * m)
-NB.   - for C * Q  : berr := ||C * Q - C * Q    || / (ε * ||C|| * m)
-NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (ε * ||C|| * m)
+NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (FP_EPS * ||C|| * m)
+NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (FP_EPS * ||C|| * m)
+NB.   - for C * Q  : berr := ||C * Q - C * Q    || / (FP_EPS * ||C|| * m)
+NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (FP_EPS * ||C|| * m)
 NB. - for QR:
-NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (ε * ||C|| * m)
-NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (ε * ||C|| * m)
-NB.   - for C * Q  : berr := ||C * Q - C * Q    || / (ε * ||C|| * m)
-NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (ε * ||C|| * m)
+NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (FP_EPS * ||C|| * m)
+NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (FP_EPS * ||C|| * m)
+NB.   - for C * Q  : berr := ||C * Q - C * Q    || / (FP_EPS * ||C|| * m)
+NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (FP_EPS * ||C|| * m)
 NB. - for RQ:
-NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (ε * ||C|| * n)
-NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (ε * ||C|| * n)
-NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (ε * ||C|| * n)
-NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (ε * ||C|| * n)
+NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (FP_EPS * ||C|| * n)
+NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (FP_EPS * ||C|| * n)
+NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (FP_EPS * ||C|| * n)
+NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (FP_EPS * ||C|| * n)
 
 testunmq=: 3 : 0
   'A C'=. y
-  rcond=. ((_."_)`gecon1 @. (=/@$)) C  NB. meaninigful for square matrices only
+  rcond=. (_."_)`gecon1@.(=/@$) C  NB. meaninigful for square matrices only
   'LQf QfL QfR RQf'=. xQf=. (gelqf ; geqlf ; geqrf ; gerqf) A
   'Qlq Qql Qqr Qrq'=. (((unglq~ (<:@c))&.>)`((ungql~ (<:@#))&.>)`((ungqr~ (<:@#))&.>)`((ungrq~ (<:@c))&.>)) ag xQf
 
-  ('unmlqln' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (LQf;(ct C);    Qlq )
-  ('unmlqlc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (LQf;(ct C);(ct Qlq))
-  ('unmlqrn' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (LQf;    C ;    Qlq )
-  ('unmlqrc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (LQf;    C ;(ct Qlq))
+  ('unmlqln' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (LQf;(ct C);    Qlq )
+  ('unmlqlc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (LQf;(ct C);(ct Qlq))
+  ('unmlqrn' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (LQf;    C ;    Qlq )
+  ('unmlqrc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (LQf;    C ;(ct Qlq))
 
-  ('unmqlln' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfL;    C ;    Qql )
-  ('unmqllc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfL;    C ;(ct Qql))
-  ('unmqlrn' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfL;(ct C);    Qql )
-  ('unmqlrc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfL;(ct C);(ct Qql))
+  ('unmqlln' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfL;    C ;    Qql )
+  ('unmqllc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfL;    C ;(ct Qql))
+  ('unmqlrn' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfL;(ct C);    Qql )
+  ('unmqlrc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfL;(ct C);(ct Qql))
 
-  ('unmqrln' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfR;    C ;    Qqr )
-  ('unmqrlc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfR;    C ;(ct Qqr))
-  ('unmqrrn' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfR;(ct C);    Qqr )
-  ('unmqrrc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (QfR;(ct C);(ct Qqr))
+  ('unmqrln' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfR;    C ;    Qqr )
+  ('unmqrlc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfR;    C ;(ct Qqr))
+  ('unmqrrn' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfR;(ct C);    Qqr )
+  ('unmqrrc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*#)@(1 {:: [)))) (QfR;(ct C);(ct Qqr))
 
-  ('unmrqln' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (RQf;(ct C);    Qrq )
-  ('unmrqlc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (RQf;(ct C);(ct Qrq))
-  ('unmrqrn' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (RQf;    C ;    Qrq )
-  ('unmrqrc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (RQf;    C ;(ct Qrq))
+  ('unmrqln' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (RQf;(ct C);    Qrq )
+  ('unmrqlc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp~&>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (RQf;(ct C);(ct Qrq))
+  ('unmrqrn' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (RQf;    C ;    Qrq )
+  ('unmrqrc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`(norm1@(- (mp &>/@}.))~ % FP_EPS*(norm1*c)@(1 {:: [)))) (RQf;    C ;(ct Qrq))
 
   EMPTY
 )
@@ -779,15 +779,15 @@ NB.   C - n×n-matrix, is used as multiplier
 NB.
 NB. Formula:
 NB. - for lower HRD:
-NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (ε * ||C|| * n)
-NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (ε * ||C|| * n)
-NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (ε * ||C|| * n)
-NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (ε * ||C|| * n)
+NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (FP_EPS * ||C|| * n)
+NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (FP_EPS * ||C|| * n)
+NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (FP_EPS * ||C|| * n)
+NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (FP_EPS * ||C|| * n)
 NB. - for upper HRD:
-NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (ε * ||C|| * m)
-NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (ε * ||C|| * m)
-NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (ε * ||C|| * m)
-NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (ε * ||C|| * m)
+NB.   - for Q * C  : berr := ||Q * C   - Q * C  || / (FP_EPS * ||C|| * m)
+NB.   - for Q^H * C: berr := ||Q^H * C - Q^H * C|| / (FP_EPS * ||C|| * m)
+NB.   - for C * Q  : berr := ||C * Q   - C * Q  || / (FP_EPS * ||C|| * m)
+NB.   - for C * Q^H: berr := ||C * Q^H - C * Q^H|| / (FP_EPS * ||C|| * m)
 
 testunmhr=: 3 : 0
   'A C'=. y
@@ -795,15 +795,15 @@ testunmhr=: 3 : 0
   'HlQf HuQf'=. xQf=. ((gehrdl~ (0,#)) ; (gehrdu~ (0,c))) A
   'Qhrl Qhru'=. ((unghrl&.>)`(unghru&.>)) ag xQf
 
-  ('unmhrlln' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (HlQf;(ct C);    Qhrl )
-  ('unmhrllc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (HlQf;(ct C);(ct Qhrl))
-  ('unmhrlrn' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (HlQf;    C ;    Qhrl )
-  ('unmhrlrc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*c)@(1 {:: [))))))) (HlQf;    C ;(ct Qhrl))
+  ('unmhrlln' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp~&>/@}.)~ % FP_EPS*(norm1*c)@(1 {:: [))))) (HlQf;(ct C);    Qhrl )
+  ('unmhrllc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp~&>/@}.)~ % FP_EPS*(norm1*c)@(1 {:: [))))) (HlQf;(ct C);(ct Qhrl))
+  ('unmhrlrn' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp &>/@}.)~ % FP_EPS*(norm1*c)@(1 {:: [))))) (HlQf;    C ;    Qhrl )
+  ('unmhrlrc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp &>/@}.)~ % FP_EPS*(norm1*c)@(1 {:: [))))) (HlQf;    C ;(ct Qhrl))
 
-  ('unmhruln' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (HuQf;(ct C);    Qhru )
-  ('unmhrulc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp~ & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (HuQf;(ct C);(ct Qhru))
-  ('unmhrurn' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (HuQf;    C ;    Qhru )
-  ('unmhrurc' tdyad ((0 & {::)`(1 & {::)`]`(rcond"_)`(_."_)`(((norm1@((- ((mp  & >/)@}.))~)) % (FP_EPS*((norm1*#)@(1 {:: [))))))) (HuQf;    C ;(ct Qhru))
+  ('unmhruln' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp~&>/@}.)~ % FP_EPS*(norm1*#)@(1 {:: [))))) (HuQf;(ct C);    Qhru )
+  ('unmhrulc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp~&>/@}.)~ % FP_EPS*(norm1*#)@(1 {:: [))))) (HuQf;(ct C);(ct Qhru))
+  ('unmhrurn' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp &>/@}.)~ % FP_EPS*(norm1*#)@(1 {:: [))))) (HuQf;    C ;    Qhru )
+  ('unmhrurc' tdyad ((0&{::)`(1&{::)`]`(rcond"_)`(_."_)`((norm1@(- mp &>/@}.)~ % FP_EPS*(norm1*#)@(1 {:: [))))) (HuQf;    C ;(ct Qhru))
 
   EMPTY
 )
@@ -831,8 +831,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testmq_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testmq_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ testmq_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testmq_mt_ 150 200
 
-testmq=: 1 : 'EMPTY_mt_ [ (testunmhr_mt_ ^: (=/@$@(0&({::))) [ testunmq_mt_) @ (u ; u)'
+testmq=: 1 : 'EMPTY_mt_ [ (testunmhr_mt_^:(=/@$@(0&({::))) [ testunmq_mt_)@(u ; u)'

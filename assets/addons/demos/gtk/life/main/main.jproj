@@ -1,0 +1,16 @@
+NB. project: ~Addons/demos/gtk/life/main
+NB.
+NB. defines list of source files.
+NB. path defaults to project directory.
+
+init.ijs
+util.ijs
+data.ijs
+event.ijs
+file.ijs
+help.ijs
+main.ijs
+make.ijs
+menu.ijs
+win.ijs
+zdefs.ijs

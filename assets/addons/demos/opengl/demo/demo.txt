@@ -1,0 +1,6 @@
+directory: addons/demos/opengl/demo
+
+This directory contains scripts used in the
+OpenGL demo. The scripts are self-contained,
+and may be run directly from J, after loading
+the OpenGL utilities.

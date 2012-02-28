@@ -1,0 +1,95 @@
+LABTITLE=: 'Frame''s Method'
+LABAUTHOR=: 'Richard L.W. Brown'
+
+NB. =========================================================
+Lab Section Introduction
+J. S. Frame developed an iterative method of computing the coefficients of the characteristic polynomial of a matrix (including the determinant) and also the inverse of the matrix. This lab illustrates the method of Frame using two different programming styles.
+)
+
+NB. =========================================================
+Lab Section Frame's Method
+This lab shows how to compute the trace of a matrix using J. Then the trace is used in an iterative method, due to J. S. Frame, to compute the other coefficients of the charateristic polynomial of the matrix (including the determinant) and to also compute the inverse of the matrix.
+
+First, enter a sample 3 by 3 matrix M.
+)
+M =: 3 3 $ 2 0 _7   3 1 4   0 5 8
+M
+
+NB. =========================================================
+Lab Section
+Now we experiment with monadic and dyadic transpose.
+
+Monadic transpose reverses the axes of an array.
+
+In dyadic tranpose, the axes listed in the left argument are moved to the end of the list of axes.  For an array of rank 2 (a matrix) the only possibilities are to leave the axes alone (and not change the matrix) or switch the axes, same as the monadic transpose.
+
+But if some axes in the left argument are boxed then those axes are run together, e.g. we get indicies i,i instead of i,j .
+)
+ M; (|:M); (0|:M); (1|:M); ((<0 1)|:M)
+
+NB. =========================================================
+Lab Section
+Thus the principal diagonal of the matrix can be obtained with the "pd" function shown below.
+
+Then the trace is just the sum of the principal diagonal.
+)
+pd =: (<0 1)&|:
+sum =: +/
+of =: @
+tr =: sum of pd
+tr M
+
+NB. =========================================================
+Lab Section
+The method of Frame is the following iteration.
+
+Let M be a given square matrix of size m by m
+
+Let F0 = I  (the n by n identity matrix) and let C0 = 0.
+
+For k = 1 to m let
+
+   Fk = M x (Fk-1 + Ck-1 x I)  and  Ck = -(tr Fk)/k
+
+Then the coefficients of the characteristic polynomial of M are Cm, ..., C1, 1.  In particular, tr M = -C1 and det M = Cm(-1)^m  Also, the adjoint of M is Fm-1 + Cm-1 x I and the inverse of M is (Fm-1 + Cm-1 x I)/Cm(-1)^m
+)
+frame =: verb define
+F =. I =. =i.m =. #M =. y
+C =. 0
+for_k. 1+i.m do.
+F =. M +/ . * F1 =. F + ({.C)*I
+C =. (-(tr F)%k),C
+end.
+((}:C),1);F1
+)
+
+NB. =========================================================
+Lab Section
+Below is the method of Frame applied to the matrix M.  The output is a boxed vector of the coefficients of the characteristic polynomial of M, i.e. of which the first entry is (-1)^m times the determinant of M, followed by a boxed matrix which is the adjoint of the matrix M.
+
+Note that we could easily modify the last line of the program to output the inverse instead of the adjoint: just replace "F1" by "F1%({.C)*(-1)^m".
+)
+frame M
+
+NB. =========================================================
+Lab Section
+It is useful to capture the ouput in variables as shown below. Then the coefficients and adjoint matrix can be used for subsequent calculations.
+
+For example, you can see below that M times M adjoint is the determinant times the identity matrix.
+)
+'C Mad' =: frame M
+C
+Mad
+M +/ . * Mad
+
+NB. =========================================================
+Lab Section
+Next, we can use the monadic polynomial function "p." to find the roots of the characteristic polynomial, that is, the eigenvalues of the matrix M.  Then we can verify that the eigenvalues are zeros of the function
+
+   det(M - xI)
+)
+p. C
+'E1 E2 E3' =: >{:p. C
+det =: -/ . *
+I =: =i.#M
+(det M - E1*I);(det M - E2*I);(det M - E3*I)

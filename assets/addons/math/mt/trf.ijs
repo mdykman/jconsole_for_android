@@ -22,7 +22,7 @@ NB.            of generator and shape given
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -279,7 +279,7 @@ NB.     Partitioned triangular tridiagonalization.
 NB.     26 September 2007.
 NB.     http://www.cs.cas.cz/miro/rst08.pdf
 
-lahefpl=: (3 : 0) ^: (TRFNB<.#@(0 & {::))
+lahefpl=: (3 : 0)^:(TRFNB<.#@(0&{::))
   'ip A lt t0 t1'=. y
   w=. lt ((-~&# { ]) ((}.~ #) - ({.~ #) mp ]) ((-~,-@[)&# {. ])) A
   A=. (w,:lt) ((0 liosE),:(0 liosS))&c } A
@@ -521,7 +521,7 @@ NB.     Partitioned triangular tridiagonalization.
 NB.     26 September 2007.
 NB.     http://www.cs.cas.cz/miro/rst08.pdf
 
-lahefpu=: (3 : 0) ^: (TRFNB<.#@(0 & {::))
+lahefpu=: (3 : 0)^:(TRFNB<.#@(0&{::))
   'ip A ut t0 t1'=. y
   w=. ut ((<:@-&# { ]) (({.~ c) - (}.~ c) mp ]) ((-,[)&# {. ])) A
   A=. (ut,:w) ((0 liosN),:(0 liosW))&c } A
@@ -681,16 +681,16 @@ getrflu1p=: 3 : 0
   elseif. 1=m do.
     dip=. < 0 , liofmax {. y
     ip=. dip C. :: ] i. n
-    y=. ((] 0:} %) (0&({,))) dip C."1 :: ] y
+    y=. ((] 0:} %) 0&({,)) dip C."1 :: ] y
     ip ; y
   elseif. do.
     k=. n (<. >.@-:) m
     'ip LaaU1a'=. getrflu1p k {. y
     y=. ip (C."1) k }. y
-    Lba=. LaaU1a (trsmxu1 & (k & ({."1))) y
-    'ipb LbbU1bb'=. getrflu1p y ((- (Lba & mp)) & (k & (}."1))) LaaU1a
+    Lba=. LaaU1a trsmxu1&(k&({."1)) y
+    'ipb LbbU1bb'=. getrflu1p y (- Lba&mp)&(k&(}."1)) LaaU1a
     dipb=. (i. k) , (k + ipb)
-    (dipb C. ip) ; ((dipb C."1 LaaU1a) , (Lba ,. LbbU1bb))
+    (dipb C. ip) ; (dipb C."1 LaaU1a) , (Lba ,. LbbU1bb)
   end.
 )
 
@@ -838,16 +838,16 @@ getrfpl1u=: 3 : 0
   elseif. 1 = n do.
     dip=. < 0 , liofmax y
     ip=. dip (C. :: ]) i. m
-    y=. ((] 0:} %) (0&({,))) dip (C. :: ]) y
+    y=. ((] 0:} %) 0&({,)) dip (C. :: ]) y
     ip ; y
   elseif. do.
     k=. m (<. >.@-:) n
     'pi L1aUaa'=. getrfpl1u k {."1 y
     y=. pi C. k }."1 y
-    Uab=. L1aUaa (trsml1x & (k & {.)) y
-    'ipb L1bbUbb'=. getrfpl1u y ((- (mp & Uab)) & (k & }.)) L1aUaa
+    Uab=. L1aUaa trsml1x&(k&{.) y
+    'ipb L1bbUbb'=. getrfpl1u y (- mp&Uab)&(k&}.) L1aUaa
     dipb=. (i. k) , (k + ipb)
-    (dipb C. pi) ; ((dipb C. L1aUaa) ,. (Uab , L1bbUbb))
+    (dipb C. pi) ; (dipb C. L1aUaa) ,. (Uab , L1bbUbb)
   end.
 )
 
@@ -992,16 +992,16 @@ getrfpu1l=: 3 : 0
   elseif. 1 = n do.
     dip=. < _1 , liolmax y
     ip=. dip (C. :: ]) i. m
-    y=. ((] _1:} %) (_1&({,))) dip (C. :: ]) y
+    y=. ((] _1:} %) _1&({,)) dip (C. :: ]) y
     ip ; y
   elseif. do.
     k=. m (<. >.@-:) n
     'ip U1bLbb'=. getrfpu1l (-k) {."1 y
     y=. ip C. (-k) }."1 y
-    Lab=. U1bLbb (trsmu1x & ((-k) & {.)) y
-    'ipa U1aaLaa'=. getrfpu1l y ((- (mp & Lab)) & ((-k) & }.)) U1bLbb
+    Lab=. U1bLbb trsmu1x&((-k)&{.) y
+    'ipa U1aaLaa'=. getrfpu1l y (- mp&Lab)&((-k)&}.) U1bLbb
     dipa=. ipa , ((m-k) + i. k)
-    (dipa C. ip) ; ((U1aaLaa , Lab) ,. (dipa C. U1bLbb))
+    (dipa C. ip) ; (U1aaLaa , Lab) ,. (dipa C. U1bLbb)
   end.
 )
 
@@ -1146,16 +1146,16 @@ getrful1p=: 3 : 0
   elseif. 1 = m do.
     dip=. < _1 , liolmax {. y
     ip=. dip (C. :: ]) i. n
-    y=. ((] _1:} %) (_1&({,))) dip (C."1 :: ]) y
+    y=. ((] _1:} %) _1&({,)) dip (C."1 :: ]) y
     ip ; y
   elseif. do.
     k=. n (<. >.@-:) m
     'ip UbbL1b'=. getrful1p (-k) {. y
     y=. ip (C."1) (-k) }. y
-    Uab=. UbbL1b (trsmxl1 & ((-k) & ({."1))) y
-    'ipa UaaL1aa'=. getrful1p y ((- (Uab & mp)) & ((-k) & (}."1))) UbbL1b
+    Uab=. UbbL1b trsmxl1&((-k)&({."1)) y
+    'ipa UaaL1aa'=. getrful1p y (- Uab&mp)&((-k)&(}."1)) UbbL1b
     dipa=. ipa , ((n-k) + i. k)
-    (dipa C."1 ip) ; ((UaaL1aa ,. Uab) , (dipa C."1 UbbL1b))
+    (dipa C."1 ip) ; (UaaL1aa ,. Uab) , (dipa C."1 UbbL1b)
   end.
 )
 
@@ -1257,7 +1257,7 @@ hetrfpl=: 3 : 0
   t0=. t1=. i. 0
   i=. 0
   while. i < n do.
-    'ipi y lt t0 t1'=. lahefpl ((i. # lt);y;lt;t0;t1)
+    'ipi y lt t0 t1'=. lahefpl (i. # lt) ; y ; lt ; t0 ; t1
     dip=. i (i.@[ , +) ipi
     ip=. dip C. ip
     subL1=. trl1 (_,TRFNB) rt y
@@ -1265,7 +1265,7 @@ hetrfpl=: 3 : 0
     y=. ((2 # TRFNB) }. y) - (((TRFNB }. subL1) mp (TRFNB ((((0<.-)#),[) }. ]) y)) + ((0 { :: ] lt) * (1 (0}) :: ] lt)) */ + (lt ((_1 liosS)&# ({,) ]) y))
     i=. TRFNB + i
   end.
-  T=. t1 (((setdiag~ (;&_1)) (setdiag~ (+;1:)) ])~ diagmat) t0
+  T=. t1 (((setdiag~ ;&_1) (setdiag~ + ; 1:) ])~ diagmat) t0
   ip ; L1 ; T
 )
 
@@ -1363,15 +1363,15 @@ hetrfpu=: 3 : 0
   t0=. t1=. i. 0
   i=. _1
   while. i >: -n do.
-    'ipi y ut t0 t1'=. lahefpu ((i. # ut);y;ut;t0;t1)
+    'ipi y ut t0 t1'=. lahefpu (i. # ut) ; y ; ut ; t0 ; t1
     dip=. i (],((+(i.@(_1&-)))~#)) ipi
     ip=. dip C. ip
-    subU1=. (tru1~(-~/@$)) (_,-TRFNB) rt y
+    subU1=. (tru1~ -~/@$) (_,-TRFNB) rt y
     U1=. subU1 stitcht (dip C. U1)
     y=. ((2 # -TRFNB) }. y) - ((((-TRFNB) }. subU1) mp ((-TRFNB) ((((0>.+)#),[) }. ]) y)) + ((_1 { :: ] ut) * (1 (_1}) :: ] ut)) */ + (ut ((1 liosN)&# ({,) ]) y))
     i=. i - TRFNB
   end.
-  T=. t1 (((setdiag~ (;&1)) (setdiag~ (+;_1:)) ])~ diagmat) t0
+  T=. t1 (((setdiag~ ;&1) (setdiag~ + ; _1:) ])~ diagmat) t0
   ip ; U1 ; T
 )
 
@@ -1429,7 +1429,7 @@ NB. Notes:
 NB. - models LAPACK's xPOTRF('L'), but uses blocked, not
 NB.   partitioned algorithm
 
-potrfl=: %:`((0:`0:`0:`]`]`(potrfl@(0 0 & {::))`,`(ct@])`trsmlx`(0 1 & {::)`[`mp`[`]`(1 1 & {::)`stitchb`(potrfl@:-~)`]`[`0:`0: fork6)@((<;.1)~ (;~@((0) 1:`(, >.@-:)`(#~)} #))))@.(1<#)
+potrfl=: %:`((0:`0:`0:`]`]`(potrfl@(0 0&{::))`,`(ct@])`trsmlx`(0 1&{::)`[`mp`[`]`(1 1&{::)`stitchb`(potrfl@:-~)`]`[`0:`0: fork6)@(<;.1~ (;~@((0) 1:`(, >.@-:)`(#~)} #))))@.(1<#)
 
 NB. ---------------------------------------------------------
 NB. potrfu
@@ -1481,7 +1481,7 @@ NB.   A -: clean po U
 NB. where
 NB.   U=. potrfu A
 
-potrfu=: %:`((0:`0:`0:`]`]`(potrfu@(1 1 & {::))`(,~)`(ct@])`trsmux`(1 0 & {::)`[`mp`[`]`(0 0 & {::)`(stitcht~)`(potrfu@:-~)`]`[`0:`0: fork6)@((<;.1)~ (;~@((0) 1:`(, >.@-:)`(#~)} #))))@.(1<#)
+potrfu=: %:`((0:`0:`0:`]`]`(potrfu@(1 1&{::))`(,~)`(ct@])`trsmux`(1 0&{::)`[`mp`[`]`(0 0&{::)`(stitcht~)`(potrfu@:-~)`]`[`0:`0: fork6)@(<;.1~ (;~@((0) 1:`(, >.@-:)`(#~)} #))))@.(1<#)
 
 NB. ---------------------------------------------------------
 NB. pttrfl
@@ -1620,13 +1620,13 @@ NB.   A - m×n-matrix
 NB.
 NB. Formula:
 NB. - for L * U1 * P = A :
-NB.     berr := ||L * U1 * P - A|| / (ε * ||A|| * m)
+NB.     berr := ||L * U1 * P - A|| / (FP_EPS * ||A|| * m)
 NB. - for P * L1 * U = A :
-NB.     berr := ||P * L1 * U - A|| / (ε * ||A|| * n)
+NB.     berr := ||P * L1 * U - A|| / (FP_EPS * ||A|| * n)
 NB. - for P * U1 * L = A :
-NB.     berr := ||P * U1 * L - A|| / (ε * ||A|| * n)
+NB.     berr := ||P * U1 * L - A|| / (FP_EPS * ||A|| * n)
 NB. - for U * L1 * P = A :
-NB.     berr := ||U * L1 * P - A|| / (ε * ||A|| * m)
+NB.     berr := ||U * L1 * P - A|| / (FP_EPS * ||A|| * m)
 NB.
 NB. Notes:
 NB. - use temporary locale mttmp to avoid mt's names
@@ -1640,16 +1640,16 @@ testgetrf=: 3 : 0
   require :: ] '~addons/math/lapack/lapack.ijs'
   need_jlapack_ :: ] 'getrf'
 
-  rcond=. ((_."_)`gecon1 @. (=/@$)) y  NB. meaninigful for square matrices only
+  rcond=. (_."_)`gecon1@.(=/@$) y  NB. meaninigful for square matrices only
 
-  ('lud_mttmp_'     tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- (((mp & >)/ @ }:) %. (2 & {::) ))) % (FP_EPS*((norm1*c)@[)))))) y
+  ('lud_mttmp_'     tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- (mp&>/@}: %. 2&{::)) % FP_EPS*(norm1*c)@[))) y
 
-  ('getrf_jlapack_' tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- (((mp & >)/ @ }:) invperm_jlapack_ (2 & {::) ))) % (FP_EPS*((norm1*c)@[)))))) y
+  ('getrf_jlapack_' tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- (mp&>/@}: invperm_jlapack_ 2&{::)) % FP_EPS*(norm1*c)@[))) y
 
-  ('getrflu1p'      tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((0 & {::) C.^:_1"1 (( trl            mp  tru1          )@(1 & {::))))) % (FP_EPS*((norm1*#)@[)))))) y
-  ('getrfpl1u'      tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((0 & {::) C.^:_1   (( trl1           mp  tru           )@(1 & {::))))) % (FP_EPS*((norm1*c)@[)))))) y
-  ('getrfpu1l'      tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((0 & {::) C.^:_1   (((tru1~ (-~/@$)) mp (trl ~ (-~/@$)))@(1 & {::))))) % (FP_EPS*((norm1*c)@[)))))) y
-  ('getrful1p'      tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((0 & {::) C.^:_1"1 (((tru ~ (-~/@$)) mp (trl1~ (-~/@$)))@(1 & {::))))) % (FP_EPS*((norm1*#)@[)))))) y
+  ('getrflu1p'      tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- (0&{:: C.^:_1"1 ( trl          mp  tru1        )@(1&{::))) % FP_EPS*(norm1*#)@[))) y
+  ('getrfpl1u'      tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- (0&{:: C.^:_1   ( trl1         mp  tru         )@(1&{::))) % FP_EPS*(norm1*c)@[))) y
+  ('getrfpu1l'      tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- (0&{:: C.^:_1   ((tru1~ -~/@$) mp (trl ~ -~/@$))@(1&{::))) % FP_EPS*(norm1*c)@[))) y
+  ('getrful1p'      tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- (0&{:: C.^:_1"1 ((tru ~ -~/@$) mp (trl1~ -~/@$))@(1&{::))) % FP_EPS*(norm1*#)@[))) y
 
   coerase <'mttmp'
 
@@ -1669,15 +1669,15 @@ NB.   A - n×n-matrix, Hermitian
 NB.
 NB. Formula:
 NB. - for P * L1 * T * L1^H * P^H = A :
-NB.     berr := ||P * L1 * T * L1^H * P^H - A|| / (ε * ||A|| * n)
+NB.     berr := ||P * L1 * T * L1^H * P^H - A|| / (FP_EPS * ||A|| * n)
 NB. - for P * U1 * T * U1^H * P^H = A :
-NB.     berr := ||P * U1 * T * U1^H * P^H - A|| / (ε * ||A|| * n)
+NB.     berr := ||P * U1 * T * U1^H * P^H - A|| / (FP_EPS * ||A|| * n)
 
 testhetrf=: 3 : 0
   rcond=. hecon1 y
 
-  ('hetrfpl' tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((mp mp ct@[)&>/@}. (fp~ /:) (0&({::)))))) % (FP_EPS*((norm1*c)@[))))) y
-  ('hetrfpu' tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((mp mp ct@[)&>/@}. (fp~ /:) (0&({::)))))) % (FP_EPS*((norm1*#)@[))))) y
+  ('hetrfpl' tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- ((mp mp ct@[)&>/@}. (fp~ /:) 0&({::))) % FP_EPS*(norm1*c)@[))) y
+  ('hetrfpu' tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- ((mp mp ct@[)&>/@}. (fp~ /:) 0&({::))) % FP_EPS*(norm1*#)@[))) y
 
   EMPTY
 )
@@ -1700,9 +1700,9 @@ NB.       definite
 NB.
 NB. Formula:
 NB. - for L * L^H = A :
-NB.     berr := ||L * L^H - A|| / (ε * ||A|| * n)
+NB.     berr := ||L * L^H - A|| / (FP_EPS * ||A|| * n)
 NB. - for U * U^H = A :
-NB.     berr := ||U * U^H - A|| / (ε * ||A|| * n)
+NB.     berr := ||U * U^H - A|| / (FP_EPS * ||A|| * n)
 NB.
 NB. Notes:
 NB. - use temporary locale mttmp to avoid mt's names
@@ -1715,12 +1715,12 @@ testpotrf=: 3 : 0
 
   rcond=. pocon1 y
 
-  ('choleski_mttmp_' tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- po))) % (FP_EPS*((norm1*c)@[))))) y
+  ('choleski_mttmp_' tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- po) % FP_EPS*(norm1*c)@[))) y
 
-  ('potrf_jlapack_'  tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- po))) % (FP_EPS*((norm1*c)@[))))) y
+  ('potrf_jlapack_'  tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- po) % FP_EPS*(norm1*c)@[))) y
 
-  ('potrfl'          tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- po))) % (FP_EPS*((norm1*c)@[))))) y
-  ('potrfu'          tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- po))) % (FP_EPS*((norm1*#)@[))))) y
+  ('potrfl'          tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- po) % FP_EPS*(norm1*c)@[))) y
+  ('potrfu'          tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- po) % FP_EPS*(norm1*#)@[))) y
 
   coerase <'mttmp'
 
@@ -1742,9 +1742,9 @@ NB.       definite tridiagonal
 NB.
 NB. Formula:
 NB. - for L1 * D * L1^H = A :
-NB.     berr := ||L1 * D * L1^H - A|| / (ε * ||A|| * n)
+NB.     berr := ||L1 * D * L1^H - A|| / (FP_EPS * ||A|| * n)
 NB. - for U1 * D * U1^H = A :
-NB.     berr := ||U1 * D * U1^H - A|| / (ε * ||A|| * n)
+NB.     berr := ||U1 * D * U1^H - A|| / (FP_EPS * ||A|| * n)
 NB.
 NB. TODO:
 NB. - A should be sparse
@@ -1752,8 +1752,8 @@ NB. - A should be sparse
 testpttrf=: 3 : 0
   rcond=. ptcon1 y
 
-  ('pttrfl' tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((mp mp ct@[)&>/)))) % (FP_EPS*((norm1*c)@[))))) y
-  ('pttrfu' tmonad (]`]`(rcond"_)`(_."_)`(((norm1@(- ((mp mp ct@[)&>/)))) % (FP_EPS*((norm1*#)@[))))) y
+  ('pttrfl' tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- ((mp mp ct@[)&>/)) % FP_EPS*(norm1*c)@[))) y
+  ('pttrfu' tmonad (]`]`(rcond"_)`(_."_)`(norm1@(- ((mp mp ct@[)&>/)) % FP_EPS*(norm1*#)@[))) y
 
   EMPTY
 )
@@ -1781,8 +1781,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testtrf_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testtrf_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ testtrf_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testtrf_mt_ 150 200
 
-testtrf=: 1 : 'EMPTY_mt_ [ (((testpttrf_mt_ @ (u ptmat_mt_)) [ (testpotrf_mt_ @ (u pomat_mt_)) [ (testhetrf_mt_ @ (u hemat_mt_))) ^: (=/)) [ testgetrf_mt_ @ u'
+testtrf=: 1 : 'EMPTY_mt_ [ (testpttrf_mt_@(u ptmat_mt_) [ testpotrf_mt_@(u pomat_mt_) [ testhetrf_mt_@(u hemat_mt_))^:(=/) [ testgetrf_mt_@u'

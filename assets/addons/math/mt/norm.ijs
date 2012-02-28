@@ -19,7 +19,7 @@ NB.          vector (matrix)
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -44,13 +44,13 @@ coclass 'mt'
 NB. =========================================================
 NB. Local definitions
 
-max=: >./`0:@.(0 = #)               NB. max of, 0 for empty list
+max=: >./`0:@.(0 = #)  NB. max of, 0 for empty list
 
-rsum=: +/"1 @:                      NB. vector: sum of, matrix: row sums
-csum=: +/"2 @:                      NB. vector: sum of, matrix: column sums
+rsum=: +/"1@:          NB. vector: sum of, matrix: row sums
+csum=: +/"2@:          NB. vector: sum of, matrix: column sums
 
-rmax=: max"1 @:                     NB. vector: max of, matrix: row maximums
-cmax=: max"2 @:                     NB. vector: max of, matrix: column maximums
+rmax=: max"1@:         NB. vector: max of, matrix: row maximums
+cmax=: max"2@:         NB. vector: max of, matrix: column maximums
 
 NB. =========================================================
 NB. Interface
@@ -80,13 +80,13 @@ NB.   DLANST('i'), xLANGB('i'), xLANGT('i'), xLANHS('i'),
 NB.   xLANTB('i'), xLANTR('i'), ZLANHB('i'), ZLANHT('i'),-
 NB.   extraneous values in matrix must be zeroed
 
-norm1=:  | csum (max @)             NB. 1-norm of vector (matrix)
-norm1r=: | rsum                     NB. 1-norm of vector (matrix rows)
-norm1c=: | csum                     NB. 1-norm of vector (matrix columns)
+norm1=:  | csum (max @)        NB. 1-norm of vector (matrix)
+norm1r=: | rsum                NB. 1-norm of vector (matrix rows)
+norm1c=: | csum                NB. 1-norm of vector (matrix columns)
 
-normi=:  | (+/"_1 @:) (max @)       NB. ∞-norm of vector (matrix)
-normir=: | rmax                     NB. ∞-norm of vector (matrix rows)
-normic=: | cmax                     NB. ∞-norm of vector (matrix columns)
+normi=:  | (+/"_1 @:) (max @)  NB. ∞-norm of vector (matrix)
+normir=: | rmax                NB. ∞-norm of vector (matrix rows)
+normic=: | cmax                NB. ∞-norm of vector (matrix columns)
 
 NB. ---------------------------------------------------------
 NB. norm1
@@ -102,13 +102,13 @@ NB.
 NB. Notes:
 NB. - norm1t implements BLAS's DASUM, DZASUM
 
-norm1t=:  sorim csum (max @)        NB. 1-norm of vector (matrix)
-norm1tr=: sorim rsum                NB. 1-norm of vector (matrix rows)
-norm1tc=: sorim csum                NB. 1-norm of vector (matrix columns)
+norm1t=:  sorim csum (max @)       NB. 1-norm of vector (matrix)
+norm1tr=: sorim rsum               NB. 1-norm of vector (matrix rows)
+norm1tc=: sorim csum               NB. 1-norm of vector (matrix columns)
 
-normit=:  sorim (+/"_1 @:) (max @)  NB. ∞-norm of vector (matrix)
-normitr=: sorim rmax                NB. ∞-norm of vector (matrix rows)
-normitc=: sorim cmax                NB. ∞-norm of vector (matrix columns)
+normit=:  sorim (+/"_1@:) (max @)  NB. ∞-norm of vector (matrix)
+normitr=: sorim rmax               NB. ∞-norm of vector (matrix rows)
+normitc=: sorim cmax               NB. ∞-norm of vector (matrix columns)
 
 NB. ---------------------------------------------------------
 NB. Square-based Euclidean (Frobenius) norm of vector

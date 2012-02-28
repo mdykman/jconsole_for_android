@@ -31,9 +31,9 @@ NB.              given
 NB. test         Adv. to make verb to test algorithms by
 NB.              matrix of generator and shape given
 NB.
-NB. Version: 0.7.0 2011-08-06
+NB. Version: 0.8.0 2011-10-29
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -111,7 +111,7 @@ NB. ---------------------------------------------------------
 NB. System definitions
 
 require       '~addons/math/misc/mathutil.ijs'  NB. mp_mt_
-require^:IFJ6 '~system/main/myutil.ijs'         NB. timespacex_z_ (J7: stdlib.ijs)
+require^:IFJ6 '~system/main/myutil.ijs'         NB. timespacex_z_ (J7: already in stdlib.ijs)
 
 NB. ---------------------------------------------------------
 NB. Addon definitions
@@ -123,6 +123,7 @@ require '~addons/math/mt/fork.ijs'    NB. Extended forks
 require '~addons/math/mt/util.ijs'    NB. Utilities
 require '~addons/math/mt/ios.ijs'     NB. IOS
 require '~addons/math/mt/norm.ijs'    NB. Norms
+require '~addons/math/mt/quatern.ijs' NB. Quaternions
 require '~addons/math/mt/struct.ijs'  NB. Structure handlers
 require '~addons/math/mt/rand.ijs'    NB. Random arrays
 require '~addons/math/mt/test.ijs'    NB. Test
@@ -142,6 +143,7 @@ NB. mid-level
 require '~addons/math/mt/eq.ijs'      NB. Eigenvalues and Schur form
 require '~addons/math/mt/evc.ijs'     NB. Eigenvectors
 require '~addons/math/mt/hrd.ijs'     NB. Hessenberg reduction
+require '~addons/math/mt/pf.ijs'      NB. Orthogonal factorization with pivoting
 require '~addons/math/mt/qf.ijs'      NB. Orthogonal factorization
 require '~addons/math/mt/trf.ijs'     NB. Triangular factorization
 require '~addons/math/mt/tri.ijs'     NB. Inverse by trf
@@ -150,7 +152,7 @@ require '~addons/math/mt/trs.ijs'     NB. Solve linear monomial equation by trf
 NB. high-level
 require '~addons/math/mt/ev.ijs'      NB. Eigenvalues and eigenvectors
 require '~addons/math/mt/exp.ijs'     NB. Matrix exponential
-require '~addons/math/mt/pow.ijs'     NB. Raise matrix to an integer power[s]
+require '~addons/math/mt/pow.ijs'     NB. Raise matrix to integer power[s]
 require '~addons/math/mt/sv.ijs'      NB. Solve linear monomial equation
 
 NB. =========================================================
@@ -183,18 +185,18 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testlow_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testlow_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ testlow_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testlow_mt_ 150 200
 
 testlow=: 1 : 0
-  (u testbak_mt_) y   NB. square matrices only
-  (u testbal_mt_) y   NB. square matrices only
-  (u testref_mt_) y   NB. matrices with min dimention ≤ 200 only
-     testrot_mt_  ''  NB. fixed non-random test matrix is used
+  (u testbak_mt_) y  NB. square matrices only
+  (u testbal_mt_) y  NB. square matrices only
+  (u testref_mt_) y  NB. matrices with min dimention ≤ 200 only
+  (u testrot_mt_) y  NB. matrix of shape (2 1:} y) is used
   (u testgq_mt_ ) y
   (u testmq_mt_ ) y
-  (u testsm_mt_ ) y   NB. square matrices with size ≤ 500 only
+  (u testsm_mt_ ) y  NB. square matrices with size ≤ 500 only
 
   EMPTY_mt_
 )
@@ -226,7 +228,7 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testmid_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testmid_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ testmid_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testmid_mt_ 150 200
 
@@ -234,6 +236,7 @@ testmid=: 1 : 0
   (u testeq_mt_ ) y   NB. square matrices only
   (u testevc_mt_) y   NB. square matrices only
   (u testhrd_mt_) y   NB. square matrices only
+  (u testpf_mt_ ) y
   (u testqf_mt_ ) y
   (u testtrf_mt_) y
   (u testtri_mt_) y   NB. square matrices only
@@ -269,7 +272,7 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testhigh_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testhigh_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ testhigh_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testhigh_mt_ 150 200
 
@@ -309,7 +312,7 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 test_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) test_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ test_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) test_mt_ 150 200
 

@@ -1,0 +1,303 @@
+LABTITLE=: 'Debug'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Introduction
+This lab gives examples of using Debug.
+
+You are encouraged to complete each example before advancing through the lab.
+)
+PREPARE
+load 'debug'
+jdebug_actrl_fkey_jdebug_=: lab_j_ bind 0
+PREPARE
+
+NB. =========================================================
+Lab Section Activating Debug
+The Debug help file is in User Manual|Debug. Take a few minutes to browse the help. You may also refer to it as you go through the lab.
+)
+
+NB. =========================================================
+Lab Section
+Activate Debug by pressing Ctrl-K when the session has focus.
+
+Try this now!
+)
+
+NB. =========================================================
+Lab Section
+You can position the Debug form as convenient.
+
+If the Debug form has focus, then Ctrl-T toggles the topmost attribute.
+)
+
+NB. =========================================================
+Lab Section Positioning the Debug form
+Closing Debug deactivates it.
+)
+
+NB. =========================================================
+Lab Section Deactivating Debug
+We now step through the execution of a definition. To do so:
+
+- ensure Debug is active
+
+- set stops on one or more lines of the definition
+
+- run the definition
+)
+
+NB. =========================================================
+Lab Section Stepping through a definition
+We will use the following definition:
+
+  foo=: 4 : 0
+  NB. comment line
+  a=. 2 + y
+  b=. a * 5
+  x + b
+  )
+)
+PREPARE
+foo=: 4 : ('NB. comment line',LF,'a=. 2 + y',LF,'b=. a * 5',LF,'x + b')
+PREPARE
+2 foo 3
+
+NB. =========================================================
+Lab Section
+Step through this definition using Debug:
+
+First ensure Debug is active (press Ctrl-K), then enter the
+following. Note that dbstop 'foo' sets stops on all lines of
+foo:
+
+   dbstop 'foo'
+   2 foo 3
+)
+
+NB. =========================================================
+Lab Section
+Press the Run button, i.e. the leftmost button of the Debug toolbar, to step through each line of the definition.
+
+The panels in the Debug window show the code, the stack, and values of the arguments and names on the current line.
+)
+
+NB. =========================================================
+Lab Section
+Debug is active when suspension is on, and the debug latent expression is set. The Debug window is displayed when Debug is loaded, so this provides a visual indication that Debug is active.
+
+However, if you change either of these directly, for example, by entering:
+
+   dbr 0
+
+then Debug will no longer be active, even if the Debug window is still displayed. You can reactivate Debug by pressing Ctrl-K.
+)
+
+NB. =========================================================
+Lab Section
+Display foo again by re-entering:
+
+   2 foo 3
+)
+
+NB. =========================================================
+Lab Section Debug Active
+Try the following experiments:
+
+Use the Back and Forward buttons to move through the code.
+
+Note that Run starts at the line you have moved to. This may give an error if a name on the line is not yet defined.
+
+Reassign one of the local variables x y a or b, for example, x=. 123 and use the Refresh button to update the display.
+
+Note that if the Debug window has focus, pressing Enter is equivalent to pressing the Step over button.
+)
+
+NB. =========================================================
+Lab Section Experiments
+Reset Debug by either stepping through all lines of foo, or by pressing the Clear button.
+
+The Debug window should show only the toolbar - this means it is active, but there are no suspended definitions.
+)
+
+NB. =========================================================
+Lab Section
+If Debug is active, and an error occurs, the suspended definition is shown.
+)
+
+NB. =========================================================
+Lab Section
+Verb goo is defined with an error as follows, TXT is not defined:
+
+  goo=: 3 : 0
+  wd 'pc myform closeok'
+  wd 'xywh 10 10 100 12;cc text edit'
+  txt=. TXT, ' edit'
+  wd 'set text *',txt
+  wd 'pas 5 5;pshow'
+  )
+)
+PREPARE
+goo=: 3 : 0
+wd 'pc myform closeok'
+wd 'xywh 10 10 100 12;cc text edit'
+txt=. TXT, ' edit'
+wd 'set text *',txt
+wd 'pas 5 5;pshow'
+)
+erase <'TXT'
+PREPARE
+
+NB. =========================================================
+Lab Section Error Handling
+Ensure Debug is active (press Ctrl-K), then enter:
+
+   goo 3
+
+The display should show goo suspended at line 2, with a value error.
+)
+PREPARE
+erase <'TXT'
+PREPARE
+
+NB. =========================================================
+Lab Section
+Define TXT, for example as below, then press the Refresh button:
+
+   TXT=: 'Rupert Bean'
+
+Press Run to resume and complete execution.
+)
+
+NB. =========================================================
+Lab Section
+Thus far, we set stops on all lines of the definitions, so that the Run button would step through the definitions line by line.
+
+In general, Run will execute up to the next stop, or to completion if no stops have been set.
+
+You can use the Step into and Step over buttons to run one line at a time, even if no stops have been explicitly set.
+
+  Step into - steps into names on the current line
+  Step over - does not step into names on the current line
+)
+
+NB. =========================================================
+Lab Section Single Step
+For example, abc and rst are defined as follows:
+
+  abc=: 3 : 0
+  a=. 2 + y
+  b=. rst 5
+  1 + a + b
+  )
+
+  rst=: 3 : 0
+  r=. 3 * y
+  5 + r
+  )
+)
+PREPARE
+abc=: 3 : ('a=. 2 + y',LF,'b=. rst 5',LF,'1 + a + b')
+rst=: 3 : ('r=. 3 * y',LF,'5 + r')
+PREPARE
+
+NB. =========================================================
+Lab Section
+Now stop abc on line 0, and step through it using Step over:
+
+   dbss 'abc 0'
+   abc 10
+
+Note that verb rst is executed, but not shown in the Debug window.
+)
+
+NB. =========================================================
+Lab Section
+Now use Step into to step through the code. This time rst is shown in the Debug window.
+
+   dbss 'abc 0'
+   abc 10
+)
+
+NB. =========================================================
+Lab Section Setting Stops
+To set stops explicitly, use any of:
+
+Debug toolbar buttons:
+   Stop name at cursor - sets stops on all lines
+   Stop Manager - a dialog for setting stops
+
+Function keys:
+   Ctrl+F9        - toggle stop on cursor line
+   Ctrl+Shift+F9  - remove all stops
+
+Verb dbstop, which sets stops on all lines in a definition.
+
+Verb dbstopme, which sets stops on all lines in the current definition.
+
+The underlying facility: dbss (13!:3)
+)
+PREPARE
+wdpclose 'myform'
+PREPARE
+
+NB. =========================================================
+Lab Section Watch
+You can define watch names that are always shown in the bottom panel using the Watch Manager.
+
+For example, the following definition references global ABC:
+
+  xyz=: 3 : 0
+  a=. 2 + y
+  b=. ABC * 5
+  1 + a + b
+  )
+)
+PREPARE
+xyz=: 3 : ('a=. 2 + y',LF,'b=. ABC * 5',LF,'1 + a + b')
+PREPARE
+
+NB. =========================================================
+Lab Section
+Now enter:
+
+  ABC=: 123
+  dbstop 'xyz'
+  xyz 10
+
+Select the Watch Manager and enter ABC. Return to the Debug window and note that ABC appears in the bottom panel.
+)
+
+NB. =========================================================
+Lab Section
+Where an explicit definition has both monadic and dyadic forms, only the form in use is shown in the Debug window.
+
+For example:
+
+  pqr=: 3 : 0
+  NB. first monad line
+  123 pqr 10
+  :
+  NB. first dyad line
+  a=. 2 * y
+  x + a
+  )
+)
+PREPARE
+pqr=: 3 : ('NB. first monad line',LF,'123 pqr 10',LF,':',LF,'NB. first dyad line',LF,'a=. 2 * y',LF,'x + a')
+PREPARE
+
+NB. =========================================================
+Lab Section
+Now enter and step through:
+
+  dbstop 'pqr'
+  pqr 7
+)
+
+NB. =========================================================
+Lab Section
+This completes the Debug Lab.
+
+For more information, read the Help available from the Debug window.
+)

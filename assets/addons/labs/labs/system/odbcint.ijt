@@ -1,0 +1,202 @@
+LABTITLE=: 'ODBC: Basic ODBC'
+LABAUTHOR=: 0 : 0
+John D. Baker
+bakerjd@kos.net
+)
+LABCOMMENTS=: 'This lab show how to use the basic facilities of the J/ODBC interface script.'
+LABERRORS=: 1
+
+NB. =========================================================
+Lab Section What is ODBC?
+ODBC (Open DataBase Connectivity) is a standard API for accessing relational data.  ODBC is commonly used with SQL databases but is also used to access data in spreadsheets and other files.
+)
+
+NB. =========================================================
+Lab Section
+An ODBC application has three basic parts.
+
+One: a datasource - usually an SQL database.
+
+Two: an ODBC driver that reads & writes the datasource.
+
+Three: an application interface that calls the driver.
+
+This lab shows how to use the basic facilities of the J ODBC  interface.  First load the basic interface script.
+)
+load 'dd'
+
+NB. =========================================================
+Lab Section Check DSN registrations?
+NOTE:  This lab uses the following ODBC datasources.  If these datasoures are not registered use the ODBC control panel applet to register them.
+
+DSN     FILE, DIRECTORY or DATABASE
+---------------------------------------------
+jdata   FoxPro or dBase driver
+        \j4\system\examples\data
+
+jaccess ACCESS driver
+        \j4\system\examples\data\jdata.mdb
+)
+NB. check registrations - will be list of 1's
+NB. if all DSN's are registered.
+(;:'jdata jaccess') e. {."1 ddsrc 0
+
+NB. =========================================================
+Lab Section Connection handles
+The first step to using ODBC is to connect to a datasource.
+The verb (ddcon) connects datasources and returns an integer connection handle.
+)
+NB. connect the jdata source - assign connection handle ch
+]ch =: ddcon 'dsn=jdata'
+
+NB. If ch is _1 an error occurred - otherwise
+NB. there are no errors and the result of dderr is empty
+NB. If you get an error check your ODBC registrations.
+dderr ''
+
+NB. =========================================================
+Lab Section Listing tables and views in a datasource
+After establishing a datasource connection you frequently want to find out what tables and views you can access.
+)
+NB. list tables, views and queries in connected datasource
+ddtblx ch
+
+NB. =========================================================
+Lab Section Listing columns in tables
+It is also useful to determine what columns are in particular tables.
+)
+NB. show the columns of tdata
+'tdata' ddcol ch
+
+NB. show the columns of addr
+'addr' ddcol ch
+
+NB. =========================================================
+Lab Section Statement handles
+It us handy to know how many rows are in a table.  To do this submit an SQL query to the database using the (ddsel) verb. The result of (ddsel) is an integer called a statement handle.
+)
+NB. count the rows in tdata - assign statement handle sh
+sh =: 'select count(*) from tdata' ddsel ch
+
+NB. =========================================================
+Lab Section Fetching data
+The statement handle is a reference to selected data. To access the data it must be fetched.  The following fetch operation returns a single boxed row count number.
+)
+NB. fetch the data associated with statement handle sh
+ddfch sh
+
+NB. close the statement handle
+ddend sh
+
+NB. =========================================================
+Lab Section
+Now select all the rows of tdata and fetch the first 10 rows.
+)
+NB. select all rows of tdata
+sh =: 'select * from tdata' ddsel ch
+
+NB. fetch first 10 rows - arg is stmt and rows
+]dat =: ddfch sh,10
+
+NB. =========================================================
+Lab Section
+(dat) is a boxed list of tables.
+)
+$&.> dat
+
+NB. =========================================================
+Lab Section Fetching all table data.
+A second argument of _1 means return all the rows.  If some rows have already been fetched _1 means all the remaining rows.
+)
+NB. get the remaining rows - statement handle is closed
+NB. when all the rows are returned.
+ddfch sh,_1
+
+NB. =========================================================
+Lab Section Selecting and fetching a table subset
+SQL is very useful for specifying subsets of tables
+)
+NB. compare male and female salaries
+sh =: 'select avg(salary) from tdata where sex = ''F''' ddsel ch
+female =: ,> ddfch sh,_1
+
+sh =: 'select avg(salary) from tdata where sex = ''M''' ddsel ch
+male =: ,> ddfch sh,_1
+
+male,female
+
+NB. =========================================================
+Lab Section Multiple datasources
+More than one datasource can be connected.
+)
+ch2 =: ddcon 'dsn=jaccess'
+
+NB. list tables, views et cetera
+ddtblx ch2
+
+NB. =========================================================
+Lab Section Transactions and Modifying data
+ODBC can also update and modify data.  Before modifying the data of an important table it is often useful to start a transaction so the updates can be rolled back (cancelled) if necessary.  Not all ODBC drivers support transactions. The Access driver is one that does.
+)
+NB. start a transaction
+ddtrn ch2
+
+NB. add a row to tdata
+sql =: 'insert into tdata (name,sex,dept,dob,doh,salary) '
+sql =: sql , ' values (''Mouse, Mickey'',''M'',''XDEP'',19320101,19990101,666666)'
+
+NB. insert row
+sql ddsql ch2
+
+NB. number of rows affected
+ddcnt ''
+
+NB. =========================================================
+Lab Section Deleting data
+Wait a minute this is not a Mickey Mouse operation let us do a little corporate downsizing and turf the rodent.  This can be down with a delete command.
+)
+NB. delete a record
+'delete from tdata where dept = ''XDEP''' ddsql ch2
+
+NB. number of rows affected
+ddcnt ''
+
+NB. =========================================================
+Lab Section Rolling back transactions
+The company is about to make a public offerring. To drive up the stock price management decides to cut salaries. Column values can be modified with an update command.
+)
+NB. give everyone a pay cut
+sql =: 'update tdata set salary = salary - round(salary * 0.10)'
+sql ddsql ch2
+
+NB. how many people took a hit
+ddcnt ''
+
+NB. =========================================================
+Lab Section
+It seems the union was not happy and managed a successful boycott of the main product of the company. To smooth feathers the paycut was rolled back.
+)
+NB. roll back all transactions
+ddrbk ch2
+
+NB. =========================================================
+Lab Section Committing transactions
+Despite the worst quarter in the history of the company, bad PR, pending shareholder lawsuits and an embitterred workforce the CEO feels he has done a good job and gives himself a hefty raise. This is one transaction that will be committed.
+)
+NB. new transaction
+ddtrn ch2
+
+sql =:'update tdata set salary = '
+sql =: sql, 'salary + 50000 where name like ''Rogerson%'''
+sql ddsql ch2
+ddcnt ''
+
+NB. commit transaction
+ddcom ch2
+
+NB. =========================================================
+Lab Section
+You now have been introduced to ODBC basics.  Other labs will introduce more advanced material.
+)
+NB. disconnect datasources
+dddis ch,ch2

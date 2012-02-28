@@ -1,0 +1,148 @@
+LABTITLE=: 'Image Addon 3 Html'
+LABAUTHOR=: 0 : 0
+Zach Reiter and Cliff Reiter
+Cliff: Math Dept, Lafayette College
+reiterc@lafayette.edu
+June 2003
+modified for J6.01, Sept 2006
+)
+LABWINDOWED=: 0
+
+NB. =========================================================
+Lab Section Loading html_gallery8
+The addon script html_gallery8 provides functions for working with collections of images and creating html files for showing them. These are convenient for applications such as reviewing, manipulating, or preparing for web viewing, a collection of images.
+)
+dir_sep=: PATHSEP_j_             NB. directory separator
+addon_path=: jpath '~addons/media/image3/'
+load addon_path,'html_gallery8.ijs'
+
+NB. =========================================================
+Lab Section Creating a temp folder
+It is assumed that you have run the image3 addon lab and that a temporary directory with several images was created. If you encounter an error or there are no images in the temp image path, you should run the image3 addon lab before continuing.
+)
+]im_path=: jpath '~temp',dir_sep,'image3',dir_sep
+#images_in im_path
+
+NB. =========================================================
+Lab Section Image lists
+We can now easily check which images are in the temporary image directory that we created. The function images_in finds all the images, that is, the supported image file types; however, it excludes files with the default thumbnail prefix 'th_'. Indeed, several functions useful for finding patterned types of files are included. The function files_in may be used to match a given pattern in a directory. Each file type has a function for removing thumbnails from the list.
+)
+>images_in im_path
+
+images_in im_path
+
+#bmps_in im_path   NB. number of non-thumbnail bmps
+
+#'*.bmp' files_in im_path  NB. total number of bmps
+
+'th_*.bmp' files_in im_path  NB. number of thumbnail bmps
+
+NB. =========================================================
+Lab Section Thumbnails
+We can create a thumbnail, preserving aspect ratio, but fitting into a width 200 and height 150 box as follows. Any thumbnail name can be used and the file type will correspond to the extension. The right argument form in that case is: 'image_name';'thumbnail_name'
+Default thumbnail names may be obtained by d_th_nm.
+)
+d_th_nm im_path,'atkiln.bmp'
+200 150 mk_th_image im_path,'atkiln.bmp'
+
+image_wh im_path,'atkiln.bmp'          NB. original
+image_wh d_th_nm im_path,'atkiln.bmp'  NB. fits in bounds
+
+NB. =========================================================
+Lab Section Jpegs in temp folder
+Now we consider just the set of jpeg images.
+)
+>ilist=:jpegs_in im_path
+$ilist
+
+NB. =========================================================
+Lab Section A gallery page
+Here we made a 4 column gallery page which has the default name index.html in the temporary folder. Thumbnails will be created for each image, so this will take several seconds. If the command below doesn't open a browser once the computation is done, use a web browser to open index.html in the temporary folder. (You may need to configure J to recognize a browser via edit-configure menus.) Click on images to get a full view and observe the impact of quality settings upon the images.
+)
+4 mk_html_gallery 240 180 ilist
+
+open_html im_path,'index.html'
+
+NB. =========================================================
+Lab Section A gallery page redone
+We can quickly "redo" a gallery page if we don't need to recompute the thumbnails. If the thumbnail width-height is specified to be 0, then no thumbnails are computed. This makes it easy to change the number of columns appearing in the gallery. Hit refresh on your browser to see the layout changed to 3 columns.
+)
+
+3 mk_html_gallery 0 ilist
+
+NB. =========================================================
+Lab Section Rotating
+Images from cameras sometimes come out rotated incorrectly for viewing. Suppose we wanted to rotate images appearing sideways so they become upright. If the image3 lab was run once, the first two images appearing in the gallery are not oriented correctly and the following correct their orientation (otherwise, it will miss-rotate them). Either way, we can see the effect. We use "and_th" to automatically apply the same transformation to the thumbnail image. Hit refresh to see the change.
+)
+rot_cw_270 and_th&> (im_path,'a_trimmed_rot.jpg');im_path,'a_ll_rot.jpg'
+3 mk_html_gallery 0 ilist
+
+NB. =========================================================
+Lab Section Conditional thumbnail updates
+The rotated images may have inconsistently sized thumbnails. Using negative thumbnail specifications recomputes thumbnails that are not the correct size, but does not recompute the other thumbnails. Hit refresh again.
+)
+3 mk_html_gallery _240 _180 ilist
+
+NB. =========================================================
+Lab Section Making a png thumbnail
+We will copy the png that comes with the addon to the temp directory and create a thumbnail for it. We can also readily view the image and thumbnail width and height.
+)
+(fread addon_path,'hy_fly_di.png') fwrite im3=:im_path,'disk.png'
+200 200 mk_th_image im3
+image_wh im3
+image_wh d_th_nm im3
+
+NB. =========================================================
+Lab Section Modifing the prolog
+The global variable ht_table_prolog can be used to add default features before the image table that is the main feature. The function ht_fmt_image gives the html code to display the png image. Hit refresh on your browser to see the changes.
+)
+ht_table_prolog
+(;d_th_nm) im3
+ht_href_fmt_image (;d_th_nm) im3
+ht_table_prolog_ima3_=:'<center>', ht_href_fmt_image (;d_th_nm) im3
+3 mk_html_gallery 0 ilist
+
+NB. =========================================================
+Lab Section Updating galleries 
+Modifying the elements of html_gallery8 makes sense when certain modifications will be routinely desired. However, often it makes sense to edit the html file to add various details that won't be routinely required. However, if the gallery is subsequently to have images added, this may require redoing work or substantial cutting and pasting. A function update_html_gallery may help in this situation. Load the index.html file into an editor (Either by viewing the source from the browser or directly). Then edit some image captions; be sure not to change the file names that are inside double quote's. Now save the changes; then refresh the browser to see that the changes have been made, and then continue the lab.
+)
+
+NB. =========================================================
+Lab Section Updating galleries 2
+Now we use update_html to add all the png and mov images in the temp image directory to the existing jpeg gallery. Once the computation is complete, refresh your browser and see that the png images have been added to the gallery while the caption changes have been made. Be careful with powerful utilities like this: work on duplicate copies. See the help files for options to this utility. 
+)
+NB. adds a movie if the image3 movie lab was run. 
+fwrite&(im_path,'mset_.mov')@fread :: _1: jpath '~temp\movie3\mset_.mov'
+ilist2=: ('mov';'jpg';'png') im_in im_path
+3 update_html_gallery _240 _180 ilist2
+
+NB. =========================================================
+Lab Section Gallery sequences
+If there are a large number of images, it is sometimes convenient to create sequences of galleries. This can be done automatically by specifying either the names of the pages or the target number of rows & columns on each page. The following creates a sequence of galleries beginning with index00.html (not index.html). If it doesn't open automatically, open it by hand. Notice that the ht_prolog was used on the first page, but not subsequent pages and we do not need to recreate the thumbnails. Check out the "next page" link.
+)
+2 3 mk_html_gallery_seq 0 ilist
+
+open_html im_path,'index00.html'
+
+NB. =========================================================
+Lab Section The prevare utility
+A windows form for rotating (lossless except for trimming to fit blocksize) and otherwise manipulating images is provided by the function prevare from the script prevare.ijs. Rotate a few of the temporary images. Use of an optional left argument creates a thumbnail as images are visited. Ordinarily we would use this form before creating the html index; in that way, thumbnails are created while the image list is browsed to verify orientation and suitability for inclusion. 
+)
+load addon_path,'prevare.ijs'
+prevare images_in im_path
+
+NB. =========================================================
+Lab Section sample1.ijs
+Two sample scripts are provided with the Image3 addon. The first is sample1.ijs. 
+It contains basic commands often useful in organizing the steps from having a directory of images to creating a gallery of those images. You may find it useful to use the script as a prototype: suitably modify the lines for your application when creating an image gallery.
+)
+
+NB. =========================================================
+Lab Section sample2.ijs
+The sample2 script gives a few lines that are a prototype of lines that could be run from time-to-time to update Web page galleries. The basic idea is that a source directory of images is created. On an as need basis, web size versions of the source images are created in the target directory. The gallery in that directory is updated using update_html_gallery so that modifications to the html file are preserved. 
+)
+
+NB. =========================================================
+Lab Section comments
+Since the functions described here provide powerful tools that can overwrite files, we repeat our standard warning: users should be prudent and work with duplicate copies of their images. Nonetheless, these functions are very handy for working with large galleries of images. Enjoy.
+)

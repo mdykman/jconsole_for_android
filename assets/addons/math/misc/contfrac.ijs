@@ -1,7 +1,7 @@
 NB. math/misc/contfrac
 NB. Continued fraction utilities
 NB. version: 1.0.0
-
+NB. 
 NB. contfrac    create continued fraction
 NB. contfracx   expand continued fraction
 

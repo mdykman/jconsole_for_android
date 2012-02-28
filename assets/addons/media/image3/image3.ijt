@@ -1,0 +1,262 @@
+LABTITLE=: 'Image Addon 3'
+LABAUTHOR=: 0 : 0
+Zach Reiter and Cliff Reiter
+Cliff: Math Dept, Lafayette College
+reiterc@lafayette.edu
+June 2003
+modified for J6.01, Sept 2006
+)
+LABWINDOWED=: 0
+
+NB. =========================================================
+Lab Section Image3 addon
+The image3 addon is designed to allow reading and writing 24 bit image files to and from J. This allows format conversion under program control as well as convenient file i/o for image processing with J. The supported types are BMP, JPEG, PNG, TGA and PNM. There is limited support for 8-bit images and simple *.MOV animations. The documentation, found in the help subdirectory of the addons directory, gives a further overview of the addon facilities. Since these facilities by their nature overwrite files, we offer standard but essential advice in such circumstances: users should work on duplicate copies of their files.
+)
+
+NB. =========================================================
+Lab Section Note re. html lab
+The image i/o utilities form the basis for html image gallery building and the other facilities included with the addon. While we briefly consider html gallery building, a more detailed lab, dealing just with html galleries, may be studied. 
+)
+
+NB. =========================================================
+Lab Section Loading the addon image script
+The addon script directly defines the BMP, TGA and PNM utilities; however, the JPEG, PNG and MOV utilities call compiled libraries (included) which are assumed to be in the image3 addon directory. The MOV utilities require that movie3.ijs has been loaded. If the script failed to load, you should check that the file image3.dll (windows) is in the addon directory.
+)
+dir_sep=: PATHSEP_j_
+addon_path=: jpath '~addons/media/image3/'
+require addon_path,'image3.ijs'
+
+NB. =========================================================
+Lab Section Creating a temp folder
+Now we will define a temporary directory to place the image files that we will create during this lab. You may delete this directory when you are finished with the lab. However, the image3 html lab assumes that the images created by this lab are in place. Hence, you may want to leave the temporary directory in place until you have done the html lab.
+)
+create_dir=:1!:5 :: ]
+]im_path=: jpath '~temp',dir_sep,'image3',dir_sep NB. directory to be created
+create_dir < im_path
+
+NB. =========================================================
+Lab Section Notice provided images
+Now we can observe that one jpeg image, atkiln.jpg, was included with the addon and one png image was also included. We assign "im1" and "im2" as names for those files.
+)
+fdir addon_path,'*.jpg'
+im1=:addon_path,'atkiln.jpg'
+fdir addon_path,'*.png'
+im2=:addon_path,'hy_fly_di.png'
+
+NB. =========================================================
+Lab Section Reading an image
+We can read the image "im1" into J. It is a three dimensional integer array giving RGB triples. Its shape is height by width by 3.
+)
+B=:read_image im1
+$B
+<"1 (2 4){.B
+
+NB. =========================================================
+Lab Section Writing an image
+We can save the array B as a BMP in the temp directory. We also load the "view_m" script so that we can view the image. You close the image windows at your convenience, but you may want to leave them open for a couple of lab steps so that you can easily compare variations on the images which will be shown.
+)
+B write_image im_path,'atkiln.bmp'
+load addon_path,'view_m.ijs'
+view_image im_path,'atkiln.bmp'
+
+NB. =========================================================
+Lab Section Negating an image
+It is easy to do arithmetic to negate the image, and then save and view it.
+)
+(255-B) write_image im_path,'negative.bmp'
+view_image im_path,'negative.bmp'
+
+NB. =========================================================
+Lab Section Raw images
+While integer arrays are convenient for most image processing, raw, binary, character arrays of bytes suffice for mechanical manipulations and save memory. Notice that "write_image" can also use binary arrays for its data.
+)
+$B=:raw_read_image im_path,'atkiln.bmp'
+1 4{.B   NB. B contains raw, undisplayable, data
+(|.B) write_image im_path,'flip.bmp'
+view_image im_path,'flip.bmp'
+
+NB. =========================================================
+Lab Section Jpeg images
+We can save the images as *.bmp, *.jpg (or *.jpeg), *.png, etc. by using the appropriate filename extention. Since bmp, png, tga, and pnm are "lossless", there is not too much risk in using them. However, jpeg images are compressed using techniques that lose information and because of the space savings, it desirable to use the quality options in a manner appropriate to the application. Both global variables and options may be used to control the quality setting. Notice that the jpeg file is dramatically smaller than the png.
+)
+B write_image im_path,'temp.png'
+jpeg_quality_ima3_
+B write_image im_path,'temp75.jpg'
+
+NB. =========================================================
+Lab Section Jpeg quality
+Compare the temp75.jpg and temp90.jpg images. Here we changed the global setting to change the quality. Notice the higher quality image took more space but at screen quality it is difficult to see significant difference.
+)
+jpeg_quality_ima3_=:90
+B write_image im_path,'temp90.jpg'
+jpeg_quality_ima3_=:75   NB. reset to default value
+view_image im_path,'temp75.jpg'
+view_image im_path,'temp90.jpg'
+
+NB. =========================================================
+Lab Section Jpeg quality II
+We may also use "write_jpeg" or "write_image" with a left argument to specify quality (we can use whichever we prefer). With high quality input data array, here is some advice regarding how to choose jpeg_quality_ima3_:
+
+95 for archiving & printing
+75 for web applications including thumbnails and
+ 5 for humor
+)
+75 B write_jpeg  im_path,'temp75b.jpg'  NB. same as default
+60 B write_image im_path,'temp60.jpg'
+40 B write_jpeg  im_path,'temp40.jpg'
+10 B write_image im_path,'temp10.jpg'
+ 5 B write_jpeg  im_path,'temp05.jpg'
+view_image im_path,'temp05.jpg'
+
+NB. =========================================================
+Lab Section Other jpeg options
+Jpeg file writes actually can take three optional arguments. The first is jpeq_quality as we have seen. The second is a Boolean flag indicating whether to use progressive format or not. The default is progressive=:0 (not). Progressive jpeg's can be roughly displayed while being downloaded, but may not be compatible with all applications. The third option is gray_scaling which we show by experiment and is discussed in the image3 addon help. Options not listed take the default values.
+)
+75 0 1 B write_image im_path,'gs_atkiln.jpg'  NB. gray scale
+75 1   B write_image im_path,'pr_atkiln.jpg'  NB. progressive, color
+view_image im_path,'gs_atkiln.jpg'
+
+NB. =========================================================
+Lab Section Lossless jpeg transforms
+Since creating jpeg images involves losing image information, it is often convenient to reflect or rotate jpegs without additional loss of information. Utilities provided for this include
+  jpeg_rot_90     jpeg_rot_180     jpeg_rot_270
+  jpeg_ll_rot_90  jpeg_ll_rot_180  jpeg_ll_rot_270
+  jpeg_transpose     jpeg_transverse
+  jpeg_ll_transpose  jpeg_ll_transverse
+  jpeg_flip_h     jpeg_flip_v
+  jpeg_ll_flip_h  jpeg_ll_flip_v
+)
+
+NB. =========================================================
+Lab Section Lossless jpeg transforms II
+Lossless transforms are only exactly possible if certain axes are multiples of internal blocksize (often 16). Utilities which transform losslessly are provided with "ll" appearing in the name and such utilities may need to adjoin the fractional blocks which appear as a misplaced edge strip. The image created here has the strip.
+)
+jpeg_ll_rot_90 im1;im_path,'a_ll_rot.jpg'
+image_wh im1
+image_wh im_path,'a_ll_rot.jpg'
+view_image im_path,'a_ll_rot.jpg'
+
+NB. =========================================================
+Lab Section Lossless jpeg transforms III
+Often, we want to trim the strip from the result, thereby losing a small amount of information; such utilities don't have "ll" in the name. Here some edge information is lost. However, the bulk of the image has been transformed with no degradation in quality. Notice the image width is not the same as before.
+)
+jpeg_rot_90 im1;im_path,'a_trimmed_rot.jpg'
+image_wh im1
+image_wh im_path,'a_trimmed_rot.jpg'
+view_image im_path,'a_trimmed_rot.jpg'
+
+NB. =========================================================
+Lab Section Png options
+The png format uses lossless compression techniques. Spending more time compressing may result in better compression. The optional left argument takes values from _1 to 9. The value _1 uses the default (6). The value 0 runs the fastest and 9 gives the most compression.
+)
+ 0 B write_image im_path,'temp.png'
+   B write_image im_path,'temp.png'
+ 6 B write_image im_path,'temp.png'
+_1 B write_image im_path,'temp.png'
+ 9 B write_image im_path,'temp.png'
+
+NB. =========================================================
+Lab Section Palettes
+A common 8-bit image format consists of a palette and an array of indices into the palette representing the pixels. Such a format is useful for abstract images with few colors but may also be used to approximate a full color image. In that case, quality is lost in exchange for smaller size. The function quantize_image allows us to create a palette of the specified size and the array suitable for saving.
+)
+B write_image im_path,'temp.bmp'
+(256 quantize_image B) write_image im_path,'atk256.bmp'
+(16 quantize_image B) write_image im_path,'atk016.png'
+
+NB. =========================================================
+Lab Section Palettes II
+Writes of *.bmp and *.png paletted images are supported as paletted images -- other types of images are promoted to 24 bit before being saved. An alternate paletting technique based upon neural nets (quantize_image_nn);
+an optional second left argument to quantize_image_nn gives the sampling rate (1-30). Small numbers give better images and require more processing. However, paletted images are not usually the best choice for photographic images.
+)
+fsize im_path,'temp.bmp'
+fsize im_path,'temp.bmp'
+(256 quantize_image_nn B) write_image im_path,'atk256a.png'
+(256 5 quantize_image_nn B) write_image im_path,'atk256b.png'
+
+NB. =========================================================
+Lab Section Palettes III: Hue
+A function Hue is defined by the script. It gives full intensity colors running from red to yellow to green to cyan to blue to magenta and back to red as its argument runs from 0 to 1. This is similar to "hue" defined in raster4.ijs for "Fractals, Visualization and J" and hence its inclusion allows many of the construction done in that book to be conveniently handled by image3.
+)
+
+Hue(i.%<:)11
+
+NB. =========================================================
+Lab Section Palettes IV
+We may save paletted images using <tt>(pal;indices)</tt> type structures. Paletted bmp and
+png images may also be read as palleted images.
+)
+
+$hpal=:Hue(i.%<:)256
+$b=:256#i.1 256
+(hpal;b) write_image im_path,'hues.png'
+view_image im_path,'hues.png'
+'p c'=:pal_read_png im_path,'hues.png'
+p-:hpal
+$read_image im_path,'hues.png'
+
+NB. =========================================================
+Lab Section Conversions
+File conversions may be made using "conv_image".
+Here we convert im1 to other formats.
+)
+im1
+90 0 1 conv_image im1;im_path,'im1.jpg' NB. grayscale jpeg
+conv_image im1;im_path,'im1.png'        NB. png
+
+NB. =========================================================
+Lab Section Nonexistent files
+Use of high level functions, such as read_image,
+on a nonexistent file result in _1, but lower level
+calls may result in errors. Uncomment and run the last command if you want to see such an error.
+)
+read_image 'no_exist.jpg'
+image_wh   'no_exist.jpg'
+NB. b=.read_jpeg 'no_exist.jpg'  NB. to see an error
+
+NB. =========================================================
+Lab Section Loading html_gallery8
+The addon script html_gallery8 provides functions for working with collections of images and creating html files for showing them. These are convenient for applications such as reviewing, manipulating, and presenting for web viewing, a collection of images from a digital camera.
+)
+load addon_path,'html_gallery8.ijs'
+
+NB. =========================================================
+Lab Section Image lists
+We can now easily check which images are in the temporary folder we created.
+)
+>images_in im_path
+
+images_in im_path
+
+NB. =========================================================
+Lab Section Jpegs in temp folder
+Now we consider just the set of jpeg images. Any thumbnails with default thumbnail type name will not be included.
+)
+>im_list=:jpegs_in im_path
+$im_list
+
+NB. =========================================================
+Lab Section A gallery page
+Here we made a 4 column gallery page which has the default name index.html in the temporary folder.
+Thumbnails will be created for each image so this will take several seconds. If the command below doesn't open a browser once the computation is done, use a web browser to open index.html in the temporary folder. Click on images to get a full view and observe the impact of quality settings upon the images.
+)
+4 mk_html_gallery 240 180 im_list
+
+NB. attempt to launch browser:
+open_html im_path,'index.html'
+
+NB. =========================================================
+Lab Section The prevare utility
+A windows form for manipulating images and organizing html galleries is part of the features provided in the script prevare.ijs. Many of our most commonly used image addon facilities appear on that interactive form.
+)
+load addon_path,'prevare.ijs'
+prevare images_in im_path
+
+NB. =========================================================
+Lab Section Further reading
+The help directory and the scripts themselves contain further information. More illustrations of using the facilities of the html_gallery8 script are included in the image3 html lab. The image 3 movie lab contains illustrations of creating and modifying movies using the movie3 script.
+)
+
+NB. =========================================================
+Lab Section Final comments
+Since the functions described here provide powerful tools that can overwrite files, we repeat our standard warning: users should be prudent and work with duplicate copies of their images. Nonetheless, these functions are very handy for working with galleries of images. Enjoy.
+)

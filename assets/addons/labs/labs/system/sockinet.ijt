@@ -1,0 +1,74 @@
+LABTITLE=: 'Sockets and the Internet'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Introduction
+For the duration of this lab it is assumed that you are connected to the Internet and have access to sockets. Once you have established a connection, sockets which are created by the socket driver can be connected to any service available on the Internet.
+
+Load the socket utilities and cover definitions in z with:
+)
+load 'socket'
+coinsert 'jsocket'
+
+NB. =========================================================
+Lab Section
+Examples of servers which exist on the Internet are those which deliver Web pages, e-mail, and files. You contact them by addressing the particular machine on which they run, at a "well-known" port number. For example, Web servers are typically listening to port 80 for incoming requests.
+
+For many of these servers, incoming requests are in the form of a single line, followed by carriage return and linefeed characters.
+)
+
+NB. =========================================================
+Lab Section Web Server
+To demonstrate we will connect to the web server running at our web site (www.jsoftware.com) and request a document.
+
+First we will create a socket:
+)
+]sk=: 0 pick sdcheck sdsocket ''
+
+NB. =========================================================
+Lab Section
+Next, we will find the address of our web server, and connect our socket to port 80 on that host:
+)
+]jsoft=: sdcheck sdgethostbyname 'www.jsoftware.com'  NB. find host
+sdcheck sdconnect sk;jsoft,<80  NB. connect to port 80
+
+NB. =========================================================
+Lab Section
+Now that we are connected, we send a single line using HTTP (HyperText Transfer Protocol) to request a document. The simplest form of request is the word "GET" followed by the document name.
+)
+sdcheck ('GET /download/testsock.txt',CR,LF) sdsend sk,0
+
+NB. =========================================================
+Lab Section
+The Web server will find the document and return its contents along the same socket, which we can read now.  This is the same file you would get if you used a Web browser and went to the URL:  http://www.jsoftware.com/download/testsock.txt
+)
+; sdcheck sdrecv sk,1000,0
+
+NB. =========================================================
+Lab Section
+Web servers are stateless, and handle a single transaction per connection. Immediately after sending the file, the Web server closes its end of the connection. We now close our end:
+)
+sdcheck sdclose sk
+
+NB. =========================================================
+Lab Section
+Some verbs have been included in a script to show the use of sockets to connect with services on the Internet.
+)
+load '~system\examples\socket\socklab.ijs'
+
+NB. =========================================================
+Lab Section
+One of the verbs, fortune, retrieves a page from the www.jsoftware.com web site and extracts a random saying from the Unix "fortune" command.
+
+To run it, advance to the next section.
+)
+
+NB. =========================================================
+Lab Section
+)
+fortune ''
+
+NB. =========================================================
+Lab Section
+This concludes this lab.  You may now disconnect your Internet session if it is no longer required.
+)

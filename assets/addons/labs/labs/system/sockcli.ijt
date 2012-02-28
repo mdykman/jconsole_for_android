@@ -1,0 +1,159 @@
+LABTITLE=: 'Socket Driver Server - Client'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Socket Driver Client
+If you did not start this lab in response to instructions in the Socket Driver Server lab currently running in another J task you should stop running this lab. In order to see the socket lab illustrating client-server communication, start the "Socket Driver Server" lab, and follow the instructions there.
+)
+PREPARE
+ASSERT=: 3 : 0
+(-.y)#'Something is wrong!'
+)
+toserver=:3 : 'wd''mb Client *'',y,'' Dismiss this dialog, switch to the server session, and continue the lab there.'''
+PREPARE
+
+NB. =========================================================
+Lab Section
+Position the 2 copies of J (server and client) as conveniently as possible on your screen. If you have a large screen you can probably position them so that you can see both sessions at the same time.
+)
+
+NB. =========================================================
+Lab Section
+)
+toserver ''
+
+NB. =========================================================
+Lab Section
+We connect to the server at its address.
+
+The address has 3 parts: The first part indicates the type of address and must be AF_INET, i.e. address family internet.
+
+The second part is the internet address of the host on which the server is running.
+
+The last part is the port number.
+)
+
+NB. =========================================================
+Lab Section
+You need to get the internet address of the system.
+
+sdgethostbyname converts a "user friendly" host name into the string of 4 numbers that is the internet address. The hostname "localhost" is a name for your system.
+
+The result of sdgethostname includes the AF_INET value of 2.
+)
+load'socket'
+coinsert 'jsocket'
+sdcleanup''
+hostaddress=: sdcheck sdgethostbyname 'localhost'
+hostaddress
+
+NB. =========================================================
+Lab Section
+sdconnect connects to a server.
+
+The port number of 1500 is the service that we want.
+
+The sdconnect parameters give the address of the socket to connect to. They are similar to the bind parameters the server used.
+)
+skclient=: 0 pick sdcheck sdsocket''
+skclient
+sdcheck sdconnect skclient ; hostaddress , <1500
+
+NB. =========================================================
+Lab Section
+)
+toserver 0 : 0
+We have requested a connection to the server. We now switch to the server task to see if it knows about the connection request.
+)
+
+NB. =========================================================
+Lab Section
+You should have just finished working in the server task and sending some data to this task.
+
+sdselect should show that our socket is now ready to read data. This is indicated by our socket in the readable socket list.
+
+The socket is also marked as ready to write.
+)
+r=: sdcheck sdselect''
+r
+ASSERT skclient e. 0 pick r
+
+NB. =========================================================
+Lab Section
+sdrecv receives data from the socket. The argument after the socket is the maximum amount of data that will be received. The 0 argument after that is flags.
+
+The amount of data received may be less than the amount in the argument.
+)
+data=: ; sdcheck sdrecv skclient , 1000 , 0
+data
+
+NB. =========================================================
+Lab Section
+Let us send some data to the server.
+
+Notice that we do sends in a row. The server just sees this as a string of incoming data, similar to reading data from a file. The boundaries of chunks of sent data have no relationship to the boundaries of chunks of received data.
+)
+
+sdcheck 'Good to be aboard.' sdsend skclient , 0
+sdcheck ' What can you do?' sdsend skclient , 0
+
+NB. =========================================================
+Lab Section
+)
+toserver 'We now switch back to the server to read the data.'
+
+NB. =========================================================
+Lab Section
+The server task is now hung waiting to receive data from us.
+
+Send the server some data.
+)
+sdcheck 'wake up!' sdsend skclient,0
+
+NB. =========================================================
+Lab Section
+)
+toserver 'We now switch to the server to see that it is running again.'
+
+NB. =========================================================
+Lab Section
+You should have just marked the server socket with sdasync.
+
+Now when we send new data to the socket it will run socket_handler'' in the server.
+)
+sdcheck 'this should cause an event' sdsend skclient,0
+
+NB. =========================================================
+Lab Section
+)
+toserver ''
+
+NB. =========================================================
+Lab Section
+Do several sends to the server.
+)
+sdcheck '1111111' sdsend skclient,0
+sdcheck '2222222222222222222' sdsend skclient,0
+sdcheck '333333333333333333333333'sdsend skclient,0
+
+NB. =========================================================
+Lab Section
+)
+toserver ''
+
+NB. =========================================================
+Lab Section
+The server sent us a J variable. Read the data and create the variable here in our task.
+)
+ASSERT skclient e. >0{sdcheck sdselect''
+
+d=: ; sdcheck sdrecv skclient,1000,0
+d=:3!:2 d
+d
+
+NB. =========================================================
+Lab Section
+This is the end of the socket client lab.
+
+Switch back to the server task and continue with the lab there.
+)

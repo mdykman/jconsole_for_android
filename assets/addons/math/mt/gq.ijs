@@ -14,7 +14,7 @@ NB.            generator and shape given
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -39,7 +39,7 @@ coclass 'mt'
 NB. =========================================================
 NB. Local definitions
 
-gqvberr=: 2 : '((norm1_mt_@(<: upddiag_mt_)@(u ct_mt_)) % (FP_EPS_mt_ * v)) @ ]'  NB. conj. to form verb to calc. berr
+gqvberr=: 2 : '((norm1_mt_@(<: upddiag_mt_)@(u ct_mt_)) % (FP_EPS_mt_ * v))@]'  NB. conj. to form verb to calc. berr
 
 NB. ---------------------------------------------------------
 NB. Blocked code constants
@@ -137,13 +137,13 @@ NB.   k  = min(m,n)
 NB.
 NB. Algorithm:
 NB.   1) form eQ(0) as unit matrix of proper size
-NB.   2) do iterations: eQ=. (s;Qf) (ungxxstep ^: k) eQ0
+NB.   2) do iterations: eQ=. (s;Qf) (ungxxstep^:k) eQ0
 NB.
 NB. Assertions:
-NB.   (] -: clean @ ((         trl   @:(}:"1)) mp  ((}:"1)@(# ungl2 ])@         tru1   @(  k & {.   )))@gelqf) A
-NB.   (] -: clean @ ((((-~/@$) trl ])@: }.   ) mp~ ( }.   @(c ung2l ])@((-~/@$) tru1 ])@((-k)&({."1))))@geqlf) A
-NB.   (] -: clean @ ((         tru   @: }:   ) mp~ ( }:   @(c ung2r ])@         trl1   @(  k &({."1))))@geqrf) A
-NB.   (] -: clean @ ((((-~/@$) tru ])@:(}."1)) mp  ((}."1)@(# ungr2 ])@((-~/@$) trl1 ])@((-k)& {.   )))@gerqf) A
+NB.   (] -: clean@((         trl   @:(}:"1)) mp  ((}:"1)@(# ungl2 ])@         tru1   @(  k & {.   )))@gelqf) A
+NB.   (] -: clean@((((-~/@$) trl ])@: }.   ) mp~ ( }.   @(c ung2l ])@((-~/@$) tru1 ])@((-k)&({."1))))@geqlf) A
+NB.   (] -: clean@((         tru   @: }:   ) mp~ ( }:   @(c ung2r ])@         trl1   @(  k &({."1))))@geqrf) A
+NB.   (] -: clean@((((-~/@$) tru ])@:(}."1)) mp  ((}."1)@(# ungr2 ])@((-~/@$) trl1 ])@((-k)& {.   )))@gerqf) A
 NB. where
 NB.   k=. <./ $ A
 NB.
@@ -202,11 +202,11 @@ NB. Notes:
 NB. - ung{l2,2l,2r,r2} and corresp. ung{lq,ql,qr,rq} are
 NB.   topologic equivalents
 
-unglqstep=: ((((GQNB, _),:~(-&c))                       (] ;. 0)       [) (((ungl2~ #) @ [) ,   larfbrcfr) ]) ({."1~ ((-GQNB)-c))
-ungqrstep=: ((((GQNB,~_),:~(-&#))                       (] ;. 0)       [) (((ung2r~ c) @ [) ,.  larfblnfc) ]) ({.  ~ ((-GQNB)-#))
+unglqstep=: ((((GQNB, _),:~(-&c))                       (] ;. 0)       [) (((ungl2~ #)@[) ,   larfbrcfr) ]) ({."1~ ((-GQNB)-c))
+ungqrstep=: ((((GQNB,~_),:~(-&#))                       (] ;. 0)       [) (((ung2r~ c)@[) ,.  larfblnfc) ]) ({.  ~ ((-GQNB)-#))
 
-ungqlstep=: ((((GQNB,~_),:~(0 {:: [) ((GQNB-1)+-~) c@]) (] ;. 0) 1 {:: [) (((ung2l~ c) @ [) ,.~ larfblnbc) ]) ({.  ~ (  GQNB +#))
-ungrqstep=: ((((GQNB, _),:~(0 {:: [) ((GQNB-1)+-~) #@]) (] ;. 0) 1 {:: [) (((ungr2~ #) @ [) , ~ larfbrcbr) ]) ({."1~ (  GQNB +c))
+ungqlstep=: ((((GQNB,~_),:~(0 {:: [) ((GQNB-1)+-~) c@]) (] ;. 0) 1 {:: [) (((ung2l~ c)@[) ,.~ larfblnbc) ]) ({.  ~ (  GQNB +#))
+ungrqstep=: ((((GQNB, _),:~(0 {:: [) ((GQNB-1)+-~) #@]) (] ;. 0) 1 {:: [) (((ungr2~ #)@[) , ~ larfbrcbr) ]) ({."1~ (  GQNB +c))
 
 NB. =========================================================
 NB. Interface
@@ -241,7 +241,7 @@ NB.      part intended for blocked algorithm being excluded,
 NB.      to produce eQ(0)
 NB.   4) find iters, the number of iterations
 NB.   5) do iterations:
-NB.        eQ=.    Qf  (unglqstep ^: iters) eQ0
+NB.        eQ=.    Qf  (unglqstep^:iters) eQ0
 NB.   6) cut off last column from eQ to produce Q
 NB.
 NB. Storage layout:
@@ -259,7 +259,7 @@ NB.               may be empty)
 NB.   *         - any value, is not used
 NB.
 NB. Assertions:
-NB.   (idmat @ ms @ $ -: clean @ (mp  ct)) Q
+NB.   (idmat@ms@$ -: clean@(mp  ct)) Q
 NB. where
 NB.   Q=. unglq gelqf A
 NB.
@@ -300,7 +300,7 @@ NB.      part intended for blocked algorithm being excluded,
 NB.      to produce eQ(0)
 NB.   4) find iters, the number of iterations
 NB.   5) do iterations:
-NB.        eQ=. (s;Qf) (ungqlstep ^: iters) eQ0
+NB.        eQ=. (s;Qf) (ungqlstep^:iters) eQ0
 NB.   6) cut off first row from eQ to produce Q
 NB.
 NB. Storage layout:
@@ -319,7 +319,7 @@ NB.               may be empty)
 NB.   *         - any value, is not used
 NB.
 NB. Assertions:
-NB.   (idmat @ ms @ $ -: clean @ (mp~ ct)) Q
+NB.   (idmat@ms@$ -: clean@(mp~ ct)) Q
 NB. where
 NB.   Q=. ungql geqlf A
 NB.
@@ -328,7 +328,7 @@ NB. - implements LAPACK's DORGQL, ZUNGQL
 NB. - straightforward O(k*m^3) code:
 NB.   Q=. (-k) {."1 mp/ (idmat m) -"2 |. ({. Qf) * (* +)"0/~"1 |: }. Qf
 
-ungql=: ($:~ (_1  0&(ms $))) : ( 1  0 }. ([ (ungqlstep^:(;`(gqi@c@])`((-(gqb@c)) ung2l ((}.~ (2 # (-@gqb@c)))@])))) ((tru1~ (-~/ @ $))@((-@(<. (_1  0&(ms $)))) {."1 ]))))
+ungql=: ($:~ (_1  0&(ms $))) : ( 1  0 }. ([ (ungqlstep^:(;`(gqi@c@])`((-(gqb@c)) ung2l ((}.~ (2 # (-@gqb@c)))@])))) ((tru1~ (-~/@$))@((-@(<. (_1  0&(ms $)))) {."1 ]))))
 
 NB. ---------------------------------------------------------
 NB. ungqr
@@ -360,7 +360,7 @@ NB.      part intended for blocked algorithm being excluded,
 NB.      to produce eQ(0)
 NB.   4) find iters, the number of iterations
 NB.   5) do iterations:
-NB.        eQ=.    Qf  (ungqrstep ^: iters) eQ0
+NB.        eQ=.    Qf  (ungqrstep^:iters) eQ0
 NB.   6) cut off last row from eQ to produce Q
 NB.
 NB. Storage layout:
@@ -379,7 +379,7 @@ NB.               may be empty)
 NB.   *         - any value, is not used
 NB.
 NB. Assertions:
-NB.   (idmat @ ms @ $ -: clean @ (mp~ ct)) Q
+NB.   (idmat@ms@$ -: clean@(mp~ ct)) Q
 NB. where
 NB.   Q=. ungqr geqrf A
 NB.
@@ -420,7 +420,7 @@ NB.      part intended for blocked algorithm being excluded,
 NB.      to produce eQ(0)
 NB.   4) find iters, the number of iterations
 NB.   5) do iterations:
-NB.        eQ=. (s;Qf) (ungrqstep ^: iters) eQ0
+NB.        eQ=. (s;Qf) (ungrqstep^:iters) eQ0
 NB.   6) cut off first column from eQ to produce Q
 NB.
 NB. Storage layout:
@@ -438,7 +438,7 @@ NB.               may be empty)
 NB.   *         - any value, is not used
 NB.
 NB. Assertions (with appropriate comparison tolerance):
-NB.   (idmat @ ms @ $ -: clean @ po) Q
+NB.   (idmat@ms@$ -: clean@po) Q
 NB. where
 NB.   Q=. ungrq gerqf A
 NB.
@@ -447,7 +447,7 @@ NB. - implements LAPACK's DORGRQ, ZUNGRQ
 NB. - straightforward O(k*m^3) code:
 NB.   Q=. (-k) {. mp/ (idmat n) -"2 (+ {."1 Qf) * (* +)"0/~"1 + }."1 Qf
 
-ungrq=: ($:~ ( 0 _1&(ms $))) : ( 0  1 }. ([ (ungrqstep^:(;`(gqi@#@])`((-(gqb@#)) ungr2 ((}.~ (2 # (-@gqb@#)))@])))) ((trl1~ (-~/ @ $))@((-@(<. ( 0 _1&(ms $)))) {.   ]))))
+ungrq=: ($:~ ( 0 _1&(ms $))) : ( 0  1 }. ([ (ungrqstep^:(;`(gqi@#@])`((-(gqb@#)) ungr2 ((}.~ (2 # (-@gqb@#)))@])))) ((trl1~ (-~/@$))@((-@(<. ( 0 _1&(ms $)))) {.   ]))))
 
 NB. ---------------------------------------------------------
 NB. unghrl
@@ -473,7 +473,7 @@ NB.     H(0:f-1) = H(f+s-1:n-1) = I .
 NB.   This approach delivers excessive calculations in rare
 NB.   case ((f>0) OR (f+s<n)).
 
-unghrl=: unglq @ (|. !. 0) : [:
+unghrl=: unglq@(|.!.0) : [:
 
 NB. ---------------------------------------------------------
 NB. unghru
@@ -500,7 +500,7 @@ NB.     H(0:f-1) = H(f+s-1:n-1) = I .
 NB.   This approach delivers excessive calculations in rare
 NB.   case ((f>0) OR (f+s<n)).
 
-unghru=: ungqr @ (0 _1 & (|. !. 0)) : [:
+unghru=: ungqr@(0 _1&(|.!.0)) : [:
 
 NB. =========================================================
 NB. Test suite
@@ -518,12 +518,12 @@ NB.   A - m×n-matrix
 NB.
 NB. Formula:
 NB. - for unglq, ungrq:
-NB.     berr := ||Q * Q^H - I|| / (ε * n)
+NB.     berr := ||Q * Q^H - I|| / (FP_EPS * n)
 NB. - for ungql, ungqr:
-NB.     berr := ||Q^H * Q - I|| / (ε * m)
+NB.     berr := ||Q^H * Q - I|| / (FP_EPS * m)
 
 testungq=: 3 : 0
-  rcond=. ((_."_)`gecon1 @. (=/@$)) y  NB. meaninigful for square matrices only
+  rcond=. (_."_)`gecon1@.(=/@$) y  NB. meaninigful for square matrices only
 
   ('unglq' tmonad (gelqf`]`(rcond"_)`(_."_)`(mp  gqvberr c))) y
   ('ungql' tmonad (geqlf`]`(rcond"_)`(_."_)`(mp~ gqvberr #))) y
@@ -546,9 +546,9 @@ NB.   A - n×n-matrix
 NB.
 NB. Formula:
 NB. - for unghrl:
-NB.     berr := ||Q * Q^H - I|| / (ε * n)
+NB.     berr := ||Q * Q^H - I|| / (FP_EPS * n)
 NB. - for ungql, ungqr :
-NB.     berr := ||Q^H * Q - I|| / (ε * m)
+NB.     berr := ||Q^H * Q - I|| / (FP_EPS * m)
 
 testunghr=: 3 : 0
   ('unghrl' tmonad ((gehrdl~ (0,#))`]`(uncon1@])`(_."_)`(mp  gqvberr c))) y
@@ -580,8 +580,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testgq_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testgq_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ testgq_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testgq_mt_ 150 200
 
-testgq=: 1 : 'EMPTY_mt_ [ (testunghr_mt_ ^: (=/@$) [ testungq_mt_) @ u'
+testgq=: 1 : 'EMPTY_mt_ [ (testunghr_mt_^:(=/@$) [ testungq_mt_)@u'

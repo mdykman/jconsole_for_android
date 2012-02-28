@@ -19,7 +19,7 @@ NB.            of generator and shape given
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -191,14 +191,14 @@ NB. Description:
 NB.   Monads to generate an elementary reflector, see larfg,
 NB.   larfp for details.
 
-larfgf=: 0 _1 & larfg
+larfgf=: 0 _1&larfg
 larfgfc=: _1 + upd larfgf
-larfgb=: _1 0 & larfg
+larfgb=: _1 0&larfg
 larfgbc=: 0 + upd larfgb
 
-larfpf=: 0 _1 & larfp
+larfpf=: 0 _1&larfp
 larfpfc=: _1 + upd larfpf
-larfpb=: _1 0 & larfp
+larfpb=: _1 0&larfp
 larfpbc=: 0 + upd larfpb
 
 NB. ---------------------------------------------------------
@@ -228,7 +228,7 @@ NB.   T10 = - T11 * (Vr' * Vl) * T00
 NB.   Vl  = V[0:m-1,0:k-1]
 NB.   Vr  = V[0:m-1,k:n-1]
 
-larftbc=: ( 1  1&{.)`((({."1) (0:`0:`(larftbc@[)`]`[`( mp~ (ct@(0&( 0})))  )`[`(-@mp~)`(mp~)`(larftbc@])`(({."1~ c), ])`,.`]`[`0: fork5) (}."1))~ (<.@-:@c))`(EMPTY"_)@.(*@<:@c)
+larftbc=: ( 1  1&{.)`(({."1 (0:`0:`(larftbc@[)`]`[`( mp~ ct@(0&( 0}))  )`[`(-@mp~)`(mp~)`(larftbc@])`(({."1~ c), ])`,.`]`[`0: fork5) }."1)~ (<.@-:@c))`(EMPTY"_)@.(*@<:@c)
 
 NB. ---------------------------------------------------------
 NB. larftbr
@@ -257,7 +257,7 @@ NB.   T10 = - T11 * (Vb * Vt') * T11
 NB.   Vt  = V[0:k-1,0:n-1]
 NB.   Vb  = V[k:m-1,0:n-1]
 
-larftbr=: ( 1  1&{.)`(( {.    (0:`0:`(larftbr@[)`]`[`((mp  ((0&( 0}))@ct))~)`[`(-@mp~)`(mp~)`(larftbr@])`(({."1~ c), ])`,.`]`[`0: fork5)  }.   )~ (<.@-:@#))`(EMPTY"_)@.(*@<:@#)
+larftbr=: ( 1  1&{.)`(({.   (0:`0:`(larftbr@[)`]`[`((mp  (0&( 0}))@ct)~)`[`(-@mp~)`(mp~)`(larftbr@])`(({."1~ c), ])`,.`]`[`0: fork5) }.  )~ (<.@-:@#))`(EMPTY"_)@.(*@<:@#)
 
 NB. ---------------------------------------------------------
 NB. larftfc
@@ -294,7 +294,7 @@ NB.     Performance. IBM J. Research & Development, Vol. 44,
 NB.     No. 4, 2000, pp 605-624.
 NB.     http://www.research.ibm.com/journal/rd/444/elmroth.pdf
 
-larftfc=: (_1 _1&{.)`((({."1) (0:`0:`(larftfc@[)`]`[`((mp~ (ct@(0&(_1}))))~)`[`(-@mp )` mp  `(larftfc@])`(({.~   #),.])`, `]`[`0: fork5) (}."1))~ (<.@-:@c))`(EMPTY"_)@.(*@<:@c)
+larftfc=: (_1 _1&{.)`(({."1 (0:`0:`(larftfc@[)`]`[`((mp~ ct@(0&(_1})))~)`[`(-@mp )` mp  `(larftfc@])`(({.~   #),.])`, `]`[`0: fork5) }."1)~ (<.@-:@c))`(EMPTY"_)@.(*@<:@c)
 
 NB. ---------------------------------------------------------
 NB. larftfr
@@ -323,7 +323,7 @@ NB.   T01 = - T00 * (Vt * Vb') * T11
 NB.   Vt  = V[0:k-1,0:n-1]
 NB.   Vb  = V[k:m-1,0:n-1]
 
-larftfr=: (_1 _1&{.)`(( {.    (0:`0:`(larftfr@[)`]`[`( mp  ((0&(_1}))@ct)  )`[`(-@mp )` mp  `(larftfr@])`(({.~   #),.])`, `]`[`0: fork5)  }.   )~ (<.@-:@#))`(EMPTY"_)@.(*@<:@#)
+larftfr=: (_1 _1&{.)`(({.   (0:`0:`(larftfr@[)`]`[`( mp  (0&(_1}))@ct  )`[`(-@mp )` mp  `(larftfr@])`(({.~   #),.])`, `]`[`0: fork5) }.  )~ (<.@-:@#))`(EMPTY"_)@.(*@<:@#)
 
 NB. ---------------------------------------------------------
 NB. Verb:      Action:  Side:   Tran:  Dir:  Layout:     eC:
@@ -364,25 +364,25 @@ NB. - models LAPACK's xLARF
 NB. - larfxxxx and larfbxxxx are topological equivalents
 NB. - if τ=0 then v can have any element values
 
-larflcbc=: ] - [ */ (mp~ (+ @ ((0 & ( 0 })) * {.)))~    NB. C - v * ((v * τ)' * C)
-larflcbr=: ] - (+ @ (* {.) @ [) */ ((0 ( 0) } [) mp ])  NB. C - (τ * v)' * (v * C)
-larflcfc=: ] - [ */ (mp~ (+ @ ((0 & (_1 })) * {:)))~    NB. C - v * ((v * τ)' * C)
-larflcfr=: ] - (+ @ (* {:) @ [) */ ((0 (_1) } [) mp ])  NB. C - (τ * v)' * (v * C)
+larflcbc=: ] - [ */ (mp~ +@(0&( 0 }) * {.))~    NB. C - v * ((v * τ)' * C)
+larflcbr=: ] - +@(* {.)@[ */ (0 ( 0) } [) mp ]  NB. C - (τ * v)' * (v * C)
+larflcfc=: ] - [ */ (mp~ +@(0&(_1 }) * {:))~    NB. C - v * ((v * τ)' * C)
+larflcfr=: ] - +@(* {:)@[ */ (0 (_1) } [) mp ]  NB. C - (τ * v)' * (v * C)
 
-larflnbc=: ] - [ */ (mp~ ({. * (+ @ (0 & ( 0 })))))~    NB. C - v * ((τ * v') * C)
-larflnbr=: ] - ((+ * {.) @ [) */ (mp~ (0 & ( 0 })))~    NB. C - (v' * τ) * (v * C)
-larflnfc=: ] - [ */ (mp~ ({: * (+ @ (0 & (_1 })))))~    NB. C - v * ((τ * v') * C)
-larflnfr=: ] - ((+ * {:) @ [) */ (mp~ (0 & (_1 })))~    NB. C - (v' * τ) * (v * C)
+larflnbc=: ] - [ */ (mp~ {. * +@(0&( 0 })))~    NB. C - v * ((τ * v') * C)
+larflnbr=: ] - (+ * {.)@[ */ (mp~ 0&( 0 }))~    NB. C - (v' * τ) * (v * C)
+larflnfc=: ] - [ */ (mp~ {: * +@(0&(_1 })))~    NB. C - v * ((τ * v') * C)
+larflnfr=: ] - (+ * {:)@[ */ (mp~ 0&(_1 }))~    NB. C - (v' * τ) * (v * C)
 
-larfrcbc=: ] - (mp (0 & ( 0 })))~ */ (+ @ (* {.) @ [)   NB. C - (C * v) * (v * τ)'
-larfrcbr=: ] - (mp (+ @ ({. * (0 & ( 0 })))))~ */ [     NB. C - (C * (τ * v)') * v
-larfrcfc=: ] - (mp (0 & (_1 })))~ */ (+ @ (* {:) @ [)   NB. C - (C * v) * (v * τ)'
-larfrcfr=: ] - (mp (+ @ ({: * (0 & (_1 })))))~ */ [     NB. C - (C * (τ * v)') * v
+larfrcbc=: ] - (mp 0&( 0 }))~ */ +@(* {.)@[     NB. C - (C * v) * (v * τ)'
+larfrcbr=: ] - (mp +@({. * 0&( 0 })))~ */ [     NB. C - (C * (τ * v)') * v
+larfrcfc=: ] - (mp 0&(_1 }))~ */ +@(* {:)@[     NB. C - (C * v) * (v * τ)'
+larfrcfr=: ] - (mp +@({: * 0&(_1 })))~ */ [     NB. C - (C * (τ * v)') * v
 
-larfrnbc=: ] - (mp ((0 & ( 0 })) * {.))~ */ (+ @ [)     NB. C - (C * (v * τ)) * v'
-larfrnbr=: ] - (mp ((+ @ (0 & ( 0 }))) * {.))~ */ [     NB. C - (C * (v' * τ)) * v
-larfrnfc=: ] - (mp ((0 & (_1 })) * {:))~ */ (+ @ [)     NB. C - (C * (v * τ)) * v'
-larfrnfr=: ] - (mp ((+ @ (0 & (_1 }))) * {:))~ */ [     NB. C - (C * (v' * τ)) * v
+larfrnbc=: ] - (mp 0&( 0 }) * {.)~ */ +@[       NB. C - (C * (v * τ)) * v'
+larfrnbr=: ] - (mp +@(0&( 0 })) * {.)~ */ [     NB. C - (C * (v' * τ)) * v
+larfrnfc=: ] - (mp 0&(_1 }) * {:)~ */ +@[       NB. C - (C * (v * τ)) * v'
+larfrnfr=: ] - (mp +@(0&(_1 })) * {:)~ */ [     NB. C - (C * (v' * τ)) * v
 
 NB. ---------------------------------------------------------
 NB. Verb:      Action:  Side:   Tran:  Dir:  Layout:     eC:
@@ -425,25 +425,25 @@ NB. - models sequence of calls to LAPACK's xLARFT and then
 NB.   to xLARFB
 NB. - larfxxxx and larfbxxxx are topological equivalents
 
-larfblcbc=: ] - [ mp (mp~ (ct @ ((0 & (0})) mp larftbc)))~             NB. C - V * ((V * T)' * C)
-larfblcbr=: ] - (ct @ (mp~ larftbr) @ [) mp ((0 (< a: ; 0)} [) mp ])   NB. C - (T * V)' * (V * C)
-larfblcfc=: ] - [ mp (mp~ (ct @ ((0 & (_1})) mp larftfc)))~            NB. C - V * ((V * T)' * C)
-larfblcfr=: ] - (ct @ (mp~ larftfr) @ [) mp ((0 (< a: ; _1)} [) mp ])  NB. C - (T * V)' * (V * C)
+larfblcbc=: ] - [ mp (mp~ ct@(0&( 0}) mp larftbc))~            NB. C - V * ((V * T)' * C)
+larfblcbr=: ] - ct@(mp~ larftbr)@[ mp (0 (< a: ;  0)} [) mp ]  NB. C - (T * V)' * (V * C)
+larfblcfc=: ] - [ mp (mp~ ct@(0&(_1}) mp larftfc))~            NB. C - V * ((V * T)' * C)
+larfblcfr=: ] - ct@(mp~ larftfr)@[ mp (0 (< a: ; _1)} [) mp ]  NB. C - (T * V)' * (V * C)
 
-larfblnbc=: ] - [ mp (mp~ (larftbc mp (ct @ (0 & (0})))))~             NB. C - V * ((T * V') * C)
-larfblnbr=: ] - ((ct mp larftbr) @ [) mp (mp~ (0 & ((< a: ; 0)})))~    NB. C - (V' * T) * (V * C)
-larfblnfc=: ] - [ mp (mp~ (larftfc mp (ct @ (0 & (_1})))))~            NB. C - V * ((T * V') * C)
-larfblnfr=: ] - ((ct mp larftfr) @ [) mp (mp~ (0 & ((< a: ; _1)})))~   NB. C - (V' * T) * (V * C)
+larfblnbc=: ] - [ mp (mp~ larftbc mp ct@(0&( 0})))~            NB. C - V * ((T * V') * C)
+larfblnbr=: ] - (ct mp larftbr)@[ mp (mp~ 0&((< a: ;  0)}))~   NB. C - (V' * T) * (V * C)
+larfblnfc=: ] - [ mp (mp~ larftfc mp ct@(0&(_1})))~            NB. C - V * ((T * V') * C)
+larfblnfr=: ] - (ct mp larftfr)@[ mp (mp~ 0&((< a: ; _1)}))~   NB. C - (V' * T) * (V * C)
 
-larfbrcbc=: ] - (mp (0 & (0})))~ mp (ct @ (mp larftbc) @ [)            NB. C - (C * V) * (V * T)'
-larfbrcbr=: ] - (mp (ct @ (larftbr mp (0 & ((< a: ; 0)})))))~ mp [     NB. C - (C * (T * V)') * V
-larfbrcfc=: ] - (mp (0 & (_1})))~ mp (ct @ (mp larftfc) @ [)           NB. C - (C * V) * (V * T)'
-larfbrcfr=: ] - (mp (ct @ (larftfr mp (0 & ((< a: ; _1)})))))~ mp [    NB. C - (C * (T * V)') * V
+larfbrcbc=: ] - (mp 0&(0}))~ mp ct@(mp larftbc)@[              NB. C - (C * V) * (V * T)'
+larfbrcbr=: ] - (mp ct@(larftbr mp 0&((< a: ;  0)})))~ mp [    NB. C - (C * (T * V)') * V
+larfbrcfc=: ] - (mp 0&(_1}))~ mp ct@(mp larftfc)@[             NB. C - (C * V) * (V * T)'
+larfbrcfr=: ] - (mp ct@(larftfr mp 0&((< a: ; _1)})))~ mp [    NB. C - (C * (T * V)') * V
 
-larfbrnbc=: ] - (mp ((0 & (0})) mp larftbc))~ mp (ct @ [)              NB. C - (C * (V * T)) * V'
-larfbrnbr=: ] - (mp ((ct @ (0 & ((< a: ; 0)}))) mp larftbr))~ mp [     NB. C - (C * (V' * T)) * V
-larfbrnfc=: ] - (mp ((0 & (_1})) mp larftfc))~ mp (ct @ [)             NB. C - (C * (V * T)) * V'
-larfbrnfr=: ] - (mp ((ct @ (0 & ((< a: ; _1)}))) mp larftfr))~ mp [    NB. C - (C * (V' * T)) * V
+larfbrnbc=: ] - (mp 0&( 0}) mp larftbc)~ mp ct@[               NB. C - (C * (V * T)) * V'
+larfbrnbr=: ] - (mp ct@(0&((< a: ;  0)})) mp larftbr)~ mp [    NB. C - (C * (V' * T)) * V
+larfbrnfc=: ] - (mp 0&(_1}) mp larftfc)~ mp ct@[               NB. C - (C * (V * T)) * V'
+larfbrnfr=: ] - (mp ct@(0&((< a: ; _1)})) mp larftfr)~ mp [    NB. C - (C * (V' * T)) * V
 
 NB. =========================================================
 NB. Test suite
@@ -480,8 +480,8 @@ NB. where
 NB.   A - m×n-matrix, is used to get Qf
 
 testlarft=: 3 : 0
-  AC=: y=. 0 {:: y
-  rcond=. ((_."_)`gecon1 @. (=/@$)) y  NB. meaninigful for square matrices only
+  y=. 0 {:: y
+  rcond=. (_."_)`gecon1@.(=/@$) y  NB. meaninigful for square matrices only
 
   ('larftbc' tmonad (geqlf`]`(rcond"_)`(_."_)`(_."_))) y
   ('larftbr' tmonad (gerqf`]`(rcond"_)`(_."_)`(_."_))) y
@@ -554,7 +554,7 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testref_mt_ 200 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testref_mt_ 200 200
+NB.     _1 1 0 4 _6 4&gemat_mt_ testref_mt_ 200 200
 NB. - test by random rectangular complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testref_mt_ 150 200
 NB.
@@ -564,4 +564,4 @@ NB.   testgq, testmq, testqf
 NB. - larftxx and larfbxxxx are impractical for large
 NB.   matrices
 
-testref=: 1 : 'EMPTY_mt_ [ ((testlarfb_mt_ [ testlarft_mt_) @ (u ; u) ^: (200 >: <./)) [ testlarf_mt_ @ u @ >: @ {.'
+testref=: 1 : 'EMPTY_mt_ [ (testlarfb_mt_ [ testlarft_mt_)@(u ; u)^:(200 >: <./) [ testlarf_mt_@u@>:@{.'

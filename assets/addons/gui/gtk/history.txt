@@ -1,0 +1,99 @@
+gui/gtk - change history
+
+== 1.0.0/1 ==
+ * initial release
+
+== 1.0.2/50 ==
+ * J701 beta release
+
+== 1.0.51/2 ==
+ * fix bug in edit_select with unicode chars
+
+== 1.0.53 ==
+ * gui/gtk: add api/noun
+
+== 1.0.54 ==
+ * gui/gtk: add api
+ * gui/gtk: g_thread_init in mac
+
+== 1.0.55 ==
+ * gtkcanvas: support jgl2
+ * gui/gtk: add api/nouns
+
+== 1.0.56 ==
+ * add gtk expander
+ * newframe has shadow parameter
+
+== 1.0.57 ==
+ * gtkcanvas: gl2 and opengl
+ * gui/gtk: new api,macro
+
+== 1.0.58 ==
+ * gui/gtk: add api
+ * gui/gtk: move gtkcanvas into gl2
+
+== 1.0.59 ==
+ * gui/gtk: fix set text with single characters
+ * gui/gtk: simpler callback error handling
+
+== 1.0.60 ==
+ * gui/gtk: add api
+ * gui/gtk: consig and cbfree with optional locale parameter
+
+== 1.0.61 ==
+ * gui/gtk: add api/noun
+
+== 1.0.62/63 ==
+ * gui/gtk: gtk+3 compatible
+
+== 1.0.64 ==
+ * gui/gtk: LC_NUMERIC for windows
+ * gui/gtk: add GtkSetEnv for windows
+
+== 1.0.65 ==
+ * gui/gtk: add definition for GDK_KP_Enter
+ 
+== 1.0.66 ==
+ * gui/gtk: add api
+ * gui/gtk: gtk+3 compatible
+
+== 1.0.67 ==
+ * clipread/write remove toJ, toCRLF
+
+== 1.0.68 ==
+ * gui/gtk: add api
+
+== 1.0.69 ==
+ * gui/gtk: gtk+3 compatible (win64)
+
+== 1.0.70 ==
+ * gui/gtk: gtk+3 compatible (win32)
+
+== 1.0.71/2 ==
+ * gui/gtk: fix gtksetenv for Mac
+
+== 1.0.73 ==
+ * gui/gtk: gtk+3 compatible (combo box)
+
+== 1.0.74/5 ==
+ * gui/gtk: support source wrap
+ * gui/gtk: default no language for text files
+
+== 1.0.76 ==
+ * gui/gtk: allow run gtk without X11 for broadway
+ * gui/gtk: avoid crash when DISPLAY not available on Linux
+
+== 1.0.77/80 ==
+ * gui/gtk: add api
+ * gui/gtk: optional argument for filechooser
+ * gui/gtk: set return value in cdcallback
+
+== 1.0.81 ==
+ * gui/gtk: add viewinsert
+ * gui/gtk: image resize on open file
+
+== 1.0.82/83 ==
+ * gui/gtk: add api
+ * gui/gtk: bugfix set return value in cdcallback
+ * gui/gtk: getGtkwidgetAllocation
+

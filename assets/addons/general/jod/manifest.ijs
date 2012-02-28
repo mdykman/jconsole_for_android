@@ -1,6 +1,6 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=:'0.9.3'
+VERSION=:'0.9.70'
 PLATFORMS=:'win linux'      
 LABCATEGORY=:'General'
 FILES=: 0 : 0
@@ -35,9 +35,11 @@ In J 7.0x JOD requires the following addons:
   data/jfiles
   arc/zip 
 
-For more information see the JOD wiki pages (Info Button)
-or run the lab "JOD lab JOD Introduction." JOD labs are under 
-the General lab category.
+For more information see the JOD wiki pages (Info Button),
+run the lab "JOD lab JOD Introduction" - JOD labs are under 
+the General lab category - or visit The JOD Page at:
+
+http://bakerjd99.wordpress.com/the-jod-page/
 
 John Baker
 bakerjd99@gmail.com

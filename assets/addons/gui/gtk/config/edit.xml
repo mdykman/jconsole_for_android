@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<style-scheme id="edit" _name="J Editor" version="1.0">
+
+  <_description>Color scheme used by the J script editor</_description>
+
+  <!-- Palette -->
+  <color name="blue"             value="#0000FF"/>
+  <color name="bordeaux"         value="#A52A2A"/>
+  <color name="cyan"             value="#008A8C"/>
+  <color name="grey"             value="#888888"/>
+  <color name="green"            value="#009900"/>
+  <color name="green-blue"       value="#009966"/>
+  <color name="light-green"      value="#DDFCDE"/>
+  <color name="light-yellow"     value="#FCFCDD"/>
+  <color name="light-grey"       value="#F5F5F5"/>
+  <color name="high"             value="#E5E5E5"/>
+  <color name="dark-orange"      value="#DD9900"/>
+  <color name="darker-red"       value="#DD4444"/>
+  <color name="purple"           value="#A020F0"/>
+  <color name="violet"           value="#6A5ACD"/>
+  <color name="dark-blue"        value="#0057AE"/>
+  <color name="dark-red"         value="#800000"/>
+  <color name="dark-green"       value="#008000"/>
+  <color name="brown"            value="#B07E00"/>
+
+
+  <style name="text"        foreground="#black" background="light-green"/>
+  <style name="selection"   foreground="#white" background="#lightblue"/>
+  <style name="current-line"   background="high"/>
+
+  <!-- Bracket Matching -->
+  <style name="bracket-match"     bold="true"/>
+  <style name="bracket-mismatch"  background="red" bold="true"/>
+
+  <!-- Search Matching -->
+  <style name="search-match"     background="#yellow"/>
+
+  <!-- Comments -->
+  <style name="def:comment"                 foreground="grey" italic="true" bold="false"/>
+  <style name="def:shebang"                 foreground="grey" bold="true"/>
+  <style name="def:doc-comment"             foreground="blue"/>
+  <style name="def:doc-comment-element"     bold="true"/>
+
+  <!-- Types -->
+  <style name="def:type"                    foreground="dark-blue"/>
+
+  <!-- Constants -->
+  <style name="def:constant"                foreground="dark-blue"/>
+  <style name="def:decimal"                 foreground="brown"/>
+  <style name="def:base-n-integer"          foreground="brown"/>
+  <style name="def:floating-point"          foreground="brown"/>
+  <style name="def:complex"                 use-style="def:base-n-integer"/>
+  <style name="def:character"               foreground="#FF80E0"/>
+  <style name="def:string"                  foreground="blue"/>
+  <style name="def:special-char"            foreground="#FF00FF"/>
+  <style name="def:builtin"                 use-style="def:type"/>
+
+  <!-- Identifiers -->
+  <style name="def:identifier"              foreground="dark-blue"/>
+  <style name="def:function"                use-style="def:identifier"/>
+
+  <!-- Statements -->
+  <style name="def:statement"               bold="true"/>
+
+  <!-- Others -->
+  <style name="def:preprocessor"            bold="true"/>
+  <style name="def:note"                    foreground="#BF0303" background="#F7E7E7" bold="true" italic="false"/>
+  <style name="def:error"                   foreground="#red" underline="true"/>
+  <style name="def:underlined"              underline="true"/>
+
+  <!-- J Language specific styles -->
+  <style name="j:adverb"      foreground="darker-red"/>
+  <style name="j:comment"     use-style="def:comment"/>
+  <style name="j:conjunction" foreground="dark-orange"/>
+  <style name="j:control"     foreground="#red"/>
+  <style name="j:error"       foreground="#magenta"/>
+  <style name="j:exparg"      foreground="bordeaux" italic="true" />
+  <style name="j:global"      foreground="bordeaux"/>
+  <style name="j:local"       foreground="purple"/>
+  <style name="j:noun"        foreground="blue" bold="true"/>
+  <style name="j:noundef"     foreground="blue"/>
+  <style name="j:number"      foreground="purple"/>
+  <style name="j:parens"      foreground="#black"/>
+  <style name="j:primitive"   foreground="cyan"/>
+  <style name="j:string"      use-style="def:string"/>
+  <style name="j:verb"        foreground="green-blue"/>
+
+  <!-- Language specific styles -->
+  <style name="c:preprocessor"              foreground="dark-green"/>
+  <style name="c:included-file"             use-style="c:preprocessor"/>
+  <style name="c:common-defines"            foreground="#0095FF" bold="true"/>
+
+  <style name="diff:diff-file"              use-style="def:statement"/>
+  <style name="diff:added-line"             use-style="def:decimal"/>
+  <style name="diff:removed-line"           use-style="def:string"/>
+  <style name="diff:changed-line"           use-style="c:preprocessor"/>
+  <style name="diff:special-case"/>
+  <style name="diff:location"               use-style="def:type"/>
+
+  <style name="xml:attribute-name"          foreground="dark-green"/>
+  <style name="xml:element-name"            bold="true"/>
+  <style name="xml:entity"                  foreground="blue"/>
+  <style name="xml:cdata-delim"             foreground="#008080" bold="true"/>
+  <style name="xml:processing-instruction"  bold="true"/>
+  <style name="xml:doctype"                 foreground="dark-red" bold="true"/>
+
+  <style name="docbook-element"             foreground="#004141" bold="true"/>
+  <style name="docbook:header-elements"     use-style="docbook-element"/>
+  <style name="docbook:formatting-elements" use-style="docbook-element"/>
+  <style name="docbook:gui-elements"        use-style="docbook-element"/>
+  <style name="docbook:structural-elements" use-style="docbook-element"/>
+
+  <style name="js:object"                   foreground="dark-green"/>
+  <style name="js:constructors"             bold="true"/>
+
+  <style name="latex:display-math"          background="#C0FFC0"/>
+  <style name="latex:inline-math"           foreground="#006400"/>
+  <style name="latex:math-bound"            bold="true"/>
+  <style name="latex:common-commands"       foreground="dark-red"/>
+  <style name="latex:command"               foreground="#7000DF"/>
+  <style name="latex:structure"             bold="true"/>
+  <style name="latex:section"               foreground="#7000DF" bold="true"/>
+  <style name="latex:include"               use-style="latex:common-commands"/>
+  <style name="latex:use-package"           use-style="latex:common-commands"/>
+
+  <style name="perl:pod"                    foreground="grey"/>
+
+  <style name="python:string-conversion"    background="#BEBEBE"/>
+  <style name="python:module-handler"       use-style="def:character"/>
+  <style name="python:special-variable"     use-style="def:type"/>
+  <style name="python:builtin-constant"     use-style="def:type"/>
+  <style name="python:builtin-object"       use-style="def:type"/>
+  <style name="python:builtin-function"     use-style="def:type"/>
+  <style name="python:boolean"              use-style="def:type"/>
+
+  <style name="scheme:parens"               use-style="def:statement"/>
+  <style name="scheme:any-function"         use-style="def:statement"/>
+
+  <style name="sh:dollar"                   foreground="dark-green" bold="true"/>
+
+  <style name="makefile:trailing-tab"       background="#FFC0CB"/>
+
+</style-scheme>

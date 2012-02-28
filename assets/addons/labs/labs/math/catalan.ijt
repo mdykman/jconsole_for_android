@@ -1,0 +1,264 @@
+LABTITLE=: 'Catalan Numbers'
+
+NB. =========================================================
+Lab Section Introduction
+Catalan numbers appear in several areas of mathematics. For example, the nth Catalan number is the number of planar binary trees with n nodes, and is the number of ways of cutting up a polygon with n+2 sides into triangles by drawing non-intersecting diagonals.
+
+Catalan numbers 0-8 are: 1 1 2 5 14 42 132 429 1430
+
+The question we will look at here is how to calculate the nth Catalan number, for n taking values of 5, 10, 1000, 10000 and up.
+)
+
+NB. =========================================================
+Lab Section Basic Formula
+The formula in conventional math notation is:
+
+   (2n)!
+  --------
+  n!(n+1)!
+
+A direct translation of the formula into J is given below, evaluated for n=5. Note that the factorial function is written !n
+)
+n=: 5
+
+(!2*n) % (!n) * (!n+1)
+
+NB. =========================================================
+Lab Section
+For a more efficient solution, rewrite the formula as:
+
+  (2n)!    1
+  ----- x ---
+   n!n!   n+1
+
+and note that the first expression is the number of ways of choosing n things from 2n, which in J is the binomial coefficent: n!2*n
+)
+
+NB. =========================================================
+Lab Section
+A direct translation of this formula into J is:
+)
+(n ! 2*n) % n+1
+
+NB. =========================================================
+Lab Section
+This can be simplified using +: (double) and >: (increment) as follows:
+)
+(n ! +: n) % >: n
+
+NB. =========================================================
+Lab Section
+Try this with other values for n:
+)
+n=: i.8
+
+(n ! +: n) % >: n
+
+NB. =========================================================
+Lab Section First Solution
+We can now define our first Catalan verb, by removing references to the argument n in the expression:
+
+  (n ! +: n) % >: n
+
+and assigning the result to cat1.
+)
+cat1=: (! +:) % >:
+
+cat1 i.8
+
+NB. =========================================================
+Lab Section
+To display a table of numbers, join n with cat1 n, as below:
+)
+n=: i.8
+
+n ,. cat1 n
+
+(,. cat1) i.8
+
+NB. =========================================================
+Lab Section
+Lets now try this with n=100. This results in a big number that exceeds the standard integer representation.
+
+To calculate it accurately, use x: to convert the argument to an extended integer.
+)
+cat1 100
+
+cat1 x: 100
+
+NB. =========================================================
+Lab Section Second Solution
+This suggests a new verb cat2, which applies x: followed by cat1.
+)
+cat2=: cat1 @ x:
+
+cat2 100
+
+(,. cat2) 100+i.10
+
+NB. =========================================================
+Lab Section
+The 1,000th catalan number has 598 digits:
+)
+cat2 1000
+
+$":cat2 1000
+
+NB. =========================================================
+Lab Section
+This can be formatted using the xfmt (extended format) utility:
+)
+load 'format'
+
+xfmt cat2 1000
+
+NB. =========================================================
+Lab Section
+Can cat2 be used to generate the 10,000th Catalan number?
+
+Yes - with a fast PC and enough memory. On the authors PC, this calculation takes just under a second and results in a number with 6,015 digits. However, it is near the limit of what can be achieved using this simple formula. If you try this, you might find that your PC runs out of memory, and starts paging memory to hard disk. This slows the calculation down enormously, and should be avoided.
+)
+
+NB. =========================================================
+Lab Section Third Solution
+It turns out that you can calculate !n by calculating the exponents in !n of each prime up to n, and this leads to a more efficient technique for computing the Catalan numbers where n is very large.
+
+The idea is that for each prime p up to n, you calculate a list, lp, of the prime powers of p up to n, and then the exponent of p in !n is given by:
+
+  +/ <. n % lp
+
+To keep numbers small, We will illustrate this for the calculation of !100.
+)
+
+NB. =========================================================
+Lab Section
+For any prime p, the maximum power of p less than or equal to n is:
+
+  <. p ^. n
+
+For example, the maximum power of 3 less than or equal to 100 is 4, and the corresponding maximum power of 7 is 2:
+)
+<. 3 ^. 100
+
+3 ^ 1 2 3 4 5
+
+
+<. 7 ^. 100
+
+7 ^ 1 2 3
+
+NB. =========================================================
+Lab Section
+The exponent of p in !n is then:
+
+  +/ <. n % p ^ >: i. <. p ^. n
+
+For example:
+)
++/ <. 100 % 3 ^ >: i. <. 3 ^. 100
+
+NB. =========================================================
+Lab Section
+As confirmation, note that 3^48 evenly divides !100, but 3^49 does not:
+)
+a=: !100x
+
+b=: 3^48x
+a -: b * a <.@% b
+
+b=: 3^49x
+a -: b * a <.@% b
+
+NB. =========================================================
+Lab Section
+The formula for each prime used (as above) is:
+
+  +/ <. n % p ^ >: i. <. p ^. n
+
+Since n may be an extended integer, we rewrite this to avoid floating point results as:
+
+  +/ n <.@% p ^ >: i. p <.@^. n
+
+and define a corresponding verb pexp:
+)
+pexp=: [: +/ ] <.@% [ ^ >: @ i. @ (<.@^.)
+
+3 pexp 100
+
+7 pexp 100
+
+NB. =========================================================
+Lab Section
+The list of primes less than or equal to n can be found using the inverse of p: the prime-producing verb.
+
+Define a verb, ple, to produce this list.
+)
+p: 7                 NB. 7th prime
+
+p: inverse 19        NB. which prime is 19?
+
+p: i. p: inverse 19  NB. primes 0-6 (=i.7)
+
+p: i. p: inverse 20  NB. primes 0-7 (=i.8)
+
+ple=: p: @ i. @ (p: inverse) @ >:
+
+ple 19
+
+NB. =========================================================
+Lab Section
+The exponents of each prime p in !n are then given by:
+
+  (ple n) pexp"0 n
+
+Rank 0 is used to evaluate pexp on each prime in the left argument, rather than the list of primes as a whole.
+)
+n=: 100
+
+ple n
+
+(ple n) pexp"0 n
+
+NB. =========================================================
+Lab Section
+The calculation of:
+
+   (2n)!
+  --------
+  n!(n+1)!
+
+can now be done by calculating the exponents of the numerator less the exponents of the denominator, for each prime up to 2n, then taking the product of the prime powers.
+)
+
+NB. =========================================================
+Lab Section
+Therefore we define cat3 as below, and check it matches cat2:
+)
+cat3=: 3 : 0
+p=. ple +: y
+e1=. p pexp"0 +: y
+e2=. p pexp"0 y
+e3=. p pexp"0 >: y
+*/ p ^ x: e1-e2+e3
+)
+
+(cat2 1000) -: cat3 1000
+
+NB. =========================================================
+Lab Section
+cat3 can be used to calculate the 10,000th Catalan number.
+
+You can try larger numbers, but be warned this may take a long time, or run out of memory. On the PC of the author, cat3 100,000 takes just under 40 seconds and returns a result with 60,199 digits.
+
+The next section calculates cat3 10000. It may take a few seconds.
+)
+
+NB. =========================================================
+Lab Section
+To see the answer in full, enter:
+
+   xfmt a
+)
+a=: cat3 10000
+
+$":a

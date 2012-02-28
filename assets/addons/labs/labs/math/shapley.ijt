@@ -1,0 +1,132 @@
+LABTITLE=: 'Shapley Value on Old Macdonald''s Farm'
+LABAUTHOR=: 'Richard L.W. Brown'
+
+NB. =========================================================
+Lab Section Introduction
+The program given in this lab computes the Shapley value for each player in an n-person cooperative game.
+
+The program makes use of an array of rank n, this means the J-rank: a vector has rank 1 and a matrix has rank 2, and illustrates the utility of high-ranked arrays. It also makes fundamental use of the dyadic transpose. These features of J are so natural to the problem that a very short and elegant program results.
+)
+
+NB. =========================================================
+Lab Section n-person cooperative games
+Old Macdonald had a farm. But for the farm to earn money, workers are needed.
+
+Workers W1 and W2 are available. With W1, the farm can earn $95,000.  With W2 it can earn $80,000.  With both W1 and W2 it can earn $145,000. Without Old Macdonald, W1 can work in the city for $25,000, W2 can work in the city for $20,000. And if both W1 and W2 work in the city then their earnings will be the sum of their individual earnings which is $45,000.
+
+Suppose they both work on the farm.  How much should Old Macdonald get and how much should each worker get?
+)
+
+NB. =========================================================
+Lab Section
+The problem of Old Macdonalds Farm is an example of a cooperative n-person game for n=3.  The players are M, W1, and W2.
+
+In general, for an n-person game, we are given the value that each coalition of players can get and that defines a function v from subsets of the set of players to the real numbers.  In the Old Macdonald example, v({M,W1,W2}) = 145, v({M,W1}) = 95, and so on. We assume v(empty set) = 0.
+
+Thus for n players we have 2^n given numbers.  In the Old Macdonald example there are 2^3 = 8 numbers.
+
+The Shapley Value (due to Lloyd Shapley) is a formula that assigns to each player a "fair" value. Consider Player i.
+
+Let S be a coalition that does NOT contain Player i. Then the difference  v(S+{i}) - v(S) measures the amount that Player i brings by joining S to form S+{i}.  The Shapley value to Player i is a weighted average of all such contributions.
+)
+
+NB. =========================================================
+Lab Section The Shapley Value
+The Shapley value can also be presented as the unique solution to a set of axioms of "fairness". And it can be presented as the unique equilibrium solution of a system of objections balanced by counterobjections.]
+
+However the Shapley value is presented, the following formula results for the value to Player i:
+
+     xi = (sum over S, i not in S) c(S)[v(S+{i})-v(S)]
+
+where if |S| = s then c(S) = (n-s-1)!s!/n!
+
+To implement the formula in J, there are two KEY STRATEGIES:
+
+1. We will store the v(S) data in an array of rank n In
+   fact the v-array will have shape (2 by 2 by ... by 2)
+   with n axes, the index for each axis being either 0 or 1. 2. We will write the program to find the Shapley Value for
+   the first player only.  Later we handle all the other
+   players by permuting the players and hence permuting the
+   axes of the array v using dyadic tranpose.
+)
+
+NB. =========================================================
+Lab Section
+For the Old Macdonald example, the array v is shown below.
+
+Note that the array is displayed as two 2 by 2 matrices.  The first matrix corresponds to the first index being 0 and that means coalitions WITHOUT Old Macdonald. In that matrix, the first row is without W1 and the first column is without W2. The second matrix gives all four coalitions WITH the Old Macdonald.
+)
+v =: 2 2 2 $ 0 20  25 45    0 80  95 145
+v
+
+NB. =========================================================
+Lab Section
+To RETRIEVE just one entry in the array v, you must use a suitable index-triple IN A BOX and use "{".  Some examples are shown below.  You can use "<" to box an index triple or, for several triples, you can use ";" as shown below.
+
+Similarly, to MODIFY an entry, use "}" instead of "{".
+)
+(<1 0 1){v          NB. v({M,W2})
+(0 1 1;1 1 0){v     NB. v({W1,W2}), v({M,W1})
+120 (<1 1 1)}v      NB. new v with 120 for v({M,W1,W2})
+
+NB. =========================================================
+Lab Section
+Now for the Shapley value program.  To compute all the contributions of the first player, we must subtract the 0-item of the array v from the 1-item.  This can be done with the expression "- -/v" (the negative of -/v) or with the expression "-~/v", minus-commute/v
+
+We call this part of the program "dv" and write it below:
+)
+dv =: -~/      NB. the program to compute v(S+{i})-v(S)
+dv v           NB. example of the program
+
+NB. =========================================================
+Lab Section
+To finish the program, we multiply by the cofficients c, ravel the array into a vector using "," and sum using "+/".
+
+Thus we get the program for the Shapley Value of the first player which we call "sh1". See below.
+
+But do  not test it yet!  We have not defined c.
+)
+PREPARE
+4!:55 <'c'
+PREPARE
+sum =: +/
+ravel =: ,
+of =: @
+sh1 =: sum of ravel of (c*dv)
+
+NB. =========================================================
+Lab Section
+To define the coefficients c we will need n and s and the quotient (n-s-1)!s!/n!.  The last expression is the reciprocal of the following quantity:
+
+   n times the binomial coefficient (n-1)-choose-s
+
+In J, (n-1)-choose-s is "s!(n-1)".
+
+ n is the number of entries in the shape of v
+ s (sizes of sets) is an addition table using the dyadic
+   version of +/ over an array of zeros and ones.
+)
+n =: # of $             NB. number of shape
+n1 =: n-1:              NB. n-1
+s =: +// of (0:,.n1#1:) NB. array of set sizes, |S|
+c =: % of (n*(s!n1))    NB. coefficients
+sh1 v                   NB. Shapley Value for landlord
+
+NB. =========================================================
+Lab Section
+Now we create a dyadic function "sh" whose left argument is a player i (i is an integer 0 to n-1) and whose right argument is the array v
+
+We use dyadic transpose "|:" to push the axes 0, 1, ... (i-1) to the end thus making i the first axis. This permutation of axes is "p" below.
+
+Then we use the rank conjunction " so the left argument can be list of players, instead of just one player. Thus e give the function 0 left rank and infinite right rank. We also compile sh into J-primitives using "f." to give the program better performance.
+)
+p =: i.@[|:]              NB. permute players
+sh =: (sh1 of p "0 _) f.  NB. Final Shapley Value function
+0 1 2 sh v                NB. values for all 3 players
+
+NB. =========================================================
+Lab Section
+Thus Old Macdonald gets $55,000, worker 1 gets $50,000, and worker 2 gets $40,000.
+
+The sum is $145,000 which is the total amount the farm earns.
+)

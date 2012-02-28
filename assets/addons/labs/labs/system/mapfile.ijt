@@ -1,0 +1,613 @@
+LABTITLE=: 'Mapped Files'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section overview
+A name can be mapped to a file. Using the name uses the file. Changing the value of the name changes the file.
+
+A mapped name is connected, as a noun, to a mapped file.
+
+A mapped files data is addressable as memory.
+
+A mapped name is the file.
+
+First a quick example.
+)
+
+NB. =========================================================
+Lab Section
+)
+require'jmf'        NB. map file utilities loaded in jmf
+require'files dir'
+fn=: jpath '~temp\t.txt'
+'testing testing 1 2 3'  fwrite fn
+fread fn
+
+NB. =========================================================
+Lab Section
+)
+JCHAR map_jmf_ 'abc';fn  NB. map abc to file characters
+abc
+abc=: |.abc
+abc
+
+NB. =========================================================
+Lab Section
+A mapped file is shared and can be used while it is mapped.
+)
+fread fn  NB. mapped file is shared
+
+NB. =========================================================
+Lab Section
+)
+unmap_jmf_ 'abc'  NB. undo mapping
+fread fn          NB. changes to the name changed the file
+
+NB. =========================================================
+Lab Section
+A simplified overview of operating system (OS) memory will help in understanding mapped names and files.
+
+For more information use Win32 reference materials. "Advanced Windows" by Jeffrey Richter from Microsoft Press is recommended.
+)
+
+NB. =========================================================
+Lab Section
+When you start an application the OS creates a new process.
+
+A process has a 4GB virtual address space (VAS); each address from 0 to 2^32 can have a byte value.
+
+Initially none of the addresses have values.
+)
+
+NB. =========================================================
+Lab Section
+Think of the process in terms of the VAS, not of physical memory or the page file.
+
+Your system may have xxMB of physical system memory and a yyyMB page file, but what matters is that the application/process has a 4GB VAS.
+)
+
+NB. =========================================================
+Lab Section
+The word virtual in VAS is interesting. Where do the values come from?
+
+Byte values in the VAS come only from byte values in a file.
+
+This is important!
+)
+
+NB. =========================================================
+Lab Section
+The OS manages the mapping between the VAS and the files that hold its values.
+)
+
+NB. =========================================================
+Lab Section
+Physical memory comes in various flavors: on-chip cache, off-chip cache, and system memory. As far as the process is concerned, system memory is just another level of cache used by the OS. System memory has a lot to do with performance, but nothing to do with the architecture of a process. The process architecture is based on the VAS.
+
+Physical memory is used by the OS to map values from file bytes to VAS addresses.
+
+Process memory is VAS memory, not physical memory.
+)
+
+NB. =========================================================
+Lab Section
+When a process starts it has a 4GB VAS with no values. Using or setting values in the VAS would cause a memory exception.
+
+            0                                            4GB
+ VAS        |----------------------------------------------|
+)
+
+NB. =========================================================
+Lab Section
+Then the application exe file is mapped into the VAS. Addresses in the process VAS map to bytes in the exe file. The OS manages the mapping.
+
+            0                                            4GB
+ VAS        |---vvvvvvv------------------------------------|
+ mapping        |-----|
+ file bytes     app.exe
+
+The -'s in the VAS line have no values. The v's have values from bytes in the mapped file.
+)
+
+NB. =========================================================
+Lab Section
+Then required dll files are mapped. This includes private dlls as well as system dlls such as kernel32.dll and user32.dll.
+
+            0                                            4GB
+ VAS        |---vvvvvvv----vvvvvv---vvvv-------------------|
+ mapping        |||||||    ||||||   ||||
+ file bytes     app.exe    kernel   user
+)
+
+NB. =========================================================
+Lab Section
+The process then starts executing bytes in the exe file.
+
+The only way the process can use or set values in its VAS is to map bytes from file.
+)
+
+NB. =========================================================
+Lab Section
+A common way to use memory is to map it to the page file.
+
+The page file is a single file, but multiple sets of contiguous bytes can be mapped into a VAS.
+
+            0                                            4GB
+ VAS        |---vvvvvvv----vvvvvv---vvvv----vv---v----vvv--|
+ mapping        |||||||    ||||||   ||||    ||   |    |||
+ file bytes     app.exe    kernel   user   system_page_file
+)
+
+NB. =========================================================
+Lab Section
+Different parts of the page file can map into the VAS of different processes.
+
+            0                                            4GB
+ VAS 1      |---vvvv-------vvvvvv---vvvv----vv---v----vvv--|
+ mapping        ||||       ||||||   ||||    ||   |    |||
+ file bytes     app1 app2  kernel   user   system_page_file
+ mapping             ||||  ||||||   ||||       ||   |
+ VAS 2      |--------vvvv--vvvvvv---vvvv-------vv---v------|
+)
+
+NB. =========================================================
+Lab Section
+Allocating memory with C malloc implicitly maps bytes of the page file into the VAS.
+
+A process can also explicitly map file bytes.
+)
+
+NB. =========================================================
+Lab Section
+Explicitly mapping file bytes takes 3 steps:
+
+1. Create a file handle that identifies a file and access attributes.
+
+2. Create a mapping handle from the file handle that identifies a set of bytes in the file. It can be all the file bytes, or one contiguous subset.
+
+3. Create a view from the mapping handle. A view is the VAS address of the mapping handle file bytes.
+)
+
+NB. =========================================================
+Lab Section
+Mapping a name to data in the VAS takes 2 steps:
+
+1. Create a header that gives the type, rank, shape, address of the data, and other information.
+
+2. Set the locale entry of a name (symbol table entry) to address the header.
+)
+
+NB. =========================================================
+Lab Section
+You have complete control over mapping files into the J VAS and in mapping names to headers and data.
+
+Although the steps are not difficult there are a lot of details. Script jmf.ijs provides utilities for common requirements.
+
+The rest of this lab describes how to use the jmf utilities.
+
+If you want more detailed understanding or have requirements not met by these utilities, then a good place to start is with a study of the jmf script.
+)
+
+NB. =========================================================
+Lab Section
+createjmf creates a jmf file that can be mapped and used as a J array.
+
+A jmf file starts with a header and is self describing. The header is not the same as the 3!:0 header as it contains a few more fields.
+
+A jmf header contains type, rank, shape, data address, and other information.
+)
+
+NB. =========================================================
+Lab Section
+createjmf parameters are the file name and the maximum size in bytes for the data. The file size is this value plus the size of the header.
+
+The jmf header is initialized as an empty integer list.
+)
+jdatafn=: jpath '~temp\jdata.jmf'
+createjmf_jmf_ jdatafn;1000  NB. 1000 bytes for data
+dir jdatafn
+
+NB. =========================================================
+Lab Section
+)
+map_jmf_ 'jdata';jdatafn  NB. map jdata to jmf file
+jdata                     NB. empty integer list
+
+NB. =========================================================
+Lab Section
+When a mapped name is assigned, the header information and data for the new value are put in the already allocated memory of the mapped file.
+)
+jdata=: i.7
+jdata
+jdata=: i.2 4
+jdata
+
+NB. =========================================================
+Lab Section
+unmap erases the name and unmaps the file. The value persists in the file.
+)
+unmap_jmf_ 'jdata'
+jdata
+map_jmf_ 'jdata';jdatafn
+jdata
+
+NB. =========================================================
+Lab Section
+)
+jdata=:'how now brown cow'
+jdata=: 1000$'abcd'
+jdata=: 1001$'zxcv'  NB. too much data for file
+
+NB. =========================================================
+Lab Section
+In general a sentence of the form:   name=: ....
+
+creates a temporary array that is the result of ....
+
+If name is not mapped, its old value is freed, and it is set to address the new array.
+
+If name is mapped, the array header and data are copied to the memory already allocated to the noun by the mapped file.
+)
+jdata=:3 3$'abcd'  NB. header and data copied to mapped memory
+
+NB. =========================================================
+Lab Section
+An amend of the form:   name=: data index} name
+
+is done "in-place". That is, it does not allocate a temporary array copy of jdata. It just changes the existing array.
+
+If name is mapped, this changes the names data, and the file, without intermediate copies of the data.
+
+And amend in-place of a very large array requires very little temporary space.
+)
+
+NB. =========================================================
+Lab Section
+)
+jdata=: 'xxx' 1} jdata  NB. amend in-place
+jdata
+
+NB. =========================================================
+Lab Section
+You can append new data to an array:
+   name=: name,new
+
+This is done in place as long as it fits in the allocated space.
+
+You get an "allocation error" if it will not fit in the allocated file space.
+)
+jdata=: i.2 3
+jdata=: jdata,7 7 7
+jdata=: jdata,3 3$8
+jdata
+jdata=: jdata,i.100 3
+
+NB. =========================================================
+Lab Section
+Before append was implemented to run in place (significant performance benefit), utility verb additem appended data in place. This is no longer necessary, but is left for the use of older applications.
+)
+
+NB. =========================================================
+Lab Section
+)
+jdata=: 23 (_1)} jdata  NB. amend in-place
+jdata
+
+NB. =========================================================
+Lab Section
+Nouns linked to mapped files are tracked in the jmf locale.
+ fn sn   - file name, share name
+ fh mh   - file handle, mapping handle
+ address - view address of file bytes
+ header  - header address (jmf file starts with header)
+ msize   - file bytes for data (createjmf argument)
+ refs    - reference count (array users)
+)
+showmap_jmf_''  NB. mapping information
+
+NB. =========================================================
+Lab Section
+J did not directly allocate the array used by jdata and J does not know how to release that memory.
+
+You explicitly create the array with map and you must explicitly free it.
+
+unmap uses showmap information to reverse the creation steps. It resets the locale entry, frees the header, unmaps the view, closes the mapping handle, and closes the file handle.
+)
+
+NB. =========================================================
+Lab Section
+)
+showmap_jmf_ ''
+unmap_jmf_ 'jdata'  NB. 0 result is success
+showmap_jmf_ ''
+
+NB. =========================================================
+Lab Section
+refs is a count of users of the array.
+
+The array has 2 users: mapping table entry, jdata
+)
+map_jmf_ 'jdata';jdatafn
+showmap_jmf_''
+
+NB. =========================================================
+Lab Section
+If the name is erased, it no longer addresses the array header and the reference count is reduced by 1.
+
+Mappings are tracked by the name. If the name is erased, the file is still mapped and we still need the information.
+)
+erase 'jdata'
+showmap_jmf_''
+
+NB. =========================================================
+Lab Section
+The name jdata is no longer mapped to the file. But the mapping is still tracked and can still be unmapped.
+)
+unmap_jmf_ 'jdata'
+
+NB. =========================================================
+Lab Section
+)
+map_jmf_ 'jdata';jdatafn
+showmap_jmf_''  NB. refs 2
+
+NB. =========================================================
+Lab Section
+When you assign a name with another name, you are assigning the value to the name. The implementation avoids making a copy, but it acts strictly as if there were a copy.
+
+This is fundamental J behavior that is sometimes described as "by value" as opposed to "by reference".
+)
+a=: 'aaa'
+b=: a     NB. b is the value of a
+b         NB. b references the same array as used by a
+a=. i.4   NB. a is a new array
+b         NB. b is unchanged
+
+NB. =========================================================
+Lab Section
+Mapped nouns violate this fundamental J behavior. When possible, mapped names are used by reference, not by value.
+)
+jdata=: i.7
+ghi=: jdata  NB. ghi references the same array as jdata
+ghi
+jdata=: 23   NB. jdata is mapped, new value is in same array
+ghi          NB. ghi references the same array!
+
+NB. =========================================================
+Lab Section
+There are practical justifications for this:
+
+A mapped name array can be a very large and it is good to avoid making copies of large arrays.
+
+A mapped name array can be shared by other processes, as we will see in later sections. Another process can change the value of the array of a mapped name. If two names reference the same array and it is changed by another process, what copies must be made?
+)
+
+NB. =========================================================
+Lab Section
+It helps to think of a mapped name as being the file, rather than as being a value in the traditional sense.
+
+   ghi=: jdata  NB. jdata is the file, and now ghi is as well
+)
+
+NB. =========================================================
+Lab Section
+The ghi use of the array is reflected in the reference count.
+
+3 array users: mapping; jdata; ghi
+)
+showmap_jmf_ 'jdata'
+
+NB. =========================================================
+Lab Section
+unmap erases jdata and so reduces the reference count by 1, but it is still in use by ghi so unmap cannot free up the resources.
+
+2 indicates unmap did not complete because the array is still in use.
+)
+unmap_jmf_ 'jdata'
+
+NB. =========================================================
+Lab Section
+)
+erase'ghi'    NB. reduces reference count
+showmap_jmf_ 'jdata'
+unmap_jmf_ 'jdata'
+
+NB. =========================================================
+Lab Section
+Using a mapped name as an argument to an explicitly defined monad assigns it to y for use in the verb. The y is a mapped noun that references the same array.
+
+You can pass a mapped noun as an argument without having the system make a copy. But because it references the same array you again get some unusual behavior.
+)
+map_jmf_ 'jdata';jdatafn
+jdata=:i.2 3
+f=: 3 : 'y=. 123 (0)} y'
+f jdata
+jdata  NB. jdata changed as side effect
+
+NB. =========================================================
+Lab Section
+map can take additional parameters:
+ sharename - default ''
+ readonly  - default 0
+)
+
+NB. =========================================================
+Lab Section
+)
+unmapall_jmf_''
+NB.      name     filename sharename readonly
+map_jmf_ 'jdata'; jdatafn; '';       1
+jdata
+jdata=: 'new data'  NB. fails - readonly
+unmapall_jmf_''
+
+NB. =========================================================
+Lab Section
+The readonly mapping parameter opens the file as readonly and marks the name as readonly so that J gives a read-only data error on any attempt to modify the data. This is very useful as it ensures that the data won't be modified.
+
+If the mapping is done without readonly then the data can be changed. Perhaps too easily as a programming error or even a typo could destroy the data.
+
+The file can be mapped so that it can be updated but the name can be marked as readonly to prevent changes. The readonly flag can be turned off specifically to allow changes and then turned back on to prevent accidents.
+)
+
+NB. =========================================================
+Lab Section
+)
+unmapall_jmf_''
+map_jmf_ 'jdata'; jdatafn; ''; 0 NB. mapped to allow changes
+jdata
+readonly_jmf_ 'jdata'   NB. 0 result indicates not readonly
+1 readonly_jmf_ 'jdata' NB. mark name as readonly
+readonly_jmf_ 'jdata'   NB. 1 indicates readonly
+jdata=: 'ooops'         NB. database destruction is prevented
+0 readonly_jmf_ 'jdata' NB. mark as not readonly
+jdata=: 23 (1}) jdata   NB. change is allowed
+1 readonly_jmf_ 'jdata' NB. mark as readonly again
+unmapall_jmf_''
+
+NB. =========================================================
+Lab Section
+If the mapped data should never be changed then it should be mapped readonly.
+
+If updates are rare then it can be mapped readonly and remapped as not readonly as required.
+
+If the mapped data can be changed and you want to minimize chances of nasty mistakes, then it should be mapped as not readonly and marked as readonly. Updates then need to be bracketed by explicit turning off readonly and then turning it back on.
+
+Mapping data as readonly and then marking it as not readonly creates a mismatch between J and the host and J will probably crash when it tries to modify the data.
+)
+
+NB. =========================================================
+Lab Section
+A sharename allows a file mapping to be shared by another process.
+
+Unix requires the sharename to be the same as the filename.
+
+Windows allows the sharename to be any name and another process can share the same memory by using the sharename.
+
+If a sharename with \s is used (for example, the filename) the \s are replaces by /s.
+
+For portable code, and in this example, we use the filename as the sharename.
+)
+map_jmf_ 'jdata';jdatafn;jdatafn;0
+jdata
+
+NB. =========================================================
+Lab Section
+Mappings shared across processes don't properly manage the reference count on the noun and instead just make sure it doesn't go to 0.
+
+Note that the refs for jdata is a larger positive number.
+)
+showmap_jmf_''
+
+NB. =========================================================
+Lab Section
+Try the following:
+ 1. start another J task
+ 2. load'jmf'
+ 3. share_jmf_ 'abc';'xxx'
+    where xxx is the value of jdatafn
+ 4. play with abc and jdata in the 2 sessions
+
+For your convenience a line that takes care of steps 2 and 3 is copied to the clipboard so you can paste it into your new J session.
+
+An application would have to use a mutex or semaphore to synchronize access to memory shared between two processes.
+)
+jdatafn
+wd'clipcopy *share_jmf_ ''abc'';''',jdatafn,'''[load''jmf'''
+
+NB. =========================================================
+Lab Section
+Close the 2nd J session (be sure to get the right one!).
+)
+
+NB. =========================================================
+Lab Section
+The unmap of jdata succeeds even though the ref count has not gone to 0. This is allowed because jdata was shared and other processes may have changed the count so it isn't dependable.
+
+Warning:
+Unmapping a shared noun forces the unmapping without checking the count. This is OK if there are no other references in the process. If there are other references, then using them will cause unpredictable behaviour (most likely a crash).
+)
+showmap_jmf_''
+unmap_jmf_'jdata' NB. unmaps even though refs will not be 0
+showmap_jmf_''
+
+NB. =========================================================
+Lab Section
+map allows a name, filename, and sharename to be mapped only once.
+)
+map_jmf_ 'jdata';jdatafn
+map_jmf_ 'xxxxx';jdatafn
+map_jmf_ 'xxxxx';'x jmf';'s123';0
+unmapall_jmf_''
+
+NB. =========================================================
+Lab Section
+The previous examples used a jmf file. A jmf file is self-describing.
+
+Let us look at files that just contain data.
+
+map will have to explicitly provide header information.
+)
+
+NB. =========================================================
+Lab Section
+)
+datafn=: jpath '~temp\data.xxx'
+'the time has come' fwrite datafn
+
+NB. =========================================================
+Lab Section
+The left argument is: JB01 JCHAR JINT JFL or JCMPX.
+)
+JCHAR map_jmf_ 'data';datafn
+data
+
+NB. =========================================================
+Lab Section
+)
+unmapall_jmf_''
+JINT map_jmf_ 'data';datafn
+data
+
+NB. =========================================================
+Lab Section
+The left argument trailing_shape gives the noun rank and shape: '' gives a list; 5 gives a table with 5 columns; and 2 5 gives a rank 3 array of 2 by 5 tables. The leading dimension is determined by the type and the number of mapped bytes, rounded down.
+)
+unmapall_jmf_''
+(JCHAR;5) map_jmf_ 'data';datafn    NB. 5 columns
+$data
+data
+
+NB. =========================================================
+Lab Section
+Some files have header information that you don't want to map. An optional 3rd value in the left argument to map specifies how many bytes to skip in the mapping.
+)
+unmapall_jmf_''
+(JCHAR;'';5) map_jmf_ 'data';datafn NB. skip first 5 bytes
+data
+
+NB. =========================================================
+Lab Section
+)
+unmapall_jmf_''
+
+NB. =========================================================
+Lab Section
+A demo of mapped names given at conferences and presentations uses a cdrom distributed by the New York Stock Exchange. Each month the NYSE distributes cdroms to subscribers with detailed trade and quote information. The demo maps 2 files from the cdrom to J nouns. One file has 13 million records of trade information for a total size of 250MB. The other file is indexing information to the trade file and it contains 200,000 records for a size of 4.5MB. The demo maps names to these two files. It is very easy to build an application with this approach.
+)
+
+NB. =========================================================
+Lab Section
+Food for thought:
+
+Files on zipdrives, cdroms, and a network can be mapped.
+
+Why read and write files? Just map them and use the power of J directly.
+
+Arrays shared between J tasks.
+
+Data shared between J and non-J tasks.
+
+...
+)

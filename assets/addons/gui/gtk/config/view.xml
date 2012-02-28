@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- view -->
+
+<style-scheme id="view" _name="view" version="1.0">
+
+  <color name="white"           value="#ffffff"/>
+  <color name="blue"            value="#0000ff"/>
+  <color name="lightblue"       value="#4444ff"/>
+  <color name="mintcream"       value="#f5fffa"/>
+  <color name="honeydew"        value="#00fff0"/>
+  <color name="linen"           value="#faf0e6"/>
+  <color name="high"            value="#e4e4d4"/>
+
+  <style name="text"            foreground="blue" background="linen"/>
+  <style name="selection"       foreground="white" background="lightblue"/>
+  <style name="current-line"    background="high"/>
+
+</style-scheme>

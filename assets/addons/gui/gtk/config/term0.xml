@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- terminal -->
+
+<style-scheme id="term0" _name="term (no syntax highlights)" version="1.0">
+
+  <color name="blue"            value="#0000FF"/>
+  <color name="light-blue"      value="#4444FF"/>
+  <color name="light-green"     value="#DDFCDE"/>
+  <color name="light-yellow"    value="#FCFCDD"/>
+  <color name="papaya"          value="#FFEFD5"/>
+  <color name="high"            value="#E5E5E5"/>
+
+  <style name="text"            foreground="blue"   background="light-yellow"/>
+  <style name="selection"       foreground="#white" background="light-blue"/>
+  <style name="current-line"    background="high"/>
+
+</style-scheme>
+
+

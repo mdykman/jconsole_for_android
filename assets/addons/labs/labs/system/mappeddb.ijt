@@ -1,0 +1,304 @@
+LABTITLE=: 'Mapped Files Database'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Mapped File Database
+This lab builds a Vehicle Registration (VR) relational database with mapped names and files.
+
+Lab "Mapped Files" is a prerequisite.
+
+The VR database will have 1 million records.
+
+Each record has 8 fields for a record size of 32 bytes.
+
+The total size of the VR database is 32MB.
+)
+PREPARE
+3 : 0''
+if. IFWINCE do.
+smoutput ''
+smoutput 'Note:'
+smoutput 'For Windows CE machines, the database has only 50,000 records.'
+end.
+)
+PREPARE
+
+NB. =========================================================
+Lab Section
+A VR record has 8 fields:
+  field     type  bytes  value
+  lic        int   4     encoding of license plate
+  make       char  1     index into MAKES
+  color      char  1     index into COLORS
+  year       int   4     year of vehicle manufacture
+  fine       int   4     total unpaid fines
+  firstname  char  6     first name
+  lastname   char  8     last name
+  comments   int   4     index into comments file
+)
+
+NB. =========================================================
+Lab Section
+Data for each field is in its own file. The field is used by mapping a name to the file.
+
+The files for the fields will be in the temp\vr directory.
+)
+
+NB. =========================================================
+Lab Section
+The next step opens and loads the script that implements the VR Database.
+
+Take a quick look at the script.
+)
+
+NB. =========================================================
+Lab Section
+)
+open '~system\extras\labs\system\mappeddb.ijs'
+load '~system\extras\labs\system\mappeddb.ijs'
+
+NB. =========================================================
+Lab Section
+Clear out and create the temp\vr directory.
+)
+vrdeleteall''   NB. delete any from a previous lab run
+createdir PATH  NB. create directory to hold VR files
+dir PATH        NB. no files in the directory
+
+NB. =========================================================
+Lab Section
+Some of the following steps may take many seconds to run. Access to the VR database is fast, but creating millions of initial values takes time.
+)
+
+NB. =========================================================
+Lab Section
+The next step builds a file for the lic field:
+ creates file temp\vr\lic.jmf
+ maps name lic to the file
+ sets values for lic for each row in the table
+
+Creating 1 million random license encodings takes time.
+)
+
+NB. =========================================================
+Lab Section
+The first time through the lab do not worry about the details of the  various build... verbs.
+)
+buildlic''  NB. build and map lic file
+dir PATH
+$lic
+5{.lic
+
+NB. =========================================================
+Lab Section
+Every field has a format verb of the form field...
+)
+sample=: ?.5$ROWS  NB. 5 random rows
+sample{lic         NB. numeric encoding of license plates
+licfmt sample      NB. formatted lic values
+
+NB. =========================================================
+Lab Section
+)
+buildmake''
+dir PATH
+[t=: a.i.sample{make     NB. chars - range 0 to #MAKES
+MAKES
+t{MAKES
+
+NB. =========================================================
+Lab Section
+)
+makefmt sample  NB. each field has a format verb
+
+NB. =========================================================
+Lab Section
+)
+buildcolor''
+colorfmt sample
+
+NB. =========================================================
+Lab Section
+)
+buildyear''  NB. year vehicle was manufactured
+sample{year
+yearfmt sample
+
+NB. =========================================================
+Lab Section
+)
+buildfine''   NB. total outstanding fines
+finefmt sample
+
+NB. =========================================================
+Lab Section
+Let us try some inquiries.
+)
+b=: (make=FORD) and (year>1997) and fine>3500
+b#i.ROWS
+[ndx=: records (make=FORD) and (year>1997) and fine>3500
+
+NB. =========================================================
+Lab Section
+)
+licfmt ndx
+
+NB. =========================================================
+Lab Section
+)
+(licfmt ndx),makefmt ndx
+
+NB. =========================================================
+Lab Section
+)
+licfmt`makefmt`colorfmt `:0 ndx  NB. evoke gerund append
+
+NB. =========================================================
+Lab Section
+)
+rep1=: licfmt`makefmt`colorfmt`yearfmt`finefmt `: 0
+rep1 ndx
+
+NB. =========================================================
+Lab Section
+)
+('license';'make';'color';'year';'fines') ,: rep1 ndx
+
+NB. =========================================================
+Lab Section
+)
+top2=: ('license';'make';'color';'year';'fines')"_
+rep2=: licfmt`makefmt`colorfmt`yearfmt`finefmt `: 0
+report2=: top2 ,: rep2  NB. train
+report2 ndx
+
+NB. =========================================================
+Lab Section
+)
+ndx=: records (make e. FORD,TOYOTA) and (color e. PINK,YELLOW) and (year>1995) and fine>3750
+rep2 ndx
+
+NB. =========================================================
+Lab Section
+)
+report3=: ('license';'fines')"_ ,: licfmt`finefmt `:0
+report3 ndx
+
+NB. =========================================================
+Lab Section
+Let us add a few more fields.
+)
+
+NB. =========================================================
+Lab Section
+)
+buildfirstname''
+firstnamefmt sample  NB. random names
+
+NB. =========================================================
+Lab Section
+)
+buildlastname''
+lastnamefmt sample
+
+NB. =========================================================
+Lab Section
+)
+[r=: records (make e.FORD,TOYOTA)and(color=PINK)and(year>1995)and fine>2000
+
+NB. =========================================================
+Lab Section
+)
+top4=: ('firstname';'lastname';'license';'make';'color';'year';'fines')"_
+rep4=: firstnamefmt`lastnamefmt`licfmt`makefmt`colorfmt`yearfmt`finefmt `:0
+report4=: top4 ,: rep4
+
+NB. =========================================================
+Lab Section
+)
+report4 r
+
+NB. =========================================================
+Lab Section
+The comment field does not fit simply into the relational model because it can vary so much in size. Most records have no comment, some have a small comment, and a few have large ones.
+It does not make sense to reserve a rectangular space that is ROWS times the maxiumum size of a variable length field.
+
+The comment field will be an index into a jfile of comments.
+)
+
+NB. =========================================================
+Lab Section
+Build comment field file and a jfile with a few comments.
+)
+buildcomment''
+
+NB. =========================================================
+Lab Section
+)
+top5=: ('license';'make';'color';'fines';'comment')"_
+rep5=: licfmt`makefmt`colorfmt`finefmt`commentfmt `:0
+report5=: top5 ,: rep5
+report5 r
+
+NB. =========================================================
+Lab Section
+)
+report5 lic i. liccode '2131AD5'
+report3 lic i. liccode '2123AC5'
+
+NB. =========================================================
+Lab Section
+)
+vrunmap''   NB. unmap all VR mapped names
+lic         NB. fields are now undefined
+
+NB. =========================================================
+Lab Section
+)
+vrmap''   NB. map all fields (very quick)
+
+NB. =========================================================
+Lab Section
+)
+rec=: lic i. liccode '2123AC5'
+report3 rec
+
+NB. =========================================================
+Lab Section
+)
+report4 rec
+lastname=: (8{.'Doe') rec} lastname   NB. new lastname
+firstname=: (6{.'Al') rec} firstname  NB. new firstname
+report4 rec
+
+NB. =========================================================
+Lab Section
+)
+NB.        lic       make    color year fine first last
+addrecord '743ABCD';'DODGE';'BLUE';1998;800; 'Al'; 'Doe'
+rep4 _1
+
+NB. =========================================================
+Lab Section
+Report on all registrations with lastname of Doe.
+)
+report4 records lastname-:"1 (8{.'Doe')
+
+NB. =========================================================
+Lab Section
+The field files were created to hold (ROWS+GROWTH) records. With a GROWTH of 20 you can add 20 records before getting an allocation error.
+
+When you get an allocation error you need to increase the size of the file. This cannot be done while the file is mapped. You need to do a vrunmap; increase the size of all field files with SetFilePointer and SetEndOfFile; then do vrmap to remap.
+)
+
+NB. =========================================================
+Lab Section
+This lab has created files in your temp\vr directory. Use vrdeleteall to delete those files if you are finished with them.
+
+You can play with the VR database in future sessions. Just run the mappeddb script and run vrmap to map the fields.
+
+The VR script is: system\extras\labs\system\mappeddb.ijs
+)
+NB. to delete the vr directory and all its files, do:
+NB. vrdeleteall ''

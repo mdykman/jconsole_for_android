@@ -23,15 +23,6 @@ if. -.IFJ6 do.
     if. 0 < #1!:0 jpath '~addons/gui/gtk/gtk.ijs' do.
       require 'gui/gtk'
     end.
-    if. (UNAME -: 'Android') *: (0 -: 2!:5 'DISPLAY') do.
-      if. 0 < #1!:0 jpath '~addons/graphics/gl2/gl2.ijs' do.
-        require 'graphics/gl2'
-        coinsert 'jgl2'
-      end.
-      if. 0 < #1!:0 jpath '~addons/graphics/bmp/bmp.ijs' do.
-        require 'graphics/bmp'
-      end.
-    end.
     if. (UNAME -: 'Linux') *: (0 -: 2!:5 'DISPLAY') do.
       if. 0 < #1!:0 jpath '~addons/graphics/gl2/gl2.ijs' do.
         require 'graphics/gl2'
@@ -743,12 +734,6 @@ fcase. do.
 end.
 if. -.IFJ6 do.
   if. -. IFTESTPLOTJHS +. IFJHS +. IFGTK do.
-    if. ('gtk' -: CONSOLEOUTPUT) *. (3 = 4!:0 <'gtkinit_jgtk_') *. (UNAME -: 'Android') *: (0 -: 2!:5 'DISPLAY') do.
-      if. 'isi' -: GTKOUTPUT do.
-        r=. 'OUTPUT=: ''isi'''
-      else.
-        r=. 'OUTPUT=: ''gtk'''
-      end.
     if. ('gtk' -: CONSOLEOUTPUT) *. (3 = 4!:0 <'gtkinit_jgtk_') *. (UNAME -: 'Linux') *: (0 -: 2!:5 'DISPLAY') do.
       if. 'isi' -: GTKOUTPUT do.
         r=. 'OUTPUT=: ''isi'''

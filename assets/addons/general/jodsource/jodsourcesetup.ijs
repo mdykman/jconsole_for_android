@@ -21,6 +21,14 @@ NB.
 NB. 4) The ZIP FILES addon must be installed. Use JAL to install
 NB.    arc/zip
 NB.
+NB.      WARNING: the arc/zip addon currently (11dec19) only works
+NB.      on 32bit systems. See The JOD Page at:
+NB.
+NB.      http://bakerjd99.wordpress.com/the-jod-page/
+NB.
+NB.      For instructions on loading these dictionaries
+NB.      without using this script.
+NB.    
 NB. 5) The directory c:\jod\j701\ (win) or /home/{$HOME}/jod/j701/ (linux)
 NB.    must be empty.
 NB.
@@ -29,6 +37,7 @@ NB.
 NB. author:  John D. Baker
 NB. created: 2011may24
 NB. changes: -----------------------------------------------------
+NB. 11dec19 added note about arc/zip failure on 64 bit systems
 
 require 'files task regex dir'
 
@@ -111,6 +120,8 @@ tmpdump=. tmppath,'dump.ijs'
 for_dict. dicts do.
   dict=. ;dict
   smoutput 'Loading: ',dict
+  NB. WARNING: replace with manual unzipping
+  NB. in case of (zread) failure 
   dumpdat=. zread (dict,'.ijs');jodzip
   (toHOST dumpdat) write tmpdump
   NB. insure dictionary path order

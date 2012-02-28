@@ -1,0 +1,10 @@
+tables/wdooo - change history
+
+== 1.0.0 ==
+ * publish in JAL
+
+== 1.0.1/10 ==
+ * J701 beta release
+
+== 1.0.11 ==
+ * copy test1.xls to ~temp

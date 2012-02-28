@@ -1,0 +1,90 @@
+LABTITLE=: 'Introduction to Labs'
+LABCOMMENTS=: 'This is used for comments'
+
+NB. =========================================================
+Lab Section Introduction
+A lab is a series of sections.
+
+A section starts with comments (such as these), optionally
+followed by J sentences which are automatically executed in
+the J session.
+
+Select menu Studio|Advance, or use the corresponding shortcut
+key, to advance to the next section.
+)
+i.5         NB. automatically executed
++/\i.5      NB. automatically executed
+
+NB. =========================================================
+Lab Section Normal Session
+Other than the automatic execution when you advance to the
+next section, this is a completely open and normal J
+session.
+
+Between sections you are in control and can use the J system
+as normal. You are encouraged to experiment by entering your
+own J sentences while going through labs.
+
+You can edit and re-enter any J sentence by moving the cursor
+up to the sentence, and pressing Enter to bring a copy down
+to the current line.
+)
+a=: i.7 NB. automatically typed and executed
+
+NB. try your own sentences here, then advance to the
+NB. next section.
+
+NB. =========================================================
+Lab Section Screen Width
+The horizontal line shown in the J session is the recommended
+minimum screen width. If necessary, resize the window so that
+all the line is visible.
+)
+
+NB. =========================================================
+Lab Section
+You can create windows while using a lab. However, if a
+window is active, then any shortcut key will signal an event in it.
+Therefore you should click in the J session to give it focus
+before using a shortcut key to advance.
+)
+
+NB. =========================================================
+Lab Section Titled Sections
+Some lab sections are titled and the title appears in the
+line that starts the section.
+)
+
+NB. =========================================================
+Lab Section
+Other lab sections are simply a continuation and are titled
+as such.
+)
+
+NB. =========================================================
+Lab Section Labs Jump...
+Some labs are in chapters that can be read in any order.
+
+Menu command Studio|Chapters... brings up a dialog that allows
+you to jump to specific chapters.
+
+Some labs require that they be run in order from the
+beginning to the end, and do not allow you to jump between
+chapters.
+)
+
+NB. =========================================================
+Lab Section Completely Open!
+There is no specific way to end a lab.
+
+You are in normal J and at any time you can close J, or use
+Studio|Labs... to select another lab, or even just get back
+to work.
+)
+
+NB. =========================================================
+Lab Section Lab Author
+The Lab Author system available from menu Studio|Author... allows you to build or edit labs.
+
+To experiment, select Studio|Author... and open up the lab system\author.ijt.
+)

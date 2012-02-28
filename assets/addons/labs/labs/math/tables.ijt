@@ -1,0 +1,215 @@
+LABTITLE=: 'Math Tables'
+LABAUTHOR=: 'K. E. Iverson'
+
+NB. =========================================================
+Lab Section Tables
+Addition and multiplication tables help to clarify the behaviour of addition and multiplication. This lab uses J to experiment with tables for them as well as for other less familiar operations.
+
+To advance to the next panel select menu Studio|Advance.
+)
+
+NB. =========================================================
+Lab Section Scalars and lists
+Addition and multiplication may be applied to individual numbers (called scalars) or lists, as follows:
+)
+2+25
+2*0 1 2 3 4 5 6 7 8 9 10
+
+NB. =========================================================
+Lab Section Names or Variables
+In math we may say "Let x=2" to assign the value 2 to the name x In J we write x=:2,a sentence that we normally read aloud as "x is 2". Thus:
+)
+x=:2
+y=:0 1 2 3 4 5 6 7 8 9 10
+x*y
+
+NB. =========================================================
+Lab Section Experimentation
+First click the mouse in the execution window to ensure that the focus is there.
+
+Then type the sentence y*y , stop and try to predict what the result should be, then press the Enter key to execute the sentence.
+)
+
+NB. =========================================================
+Lab Section Addition table
+Enter the sentence
+
+y +table y
+
+to produce an addition table. Then produce multiplication and subtraction tables.
+)
+
+NB. =========================================================
+Lab Section Named tables
+Assign the names AT and MT and ST, for Addition, Multiplication, and Subtraction, to the tables produced above. For example, enter
+
+AT=: y + table y
+
+AT
+)
+
+NB. =========================================================
+Lab Section Joint Display
+Tables may be displayed together for comparison. For example, enter:
+
+AT,.MT
+
+AT,.ST,.MT
+)
+
+NB. =========================================================
+Lab Section Cursor and Re-entry
+Some of the text will have now passed off the screen. The up-arrow key will move the cursor up the screen, and will bring back earlier material. Pressing Enter will bring the line marked by the cursor down to the enter area, where it may be re-executed, perhaps after modifying it by use of the left and right arrows, and the backspace and delete keys.
+)
+
+NB. =========================================================
+Lab Section Rows and Columns
+Enter 2 * y to verify that it gives the results of row 2 of the multiplication table. Repeat for other rows and other tables.
+
+Enter an expression to give column 3 of ST.
+)
+
+NB. =========================================================
+Lab Section Studying tables
+Understanding the significance of the individual rows and columns makes it possible to use a multiplication table to study the properties (that is, the behaviour) of multiplication. Study the table MT and comment on all the interesting properties you observe.
+)
+
+NB. =========================================================
+Lab Section
+Compare your comments with the following, and verify that they are correct:
+
+*  Row 3 agrees with column 3. In other words, the expressions 3*b and b*3 agree for any b. This property of multiplication is expressed by stating that it is commutative.
+
+* Row 4 proceeds by "counting by fours". In other words,
+
+   4 * (b+1)
+
+equals
+
+   4 + (4*b)
+
+* The numbers on the diagonal are all squares.
+)
+
+NB. =========================================================
+Lab Section Symmetric lists
+Enter :
+
+s=:y-5
+
+s
+
+to display a symmetric list beginning with negative 5 and ending with 5. Then display the table s * table s and comment on any further properties of multiplication observable in it.
+)
+
+NB. =========================================================
+Lab Section
+Compare your comments with the following:
+
+* The zero row and zero column are all zeros, and these divide the table into four quadrants that alternate in sign.
+
+* Since row 4 proceeds to the right by counting by fours, it is clear that the sign must change on crossing the zero column.
+
+* The numbers in the upper left quadrant are each a product of two negative numbers. Their sign can be used to  remember that (or perhaps even to see WHY) the product of two negatives is positive.
+
+* As in MT, the diagonals are all squares, and are therefore all non-negative.
+)
+
+NB. =========================================================
+Lab Section Unknown functions
+Just as the study of the table of a known function, such as *, can reveal many of its properties, so can a careful study of an unknown function reveal what it does.
+
+Study the table y |table y, try to state what the function | does, and suggest a name for it.
+)
+y |table y
+
+NB. =========================================================
+Lab Section
+3 divides 6 to give the quotient 2
+3 divides 7 to give the quotient 2 and the remainder 1
+3|7 gives the remainder on dividing 3 into 7
+| is called the remainder or residue function.
+)
+3|y
+
+NB. =========================================================
+Lab Section J Dictionary
+Place the cursor just to the left of a | on the screen, hold down the Control key, and press the F1 key. This displays the page from the J Dictionary that defines |
+
+Press the Escape key to close the dictionary.
+
+The right side of the page shows the (dyadic) case of two arguments just discussed. The left (monadic) case of one argument is the Magnitude or Absolute Value function. Thus:
+)
+s
+3|s
+|s
+
+NB. =========================================================
+Lab Section Double use of symbols
+If you suspect that the double use of the symbol | could lead to confusion, be re-assured that such use of the minus sign is frequent and familiar, the case x-y meaning subtraction, and the case -y meaning negation. Thus:
+)
+s
+5-s
+-s
+
+NB. =========================================================
+Lab Section
+Confirm the general use of two meanings by looking up - and other functions in the dictionary. It may be wise to limit your reading to the first few lines, because many definitions continue into details not relevant to a beginner.
+
+For example, the monadic case of = may prove too difficult, and may best be ignored by a beginner:
+)
+8=2 7 1 8 2 8
+=2 7 1 8 2 8
+
+NB. =========================================================
+Lab Section Further functions
+Display and study each of the following function tables:
+
+y<table y
+
+y>table y
+
+y=table y
+)
+
+NB. =========================================================
+Lab Section
+Joint displays of related functions may make them easier to study. For example, observe the following results q and r, and then try q,r
+)
+]q=:y (<table,.>table,.=table) y
+
+]r=:y (<:table,.>:table,.~:table)  y
+
+NB. =========================================================
+Lab Section Min, Max, Left, Right
+Study the tables A and B and C and D and then look at (A,.B),(C,.D)
+)
+A=: y <.table y
+
+B=: y >.table y
+
+C=: y <.table y
+
+D=: y <.table y
+
+NB. =========================================================
+Lab Section Approximate results
+Study the following tables, using the dictionary if necessary. Notice that some of the larger results such as 9^10 (nine to the power ten) are only approximate.
+)
+E=: y ^table y
+
+F=: y !table y
+
+G=: y %table y
+
+NB. =========================================================
+Lab Section
+We will repeat the functions of the preceding section, using x: y instead of y to invoke "infinite precision" computation. This also produces quotients of integers as rational numbers. For example, the result of the quotient of 3 divided by 7 is given as 3r7.
+
+Try expressions such as 2r3+3r4 and 2r3*3r4
+)
+EX=: y ^table x:y
+
+FX=: y !table x:y
+
+GX=: y %table x:y

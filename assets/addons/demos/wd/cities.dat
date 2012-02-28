@@ -1,0 +1,126 @@
+NB. cities.dat
+NB. layout - each row contains:
+NB. city: latitude longitude (each is degrees minutes)
+NB. north and east is +ve 
+
+Abu Dhabi: 24 28 54 25
+Addis Ababa: 9 3 38 42
+Aden: 12 46 45 1
+Algiers: 36 50 3 0
+Amman: 31 57 35 56
+Amsterdam: 52 21 4 54
+Anchorage: 61 13 -149 -53
+Ankara: 39 55 32 50
+Antwerp: 51 13 4 25
+Asuncion: -25 -16 -57 -40
+Athens: 38 0 23 44
+Atlanta: 33 45 -84 -23
+Baghdad: 33 20 44 26
+Bangkok: 13 44 100 30
+Beijing: 39 55 116 25
+Beirut: 33 52 35 30
+Belgrade: 44 50 20 30
+Berlin: 52 31 13 24
+Bern: 46 57 7 30
+Bogota: 4 36 -74 -5
+Bombay: 18 56 72 51
+Bonn: 50 44 7 6
+Boston: 42 20 -71 -5
+Brasilia: -15 -47 -47 -55
+Brussels: 50 50 4 21
+Budapest: 47 30 19 5
+Buenos Aires: -34 -37 -58 -24
+Cairo: 30 3 31 15
+Calcutta: 22 35 88 21
+Cape Town: -33 -56 18 22
+Caracas: 10 30 -66 -56
+Cardiff: 51 30 -3 -13
+Cayenne: 4 55 -52 -18
+Chicago: 41 50 -87 -45
+Copenhagen: 55 43 12 34
+Cupertino: 37 21 -121 -57
+Dacca: 23 42 90 22
+Dallas: 32 47 -96 -49
+Damascus: 33 30 36 15
+Denver: 39 44 -104 -59
+Djakarta: -6 -8 106 45
+Doha: 25 17 51 32
+Dublin: 53 20 -6 -15
+Edinburgh: 55 57 -3 -13
+Geneva: 46 10 6 9
+Georgetown: 6 46 -58 -10
+Godthaab: 64 15 -51 -40
+Guam: 13 28 144 47
+Havana: 22 8 -82 -22
+Helsinki: 60 10 24 58
+Hong Kong: 22 15 114 10
+Honolulu: 21 19 -157 -52
+Istanbul: 41 2 28 59
+Jerusalem: 31 47 35 14
+Kabul: 34 30 69 12
+Karachi: 24 51 67 2
+Khartoum: 15 36 32 32
+Kuwait: 29 20 48 0
+Lagos: 6 27 3 23
+La Paz: -16 -30 -68 -9
+St. Petersberg: 59 55 30 15
+Lima: -12 -3 -77 -3
+Lisbon: 38 44 -9 -8
+London: 51 30 0 -10
+Los Angeles: 34 4 -118 -15
+Madrid: 40 25 -3 -43
+Manama: 26 12 50 35
+Manchester: 53 28 -2 -15
+Manila: 14 36 120 59
+Mecca: 21 27 39 49
+Mexico City: 19 24 -99 -9
+Miami: 25 46 -80 -12
+Minneapolis: 44 59 -93 -13
+Mogadisho: 2 2 45 21
+Montevideo: -34 -55 -56 -10
+Montreal: 45 30 -73 -36
+Moscow: 55 45 37 35
+Muscat: 23 29 58 33
+Nairobi: -1 -17 36 50
+New Delhi: 28 37 77 13
+New York: 40 43 -74 -1
+Nouakchott: 18 9 -15 -58
+Osaka: 34 40 135 30
+Oslo: 59 56 10 45
+Ottawa: 45 25 -75 -42
+Paramaribo: 5 52 -55 -10
+Paris: 48 52 2 18
+Peking: 39 55 116 25
+Perth: -31 -56 115 50
+Philadelphia: 39 37 -75 -7
+Portland: 45 33 -122 -36
+Prague: 50 5 14 26
+Quito: 0 -14 -78 -30
+Rabat: 34 2 -6 -51
+Reykjavik: 64 9 -21 -57
+Rio de Janeiro: -22 -53 -43 -17
+Riyadh: 24 39 46 43
+Rome: 41 53 12 30
+Saint Louis: 38 38 -90 -11
+Salt Lake City: 40 46 -111 -53
+San Diego: 32 43 -117 -9
+San Francisco: 37 48 -122 -24
+San Jose: 9 59 -84 -4
+Seoul: 37 33 126 58
+Shanghai: 31 14 121 30
+Singapore: 1 17 103 51
+Sao Paulo: -23 -33 -46 -39
+Stockholm: 59 20 18 3
+Sydney: -33 -52 151 13
+Tehran: 35 40 51 26
+Tianjin: 39 8 117 12
+Tokyo: 35 42 139 46
+Toronto: 43 42 -79 -30
+Tripoli: 32 53 13 12
+Tunis: 36 48 10 11
+Vancouver: 49 16 -123 -7
+Vienna: 48 13 16 22
+Warsaw: 52 15 21 0
+Washington: 38 53 -77 0
+Wellington: -41 -17 174 47
+Zurich: 47 23 8 33

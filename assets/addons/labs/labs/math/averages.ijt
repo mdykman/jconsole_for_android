@@ -1,0 +1,208 @@
+LABTITLE=: 'Averages'
+LABAUTHOR=: 'Richard L.W. Brown'
+LABCOMMENTS=: 0 : 0
+A lab about various types of averages. It shows use of:
+forks, rank, inverses, conjugates, under, obverse.
+)
+
+NB. =========================================================
+Lab Section The Arithmetic Mean
+The best known average is the arithmetic mean.  Given a list of numbers, the arithmetic mean is defined to be the sum of the numbers in the list divided by the number of numbers in the list.
+
+An arithmetic mean program, or function or "verb" as functions are called in J, "am" is shown below:
+
+[The string of three verbs "sum % #" is called a "fork". another example of a fork would be "sin + cos". ]
+
+)
+sum =: +/       NB. sum is 'plus between'
+sum 2 3 5 7     NB. example of sum
+am =: sum % #   NB. arithmetic mean 'sum divided by number'
+am 2 3 5 7      NB. example of arithmetic mean
+
+NB. =========================================================
+Lab Section
+The function (or verb) "am" was designed to compute the arithmetic mean of a list.  What happens if it is applied to a matrix? [see below]
+
+As you can see, each column is averaged.  Here is how J interprets the situation.  A matrix is a list of rows.  In this example there are two items (rows) and "sum" sums this two-item list to produce a row which is the sum of the given rows.  This result is divided by the number of items in the list, i.e. two in the example.  The net effect is the arithmetic mean of the rows which is the arithmetic mean of each column.
+)
+matrix =: 2 3 $ 4 7 8   2 5 1  NB. 2 by 3 matrix
+matrix                         NB. display it
+am matrix
+
+NB. =========================================================
+Lab Section
+Suppose a matrix is given and one wants the arithmetic mean of each row.  A 2 by 3 matrix is a list of two rows and each row is a list of 3 numbers.  The rows are called the 1-cells of the matrix.
+
+To create a verb that applies "am" to 1-cells, use the rank conjunction " as shown below. The result is a list of two numbers, the means of each row.
+)
+am"1 matrix           NB. arithmetic means of 1-cells
+row_averages =: am"1  NB. define a row_averages function
+row_averages matrix   NB. apply it
+
+NB. =========================================================
+Lab Section
+Consider now a list of 2 matrices, each of size 2 by 3. This is an array of shape 2 by 2 by 3.  [see below]
+
+Applying am to the array takes the arithmetic mean of the two 2 by 3 matrices and the result is a 2 by 3 matrix.
+
+On the other hand, applying am"1 to the array takes the arithmetic means of each 1-cell (row) and gives a 2 by 2 matrix as the result.
+
+[More generally, an array of shape (a by b by ... by u by v) has 1-cells with v elements each and these 1-cells are arranged in an array of shape: a by b by ... by u]
+)
+array =: 2 2 3$2 1 4   9 0 7     5 1 2   3 4 0
+array
+am array
+am"1 array
+
+NB. =========================================================
+Lab Section Other Means
+If you drive a car at 40 km/hr for one hour and then drive it at 60 km/hr for the next hour, what was your average speed?
+
+The arithmetic mean is the correct average to use here: 40 km plus 60 km = 100 km in 2 hours; therefore 50 km/hr.
+
+If you drive a car at 40 km/hr for 100 km and then drive at 60 km/hr for another 100 km, what was your average speed?
+
+This time the harmonic mean is the correct average to use: 100 km in 100/40 hrs and 100 km in 100/60 hrs; therefore 200 km in 100/40 + 100/60 hrs or 1/((1/40 + 1/60)/2) = 48 km/hr.
+
+The harmonic mean is calculated as follows: "the reciprocal of the arithmetic mean of the reciprocals"
+)
+am 40 60         NB. arithmetic mean
+% am % 40 60     NB. harmonic mean
+
+NB. =========================================================
+Lab Section
+Suppose you weigh an object using a balance beam and find that the object weighs an amount x  But you suspect the balance may be off center so you put the object on the other side and weigh it again, getting y this time.  Is it appropriate to use the arithmetic mean (x+y)/2 as an estimate of the correct weight?
+
+If the lengths of the beam are s and t and the correct weight is w then:  sx = tw  and sw = ty   so dividing we get x/w = w/y  Thus  w = sqrt(xy) = geometric mean of x and y
+
+More generally, the geometric mean of a list is the nth root of the product where n is the number of list items. [see below]
+)
+product =: */        NB. product is times between
+product 2 3 5 7      NB. example of product
+gm =: # %: product   NB. nth root of product
+gm 2 3 5 7           NB. example of geometric mean
+
+NB. =========================================================
+Lab Section
+Another approach to the geometric mean is to take logs, apply the arithmetic mean, and take antilogs. [see below]
+
+In J, the natural log is denoted by "^." and the exponential function is denoted by "^".
+
+This form of the geometric mean shows its relation to the arithmetic mean. It also shows that the geometric mean is related to the arithmetic mean in the same way that the harmonic mean is related to the arithmetic mean.
+)
+^ am ^. 2 3 5 7
+exp =: ^
+ln =: ^.
+exp am ln 2 3 5 7
+
+NB. =========================================================
+Lab Section The Importance of Rank
+To write verbs "hm" for harmonic mean and "gm" for geometric mean, we can use composition of functions which is denoted by "@" in J.  However, there is one catch which is illustrated by the first example below.
+
+The composite function must know its rank, that is, what kind of cells it should apply to in arrays.  The rule is that the composite inherits the rank from the rank of the first (rightmost) function.  The ranks of "%" and of "^." are each 0 (they apply to each 0-cell in an array) so the 0-rank is inherited along the composition.  Thus "am" takes the arithmetic mean of each 0-cell -- not what we want!
+
+One way to fix the ranks is shown below.
+)
+hm =: %@am@%      NB. incorrect composition (rank is wrong)
+hm 2 3 5 7        NB. applies to each 0-cell (incorrect)
+hm =: %@am@(%"1)  NB. reciprocal of arth-mean of reciprocals
+hm 2 3 5 7        NB. correct.  Could use (%"2) etc.
+gm =: ^@am@(^."1) NB. exp of arth-mean of logs
+gm 2 3 5 7
+
+NB. =========================================================
+Lab Section Conjugates
+The way in which the harmonic mean and the geometric mean are formed from the arithmetic mean is very common situation in mathematics (and more generally in life!), a composition of the form
+
+                -1
+               p    @  f  @  p
+
+Sometimes this construction is called a "conjugate". In ordinary life this is experienced as a preparation, p, followed by an operation, f, followed by undoing the preparation, p inverse.
+
+Example: remove cover, fix engine, replace cover.
+
+In the code below, note the syntax p^:_1 for the inverse of the function p
+)
+PREPARE
+4!:55 <'p'
+PREPARE
+f =: (p^:_1)@am@(p"1)    NB. generic conjugate of 'am'
+p =: ]                   NB. If p = (right) identity ...
+f 2 3 5 7                NB. then f is just arithmetic mean.
+p =: %                   NB. If p = reciprocal ...
+f 2 3 5 7                NB. then f is harmonic mean.
+p =: ^.                  NB. If p = nat. log ...
+f 2 3 5 7                NB. then f is geometric mean.
+
+NB. =========================================================
+Lab Section
+In J, the conjugate is provided through the conjunction "&." Thus "f&.p" will accomplish the conjugate "(p^:_1)@f@p" provided J is able to find a suitable inverse for "p". The conjunction "&." is called "under" in J.
+
+The last example [below] is root-mean-square, often denoted by rms, and used in the audio industry.
+)
+hm =: am&.(%"1)  NB. harmonic mean: f = am, p = %
+hm 2 3 5 7
+gm =: am&.(^."1) NB. geometric mean: f = am, p = ^.
+gm 2 3 5 7
+gm matrix        NB. geometric mean of each row
+f =: am&.(p"1)   NB. general conjugate of am
+p =: %           NB. If p is reciprocal ...
+f 2 3 5 7        NB. then f is harmonic mean.
+p =: *:          NB. If p is square ...
+f 2 3 5 7        NB. then f is root-mean-square.
+
+NB. =========================================================
+Lab Section Average Rates of Return
+In the investment community, there is the concept of "average rate of return".  If annual interest rates in three successive years are 7%, 9%, and 4% then the average rate of return is 100r where
+
+                   3
+              (1+r)  = (1+0.07)(1+0.09)(1+0.04)
+
+Thus we must divide by 100, add one, take logs, take the arithmetic mean, take antilogs, subtract one, multiply by 100.
+)
+ar =: am&.(^."1)&.(+&1)&.(%&100) NB. average rate of return
+ar 7 9 4
+
+NB. =========================================================
+Lab Section Inverses and Partial Averages
+Clearly there is no inverse to the average function: given an average you cannot deduce the original values that were averaged!
+
+However, from a list of numbers we can compute the partial averages, i.e. the first, the average of the first two, the average of the first three, and so on, and this list has the same number of items as the original list. Moreover, the original list can be recovered from the list of partial averages: the partial-averages function has an inverse.
+
+The partial averages function can be defined as the partial sums function "ps" composed with the divide-by-index function "di". [see below]
+)
+ps =: +/\            NB. Plus between on prefixes ...
+ps 2 3 5 7           NB. is partial sums.
+ix =: >:@i.@#        NB. increment of index list of #
+ix 2 3 5 7           NB. computes indexes 1 ... (n = length)
+di =: %ix            NB. divide by indexes
+di 2 5 10 17         NB. divides each number by its index
+pa =: di@ps          NB. partial averages
+pa 2 3 5 7           NB. example
+
+NB. =========================================================
+Lab Section
+Now we want the inverse of the partial average function.
+
+First note that "ps" has an inverse that is known to J. (Experiment with (ps^:_1) 2 5 10 17 )
+
+However, our function "di" is constructed from parts such as "i." and "#" which do not have inverses so the J cannot invert the function "di".  We can get around this apparent obstacle by defining the inverse of "di" ourselves and telling J what we want.  This construction which uses the ":." conjunction is called creating an "obverse" in J.
+
+When this is done, the function "pa" becomes invertible.
+)
+di =: (%ix) :. (*ix)  NB. di is %ix and (di^:_1) is *ix
+(pa^:_1) pa 2 3 5 7   NB. now 'pa' has an inverse!
+
+NB. =========================================================
+Lab Section Application to an Investment Problem
+As an application of partial averages, consider the following situation. You are considering purchase of a mutual fund which gained 46% last year, had a rate of return of 19% per year over the last two years and had a of return of 11% per year over the last three years.
+
+The performance of the fund sounds pretty good; but to what extent is the reported past performance really just a distortion created by the 46% gain last year?  To answer this, we must compute the actual annual gain each year from the average rates over the past three years.
+
+We define a generic conjugate of partial-averages and then specify the preparation function p so that we compute average rates.  Apply the inverse of this function to solve our mutual fund problem. [see below]
+
+Thus the fund lost over 3% in each of the two years before last year.
+)
+f =: pa&.(p"1)         NB. generic conjugate of 'pa'
+p =: ^.@(+&1)@(%&100)  NB. p that gives average rates
+f^:_1 (46 19 11)       NB. This gives the answer.

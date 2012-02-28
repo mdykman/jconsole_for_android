@@ -58,7 +58,7 @@ NB.           matrix from general square invertible one
 NB.
 NB. Version: 0.7.0 2011-08-06
 NB.
-NB. Copyright 2007-2011 Oleg Kobchenko, Roger Hui, Igor Zhuravlev
+NB. Copyright 2007-2011 Oleg Kobchenko, Roger Hui, Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -92,7 +92,7 @@ t2td=: 1 : '({. u/&i. {:)@$'
 NB. template conj. to extract matrix circumscribing the
 NB. triangular (trapezoidal) matrix
 NB. starting from diagonal number x in the matrix y
-trcut=: 2 : '((m & *) @: (<./ " 1) @ v $) {. ]'
+trcut=: 2 : '((m&*)@:(<./"1)@v $) {. ]'
 
 NB. extract upper triangular (trapezoidal) matrix
 trucut=: 1 _1 trcut (] ,. (-~ {:))
@@ -138,7 +138,7 @@ NB.
 NB. Examples:
 NB. - see mbstencil, mabstencil
 
-mxbstencil=: 1 : '(+./^:(_2+(#@$))@:((1=I.)"1 2)~ (-&1 0"1))~ (u t2td)'
+mxbstencil=: 1 : '(+./^:(_2 + #@$)@:((1=I.)"1 2)~ -&1 0"1)~ (u t2td)'
 
 NB. ---------------------------------------------------------
 NB. mbstencil
@@ -177,8 +177,8 @@ NB. 0 0 1 1 0                             0 1 1 0 0
 NB. 1 0 0 1 1                             1 1 0 0 1
 NB. 1 1 0 0 1                             1 0 0 1 1
 
-mbstencil=:                       -~ mxbstencil
-mabstencil=: ((|."1)@:-~ (<:@c)) (+  mxbstencil) ]
+mbstencil=:                   -~ mxbstencil
+mabstencil=: (|."1@:-~ <:@c) (+  mxbstencil) ]
 
 NB. ---------------------------------------------------------
 NB. diaglios
@@ -217,7 +217,7 @@ NB.   diagonal
 diaglios=: (0 0 _&$:) :(4 : 0)
   'd h s'=. x=. ((i. 3) < (# x)) } 0 0 _ ,: x  NB. in-place op
   'm n'=. y=. 2 $ y
-  H=. n (- @ * ^: (0 > ])) d
+  H=. n (-@*^:(0 > ])) d
   S=. 0 >. <./ y , <. -: (n + m - | n - m + +: d)
   (h ,: (s <. S)) (] ;. 0) (>: n) dhs2lios H , S
 )
@@ -228,14 +228,14 @@ NB. Interface
 NB. ---------------------------------------------------------
 NB. Miscellaneous
 
-c=: {:!.1 @ $      NB. Columns in noun
+c=: {:!.1@$      NB. Columns in noun
 
-trace=: +/ @ diag  NB. Matrix trace
+trace=: +/@diag  NB. Matrix trace
 
-ct=: + @: |:       NB. Conjugate transpose
-cp=: ct &. |.      NB. Conjugate pertranspose
+ct=: +@:|:       NB. Conjugate transpose
+cp=: ct&.|.      NB. Conjugate pertranspose
 
-fp=: [ C."1 C.     NB. Full (symmetric) permutation
+fp=: [ C."1 C.   NB. Full (symmetric) permutation
 
 NB. Transform permutation vector to permutation matrix, to
 NB. permute rows by y or columns by (/:y)
@@ -375,8 +375,8 @@ NB.
 NB. Notes:
 NB. - at most one of A0, A1 can be 1-rank array (i.e. vector)
 
-appendl=: , `([, (({."1~    c )~))`(({."1~    c ), ]) @. (*@-&c)
-appendr=: , `([, (({."1~ (-@c))~))`(({."1~ (-@c)), ]) @. (*@-&c)
+appendl=: , `([, ({."1~   c)~)`(({."1~   c), ])@.(*@-&c)
+appendr=: , `([, ({."1~ -@c)~)`(({."1~ -@c), ])@.(*@-&c)
 
 NB. ---------------------------------------------------------
 NB. stitcht
@@ -401,8 +401,8 @@ NB.
 NB. Notes:
 NB. - 1-rank arrays (i.e. vectors) are also acceptable
 
-stitcht=: ,.`([,.(({.  ~    # )~))`(({.  ~    # ),.]) @. (*@-&#)
-stitchb=: ,.`([,.(({.  ~ (-@#))~))`(({.  ~ (-@#)),.]) @. (*@-&#)
+stitcht=: ,.`([,.({.  ~   #)~)`(({.  ~   #),.])@.(*@-&#)
+stitchb=: ,.`([,.({.  ~ -@#)~)`(({.  ~ -@#),.])@.(*@-&#)
 
 NB. ---------------------------------------------------------
 NB. diag
@@ -538,7 +538,7 @@ NB.
 NB. TODO:
 NB. - B would be sparse
 
-bdlpick=: * _1 0 & mbstencil
+bdlpick=: * _1 0&mbstencil
 
 NB. ---------------------------------------------------------
 NB. bdupick
@@ -556,7 +556,7 @@ NB.
 NB. TODO:
 NB. - B would be sparse
 
-bdupick=: * 0 1 & mbstencil
+bdupick=: * 0 1&mbstencil
 
 NB. ---------------------------------------------------------
 NB. hslpick
@@ -571,7 +571,7 @@ NB. where
 NB.   A - m×n-matrix, contains B
 NB.   B - m×n-matrix, lower Hessenberg
 
-hslpick=: * __ 1 & mbstencil
+hslpick=: * __ 1&mbstencil
 
 NB. ---------------------------------------------------------
 NB. hsupick
@@ -586,7 +586,7 @@ NB. where
 NB.   A - m×n-matrix, contains B
 NB.   B - m×n-matrix, upper Hessenberg
 
-hsupick=: * _1 _ & mbstencil
+hsupick=: * _1 _&mbstencil
 
 NB. ---------------------------------------------------------
 NB. gtpick
@@ -603,7 +603,7 @@ NB.
 NB. TODO:
 NB. - B would be sparse
 
-gtpick=: * _1 1 & mbstencil
+gtpick=: * _1 1&mbstencil
 
 NB. ---------------------------------------------------------
 NB. trlpick
@@ -721,7 +721,7 @@ NB.
 NB. TODO:
 NB. - D would be sparse
 
-diagmat=: (0 0&$:) :((; {.)~ setdiag ((0 $~ ((+ (2&(|.@}. - {.)@(0&(<. , >.))))))~ #))
+diagmat=: (0 0&$:) :((; {.)~ setdiag ((0 $~ (+ (2&(|.@}. - {.)@(0&(<. , >.)))))~ #))
 
 NB. ---------------------------------------------------------
 NB. trl
@@ -843,7 +843,7 @@ NB. 1  1  0 0                    1 0
 NB. 5  6  1 0                    9 1
 NB. 9 10 11 1
 
-trl1=: (0&$:) :([ trl ((1;[) setdiag ]))
+trl1=: (0&$:) :([ trl (1;[) setdiag ])
 
 NB. ---------------------------------------------------------
 NB. tru1
@@ -867,7 +867,7 @@ NB. 0 1                          1 5 6
 NB.                              0 1 9
 NB.                              0 0 1
 
-tru1=: (0&$:) :([ tru ((1;[) setdiag ]))
+tru1=: (0&$:) :([ tru (1;[) setdiag ])
 
 NB. ---------------------------------------------------------
 NB. tr2he
@@ -882,7 +882,7 @@ NB. where
 NB.   T - n×n-matrix, lower or upper triangular
 NB.   H - n×n-matrix, Hermitian (symmetric)
 
-tr2he=: (-: upddiag) @ (+ ct)
+tr2he=: (-: upddiag)@(+ ct)
 
 NB. ---------------------------------------------------------
 NB. he
@@ -897,7 +897,7 @@ NB. where
 NB.   G - n×n-matrix
 NB.   H - n×n-matrix, Hermitian (symmetric)
 
-he=: tr2he @ trl
+he=: tr2he@trl
 
 NB. ---------------------------------------------------------
 NB. po

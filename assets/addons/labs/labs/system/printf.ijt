@@ -1,0 +1,372 @@
+LABTITLE=: 'Formatting with printf'
+
+NB. =========================================================
+Lab Section Introduction
+The printf package emulates the C printf and sprintf functions.  It also contains a pair of adverbs (vsprintf and vbsprintf) which convert printf specifications into verbs that perform better on large operands, and a pair of verbs (qprintf and qsprintf) for printing out debugging messages.
+
+The package was contributed by Henry H. Rich (glasss@bellsouth.net).
+
+Example:
+)
+load 'printf'
+'Today is %d/%d/%d' printf today =. 3 {. 6!:0 ''
+qprintf 'today '
+
+NB. =========================================================
+Lab Section Quick Summary
+If you know printf in C, you can use J printf/sprintf immediately.  The specification string is the left argument to printf; the data to be substituted is a vector right argument (if any of the elements are lists, the elements should be boxed).
+
+C features not supported:
+ * width and precision specifiers
+ %n field type
+
+J features not in C:
+ verbs in the field specifier, applied before formatting
+ %j and %J field types, which mean J default formatting
+ %S field type, which accepts a boxed list
+ \l escape to produce LF
+)
+'Using printf is easy as %d %d %d.' printf >: i. 3
+'Printed strings should be %s.' printf <'boxed'
+
+NB. =========================================================
+Lab Section Overview
+To use printf you give an example of the desired output, with indications of where you want variable data to be inserted.  These indications, called fields, begin with the percent sign % and end with a character that tells what type of conversion is to be performed on the data.  The example string, called the specification, is the left argument to printf.  The right argument to printf is the data that is to be inserted.  The fields are replaced by the corresponding data.  Examples:
+)
+'%s, %s!' printf 'Hello';'world'
+'A %s field and %d numeric field' printf 'string';1
+
+NB. =========================================================
+Lab Section Fields
+A field has the form:
+
+%[flags][width][.precision][?verb?]type
+
+where the [] indicate optional elements, and
+there must be no spaces.  The . and ? are
+punctuation that indicate the presence of their
+component.  Omitted components assume a default
+value, to be discussed later.  Examples:
+
+ Field       Components
+ -------------------------------
+ %s          type=s
+ %5d         width=5, type=d
+ %.6f        precision=6, type=f
+ %-?100*?f   verb='100* y', type=f, flags=-
+)
+
+NB. =========================================================
+Lab Section
+The components of a field control the formatting of the data for the field.  When data is formatted, the order of processing is:
+
+ 1.  The item is opened (i. e. unboxed)
+ 2.  The verb, if any, is applied
+ 3.  The conversion indicated by the type is performed
+ 4.  The precision is applied
+ 5.  The width is applied
+ 6.  The flags are applied
+
+We will discuss the components one by one.
+)
+
+NB. =========================================================
+Lab Section Verb
+If ?verb? is given, that verb is applied to the data before any further formatting.  Examples:
+)
+'%.2?100*?f percent' printf 0.1
+'The list contains %?#?d items' printf <1;2;3
+
+NB. =========================================================
+Lab Section Type
+The type, which is the only required component, indicates the conversion that will be applied to the data.  We will now go through the types.
+)
+
+NB. =========================================================
+Lab Section Integer types
+The types to use for displaying integers (or floating-point numbers, which are truncated to integer) are:
+
+ d decimal
+ u unsigned 32-bit integer (not really meaningful in J)
+ o octal
+ x,X hexadecimal (using a-f or A-F)
+
+Examples:
+)
+'%d decimal is %o octal' printf 26 26
+'%d decimal is %x (or %X) hex' printf 26 26 26
+
+NB. =========================================================
+Lab Section Floating-point types
+Floating-point numbers use types:
+
+ f    integer.fraction form
+ e,E  scientific notation (mmecc or mmEcc)
+ g,G  like f unless the number is too big or too small;
+       then like e,E
+
+Examples:
+)
+'%f is a middle-sized number' printf 50.5
+'%e (aka %E) looks ugly as %f' printf 1e8 1e8 1e8
+'The system can choose for you: %g %g %g' printf 1e8 1e_8 1e2
+
+NB. =========================================================
+Lab Section String types
+String data can be displayed with the types
+
+ s,c  string data
+
+(The distinction in C between s and c types is meaningless in J)
+
+Example:
+)
+'Field %s and field %c' printf 'one';'two'
+
+NB. =========================================================
+Lab Section Special J types
+Printf in J recognizes 2 field types not available in C:
+
+ j  apply J default formatting (using ":)
+ J  apply J default formatting, and then flatten to string
+ S  accept string or boxed list
+
+The data item corresponding to S may be a string, in which case S is identical to s type; or the data may be a boxed list, in which case each boxed item is opened, formatted using ":, and the results run together to form a string.
+
+Examples:
+)
+'Negative numbers use _ or -, as in %j and %d' printf _2 _2
+'A boxed list: %S' printf < 'characters';'and';1;'number'
+
+NB. =========================================================
+Lab Section
+Field type J is useful for displaying boxed or high-rank items.  A newline is inserted before each item and after the entire list, and the list is raveled to a rank-1 string.
+
+Example:
+)
+'Boxed item:%JRank-2 item:%J' printf (<'aaa';'bbb');<i. 2 3
+
+NB. =========================================================
+Lab Section Precision
+The meaning of the precision component depends on the field type:
+
+ integer (duoxX): minimum number of digits.  The field is extended if necessary (with '0' characters) to the length given.  Default is 1.
+
+ floating-point (feEgG): number of fractional digits to display.  Default is 6.
+
+ others (scSj): Maximum number of characters.  Strings longer than the maximum are truncated.  Default is _ .
+
+Examples:
+)
+'Field extended to 5 digits: %.5d' printf 30
+'Field with 2 decimal places: %.2f' printf 45.4567
+'A string of 3 characters: %.3s' printf <'categorical'
+
+NB. =========================================================
+Lab Section Width
+The width component gives the minimum field width.  The value after the precision is applied is extended to the minimum width by adding spaces on the left (subject to control by the flags, as discussed later).  The width component will not shorten a string.
+
+J printf does not support the variable-width specifier ('*') of C.
+
+Examples:
+)
+'Minimum width 5: %5d.' printf 30
+'Minimum width 5: %5d.' printf 1234567
+
+NB. =========================================================
+Lab Section Width and precision on lists
+The opened data item corresponding to an integer or floating-point type may be a list.  In this case, the precision is applied to each item of the list separately, the results of that formatting are run together into a single string (with one space between the items), and the width component is applied to the entire result.  Examples:
+)
+'A list of fractions: %.1f' printf <4 0.2 5.3
+'A list of fractions: %20.1f' printf <4 0.2 5.3
+
+NB. =========================================================
+Lab Section Flags
+The flags component alters the display produced by the other components.  There are 3 classes of flags: justification, sign, and alternate-format.  At most one flag in each class should be selected.
+)
+
+NB. =========================================================
+Lab Section Flags: justification
+If a width is specified, left-justification, right-justification, or center-justification can be selected:
+
+ -  left-justification
+ ^  centering
+ (default) right justification
+
+Examples:
+)
+'Justification: %20s' printf <'right'
+'Justification: %-20s' printf <'left'
+'Justification: %^20s' printf <'center'
+
+NB. =========================================================
+Lab Section Flags: sign
+By default, negative numbers have a '-' prefix and nonnegative numbers have no prefix.  For types d, u, and f only, the prefix for nonnegative numbers can be changed:
+
+ +  use + prefix
+ (space)  use space prefix
+
+Examples:
+)
+'Positive (%d) and negative (%d)' printf 5 _5
+'Positive (%+d) and negative (%+d)' printf 5 _5
+'Positive (% d) and negative (% d)' printf 5 _5
+
+NB. =========================================================
+Lab Section Flags: alternate-format
+The alternate-format flag, #, changes the display of certain types:
+
+ o   the display is prefixed with '0'
+ x,X the display is prefixed with '0x' or '0X'
+
+Examples:
+)
+'Normal %o and alternate %#o' printf 12 12
+'Normal %x (%X) and alternate %#x (%#X)' printf 12 12 12 12
+
+NB. =========================================================
+Lab Section Escape characters: %
+To include a % character in the output, use the escape sequence '%%'.  This produces a single '%' character and does not count as a field.
+)
+'%?100*?d%% complete.' printf 0.2
+
+NB. =========================================================
+Lab Section Escape characters: \ escapes
+Certain non-printable characters are represented by escape sequences:
+
+ \n  CRLF on Windows, LF on Unix
+ \t  TAB
+ \b  BS
+ \r  CR
+ \f  VT
+ \l  LF
+ \\  \
+ \'' '
+
+Examples:
+)
+'Line 1\nLine 2' printf ''
+'The \\ character is an escape\n\n' printf ''
+
+NB. =========================================================
+Lab Section Escape characters: \ octal
+In addition, \(digits) is octal escape.  The longest sequence of valid octal digits following the \, up to a maximum of 3 digits, is converted to a number, and that item of a. is the character produced.  With octal escapes, any character can be put into the specification.  Example:
+)
+'Octal LF: \12Line 2' printf ''
+
+NB. =========================================================
+Lab Section sprintf
+The verb sprintf is like printf, except that it prints nothing and gives as a result the string after substitution.
+
+sprintf has infinite rank, but it applies the formatting to rank-1 lists of its inputs.
+
+Examples:
+)
+a =. 'Length of ''%s'' is %?#?j.' sprintf 'abc';'abc'
+a
+b =. 'Length of ''%s'' is %?#?j.' sprintf ,.~ 'abc';'de';'fghi'
+b
+b ,. '*'
+
+NB. =========================================================
+Lab Section Performance
+sprintf formats strings effectively, but a couple of factors make it unsuitable for use on large lists:
+
+ 1. The results of the formatting are padded with blanks to bring them to a common shape;
+
+ 2. If sprintf is applied at rank 1 to prevent the padding, the specification string is parsed for every application of sprintf.  Parsing the specification string will take much more time than formatting the data.
+)
+
+NB. =========================================================
+Lab Section
+For repeated application of sprintf, two adverbs are provided.  Each adverb parses the specification string and produces a verb that can be applied repeatedly with high performance.
+
+The adverb vsprintf yields a monadic verb that takes a list of as many items as there are fields in the specification, and produces a string result.
+
+The adverb vbsprintf takes a list, each element of which is a list of as many items as there are fields in the specification, and produces a list of boxed strings as its result.
+)
+
+NB. =========================================================
+Lab Section vsprintf
+If the specification has 0 or 1 field, the rank of the verb produced by vsprintf is 0.  Otherwise, its rank is 1.
+
+vsprintf is useful when you want to perform some further processing on each string - filling in a form with it, for example.  For large lists vbsprintf is faster.
+)
+fmt =. 'Name: %s value: %j' vsprintf
+'Rank of fmt is %j' printf {. fmt b. 0
+smoutput@fmt 3 2 $ 'Able';1;'Baker';2;'Charlie';3
+fmt0 =. 'Name: %s' vsprintf
+'Rank of fmt0 is %j' printf {. fmt0 b. 0
+smoutput@fmt0 'Able';'Baker';'Charlie'
+
+NB. =========================================================
+Lab Section vbsprintf
+If the specification has 0 or 1 field, the rank of the verb produced by vbsprintf is 1.  Otherwise, its rank is 2.
+)
+bfmt =. 'Name: %s value: %j\n' vbsprintf
+'Rank of bfmt is %j' printf {. bfmt b. 0
+bfmt 3 2 $ 'Able';1;'Baker';2;'Charlie';3
+; bfmt 3 2 $ 'Able';1;'Baker';2;'Charlie';3
+bfmt0 =. 'Name: %s ' vbsprintf
+'Rank of bfmt0 is %j' printf {. bfmt0 b. 0
+; bfmt0 'Able';'Baker';'Charlie'
+smoutput@> bfmt0 'Able';'Baker';'Charlie'
+
+NB. =========================================================
+Lab Section Performance tips
+The %s and %j fields require the least processing.  If all the fields in the specification are %s, vbsprintf uses a very fast verb to format the data.  If all the fields are %s or %j, vbsprintf uses a fast verb to format the data.  If other types appear, vbsprintf applies conversions to each column separately.
+)
+
+NB. =========================================================
+Lab Section qprintf - typeout for debugging
+If you want the easiest way to display expressions, qprintf may be the answer:
+)
+vec =: 30 50 20
+qprintf 'vec {.vec <./vec '
+
+NB. =========================================================
+Lab Section
+The right argument to qprintf is a string which contains a list of expressions.  The last character of the string is the delimiter between expressions.  The expressions are separated, then executed.  The result is printed, preceded by a label which is the expression itself, followed by '='.
+
+Remember the delimiter!
+)
+qprintf 'vec >./vec }:vec'  NB. oops
+qprintf 'vec >./vec }:vec '  NB. That's better
+qprintf 'vec!(+/ % #)vec!'  NB. Any character is OK
+
+NB. =========================================================
+Lab Section qprintf - custom labels
+If you want to change the default label ' expr=', you may include a label before the expression.  If the expression contains '?', only the part after the last '?' is evaluated, and the part before the last '?' is used as the label.
+)
+qprintf 'vec!, mean=?(+/ % #)vec!'
+
+NB. =========================================================
+Lab Section qprintf - custom field specifications
+The left argument to qprintf is the list of field specifications to use (it is repeated as often as necessary).  It may be specified as a boxed list or a string; if a string, the field specifications start with '%'.  The default specification is '%J'.
+)
+qprintf 'vec '
+'%5.2f' qprintf 'vec '
+
+NB. =========================================================
+Lab Section qsprintf
+qsprintf is like qprintf, but it returns the string as a result rather than printing it.
+)
+
+NB. =========================================================
+Lab Section Summary of types
+ c   character
+ s   a string
+ S   a boxed list
+ j   J default formatting
+ J   J default formatting, flattened to a character string
+ d   a signed integer, in decimal
+ u   an unsigned 32-bit integer, in decimal
+ o   an unsigned 32-bit integer, in octal
+ x   an unsigned 32-bit integer, in hexadecimal
+ X   like %x, but using upper-case letters
+ e   a floating-point number, in scientific notation
+ E   like %e, but using an upper-case "E"
+ f   floating-point number, in fixed decimal notation
+ g   floating-point number, in %e or %f notation
+ G   as %g, but with an upper-case "E" (if applicable)
+)

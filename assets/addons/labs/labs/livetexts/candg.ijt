@@ -1,0 +1,2504 @@
+LABTITLE=: 'Book of Numbers'
+LABAUTHOR=: 'KEI'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Chapter The Romance of Numbers
+NB. =========================================================
+Lab Section Figure 1.4
+
+This lab is written as a companion to The Book of Numbers,
+by John H. Conway and Richard K. Guy, Springer-Verlag, 1996,
+ISBN 0-387-97993-X. It will be referred to here as BON, and all references to figures concern
+figures in BON.
+
+The development will closely follow that of BON, making
+frequent explicit references to it. Sections that appear
+not to benefit from this treatment will be skipped.
+
+The use of the computer makes it possible for the reader to experiment with
+mathematical ideas with ease and precision, often providing new insights.
+Experiments may also be used to clarify any new notation encountered.
+Moreover, helpful comments are sometimes appended to expressions,
+preceded by NB. (for Nota Bene).
+
+To advance to the next panel of the lab, click on Studio|Advance,
+or use the indicated shortcut.
+)
+PREPARE
+
+9!:17 ] 1 1 NB. Display centered
+FOR=:2 : '(n,m) (|:@(|:@(] = {.@[) {"0 1 |:@(] ,: {:@[)))  y'
+POLY=:|.@[ p. ]
+
+and=:*.
+above=:,
+agenda=:@.
+altsigns=:$&1 _1 @ >:
+  alt=:altsigns
+a0=:0 _ 0 _ 0 _ 0  _  0  _  0  _ 0 _ 0  _  _  _
+a1=:_ 0 _ 1 _ 2 _  5  _  6  _  4 _ 3 _  0  _  _
+a2=:_ _ 0 _ 2 _ 6  _ 10  _  9  _ 6 _ 2  _  0  _
+a3=:_ _ _ 0 _ 5 _ 10  _ 12  _ 10 _ 4 _  1  _  0
+a4=:_ _ 0 _ 2 _ 8  _ 11  _ 12  _ 7 _ 2  _  0  _
+a5=:_ 0 _ 1 _ 4 _  8  _ 10  _  8 _ 4 _  0  _  _
+a6=:_ _ 0 _ 2 _ 3  _  6  _  5  _ 4 _ 1  _  0  _
+a7=:_ _ _ 0 _ 0 _  0  _  0  _  0 _ 0 _  0  _  0
+
+  fr1=:>a0;a1;a2;a3;a4;a5;a6;a7
+
+binomialcoefficients=:!~
+  BC=:binomialcoefficients
+border=:1 : 0 f.
+u border~ y
+:
+(' ';,.x),.({.;}.)":y,x u/y
+)
+
+by=:,.
+b0=:1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ _ _
+b1=:_ 1 _ 2 _ 2 _ 4 _ 2 _ 1 _ 3 _ 2 _ 4 _ 1 _ _
+b2=:_ _ 1 _ 3 _ 7 _ 7 _ 1 _ 2 _ 5 _ 7 _ 3 _ 1 _
+b3=:_ _ _ 1 _ 10 _ 12 _ 3 _ 1 _ 3 _ 17 _ 5 _ 2 _ 1
+b4=:_ _ 1 _ 3 _ 17 _ 5 _ 2 _ 1 _ 10 _ 12 _ 3 _ 1 _
+b5=:_ 1 _ 2 _ 5 _ 7 _ 3 _ 1 _ 3 _ 7 _ 7 _ 1 _ _
+b6=:_ _ 1 _ 3 _ 2 _ 4 _ 1 _ 2 _ 2 _ 4 _ 2 _ 1 _
+b7=:_ _ _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1 _ 1
+
+  fr2=:>b0;b1;b2;b3;b4;b5;b6;b7
+
+copies=:#
+
+cut=:- on -: on # ]pref ]
+
+decrement=:<:
+  dec=:decrement
+diagonal=:/.
+diamond=:4 : '(0 1 2 + {:x) from rows(0 1 2 + {.x) from y'"1 2
+  diam=:diamond
+dividedby=:%
+  dby=:dividedby
+
+each=:"0
+ei=:i.@>:
+expand=:}.@,"2@(0:,."1])
+
+fallingfactorial=:^!._1
+  ff=:fallingfactorial
+ffp=:p.!._1
+fod=:|:
+foh=:|.
+for=: ^:
+fov=:|."1
+from=:<:@[ { ]
+
+gm=:1: + (+ %)/@i.
+greaterthan=:>
+  gt=:greaterthan
+
+in=:]
+increment=:>:
+  inc=:increment
+integers=:i. : (+i.)
+  int=:integers
+into=:1 : 'm {~ y |~ #m'
+
+leftargument=:[
+  left=:leftargument
+lessthan=:<
+  lt=:lessthan
+lessthan=:<
+  lt=:lessthan
+log=:^.
+
+mag=:|
+max=:>.
+mi=:%.
+min=:<.
+minus=:2 : 'u table - v table'
+mp=: +/ . *
+
+not=:-.
+
+notequal=:~:
+  neq=:notequal
+notgreaterthan=:<:
+  ngt=:notgreaterthan
+notlessthan=:>:
+  nlt=:notlessthan
+nub=:~.
+
+on=:@:
+or=:+.
+out=: 1 : 'y {~ <: (]-.u) 1&int # y'
+over=:/
+
+pi=:<.@o.@(10"0 ^ ])
+pal=:255*#:7 6 5 4 3 2 1 0
+plus=:2 : 'u table + v table'
+poly=:p.
+power=:^
+prefixes=: \
+  pref=:prefixes
+
+ravel=:,
+reciprocal=:%
+remainder=:|
+  rem=:remainder
+replacezero=:] + >:@(>./@,) * ] = 0:
+require 'graph plot'
+  color=:viewmat
+rightargument=:]
+  right=:rightargument
+root=:%:
+rotate=:-@i.@-@#|."_1]
+rows=:"1
+r90=:|:@|.
+
+shape=:$
+show=:-@[ ]\":@]
+sign=:*
+space=:rotate@replacezero@expand
+sum=:+/
+sums=:+/\
+suffixes=:\.
+  suff=:suffixes
+symmetricintegers=:i:@ -
+  sint=:symmetricintegers
+TABLE=:1 : 0~~
+u$:~ y
+:
+(' ';,.x),.({.;}.)":y,x u/y
+)
+table=:/~~
+  T=:table
+taylor=:t.
+tie=:`
+times=:2 : 'u table * v table'
+trim=:}.
+
+under=:&.
+
+whole=:(<. -: ])@+. *. -.@:(e.&_ __)
+with=:&
+
+dt=:3 : '(foh nlt table i) * i |."0 1 pwdifs for (i=.i.# y) y'
+
+PREPARE
+
+NB. =========================================================
+Lab Section
+
+We will first show the use of the function pi
+to produce values of pi (given
+in Figure 1.4 of BON) to any desired number of digits,
+and the function show to show them in tables of a
+specified number of columns:
+)
+pi 5
+
+pi 9            NB. Approximation only
+
+pi 9x           NB. Appended x invokes extended precision
+
+pi 50x
+
+5 show pi 50x
+
+NB. =========================================================
+Lab Section
+Experiment with the use of the up and down arrows,
+and the Page Up and Page Down keys, to recall earlier
+panels.
+
+With the cursor resting on an expression to be recalled
+(such as pi 5), press the Enter key to bring
+it down to the entry position and revise it (perhaps
+by pressing the BkSp key to remove the 5, and then
+entering 7. Finally, execute the revised line by
+pressing the Enter key, and observe the result.
+)
+
+NB. =========================================================
+Lab Chapter Figures from Figures
+NB. =========================================================
+Lab Section Tables
+
+The expression 1 int 6 gives a list of 6 integers beginning with 1, that is known as the "natural", or "counting" numbers. Similarly 0 int 6 (or int 6) gives the first six non-negative integers.
+Moreover, 1 int 3 6 and 0 int 3 6 and int 3 6 give tables of 3 rows and 6 columns.
+
+This will be illustrated below, together with an expressions for the first table of Figure 2.1:
+)
+1 int 6
+
+0 int 6
+
+int 6
+
+int 10 1
+
+NB. =========================================================
+Lab Section
+
+The abbreviation int is provided for the name integers. To see the longer name to which an abbreviation might refer, enter it alone (without an argument), as shown below.
+
+Further tables of figure 2.1 are obtained as follows:
+)
+int
+
+integers 10 2
+
+integers 10 6
+
+NB. =========================================================
+Lab Section Color patterns
+
+In the next panel we will use the function color
+to produce a "window" with each distinct element of
+its argument table shown in a distinct color. To continue,
+you may press the key Esc to remove the window.
+
+You may also move the window so that it does not obscure
+the text. To do this, use the mouse to place its cursor
+on the top bar of the window, press and hold the mouse
+button, move the mouse to drag the window to the desired
+position, then release the mouse key.
+
+We will use the following table of remainders on
+dividing the first six rows of the last table of
+Figure 2.1 as shown below.
+)
+5 rem int 6 6 NB. Remainders on dividing by 5
+
+NB. =========================================================
+Lab Section
+)
+color 5 rem int 6 6
+
+NB. =========================================================
+Lab Section
+
+It is perhaps best to leave the color window displayed, proceeding
+by first clicking the mouse on the text area to "change focus"
+to it.
+
+To remove the color window later, it will be necessary to
+use the mouse to return focus to it before pressing Esc.
+
+Try other experiments, such as color 6 rem int 6 6,
+and compare it with the last table of Figure 2.1.
+)
+color 2 rem int 7 7
+
+NB. =========================================================
+Lab Section
+
+The term "residue" is also used for "remainder",
+as in Figure 2.5. Use the functions color,
+rem, and int to produce the results of Figures
+2.4-2.7.
+)
+
+NB. =========================================================
+Lab Section Name assignment
+
+As in algebra, names may be assigned to quantities,
+making experimentation much more convenient.
+For example:
+)
+t1=: 1 int 6 6    NB. The copula =: may be read as "is"
+t1
+
+t1*t1
+
+color 5 rem t1*t1
+
+NB. =========================================================
+Lab Section
+
+The copula may also be used to assign names to functions.
+For example:
+)
+PLUS=:+
+
+MINUS=:-
+
+3 PLUS 4
+
+3 PLUS int 6
+
+10 MINUS int 6
+
+NB. =========================================================
+Lab Section Function tables
+
+A multiplication table may be produced for different left and right arguments, but a single argument is used for both left and right, as shown in the production of Figure 2.8 below:
+)
+1 int 6
+
+1 int 10
+
+(1 int 6) * table (1 int 10) NB. Compare with Figure 2.8
+
+* table 1 int 10
+
+NB. =========================================================
+Lab Section
+
+The multiplication tables of Figure 2.9 may be produced as follows:
+)
+* table 1 int 1
+
+* table 1 int 2
+
+* table 1 int 3
+
+* table 1 int 6
+
+NB. =========================================================
+Lab Section Bordered tables
+
+A table bordered by its arguments may be easier to understand:
+)
+* border 1 int 10
+
+_2 int 5      NB. 5 integers beginning with negative 2
+
+* border _2 int 5
+
+NB. =========================================================
+Lab Section Addition and subtraction
+
+Addition and subtraction tables show interesting patterns:
+)
++ border int 5
+
++ table int 5
+
+color + table int 5
+
+NB. =========================================================
+Lab Section
+
+It should be noted that a negative number is denoted
+by a prefixed underbar (_). This is to be distinguished
+from the symbol - used for the subtraction or negation
+function that might be used to produce it:
+)
+5-8
+
+-3
+
+- border 1 int 5
+
+- table 1 int 5
+
+color - table 1 int 5
+
+NB. =========================================================
+Lab Section Products of signed numbers
+
+A multiplication table based on both negative and
+positive arguments provides an interesting pattern:
+)
+* border _3 int 7
+
+* table _3 int 7
+
+color * table _3 int 7
+
+NB. =========================================================
+Lab Section Color control
+
+The actual colors used by the function color may be changed
+by the use of a left argument which we will call pal (for
+palette).
+
+Compare the two examples given below by recalling each one,
+removing the NB., and then executing it.
+)
+pal NB. Weights given to primary colors (255 max)
+
+NB. color 6 remainder int 6 6
+
+NB. pal color 6 remainder int 6 6
+
+NB. =========================================================
+Lab Section
+
+Enter #:7 6 5 4 3 2 1 0 to get the base-2 representations
+of the numbers 7 6 5 4 3 2 1 0, and 255*#:7 6 5 4 3 2 1 0 to
+see the means of defining the table pal. Also try using
+(foh pal) and (fov pal) instead of pal.
+
+We will repeat the display of the multiplication table
+using the colors specified by pal:
+)
+pal color * table _3 int 7
+
+NB. =========================================================
+Lab Section The signum function
+
+The function sign gives the signs of its argument,
+and again gives an interesting picture of the products
+of signs when applied to a multiplication table:
+)
+sign _3 int 7
+
+sign * table _3 int 7
+
+pal color sign * table _3 int 7
+
+NB. =========================================================
+Lab Section Squares
+
+The function whole tests its argument, yielding 0
+if it is not a whole number, and 1 if it is. The function root gives that
+root of its right argument specified by its left argument,
+so the squares in a multiplication table
+may be identified (and colored) as shown below.
+As does Figure 2.8, the result shows that squares lie on
+the diagonal, but shows the occurrence of other squares as well:
+)
+whole 2 root * table 1 int 10
+
+color whole 2 root * table 1 int 10
+
+NB. =========================================================
+Lab Section Max, min, and relations
+
+The function max yields the maximum of its arguments,
+and may be used to produce the gnomons of Figure 2.12 as follows:
+)
+1 int 6
+
+3 max 1 int 6
+
+max border 1 int 6
+
+max table 1 int 6
+
+color max table 1 int 6
+
+NB. =========================================================
+Lab Section
+
+The function nlt (not-less-than or greater-than-or-equal-to) produces
+a table of zeros and ones which, multiplied by the
+max table gives the triangular table of Figure 2.13:
+)
+nlt
+
+nlt border 1 int 6
+
+(nlt table * max table) 1 int 6
+
+pal color (nlt table * max table) 1 int 6
+
+NB. =========================================================
+Lab Section
+
+The following produces an nlt table of six rows and seven columns:
+)
+(1 int 6) nlt table (1 int 7)
+
+pal color (1 int 6) nlt table (1 int 7)
+
+NB. =========================================================
+Lab Section Rotation
+
+This last window shows the juxtaposition of two
+"six triangles" to yield a total of the "pronic"
+number 6*(6+1) portrayed in Figure 2.15.
+
+However, the orientation of the result differs from
+Figure 2.15, a matter that can be rectified by a
+90-degree clockwise rotation as follows:
+)
+r90 (1 int 6) nlt table (1 int 7)
+
+pal color r90 (1 int 6) nlt table (1 int 7)
+
+NB. =========================================================
+Lab Section
+
+Other orientations may also be required. Repeated rotations are
+illustrated below:
+)
+k=:1 2 3 4
+
++: k             NB. Double function
+
++: for 2 k       NB. Double applied for 2 times
+
++: for 0 1 2 3 k NB. Double applied for a list of times
+
++: for _1 k      NB. Double applied _1 times gives inverse
+
+t4=: 1 int 4 4
+t4
+
+r90 for 2 t4      NB. Two 90-degree rotations
+
+NB. =========================================================
+Lab Section
+
+"Flips" on (that is, about) the horizontal, vertical, and diagonal axes supplement
+rotations to provide all possible reorientations:
+)
+t4
+
+fod t4
+
+foh t4
+
+fov t4
+
+r90 fov t4
+
+NB. =========================================================
+Lab Section
+
+Figure 2.16 pictures the sum of the first n odd numbers
+as the square of n Figures of this form may be produced
+as shown below. Experiment with the functions lt (less than)
+and gt (greater than) in producing such figures.
+)
+r90 1 3 5 7 9 nlt table 1 2 3 4 5 6 7 8 9 10
+
+color r90 1 3 5 7 9 nlt table 1 2 3 4 5 6 7 8 9 10
+
+NB. =========================================================
+Lab Section Experiments
+
+Try the following experiments and others suggested by them.
+To avoid mistyping, move the cursor up to any desired
+expression, press Enter to bring it to the input area,
+then press Enter again to execute it (perhaps after
+revising it):
+
+ODD=:r90 1 3 5 7 9 nlt table 1 2 3 4 5 6 7 8 9 10
+
+ODD by fov ODD
+
+color ODD by fov ODD
+
+ODD by 2 * fov ODD
+
+color ODD by 2 * fov ODD
+
+ODD above 2 * foh ODD
+
+color ODD above 2 * foh ODD
+)
+
+NB. =========================================================
+Lab Section List of names
+
+To recall the names of the functions available (together
+with any names that you may have assigned), enter names'' as
+shown below. You may then enter any one of the names (alone,
+without arguments) to see what it denotes:
+)
+names ''
+
+t4
+
+remainder
+above
+by
+max
+
+NB. =========================================================
+Lab Section
+
+The result shown by entering a function name is the
+representation of the function in the underlying
+programming language J used here. It may be substituted
+for the function name in any expression (perhaps after
+enclosing it in parentheses).
+
+Although the J expressions are usually briefer than the
+names assigned to them, the longer names may be easier to recall.
+)
+remainder
+
+3 remainder 0 1 2 3 4 5 6 7 8
+
+3 | 0 1 2 3 4 5 6 7 8
+
+NB. =========================================================
+Lab Section
+
+The expression (nlt table * max table) 1 int 6
+may also be written as nlt times max 1 int 6,
+and plus and minus may be used similarly. Thus:
+)
+(nlt table * max table) 1 int 6
+
+nlt times max 1 int 6
+
+2 3 5 nlt times max 1 2 3 4 5 6
+
+NB. =========================================================
+Lab Section Figure 2.20
+
+The steps in producing Figure 2.20 are shown below. Try
+the use of the color control pal in producing this table.
+)
+
+(nlt table 1 int 6) ; (trim nlt table 1 int 6)
+
+0 2 into trim nlt table 1 int 6 NB. Substitute 0 2 for 0 1
+
+trim rows nlt table 1 int 6
+
+color (fov by 0 2 into on trim rows) nlt table 1 int 6
+
+NB. =========================================================
+Lab Section Figure 2.21
+
+Figure 2.21 may be produced as follows:
+)
+t5=:nlt table 1 int 5
+
+(0 1 into by 0 0 into) t5
+
+(2 1 into by 0 3 into) t5
+
+((0 1 into by 0 0 into) above (2 1 into by 0 3 into)) t5
+
+pal color((0 1 into by 0 0 into)above(2 1 into by 0 3 into))t5
+
+NB. =========================================================
+Lab Section
+)
+t20=:nlt table 1 int 20
+
+pal color((0 1 into by 0 0 into)above(2 1 into by 0 3 into))t20
+
+NB. =========================================================
+Lab Chapter What comes next?
+NB. =========================================================
+Lab Section Moessner's magic
+
+Moessner's method drops items of a list
+whose indices satisfy a specified function of the indices,
+and then computes their cumulative (or partial) sums:
+
+power with a right argument of 2 is the square function,
+and * with a right argument of 2 is the double function.
+They will be expressed as power with 2, and * with 2.
+)
+1 int 16
+
+sums 1 int 16              NB. Partial sums (triangular numbers)
+
+* with 2 out 1 int 16      NB. Drop items whose indices are even
+
+sums * with 2 out 1 int 16 NB. Partial sums of alternates (i.e., odds)
+
+power with 2 (1 int 8)     NB.  agree with squares
+
+sums * with 2 out 1 int 40
+
+NB. =========================================================
+Lab Section Factorial numbers
+
+Sums of every other of sums of all but every third
+gives cubes:
+)
+* with 3 out 1 int 16
+
+sums * with 3 out 1 int 16
+
+sums * with 2 out sums * with 3 out 1 int 16
+
+shape sums * with 2 out sums * with 3 out 1 int 16
+
+power with 2 (1 int 6)
+
+sums * with 2 out sums * with 3 out 1 int 40
+
+sums * with 2 out sums * with 3 out sums * with 4 out 1 int 40
+
+power with 4 (1 int 10)
+
+NB. =========================================================
+Lab Section
+
+Successive drops according to the triangular numbers
+gives factorials as leading elements:
+)
+sums out 1 int 16
+
+1 int 16
+
+sums 1 int 16
+
+sums sums out 1 int 16
+
+sums sums out sums sums out 1 int 16
+
+sums sums out sums sums out sums sums out 1 int 16
+
+!0 1 2 3 4 NB. Factorials
+
+NB. =========================================================
+Lab Section Pascal's triangle
+
+As remarked in BON, the symbol for the factorial function
+once preceded its argument, as is done for most functions
+such as sin, cos, square, and square root. But the factorial
+is commonly written anomalously as n!. As seen in the preceding
+panel, we will use the form !n
+
+Re-orderings of the letters of a word such as 'TEA' are
+commonly called anagrams, and we will use the anagram
+function (denoted by A.) in what follows:
+)
+
+1 A. 'AET'
+
+2 A. 'AET'
+
+1 2 A. 'AET'
+
+int ! 3
+
+(int ! 3) A. 'AET'
+
+NB. =========================================================
+Lab Section
+
+To use fewer lines, we will also flip the resulting anagrams
+along the diagonal. Moreover, we will color the resulting
+tables to bring out the fact that the number of anagrams of
+an n-letter word is n times n-1 times n-2, etc., that is !n:
+
+(You may click the mouse on the middle square on the color
+window to expand it to maximum size.)
+)
+fod (int ! 3) A. 'AET'
+
+fod (int ! 4) A. 'ABCD'
+
+fod (int ! 4) A. 1 2 3 4
+
+pal color (int ! 4) A. 'ABCD'
+
+NB. =========================================================
+Lab Section Arrangements
+
+We will use the binomial coefficients BC, for which 5 BC 3
+gives the number of ways of choosing 3 things out of 5. Then
+BC table int 6 produces a corresponding function table
+similar to Pascal's triangle:
+)
+5 BC 3
+
+BC table int 5
+
+BC border int 6
+
+NB. =========================================================
+Lab Section
+
+In the expression BC table int 6 of the preceding panel,
+the argument 6 was used to obtain a table of binomial
+coefficients of order 5. We will now replace the integer
+function int by the "extended integers" function ei:
+)
+int 6
+ei 5
+
+BC table ei 7
+
+NB. =========================================================
+Lab Section Choice numbers
+
+BON gives the number of arrangements as n! divided by
+(or dby) (n-r)!. We will obtain them as follows:
+)
+n=:7
+
+n-ei n
+
+!n
+
+!n-ei n
+
+(!n) dby (!n-ei n)
+
+n=:10
+
+(!n) dby (!n-ei n)
+
+NB. =========================================================
+Lab Section Pascal's triangle
+
+In the preceding panel, the last few (large) numbers
+were given approximately in "scientific notation".
+Exact results (in "extended precision") may be obtained
+by using either n=:10x or n=:x: x instead of n=:10:
+)
+n=:10x
+
+(!n) dby (!n-ei n)
+
+NB. =========================================================
+Lab Section
+
+The divisor in the preceding expression may be
+multiplied by ! ei n to obtain the number of choices:
+)
+! ei n
+
+(!n) dby (! n-ei n) * (! ei n)
+
+n BC (ei n)
+
+28 BC 11  NB. Examples from BON
+
+(27 BC 11) + (27 BC 10)
+
+NB. =========================================================
+Lab Section
+
+Pascal's triangle of order 4 contains the elements of the
+table BC table ei 4, but displays them with iterleaved
+spaces and with rows shifted to form a triangle.
+
+The function space produces the corresponding table, using an
+element larger than any in the original table to denote the
+interleaved spaces, and to replace the zeros:
+)
+
+BC table ei 4
+
+space BC table ei 4
+
+pal color space BC table ei 4
+
+NB. =========================================================
+Lab Section
+
+The spaced version of Pascal's triangle may be made
+more readable by substituting a _ (the symbol for
+infinity) for each occurrence of the 7 used to mark
+inserted spaces:
+)
+space BC table ei 4
+
+_ FOR 7 in space BC table ei 4
+
+NB. =========================================================
+Lab Section
+
+The triangle of Figure 3.3 is produced as follows:
+)
+bct13=:BC table ei 13
+
+bct13
+
+pal color space bct13
+
+NB. =========================================================
+Lab Section Binomial coefficients as matrices
+
+Although the triangular display of a table such as
+bct13 is both informative and familiar, because it
+can be treated as a matrix the table itself is
+better for general use:
+)
+mi bct13  NB. Matrix inverse gives alternating binomial coefficients
+bct13 mp mi bct13
+
+NB. =========================================================
+Lab Section
+)
++ over 1 2 3 4
+1+2+3+4
+
++ over rows bct13     NB. Sum over each row of bct gives powers of 2
+
+2 power ei 13
+
+mi bct13
+
++ over rows mi bct13  NB. Sum over rows of alternating binomials
+
+NB. =========================================================
+Lab Section
+
+The figurate numbers (triangular, tetrahedral, etc.):
+)
+bct13
+
+1 from rows bct13
+
+sums 1 from rows bct13
+2 from rows bct13
+
+sums 2 from rows bct13
+sums 3 from rows bct13
+
+NB. =========================================================
+Lab Section
+
+We will use the matrix of binomial
+coefficients bct5=:BC table ei 5 together with the matrix product
+mp to develop a host of identities concerning sums of
+products of binomial coefficients:
+)
+1 2 3 ; 4 5 6 7 NB. Boxed display
+
+bct5=:BC table ei 5
+
+bct5;(bct5 mp bct5);(bct5 mp bct5 mp bct5)
+
+NB. =========================================================
+Lab Section
+
+The first column of each of these (matrix product) powers of the binomial
+coefficient table are clearly powers of the number of factors.
+If we could establish a pattern for each complete matrix we
+would have an identity for the sums of products of binomial
+coefficients implicit in the matrix product.
+
+This pattern becomes evident if we divide such a matrix
+(in element-by-element fashion) by the table bct5 itself:
+)
+(bct5 dby bct5);((bct5 mp bct5)dby bct5);((bct5 mp bct5 mp bct5)dby bct5)
+
+3 log 1 3 9 27 81 243 NB. Base 3 logarithm
+
+3 log (bct5 mp bct5 mp bct5) dby bct5
+
+NB. =========================================================
+Lab Section
+
+The lower triangular part of this "exponents of 3"
+table agrees with the subtraction table. Thus:
+)
+-table ei 5
+
+3 power - table ei 5
+
+bct5 * 3 power - table ei 5
+
+bct5 mp bct5 mp bct5
+
+NB. =========================================================
+Lab Section Frieze patterns
+
+As was done for Pascal's Triangle, we will treat the
+frieze patterns of Figure 3.8 as matrices, using _ (infinity) as
+a spacer. Thus:
+)
+fr1
+
+2 7 diamond fr1  NB. Sums differ  by 1
+
+2 8 diamond fr1 NB. Only alternate columns give relevant diamonds
+
+2 9 diamond fr1
+
+NB. =========================================================
+Lab Section
+
+A table of indices may be used with diamond:
+)
+a=:2 2 3 4,.7 9 8 9
+a
+
+a diamond fr1
+
+NB. =========================================================
+Lab Section
+
+The multiplicative pattern of Figure 3.9(b) will be treated
+similarly:
+)
+fr2
+
+2 7 diamond fr2 NB. Products differ by 1
+
+a diamond fr2
+
+NB. =========================================================
+Lab Section Differencing
+
+The function sums gives all partial sums (or "aggregates",
+or "integrals:), and its inverse pwdifs=:sums for _1
+gives pairwise differences:
+)
+a=:int 5
+a
+*: a   NB. Square of a
+
+*: for _1 a
+
+root a
+
+b=:4 power int 7
+
+b
+
+pwdifs=:sums for _1
+
+sums b
+
+pwdifs sums b
+
+NB. =========================================================
+Lab Section
+
+We will now use the complete
+difference table function dt to produce
+each of the difference tables that comprise Table 3.19.
+
+To see the definition of dt (and its use of pwdifs), enter
+dt alone.
+)
+t1=:dt b
+
+t1
+
+1 from rows t1
+
+t2=:dt 1 from rows t1
+t3=:dt 1 from rows  t2
+t4=:dt 1 from rows t3
+
+NB. =========================================================
+Lab Section
+
+Although these individual difference tables show interesting
+patterns, any of the lines (horizontal, vertical, or diagonal)
+of the fan display of Figure 3.19 that extend beyond them
+seem to show no further patterns:
+)
+t1;t2
+
+t3;t4
+
+NB. =========================================================
+Lab Section Number walls
+
+Figure 3.21 shows the building of a table based on the pattern:
+
+    N
+  W X E
+    S
+
+and the relation that the square of X must equal
+the sum (N*S)+(W*E).
+
+This implies that the product N*S must equal the square of X
+less the product W*E. We begin by defining a function NS,
+and applying it to the sequence 5 19 65 found in row 2 of
+Figure 3.21. Note that this produces the result shown
+just below it (in the position S) in the table:
+)
+NS=:(* over on (2 2 with from rows)) - (* over on (1 3 with from rows))
+
+NS 5 19 65
+
+NB. =========================================================
+Lab Section
+
+We now define the sequence s=:0 1 5 19 65 211 665,
+and the two-rowed table t based upon it. Further,
+we will use the expression 3 NS\ s to apply NS to
+each length-3 infix of s.
+
+The result may be compared with the next row of Table 3.21:
+)
+s=:0 1 5 19 65 211 665
+
+t2=:fod 1 by s
+t2
+
+NS 5 19 65
+
+3 NS\ s
+
+NS3=:3 with (NS\)
+
+NS3 s
+
+NS3 2 from t2
+
+NB. =========================================================
+Lab Section
+
+To obtain the next row (position S) of the table, we must divide
+by the preceding row N (which in this case is all ones).
+
+This row must be "clipped" to make its length agree with
+that of the result of NS3, and infinities will then be
+appended to agree with the row length of the table:
+)
+clip=: }.@}:
+
+clip 1 from t2
+
+(NS3 2 from t2) % (clip 1 from t2)
+
+_ , ((NS3 2 from t2) % (clip 1 from t2)) ,_
+
+t3=:t2 above _ , ((NS3 2 from t2) % (clip 1 from t2)) , _
+
+t3
+
+NB. =========================================================
+Lab Section
+
+The final row of the table may be obtained similarly:
+)
+t4=:t3 above _ , ((NS3 3 from t3) % (clip 2 from t3)) , _
+
+t4
+
+NB. =========================================================
+Lab Section
+
+We will now use the fact that s is
+the begining of a sequence of differences of powers
+of 3 and powers of 2, to apply these techniques to
+an extended table:
+)
+n=:int 10
+es=:(3 ^ n)-(2 ^ n)
+
+et2=:fod 1 by es
+et2
+
+NS3 2 from et2
+
+clip 1 from et2
+
+(NS3 2 from et2) % (clip 1 from et2)
+
+_ , ((NS3 2 from et2) % (clip 1 from et2)) , _
+
+et3=:et2 above _ , ((NS3 2 from et2) % (clip 1 from et2)) , _
+
+et3
+
+NB. =========================================================
+Lab Section
+
+Finally:
+)
+et4=:et3 above _ , ((NS3 3 from et3) % (clip 2 from et3)) , _
+
+et4
+
+NB. =========================================================
+Lab Chapter Famous families of numbers
+NB. =========================================================
+Lab Section Bell numbers and Stirling numbers
+
+The following recursive definition for Stirling numbers
+is based on the recurrence relation given in BON.
+
+Understanding the definition of S1 is not essential to
+its use, but it may be read as follows: agenda selects
+for execution one of the tied functions, choosing f1
+if the condition h1 is false, and g1 if true; S1 with dec
+applies S1 after decrementing its arguments, and each
+causes the function to apply to each element.
+)
+n=:[  NB. Left argument
+k=:]  NB. Right argument
+zero=:0: NB. The constant function 0
+f1=:k=zero
+g1=:(n S1 with dec k)+(dec on n)*(dec on n) S1 k
+h1=:n > zero
+
+S1=:f1 tie g1 agenda h1 each
+
+4 S1 0 1 2 3 4 5
+
+3 S1 0 1 2 3 4 5
+
+S1 table int 5
+
+NB. =========================================================
+Lab Section
+
+Stirling numbers of the second kind are obtained similarly:
+)
+f2=:k=zero
+g2=:(n S2 with dec k)+k*(dec on n) S2 k
+h2=:n > zero
+
+S2=:f2 tie g2 agenda h2 each
+
+S2 table ei 5
+
+(S1 table ; S2 table) ei 7
+
++ over rows S1 table ei 7  NB. Bell numbers
+
++ over rows S2 table ei 7
+
+NB. =========================================================
+Lab Section
+It may be noted that the functions BC and S1 and S2
+are denoted in BON by the forms ( ) and [ ] and { }.
+
+Treatment of the Stirling numbers as matrices offers
+significant insights. For example, the use of matrix
+inverse (mi) and magnitude (mag) give:
+)
+st1=: S1 table
+st2=: S2 table
+
+(st1;(mi on st1);(mag on mi on st1);st2) ei 5
+
+(st2;(mi on st2);(mag on mi on st2);st1) ei 5
+
+NB. =========================================================
+Lab Section
+
+More importantly, these matrices together with
+matrix product (mp) provide transformations between
+the coefficients of an ordinary polynomial and the
+coefficients of a "falling factorial" polynomial.
+
+The relation between the power function (power) and the
+falling factorial function (ff) is illustrated below.
+A falling factorial polynomial (ffp) is based on ff in
+the same way that an ordinary polynomial (poly) is based
+on the power function:
+)
+5 power 4
+
+5*5*5*5
+
+5 ff 4
+
+5*(5-1)*(5-2)*(5-3)
+
+c=:3 1 4 2 5
+
+x=:0 1 2 3 4 5 6
+
+c poly x NB. Powers are in ascending order
+
+c ffp x
+
+NB. =========================================================
+Lab Section
+
+A matrix product with an appropriate table of
+Stirling numbers may be applied to the
+coefficients of an ordinary polynomial to produce the
+coefficients of an equivalent falling factorial
+polynomial. For example:
+)
+c
+
+# c    NB. Number of elements of c
+
+S2 table int # c NB. Stirling numbers of appropriate order
+
+d=:c mp S2 table int # c
+
+d
+
+d ffp x
+
+c poly x
+
+NB. =========================================================
+Lab Section
+
+The inverse transformation is provided by the inverse
+of the Stirling table:
+)
+mi S2 table int # c
+
+d mp mi S2 table int # c
+
+c
+
+NB. =========================================================
+Lab Section
+
+One reason for the importance of the falling factorial
+polynomial is that its coefficients are easily derived from
+a difference table, and a Stirling table can then be used to
+produce the coefficients for an ordinary polynomial:
+)
+y=:c poly x
+
+y
+
+dt y
+
+a=:1 from rows dt y
+
+b=: a dby ! int # a
+
+a;b
+
+b ffp x
+
+y
+
+NB. =========================================================
+Lab Section
+
+Non-recursive functions for Stirling numbers can
+be obtained from the Vandermonde matrix (for powers)
+and the corresponding matrix for the falling factorial:
+)
+vmp=: ^ table int 5x
+
+vmf=: ff table int 5x
+
+vmp;vmf
+
+fod (mi vmf) mp vmp
+
+fod (mi vmp) mp vmf
+
+NB. =========================================================
+Lab Section Partition numbers and compositions; Ramanujan's numbers
+
+Ramanujan's approximation for the number of partitions
+is defined below. The results may be compared with
+the exact values for the cases 0-11 given on page 95:
+)
+p=:3 : '(^ o. %: 2r3 * y) % (4 * y * %: 3)'
+(int 25) by p int 25
+
+NB. =========================================================
+Lab Section Catalan numbers
+
+For a treatment of Catalan numbers, close this lab,
+and open the lab "Catalan Numbers".
+)
+
+NB. =========================================================
+Lab Section Bernoulli numbers
+
+In BON, the coefficients given in the equations defining the
+Bernoulli numbers are the alternating binomials,
+and are used as shown below. The function x: (used in coeffs)
+invokes the use of extended precision, presenting rationals
+in the form 1r2 and 1r6, etc.:
+)
+bern=:(] mp numerator % denominator) , ]
+   numerator=:2 with trim on coeffs
+   denominator=:2 with from on - on coeffs
+      coeffs=:abct on inc on x: on #
+         abct=:(] BC ei) * (_1 with power on ei)
+
+bern 1
+
+bern bern 1
+
+bern for (ei 12) 1
+
+NB. =========================================================
+Lab Section
+
+The definition of bern is repeated below, and details of
+it may be explored by exercising the component functions.
+For example:
+
+   bern=:(] mp numerator % denominator) , ]
+      numerator=:2 with trim on coeffs
+      denominator=:2 with from on - on coeffs
+         coeffs=:abct on inc on x: on #
+            abct=:(ei ! ]) * (_1 with power on ei)
+)
+B=: bern bern 1
+
+B
+
+# B   NB. Number of elements
+
+numerator B
+
+denominator B
+
+coeffs B
+
+inc
+
+(_1 with power on ei) 5
+
+NB. =========================================================
+Lab Section
+
+The following modification of bern gives the Bernoulli
+numbers in ascending order:
+)
+bernasc=:] , (fov mp numerator % denominator)
+
+bernasc for (ei 12) 1
+
+NB. =========================================================
+Lab Section
+
+The expression given for B12 in BON may be tested
+as follows:
+)
+(bern for 12) 1
+
+1 from (bern for 12) 1
+
+a=:x: 2 3 5 7 13
+
+1 dby a
+
+1- + over 1 dby a
+
+NB. =========================================================
+Lab Section Euler numbers
+
+The zigzag triangle of BON is obtained by alternate use
+of the suffix and prefix operations defined below:
+)
+prefix=:0:,+/\
+suffix=:+/\.,0:
+
+f=:suffix tie prefix agenda (2:|#) NB. prefix if odd # of elements
+
+f 1
+f f 1
+
+f^:(ei 10) 1
+
+1 from rows f^:(ei 13) 1
+
+sum rows f^:(ei 13) 1x
+
+NB. =========================================================
+Lab Section Fibonacci numbers
+
+The recursive relation on items n+2 and n+1 and n
+given in BON provides the basis for a recursive definition
+for the fibonacci numbers. An expression such as 1 1 2 3 fib 5
+extends the fibonacci sequence 1 1 2 3 by five further items:
+)
+fib=:f3`g3@.h3
+  f3=:[
+  g3=:([ , sum on (_2 with take on [)) on ([ fib dec on ])
+  h3=:0 with < on ]
+
+1 fib 5
+
+1 1 2 3 fib 5
+
+FIB=:1 with fib
+
+LUCAS=:2 1 with fib
+
+FIB 6
+
+LUCAS 6
+
+NB. =========================================================
+Lab Section
+
+Applying FIB to each of the arguments 0 to 6, and boxing
+each of the results, gives the following pattern:
+)
+< on FIB each 0 1 2 3 4 5 6
+
+,.< on FIB each 0 1 2 3 4 5 6
+
+NB. =========================================================
+Lab Section
+
+The diagonal sums used in figure 4.24 are obtained as follows:
+)
+BC table ei 7
+
+sum diagonal BC table ei 7
+
+8 take sum diagonal BC table ei 7
+
+NB. =========================================================
+Lab Section
+
+The diagonal sums used to obtain fibonacci numbers are
+also useful in obtaining the coefficients for a product of polynomials:
+)
+
+c=: 2 1 4 3
+d=: 5 4 3 2 1
+
+((c with poly);(d with poly);(c with poly * d with poly)) 0 1 2 3 4 5
+
+c * table d
+
+e=: sum diagonal c * table d
+e
+
+((c with poly * d with poly) ; (e with poly)) 0 1 2 3 4 5
+
+NB. =========================================================
+Lab Section
+
+The coefficients of a product polynomial may also
+be obtained from the Taylor series of the product.
+
+As shown in Concrete Mathematics (Graham, Knuth, and Patashnik),
+the fibonacci numbers can be obtained as the Taylor series
+of a rational function:
+)
+(c with poly * d with poly) taylor 0 1 2 3 NB. First four coefficients
+
+(c with poly * d with poly) taylor int 10
+
+(0 1 with poly % 1 _1 _1 with poly) taylor int 10
+
+NB. =========================================================
+Lab Section
+
+Pairwise differences are given by the function pwdifs,
+itself defined as sum prefixes for _1, that is, the
+inverse of the partial sums. When applied to a list
+Fibonacci numbers, diffs gives Fibonacci numbers:
+)
+f10=: FIB 10
+
+f10
+
+pwdifs f10
+
+x=:1 2 3 4 5 6 7 8
+
+sum x
+
+sum prefixes x
+
+sum prefixes for _1 x
+
+pwdifs x
+
+NB. =========================================================
+Lab Section
+
+Similarly, the inverse of partial products gives
+pairwise quotients. Applied to Fibonacci numbers,
+these pairwise quotients give the approximations
+to the golden number mentioned in BON.
+
+A second application of pairwise quotients gives
+results that approach 1 from above and below, showing
+that the approximations are alternately greater than
+and less than the golden number:
+)
+pwquos=:* over prefixes for _1
+
+pwquos f10
+
+pwquos pwquos f10
+
+x
+
+* over x
+
+* over prefixes x
+
+NB. =========================================================
+Lab Section
+
+The approach of pwquos pwquos f10 to the limit 1 can be seen
+more clearly by applying x: to f10 to get results in
+extended precision (and therefore expressed as rationals):
+)
+pwquos x: f10
+
+pwquos pwquos x: f10
+
+NB. =========================================================
+Lab Chapter The Primacy of Primes
+NB. =========================================================
+Lab Section Prime numbers
+
+The function p: gives the primes, and q: gives the
+decomposition of a number into its prime factors.
+Moreover, it may be noted that primes do not appear
+in the multiplication table for the argument 2 int n:
+)
+p:0
+
+p:0 1 2 3 4
+
+p:1000000
+
+q:1+p:1000000
+
+2 int 10
+
+* table 2 int 10
+
+NB. =========================================================
+Lab Section
+
+As remarked in BON, "The number 1 used to be counted as
+a prime ... But there are so many ways in which it differs
+from the proper prime numbers that mathematicians now put
+in its special class."
+
+In particular, if 1 were included, prime decompositions
+would no longer be unique: 6 might be expressed as 2*3,
+but also as 1*2*3 and 1*1*2*3.
+
+Moreover, 1 is often inadvertently included as a prime
+in definitions used in elementary texts, as for example,
+"A prime is any number divisible only by itself and 1".
+
+The addition of the phrase "except for 1 itself" seems
+awkward, and it might be better to define a prime as
+a number with exactly two distinct divisors. This definition is
+illustrated in the following, using the fact that a
+remainder of zero indicates a divisor:
+)
+rt=:remainder table 1 int 10
+
+rt;0=rt
+
+NB. =========================================================
+Lab Section
+Summing the divisor table gives the number of distinct divisors,
+and comparing this sum to 2 gives a sieve that identifies the
+primes. Finally, # is used to select the primes
+themselves:
+)
+0=rt
+
+sum 0=rt
+
+2=sum 0=rt
+
+(2=sum 0=rt) # 1 int 10
+
+NB. =========================================================
+Lab Section Arithmetic modulo p
+
+We will define mod such that a + mod 5 b gives the
+5-remainder of the sum of a and b. Thus:
+)
+a=:3
+b=:int 7x
+a+b
+5 rem a+b
+
+mod=:2 : (':'; 'n | x u y')
+
+a +mod 5 b
+
++ mod 5 table b
+
+* mod 5 table b
+
+NB. =========================================================
+Lab Section
+
+A bordered multiplication table can itself be used to
+carry out multiplication in the following sense: to
+multiply 8 by 6, read the element in row 8 and column
+6.
+
+Conversely, to divide 48 by 6, locate it in column 6
+and read off its row number.
+
+Use the following table for experimenting with such
+multiplication and division:
+)
+i=: 1 int 10
+i
+
+* border i
+
+NB. =========================================================
+Lab Section
+
+Multiplication modulo 7 can be treated similarly.
+We first show that the expression 7 with rem @ * table i
+is equivalent to the expression 7 rem * table i :
+)
+7 with rem @ * table i
+
+7 rem * table i
+
+NB. =========================================================
+Lab Section
+
+We now produce the bordered table for the function 7 with rem @ *
+to be used like the multiplication table in the earlier panel,
+but this time to provide multiplication and division modulo 7.
+
+Compare results for "division mod 7" provided
+by the bordered table with those given in BON.
+)
+7 with rem @ * border i
+
+NB. =========================================================
+Lab Section There are always new primes
+
+We will use the functions p: and q: (introduced in
+the first panel) to carry out some of the calculations in
+this section of BON:
+)
+(* over 2 3 5 7 11 13) + 1
+
+q:30031
+
+(p: for _1) 19  NB. Index of 19 in the primes
+
+p: int 7+1      NB. The primes to 19
+
+(* over p: int 7+1) +1
+
+q: 9699691
+
+NB. =========================================================
+Lab Section Mersenne's numbers
+
+We give a few of the calculations of this section:
+)
+(2^15)-1
+
+#:(2^15)-1  NB. Binary representation
+
+q: (2^15)-1 NB. Prime factorization
+
+10 show (180*((2 power 127x)-1) power 2)+1 NB. Miller&Wheeler
+
+NB. =========================================================
+Lab Section Perfect numbers
+
+We will first define a function that sums all factors of
+an argument (except itself), and apply it to interesting cases.
+We will defer examination of the component functions:
+)
+  g=:] power binary
+    binary=:fod on (#: on int on (2 with power) on #)
+  f=:nub@:(* over)
+    nub=:~.
+  e=:sum@:(_1&trim)
+sumfactors=:e on f on g on q:
+
+sumfactors 496  NB. A known perfect number
+
+y=:2 3 4 5 6 7 8
+sumfactors each y
+
+y=sumfactors each y
+
+(y=sumfactors each y) # y
+
+y=:2 int 30
+y
+
+(y=sumfactors each y) # y
+
+NB. =========================================================
+Lab Section
+
+We will compute one case of a perfect number derived
+from a Mersenne prime. The next case (2 power 17x)-1
+may be computed, but takes many minutes:
+)
+M=:(2 power 13x)-1 NB. Mersenne prime
+M
+q:M
+
+DM=:(M*(M+1)) dby 2 NB. Putative perfect number
+DM
+
+q: DM
+
+sumfactors DM
+
+NB. =========================================================
+Lab Section
+
+We will first repeat the definition of the function
+sumfactors, and will then illustrate the application
+of the component functions for the argument 496:
+
+   g=:] power binary
+     binary=:fod on (#: on int on (2 with power) on #)
+   f=:nub@:(* over)
+     nub=:~.
+   e=:sum@:(_1&trim)
+ sumfactors=:e on f on g on q:
+)
+
+q:496           NB. Prime factors of 496
+
+binary q: 496   NB. Table of binary representations
+
+g q: 496        NB. Powers of prime factors
+
+* over g q: 496 NB. Product over powers to get factors
+f g q: 496      NB. Nub suppresses repetitions
+
+NB. =========================================================
+Lab Section
+Re-display of definition:
+
+   g=:] power binary
+     binary=:fod on (#: on int on (2 with power) on #)
+   f=:nub@:(* over)
+     nub=:~.
+   e=:sum@:(_1&trim)
+ sumfactors=:e on f on g on q:
+)
+_1 trim f g q: 496 NB. Trims off last factor (496 itself)
+
+e f g q: 496       NB. Sums trimmed list of factors
+
+sumfactors 496
+
+NB. =========================================================
+Lab Section Wilson's test
+
+Wilson's test states that p is a prime if the factorial of
+p-1 is congruent to _1. Equivalently we may say that
+the p-residue (or p-remainder) of the factorial of the decrement
+of p must equal the decrement of p. We therefore define
+Wilson's test as follows:
+)
+wilson=:dec = ] rem ! on dec
+
+wilson 3
+
+n=:3 4 5
+
+wilson n       NB. Test for primes
+
+(wilson n) # n NB. Select primes
+
+n=:int 50x
+n
+
+(wilson n) # n NB. Curiously, Wilson's test gives 1 as a prime
+
+p:200          NB. A larger prime
+
+wilson 1228 1229 1230x
+
+NB. =========================================================
+Lab Section Fourteen fruitful fractions
+
+The following provides an approach to experimenting with
+the fractions given in Figure 5.3:
+)
+nums=:17 78 19 23 29 77 95 77 1 11 13 15 15 55x
+dens=:91 85 51 38 33 29 23 19 17 13 11 14 2 1
+'A B C D E F G H I J K L M N'=:nums dby dens
+
+A,B,N
+
+c=: 2,M,N,E,F,K,A,B,J,E,F,K,A,B,J,E,F,K,A,I
+
+* over pref c NB. Results of Figure 5.4
+
+NB. =========================================================
+Lab Chapter Further fruitfulness of fractions
+NB. =========================================================
+Lab Section Farey fractions
+
+According to BON, "Farey suggested arranging all the
+proper fractions with (lowest) denominator up to some
+point in order of magnitude." We will do this by
+forming the divide table for the
+integers i.7x (from 0 to 6), taking the minimum with 1
+to eliminate the improper fractions and infinities, and then using the
+comma to ravel the table to a 49-element list. Finally we take
+the nub of that to eliminate duplicates, and sort the
+result to ascending order:
+)
+dby table i.7x
+
+1 min dby table i.7x
+
+nub , 1 min dby table i.7x
+
+F6=:sort nub , 1 min dby table i.7x
+F6  NB. Farey series of order 6
+
+NB. =========================================================
+Lab Section
+
+The "cross products" mentioned by BON concern
+relations between successive pairs of elements of F6.
+We will form such pairs by using the familiar "prefix"
+with a left argument to specify the number of
+elements to be selected:
+)
+a=:0 1 2 3 4 5 6
+sum a
+sum pref a   NB. Subtotals
+
+2 sum pref a NB. Sums over successive pairs
+
+3 sum pref a NB. Sums over successive triples
+
+2 right \ F6 NB. Successive pairs from F6
+
+NB. =========================================================
+Lab Section
+
+We will now transpose this table of pairs and apply
+division over it to give the cross
+products, the sucessive integers appearing as the
+numerators and denominators:
+)
+fod 2 right \ F6
+
+dby over fod 2 right \ F6
+
+NB. =========================================================
+Lab Section
+
+We will now use the expression that produced F6
+to define a function called Farey to produce
+series of any order. It is interesting
+to note that the number of elements (given by the number
+symbol #) for several cases are primes, but (as discussed
+in the section on totients in BON) the situation is
+not that simple:
+:
+)
+Farey=:3 : 'sort nub , 1 min dby table i. y+1x'
+
+Farey 6
+
+Farey 1
+
+# on Farey each 1 2 3 4 5 6 7 8 9 NB. Primes, but 17 is missing
+
+# on Farey each 10                NB. Not prime
+
+# on Farey each 1 int 20
+
+NB. =========================================================
+Lab Section
+
+Prime factorization of these results shows the primes:
+)
+i=: 1 int 28
+(,.i) ; q: # on Farey each i
+
+NB. =========================================================
+Lab Section Euler's totient numbers
+
+As stated in BON, the length of a Farey series of
+order n is one more than the sum of the totient
+functions of 1 to n We therefore begin by taking
+the pairwise differences of these lengths prefaced
+by 1.
+
+These results show an initial 1 that we remove by
+the use of 1 trim, giving a list that agrees with
+the "little table" in BON:
+)
+i=:1 int 20
+i
+
+1 , # on Farey each i
+
+pwdifs 1 , # on Farey each i
+
+1 trim pwdifs 1 , # on Farey each i
+
+NB. =========================================================
+Lab Section
+
+BON gives the totient of 100 as 40, a result we
+may check as shown below.
+
+BON gives the expression n*(1-1 dby p)*(1-1 dby q)*(1-1 dby r)* ...
+for the totient of n, where p,q,r are the different (distinct)
+prime factors of n This is shown below for the case n=:100:
+)
+1 trim pwdifs 1 , # on Farey each 99 100 101
+
+totient=:3 : '*/y,1-1 dby nub q:y'"0
+totient i
+
+totient 1 int 10 10
+
+NB. =========================================================
+Lab Section
+
+The assertion in BON that any number is the sum of the
+totients of its divisors may be tested as follows:
+)
+x=:12
+1 int 12
+(1 int x) rem x
+sieve=:0=(1 int x) rem x NB. 0 remainder gives sieve for divisors
+sieve # 1 int x          NB. Select divisors
+divisors=:3 : '(0=(1 int y) rem y)# 1 int y'
+divisors 12
+
+sum totient divisors 12
+
+sum totient divisors 210
+
+NB. =========================================================
+Lab Section
+
+BON asserts that "... every totient number that
+happens, happens at least twice, but nobody has yet
+managed to prove this." We will experiment with this
+assertion  by using the function = to provide a
+classification table of a list of totients (with
+respect to its nub), and then summing the rows of the
+table (by first transposing it). The result shows that
+there are two 1s, three 2s, four 4s, etc.:
+)
+i
+tot=:totient i
+tot
+nub tot
+=tot
+sum fod = tot
+nub sum fod = tot
+
+NB. =========================================================
+Lab Section
+
+Finally, a similar classification of this result shows
+the number of occurrences of each sum:
+)
+sum fod = sum fod = tot
+
+sum fod = sum fod = totient 1 int 1000
+
+NB. =========================================================
+Lab Section Fractions cycle into decimals
+
+The format function(":) may be used to show
+the decimal representation of a fraction to
+a desired number of places, the imaginary part
+of the complex left argument specifying the
+number of places:
+)
+0j14 ": 1r7
+
+0j14 ": 3r13
+
+8 show 0j14 ": 1r7
+
+NB. =========================================================
+Lab Section
+
+The last entry of Table 6.1 may be shown as a
+7 by 14 table as follows:
+)
+7 14 $ 0j96 ": 1r97
+
+NB. =========================================================
+Lab Section Repeated shuffling
+
+We will begin with the outshuffle of Figure 6.5b,
+first defining a function that cuts the cards
+(the integers 0-7) into a two-column table akin to
+the left column of the figure, and ravel it to
+form the list in the right column.
+
+The number 4 used below is the size of each cut deck;
+that is, one half of the number of cards:
+)
+int 4
+4+int 4
+
+cut=:int ,. ] + int
+
+cut 4
+
+, cut 4
+
+NB. =========================================================
+Lab Section
+
+For the inshuffle we must increment the table produced
+by cut, and flip the result about the vertical axis:
+)
+inc cut 4
+
+fov inc cut 4
+
+,fov inc cut 4
+
+NB. =========================================================
+Lab Section
+
+We use these results to define functions for the shuffles:
+)
+outsh=:, on cut
+
+outsh 4
+
+insh=:, on fov on inc on cut
+
+insh 4
+
+NB. =========================================================
+Lab Section
+
+To make a clear distinction between the items
+in a deck and their indices, we will define
+functions OUTSH and INSH that use the results
+of outsh and insh to select from a deck, first
+using the deck 'ABCDEFGH':
+)
+OUTSH=: inc@(outsh@:(dby&2@:#)) from right
+
+INSH=:insh@:(dby with 2@:#) from right
+
+deck=:'ABCDEFGH'
+
+OUTSH deck
+
+INSH deck
+
+NB. =========================================================
+Lab Section
+
+These functions apply to boxed arrays as well:
+)
+q=:'Ace two three four five six seven eight nine ten Jack Queen King Joker'
+
+deck=: ;: q   NB. ;: is the word formation function
+
+deck
+
+OUTSH deck
+
+INSH deck
+
+NB. =========================================================
+Lab Section
+
+The tables produced by powers of these functions,
+as well as coloring of these tables, show interesting
+patterns such as the power of the permutation at which
+the pattern repeats. We will begin with the outshuffle:
+)
+x=:1 2 3 4 5 6 7 8
+
+OUTSH for 0 1 2 3 4 5 6 7 8 x
+
+color OUTSH for 0 1 2 3 4 5 6 7 8 x
+
+NB. =========================================================
+Lab Section
+)
+INSH for 0 1 2 3 4 5 6 7 8 x
+
+color INSH for 0 1 2 3 4 5 6 7 8 x
+
+NB. =========================================================
+Lab Section Continued fractions
+
+In evaluating continued fractions, we add to the left
+argument the reciprocal of the right argument, as
+defined by the function cf=: left + % on right .
+
+Compare the following rational numbers with those
+given in BON:
+)
+cf=: left + % on right
+
+12 cf 2x
+
+12 cf 2 cf 1x
+
+12 cf 2 cf 1 cf 2x
+
+NB. =========================================================
+Lab Section
+
+This may also be expressed by applying cf over the
+lists of coefficients, and by using pref to get the
+convergents. The corresponding decimal approximations
+may be obtained by omitting the final x from the list:
+)
+cf over 12x
+
+cf over 12 2x
+
+cf over 12 2 1x
+
+cf over 12 2 1 2 1 1x
+
+cf over pref 12 2 1 2 1 1x
+
+cf over pref 12 2 1 2 1 1
+
+cf over pref 1 1 1 1 1 1 1 1x  NB. Fibonacci numbers
+
+cf over pref 1 1 1 1 1 1 1 1   NB.  approach the golden number
+
+NB. =========================================================
+Lab Chapter Geometric problems and algebraic numbers
+NB. =========================================================
+Lab Section Continued fractions for irrational numbers
+)
+cf over pref 1 2 2 2 2 2 2 2x
+
+cf over pref 1 2 2 2 2 2 2 2
+
+%: 2
+
+cf over 1 1 1 1 1 1 1 1
+
+(1 + %: 5) dby 2
+
+cf over 1 1 2 1 2 1 2 1 2
+
+%:3
+
+cf over 2 4 4 4 4 4 4 4
+
+%:5
+
+NB. =========================================================
+Lab Chapter Imagining imaginary numbers
+NB. =========================================================
+Lab Section Imaginary numbers are real
+
+The dyadic function j. yields complex numbers,
+and the function sint=: i: produces a symmetric list
+of integers.
+
+The expression (sint 4) j. table (sint 2) therefore produces a
+9-by-5 table of Gaussian integers:
+)
+3 j. 4
+2.5 j. _3.5
+
+sint=:i:
+
+sint 4
+
+(sint 4) j. table (sint 2)
+
+NB. =========================================================
+Lab Section
+
+This table may be flipped about the diagonal and
+then about the horizontal axis to agree with Figure 8.6
+(except for the typo -5 for -3):
+)
+foh fod (sint 4) j. table (sint 2)
+
+NB. =========================================================
+Lab Section
+
+Table 8.7 (a) may be produced similarly:
+)
+gint=:foh fod (int 7) j. table sint 6
+
+gint
+
+NB. =========================================================
+Lab Section
+
+To test whether the Gaussian integer 3j2 is a prime
+(as it is said to be in Figure 8.7 (a)),
+we will divide it by this table gint and apply the function
+whole to indicate which of the quotients is an integer
+or Gaussian integer. We then use the result to select
+(#"1) from each row of gint:
+)
+gint ; (whole 3j2 dby gint) ; ((whole 3j2 dby gint) #"1 gint)
+
+NB. =========================================================
+Lab Section
+The Gaussian integer 3j2 therefore appears to have five divisors. But three
+of them are 1 and 0j1 and 0j_1 (so-called units), that
+are factors of any Gaussian integer. Moreover, the last
+(2j_3) divided into 3j2 gives a unit (0j1). Hence, (unless
+we otherwise exclude units from our factor table and from
+the table of quotients) we expect a prime to have 5 factors,
+and test for primality by requiring that the number of 1s in
+the sieve produced by the function whole is not greater
+than 5.
+
+Note that the primality function given below may not
+work for a left argument whose magnitude exceeds the
+magnitude of the largest element of the Gaussian table
+right argument:
+)
+sum ravel whole 3j2 dby gint
+(sum ravel whole 3j2 dby gint) = 5 NB. 3j2 is a prime
+sum ravel whole 4j3 dby gint
+(sum ravel whole 4j3 dby gint) = 5 NB. 4j3 is not a prime
+
+primality=: 5 with = on sum on ravel on whole on dby
+3j2 primality gint
+primality with gint each 3j2 4j3
+
+NB. =========================================================
+Lab Chapter Some transcendental numbers
+NB. =========================================================
+Lab Section The number pi
+No topics treated
+)
+
+NB. =========================================================
+Lab Chapter Infinite and infinitesmal numbers
+NB. =========================================================
+Lab Section Addition of Nimbers
+
+Table 10.1 gives an addition table for "nimbers", a table
+we will produce by first defining a function
+p that performs "addition" of single nimbers, use it, and then
+analyze the definition:
+)
+p=:#. on (neq over) on #: on , each
+3 p 5
+3 p int 16
+p border int 16
+
+NB. =========================================================
+Lab Section
+The successive steps in the execution of p are illustrated
+below. The functions #: and #. give the binary representation
+and its inverse:
+)
+p=:#. on (neq over) on #: on , each
+
+3 , 5
+
+a=:3 #: on , 5
+a
+neq over a
+
+#. neq over a
+
+3 p 5
+
+NB. =========================================================
+Lab Section Multiplication of Nimbers
+The function mt defined below multiplies nimbers:
+)
+mt=: monad define
+iN=.i.N=.y
+MT=.(>.|:)iN 1}0$~,~N
+for_a. 2}.iN do.for_b. a}.iN do.
+ c=.a,b,|:(#:i.@*/)a,b
+ r=.<"1[0 1|:(2 1,0 3,:2 3){c
+ t=.~.(~:/&.#:)"1 r{"1 2 MT
+ j=.(0:i.~]e.~[:i.2:+>./)t
+ MT=.j((;|.)a,b)}MT
+end.end.
+)
+
+mt 8 NB. A Nimbers multiplication table
+
+NB. =========================================================
+Lab Section
+)
+mt 24
+
+NB. =========================================================
+Lab Section
+The function mt produces a nimbers multiplication table --
+to produce a nimbers multiplication function, we pick
+appropriate elements from this table as follows:
+)
+t=:(]{[{mt@(2:+(>./)))"0 NB. Nimbers times function
+
+3 t 6
+t border int 7
+
+5 t 6
+5 t 4 p 2    NB. No precdence of t over p here
+
+5 t (4 p 2)  NB.  Equivalent to this
+
+(5 t 4) p 2  NB.  Not to this
+
+NB. =========================================================
+Lab Section Powers of Nimbers
+The table of powers (Table 10.3) concerns the application
+of nimbers multiplication over a number of copies
+of an argument, the number being specified by the exponent:
+)
+npow=:t over on (right copies left)
+
+a1=:1+a0=:int 7
+
+a0
+a1
+
+a0 npow each/ a1
+
+NB. =========================================================
+Lab Section Identity elements
+Since a1 begins at 1, the exponents exclude 0,
+and the result therefore excludes the leading column of 1's
+of Table 10.3.
+
+The use of a0 as right argument should include this column, but will fail
+because no "identity element" or "neutral" has been defined for the
+function t. The following illustrates the matter by the identity elements
+of the ordinary functions of plus and times:
+)
+d=:1 int 5
+d
+3 take d                              NB. Partitions of d
+3 drop d
+
+(+ over 3 take d) + (+ over 3 drop d) NB. Sum of sum over partitions
++ over d                              NB. equals sum over the whole
+
+0 take d
+0 drop d
+(+ over 0 take d) + (+ over 0 drop d) NB. Works for an empty list as well
+
++/ 0 take d NB. But only because the neutral of + is suitably defined
+
+NB. =========================================================
+Lab Section
+Similarly for the identity elements of * (which is 1) and
+minimum (which is infinity -- denoted by _)
+)
+(* over 3 take d) * (* over 3 drop d) NB. Times of times over partitions
+* over d                              NB. Equals times over whole
+
+(* over 0 take d) * (* over 0 drop d) NB. Works for an empty list as well
+
+* over 0 take d                       NB. Neutral of *
+
+(min over 3 take d) min (min over 3 drop d) NB. Min of min over partitions
+min over d                                  NB. equals min over whole
+
+(min over 0 take d) min (min over 0 drop d) NB. Works for an empty list as well
+
+min over 0 take d                           NB. Neutral of min
+
+_ min 3                                     NB. Test of neutral
+
+NB. =========================================================
+Lab Section
+End of Book of Numbers lab.
+)
+PREPARE
+clear''
+PREPARE
+
+
+
+

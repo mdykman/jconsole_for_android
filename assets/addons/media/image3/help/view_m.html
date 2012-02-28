@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE>The view_m Script</TITLE>
+</HEAD>
+<BODY>
+<b>The View_m Script</b><br>
+by Zachary X. Reiter and Clifford A. Reiter<br>
+October 2002<br>
+<p>
+The image3 addon contains the script, <tt>view_m.ijs</tt>, which defines functions that may be used to display images and data. Images may be given as a file name or as one of the standard data forms for images as noted below. Data is assumed to be matrix whose values are to be visualized via coloring.
+
+<p><b>The Main Functions</b></p>
+The syntax of the main functions are as follows. <br>
+<ul>
+<li><tt>view_image 'imagefile' </tt> opens a view window containing the image in the file "imagefile". Alternaterly,<br>
+<tt>view_image imagedata </tt> where imagedata is one of the arrays used to give an image as described below.
+<li><tt>[palette] view_data matrix </tt> where "matrix" is a matrix of numeric data. The data is linearly scaled to determine color unless the minimum value of the data is 0 or 1 and the maximum value is 254 or 255 (which suggests it has already been scaled). The left argument may be used to specify a 256-color palette. The default palette, <tt>P254</tt> is described below.</li>
+<li><tt>levels cile data</tt> changes the data into the specified number of levels, each level having approximately the same number of appearances. It is useful to combine this with <tt>view_data</tt>:<br>
+<tt> view_data 256 cile data </tt> displays the data with optimal contrast, rather than linear constrast.</li>
+</ul>
+<p><b>The Data Forms for Images are:</b></p>
+<ol>
+<li>h by w by 3 array of integers (range 0-255): this is the main data form</li>
+<li>h by w by 3 array of bytes (characters): compact data form</li>
+<li>h by w by 1 array of integers (range 0-255) or bytes: Grayscale image</li>
+<li><tt>(p;B)</tt> where <tt>p</tt> is an integer palette of RGB values (0-255) and <tt>B</tt> is an h by w array of indices into the palette. </li>
+</ol>
+The left argument (adverb) of <tt>write_image</tt> may be data in any of those forms. The grayscale format is primarily intended for access to Jpeg grayscale images. Paletted images are promoted to 24 bit images before being saved except for <i>*.bmp</i> and <i>*.png</i> files which are saved as 8-bit images.
+</p>
+
+<p><b>Palettes</p></b>
+Three standard palettes are defined by the script.  
+<ul>
+<li><tt>P254 </tt> This is the default palette: it contains white, 
+then 254 pure hues ranging from red to magenta, and finally black. Thus, Boolean arrays are shown in black and white and others primarily show hues, but the lowest points are white and the highest are black. Contrast may be automatically enhanced by using <tt>cile</tt>, see above and below.</li>
+<li><tt>P256 </tt> This is similar to <tt>P254</tt> except no black and white appear: it is a list of 256 pure hues.</li>
+<li><tt>BW256 </tt> This is a 256 palette running from black (low!) to white.
+</ul>
+
+<p><b>Several Examples </p></b>
+Some examples appear at the end of the <i>view_m.ijs</i> script itself illustrate usage. Some of those are repeated here:
+<pre>
+view_image addon_path,'atkiln.jpg'   NB. load a medium size image
+view_image 500#,:3#"0 i.256          NB. grayscale as integers
+view_image a.{~500#,:3#"0 i.256      NB. grayscale as raw
+view_image P256;500#,:i.256          NB. Hues
+
+view_data (+./ . * |:) #:i.2^8       NB. Sierpinski triangle
+view_data (+./ . *. |:) 3 3 3 3 3#:i.3^5  NB. Sierpinski carpet
+sin3data=:|.(+&(1&o.) + 1&o.@(+&.*:))"0/~ 14*(i:%]) 200
+view_data sin3data                   NB. linear scale; b/w peak/valley
+P256 view_data sin3data              NB. linear scale
+view_data 256 cile sin3data          NB. optimal contrast; b/w peak/valley
+P256 view_data 256 cile sin3data     NB. optimal contrast
+view_data 1+254 cile sin3data        NB. use 254 hues to show data with 
+                                     NB. optimal contrast; black/white 
+                                     NB. reserved for later use.
+</pre> 
+<hr>
+Link to:<br>
+<a href="index.html">
+Image3 Main Help</a>
+</body>
+</HTML>

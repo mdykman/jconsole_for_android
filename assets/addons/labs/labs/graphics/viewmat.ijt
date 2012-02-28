@@ -1,0 +1,218 @@
+LABTITLE=: 'Viewmat'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section Overview
+The viewmat utilities display tables of data graphically. They are used in several of the labs.
+
+There are three utilities:
+
+  viewmat - view arbitrary table
+
+  viewrgb - view table of RGB integers
+
+  viewbmp - view bitmap file
+
+viewmat is the main utility, and is used by the other verbs.
+
+This lab displays several viewmat windows. You can leave them open and move them aside to view the lab text. To close them, press Esc in the viewmat window.
+
+To load, enter:
+)
+PREPARE
+load 'trig'
+PREPARE
+load 'viewmat'
+
+NB. =========================================================
+Lab Section viewmat
+For example, here is some random binary data, and its viewmat display.
+)
+[a=: ?20 20$2
+
+viewmat a
+
+NB. =========================================================
+Lab Section
+viewmat typically scales the data to a reasonable sized display. If you resize the window, it is redrawn. Try this now.
+)
+
+NB. =========================================================
+Lab Section
+Here it is used to visualize a multiplication table.
+)
+*/~ i:3
+
+viewmat */~ i:3
+
+NB. =========================================================
+Lab Section Color Palette
+A color palette may be given in the left argument. These are RGB triples, e.g. 255 0 0 is red.
+)
+(255 0 0,:0 128 0) viewmat ?20 20$2
+
+NB. =========================================================
+Lab Section
+This is a convenient way of displaying a color table.
+
+For example, here are the 16 HTML primary colors.
+)
+load 'color16'
+COLOR16
+(". COLOR16) viewmat i. 16
+
+NB. =========================================================
+Lab Section Window Title
+A boxed right argument is interpreted as:
+
+  data ; window title
+
+For example, here again are the 16 primary colors, this time displayed in a 4 x 4 table, with a window title.
+)
+(". COLOR16) viewmat (i. 4 4);'Primary Colors'
+
+NB. =========================================================
+Lab Section Vector Field
+If the right argument is complex, it is displayed as a vector field.
+
+The color indicates the magnitude |z, and arrows indicate the direction *z.
+)
+
+NB. =========================================================
+Lab Section
+To experiment with this, define a table of complex numbers centered on the origin, with the real part increasing from left to right, and the complex part increasing from bottom to top, as in the typical display of the complex plane.
+)
+[z=: |. j.~/~ i:2j16
+
+NB. =========================================================
+Lab Section
+Displaying z in viewmat shows a radial vector field.
+
+Note that unlike the earlier examples, viewmat attempts to smooth out the display of a vector field.
+)
+PREPARE
+z=: |. j.~/~ i:2j16
+PREPARE
+viewmat z
+
+NB. =========================================================
+Lab Section
+Here is the log of z.
+)
+PREPARE
+z=: |. j.~/~ i:2j16
+PREPARE
+viewmat (^. z);'Log z'
+
+NB. =========================================================
+Lab Section
+More examples:
+)
+PREPARE
+z=: |. j.~/~ i:2j16
+PREPARE
+viewmat (%z);'Reciprocal z'
+
+viewmat (sin z);'Sine z'
+
+NB. =========================================================
+Lab Section Utilities
+Viewmat is loaded into the jviewmat locale. This has other
+utilities, including:
+
+readmat_jviewmat_ ''  NB. reads active viewmat window
+
+savemat_jviewmat_ ''  NB. saves active viewmat window
+                      NB. argument is filename,
+                      NB. default ~temp\jviewmat.bmp
+
+closeall_jviewmat_ '' NB. close all viewmat windows
+
+For example, the next section uses closeall to close any
+viewmat windows.
+)
+
+NB. =========================================================
+Lab Section RGB
+A left argument for viewmat of 'rgb' means that the right argument is interpreted as a table of RGB color integers. The initial size is exactly that given.
+
+For convenience, the utility viewrgb is defined as:
+
+   'rgb' & viewmat
+
+For example, read in a bitmap file. Each number is an RGB color integer.
+)
+PREPARE
+closeall_jviewmat_ ''
+PREPARE
+a=: readbmp jpath '~system\examples\data\toucan.bmp'
+$a
+(<40;10) { a
+|.256 256 256 #: (<40;10) { a
+
+NB. =========================================================
+Lab Section
+Display the bitmap.
+
+Note that you can resize this image, but the quality is only as good as the initial data.
+)
+PREPARE
+a=. readbmp jpath '~system\examples\data\toucan.bmp'
+PREPARE
+viewrgb a
+
+NB. =========================================================
+Lab Section
+Since no scaling is done for the initial display of RGB data, this can be helpful for displaying a bitmap accurately.
+
+The following definitions will be used to display Hilbert's Peano (space-filling) curve. This has a fine pattern that can be distorted by scaling.
+)
+WB=: 255,:0 0 255        NB. white/blue color triples
+WR=: 256 #. 255,:255 0 0 NB. white/red color RGB integers
+HP=: 0, 0 1 0 ,: 0       NB. initial curve
+hp=: 3 : '(|.,]) 1 (0 _2 _2 ,&.> _2 _1 0 + #y) } (,.|:) y'
+
+NB. =========================================================
+Lab Section
+Compare the normal (scaled) blue version with the unscaled red version:
+)
+PREPARE
+WB=: 255,:0 0 255
+WR=: 256 #. 255,:255 0 0
+hp=: 3 : '(|.,]) 1 (0 _2 _2 ,&.> _2 _1 0 + #y) } (,.|:) y'
+HP=: 0, 0 1 0 ,: 0
+PREPARE
+WB viewmat hp ^:7 HP
+viewrgb WR {~ hp ^:7 HP
+
+NB. =========================================================
+Lab Section
+The scale definition below will scale up a bitmap accurately.
+
+This time the small version is unscaled, and the larger version
+is accurately scaled.
+)
+PREPARE
+hp=: 3 : '(|.,]) 1 (0 _2 _2 ,&.> _2 _1 0 + #y) } (,.|:) y'
+HP=: 0, 0 1 0 ,: 0
+PREPARE
+scale=: [ # #"1         NB. scale table y by integer x
+MG=: 256 #. 128 0 128,:0 192 0
+viewrgb MG {~ hp ^:6 HP
+viewrgb 2 scale MG {~ hp ^:6 HP
+
+NB. =========================================================
+Lab Section viewbmp
+The utility viewbmp will read a bitmap file and display it using
+viewrgb.
+
+For example:
+)
+viewbmp jpath '~system\examples\data\jbox.bmp'
+
+NB. =========================================================
+Lab Section
+This ends the viewmat lab.
+
+Utilities to display other image file types, such as JPEG, can be found in the Image3 Addon.
+)

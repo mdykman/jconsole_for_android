@@ -17,9 +17,9 @@ NB.            given
 NB. testbal    Adv. to make verb to test gxbalx by
 NB.            matrix(-ces) of generator and shape given
 NB.
-NB. Version: 0.7.0 2011-08-06
+NB. Version: 0.8.0 2011-10-29
 NB.
-NB. Copyright 2010-2011 Igor Zhuravlev
+NB. Copyright 2010-2011 Igor Zhuravlov
 NB.
 NB. This file is part of mt
 NB.
@@ -86,7 +86,7 @@ NB.   vapp=. ioz`getv`mkt`dhs gebalxp1d
 NB. where
 NB.   ioz  - dyad to scan vector, either (i.) or (i:), is
 NB.          called as:
-NB.            io=. (ioz & 0) vector
+NB.            io=. (ioz&0) vector
 NB.   getv - dyad to extract vector from matrix, is either
 NB.          ({) or ({"1), is called as:
 NB.            vector=. iovector getv matrix
@@ -140,14 +140,14 @@ gebalxp1d=: 1 : 0
   'p hs nz'=. y
   'h s'=. hs
   while.
-    zi=. h + (h ,: s) (ioz & 0 ;. 0) nz
+    zi=. h + (h ,: s) (ioz&0 ;. 0) nz
     zi < h + s
   do.
     nza=. (zi { p) (0:`[`(0 ~: getv)) } x
     nst=. < (h mkt s) , zi
     p=. nst C. :: ] p
     nz=. (nst C. :: ] nz) - (p { nza)
-    'h s'=. dhs (h , s)
+    'h s'=. dhs h,s
   end.
   p ; (h , s)
 )
@@ -244,7 +244,7 @@ NB.     o=. ((1 - FP_EPS) * x) I. y
 NB.   and provides:
 NB.     y < o { x
 
-gebalsf=: GEBALPOWMAX {~ (GEBALPOWMAX i. (1 { (GEBALSCLFAC ^ 1 1 _1) & ((*^:(({.<{:)@])^:_) (3&{.)))) <. (GEBALESFMAX1 - GEBALPOWMAX I. (1+FP_PREC)*(3{])) <. (GEBALPOWMIN I. (4{]))
+gebalsf=: GEBALPOWMAX {~ (GEBALPOWMAX i. 1 { (GEBALSCLFAC ^ 1 1 _1)&((*^:(({. < {:)@])^:_) 3&{.)) <. (GEBALESFMAX1 - GEBALPOWMAX I. (1 + FP_PREC) * 3 { ]) <. GEBALPOWMIN I. 4 { ]
 
 NB. =========================================================
 NB. Interface
@@ -314,8 +314,8 @@ NB.     general and structured eigenvalue problems. Ph.D.
 NB.     thesis, TU Berlin, Institut für Mathematik, Berlin,
 NB.     Germany.
 
-geballp=: [ ((fp~ (0 & {::)) ; ]) (({`({"1) gebalxp2d) (((+/,:(+/"1)) (-"1) diag)@:(0&~:)))
-gebalup=: [ ((fp~ (0 & {::)) ; ]) ((({"1)`{ gebalxp2d) (((+/"1,:(+/)) (-"1) diag)@:(0&~:)))
+geballp=: [ ((fp~ (0&{::)) ; ]) (({`({"1) gebalxp2d) (((+/,:(+/"1)) -"1 diag)@:(0&~:)))
+gebalup=: [ ((fp~ (0&{::)) ; ]) ((({"1)`{ gebalxp2d) (((+/"1,:(+/)) -"1 diag)@:(0&~:)))
 
 NB. ---------------------------------------------------------
 NB. gebals
@@ -431,7 +431,7 @@ gebals=: 3 : 0
     while. bt > i=. >: i do.
       rc=. rios (] ;. 0)"2 1 i ([ 0:`[`]}"1 { ,: {"1) B
       'r c'=. norm1tr rc
-      if. r (*. & (0&~:)) c do.
+      if. r (*.&(0&~:)) c do.
         'ra ca'=. |@(liofmax { ])"1 rc
         sum=. r + c
         g=. r % GEBALSCLFAC
@@ -445,15 +445,15 @@ gebals=: 3 : 0
         r=. r * fdn
         if. (r+c) < GEBALFACTOR*sum do.
           di=. i { d
-          if. f (*. & (<&1)) di do.
+          if. f (*.&(<&1)) di do.
             if. GEBALSFMIN1 >: f*di do. continue. end.
           end.
-          if. f (*. & (>&1)) di do.
+          if. f (*.&(>&1)) di do.
             if. di >: GEBALSFMAX1%f do. continue. end.
           end.
           d=. (di*f) i } d
-          B=. i  (%&f) upd    B
-          B=. i ((*&f) upd)"1 B
+          B=. i  %&f upd    B
+          B=. i (*&f upd)"1 B
           noconv=. 1
         end.
       end.
@@ -507,8 +507,8 @@ NB.
 NB. Notes:
 NB. - gebalu models LAPACK's xGEBAL('B')
 
-geball=: gebals @ geballp
-gebalu=: gebals @ gebalup
+geball=: gebals@geballp
+gebalu=: gebals@gebalup
 
 NB. ---------------------------------------------------------
 NB. ggballp
@@ -783,8 +783,8 @@ NB.
 NB. Notes:
 NB. - ggbalu implements LAPACK's xGGBAL('B')
 
-ggball=: ggbals @ ggballp
-ggbalu=: ggbals @ ggbalup
+ggball=: ggbals@ggballp
+ggbalu=: ggbals@ggbalup
 
 NB. =========================================================
 NB. Test suite
@@ -868,8 +868,8 @@ NB.   distributed uniformly with support (0,1):
 NB.     ?@$&0 testbal_mt_ 150 150
 NB. - test by random square real matrix with elements with
 NB.   limited value's amplitude:
-NB.     (_1 1 0 4 _6 4 & gemat_mt_) testbal_mt_ 150 150
+NB.     _1 1 0 4 _6 4&gemat_mt_ testbal_mt_ 150 150
 NB. - test by random square complex matrix:
 NB.     (gemat_mt_ j. gemat_mt_) testbal_mt_ 150 150
 
-testbal=: 1 : 'EMPTY_mt_ [ (testggbal_mt_ @ (u spmat_mt_ 0.25) @ (2&,) ^: (=/)) [ (testgebal_mt_ @ (u spmat_mt_ 0.25) ^: (=/))'
+testbal=: 1 : 'EMPTY_mt_ [ (testggbal_mt_@(u spmat_mt_ 0.25)@(2&,) [ testgebal_mt_@(u spmat_mt_ 0.25)) ^: (=/)'

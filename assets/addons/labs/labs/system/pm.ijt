@@ -1,0 +1,110 @@
+LABTITLE=: 'Performance Monitor Utilities'
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section Performance Monitor Utilities
+The Performance Monitor Utilities (PM) extend the Performance Monitor foreign conjunctions (6!:8 - 6!:13) introduced in J405. For a description of these foreign conjunctions, see section "6!:x Performance Monitor" in the J HTML Help.
+
+PM provides functions to turn the Performance Monitor on and off, and analyze and display the raw data produced by the foreign conjunctions.
+
+The following loads PM:
+)
+load 'jpm'
+
+NB. =========================================================
+Lab Section jpm locale
+The PM definitions use the jpm locale.
+
+When analyzing the results of PM, any definitions in the jpm locale are ignored, so that they do not interfere with the
+results shown for your application. Therefore, the PM definitions should be run directly from the jpm locale, rather than from cover functions in z or other locales.
+
+Note that if your application calls PM definitions explicitly, then the resources used by those definitions will be included in the totals for your application.
+)
+
+NB. =========================================================
+Lab Section Running PM
+For the most part, you need only turn PM on, run your application, then display the results.
+
+When you call any of the PM display verbs, this turns off PM and reads the results.
+
+The lab examples use the compound interest functions that are now loaded:
+)
+load '~system\packages\finance\interest.ijs'
+
+NB. =========================================================
+Lab Section Examples
+In the following example, you need to enter the J sentences to create the monitor data manually, otherwise, if the sentences were run by the lab, then the monitor data would also include resources used by the J code that runs the lab.
+)
+
+NB. =========================================================
+Lab Section
+To run this example, enter the following sentences (you can cut and paste from the J session). These will run PM, then run the verb "accpay", and display the time taken during execution:
+
+   start_jpm_ ''
+   accpay 1;12;0.10 5 0.09;24#1
+   showdetail_jpm_ 'accpay'
+)
+
+NB. =========================================================
+Lab Section
+Before continuing, ensure that you have run the sentences from the previous Lab section, and can see the detailed timings for "accpay".
+)
+PREPARE
+3 : 0 ''
+t=. CRLF,'First run the sentences from the previous Lab section!'
+if. 0 ~: 4!:0 <'PMNAMES_jpm_' do. smoutput t
+elseif.  0 = (<'accpay') (e. :: 0:) PMNAMES_jpm_ do. smoutput t
+end.
+)
+PREPARE
+
+NB. =========================================================
+Lab Section
+In the display from "showdetail", the column headings are:
+
+  all     - time includes calls to subroutines
+  here    - time excludes calls to subroutines
+  rep     - number of repetitions
+  accpay  - non-comment lines in definition
+)
+
+NB. =========================================================
+Lab Section
+"showdetail" with no left argument, or a left argument of 0, shows time taken.
+
+A left argument of 1 specifies space used, i.e. the additional space, if any, used by the line being executed. If space is freed, the amount shown is 0:
+)
+1 showdetail_jpm_ 'accpay'
+
+NB. =========================================================
+Lab Section
+Since "accpay" calls subroutines, their timings can also be displayed.
+
+In the following, "accint" is shown in a single line because it is a tacit definition:
+)
+showdetail_jpm_ 'accint'
+
+showdetail_jpm_ 'intrep'
+
+NB. =========================================================
+Lab Section
+"showtotal" shows total resources used for each definition.
+
+The optional left argument is 0 - 3 numbers:
+
+   0=time (default) 1=space
+   0=distinguish names by locales (default) 1=total names
+   percentage of values shown in detail (default 90)
+
+The right argument is the names to analyze, or all names if empty.
+
+By default, only those definitions contributing to the first 90% of the resources used are shown - this is helpful in limiting the display when there are many definitions.
+)
+
+NB. =========================================================
+Lab Section
+The following shows the default and the 100% result of showtotal:
+)
+showtotal_jpm_ ''          NB. show to 90% of resources
+
+0 0 100 showtotal_jpm_ ''  NB. show all definitions

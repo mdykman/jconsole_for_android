@@ -1,0 +1,4 @@
+graphics/grid6 - change history
+
+== 1.0.0/1 ==
+ * initial 701 release

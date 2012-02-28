@@ -235,8 +235,6 @@ gpsetwith_z_   =: gpsetwith_jgnuplot_
 NB. set EXE   as path to gnuplot binary
 NB. set JSDIR as path to gnuplot javascript scripts
 NB. hardwired OS assumptions that may need tweaking
-
-NB. reliance on external binary makes this a no-go under Android - md
 3 : 0''
 select. UNAME 
 case. 'Win' do.

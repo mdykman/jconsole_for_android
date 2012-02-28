@@ -1,0 +1,169 @@
+LABTITLE=: 'Application Distribution - Installer'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section Overview
+This lab describes one way of packaging an application for distribution.
+
+An app distributed this way is called an installer app (iapp).
+
+An iapp is packaged the same way as J (exe for Windows, sh shell script for Linux, and dmg for Mac).
+)
+
+NB. =========================================================
+Lab Section
+An iapp is complete and self-contained. It contains all of the J system (except for things like examples, labs, demos, and help) and application specific files.
+
+An iapp installation has a folder similar to the J development environment.
+)
+
+NB. =========================================================
+Lab Section
+Creating an iapp is done in three steps:
+
+1. develop and test app
+
+2. define intaller.ijs to set app contents
+
+3. build iapp installer file from installer.ijs
+)
+
+NB. =========================================================
+Lab Section
+We recommended you develop your app in Project Manager.
+
+The best way to learn about iapp is to experiment with one.
+
+The next step creates a Project Manager iapp project.
+)
+
+NB. =========================================================
+Lab Section
+Run Project Manager and open the new apps\example project.
+
+Open and study the 3 files.
+)
+PREPARE
+abc=:666
+1!:5 :: 0: <jpath '~user\projects\apps'
+1!:5 :: 0: <jpath '~user\projects\apps\example'
+src=. jpath '~system\examples\appdist\apps\example\'
+snk=. jpath '~user\projects\apps\example\'
+(fread src,'example.ijp')  fwrite snk,'example.ijp'
+(fread src,'example.ijs')  fwrite snk,'example.ijs'
+(fread src,'installer.ijs')fwrite snk,'installer.ijs'
+(fread src,'app.ijs')      fwrite snk,'app.ijs'
+(fread src,'app.ico')      fwrite snk,'app.ico'
+(fread src,'app.png')      fwrite snk,'app.png'
+(fread src,'app.icns')     fwrite snk,'app.icns'
+PREPARE
+
+NB. =========================================================
+Lab Section
+example.ijs is the main application file.
+
+app.ijs loads the main app script and starts the app.
+)
+
+NB. =========================================================
+Lab Section
+installer.ijs provides information for the install program and describes the files needed by the app.
+
+Study installer.ijs with the next few steps.
+)
+
+NB. =========================================================
+Lab Section
+First appdist.ijs is loaded to define utilities for building an iapp file.
+)
+
+NB. =========================================================
+Lab Section
+APP_COMPANY: author
+
+APP_PRODUCT: product - used as install folder
+
+APP_IJS: script that runs the app
+
+APP_ICON: path to icons
+)
+
+NB. =========================================================
+Lab Section
+APP_COMMON: files to include in the distribution
+
+APP_LOCK: 1 to lock all user ijs files
+
+APP_ADDONS: addons to include
+
+APP_WIN: Windows files
+
+APP_LINUX: Linux files
+
+APP_MAC: Mac files
+)
+
+NB. =========================================================
+Lab Section
+This step loads the app installer script (which in turn loads the appdist utilities).
+)
+load '~user\projects\apps\example\installer.ijs'
+
+NB. =========================================================
+Lab Section
+This step builds the iapp file based on installer.ijs.
+)
+build''
+
+NB. =========================================================
+Lab Section
+Run the installer (as you would a J install) to do the install.
+)
+
+NB. =========================================================
+Lab Section
+Be careful with includes with * and ? wildcards as they may include more stuff than you really intended.
+)
+
+NB. =========================================================
+Lab Section
+An installed iapp app is complete and it is not affected by any changes (new J installs, JAL updates, addons updates, development changes, etc.).
+)
+
+NB. =========================================================
+Lab Section
+Set APP_LOCK 1 to lock all user ijs files.
+
+In general we encourage you to not lock files. However, if you must lock, be aware that the encryption is not strong and is secure against only casual attacks.
+)
+
+NB. =========================================================
+Lab Section
+The iapp file creates a standard J installation with a few differences.
+
+  bin\profilex.ijs sets ARGV and user temp config folders
+
+  bin\icons\app.??? (ico png icns)
+
+  ~user is in ~install
+
+  ~config is in ~user
+
+  ~temp is in a system temp folder
+)
+
+NB. =========================================================
+Lab Section
+startup.ijs is not part of the iapp. Any startup.ijs dependencies in the iapp should be added to APP_IJS.
+)
+
+NB. =========================================================
+Lab Section
+config.ijs is not normally part of an iapp. You could include it but it is probably better to have the iapp run with the default config. Provide any specific config requirements in APP_IJS. Note that ~config is in the J folder and may be a protected folder so the iapp should not depend on writes to ~config.
+)
+
+NB. =========================================================
+Lab Section
+Debug hint: if an installed iapp fails to run, edit iapp bin\profilex.ijs to not set ARGV and then it will start with an ijx window.
+)
+

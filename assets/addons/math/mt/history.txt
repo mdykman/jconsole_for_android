@@ -64,3 +64,8 @@ math/mt - change history
  * sv: tests are enhanced
  * trs: tests are enhanced
  * util: condneg renamed to negneg and variated in negpos, fmtlog is reworked
+
+== 0.8.0 ==
+ + pf: rank-revealing orthogonal factorization with pivoting, initial draft
+ + quatern: quaternions support
+ * rot: reworked to rely on quaternions

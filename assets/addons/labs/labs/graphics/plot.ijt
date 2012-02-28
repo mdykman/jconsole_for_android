@@ -1,0 +1,176 @@
+LABTITLE=: 'Plot Package'
+
+NB. =========================================================
+Lab Section Plot Package
+Many sections in this lab generate a plot. If you have enough screen space you may leave the plot displayed as you advance through the lab. Resize it if you wish. Otherwise, close down the plot by giving it focus, and pressing Esc.
+)
+
+NB. =========================================================
+Lab Section Plot Overview
+Plot is a plotting package for J providing business and scientific graphics.
+
+To load, enter:
+)
+load 'plot'
+
+NB. =========================================================
+Lab Section
+This loads the package into locale plot, and defines two user functions, "pd" (Plot Driver) and "plot".
+
+pd     low-level function that handles all calls to Plot.
+       Typically used for complex plots.
+
+plot   cover function for pd that will handle most simple
+       uses of Plot.
+
+The examples given below also require the utilities in scripts numeric and trig. Load these as:
+)
+load 'numeric trig'
+
+NB. =========================================================
+Lab Section Verb "plot"
+The form is:
+
+    opt plot data
+
+The right argument is the data to be plotted. The optional left argument specifies various plot options.
+
+In general, 2D plots require x and y values given as a 2-element boxed list, and 3D plots require x, y and z values as a 3-element boxed list.
+
+However, if the right argument is open, it is treated as y values (2D plots) or z values (3D plots) . It should be a matrix of data. A vector is treated as a 1-row matrix. For 2D plots, each row of the matrix is treated as a separate data item.
+)
+
+NB. =========================================================
+Lab Section
+The next section will plot a list of data. It is treated as y values, and the x values default to i.#y
+)
+
+NB. =========================================================
+Lab Section
+)
+plot 1 2 3 5
+
+NB. =========================================================
+Lab Section
+The following also plots a list of data, the sin of y where y ranges from 0 to 10 in 100 steps. The data is treated as y values, and the x values again default to i.#y
+
+This time, the default x values are inappropriate - they are shown as in the range 0 to 100, but are actually in the range 0 to 10:
+)
+plot sin steps 0 10 100
+
+NB. =========================================================
+Lab Section
+The next example provides the correct x values as the first element of a boxed list of x and y values:
+)
+x=: steps 0 10 100
+plot x;sin x
+
+NB. =========================================================
+Lab Section Plot
+The above example could have been entered more simply as:
+)
+plot (];sin) steps 0 10 100
+
+NB. =========================================================
+Lab Section Parametric Plot
+The next example provides applies verbs to generate both the x and y values, giving a parametric plot:
+)
+plot (sin;sin*cos) steps 0 10 100
+
+NB. =========================================================
+Lab Section
+It may be seen that all plots are parametric, but in the simpler cases, one of the verbs that generates the x or y values is the identity.
+)
+
+NB. =========================================================
+Lab Section
+The next example plots the sin curve, swapping the identity and sin verbs to rotate the plot:
+)
+plot (sin;]) steps 0 10 100
+
+NB. =========================================================
+Lab Section
+The above example could also have been entered as:
+)
+plot |. (];sin) steps 0 10 100
+
+NB. =========================================================
+Lab Section Plot Options
+The left argument to plot specifies one or more options, delimited by semicolons. These are the options that may be given as arguments to pd, see below.
+
+For example, show the x and y axes, and do not show any labels:
+)
+'axes 1 1;labels 0' plot (sin;sin*cos) steps 0 10 100
+
+NB. =========================================================
+Lab Section
+The next example plots a matrix of sin values. Each row is treated as a separate data item:
+)
+plot sin */~ steps 0 3 50
+
+NB. =========================================================
+Lab Section Surface Plots
+The "surface" option displays this as a surface plot:
+)
+'surface' plot sin */~ steps 0 3 50
+
+NB. =========================================================
+Lab Section
+In the above example, "surface" is short for "type surface".
+
+If the first option is a type, the word "type" may be omitted.
+
+3D graphics options include viewpoint, viewbox sizing, and the vertical direction. For example:
+)
+Z=: sin */~ steps 0 3 50
+'surface;viewsize 1 1 0.2;viewpoint 1 0 0.7' plot Z
+
+NB. =========================================================
+Lab Section
+Surface is the default type when x y and z values are provided in a 3-element boxed list.
+
+The following example shows the standard sombrero:
+)
+X=: Y=: steps _3 3 70
+Z=: (cos % 3&+) X (+/&:*:) Y
+'boxed 0' plot X;Y;Z
+
+NB. =========================================================
+Lab Section
+This is the same sombrero, after use as a cushion:
+)
+'boxed 0;viewsize 1 1 0.05' plot X;Y;Z
+
+NB. =========================================================
+Lab Section Business Graphics
+Plots for business graphics include various bar charts, pie charts, and hi-lo close.
+
+For example, a stacked barchart:
+)
+'sbar' plot >:?.>:i.3 5
+
+NB. =========================================================
+Lab Section
+Plots for business graphics include various bar charts, pie charts, and hi-lo close.
+
+Floating barchart, with title:
+)
+'fbar;title My Plot' plot >:?>:i.3 5
+
+NB. =========================================================
+Lab Section Verb "pd"
+"pd" is a monadic function whose argument is either a list of commands or options given as a character string delimited by semicolons, or data given as numeric data.
+
+For example:
+)
+pd 'reset'         NB. reset plot
+pd 'type line'     NB. set line type
+pd *: i.10         NB. set plot data
+pd 'show'          NB. show it
+
+NB. =========================================================
+Lab Section Plot Demo
+For several examples using pd, load the plot demo from menu item Studio|Demos|plot.
+
+In the demo, select menu item Options|View Definition to view and experiment with the definitions.
+)
