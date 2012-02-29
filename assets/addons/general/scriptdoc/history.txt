@@ -1,0 +1,4 @@
+general/scriptdoc - change history
+
+== 1.0.0 ==
+ * initial 701 release
