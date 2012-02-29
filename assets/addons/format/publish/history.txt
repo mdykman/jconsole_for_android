@@ -1,5 +1,8 @@
 format/publish - change history
 
+== 1.0.8 ==
+ * j701
+
 == 1.0.5-7 ==
  * add Publish Manager
  * add progress log
@@ -13,5 +16,5 @@ format/publish - change history
  * correctly define getPDFreader
 
 == 1.0.2 ==
- * fix for when PDFREADER_j_ not defined
+ * fix for when PDFReader_j_ not defined
 

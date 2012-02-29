@@ -38,7 +38,13 @@ p=. gdk_pixbuf_new_from_file_at_scale File;;/y,0,0
 gtk_image_set_from_pixbuf image,p
 )
 3 : 0''
-if. IFWIN do. UNAME=: 'Win' else. UNAME=: LF -.~ 2!:0 'uname' end.
+if. IFWIN do. 
+  UNAME=: 'Win' 
+elseif. IFANDROID do.
+  UNAME=: 'Linux' 
+elseif.
+  UNAME=: LF -.~ 2!:0 'uname' 
+end.
 select. UNAME
 case. 'Darwin' do.
   libdir=. GTKPATH,'lib/'

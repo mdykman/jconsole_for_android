@@ -13,7 +13,7 @@ coclass 'psqlite'
 ADDONDIR=: jpath '~addons/data/sqlite/'
 3 : 0 ''
   if. IFWIN do. LIBSQLITE=: jpathsep ADDONDIR,'lib/sqlite3.dll'
-            elseif. UNAME-:'Linux' do. LIBSQLITE=: > IFANDROID{ 'libsqlite3.so.0';'libsqlite.so'
+            elseif. UNAME-:'Linux' do. LIBSQLITE=: > IFANDROID { 'libsqlite3.so.0';'libsqlite.so'
             elseif. do. LIBSQLITE=: find_dll 'sqlite3' end.
 )
 

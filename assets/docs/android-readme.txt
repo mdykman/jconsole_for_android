@@ -35,6 +35,16 @@ As some compensation for this shortcoming, I have bundled all available addons f
   Any addon which depends on bundled native libraries has been eliminated from this release. Examples of these include math/lapack.ijs and math/fftw.ijs.
   Any addon which depends on GL or GTK has also been eliminated from this release. See Graphics/GL2 below.
 
+ ** JHS
+ The JHS Server may be launched from the conlse via the menu option Script/Launch JHS.
+
+ ** Shared Libraries
+ The following shared libraries which are known to be referenced by J scripts are provided by Android:
+    libc.so
+    libz.so
+    libsqlite.so
+    libexpat.so
+
  ** Graphics/GL2
 
 In the present release, no graphics are implemented.  It was deemed by the author that the undertaking considerably expands the scope of the current effort.  We hope to rectify this in a future release.

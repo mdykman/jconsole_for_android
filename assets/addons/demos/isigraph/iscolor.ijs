@@ -1,6 +1,6 @@
 NB. iscolor   - colors for isigraph demos
 
-rgb=. +/ @ (1 256 65536 & *)
+rgb=. +/ @ (1 256 65536 & *) @: (|.^:(-.RGBSEQ_jgl2_))
 
 STDCLR=: ".;._2 (0 : 0)
 AQUA=:    rgb   0 255 255

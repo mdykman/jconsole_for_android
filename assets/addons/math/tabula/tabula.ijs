@@ -1,9 +1,16 @@
 NB. Thu 01 Dec 2011 04:39:47 TABULA scientific calculator topend
 NB. based on JWD gui: j7 not supported
 
+3 : 0''
+if. IFJ6 do.
+  require 'strings'	NB. for: rplc
+  require 'gl2'		NB. load gl2 definitions in jgl2 locale
+else.
+  require 'gui/gtkwd'	NB. for: wd
+end.
+''
+)
 coclass 'tab'
-require 'strings'	NB. for: rplc
-require 'gl2'		NB. load gl2 definitions in jgl2 locale
 coinsert'jgl2'		NB. allows use of gl2 verbs unlocalised
 
 XYWH0=: 8 55 527 450		NB. Factory setting: form position
@@ -84,7 +91,7 @@ rem form end;
 NEEDS=: '=:',TAB,TAB,'empty'
 
 TABU=: 0 : 0
-pc tab;
+pc tab closeok;
 menupop "File";
 menu newtt "&New" "Ctrl+N" "Start a new ttable" "new";
 menu opens "Open Sample" "Ctrl+Shift+O" "Open a sample ttable" "sample";
@@ -1215,6 +1222,7 @@ sellines PLOTY	NB. indicate which have been plotted
 )
 
 repos=: 3 : 0
+return.
 Handler 'repos'	NB. reset form pos+size to value in XYWH
 if. (y-:0) or (heldshift'') do. XYWH=: XYWH0 end.
 wd nb 'psel tab; pmovex' ; XYWH
@@ -1384,7 +1392,7 @@ end.
 
 start=: 3 : 0
 	NB. start the app: create form and init: cal
-if. +./ 'j7' E. JVERSION do.
+if. 0[ -.IFJ6 do.
   smoutput '>>> TABULA is not yet supported in this JVERSION:'
   smoutput JVERSION
   return.
@@ -1413,12 +1421,13 @@ if. coldstart do.
 	tabgroups=: 'ttable';'consts';'functs';'inf'	NB. wd-ids of sub-forms
 	wd 'set tabs "Ttable" "Consts" "Functs" "Info"'	NB. labels in their tabs
 	wd 'creategroup tabs'
-	inf_run''
+	ttable_run''
 	consts_run''
 	functs_run''
-	ttable_run''
+	inf_run''
 	wd 'creategroup'
 	wd 'setshow ttable 1'
+wd 'pshow'
 end.
 calco=: ''	NB. used by: calcmd...
 sess 'start_tab_: init the form'
@@ -1480,6 +1489,14 @@ tab_g_focuslost=: empty
 tab_g_mbldown=: click@(1"_)
 tab_g_mblup=: click@(0"_)
 tab_g_mmove=: mousemove
+3 : 0''
+if. -.IFJ6 do.
+if. 3=GTKVER_j_ do.
+tab_g_paint=: 3 : 'for_i. i.32 do. 0 drawico i end.'
+end.
+end.
+''
+)
 tab_run=: start
 tab_tabs_button=: clicktab
 tabengine=: tabengine_cal_
@@ -1638,7 +1655,13 @@ uurowsc=: uurowsc_uu_
 uurowsf=: uurowsf_uu_
 vv=: ":@|:@,:
 wav=: ] , '.wav' #~ [: -. '.' e. ]
-wd=: wd_probed
+
+3 : 0''
+if. IFJ6 do.
+  wd=: wd_probed
+end.
+''
+)
 
 wd_probed=: 3 : 0
 try.
@@ -1658,7 +1681,7 @@ window_close=: 3 : 0
 NB. Close the form: tab
 NB. SAFE TO CALL EVEN IF WINDOW IS ABSENT
 try.
-  11!:0 'psel tab; pclose;'
+  wd`(11!:0)@.IFJ6 'psel tab; pclose;'
 catch.
   i.0 0
 end.

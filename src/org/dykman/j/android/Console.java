@@ -37,7 +37,6 @@ public class Console extends FileEdit {
 		yinit();
 	}
 
-	
 	final private  void yinit() {
 		setText("", BufferType.EDITABLE);
 		this.setBackgroundColor(backgroundColor);
@@ -96,8 +95,7 @@ public class Console extends FileEdit {
 	public void handleEnter(String line, boolean last) {
 		if (last) {
 			if (line != null && line.trim().length() > 0) {
-				theApp.addHistory(line);
-				theApp.callJ(line);
+				theApp.callWithHistory(line);
 			} else {
 				prompt();
 			}
@@ -139,12 +137,6 @@ public class Console extends FileEdit {
 		endBatchEdit();
 	
 	}
-/*
-	public void synchCursor() {
-		EditorData ed = theApp.getWindow(JActivity.CONSOLE_NAME);
-		if(ed != null) ed.cursorPosition = getText().length();
-	}
-*/
 	@Override
 	public void onTextChanged(CharSequence seq,int start, int lengthBefore, int lengthAfter) {
 //		this.ons
@@ -177,10 +169,10 @@ public class Console extends FileEdit {
 
 	public void consoleOutput(int type,String s) {
 		appendSeq(s,getColorForType(type));
-		Editable sp = getText();
-       	computeScroll();
-        bringPointIntoView(sp.length());
-        placeCursor();
+//		Editable sp = getText();
+// JIC:
+		//        bringPointIntoView(sp.length());
+ //       placeCursor();
 	}
 	
 	Dimension getDimension() {

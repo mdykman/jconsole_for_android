@@ -518,6 +518,7 @@ GDK_WINDOW_TYPE_HINT_COMBO=: 12
 GDK_WINDOW_TYPE_HINT_DND=: 13
 
 GTK_ACCEL_VISIBLE=: 1
+GTK_ACCEL_LOCKED=: 2
 
 GTK_DIALOG_MODAL=: 1
 GTK_DIALOG_DESTROY_WITH_PARENT=: 2
@@ -620,6 +621,17 @@ CAIRO_FORMAT_ARGB32=: 0
 CAIRO_FORMAT_RGB24=: 1
 CAIRO_OPERATOR_SOURCE=: 1
 CAIRO_OPERATOR_OVER=: 2
+GTK_PRINT_CAPABILITY_PAGE_SET=: 1
+GTK_PRINT_CAPABILITY_COPIES=: 2
+GTK_PRINT_CAPABILITY_COLLATE=: 4
+GTK_PRINT_CAPABILITY_REVERSE=: 8
+GTK_PRINT_CAPABILITY_SCALE=: 16
+GTK_PRINT_CAPABILITY_GENERATE_PDF=: 32
+GTK_PRINT_CAPABILITY_GENERATE_PS=: 64
+GTK_PRINT_CAPABILITY_PREVIEW=: 128
+GTK_PRINT_CAPABILITY_NUMBER_UP=: 256
+GTK_PRINT_CAPABILITY_NUMBER_UP_LAYOUT=: 512
+
 GTK_PRINT_STATUS_INITIAL=: 0
 GTK_PRINT_STATUS_PREPARING=: 1
 GTK_PRINT_STATUS_GENERATING_DATA=: 2
@@ -914,7 +926,8 @@ gtk_about_dialog_set_website > n x *c
 
 gtk_accel_group_new > x
 
-gtk_acceletor_parse > n *c *x x
+gtk_accelerator_parse > n *c *i *i
+gtk_accelerator_valid > i i i
 
 gtk_adjustment_get_value > d x
 gtk_adjustment_new > x d d d d d d
@@ -943,6 +956,7 @@ gtk_button_set_focus_on_click > n x i
 gtk_button_set_image > n x x
 gtk_button_set_label > n x *c
 gtk_button_set_relief > n x x
+gtk_button_set_use_underline > n x i
 
 gtk_cell_layout_pack_end > n x x i
 gtk_cell_layout_pack_start > n x x i
@@ -959,6 +973,7 @@ gtk_check_button_new > x
 gtk_check_button_new_with_label > x *c
 gtk_check_button_new_with_mnemonic > x *c
 gtk_check_menu_item_get_active > i x
+gtk_check_menu_item_new_with_label > x *c
 gtk_check_menu_item_new_with_mnemonic > x *c
 gtk_check_menu_item_set_active > n x i
 
@@ -1022,6 +1037,7 @@ gtk_entry_new > x
 gtk_entry_set_editable > n x x
 gtk_entry_set_max_length > n x x
 gtk_entry_set_text n x *c
+gtk_entry_set_visibility n x i
 
 gtk_event_box_new > x
 gtk_events_pending > x
@@ -1178,6 +1194,8 @@ gtk_progress_bar_set_fraction > n x d
 gtk_radio_button_new_with_mnemonic_from_widget > x x *c
 
 gtk_range_get_value > d x
+gtk_range_set_increments > n x d d
+gtk_range_set_range > n x d d
 gtk_range_set_value > n x d
 
 gtk_rc_parse_string > n *c
@@ -1203,7 +1221,6 @@ gtk_spin_button_set_value > n x d
 
 gtk_statusbar_get_context_id > x x *c
 gtk_statusbar_get_has_resize_grip > i x
-gtk_statusbar_get_type > x
 gtk_statusbar_new > x
 gtk_statusbar_pop > n x x
 gtk_statusbar_push > x x x *c
@@ -1309,6 +1326,7 @@ gtk_tree_model_get_n_columns > x x
 gtk_tree_model_get_path > x x *x
 gtk_tree_model_get_string_from_iter > x x *x
 gtk_tree_model_iter_n_children > x x *x
+gtk_tree_model_iter_nth_child > i x *x x i
 gtk_tree_model_iter_next > i x *x
 
 gtk_tree_path_free > n x
@@ -1320,6 +1338,7 @@ gtk_tree_selection_count_selected_rows > i x
 gtk_tree_selection_get_selected > i x *x *x
 gtk_tree_selection_get_tree_view > x x
 gtk_tree_selection_iter_is_selected > i x *x
+gtk_tree_selection_select_iter > n x *x
 gtk_tree_selection_select_path > n x x
 gtk_tree_selection_set_mode > n x x
 gtk_tree_selection_unselect_all > n x
@@ -1392,7 +1411,6 @@ gtk_vbox_new > x x x
 gtk_vseparator_new > x
 
 : widget,title,parent,action,stock_cancel,response_cancel,stock_ok,response_ok,null
-gtk_widget_add_accelerator > n x *c x c x x
 gtk_widget_add_accelerator > n x *c x i x x
 gtk_widget_add_events > n x x
 gtk_widget_create_pango_context > x x
@@ -1406,6 +1424,7 @@ gtk_widget_get_name > x x
 gtk_widget_get_pango_context > x x
 gtk_widget_get_parent > x x
 gtk_widget_get_parent_window > x x
+gtk_widget_get_sensitive > i x
 gtk_widget_get_size_request > n x *i *i
 gtk_widget_get_toplevel > x x
 gtk_widget_get_window > x x
@@ -1477,7 +1496,6 @@ gtk_page_setup_get_paper_size > x x
 gtk_page_setup_get_paper_width > d x i
 gtk_page_setup_get_right_margin > d x i
 gtk_page_setup_get_top_margin > d x i
-gtk_page_setup_get_type > x
 gtk_page_setup_load_file > i x *c x
 gtk_page_setup_load_key_file > i x x *c x
 gtk_page_setup_new > x
@@ -1504,7 +1522,6 @@ gtk_paper_size_get_height > d x i
 gtk_paper_size_get_name > x x
 gtk_paper_size_get_paper_sizes > x i
 gtk_paper_size_get_ppd_name > x x
-gtk_paper_size_get_type > x
 gtk_paper_size_get_width > d x i
 gtk_paper_size_is_custom > i x
 gtk_paper_size_is_equal > i x x
@@ -1523,7 +1540,6 @@ gtk_print_context_get_hard_margins > i x *d *d *d *d
 gtk_print_context_get_height > d x
 gtk_print_context_get_page_setup > x x
 gtk_print_context_get_pango_fontmap > x x
-gtk_print_context_get_type > x
 gtk_print_context_get_width > d x
 gtk_print_context_set_cairo_context > n x x d d
 gtk_print_error_quark > i
@@ -1538,11 +1554,9 @@ gtk_print_operation_get_print_settings > x x
 gtk_print_operation_get_status > i x
 gtk_print_operation_get_status_string > x x
 gtk_print_operation_get_support_selection > i x
-gtk_print_operation_get_type > x
 gtk_print_operation_is_finished > i x
 gtk_print_operation_new > x
 gtk_print_operation_preview_end_preview > n x
-gtk_print_operation_preview_get_type > x
 gtk_print_operation_preview_is_selected > i x i
 gtk_print_operation_preview_render_page > n x i
 gtk_print_operation_run > i x i x x
@@ -1598,7 +1612,6 @@ gtk_print_settings_get_resolution_x > i x
 gtk_print_settings_get_resolution_y > i x
 gtk_print_settings_get_reverse > i x
 gtk_print_settings_get_scale > d x
-gtk_print_settings_get_type > x
 gtk_print_settings_get_use_color > i x
 gtk_print_settings_has_key > i x *c
 gtk_print_settings_load_file > i x *c x
@@ -1639,27 +1652,31 @@ gtk_print_settings_set_use_color > n x i
 gtk_print_settings_to_file > i x *c x
 gtk_print_settings_to_key_file > n x x *c
 gtk_print_settings_unset > n x *c
-
-: get type
-gtk_alignment_get_type > x
-gtk_button_get_type > x
-gtk_combo_box_get_type > x
-gtk_dialog_get_type > x
-gtk_frame_get_type > x
-gtk_hbox_get_type > x
-gtk_hscale_get_type > x
-gtk_hscrollbar_get_type > x
-gtk_label_get_type > x
-gtk_notebook_get_type > x
-gtk_radio_button_get_type > x
-gtk_scrolled_window_get_type > x
-gtk_spin_button_get_type > x
-gtk_text_view_get_type > x
-gtk_tool_button_get_type > x
-gtk_tree_view_get_type > x
-gtk_vbox_get_type > x
-gtk_vscale_get_type > x
-gtk_vscrollbar_get_type > x
+: gtk_printer
+gtk_printer_new > x *c x i
+gtk_printer_get_backend > x x
+gtk_printer_get_name > x x
+gtk_printer_get_state_message > x x
+gtk_printer_get_description > x x
+gtk_printer_get_location > x x
+gtk_printer_get_icon_name > x x
+gtk_printer_get_job_count > i x
+gtk_printer_is_active > i x
+gtk_printer_is_paused > i x
+gtk_printer_is_accepting_jobs > i x
+gtk_printer_is_virtual > i x
+gtk_printer_is_default > i x
+gtk_printer_accepts_ps > i x
+gtk_printer_accepts_pdf > i x
+gtk_printer_list_papers > x x
+gtk_printer_compare > i x x
+gtk_printer_has_details > i x
+gtk_printer_request_details > n x
+gtk_printer_get_capabilities > i x
+gtk_printer_get_default_page_size > x x
+gtk_printer_get_hard_margins > i x *d *d *d *d
+: gboolean (*GtkPrinterFunc) (GtkPrinter *printer, gpointer data);
+gtk_enumerate_printers > n x x x i
 )
 libpixbuf cddef each <;._2 [ 0 : 0
 gdk_pixbuf_add_alpha > x x i x x x : buf,use_substitute_color?,r,g,b
@@ -1699,22 +1716,31 @@ g_value_take_string > n x *c
 g_object_ref_sink > x x
 )
 libpango cddef each <;._2 [ 0 : 0
-pango_font_description_from_string > x *c : font_desc font_string
+pango_context_get_font_description > x x
+pango_context_get_metrics > x x x x
+pango_context_set_font_description > n x x
+pango_context_set_matrix > n x *d
 pango_font_description_free > n x         : font_desc
+pango_font_description_from_string > x *c : font_desc font_string
+pango_font_description_get_size > i x
 pango_font_description_set_size > n x i
 pango_font_description_set_style > n x i
 pango_font_description_set_weight > n x i : bold=700
-pango_layout_new > x x
+pango_font_metrics_get_approximate_char_width > i x
+pango_font_metrics_get_approximate_digit_width > i x
+pango_font_metrics_get_ascent > i x
+pango_font_metrics_get_descent > i x
+pango_layout_context_changed > n x
 pango_layout_get_context > x x
-pango_layout_set_attributes > n x x
-pango_layout_set_spacing > n x x
-pango_layout_set_text > n x *c x
-pango_layout_set_font_description > n x x
+pango_layout_get_font_description > x x
 pango_layout_get_pixel_extents > n x x *x
 pango_layout_get_pixel_size n x *x *x
+pango_layout_new > x x
+pango_layout_set_attributes > n x x
+pango_layout_set_font_description > n x x
+pango_layout_set_spacing > n x x
+pango_layout_set_text > n x *c x
 pango_matrix_rotate > n *d d
-pango_context_set_matrix > n x *d
-pango_layout_context_changed > n x
 
 :pango attribute
 pango_attr_list_change > n x x
@@ -2168,6 +2194,8 @@ z
 )
 gtk_gettypes=: 3 : 0
 t=. [;._2 GTKTYPES
+s=. > (<;._2 GTKTYPES) ,&.> <'_jgtk_'
+0!:110 s ,"1 ' =: ''',"1 ((>libgtk),' ') ,"1 t ,"1 ' >',"1 (2*IFUNIX) }. ' + x''&(15!:0)'
 t=. ((>libgtk),' ') ,"1 t ,"1 ' >',"1 (2*IFUNIX) }. ' + x'
 t (15!:0 ::0:)"1 ''
 EMPTY
@@ -2503,6 +2531,14 @@ cb5=: f 6
 cb6=: f 7
 cb7=: f 8
 cb8=: f 9
+cbuserdata=: 4 : 0
+assert. x>1
+cb=. (x-2){cb2,cb3,cb4,cb5,cb6,cb7,cb8
+'handler locale'=. 2{.boxxopen y
+if. 0=#locale do. locale=. >coname'' else. locale=. ,>locale end.
+h=. cbreg handler,'_',locale,'_'
+cb,h
+)
 consigs=: 4 : 0
 'widget signal handler locale'=. 4{.y
 if. 0=#locale do. locale=. >coname'' else. locale=. ,>locale end.
@@ -4297,3 +4333,23 @@ gladerepsub=: 3 : 0
 LF,~LF,;' ',each,LF,~each y
 )
 
+GTKPRINTERS=: 0$<''
+cb_enumerate_printers=: 3 : 0
+'printer data'=. y
+if. gtk_printer_is_virtual printer do. 0 return. end.
+def=. ' *'{~ gtk_printer_is_default printer
+prt=. memr (gtk_printer_get_name printer), 0 _1
+GTKPRINTERS=: GTKPRINTERS, <def,prt
+0
+)
+gtk_qprinters=: 3 : 0
+pcb=. 2 cbuserdata 'cb_enumerate_printers';'jgtk'
+GTKPRINTERS_jgtk_=: 0$<''
+gtk_enumerate_printers pcb, 0 1
+if. #GTKPRINTERS_jgtk_ do.
+  def=. }.&.> GTKPRINTERS_jgtk_ {~ '*' i.~ {."1 >GTKPRINTERS_jgtk_
+  prn=. /:~ }.&.> GTKPRINTERS_jgtk_
+  GTKPRINTERS_jgtk_=: def,prn
+end.
+GTKPRINTERS_jgtk_
+)

@@ -27,15 +27,15 @@ wd 'pshow;'
 
 edits_cancel_button=: wd bind 'pclose'
 
-wincontrol_brich_button=: edits_brich_button=: wdedits bind (0 : 0)
+edits_brich_button=: wdedits bind (0 : 0)
 wd 'cc richeditm richeditm;'
 wd 'set richeditm *',fread RTFFILE
 )
 
-wincontrol_bedit_button=: edits_bedit_button=: wdedits bind (0 : 0)
+edits_bedit_button=: wdedits bind (0 : 0)
 wd 'cc edit edit ws_border es_autohscroll'
 )
 
-wincontrol_beditm_button=: edits_beditm_button=: wdedits bind (0 : 0)
+edits_beditm_button=: wdedits bind (0 : 0)
 wd 'cc editm editm ws_border es_autovscroll'
 )

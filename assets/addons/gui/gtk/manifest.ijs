@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 GTK (GIMP toolkit) api.
 )
 
-VERSION=: '1.0.83'
+VERSION=: '1.0.89'
 
 FILES=: 0 : 0
 gtk.ijs

@@ -11,7 +11,7 @@ pas 6 6;pcenter;
 rem form end;
 )
 
-font=: IFUNIX pick '"Arial" 14' ; '"Kochi Mincho" 14'
+font=: IFUNIX pick '"Fixedsys" 14' ; '"Kochi Mincho" 14'
 
 c_name=: '漢語'
 c_problem=: '沒有問題'

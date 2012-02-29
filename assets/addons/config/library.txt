@@ -1,2 +1,2 @@
-library_current_7.1.56_linux.tar.gz 69750
-library_current_7.1.56_win.zip 82403
+library_current_7.1.57_win.zip 82411
+library_current_7.1.57_linux.tar.gz 70679

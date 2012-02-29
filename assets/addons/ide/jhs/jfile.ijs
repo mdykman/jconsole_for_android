@@ -326,8 +326,8 @@ NB. newname frename oldname - return 1 if rename ok
 frename=: 4 : 0
 if. x -: y do. return. end.
 if. UNAME-:'Linux' do.
-  llib=. > IFANDROID { 'libc.so.6' ; 'libc.so'
-  0=>{.llib,' rename i *c *c' 15!:0 y;x
+  llib=. > IFANDROID { 'libc.so.6';'libc.so'
+  0=>{. (llib,' rename i *c *c') 15!:0 y;x
 elseif. UNAME-:'Darwin' do.
   0=>{.'libc.dylib rename i *c *c' 15!:0 y;x
 elseif. do.

@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -23,10 +24,15 @@ public class AndroidJInterface extends JInterface {
 		
 		int result = -1;
 		try {
+			Map<String, String> nv = System.getenv();
+			
+			for(Map.Entry<String, String> en : nv.entrySet() ) {
+				Log.d(LOGTAG,"env: " + en.getKey() + "=" + en.getValue());
+			}
 			URL url = new URL(urlS);
 			File file = new File(fileS);
 			if(! file.canWrite()) {
-				Log.e(JInterface.LOGTAG,"failed to download, file is not writeable: " 
+				Log.e(LOGTAG,"failed to download, file is not writeable: " 
 						 + file.getPath());
 				return -2;
 			}
@@ -45,14 +51,14 @@ public class AndroidJInterface extends JInterface {
 			out.close();
 			
 		} catch(MalformedURLException e) {
-			Log.e(JInterface.LOGTAG,"failed to download file.",e);
+			Log.e(LOGTAG,"failed to download file due to malformed url: " + urlS);
 			result = -3;
 		} catch(IOException e) {
-			Log.e(JInterface.LOGTAG,"failed to download file.",e);
+			Log.e(LOGTAG,"failed to download file due to IOException: " + e.getLocalizedMessage());
 			result = -4;
 		} catch(Exception e) {
-			Log.e(JInterface.LOGTAG,"failed to download file.",e);
-			result = -5;
+			Log.e(LOGTAG,"failed to download file." ,e);
+			result = -1;
 		}
 		
 		return result;

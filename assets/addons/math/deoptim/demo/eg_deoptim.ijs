@@ -2,10 +2,14 @@ NB. =========================================================
 NB. GUI for DE example
 NB. http://www.icsi.berkeley.edu/~storn/code.html
 
+require 'gtkwd'
+
 require 'plot strings'
 require 'math/deoptim'
 coclass 'pegde'
 coinsert 'pdeoptim jgl2'
+
+steps=: {. + (1&{ - {.) * (i.@>: % ])@{:
 
 NB. =========================================================
 NB. Problem definition - Chebyshev polynomial fitting problem 
@@ -94,11 +98,11 @@ create=: 3 : 0
   wd EGDE
   NB. initialize form here
   initControls''
+  wd 'pshow;'
   deplot=: conew 'jzplot'
   PForm__deplot=: 'myplot'
   PFormhwnd__deplot=: wd 'qhwndp'
   PId__deplot=: 'deplot'
-  wd 'pshow;'
 )
 
 destroy=: 3 : 0

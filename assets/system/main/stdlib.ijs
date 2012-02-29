@@ -20,15 +20,16 @@ if. IFANDROID do.
   UNAME=: 'Linux'
 elseif. IFUNIX do.
   UNAME=: (2!:0 'uname')-.10{a.
-elseif. 1 do.
+elseif. do.
   UNAME=: 'Win'
 end.
 )
 
 jcwdpath=: (1!:43@(0&$),])@jpathsep@((*@# # '/'"_),])
 jsystemdefs=: 3 : 0
-xuname =. > IFANDROID { UNAME ; 'Android'
-0!:0 <jpath '~system/defs/',y,'_',(tolower xuname),(IF64#'_64'),'.ijs'
+xuname=. tolower > IFANDROID { UNAME ; 'Android'
+smoutput 'libname=', '~system/defs/',y,'_', xuname,(IF64#'_64'),'.ijs'
+0!:0 <jpath '~system/defs/',y,'_', xuname,(IF64#'_64'),'.ijs'
 )
 18!:4 <'z'
 'TAB LF FF CR DEL EAV'=: 9 10 12 13 127 255{a.
@@ -1604,7 +1605,7 @@ else.
     try.
       2!:0'which netscape'
       'netscape' return. catch. end.
-    '' return.
+     return.
   end.
 end.
 )

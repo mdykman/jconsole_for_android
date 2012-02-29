@@ -92,8 +92,11 @@ gui/gtk - change history
  * gui/gtk: add viewinsert
  * gui/gtk: image resize on open file
 
-== 1.0.82/83 ==
+== 1.0.82/87 ==
  * gui/gtk: add api
  * gui/gtk: bugfix set return value in cdcallback
  * gui/gtk: getGtkwidgetAllocation
 
+== 1.0.88/89 ==
+ * gui/gtk: print api
+ * gui/gtk: pango api

@@ -13,7 +13,7 @@ elseif. UNAME-:'Linux' do.
   else.
     libgl=:  'libGL.so.1'
     libglu=: 'libGLU.so.1'
-  done.
+  end.
 elseif. UNAME-:'Darwin' do.
   libgl=: '/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib'
   libglu=: '/System/Library/Frameworks/OpenGL.framework/Libraries/libGLU.dylib'

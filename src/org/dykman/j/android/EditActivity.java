@@ -57,6 +57,10 @@ public class EditActivity extends AbstractActivity {
 
 	}
 	@Override
+	public void runFile() {
+		runFile(console, file);
+	}
+	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		if(this.isFinishing()) {

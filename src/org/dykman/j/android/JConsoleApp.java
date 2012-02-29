@@ -37,11 +37,9 @@ public class JConsoleApp extends Application {
 	public static final String LogTag = "j-console";
 
 	protected JInterface jInterface = null;
-//	protected FileEdit currentEditor = null;
 	private JActivity activity;
 
 	protected Map<String,Intent> intentMap = new HashMap<String, Intent>();
-//	protected Map<String, EditorData> windows = new HashMap<String, EditorData>();
 	
 	protected java.util.List<String> history = new LinkedList<String>();
 	protected final String tempDir = "user/temp";
@@ -51,13 +49,8 @@ public class JConsoleApp extends Application {
 	private Console console;
 	boolean localFile = true;
 
-//	@SuppressWarnings({ "unchecked", "rawtypes" })
-//	Map<String,Activity> activities = new java.util.concurrent.ConcurrentHashMap();
-	List<EngineOutput> outputs = new LinkedList<JConsoleApp.EngineOutput>();
+	List<EngineOutput> outputs = new LinkedList<EngineOutput>();
 	
-//	protected Console console;
-//	protected ViewGroup container = null;
-//	protected String currentWindow;
 	boolean consoleState = false;
 	boolean started = false;
 	
@@ -81,19 +74,6 @@ public class JConsoleApp extends Application {
 	public boolean isLocalFile() {
 		return localFile;
 	}
-	/*
-	public Activity getActivity(String label) {
-		return getActivity(label,true);
-	}
-	public Activity getActivity(String label, boolean show) {
-		Activity activity = activities.get(label);
-		return activity;
-	}
-	
-	public void addActivity(String label, Activity activity) {
-		activities.put(label, activity);
-	}
-	*/
 	public void setLocalFile(boolean localFile) {
 		this.localFile = localFile;
 	}
@@ -104,8 +84,10 @@ public class JConsoleApp extends Application {
 		}
 		outputs.clear();
 	}
-	
-	public void consoleOutput(EngineOutput output) {
+	public synchronized void consoleOutput(int type, String content) {
+		consoleOutput(new EngineOutput(type, content));
+	}	
+	public synchronized void consoleOutput(EngineOutput output) {
 		if(!consoleState) {
 			outputs.add(output);
 		} else {
@@ -115,11 +97,11 @@ public class JConsoleApp extends Application {
 	}
 	@Override
 	public void onCreate() {
-		root = getDir("jconsole",Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE);
+		root = getDir("jconsole",  0777);
 		if(currentLocalDir == null) {
 			currentLocalDir = root;
 		}
-		jInterface = new JInterface();
+		jInterface = new AndroidJInterface();
 	}
 
 	public Console getConsole() {
@@ -129,7 +111,7 @@ public class JConsoleApp extends Application {
 		this.activity = activity;
 		this.console = console;
 		this.console.setApplication(this);
-		setConsoleState(true);
+//		setConsoleState(true);
 		flushOutputs();
         if(!started) {
            started = true;
@@ -166,6 +148,10 @@ public class JConsoleApp extends Application {
 		return k.toArray(new String[k.size()]);
 	}
 	
+	public void callWithHistory(String line) {
+		addHistory(line);
+		callJ(line);
+	}
 	public void addHistory(String line) {
 		if (line != null && line.trim().length() > 0) {
 			line = line.trim();
@@ -190,7 +176,7 @@ public class JConsoleApp extends Application {
 		imm.restartInput(console);
 	}	
 	
-	public void newFile() {
+	public void newFile(Context context) {
 		File tmp = new File(root, tempDir);
 		int i = 1;
 		File newf = new File(tmp, Integer.toString(i) + ".ijs");
@@ -201,7 +187,7 @@ public class JConsoleApp extends Application {
 		intent.setClass(getApplicationContext(), EditActivity.class);
 
 		intent.putExtra("file", newf.getAbsolutePath());
-		startActivity(intent);
+		context.startActivity(intent);
 	}
 
 /*
@@ -257,42 +243,6 @@ public class JConsoleApp extends Application {
 			_saveas(fe,f);
 		}
 	}
-	/*
-	protected void setView(String label, FileEdit win) {
-//Log.d(JActivity.LogTag,"SETVIEW " + label + ", " + win.getClass().getName());
-		setCurrentWindow(label);
-		currentEditor =  win;
-		activity.getContainer().removeAllViews();
-		activity.getContainer().addView(win);
-		if(win instanceof Console) {
-			activity.setTitle(label);
-		} else {
-			activity.setTitle(win.createTitle());
-		}
-		win.requestFocus();
-		win.restoreCursor();
-	}
-	*/
-/*
-	public void setConsole(Console console, String label) {
-		preserveCurrentWindow();
-		EditorData data = windows.get(label);
-		windows.put(label, null);
-		if(data != null) toView(console,data);
-		setView(label, console);
-		console.requestFocus();
-		console.restoreCursor();
-	}
-
-	public void setWindow(EditorData data, String label) {
-		preserveCurrentWindow();
-		FileEdit win = new FileEdit(activity);
-		toView(win,data);
-		windows.put(label, data);
-		setView(label, win);
-		win.restoreCursor();
-	}
-*/
 	protected void doCloseCurrent() {
 		/*
 		final FileEdit editor = getCurrentEditor();
@@ -533,10 +483,10 @@ public class JConsoleApp extends Application {
 	public JInterface getjInterface() {
 		return jInterface;
 	}
+	/*
 	public void setjInterface(JInterface jInterface) {
 		this.jInterface = jInterface;
 	}
-	/*
 	public String getCurrentWindow() {
 		return currentWindow;
 	}
@@ -595,21 +545,6 @@ public class JConsoleApp extends Application {
 	public String getTempDir() {
 		return tempDir;
 	}
-	/*
-	public EditorData getWindow(String name) {
-		return windows.get(name);
-	}
-	*/
-	static class EngineOutput {
-		int type;
-		String content;
-
-		EngineOutput(int type, String content) {
-			this.type = type;
-			this.content = content;
-		}
-	}
-
 	class JHSTask extends JTask {
 		protected Integer doInBackground(String... params) {
 			String[] cmds = {
@@ -650,8 +585,8 @@ public class JConsoleApp extends Application {
 			Integer res = -1;
 			StringBuilder sb = new StringBuilder();
 			sb.append("Cwh_j_ =: ").append(width).append(" ").append(height);
-			jInterface.addOutputListener(this);
 			res = jInterface.callJ(sb.toString());
+			jInterface.addOutputListener(this);
 			for(String sentence : params) {
 				res = jInterface.callJ(sentence);
 			}
@@ -669,8 +604,9 @@ public class JConsoleApp extends Application {
 				ed.placeCursor();
 			}
 			*/
-			console.placeCursor();
-			console.prompt();
+//			console.placeCursor();
+//			console.prompt();
+			consoleOutput(JInterface.MTYOFM,"  ");
 			console.setEnabled(true);
 		}
 	}
@@ -720,9 +656,9 @@ public class JConsoleApp extends Application {
 					ready = true;
 					loop = false;
 				}
-				// wait no more than 10 seconds, then abort
+				// wait no more than 15 seconds, then abort
 				long ll = System.currentTimeMillis() - start;
-				if(ll > 10000) {
+				if(ll > 15000) {
 					loop = false;
 					publishProgress(-1);
 				} else {
@@ -737,14 +673,12 @@ public class JConsoleApp extends Application {
 			if(ready) {
 				Intent myIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse("http://localhost:65001/jijxipad"));
-				EngineOutput out = new EngineOutput(JInterface.MTYOLOG, "launching browser\n");
-				consoleOutput(out);
+				consoleOutput(JInterface.MTYOFM,"launching browser\n");
 				context.startActivity(myIntent);
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setMessage("failed to connect to JHS server");
 				builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 					}

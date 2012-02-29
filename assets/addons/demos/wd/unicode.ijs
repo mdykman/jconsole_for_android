@@ -1,19 +1,16 @@
 NB. built from project: ~Source/examples/unicode/unicode
 NB. init
 
-GTKOUTPUT_jzgrid_=: 'isi'
 require 'jzgrid plot'
+require 'gui/gtkwd/wdjview'
 
 coclass 'judemo'
-
 
 IFUNICODE=: 1
 CELLALIGN=: 0
 CELLFMT=: ',c'
 CELLVALS=: 6146 35755 22079 12852 42854 92439
 GRIDNAMES=: 'cellalign celldata cellfmt'
-
-require 'gui/gtkwd/wdjview'
 
 NB. util
 
@@ -111,6 +108,9 @@ PFormhwnd=: wd'qhwndp'
 wd 'pshow;'
 grid=: '' conew 'jzgrid'
 plot=: '' conew 'jzplot'
+PForm__plot=: 'unicode'
+PFormhwnd__plot=: wd 'qhwndp'
+PId__plot=: 'plot'
 show''
 )
 
@@ -154,19 +154,16 @@ show__grid GRIDNAMES
 
 NB. =========================================================
 unicode_plot_paint=: 3 : 0
-loc=. coname''
-cocurrent plot
-PId=: 'plot'
-pd 'reset'
-pd 'type bar'
-pd 'axes 1 0'
-pd 'xlabel ',":2001+i.4
-pd 'keystyle of'
-pd 'keypos ro'
-pd 'key ',PLOTKEYS__loc
-pd 'title ',PLOTTITLE__loc
-pd PLOTDATA__loc
-pd 'show'
+pd__plot 'reset'
+pd__plot 'type bar'
+pd__plot 'axes 1 0'
+pd__plot 'xlabel ',":2001+i.4
+pd__plot 'keystyle of'
+pd__plot 'keypos ro'
+pd__plot 'key ',PLOTKEYS
+pd__plot 'title ',PLOTTITLE
+pd__plot PLOTDATA
+pd__plot 'show'
 )
 
 NB. =========================================================

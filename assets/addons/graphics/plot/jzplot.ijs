@@ -1124,7 +1124,7 @@ end.
 subres
 )
 plotshow=: 3 : 0
-gtk_window_present_with_time_jgtk_ PFormhwnd,GDK_CURRENT_TIME_jgtk_
+gtk_window_present_with_time_jgtk_ ((0&". ::]) PFormhwnd),GDK_CURRENT_TIME_jgtk_
 glsel PIdLoc
 gpinit''
 make ''
@@ -2226,7 +2226,7 @@ end.
 pclose_gtk=: 3 : 0
 try.
   if. ifjwplot'' do.
-    wpsave PFormhwnd
+    wpsave (0&". ::]) PFormhwnd
     if. #pdcmdsave do.
       gtk_save pdcmdsave
       pdcmdsave=: ''
@@ -2240,7 +2240,7 @@ try.
       print''
     end.
   end.
-  gtk_widget_destroy_jgtk_ ::0: PFormhwnd
+  gtk_widget_destroy_jgtk_ ::0: (0&". ::]) PFormhwnd
   PFormhwnd=: 0
   pd 'reset'
 catch. end.
@@ -2248,9 +2248,9 @@ if. (ifjwplot'') *. -.IFGTK do. gtk_main_quit_jgtk_ '' end.
 0
 )
 popen_gtk=: 3 : 0
-if. 0~:PFormhwnd do.
-  if. 0= gtk_widget_get_parent_window_jgtk_ PFormhwnd do.
-    gtk_window_present_with_time_jgtk_ PFormhwnd,GDK_CURRENT_TIME_jgtk_
+if. 0~: (0&". ::]) PFormhwnd do.
+  if. 0= gtk_widget_get_parent_window_jgtk_ (0&". ::]) PFormhwnd do.
+    gtk_window_present_with_time_jgtk_ ((0&". ::]) PFormhwnd),GDK_CURRENT_TIME_jgtk_
     glsel PIdLoc
     0 return.
   end.
@@ -2299,7 +2299,7 @@ end.
 )
 ptop_gtk=: 3 : 0
 PTop=: -. PTop
-gtk_window_set_keep_above_jgtk_ PFormhwnd, PTop
+gtk_window_set_keep_above_jgtk_ ((0&". ::]) PFormhwnd), PTop
 0
 )
 
@@ -5813,7 +5813,7 @@ sty=. (bld#' bold'),(ita#' italic'),und#' underline'
 ('_' (I.@(' '&=)nam)} nam=. ind pick GTKFONTNAMES),sty,' ',":siz
 )
 gtk_getsize=: 3 : 0
-if. 0=PFormhwnd do. '' return. end.
+if. 0=(0&". ::]) PFormhwnd do. '' return. end.
 _2{.getGtkWidgetAllocation_jgtk_ canvas__PIdLoc
 )
 output_parms=: 4 : 0
@@ -6282,12 +6282,12 @@ if. ifjwplot'' do.
 end.
 if. PShow=0 do.
   if. VISIBLE do.
-    gtk_widget_show_all_jgtk_ PFormhwnd
+    gtk_widget_show_all_jgtk_ (0&". ::]) PFormhwnd
   else.
-    gtk_widget_hide_all_jgtk_ PFormhwnd
+    gtk_widget_hide_all_jgtk_ (0&". ::]) PFormhwnd
   end.
   PShow=: 1
-  gtk_window_set_keep_above_jgtk_ PFormhwnd,PTop
+  gtk_window_set_keep_above_jgtk_ ((0&". ::]) PFormhwnd),PTop
   gtk_paint''
 else.
   gtk_paint''
@@ -6327,7 +6327,7 @@ p,a,'.',y
 )
 isi_getsize=: 3 : 0
 if. -. wdishandle :: 0: ": PFormhwnd do. '' return. end.
-wd 'psel ',PFormhwnd
+wd 'psel ', ":PFormhwnd
 s=. wd :: 0: 'qchildxywhx ',PId
 if. s -: 0 do. '' return. end.
 2 3 { 0 ". s

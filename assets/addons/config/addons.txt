@@ -2,7 +2,7 @@ api/gdi32 1.0.1
 gdi32 api
 gdi32 api definitions
 )
-api/gdiplus 1.0.2 
+api/gdiplus 1.0.3 
 gdiplus api
 gdiplus api definitions
 )
@@ -135,7 +135,7 @@ gtk demos, includes:
 
 See wiki page http://www.jsoftware.com/jwiki/Addons/demos/gtk for installation.
 )
-demos/isigraph 1.0.2 
+demos/isigraph 1.0.4 
 isigraph demos
 This package contains isigraph example scripts.
 
@@ -159,7 +159,7 @@ demos/plot 1.0.4
 Plot demos
 Plot demos on JGTK and JHS
 )
-demos/wd 1.0.6 
+demos/wd 1.0.14 
 wd demos
 wd demos using gtkwd
 )
@@ -191,13 +191,13 @@ format/printf 1.0.1
 C-style printf formatting
 Printf provides verbs and adverbs for formatted printing in the manner of C's printf and sprintf.
 )
-format/publish 1.0.7 
+format/publish 1.0.8 
 builds pdf reports from markup
 Publish generates a PDF report from source in plain text files in an html-like markup language.
 
 The markup language supports calling J expressions, for example, to allow data to be read in from various sources. Apart from this, reports can be customized without knowledge of J.
 )
-games/minesweeper 1.0.5 
+games/minesweeper 1.0.7 
 Classic Minesweeper game
 Implentation of classic Minesweeper game. 
 
@@ -215,7 +215,7 @@ games/pousse 1.0.2
 pousse
 pousse
 )
-games/solitaire 1.0.1 
+games/solitaire 1.0.2 
 solitaire
 solitaire
 )
@@ -340,6 +340,50 @@ options for the form of the words used, and verbs to convert a script
 in alpha form to a script in J primitives so there is no execution
 time penalty.
 )
+general/scriptdoc 1.0.0 
+scriptdoc
+Scripts are documented in comment lines (i.e. lines
+beginning with NB.). Multi-line comments are consecutive
+lines beginning with NB. with no break.
+
+The first line of a multi-line comment may be used
+for summary documentation of the script.
+
+
+1. The first line in the script is a comment line describing the script, i.e
+
+   NB. script description
+
+2. Global definitions produced by the script are preceded by
+one or more comment lines. The first such comment line has
+the form:
+
+   NB.*name type description
+
+where type is one of:
+        v verb
+        a  adverb
+        c  conjunction
+        n  noun
+
+After this first comment line, all subsequent comment lines
+without a break are assumed to be part of the description
+for the definition.
+
+The * should not be given after the NB. unless it begins
+a new definition.
+
+Conventionally, the second such line may be a "form" statement
+describing the usage of the definition, e.g.
+
+   form:  calendar year [,months]
+
+Other lines include an "example" statement
+
+   example: calendar 1998 5
+
+3. Other NB. comment lines in the script are ignored.
+)
 general/unittest 1.0.4 
 Unit Test Framework
 Implements a unit test framework.
@@ -364,7 +408,7 @@ graphics/color 1.0.1
 Color tables
 Color tables and related scripts.
 )
-graphics/gl2 1.0.15 api/gdi32,api/gdiplus,gui/gtk
+graphics/gl2 1.0.20 api/gdi32,api/gdiplus,gui/gtk
 gl2
 Base class for gl2 commands. This is only intended to support legacy J6 packages and should not be used in newly-written code.  Use Cairo instead.
 )
@@ -372,7 +416,7 @@ graphics/graph 1.0.3 graphics/bmp,graphics/color,graphics/gl2,gui/gtk
 Graph
 2D Graph
 )
-graphics/grid 1.0.2 general/misc/font,general/misc/pack,graphics/gl2,gui/gtkwd
+graphics/grid 1.0.4 general/misc/font,general/misc/pack,graphics/gl2,gui/gtkwd
 Grid
 Grid J6
 )
@@ -390,15 +434,23 @@ graphics/opengl 1.0.11
 OpenGL graphics
 OpenGL graphics (supported in linux,window)
 )
-graphics/plot 1.0.80 graphics/afm,graphics/bmp,graphics/color,graphics/gl2
+graphics/plot 1.0.81 graphics/afm,graphics/bmp,graphics/color,graphics/gl2
 Plot
 2D Plot
+)
+graphics/print 1.0.0 
+print
+print text files
+)
+graphics/treemap 1.0.3 
+Displays a treemap
+Displays a treemap in an isigraph control.
 )
 graphics/viewmat 1.0.2 graphics/bmp
 Displays a viewmat
 Viewmat displays tables of data graphically.
 )
-gui/gtk 1.0.83 
+gui/gtk 1.0.89 
 GTK API
 GTK (GIMP toolkit) api.
 )
@@ -406,7 +458,7 @@ gui/gtkide 1.0.4
 GTK IDE
 GTK IDE
 )
-gui/gtkwd 1.0.13 graphics/gl2
+gui/gtkwd 1.0.24 graphics/gl2
 gtk wd emulator
 wd (window driver) emulator using gtk api
 
@@ -417,6 +469,10 @@ Grid implementation for J7/JGTK
 Grid class for J7/JGTK based on GtkTreeeView and GtkListStore widgets.
 
 See wiki page http://www.jsoftware.com/jwiki/Addons/gui/jgtkgrid for help.
+)
+gui/util 1.0.7 
+GUI utilities
+cobrowse - famous SmallTalk tool for J
 )
 ide/gtk 1.0.77 
 GTK IDE
@@ -434,7 +490,7 @@ math/cal 1.0.7
 Scientific calculator engine
 CAL is a platform-independent engine residing in its own locale (_cal_) which forms the basis of TABULA, a backfitting scientific calculator.
 )
-math/deoptim 1.0.6 
+math/deoptim 1.0.7 
 Differential Evolution for optimization of multidimensional functions
 Differential Evolution is a form of evolutionary algorithm. It is relatively robust, simple and fast. 
 DE finds the global minimum of a multidimensional, multimodal (i.e. exhibiting more than one minimum) function with good probability.
@@ -493,7 +549,7 @@ math/mt 0.8.1 general/misc,math/lapack 1.1.16,math/misc
 Matrix toolbox
 Library to solve some problems in matrix algebra: transforming, decomposing, reducing to condensed form, factorization, equation solving, function applying, condition number estimating. Is based mostly on LAPACK algorithms, but doesn't require LAPACK.
 )
-math/tabula 1.0.5 
+math/tabula 1.0.8 
 TABULA - scientific calculator
 TABULA is a backfitting scientific calculator with many built-in physical constants, which knows about units of measurement.
 )

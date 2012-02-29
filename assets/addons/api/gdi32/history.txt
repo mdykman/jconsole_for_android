@@ -1,7 +1,0 @@
-api/gdi32 - change history
-
-== 1.0.0 ==
- * j701
-
-== 1.0.1 ==
- * platform specific manifest

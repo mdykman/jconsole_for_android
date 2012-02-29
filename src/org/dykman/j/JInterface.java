@@ -82,6 +82,7 @@ public class JInterface {
 			execlist.remove(listener);
 		}
 	}
+	
 	public void addOutputListener(OutputListener listener) {
 		if(!outputs.contains(listener)) {
 			outputs.add(listener);

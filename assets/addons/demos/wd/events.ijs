@@ -1,7 +1,7 @@
 NB. illustrates events in J
 
-coclass 'jevents'
 require 'gl2 numeric trig gui/gtkwd/wdjview'
+coclass 'jevents'
 coinsert 'jgl2'
 
 TEXT=: 0 : 0

@@ -1,5 +1,8 @@
 math/deoptim - change history
 
+== 1.0.7 ==
+ * chg: j701 gtkwd
+
 == 1.0.5/6 ==
  * add: option to re-evaluate best population member
  * add: sampling utilities

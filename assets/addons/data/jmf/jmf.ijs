@@ -54,8 +54,8 @@ AFNJA=: 2
 NULLPTR=: <0
 3 : 0''
 if. IFUNIX do.
-  ulib=. > ISANDROID { 'libc.so.6' ; 'libc.so'
-  lib=. >(UNAME-:'Darwin'){ ulib ;'libc.dylib '
+  lib=. > IFANDROID { 'libc.so.6 ';'libc.so '
+  lib=. >(UNAME-:'Darwin'){lib;'libc.dylib '
   api=. 1 : ('(''',lib,''',x) & cd')
   c_isatty=: ' isatty i i' api
   c_open=: 'open i *c i i' api

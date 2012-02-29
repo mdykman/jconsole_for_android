@@ -16,7 +16,7 @@ DIR=: DIR*_1^(POS<0)+.MAX<POS
 POS=: POS+(+: 0>.-POS)-+:0>.POS-MAX
 glbrush glrgb (?500){COLORS
 glellipse (POS*($POS)$w),SIZE
-glpaint''
+glpaintx''
 )
 
 NB. =========================================================

@@ -1,6 +1,6 @@
 NB. demosel.ijs      - main selection dialog
 
-require 'gui/gtkwd gui/gtkwd/wdjview gl2 numeric stats'
+require 'gtkwd gui/gtkwd/wdjview gl2 numeric stats'
 
 18!:55 <'jdemos'
 coclass 'jdemos'
@@ -37,18 +37,26 @@ NB. allout dallout
 
 TITLES=: maketitle 0 : 0
 cities dcities
+cobrowse dcobrowse
 coins dcoins
 controls dcontrols
+deoptim ddeoptim
 eigenpictures deigenpic
 events devents
+form_edit dformedit
 grid dgrid
-life dlife
 isigraph... disigraph
+life dlife
 minesweeper dminesweeper
 nurikabe dnurikabe
 plot dplot
 pousse dpousse
+printer dprinter
+scriptdoc dscriptdoc
 solitaire dsolitaire
+tabula dtabula
+treemap dtreemap
+unicode dunicode
 unicode_simple dunisimple
 )
 
@@ -94,22 +102,27 @@ demos_cancel_button=: demos_close
 NB. =========================================================
 dallout=: load bind (jpath '~addons/demos/wd/allout.ijs')
 dcities=: load bind (jpath '~addons/demos/wd/citydemo.ijs')
+dcobrowse=: load bind (jpath '~addons/gui/util/cobrowse.ijs')
 dcoins=: load bind (jpath '~addons/demos/wd/coins.ijs')
 dcontrols=: load bind (jpath '~addons/demos/wd/controls.ijs')
+ddeoptim=: load bind (jpath '~addons/math/deoptim/demo/eg_deoptim.ijs')
 ddialogs=: load bind (jpath '~addons/demos/wd/demoall.ijs')
 deigenpic=: load bind (jpath '~addons/math/eigenpic/eigenpic.ijs')
 devents=: load bind (jpath '~addons/demos/wd/events.ijs')
 dgrid=: load bind (jpath '~addons/demos/wd/grid.ijs')
-dlife=: load bind (jpath '~addons/demos/wd/life.ijs')
 disigraph=: load bind (jpath '~addons/demos/isigraph/isdemo.ijs')
+dlife=: load bind (jpath '~addons/demos/wd/life.ijs')
 dminesweeper=: load bind (jpath '~addons/games/minesweeper/uiwd.ijs')
 dnurikabe=: nurikabe__ @: (load bind (jpath '~addons/games/nurikabe/nurikabe.ijs'))
 dpaint=: load bind (jpath '~addons/demos/isigraph/paint.ijs')
 dplot=: load bind (jpath '~addons/demos/wdplot/plotdemo.ijs')
 dpousse=: load bind (jpath '~addons/games/pousse/pousse.ijs')
+dprinter=: load bind (jpath '~addons/demos/wd/printer.ijs')
 dsolitaire=: load bind (jpath '~addons/games/solitaire/solitaire.ijs')
-dunisimple=: load bind (jpath '~addons/demos/wd/unisimple.ijs')
+dtabula=: load bind (jpath '~addons/math/tabula/tabula.ijs')
+dtreemap=: load bind (jpath '~addons/graphics/treemap/demo.ijs')
 dunicode=: load bind (jpath '~addons/demos/wd/unicode.ijs')
+dunisimple=: load bind (jpath '~addons/demos/wd/unisimple.ijs')
 
 NB. =========================================================
 deigenpic=: 3 : 0
@@ -118,6 +131,18 @@ if. fexist jpath '~addons/math/lapack/lapack.ijs' do.
 else.
   wdinfo 'Eigenpicture';'This demo requires the LAPACK Addon'
 end.
+)
+
+NB. =========================================================
+dformedit=: 3 : 0
+(<f=. jpath '~temp/formedit.ijs') 1!:2~ (1!:1) <jpath '~addons/demos/wd/life.ijs'
+wdformedit f
+)
+
+NB. =========================================================
+dscriptdoc=: 3 : 0
+load 'general/scriptdoc'
+scriptdoc jpath '~system/main/task.ijs'
 )
 
 demos_run''

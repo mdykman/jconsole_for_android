@@ -4,8 +4,14 @@ coclass 'jigdemo'
 coinsert 'jgl2'
 
 require 'gui/gtkwd/wdviewmat'
-require '~addons/general/misc/evolute.ijs'
+NB. require '~addons/general/misc/evolute.ijs'
 require '~addons/demos/isigraph/iscolor.ijs'
+
+NB. include evolute in-line
+e0=. }: @ (2: # >:@i.)
+e1=. <: @ +: $ _1: , ] , 1: , -
+e2=. _1 & |. @ (e0 # e1)
+evolute=: ,~ $ /: @ (+/\) @ e2 f.
 
 HWNDP=: ''
 
@@ -125,7 +131,9 @@ glpaint''
 
 NB. =========================================================
 isdemo_g_paint=: 3 : 0
-isdemo_run1 ISDEMODAT
+if. (<ISDEMOSEL) -.@e. ;:'PAINT SMESSER ' do.
+  isdemo_run1 ISDEMODAT
+end.
 )
 
 NB. =========================================================
@@ -240,7 +248,7 @@ gshow=: 3 : 0
 try. wd 'psel isdemo'
 catch. return. end.
 glsel 'g'
-NB. glpaint''
+glpaint''
 0
 )
 

@@ -3,9 +3,9 @@ NB.
 NB. This demo shows a virtual grid where data is given
 NB. via a get event handler
 
-coclass 'vgriddemo'
-
 require 'jzgrid pack'
+
+coclass 'vgriddemo'
 
 size=. 10000 200
 MYDATA=: (10 * 1 + i.size) + size $ 0.01*?~100

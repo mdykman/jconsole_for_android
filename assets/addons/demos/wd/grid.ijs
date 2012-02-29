@@ -1,6 +1,7 @@
-coclass 'jgriddemo'
-
 load 'jdgrid jsgrid jtgrid jvgrid jzgrid'
+
+coclass 'jgriddemo'
+coinsert 'jgl2'
 grid=: ''
 
 DEVOPTS=: OPTIONS_jzgrid_,cutopen 0 : 0
@@ -30,7 +31,7 @@ gridruns=: 3 : '1 gridinit y'
 gridinit=: 4 : 0
 wd 'psel griddemo'
 griddemo_pn > GRIDNAMES {~ GRIDEXAMS i. <GRIDDEMOSEL
-glsel_jgl2_ 'grid'
+glsel 'grid'
 erase DEVOPTS
 grid_gridhandler=: 1:
 GRIDPID=: 'griddemo'

@@ -48,25 +48,25 @@ buttons_cancel_button=: 3 : 0
 wd 'pclose;'
 )
 
-wincontrol_bradios_button=: buttons_bradios_button=: wdbuttons bind (0 : 0)
+buttons_bradios_button=: wdbuttons bind (0 : 0)
 wd 'cc radios groupbox;cn "Radio Buttons"'
 wd 'cc active radiobutton;cn "Active"'
 wd 'cc inactive radiobutton group;cn "Inactive"'
 wd 'cc done radiobutton group;cn "Done"'
 )
 
-wincontrol_bcheck_button=: buttons_bcheck_button=: wdbuttons bind (0 : 0)
+buttons_bcheck_button=: wdbuttons bind (0 : 0)
 wd 'cc groupcheck groupbox;cn "Check Buttons"'
 wd 'cc checkin checkbox;cn "Checked In"'
 wd 'cc checkout checkbox;cn "Checked Out"'
 )
 
-wincontrol_bdefault_button=: buttons_bdefault_button=: wdbuttons bind (0 : 0)
+buttons_bdefault_button=: wdbuttons bind (0 : 0)
 wd 'cc defpushbutton button bs_defpushbutton;cn "Default Pushbutton"'
 )
 
-wincontrol_bpush_button=: buttons_bpush_button=: wdbuttons bind (0 : 0)
+buttons_bpush_button=: wdbuttons bind (0 : 0)
 wd 'cc ordpushbutton button;cn "Pushbutton"'
 )
 
-wincontrol_bod_button=: buttons_bod_button=: wdbuttons bind BUTTOD
+buttons_bod_button=: wdbuttons bind BUTTOD

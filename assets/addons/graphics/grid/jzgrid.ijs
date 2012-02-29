@@ -85,7 +85,10 @@ tominus=: '-'&(I. @(e.&'_')@]})
 towords=: ;: inverse
 qextenth=: {: @ glqextent
 qextentw=: {. @ glqextent
-qextentwv=: glqextentw @ ; @: (,each&LF)
+qextentwv=: 3 : 0
+w=. {. glqextent '8'
+w * #&> y
+)
 qextentwm=: $ $ qextentwv@,
 qextentw16=: qextentw @ utf8
 qextentW=: 3 : 0

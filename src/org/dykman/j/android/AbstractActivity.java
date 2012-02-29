@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.dykman.j.JInterface;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -47,13 +49,26 @@ public abstract class AbstractActivity extends Activity {
 
 
 	}
+	public void runFile() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("You cannot run this object");
+		builder.setPositiveButton("OK", new AlertDialog.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		
+	}
+	public void closeCurrent() {
+		finish();
+	}
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		boolean result = true;
 		int itemId = item.getItemId();
 		Log.d(JConsoleApp.LogTag,"selection " + itemId + ", " + getClass().getName());
 		switch(itemId) {
-			case R.id.newf:    theApp.newFile();                     break;
+			case R.id.newf:    theApp.newFile(this);                     break;
 //			case R.id.open:    requestFileOpen(); 	          break;
 			case R.id.open:    {
 				requestFileOpen(); 	          
@@ -61,11 +76,12 @@ public abstract class AbstractActivity extends Activity {
 			}
 			case R.id.window:  requestWindowSelect();     	  break;
 			case R.id.jbreak:  callBreak();                   break;
-//			case R.id.close:   theApp.closeCurrent();         break;
+			case R.id.close:   closeCurrent();         break;
 			case R.id.exit:    testQuit();					  break;
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
 			case R.id.runf:    requestFileRun();              break;
+			case R.id.runc:    runFile();               break;
 			case R.id.vocab:   showHelp(R.string.help_start); break;
 			case R.id.jhs:		theApp.launchJHS(this);		  break;
 			case R.id.learning: showHelp(R.string.learning);  break;
@@ -288,11 +304,13 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 	protected void runFile(Console console,File f) {
 		StringBuilder sb = new StringBuilder("load '");
 		sb.append(f.getAbsolutePath()).append("'");
-		
+/*	
 		console.placeCursor();
 		console.append("\n");
 		console.append(sb.toString());
 		console.append("\n");
+*/
+		theApp.consoleOutput(JInterface.MTYOFM, "\n" + sb.toString() + "\n");
 		theApp.callJ(sb.toString());
 	}
 

@@ -84,30 +84,30 @@ PAYNDX=: 0
 wd 'set pay *',PAYNDX pick PAY
 )
 
-wincontrol_spinv_button=: selects_spinv_button=: 3 : 0
+selects_spinv_button=: 3 : 0
 PAYNDX=: (#PAY) | PAYNDX+".spinv
 wd 'set pay *',PAYNDX pick PAY
 )
 
-wincontrol_spin_button=: selects_spin_button=: 3 : 0
+selects_spin_button=: 3 : 0
 j=. 0 >. 10 <. (".trackbar)+".spin
 wd 'set trackbar ',":j
 j=. 0 >. 10 <. (".trackbarv)+".spin
 wd 'set trackbarv ',":j
 )
 
-wincontrol_setprogress_button=: selects_setprogress_button=: 3 : 0
+selects_setprogress_button=: 3 : 0
 PROGRESS=: 100 <. PROGRESS+8
 wd 'set progress2 ',":PROGRESS
 )
 
-wincontrol_blist_button=: selects_blist_button=: wdselects bind (0 : 0)
+selects_blist_button=: wdselects bind (0 : 0)
 wd 'cc bxlist listbox ws_vscroll lbs_multiplesel'
 list=. ;:'apples bananas cherries dates'
 wd 'set bxlist ',;list ,each LF
 )
 
-wincontrol_bclist_button=: selects_bclist_button=: wdselects bind (0 : 0)
+selects_bclist_button=: wdselects bind (0 : 0)
 wd 'cc combolist combolist ws_vscroll'
 j=. 'January February March April May June July August'
 mos=. ;:j,' September October November December'
@@ -115,7 +115,7 @@ wd  'set combolist ',;mos,&.>LF
 wd  'setselect combolist 0;'
 )
 
-wincontrol_bcd_button=: selects_bcd_button=: wdselects bind (0 : 0)
+selects_bcd_button=: wdselects bind (0 : 0)
 wd 'cc combodrop combodrop'
 j=. 'Antwerp Brussels Copenhagen Danzig Essen Frankfurt Gstaad'
 city=. ;:j,' Hamburg Ilford Krakow Lausanne'
@@ -123,14 +123,14 @@ wd  'set combodrop ',;city ,each LF
 wd  'setselect combodrop 0;'
 )
 
-wincontrol_bcombo_button=: selects_bcombo_button=: wdselects bind (0 : 0)
+selects_bcombo_button=: wdselects bind (0 : 0)
 wd 'cc combobox combobox ws_vscroll'
 words=. ;:'Goose Geese Moose Meese Tooth Teeth Booth Beeth'
 wd  'set combobox ',;words ,each LF
 wd  'setselect combobox 0;'
 )
 
-wincontrol_bspinv_button=: selects_bspinv_button=: wdselects bind (0 : 0)
+selects_bspinv_button=: wdselects bind (0 : 0)
 wd 'cc spinv spinv'
 
 NB. initialise spinbox text:
@@ -143,11 +143,11 @@ NB. selects_spinv_button is defined as:
   wd  'set pay *',PAYNDX pick PAY
 )
 
-wincontrol_btrack_button=: selects_btrack_button=: wdselects bind (0 : 0)
+selects_btrack_button=: wdselects bind (0 : 0)
 wd 'cc trackbar trackbar tbs_autoticks tbs_both tbs_enableselrange tbs_top'
 )
 
-wincontrol_bspin_button=: selects_bspin_button=: wdselects bind (0 : 0)
+selects_bspin_button=: wdselects bind (0 : 0)
 wd 'cc spin spin'
 
 NB. selects_spin_button is defined as:
@@ -157,11 +157,11 @@ NB. selects_spin_button is defined as:
   wd  'set trackbarv ',":j
 )
 
-wincontrol_btrackv_button=: selects_btrackv_button=: wdselects bind (0 : 0)
+selects_btrackv_button=: wdselects bind (0 : 0)
 wd 'cc trackbarv trackbarv tbs_autoticks'
 )
 
-wincontrol_bprog_button=: selects_bprog_button=: wdselects bind (0 : 0)
+selects_bprog_button=: wdselects bind (0 : 0)
 wd 'cc progress2 progress ws_border'
 
 NB. selects_setprogress_button is defined as:
