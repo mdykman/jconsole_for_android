@@ -35,6 +35,8 @@ public class JInterface {
 	    		}
     		}
     		for(String sentence : s) {
+    			result = -1;
+        		Log.i(JConsoleApp.LogTag, "executing: " + sentence);
     			result = callJNative(nativeInstance,sentence);
     		}
 	    	

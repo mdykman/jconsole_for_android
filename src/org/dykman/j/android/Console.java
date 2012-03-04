@@ -176,11 +176,12 @@ public class Console extends FileEdit {
  //       placeCursor();
 	}
 	
+	
 	Dimension getDimension() {
 		Rect r = new Rect();
 		setEnabled(false);
 		getLocalVisibleRect(r);
-		float charwidth = getPaint().measureText("X");
+		float charwidth = getPaint().measureText("XXXXX") / 5;
 		float charheight = getTextSize();
 		Dimension dd = new Dimension();
 		dd.width = (int)(0.93 * (r.width() / charwidth)+0.5);

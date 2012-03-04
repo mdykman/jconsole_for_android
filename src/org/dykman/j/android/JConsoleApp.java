@@ -16,6 +16,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.dykman.j.JInterface;
+import org.dykman.j.android.Console.Dimension;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -116,15 +117,20 @@ public class JConsoleApp extends Application {
 		this.console = console;
 		this.console.setApplication(this);
 		flushOutputs();
+        StringBuilder sb = new StringBuilder();
         if(!started) {
+        	console.setEnabled(false);
            started = true;
            jInterface.start();
-           StringBuilder sb = new StringBuilder();
            // change to root directory
            sb.append("1!:44 '").append(root.getAbsolutePath()).append("'");
            callJ(new String[]{sb.toString()},false);
            installSystemFiles(activity,console,root,false);
+           sb.setLength(0);
         }
+        Dimension dd = console.getDimension();
+        sb.append("Cwh_j_=:").append(dd.width).append(" ").append(dd.height);
+        callJ(new String[]{sb.toString()},false);
         setConsoleState(true);
 
 	}
@@ -171,10 +177,6 @@ public class JConsoleApp extends Application {
 			}
 			history.add(0,line);
 		}
-	}
-
-	public Console getConsole() {
-		return console;
 	}
 
 	public void reset() {
@@ -297,14 +299,14 @@ public class JConsoleApp extends Application {
 		if(args.length > 1) {
 			String [] ss = new String[args.length];
 			ss[0] = sb.toString();
-			Log.d(JConsoleApp.LogTag,ss[0]);
+//			Log.d(JConsoleApp.LogTag,ss[0]);
 			for(int i =1; i<args.length; ++i) {
 				ss[i] = args[i];
 				Log.d(JConsoleApp.LogTag,ss[i]);
 			}
 			callJ(ss);
 		} else {
-			Log.d(JConsoleApp.LogTag,sb.toString());
+//			Log.d(JConsoleApp.LogTag,sb.toString());
 			callJ(new String[]{sb.toString()});
 		}
 	}
