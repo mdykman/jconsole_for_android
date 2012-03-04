@@ -50,7 +50,9 @@ load 'task'
 load '~system/util/configure.ijs'
 load '~system/main/ctag.ijs'
 load '~system/util/jadetag.ijs'
-startupide''
+
+load ^:IFANDROID '~system/util/android.ijs'
+NB. startupide''
 
 NB. ---------------------------------------------------------
 NB. JVERSION_z_ (used in about box)

@@ -456,7 +456,20 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  e=. shellcmd cmd
+  if. IFANDROID do.
+   rr=. f anddf_z_ p
+   if. rr < 0 do.
+     msg=.'anddf_z_ returns ',rr
+     log 'Download failed: ',msg
+     info 'Download failed:',LF2,msg
+     ferase p
+     r=. 1;msg
+   else.
+     r=. 0;'downloaded: ', f, ' to ', p
+   end.
+  else.
+    e=. shellcmd cmd
+  end.
 catch. fail=. 1 end.
 if. fail +. 0 >: fsize p do.
   if. _1-:msg=. freads q do.

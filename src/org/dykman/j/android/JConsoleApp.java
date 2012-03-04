@@ -16,7 +16,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.dykman.j.JInterface;
-import org.dykman.j.android.Console.Dimension;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -128,14 +127,14 @@ public class JConsoleApp extends Application {
            installSystemFiles(activity,console,root,false);
            sb.setLength(0);
         }
-        Dimension dd = console.getDimension();
-        sb.append("Cwh_j_=:").append(dd.width).append(" ").append(dd.height);
-        callJ(new String[]{sb.toString()},false);
         setConsoleState(true);
 
 	}
 	
 
+	public Dimension getDimension() {
+		return console.getDimension();
+	}
 	public void launchJHS(Context context) {
 		String arg= null;
 		if(!testJHSServer()) {
@@ -355,7 +354,7 @@ public class JConsoleApp extends Application {
 		@Override
 		public void onPostExecute(String s) {
 			bootstrap();
-			console.setEnabled(true);
+//			console.setEnabled(true);
 		}
 
 		@Override
