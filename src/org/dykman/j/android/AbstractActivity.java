@@ -36,7 +36,7 @@ public abstract class AbstractActivity extends Activity {
 	JConsoleApp theApp;
 	public static final String CONSOLE_NAME = "J Console";
 	static final String tempDir = "user/temp";
-	Console console;
+//	Console console;
 
 
 	protected File root;
@@ -45,13 +45,14 @@ public abstract class AbstractActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		theApp = (JConsoleApp) this.getApplication();
 		root = theApp.getRoot();
-		console = theApp.getConsole();
+//		console = theApp.getConsole();
 
 
 	}
-	public void runFile() {
+
+	public void alert(String message) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("You cannot run this object");
+		builder.setMessage(message);
 		builder.setPositiveButton("OK", new AlertDialog.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
@@ -59,8 +60,8 @@ public abstract class AbstractActivity extends Activity {
 		});
 		
 	}
-	public void closeCurrent() {
-		finish();
+	public void runFile() {
+		alert("You cannot run this object");
 	}
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -76,7 +77,6 @@ public abstract class AbstractActivity extends Activity {
 			}
 			case R.id.window:  requestWindowSelect();     	  break;
 			case R.id.jbreak:  callBreak();                   break;
-			case R.id.close:   closeCurrent();         break;
 			case R.id.exit:    testQuit();					  break;
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
@@ -98,27 +98,8 @@ public abstract class AbstractActivity extends Activity {
 
 		int n = editor.getSelectionStart();
 		String line = editor.getLineForPosition(n);
-		console.placeCursor();
-		console.append("\n");
-		console.append(line);
-		console.append("\n");
+		theApp.consoleOutput(JInterface.MTYOFM, line + "\n");
 		theApp.callJ(line);
-	}
-/*
-	protected void saveCurrent() {
-		try {
-			FileEdit v = getEditor();
-			
-			v.save();
-			setTitle(v.createTitle());
-		} catch(IOException e) {
-			Log.e(JConsoleApp.LogTag,"error on save",e);
-		}
-	}
-*/
-	protected void clearConsole() {
-		console.replaceText("");
-		console.prompt();
 	}
 	
 	public void requestWindowSelect() {
@@ -168,8 +149,7 @@ public abstract class AbstractActivity extends Activity {
 					TextView tv = (TextView) vv;
 					String text = new StringBuilder(tv.getText()).toString();
 					if(editor instanceof Console) {
-						console.append(text);
-						console.placeCursor();
+						theApp.consoleOutput(JInterface.MTYOFM, text);
 					} else {
 						Editable ed = editor.getEditableText();
 						int n = editor.getSelectionStart();
@@ -290,33 +270,17 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 			startActivity(intent);
 		}
 	}
-	/*
-	class OpenFileAction implements FileAction {
-		public void useFile(File f) {
-			
-			EditorData data = openEditor(f);
-			theApp.setWindow(data, data.name);
-		}
-		
-	}
-	*/
 	
-	protected void runFile(Console console,File f) {
+	protected void runFile(File f) {
 		StringBuilder sb = new StringBuilder("load '");
 		sb.append(f.getAbsolutePath()).append("'");
-/*	
-		console.placeCursor();
-		console.append("\n");
-		console.append(sb.toString());
-		console.append("\n");
-*/
-		theApp.consoleOutput(JInterface.MTYOFM, "\n" + sb.toString() + "\n");
+		theApp.consoleOutput(JInterface.MTYOFM, sb.toString() + "\n");
 		theApp.callJ(sb.toString());
 	}
 
 	class RunFileAction implements FileAction {
 		public void useFile(File f) {
-			runFile(console,f);
+			runFile(f);
 		}
 		
 	}
@@ -334,8 +298,6 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 		
 	}
 	public void requestFileSaveAs(File ff) {
-//		FileEdit fe = getEditor();
-//		File ff = fe.getFile();
 		final EditText et = new EditText(AbstractActivity.this);
 		et.setLayoutParams(new ViewGroup.LayoutParams(
 			ViewGroup.LayoutParams.FILL_PARENT, 
@@ -374,11 +336,11 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 
 	}
 	protected void callBreak() {
-		theApp.getjInterface().callJ("break_z_ ''");
+		theApp.getjInterface().callSuperJ(new String[]{"break_z_ ''"});
 	}
 
 	public void quit() {
-		int pid = android.os.Process.myPid();
+		theApp.stop();		int pid = android.os.Process.myPid();
 		android.os.Process.killProcess(pid);
 	}
 
@@ -401,13 +363,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 		dialog.show();
 		
 	}
-	
-	protected EditorData openEditor(File f) {
-//		FileEdit fe =  openFileEditor(f);
-//		return theApp.toData(fe);
-		return null;
-	}
-	
+
 	protected FileEdit openFileEditor(File f) {
 		FileEdit ef = new FileEdit(this);
 		try {

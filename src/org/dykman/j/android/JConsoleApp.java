@@ -16,8 +16,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.dykman.j.JInterface;
-import org.dykman.j.OutputListener;
-import org.dykman.j.android.Console.Dimension;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,7 +34,7 @@ public class JConsoleApp extends Application {
 	
 	public static final String LogTag = "j-console";
 
-	protected JInterface jInterface = null;
+	protected AndroidJInterface jInterface = null;
 	private JActivity activity;
 
 	protected Map<String,Intent> intentMap = new HashMap<String, Intent>();
@@ -97,27 +95,34 @@ public class JConsoleApp extends Application {
 	}
 	@Override
 	public void onCreate() {
-		root = getDir("jconsole",  0777);
-		if(currentLocalDir == null) {
-			currentLocalDir = root;
-		}
-		jInterface = new AndroidJInterface();
+		super.onCreate();
+		root = getDir("jconsole", Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
+		currentLocalDir = root;
+		jInterface = new AndroidJInterface(this);
+	}
+	
+	
+	public void stop() 
+	{
+		jInterface.stop();
 	}
 
-	public Console getConsole() {
-		return console;
+	public void setEnableConsole(boolean b) {
+		console.setEnabled(b);
 	}
+	
 	public void setup(JActivity activity,Console console) {
 		this.activity = activity;
 		this.console = console;
 		this.console.setApplication(this);
-//		setConsoleState(true);
 		flushOutputs();
         if(!started) {
            started = true;
+           jInterface.start();
            StringBuilder sb = new StringBuilder();
+           // change to root directory
            sb.append("1!:44 '").append(root.getAbsolutePath()).append("'");
-           jInterface.callJ(sb.toString());
+           callJ(new String[]{sb.toString()},false);
            installSystemFiles(activity,console,root,false);
         }
         setConsoleState(true);
@@ -128,8 +133,11 @@ public class JConsoleApp extends Application {
 	public void launchJHS(Context context) {
 		String arg= null;
 		if(!testJHSServer()) {
-			JHSTask task = new JHSTask();
-			task.execute("");
+			String[] cmds = {
+					"load '~addons/ide/jhs/core.ijs'",
+					"init_jhs_''"
+			};
+			jInterface.callJ(cmds);
 		} else {
 			arg = "ready";
 		}
@@ -157,14 +165,16 @@ public class JConsoleApp extends Application {
 			line = line.trim();
 			if (history.size() >= 100) {
 				history.remove(history.size()-1);
-//				history.remove(0);
 			}
 			if(history.contains(line)) {
 				history.remove(line);
 			}
-//			history.add(line);
 			history.add(0,line);
 		}
+	}
+
+	public Console getConsole() {
+		return console;
 	}
 
 	public void reset() {
@@ -190,32 +200,11 @@ public class JConsoleApp extends Application {
 		context.startActivity(intent);
 	}
 
-/*
-	protected void preserveCurrentWindow() {
-		if(currentEditor != null) {
-			currentEditor.markCursor();
-				EditorData old = toData(currentEditor);
-				String ol = getCurrentWindow();
-				windows.put(ol, old);
-		}
-	}
- */	
-	
 	private void _saveas(final FileEdit fe,final File f) 
 		throws IOException {
 		fe.setTextChanged(true);
-//		fe.setFile(f);
-//		fe.setName(f.getName());
-//		Log.d(JActivity.LogTag,"writing file " + f.getAbsolutePath());
 		fe.save(f);
-
-		/*
-		windows.remove(getCurrentWindow());
-		windows.put(fe.getName(), toData(fe));
-		setCurrentWindow(fe.getName());
-		*/
 		activity.setTitle(fe.createTitle());
-		
 	}
 	
 	public void saveAs(final FileEdit fe,final File f) throws IOException {
@@ -243,29 +232,17 @@ public class JConsoleApp extends Application {
 			_saveas(fe,f);
 		}
 	}
-	protected void doCloseCurrent() {
-		/*
-		final FileEdit editor = getCurrentEditor();
-
-		if(!(editor instanceof Console)) {
-			String cw = getCurrentWindow();
-			windows.remove(cw);
-		}
-		*/
-	}
 	
 	protected void promptSaveWithAction(final FileEdit fe, final File file, final ResponseAction action) 
 			throws IOException {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setMessage("Save " + fe.getName() +"?")
-//				.setCancelable(false)
 			.setPositiveButton("Yes",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						try {
 							fe.save(file);
 							if(action != null) action.action(true);
-//							doCloseCurrent();
 							dialog.dismiss();
 						} catch(IOException e) {
 							Log.e(JConsoleApp.LogTag,"error saving file",e);
@@ -281,38 +258,25 @@ public class JConsoleApp extends Application {
 		AlertDialog dd = builder.create();
 		dd.show();
 	}
-	/*
-	protected void closeCurrent() {
-		try {
-			final FileEdit fe = getCurrentEditor();
-			if(! JActivity.CONSOLE_NAME.equals(fe.getName())) {
-				if(fe.isTextChanged()) {
-					promptSaveWithAction(fe, new ResponseAction() {
-						public void action(boolean state) {
-							doCloseCurrent();
-						}
-					});
-				} else {
-					doCloseCurrent();
-				}
-			}
-		} catch(IOException e) {
-			Log.e(JConsoleApp.LogTag,"error on close",e);
-		}
-	}
-*/
+	
 	public boolean hasEditor(String name) {
-		return false;
-//		return windows.keySet().contains(name);
+		return intentMap.keySet().contains(name);
 	}
-
+	
 	public void callJ(String... sentences) {
-		JTask task = new JTask();
-		task.execute(sentences);
+		callJ(sentences,true);
+	}
+	
+	public void callJ(String[] sentences,boolean async) {
+		if(async) {
+			jInterface.callJ(sentences);
+		} else {
+			jInterface.callSuperJ(sentences);
+		}
 	}
 
 	
-	protected void bootstrap(Console console) {
+	protected void bootstrap() {
 		Toast.makeText(activity, "booting session", Toast.LENGTH_SHORT).show();
 		bootStrapSession(activity,"''");
 	}
@@ -339,10 +303,9 @@ public class JConsoleApp extends Application {
 				Log.d(JConsoleApp.LogTag,ss[i]);
 			}
 			callJ(ss);
-			
 		} else {
 			Log.d(JConsoleApp.LogTag,sb.toString());
-			callJ(sb.toString());
+			callJ(new String[]{sb.toString()});
 		}
 	}
 
@@ -352,8 +315,8 @@ public class JConsoleApp extends Application {
 			InstallationTask task = new InstallationTask(activity,console);
 			task.execute(base);
 		} else {
-			Log.d(JConsoleApp.LogTag,"bootstrapping");
-			bootstrap(console);
+			Log.d(JConsoleApp.LogTag,"bootstraping session");
+			bootstrap();
 		}
 	}
 	protected boolean checkInstall(File base) {
@@ -389,8 +352,7 @@ public class JConsoleApp extends Application {
 
 		@Override
 		public void onPostExecute(String s) {
-			bootstrap(console);
-			
+			bootstrap();
 			console.setEnabled(true);
 		}
 
@@ -421,7 +383,7 @@ public class JConsoleApp extends Application {
 			installDirectory(base, "docs");
 
 			publishProgress("installing addons");
-			publishProgress("(addons take awhile)");
+			publishProgress("(addons take awhile, please be patient)");
 			installDirectory(base, "addons");			
 			
 			publishProgress("installing test files");
@@ -480,28 +442,9 @@ public class JConsoleApp extends Application {
 		}
 	}
 	
-	public JInterface getjInterface() {
+	public AndroidJInterface getjInterface() {
 		return jInterface;
 	}
-	/*
-	public void setjInterface(JInterface jInterface) {
-		this.jInterface = jInterface;
-	}
-	public String getCurrentWindow() {
-		return currentWindow;
-	}
-	public void setCurrentWindow(String currentWindow) {
-		this.currentWindow = currentWindow;
-	}
-	*/
-	/*
-	public FileEdit getCurrentEditor() {
-		return currentEditor;
-	}
-	public void setCurrentEditor(FileEdit currentEditor) {
-		this.currentEditor = currentEditor;
-	}
-	*/
 	public java.util.List<String> getHistory() {
 		return history;
 	}
@@ -545,72 +488,8 @@ public class JConsoleApp extends Application {
 	public String getTempDir() {
 		return tempDir;
 	}
-	class JHSTask extends JTask {
-		protected Integer doInBackground(String... params) {
-			String[] cmds = {
-					"load '~addons/ide/jhs/core.ijs'",
-					"init_jhs_''"
-			};
-//			Log.d(LogTag,"starting JHS");
-			super.doInBackground(cmds);
-			Log.d(LogTag,"returned from starting JHS");
-			return 0;
-		}		
-	}
-	
-	class JTask extends AsyncTask<String, EngineOutput, Integer> 
-		implements OutputListener {
-	
-		int width, height;
-		@Override
-		public void onProgressUpdate(EngineOutput... oo) {
-			EngineOutput o = oo[0];
-			consoleOutput(o);
-		}
-	
-		public void onOutput(int type, String content) {
-			publishProgress(new EngineOutput(type, content));
-		}
-	
-		@Override
-		protected void onPreExecute() {
-			console.setEnabled(false);
-			Dimension dd = console.getDimension();
-			width = dd.width;
-			height = dd.height;
-		}
-	
-		@Override
-		protected Integer doInBackground(String... params) {
-			Integer res = -1;
-			StringBuilder sb = new StringBuilder();
-			sb.append("Cwh_j_ =: ").append(width).append(" ").append(height);
-			res = jInterface.callJ(sb.toString());
-			jInterface.addOutputListener(this);
-			for(String sentence : params) {
-				res = jInterface.callJ(sentence);
-			}
-			jInterface.removeOutputListener(this);
-			return res;
-		}
 
-		
-		@Override
-		protected void onPostExecute(Integer code) {
-			// this is a worry, in the world of async windows
-			/*
-			EditorData ed = windows.get(JActivity.CONSOLE_NAME);
-			if(ed!=null) {
-				ed.placeCursor();
-			}
-			*/
-//			console.placeCursor();
-//			console.prompt();
-			consoleOutput(JInterface.MTYOFM,"  ");
-			console.setEnabled(true);
-		}
-	}
-	
+
 	boolean testJHSServer() {
 		boolean result = false;
 		HttpClient client = new DefaultHttpClient();
@@ -678,7 +557,7 @@ public class JConsoleApp extends Application {
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setMessage("failed to connect to JHS server");
-				builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 					}
@@ -697,8 +576,7 @@ public class JConsoleApp extends Application {
 			} else {
 				
 			}
-//			EngineOutput out = new EngineOutput(JInterface.MTYOLOG, "waiting for JHS to start: " + oo[0] + "\n");
-			Log.d(LogTag,"waiting: " + oo);
+			Log.d(LogTag,"waiting: " + oo[0]);
 		}
 	}
 }

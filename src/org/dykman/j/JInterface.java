@@ -24,7 +24,7 @@ public class JInterface {
 	private List<ExecutionListener> execlist = new ArrayList<ExecutionListener>();
 	private List<OutputListener> outputs = new ArrayList<OutputListener>();
 
-    public int callJ(String s) {
+    public int callJ(String []s) {
     	int result = -1;
     	try {
     		if(nativeInstance == 0L) {
@@ -34,7 +34,9 @@ public class JInterface {
 			    	}
 	    		}
     		}
-	    	result = callJNative(nativeInstance,s);
+    		for(String sentence : s) {
+    			result = callJNative(nativeInstance,sentence);
+    		}
 	    	
     	} catch(Throwable e) {
     		Log.e(JConsoleApp.LogTag, "error executing sentence: " + s, e);
@@ -112,11 +114,12 @@ public class JInterface {
     
     static {
     	try {
-    		// shipped with application
     		System.loadLibrary("j");
     	} catch(Exception e) {
     		Log.e("J-interface", "failed to load j shared object", e);
     	}
     }
 
+    
+ 
 }

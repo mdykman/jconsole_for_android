@@ -84,7 +84,7 @@ public class Console extends FileEdit {
 	public void setApplication(JConsoleApp app) {
 		theApp = app;
 	}
-	
+
 	@Override
 	public void onScrollChanged(int l, int t, int oldl, int oldt) {
 		cancelLongPress();
@@ -134,6 +134,7 @@ public class Console extends FileEdit {
 
 		sp.setSpan(new ForegroundColorSpan(colour), s, e,
 				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		setSelection(sp.length());
 		endBatchEdit();
 	
 	}

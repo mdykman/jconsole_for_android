@@ -74,7 +74,7 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		int itemId = item.getItemId();
 		Log.d(JConsoleApp.LogTag,"selection " + itemId + ", " + getClass().getName());
 		switch(itemId) {
-			case R.id.clear:   clearConsole();                break;
+			case R.id.clear:   console.clear();                break;
 			case R.id.jbreak:  callBreak();                   break;
 			case R.id.reset:   theApp.reset();                break;
 			default : result = false;

@@ -36,14 +36,16 @@ public class EditActivity extends AbstractActivity {
 		
 		if((savedInstanceState== null) || ! savedInstanceState.getBoolean("loaded")) {			
 			try {
-				BufferedReader reader = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file)));
-				StringBuilder sb = new StringBuilder();
-				String line;
-				while((line = reader.readLine())!=null) {
-					sb.append(line).append("\n");
+				if(file.exists()) {
+					BufferedReader reader = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file)));
+					StringBuilder sb = new StringBuilder();
+					String line;
+					while((line = reader.readLine())!=null) {
+						sb.append(line).append("\n");
+					}
+					editor.setText(sb.toString());
 				}
-				editor.setText(sb.toString());
 			} catch(IOException e) {
 				editor.setText("The was an error reading the requested file " + s);
 				Log.e(JConsoleApp.LogTag,"error loading file",e);
@@ -56,9 +58,10 @@ public class EditActivity extends AbstractActivity {
 		}
 
 	}
+
 	@Override
 	public void runFile() {
-		runFile(console, file);
+		runFile(file);
 	}
 	@Override
 	public void onDestroy() {
@@ -92,10 +95,10 @@ public class EditActivity extends AbstractActivity {
 		int itemId = item.getItemId();
 		Log.d(JConsoleApp.LogTag,"selection " + itemId + ", " + getClass().getName());
 		switch(itemId) {
-			case R.id.close:   close();         			break;
-			case R.id.save:    save();                 break;
-			case R.id.runc:    runCurrentFile(console);     break;
-			case R.id.saveas:  requestFileSaveAs(file);           break;
+			case R.id.close:   close();         break;
+			case R.id.save:    save();          break;
+			case R.id.runc:    runCurrentFile(); break;
+			case R.id.saveas:  requestFileSaveAs(file); break;
 			default : result = false;
 		}
 		if(!result) {
@@ -140,19 +143,19 @@ public class EditActivity extends AbstractActivity {
 	public void onTextChanged() {
 		
 	}
-	protected void runCurrentFile(final Console console) {
+	protected void runCurrentFile() {
 		try {
 			if(editor.textChanged) {
 				theApp.promptSaveWithAction(editor, file, new ResponseAction() {
 					public void action(boolean state) {
 						if(state) {
-							runFile(console,file);
+							runFile(file);
 						}
 					}
 				});
 			} else {
 //					File f = editor.getFile();
-				runFile(console,file);
+				runFile(file);
 			}
 		} catch(IOException e) {
 			Log.e(JConsoleApp.LogTag,"error running current file",e);
