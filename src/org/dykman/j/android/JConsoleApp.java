@@ -120,10 +120,10 @@ public class JConsoleApp extends Application {
         if(!started) {
         	console.setEnabled(false);
            started = true;
-           jInterface.start();
            // change to root directory
            sb.append("1!:44 '").append(root.getAbsolutePath()).append("'");
-           callJ(new String[]{sb.toString()},false);
+           jInterface.callSuperJ(new String[]{sb.toString()});
+           jInterface.start();
            installSystemFiles(activity,console,root,false);
            sb.setLength(0);
         }

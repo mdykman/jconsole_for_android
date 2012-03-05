@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -41,6 +40,41 @@ public class AndroidJInterface extends JInterface {
 		runner.execute(new String[]{});
 	}
 
+	Thread thread = null;
+	LinkedList<String> commandBuffer = new LinkedList<String>(); 
+	public void addLine(String sentence) {
+		synchronized (commandBuffer) {
+			commandBuffer.addFirst(sentence);
+			if(thread!= null && thread.getState() == Thread.State.TIMED_WAITING) {
+				thread.interrupt();
+			}
+		}
+	}
+	
+	public String nextLine() {
+		try {
+			while(true) {
+				synchronized(commandBuffer) {
+					thread = Thread.currentThread();
+					if(commandBuffer.size() >0) {
+						return commandBuffer.removeLast();
+					}
+				}
+				try {
+					Thread.sleep(250);
+				} catch(Exception e) {
+					// ignore sleep/interrupted exceptions
+				}
+			} 
+		} catch(Exception e) {
+			Log.e(LOGTAG,"rerror reading line",e);
+		}
+		synchronized(commandBuffer) {
+			thread = null;
+		}
+		return null;
+	}
+	
 	int downloadFile(String urlS, String fileS) {
 
 		int result = -1;

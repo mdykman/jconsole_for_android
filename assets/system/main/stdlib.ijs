@@ -73,14 +73,6 @@ end.
 ''
 )
 
-NB. 3 : 0''
-NB. NB. added by md.  there is likely a beter place to bootstrap this
-NB. if. IFANDROID do.
-NB.   anddf_z_=: 4 : '''libj.so android_download_file i *c *c'' 15!:0 x;y'
-NB. end.
-NB. ''
-NB. )
-
 items=: "_1
 fetch=: {::
 leaf=: L:0

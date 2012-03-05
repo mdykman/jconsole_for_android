@@ -30,7 +30,7 @@ public class JInterface {
     		if(nativeInstance == 0L) {
 	    		synchronized(this) {
 			    	if(nativeInstance == 0L) {
-			    			nativeInstance = initializeJ();
+			    		nativeInstance = initializeJ();
 			    	}
 	    		}
     		}
@@ -39,7 +39,6 @@ public class JInterface {
         		Log.i(JConsoleApp.LogTag, "executing: " + sentence);
     			result = callJNative(nativeInstance,sentence);
     		}
-	    	
     	} catch(Throwable e) {
     		Log.e(JConsoleApp.LogTag, "error executing sentence: " + s, e);
     	} finally { 
