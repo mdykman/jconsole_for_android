@@ -2,7 +2,6 @@ NB. J profile
 NB. JFE sets BINPATH_z_ and ARGV_z_
 NB. add your sentences in startup.ijs
 
-
 systype=. 9!:12''
 jpathsep_z_=: '/'&(('\' I.@:= ])}) NB. convert to / separator
 BINPATH_z_=: jpathsep BINPATH_z_
@@ -11,27 +10,12 @@ NB. create SystemFolders
 bin=.     BINPATH
 install=. (bin i: '/'){.bin
 addons=.  install,'/addons'
-system_z_ =. system=.  install,'/system'
+system=.  install,'/system'
 tools=.   install,'/tools'
+home=.    >(systype-5){(2!:5'HOME');2!:5'USERPROFILE'
 
-sth =. 4 : 0 
-if. y <: 5 do.
-  >(y-5){(2!:5'HOME');2!:5'USERPROFILE'
-else.
-  x 
-end.
-)
-	
-home =. install sth systype
-
-NB. home =. install ]`('user/',[)@.(0-:]) home
-NB. home =. install (4 : 'if. 0 = y do.  x, ''/user'' else. y end.') home
-
-NB. userx=.   '\j',('64-'#~16={:$3!:3[2),'user'
 userx=.   '\j',('64-'#~16={:$3!:3[2),'701-user'
-user=.    home,     '/user'"_^:( 8 = 9!:12'') userx
-
-NB. user=.    home,'/user'
+user=.    home,userx
 break=.   user,'/break'
 snap=.    user,'/snap'
 temp=.    user,'/temp'

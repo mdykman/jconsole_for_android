@@ -51,7 +51,6 @@ load '~system/util/configure.ijs'
 load '~system/main/ctag.ijs'
 load '~system/util/jadetag.ijs'
 
-load ^:IFANDROID '~system/util/android.ijs'
 NB. startupide''
 
 NB. ---------------------------------------------------------

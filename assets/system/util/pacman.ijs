@@ -446,6 +446,9 @@ readconfig=: 3 : 0
 ReadCatalog=: 2
 0!:0 :: ] <PACMANCFG
 )
+
+load ^:(IFDEF'android') '~system/util/android.ijs'
+
 httpget=: 3 : 0
 'f t'=. 2 {. (boxxopen y),a:
 n=. f #~ -. +./\. f e. '=/'
@@ -456,7 +459,7 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  if. IFANDROID do.
+  if. IFDEF'android' do.
    rr=. f anddf_z_ p
    if. rr < 0 do.
      msg=.'anddf_z_ returns ',rr

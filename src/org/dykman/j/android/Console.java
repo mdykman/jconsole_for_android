@@ -47,7 +47,7 @@ public class Console extends FileEdit {
 					int n = getSelectionStart();
 					String line = getLineForPosition(n);
 					if(line != null && line.equals(last)) {
-						appendSeq("\n");
+//						appendSeq("\n");
 						handleEnter(line, false);
 					}
 					last = line;
@@ -64,7 +64,7 @@ public class Console extends FileEdit {
 						--n;
 					String line = getLineForPosition(n);
 					boolean onLast = isCursorOnBottomLine();
-					appendSeq("\n");
+//					appendSeq("\n");
 					handleEnter(line, onLast);
 
 					return true;
@@ -94,6 +94,7 @@ public class Console extends FileEdit {
 
 	public void handleEnter(String line, boolean last) {
 		if (last) {
+			appendSeq("\n");
 			if (line != null && line.trim().length() > 0) {
 				theApp.callWithHistory(line);
 			} else {
@@ -101,6 +102,11 @@ public class Console extends FileEdit {
 			}
 		} else {
 			if (line != null) {
+				Editable editable = getText();
+//				int nn = getSelectionStart();
+				if(editable.length() > 0 && editable.charAt(editable.length() -1) != '\n') {
+					appendSeq("\n");
+				}
 				appendSeq(line);
 				placeCursor();
 			}

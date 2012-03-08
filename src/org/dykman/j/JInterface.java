@@ -105,6 +105,7 @@ public class JInterface {
     native public int callJNative(long inst,String s); 
     native public void destroyJNative(long inst); 
     native public long initializeJNative();
+    native public void setEnv(String key,String value);
 
 // to be called back from library    
     public void output(int type,String s) {

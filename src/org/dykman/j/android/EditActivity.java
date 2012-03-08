@@ -32,6 +32,7 @@ public class EditActivity extends AbstractActivity {
 		String s = b.getString("file");
 		file = new File(s);
 		theApp.addFile(file.getAbsolutePath(),getIntent());
+		editor.setName(file.getName());
 		setTitle(file.getName());
 		
 		if((savedInstanceState== null) || ! savedInstanceState.getBoolean("loaded")) {			

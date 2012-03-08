@@ -7,7 +7,7 @@ if. UNAME-:'Win' do.
   libgl=: 'opengl32.dll'
   libglu=: 'glu32.dll'
 elseif. UNAME-:'Linux' do.
-  if. IFANDROID do.
+  if. IFDEF'android' do.
     libgl=:  'libGLESv2.so'
     libglu=: 'libEGL.so'
   else.

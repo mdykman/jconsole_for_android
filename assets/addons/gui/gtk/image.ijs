@@ -37,10 +37,12 @@ rescale=: 3 : 0
 p=. gdk_pixbuf_new_from_file_at_scale File;;/y,0,0
 gtk_image_set_from_pixbuf image,p
 )
+
+
 3 : 0''
 if. IFWIN do. 
   UNAME=: 'Win' 
-elseif. IFANDROID do.
+elseif. IFDEF'android' do.
   UNAME=: 'Linux' 
 elseif.
   UNAME=: LF -.~ 2!:0 'uname' 

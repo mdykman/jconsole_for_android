@@ -99,6 +99,10 @@ public class JConsoleApp extends Application {
 		root = getDir("jconsole", Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
 		currentLocalDir = root;
 		jInterface = new AndroidJInterface(this);
+		jInterface.setEnv("HOME", root.getAbsolutePath());
+		jInterface.callSuperJ(new String[]{
+			"DEFandroid_z_=:1",
+			"anddf_z_=: 4 : ' ''libj.so android_download_file i *c *c'' 15!:0 x;y'"});
 	}
 	
 	
@@ -143,11 +147,14 @@ public class JConsoleApp extends Application {
 					"init_jhs_''"
 			};
 			jInterface.callJ(cmds);
+			JHSLauncherTask ltask = new JHSLauncherTask(context);
+			ltask.execute(arg);
 		} else {
-			arg = "ready";
+			Intent myIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("http://localhost:65001/jijxipad"));
+				consoleOutput(JInterface.MTYOFM,"launching browser\n");
+				context.startActivity(myIntent);
 		}
-		JHSLauncherTask ltask = new JHSLauncherTask(context);
-		ltask.execute(arg);
 	}
 	public void setConsoleState(boolean n) {
 		consoleState = n;
@@ -524,7 +531,7 @@ public class JConsoleApp extends Application {
 			long start = System.currentTimeMillis();
 			publishProgress(0);
 			// try to wait for JHS to start
-			long waitFor = 1000;
+			long waitFor = 500;
 			while(loop) {
 				try {
 					if(loop && waitFor > 0) Thread.sleep(waitFor);
@@ -544,7 +551,7 @@ public class JConsoleApp extends Application {
 				} else {
 					publishProgress((int)(ll/100));
 				}
-				waitFor = 500;
+				waitFor = 250;
 			}
 			return null;
 		}

@@ -109,9 +109,10 @@ if. 0 = 1!:4 :: 0: <f do.
 end.
 NB. fall back one more time for android
 if. 0 = 1!:4 :: 0: <f do.
- f=. (BINPATH i: '/'){. BINPATH
- f=. (f i: '/'){. f
- f=. f,'/lib/', t
+ f=.t
+NB. f=. (BINPATH i: '/'){. BINPATH
+NB. f=. (f i: '/'){. f
+NB. f=. f,'/lib/', t
 end.
 
 rxdll=: '"',f,'" '

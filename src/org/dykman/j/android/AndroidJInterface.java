@@ -25,6 +25,8 @@ public class AndroidJInterface extends JInterface {
 
 	JConsoleApp theApp;
 	JRunner runner = null;
+	Thread thread = null;
+	LinkedList<String> commandBuffer = new LinkedList<String>(); 
 	
 	public AndroidJInterface(JConsoleApp theApp) {
 		this.theApp = theApp;
@@ -34,20 +36,22 @@ public class AndroidJInterface extends JInterface {
 	
 	public void stop() {
 		runner.stop();
+		intr();
 	}
 	
 	public void start() {
 		runner.execute(new String[]{});
 	}
 
-	Thread thread = null;
-	LinkedList<String> commandBuffer = new LinkedList<String>(); 
+	public void intr() {
+		if(thread != null && thread.getState() == Thread.State.TIMED_WAITING) {
+			thread.interrupt();
+		}
+	}
 	public void addLine(String sentence) {
 		synchronized (commandBuffer) {
 			commandBuffer.addFirst(sentence);
-			if(thread!= null && thread.getState() == Thread.State.TIMED_WAITING) {
-				thread.interrupt();
-			}
+			intr();
 		}
 	}
 	
@@ -67,8 +71,9 @@ public class AndroidJInterface extends JInterface {
 				}
 			} 
 		} catch(Exception e) {
-			Log.e(LOGTAG,"rerror reading line",e);
+			Log.e(LOGTAG,"error reading line",e);
 		}
+		
 		synchronized(commandBuffer) {
 			thread = null;
 		}
@@ -129,7 +134,7 @@ public class AndroidJInterface extends JInterface {
 				if(cl >= 0) {
 					if(cl != result) {
 						Log.w(LOGTAG,"content length reports difference while downloading " + fileS + ". cl = "
-								+ cl + ", downloaded bytes=" + result);
+							+ cl + ", downloaded bytes=" + result);
 					}
 				}
 			} finally {
@@ -163,7 +168,9 @@ public class AndroidJInterface extends JInterface {
 	}	
 	@Override
 	public int callJ(String []sentence) {
-		runner.addSentence(sentence);
+		for(String s : sentence) {
+			addLine(s);
+		}
 		return 0;
 	}
 	
@@ -173,16 +180,18 @@ public class AndroidJInterface extends JInterface {
 		Thread thread;
 		boolean running = true;
 		
-
+/*
 		protected void intr() {
 			if (thread.getState() == Thread.State.TIMED_WAITING) {
 				thread.interrupt();
 			}
 		}
+*/
 		public void stop() {
 			running = false;
-			intr();
+	//		intr();
 		}
+		/*
 		public void addSentence(String []ss) {
 			theApp.setEnableConsole(false);
 			for(String s : ss) {
@@ -200,6 +209,7 @@ public class AndroidJInterface extends JInterface {
 
 			}
 		}
+		*/
 		@Override
 		protected void onProgressUpdate(Object... objs) {
 			for(Object o : objs) {
@@ -215,15 +225,9 @@ public class AndroidJInterface extends JInterface {
 		protected Integer doInBackground(String... params) {
 			AndroidJInterface.this.addOutputListener(this);
 			thread = Thread.currentThread();
-			boolean worked = false;
 			while (running) {
-				String cmd = null;
-				synchronized (cms) {
-					if (cms.size() > 0) {
-						cmd = cms.removeLast();
-					}
-				}
-				
+				String cmd = nextLine();
+
 				if(cmd != null) {
 					StringBuilder sb = new StringBuilder();
 			        Dimension dd = theApp.getDimension();
@@ -234,8 +238,14 @@ public class AndroidJInterface extends JInterface {
 					AndroidJInterface.this.addExecutionListener(this);
 					callSuperJ(new String[]{cmd});
 					AndroidJInterface.this.removeExecutionListener(this);
-					worked = true;
-				} else {
+					synchronized (commandBuffer) {
+						if(commandBuffer.size() == 0) {
+							publishProgress(true);
+						}
+					}
+				} 
+				/*
+				else {
 					if(worked) publishProgress(true);
 					try {
 						Thread.sleep(250);
@@ -243,6 +253,7 @@ public class AndroidJInterface extends JInterface {
 						// ignore
 					}
 				}
+				*/
 			}
 			AndroidJInterface.this.removeOutputListener(this);
 			return 0;
