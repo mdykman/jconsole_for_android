@@ -1,6 +1,8 @@
 package org.dykman.j.android;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +10,8 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -84,13 +88,6 @@ public class AndroidJInterface extends JInterface {
 
 		int result = -1;
 		try {
-//			Map<String, String> nv = System.getenv();
-
-/*
-			for (Map.Entry<String, String> en : nv.entrySet()) {
-				Log.d(LOGTAG, "env: " + en.getKey() + "=" + en.getValue());
-			}
-*/
 			URL url = new URL(urlS);
 			
 			HttpGet get = new HttpGet(url.toURI());
@@ -180,36 +177,10 @@ public class AndroidJInterface extends JInterface {
 		Thread thread;
 		boolean running = true;
 		
-/*
-		protected void intr() {
-			if (thread.getState() == Thread.State.TIMED_WAITING) {
-				thread.interrupt();
-			}
-		}
-*/
 		public void stop() {
 			running = false;
 	//		intr();
 		}
-		/*
-		public void addSentence(String []ss) {
-			theApp.setEnableConsole(false);
-			for(String s : ss) {
-				addS(s);
-			}
-		
-		}
-		public void addS(String s) {
-			try {
-				synchronized (cms) {
-					cms.addFirst(s);
-				}
-				intr();
-			} catch (Exception e) {
-
-			}
-		}
-		*/
 		@Override
 		protected void onProgressUpdate(Object... objs) {
 			for(Object o : objs) {
@@ -244,19 +215,68 @@ public class AndroidJInterface extends JInterface {
 						}
 					}
 				} 
-				/*
-				else {
-					if(worked) publishProgress(true);
-					try {
-						Thread.sleep(250);
-					} catch (Exception e) {
-						// ignore
-					}
-				}
-				*/
 			}
 			AndroidJInterface.this.removeOutputListener(this);
 			return 0;
+		}
+
+		public int unzip(String fs) {
+			return unzip(fs,null);
+		}
+		
+		public int unzip(String fs, String toDirs) {
+			File f = new File(fs);
+			File dir = toDirs == null || toDirs.length() == 0 ? null : new File(toDirs);
+			return unzip(f,dir);
+		}
+		public int unzip(File f) {
+			return unzip(f,null);
+		}
+		public int unzip(File f, File toDir) {
+			final int BUFFER = 8192;
+			File of = null;
+			ZipInputStream zin = null;
+			int result = 0;
+			try {
+				if(toDir == null) toDir = f.getParentFile();
+				
+				FileInputStream fin = new FileInputStream(f);
+				zin = new ZipInputStream(fin);
+				ZipEntry entry;
+				byte[] buff = new byte[BUFFER];
+				while((entry = zin.getNextEntry())!=null) {
+					of = new File(toDir,entry.getName());
+					of.mkdirs();
+					BufferedOutputStream bout = null;
+					try {
+						FileOutputStream fos = new FileOutputStream(of);
+						bout = new BufferedOutputStream(fos);
+						int n;
+						while((n = zin.read(buff,0,BUFFER)) != -1) {
+							fos.write(buff, 0, n);
+						}
+						bout.flush();
+					} finally {
+						if(bout!=null) {
+							bout.close();
+						}
+					}
+				}
+				zin.close();
+			} catch(IOException e) {
+				Log.e(LOGTAG,"error unzipping file " + f.getName() + ": " + e.getLocalizedMessage(),e);
+				if(of != null) {
+					of.delete();
+				}
+				result = -1;
+			} finally {
+				try {
+					if(zin!=null) zin.close();
+				}catch(Exception e) {
+					
+				}
+			}
+			return result;
 		}
 		
 		public void onCommandComplete(int resultCode) {

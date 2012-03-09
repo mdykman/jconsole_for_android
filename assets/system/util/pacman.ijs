@@ -457,7 +457,18 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  e=. shellcmd cmd
+  if. IFDEF'android' do.
+    anddf=: 4 : '''libj.so android_download_file i *c *c'' 15!:0 x;y'
+	 rr=.f anddf p
+	 if. rr >: 0 do
+      r=. 0;p
+    else.
+      r=. 1; 'failed to download ',p,'. returned ',": rr
+	 end.
+	 return. r
+  else.
+    e=. shellcmd cmd
+  end.
 catch. fail=. 1 end.
 if. fail +. 0 >: fsize p do.
   if. _1-:msg=. freads q do.

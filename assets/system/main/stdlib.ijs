@@ -13,15 +13,16 @@ IF64=: 16={:$3!:3[2
 IFGTK=: IFJHS=: IFBROADWAY=: 0
 IFJ6=: 0
 IFWINE=: IFWIN > 0-:2!:5'_'
-if. IF64 do.
+if. IF64 +. IFDEF'android' do.
   IFWOW64=: 0
-else.
+elseif. do.
   if. IFUNIX do.
     IFWOW64=: '64'-:_2{.(2!:0 'uname -m')-.10{a.
   else.
     IFWOW64=: 'AMD64'-:2!:5'PROCESSOR_ARCHITEW6432'
   end.
 end.
+
 if. IFDEF'android' do.
   UNAME=:'Linux'
 elseif. IFUNIX do.
@@ -29,10 +30,12 @@ elseif. IFUNIX do.
 elseif. do.
   UNAME=: 'Win'
 end.
+
 )
 jcwdpath=: (1!:43@(0&$),])@jpathsep@((*@# # '/'"_),])
 jsystemdefs=: 3 : 0
-0!:0 <jpath '~system/defs/',y,'_',(tolower UNAME),(IF64#'_64'),'.ijs'
+xuname=.>(IFDEF'android'){UNAME;'android'
+0!:0 <jpath '~system/defs/',y,'_',(tolower xuname),(IF64#'_64'),'.ijs'
 )
 18!:4 <'z'
 'TAB LF FF CR DEL EAV'=: 9 10 12 13 127 255{a.
