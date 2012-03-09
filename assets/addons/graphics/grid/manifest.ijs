@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 Grid J6
 )
 
-VERSION=: '1.0.4'
+VERSION=: '1.0.8'
 
 DEPENDS=: 0 : 0
 general/misc/font

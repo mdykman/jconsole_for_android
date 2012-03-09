@@ -27,6 +27,7 @@ hdrrow=: hdrcol=: 0
 grid=: conew 'jzgrid'
 wd 'pshow'
 show__grid pack 'cellrange gridvirtualmode hdrrow hdrcol'
+wdloop^:(-.IFJ6)''
 )
 
 NB. =========================================================

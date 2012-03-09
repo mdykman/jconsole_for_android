@@ -1,6 +1,6 @@
 NB. demosel.ijs      - main selection dialog
 
-require 'gtkwd gui/gtkwd/wdjview gl2 numeric stats'
+require 'gtkwd gui/gtkwd/jview gl2 numeric stats'
 
 18!:55 <'jdemos'
 coclass 'jdemos'
@@ -52,6 +52,7 @@ nurikabe dnurikabe
 plot dplot
 pousse dpousse
 printer dprinter
+regular_expressions dregex
 scriptdoc dscriptdoc
 solitaire dsolitaire
 tabula dtabula
@@ -82,6 +83,7 @@ wd 'set listbox ',;DEL,each ({."1 TITLES),each DEL
 wd 'setselect listbox 0'
 wd 'setfocus listbox'
 wd 'pshow;'
+wdloop^:(-.IFJ6)''
 )
 
 NB. =========================================================
@@ -118,6 +120,7 @@ dpaint=: load bind (jpath '~addons/demos/isigraph/paint.ijs')
 dplot=: load bind (jpath '~addons/demos/wdplot/plotdemo.ijs')
 dpousse=: load bind (jpath '~addons/games/pousse/pousse.ijs')
 dprinter=: load bind (jpath '~addons/demos/wd/printer.ijs')
+dregex=: load bind (jpath '~addons/demos/wd/regdemo.ijs')
 dsolitaire=: load bind (jpath '~addons/games/solitaire/solitaire.ijs')
 dtabula=: load bind (jpath '~addons/math/tabula/tabula.ijs')
 dtreemap=: load bind (jpath '~addons/graphics/treemap/demo.ijs')
@@ -141,7 +144,7 @@ wdformedit f
 
 NB. =========================================================
 dscriptdoc=: 3 : 0
-load 'general/scriptdoc'
+load 'scriptdoc'
 scriptdoc jpath '~system/main/task.ijs'
 )
 

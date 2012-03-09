@@ -1,14 +1,8 @@
-3 : 0''
-if. IFGTK do.
-  require 'gtkwd graphics/print'
-end.
-''
-)
+require 'gtkwd print'
 
 coclass 'jscriptdoc'
 
-FIXFONT=: IFUNIX{::'"Courier New" 12' ; 'mono 12'
-PATHSEP=: '/'
+PATHSEP=: jpathsep '/'
 0 : 0
 
 Scripts are documented in comment lines (i.e. lines
@@ -54,7 +48,7 @@ Other lines include an "example" statement
 3. Other
 )
 3 : 0''
-if. -.IFGTK do.
+if. -.gtkInitDone_jgtk_ do.
   wdinfo=: smoutput&>
 end.
 0
@@ -166,8 +160,9 @@ if. 0 e. # y do. '' return. end.
 if. _1=files=. docgetscripts y do. _1 return. end.
 SCRIPTFILES=: files
 dat=. sdoc_show ''
-if. IFGTK do.
+if. gtkInitDone_jgtk_ do.
   wd 'pshow;pactive'
+  wdloop^:(-.IFJ6)''
   ''
 else.
   dat
@@ -278,11 +273,11 @@ else.
   sep=. LF,FILESEP,LF
   dat=. (#sep) }. tolist sep&, each txt
 end.
-if. IFGTK *. 200000 <: #dat do.
+if. gtkInitDone_jgtk_ *. 200000 <: #dat do.
   dat=. (200000{.dat),LF,'...'
 end.
 
-if. -.IFGTK do.
+if. -.gtkInitDone_jgtk_ do.
   dat, LF
 else.
   sdoc_run''

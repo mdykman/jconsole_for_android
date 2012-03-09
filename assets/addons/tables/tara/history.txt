@@ -1,4 +1,8 @@
 tables/tara - change history
+
+== 1.2.15 ==
+ * revert: add summary information streams
+
 == 1.2.14 ==
  * fix: kludge for xlscsv which has trouble to read small block
 

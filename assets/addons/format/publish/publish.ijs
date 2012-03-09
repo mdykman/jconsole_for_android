@@ -1,3 +1,24 @@
+3 : 0''
+if. IFJ6 do.
+  script_z_ jpath '~system/classes/plot/afm.ijs'
+  script_z_ jpath '~system/packages/graphics/bmp.ijs'
+  script_z_ jpath '~system/packages/color/colortab.ijs'
+  script_z_ jpath '~system/main/dll.ijs'
+  script_z_ jpath '~system/main/files.ijs'
+  script_z_ jpath '~system/packages/misc/font.ijs'
+  script_z_ jpath '~system/main/gl2.ijs'
+  script_z_ jpath '~system/classes/plot/jzplot.ijs'
+  script_z_ jpath '~system/main/numeric.ijs'
+  script_z_ jpath '~system/classes/plot/plot.ijs'
+  script_z_ jpath '~system/main/regex.ijs'
+  script_z_ jpath '~system/main/strings.ijs'
+  script_z_ jpath '~system/main/trig.ijs'
+else.
+  require 'afm bmp colortab dll files general/misc/font gl2 jzplot numeric plot regex strings trig'
+end.
+''
+)
+
 coclass 'ppublish'
 cutlist=: 3 : 0
 txt=. trimWS y
@@ -670,13 +691,17 @@ end.
 '<<',LF,s,'>>',LF
 )
 view=: 3 : 0
-if. #PDFreader=. getPDFreader'' do.
-  cmd=. PDFreader,' "',OutputFile,'"'
-  if. IFUNIX do.
-    2!:1 cmd,' &'
-  else.
-    wd 'winexec *',cmd
+if. IFJ6 do.
+  if. #PDFreader=. getPDFreader'' do.
+    cmd=. PDFreader,' "',OutputFile,'"'
+    if. IFUNIX do.
+      2!:1 cmd,' &'
+    else.
+      wd 'winexec *',cmd
+    end.
   end.
+else.
+  viewpdf_j_ OutputFile
 end.
 EMPTY
 )
@@ -1439,7 +1464,6 @@ txt;front
 coclass 'ppubzlib'
 z2chr=: 2 & ic
 z2num=: _2 & ic
-
 zlibinit=: 3 : 0
 if. UNAME-:'Linux' do.
   p=. > (IFDEF'android') {'libz.so.1';'libz.so'
@@ -2839,10 +2863,28 @@ for_p. y do.
   r=. r,clr;fnt;bgn;end;bwd;ewd;hit
 end.
 )
-require 'gtkwd'
+3 : 0''
+if. IFJ6 do.
+  script_z_ jpath '~system/main/compare.ijs'
+  script_z_ jpath '~system/main/dir.ijs'
+  script_z_ jpath '~system/packages/winapi/dirbrowse.ijs'
+  script_z_ jpath '~system/main/dll.ijs'
+  script_z_ jpath '~system/main/files.ijs'
+  script_z_ jpath '~system/main/gl2.ijs'
+  script_z_ jpath '~system/classes/view/jview.ijs'
+  script_z_ jpath '~system/packages/print/print.ijs'
+  script_z_ jpath '~system/main/regex.ijs'
+  script_z_ jpath '~system/main/strings.ijs'
+  script_z_ jpath '~system/packages/misc/task.ijs'
+  script_z_ jpath '~system/main/text.ijs'
+else.
+  require 'gtkwd'
+  require 'dir dll files gl2 print regex strings task text'
+end.
+''
+)
 
 coclass 'ppubman'
-'load'~'format/publish'
 MAXRECENT=: 20
 PUBSNAPS=: 5
 PUBSNAPX=: ''
@@ -3414,9 +3456,11 @@ for_s. d do.
 end.
 )
 snapview=: 3 : 0
-require '~system/extras/util/dirmatch.ijs'
-PJPROJ_jdirmatch_=: ''
-dmrun_jdirmatch_ 1 1
+if. IFJ6 do.
+  require '~system/extras/util/dirmatch.ijs'
+  PJPROJ_jdirmatch_=: ''
+  dmrun_jdirmatch_ 1 1
+end.
 )
 ss_files=: 3 : 0
 t=. 1!:0 y,'*'
@@ -3599,15 +3643,19 @@ pdf=. getPDFreader_ppublish_''
 msk=. ext = <'.pdf'
 dun=. dun +. msk
 for_t. msk#y do.
-  cmd=. pdf,' "',(>t),'"'
-  if. IFUNIX do.
-    2!:1 cmd,' &'
-  else.
-    if. #pdf do.
-      wd 'winexec *',cmd
+  if. IFJ6 do.
+    cmd=. pdf,' "',(>t),'"'
+    if. IFUNIX do.
+      2!:1 cmd,' &'
     else.
-      shell }.cmd
+      if. #pdf do.
+        wd 'winexec *',cmd
+      else.
+        shell }.cmd
+      end.
     end.
+  else.
+    viewpdf_j_ >t
   end.
 end.
 msk=. IFUNIX < ext e. '.jpg';'.jpeg'

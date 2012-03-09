@@ -1,6 +1,6 @@
 gui/util - change history
 
-== 1.0.6/7 ==
+== 1.0.6/9 ==
  * chg: add toolbar bmp for j701
 
 == 1.0.5 ==

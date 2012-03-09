@@ -1,4 +1,4 @@
-require 'gui/gtkwd bmp regex general/misc/font'
+require 'gtkwd bmp regex general/misc/font'
 require '~addons/gui/gtkwd/sms.ijs'
 
 coclass 'jformedit'
@@ -12,7 +12,7 @@ create=: 3 : 0
 copybuffer=: ''
 if. GSCALE=0 do.
   wd 'pc gscale;xywh 0 0 200 200;cc g static'
-  wd 'pshow'
+  wd^:(-.IFJ6) 'pshow;pshow sw_hide'
   s=. 2 { 0 ". wd 'qchildxywh g'
   x=. 2 { 0 ". wd 'qchildxywhx g'
   wd 'pclose'

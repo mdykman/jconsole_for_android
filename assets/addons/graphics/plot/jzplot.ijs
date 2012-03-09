@@ -16,7 +16,7 @@ if. -.IFJ6 do.
     require 'graphics/bmp'
     require 'gui/gtk graphics/gl2'
     if. GTKOUTPUT -: 'isi' do.
-      require 'gui/gtkwd'
+      require 'gtkwd'
     end.
     coinsert 'jgl2'
   elseif. do.
@@ -106,7 +106,10 @@ nc=: 4!:0
 packs=: (, ,&< ".) &>
 pdefs=: 3 : '0 $ ({."1 y)=: {:"1 y'
 pbuf=: 3 : 'buf=: buf,,y,"1 LF'
-pforms=: [: <;._2 &> [: <;._2 wd bind 'qpx'
+pforms=: 3 : 0
+if. 0=# z=. <;._2;._2 @ wd 'qpx' do. z=. 0 6$<'' end.
+z
+)
 pick=: >@{
 pickf=: 2 : 'u @ > @ (n&{)'
 pow10=: 10&^
@@ -2249,8 +2252,10 @@ if. (ifjwplot'') *. -.IFGTK do. gtk_main_quit_jgtk_ '' end.
 )
 popen_gtk=: 3 : 0
 if. 0~: (0&". ::]) PFormhwnd do.
-  if. 0= gtk_widget_get_parent_window_jgtk_ (0&". ::]) PFormhwnd do.
-    gtk_window_present_with_time_jgtk_ ((0&". ::]) PFormhwnd),GDK_CURRENT_TIME_jgtk_
+  if. gtk_widget_is_toplevel_jgtk_ (0&". ::]) PFormhwnd do.
+    if. 0= gtk_window_has_toplevel_focus_jgtk_ ((0&". ::]) PFormhwnd) do.
+      gtk_window_present_with_time_jgtk_ ((0&". ::]) PFormhwnd),GDK_CURRENT_TIME_jgtk_
+    end.
     glsel PIdLoc
     0 return.
   end.
@@ -2391,14 +2396,14 @@ wd 'ptop ',":PTop
 fzskludge=: 4%3
 pgetascender=: 3 : 0
 if. Poutput = iISI do.
-  if. GL2Backend_jgl2_ e. 3 4 do.
+  if. 1=GL2Backend_jgl2_ do.
     glfont y
     1 { glqtextmetrics''
   else.
     FontScale * getascender y
   end.
 elseif. Poutput = iGTK do.
-  if. GL2Backend_jgl2_ e. 3 4 do.
+  if. 1=GL2Backend_jgl2_ do.
     CF gtkfontdesc y
     1 { glqtextmetrics''
   else.
@@ -6274,7 +6279,6 @@ end.
 g_object_unref_jgtk_ buf
 )
 gtk_show=: 3 : 0
-coinsert 'jgl2'
 if. -.IFGTK do. gtkinit_jgtk_ '' end.
 popen_gtk''
 if. ifjwplot'' do.
@@ -6288,12 +6292,10 @@ if. PShow=0 do.
   end.
   PShow=: 1
   gtk_window_set_keep_above_jgtk_ ((0&". ::]) PFormhwnd),PTop
-  gtk_paint''
-else.
-  gtk_paint''
 end.
-glpaintx''
-if. (ifjwplot'') *. -.IFGTK do. gtk_main_jgtk_ '' end.
+gtk_paint''
+glpaint''
+if. -.gtkMainLoop_jgtk_ do. gtk_main_jgtk_ '' end.
 )
 gtk_paint=: 3 : 0
 glsel PIdLoc
@@ -6758,7 +6760,8 @@ wd 'pc a owner;xywh 0 0 240 200;cc g isigraph rightmove bottommove;pas 0 0'
 PFormhwnd=: 0 ". wd 'qhwndp'
 PId=: 'g'
 wd 'setxywhx g 0 0 ',":y
-isi_paint''
+wd 'pshow'
+isi_paintx''
 glpaint''
 res=. isi_getbmp''
 wd 'pclose'
@@ -6835,7 +6838,6 @@ isi_tifr=: 'tif' & isi_defstr
 isi_show=: 3 : 0
 popen_isi''
 (PForm,'_',PId,'_paint')=: isi_paint
-isi_paint''
 if. PShow=0 do.
   if. VISIBLE do.
     wd 'pshow ',PSHOW
@@ -6844,9 +6846,10 @@ if. PShow=0 do.
   end.
   wd 'ptop ',":PTop
   PShow=: 1
-else.
-  glpaint''
 end.
+isi_paint''
+glpaint''
+wdloop^:(-.IFJ6)''
 )
 isi_paint=: 3 : 0
 glsel PId

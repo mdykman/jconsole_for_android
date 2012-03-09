@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 eigenpicture
 )
 
-VERSION=: '1.0.0'
+VERSION=: '1.0.1'
 
 RELEASE=: 'j602 j701'
 

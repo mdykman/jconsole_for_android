@@ -1,10 +1,11 @@
 NB. Isigraph viewer
 
+require 'gtkwd gui/gtkwd/wdviewmat'
+NB. require '~addons/general/misc/evolute.ijs'
+
 coclass 'jigdemo'
 coinsert 'jgl2'
 
-require 'gui/gtkwd/wdviewmat'
-NB. require '~addons/general/misc/evolute.ijs'
 require '~addons/demos/isigraph/iscolor.ijs'
 
 NB. include evolute in-line

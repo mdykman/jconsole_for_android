@@ -10,7 +10,6 @@ if. IFUNIX do.
   assert. fds_bits_off=0
 end.
 )
-
 3 : 0''
 select. UNAME
 case. 'Win' do.

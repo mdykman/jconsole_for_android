@@ -18,8 +18,9 @@ NB. inversion (where, K=min{M,N)).
 
 NB. not updated for J6 /cdb
 
-load 'gl2'
-cocurrent 'base'
+require 'gtkwd gui/gtkwd/jview gl2'
+
+cocurrent 'jallout'
 coinsert 'jgl2'
 
 NB. =========================================================
@@ -108,9 +109,11 @@ wd 'menupopz;'
 wd 'xywh 5 5 ',":cell*N,M
 wd 'cc gg isigraph;'
 wd 'pas 5 5;pcenter;'
-wd 'pshow;'
+wd^:(-.IFJ6) 'pshow;pshow sw_hide'
 ResetD''
 Don NewD''
+wd 'pshow;'
+wdloop^:(-.IFJ6)''
 )
 
 NB. =========================================================

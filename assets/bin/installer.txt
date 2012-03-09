@@ -1,1 +1,1 @@
-Android J-Console Installer (alpha)
+j701a_linux32.sh

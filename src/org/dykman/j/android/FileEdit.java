@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources.Theme;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,9 +20,9 @@ public class FileEdit extends EditText {
 	int cursorPosition = 0;
 //	File file;
 	String name;
-	protected Activity editActivity;
+	protected EditActivity editActivity;
 
-	public void setActivity(Activity activity) {
+	public void setActivity(EditActivity activity) {
 		editActivity = activity;
 	}
 	public FileEdit(Context context, AttributeSet attrs, int defStyle) {
@@ -129,12 +127,14 @@ public class FileEdit extends EditText {
 	}
 
 	public void save(File file) throws IOException {
-		Log.d("j-console","in save(),textChanged = " + textChanged);
+		Log.d(JConsoleApp.LogTag,"in save(),textChanged = " + textChanged);
 		if(textChanged) {
 			OutputStream out = new FileOutputStream(file);
 			out.write(getText().toString().getBytes());
 			out.close();
 			textChanged = false;
+			editActivity.setFile(file);
+			editActivity.setTitle(createTitle());
 		}
 	}
 	

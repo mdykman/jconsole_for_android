@@ -1,6 +1,6 @@
 NB. edit graph definition
 
-coclass 'jdplot'
+coclass 'jdplotgtk'
 
 graftext=: ''
 
@@ -77,7 +77,7 @@ PLOTEDITHELP=: 0 : 0
 To experiment, modify the commands, then Redisplay.
 
 To run a demo by itself, wrap the commands in reset and show.
-In some cases, you need to reference data in locale jdplot.
+In some cases, you need to reference data in locale jdplotgtk.
 
 For example, to run the 2D|Bar demo:
 

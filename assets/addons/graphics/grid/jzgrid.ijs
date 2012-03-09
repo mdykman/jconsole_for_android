@@ -1,4 +1,4 @@
-require 'gui/gtkwd pack general/misc/font'
+require 'gtkwd pack general/misc/font'
 
 coclass 'jzgrid'
 coinsert 'jgl2'
@@ -85,10 +85,7 @@ tominus=: '-'&(I. @(e.&'_')@]})
 towords=: ;: inverse
 qextenth=: {: @ glqextent
 qextentw=: {. @ glqextent
-qextentwv=: 3 : 0
-w=. {. glqextent '8'
-w * #&> y
-)
+qextentwv=: glqextentw @ ; @: (,each&LF)
 qextentwm=: $ $ qextentwv@,
 qextentw16=: qextentw @ utf8
 qextentW=: 3 : 0
@@ -1093,7 +1090,7 @@ Hc=: Hr=: Hx=: Hy=: Hw=: Hh=: 0
 VSxywh=: HSxywh=: Gxywh=: 0 0 0 0
 Vcx=: Vcy=: 0
 drawinit''
-glpaint''
+glpaintx''
 )
 refresh=: showit bind 5
 initsizes=: 3 : 0
@@ -1246,10 +1243,9 @@ case. iACombo do. return.
 end.
 State=: 0
 m=. 0 ". sysmodifiers__locV
-key sysdata__locV;(m e. 2 3);m e. 1 3
+key (ucp sysdata__locV);(m e. 2 3);m e. 1 3
 )
 keyx=: 3 : 0
-
 d=. alfndx {. Char
 m=. Shift + +: Ctrl
 if. (d > 32) *. d -.@e. NonAlfaNum do.
@@ -1588,7 +1584,7 @@ showit''
 bcshow 0
 )
 bcchar=: 3 : 0
-select. alfndx {. sysdata__locV
+select. alfndx {. ucp sysdata__locV
 case. kbENTER do.
   1 [ bcfini 1
 case. kbESC do.
@@ -3337,10 +3333,10 @@ end.
 kbEXIT1=: kbENTER,kbEND,kbHOME,kbLEFT,kbRIGHT,kbUP,kbDOWN
 editchar=: editcharx=: 3 : 0
 
-c=. sysdata__locV
+c=. ucp sysdata__locV
 d=. alfndx {. c
 m=. 0 ". sysmodifiers__locV
-if. d > 31 do.
+if. (d > 31) *. d -.@e. NonAlfaNum do.
   if. m e. 2 3 do. return. end.
   editdelsel''
   Text=: (Epos {. Text), (ucp c), Epos }. Text

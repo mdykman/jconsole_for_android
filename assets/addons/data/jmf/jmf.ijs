@@ -52,7 +52,6 @@ HS=: SZI*HSN
 AFRO=: 1
 AFNJA=: 2
 NULLPTR=: <0
-
 3 : 0''
 if. IFUNIX do.
   lib=. > (IFDEF'android') { 'libc.so.6 ';'libc.so '

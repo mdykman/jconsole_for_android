@@ -1,11 +1,5 @@
-3 : 0''
-if. IFJ6 do.
-  require '~system/extras/migrate/gl2.ijs'
-else.
-  require 'gui/gtkwd'
-end.
-''
-)
+require 'gtkwd gl2'
+
 require '~addons/math/lapack/lapack.ijs'
 require '~addons/math/lapack/dgeev.ijs'
 
@@ -349,7 +343,6 @@ pas 4 4;
 rem form end;
 )
 iflapackavail=: 3 : 0
-if. UNAME-:'Linux' do. 1 return. end.
 try.
   fexist deb dll_jlapack_ -. '"'
 catch.
@@ -379,6 +372,7 @@ wd 'setfont ev2 ',FIXFONT
 wd 'setfont rv1 ',FIXFONT
 wd 'setfont rv2 ',FIXFONT
 wd 'pshow'
+wdloop^:(-.IFJ6)''
 )
 ep_close=: 3 : 0
 try. wd 'psel epd;pclose' catch. end.

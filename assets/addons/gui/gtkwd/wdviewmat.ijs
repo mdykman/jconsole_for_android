@@ -1,6 +1,6 @@
 NB. viewmat init
 
-require 'graphics/bmp gui/gtkwd'
+require 'graphics/bmp gtkwd'
 
 coclass 'jviewmat'
 

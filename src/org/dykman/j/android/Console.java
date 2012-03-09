@@ -13,6 +13,7 @@ import android.view.View;
 
 public class Console extends FileEdit {
 	JConsoleApp theApp;
+	JActivity jActivity;
 
 	protected int backgroundColor = 0xffffffff;
 	protected int inputColor = 0xff000000;
@@ -35,6 +36,9 @@ public class Console extends FileEdit {
 	public Console(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		yinit();
+	}
+	public void setJActivity(JActivity jActivity) {
+		this.jActivity = jActivity;
 	}
 
 	final private  void yinit() {

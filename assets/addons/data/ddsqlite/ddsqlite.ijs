@@ -49,7 +49,6 @@ initodbcenv_jddsqlite_ 0
 
 EMPTY
 )
-
 3 : 0''
 select. UNAME
 case. 'Linux' do. libsqlite=: > (IFDEF'android') { 'libsqlite3.so.0';'libsqlite.so'

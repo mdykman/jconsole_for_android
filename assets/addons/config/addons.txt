@@ -124,7 +124,7 @@ Includes sqlite browser, see browser.ijs, browser.reg
 
 Binaries for Windows and Linux; on Mac comes standard
 )
-demos/gtk 1.0.17 
+demos/gtk 1.0.18 
 gtk demos
 gtk demos, includes:
 
@@ -135,13 +135,13 @@ gtk demos, includes:
 
 See wiki page http://www.jsoftware.com/jwiki/Addons/demos/gtk for installation.
 )
-demos/isigraph 1.0.4 
+demos/isigraph 1.0.7 
 isigraph demos
 This package contains isigraph example scripts.
 
 Each script can be run by itself. First enter:
 
-require 'gui/gtkwd'
+require 'gtkwd'
 
 Many of these examples (in particular the ifs examples) are
 based on work done by Clifford Reiter.
@@ -155,11 +155,11 @@ OpenGL demos, includes:
  lab
 (partially supported in linux and window)
 )
-demos/plot 1.0.4 
+demos/plot 1.0.5 
 Plot demos
 Plot demos on JGTK and JHS
 )
-demos/wd 1.0.14 
+demos/wd 1.0.20 
 wd demos
 wd demos using gtkwd
 )
@@ -191,13 +191,13 @@ format/printf 1.0.1
 C-style printf formatting
 Printf provides verbs and adverbs for formatted printing in the manner of C's printf and sprintf.
 )
-format/publish 1.0.8 
+format/publish 1.0.9 
 builds pdf reports from markup
 Publish generates a PDF report from source in plain text files in an html-like markup language.
 
 The markup language supports calling J expressions, for example, to allow data to be read in from various sources. Apart from this, reports can be customized without knowledge of J.
 )
-games/minesweeper 1.0.7 
+games/minesweeper 1.0.8 
 Classic Minesweeper game
 Implentation of classic Minesweeper game. 
 
@@ -207,15 +207,15 @@ User interfaces available for various J environments currently include:
 
 Authors: Ric Sherlock, Bill Lam and Raul Miller.
 )
-games/nurikabe 1.0.3 
+games/nurikabe 1.0.4 
 Nurikabe
 Nurikabe puzzle, see wiki Essays/Nurikabe.
 )
-games/pousse 1.0.2 
+games/pousse 1.0.3 
 pousse
 pousse
 )
-games/solitaire 1.0.2 
+games/solitaire 1.0.8 
 solitaire
 solitaire
 )
@@ -340,7 +340,7 @@ options for the form of the words used, and verbs to convert a script
 in alpha form to a script in J primitives so there is no execution
 time penalty.
 )
-general/scriptdoc 1.0.0 
+general/scriptdoc 1.0.2 
 scriptdoc
 Scripts are documented in comment lines (i.e. lines
 beginning with NB.). Multi-line comments are consecutive
@@ -404,11 +404,11 @@ graphics/bmp 1.0.1
 bitmap utilities
 Utilities for *.bmp files
 )
-graphics/color 1.0.1 
+graphics/color 1.0.2 
 Color tables
 Color tables and related scripts.
 )
-graphics/gl2 1.0.20 api/gdi32,api/gdiplus,gui/gtk
+graphics/gl2 1.0.31 api/gdi32,api/gdiplus,gui/gtk
 gl2
 Base class for gl2 commands. This is only intended to support legacy J6 packages and should not be used in newly-written code.  Use Cairo instead.
 )
@@ -416,7 +416,7 @@ graphics/graph 1.0.3 graphics/bmp,graphics/color,graphics/gl2,gui/gtk
 Graph
 2D Graph
 )
-graphics/grid 1.0.4 general/misc/font,general/misc/pack,graphics/gl2,gui/gtkwd
+graphics/grid 1.0.8 general/misc/font,general/misc/pack,graphics/gl2,gui/gtkwd
 Grid
 Grid J6
 )
@@ -434,15 +434,15 @@ graphics/opengl 1.0.11
 OpenGL graphics
 OpenGL graphics (supported in linux,window)
 )
-graphics/plot 1.0.81 graphics/afm,graphics/bmp,graphics/color,graphics/gl2
+graphics/plot 1.0.85 graphics/afm,graphics/bmp,graphics/color,graphics/gl2
 Plot
 2D Plot
 )
-graphics/print 1.0.0 
+graphics/print 1.0.1 
 print
 print text files
 )
-graphics/treemap 1.0.3 
+graphics/treemap 1.0.4 
 Displays a treemap
 Displays a treemap in an isigraph control.
 )
@@ -450,7 +450,7 @@ graphics/viewmat 1.0.2 graphics/bmp
 Displays a viewmat
 Viewmat displays tables of data graphically.
 )
-gui/gtk 1.0.89 
+gui/gtk 1.0.96 
 GTK API
 GTK (GIMP toolkit) api.
 )
@@ -458,7 +458,7 @@ gui/gtkide 1.0.4
 GTK IDE
 GTK IDE
 )
-gui/gtkwd 1.0.24 graphics/gl2
+gui/gtkwd 1.0.34 graphics/gl2
 gtk wd emulator
 wd (window driver) emulator using gtk api
 
@@ -470,11 +470,11 @@ Grid class for J7/JGTK based on GtkTreeeView and GtkListStore widgets.
 
 See wiki page http://www.jsoftware.com/jwiki/Addons/gui/jgtkgrid for help.
 )
-gui/util 1.0.7 
+gui/util 1.0.9 
 GUI utilities
 cobrowse - famous SmallTalk tool for J
 )
-ide/gtk 1.0.77 
+ide/gtk 1.0.78 
 GTK IDE
 GTK IDE
 )
@@ -490,7 +490,7 @@ math/cal 1.0.7
 Scientific calculator engine
 CAL is a platform-independent engine residing in its own locale (_cal_) which forms the basis of TABULA, a backfitting scientific calculator.
 )
-math/deoptim 1.0.7 
+math/deoptim 1.0.8 
 Differential Evolution for optimization of multidimensional functions
 Differential Evolution is a form of evolutionary algorithm. It is relatively robust, simple and fast. 
 DE finds the global minimum of a multidimensional, multimodal (i.e. exhibiting more than one minimum) function with good probability.
@@ -499,7 +499,7 @@ http://www.icsi.berkeley.edu/~storn/code.html
 
 Contributed by Ric Sherlock.
 )
-math/eigenpic 1.0.0 
+math/eigenpic 1.0.1 
 eigenpic
 eigenpicture
 )
@@ -549,7 +549,7 @@ math/mt 0.8.1 general/misc,math/lapack 1.1.16,math/misc
 Matrix toolbox
 Library to solve some problems in matrix algebra: transforming, decomposing, reducing to condensed form, factorization, equation solving, function applying, condition number estimating. Is based mostly on LAPACK algorithms, but doesn't require LAPACK.
 )
-math/tabula 1.0.8 
+math/tabula 1.0.11 
 TABULA - scientific calculator
 TABULA is a backfitting scientific calculator with many built-in physical constants, which knows about units of measurement.
 )
@@ -608,7 +608,7 @@ Supports user-defined field and string delimiters.
 
 Contributed by Ric Sherlock.
 )
-tables/tara 1.2.14 
+tables/tara 1.2.15 
 Read/write Excel *.xls files
 Tara reads and writes files in Excel format. It supports the biff8 format used in Excel 97/2000/xp/2003. It also reads older formats used in earlier versions of Excel. It can also work with spreadsheets like OpenOffice and Gnumeric that support Excel formats. It runs on Windows, Linux and Mac OSX. MS Excel or OpenOffice are not required to use Tara.
 

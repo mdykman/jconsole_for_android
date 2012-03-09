@@ -8,7 +8,7 @@ wd (window driver) emulator using gtk api
 http://www.jsoftware.com/jwiki/Addons/gui/gtkwd
 )
 
-VERSION=: '1.0.24'
+VERSION=: '1.0.34'
 
 DEPENDS=: 0 : 0
 graphics/gl2
@@ -24,10 +24,11 @@ manifest.ijs
 formedit.ijs
 gtkwd.ijs
 isigraph.ijs
+jinput.ijs
 sms.ijs
 view2.ijs
 vkeys.ijs
-wdjview.ijs
+jview.ijs
 wdviewmat.ijs
 forms/
 )

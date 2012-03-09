@@ -1,6 +1,8 @@
 NB. unisimple
 
-require 'gui/gtkwd/wdjview'
+require 'gtkwd gui/gtkwd/jview'
+
+coclass 'judmeo'
 
 ABC=: 0 : 0
 pc abc;pn "Unicode";
@@ -53,6 +55,7 @@ btext=: c_name
 wd'setcaption b *',btext
 wd'set em *',c_all
 wd 'pshow;'
+wdloop^:(-.IFJ6)''
 )
 
 NB. =========================================================

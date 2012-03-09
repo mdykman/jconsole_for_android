@@ -1,10 +1,11 @@
 NB. control2.ijs  - edits
 
+NB. use markup language for gtklabel instead of real richeditm
 RTFFILE=: jpath '~addons/demos/wd/jr4.rtf'
 
 EDITS=: 0 : 0
 pc edits;
-xywh 5 8 160 67;cc richeditm richeditm;
+xywh 5 8 160 67;cc richeditm static;
 xywh 8 84 82 12;cc edit edit ws_border es_autohscroll;
 xywh 105 84 100 35;cc editm editm ws_border es_autovscroll;
 xywh 170 10 5 5;cc brich button;cn "";
@@ -21,7 +22,9 @@ wd EDITS
 ITALIC=: 0
 SIZE=: 15
 wd 'set edit *single line edit box'
-wd 'set richeditm *',fread RTFFILE
+c=. 0". wd 'qhwndc richeditm'
+j4r=. '<span font="Arial Black 32" fgcolor="red">J Release 7</span>'
+gtk_label_set_markup_jgtk_ c ; j4r
 wd 'pshow;'
 )
 
@@ -29,7 +32,9 @@ edits_cancel_button=: wd bind 'pclose'
 
 edits_brich_button=: wdedits bind (0 : 0)
 wd 'cc richeditm richeditm;'
-wd 'set richeditm *',fread RTFFILE
+hc=. 0". wd 'qhwndc richeditm'
+j4r=. '<span font="Arial Black 32" fgcolor="red">J Release 7</span>'
+gtk_label_set_markup_jgtk_ hc ; j4r
 )
 
 edits_bedit_button=: wdedits bind (0 : 0)

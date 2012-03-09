@@ -7,13 +7,8 @@ if. UNAME-:'Win' do.
   libgl=: 'opengl32.dll'
   libglu=: 'glu32.dll'
 elseif. UNAME-:'Linux' do.
-  if. IFDEF'android' do.
-    libgl=:  'libGLESv2.so'
-    libglu=: 'libEGL.so'
-  else.
-    libgl=:  'libGL.so.1'
-    libglu=: 'libGLU.so.1'
-  end.
+  libgl=:  'libGL.so.1'
+  libglu=: 'libGLU.so.1'
 elseif. UNAME-:'Darwin' do.
   libgl=: '/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib'
   libglu=: '/System/Library/Frameworks/OpenGL.framework/Libraries/libGLU.dylib'

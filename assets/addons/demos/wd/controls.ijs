@@ -48,6 +48,7 @@ selects_run''
 wd 'creategroup'
 wd 'setshow buttons 1'
 wd 'pshow'
+wdloop^:(-.IFJ6)''
 )
 
 wincontrol_close=: wd bind 'pclose'

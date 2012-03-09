@@ -643,4 +643,5 @@ destroy=: tmapdestroy
 wd 'pshow;'
 tm=: '' conew 'ptreemap'
 show__tm pack 'DATA LABEL NOTE'
+wdloop^:(-.IFJ6)''
 )

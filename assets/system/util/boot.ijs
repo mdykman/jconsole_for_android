@@ -50,8 +50,7 @@ load 'task'
 load '~system/util/configure.ijs'
 load '~system/main/ctag.ijs'
 load '~system/util/jadetag.ijs'
-
-NB. startupide''
+startupide''
 
 NB. ---------------------------------------------------------
 NB. JVERSION_z_ (used in about box)

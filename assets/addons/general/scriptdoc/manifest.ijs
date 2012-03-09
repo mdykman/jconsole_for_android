@@ -46,7 +46,7 @@ Other lines include an "example" statement
 3. Other NB. comment lines in the script are ignored.
 )
 
-VERSION=: '1.0.0'
+VERSION=: '1.0.2'
 
 RELEASE=: 'j701'
 

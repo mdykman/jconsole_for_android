@@ -1,13 +1,24 @@
 require 'gui/gtk gl2'
 require '~addons/gui/gtkwd/isigraph.ijs'
 
-IFJAVA_z_=: 0
-IFWINCE_z_=: 0
+3 : 0''
+if. 0~: 4!:0 <'IFJAVA_z_' do. IFJAVA_z_=: 0 end.
+if. 0~: 4!:0 <'IFWINCE_z_' do. IFWINCE_z_=: 0 end.
+if. 0~: 4!:0 <'FIXFONT_z_' do. FIXFONT_z_=: FIXFONT_jgl2_ end.
+if. 0~: 4!:0 <'PROFONT_z_' do. PROFONT_z_=: PROFONT_jgl2_ end.
+''
+)
 
 coclass 'gtkwd'
 coinsert 'jgtk'
 
+gtkinit_jgtk_ ::0: ''
+
 gtkcv=: IFUNIX{::'>+ ';'>  '
+
+gtk_label_set_line_wrap_mode_jgtk_=: ((>libgtk), ' gtk_label_set_line_wrap_mode ',gtkcv, 'n x i')&cd
+gtk_widget_get_ancestor_jgtk_=: ((>libgtk), ' gtk_widget_get_ancestor ',gtkcv, 'x x x')&cd
+g_markup_escape_text_jgtk_=: ((>libglib), ' g_markup_escape_text ',gtkcv, 'x *c x')&cd
 wdqdata=: 0 0$0
 
 Debugwd=: 0
@@ -41,7 +52,7 @@ WindowListMenubar=: 9
 WindowListToolip=: 10
 WindowListAccel=: 11
 WindowListWhwh0=: 12
-WindowListOwner=: 13
+WindowListDefpushbutton=: 13
 WindowListTbimg=: 14
 WindowListCloseok=: 15
 
@@ -58,22 +69,6 @@ ChildListUserdata=: 11
 menuList=: 0 4$<''
 toolbarList=: 0 5$<''
 statusbarList=: 0 3$<''
-glxList=: 0 14$<''
-GLXLISTHANDLEP=: 0
-GLXLISTHANDLE=: 1
-GLXLISTHANDLEV=: 2
-GLXLISTGLXTYPE=: 3
-GLXLISTFONT=: 4
-GLXLISTRGB=: 5
-GLXLISTPENCOLOR=: 6
-GLXLISTPENSTYLE=: 7
-GLXLISTNULLBRUSH=: 8
-GLXLISTBRUSHCOLOR=: 9
-GLXLISTTEXTXY=: 10
-GLXLISTTEXTCOLOR=: 11
-GLXLISTCLIPRECT=: 12
-GLXLISTWINDORG=: 13
-
 activeidx=: 0
 cxywh=: 0 0 100 100
 cFontdef=: ''
@@ -129,6 +124,7 @@ else.
   assert. 0~:fixed1
   assert. fixed1 e. 3{::"1 subformList
 end.
+defpushbutton=. 0
 if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
   cParentId=. (handle i. cWindow){ >WindowListId{"1 windowList
   cParentLoc=. (handle i. cWindow){ >WindowListLocale{"1 windowList
@@ -146,6 +142,7 @@ case. wdcl_button do.
     gtk_button_set_use_underline window ; 1
     gtk_button_set_label window ; id
   end.
+  if. (<'bs_defpushbutton') e. styles do. defpushbutton=. window end.
   consig window ; 'clicked' ; 'button_clicked'
 case. wdcl_checkbox do.
   window=. gtk_check_button_new ''
@@ -162,8 +159,10 @@ case. wdcl_combobox do.
 case. wdcl_combodrop do.
   if. 3=GTKVER_j_ do.
     window=. gtk_combo_box_new_with_entry ''
+    gtk_combo_box_set_entry_text_column window, 0
   else.
     window=. gtk_combo_box_entry_new ''
+    gtk_combo_box_entry_set_text_column window, 0
   end.
   consig window ; 'changed' ; 'combobox_changed'
 case. wdcl_combolist do.
@@ -174,22 +173,24 @@ case. wdcl_combolist do.
   consig window ; 'changed' ; 'combobox_changed'
   consig3 window ; 'key-press-event' ; 'combolist_key_press'
 fcase. wdcl_richedit do.
-case. wdcl_edit do.
   iclass=. wdcl_edit
+case. wdcl_edit do.
   window=. gtk_entry_new ''
   if. (<'es_readonly') e. styles do. gtk_widget_set_sensitive window, 0 end.
   if. (<'es_password') e. styles do. gtk_entry_set_visibility window, 0 end.
   consig3 window ; 'key-press-event' ; 'edit_key_press'
 fcase. wdcl_editijs;wdcl_editijx;wdcl_richeditm do.
-case. wdcl_editm do.
   iclass=. wdcl_editm
+case. wdcl_editm do.
   buf=. gtk_text_buffer_new <0
   window=. gtk_text_view_new_with_buffer <buf
   if. (<'es_readonly') e. styles do. gtk_widget_set_sensitive window, 0 end.
-  ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x *c x x')&cd window ; 'wrap-mode' ; GTK_WRAP_NONE ; 'left-margin' ; 0 ;< 0
-  if. (hsc=. (<'es_autohscroll') e. styles) +. vsc=. (<'es_autovscroll') e. styles do.
+  gtk_text_view_set_left_margin window, 0
+  gtk_text_view_set_right_margin window, 0
+  gtk_text_view_set_wrap_mode window, ((<'es_autohscroll') e. styles){GTK_WRAP_WORD,GTK_WRAP_NONE
+  if. (hsc=. (<'ws_hscroll') e. styles) +. vsc=. (<'ws_vscroll') e. styles do.
     scrolledwindow=. gtk_scrolled_window_new 0,0
-    gtk_scrolled_window_set_policy scrolledwindow, (hsc{GTK_POLICY_NEVER,GTK_POLICY_AUTOMATIC), (vsc{GTK_POLICY_NEVER,GTK_POLICY_AUTOMATIC)
+    gtk_scrolled_window_set_policy scrolledwindow, (hsc{GTK_POLICY_NEVER,GTK_POLICY_AUTOMATIC), (vsc{GTK_POLICY_NEVER,GTK_POLICY_ALWAYS)
     gtk_container_add scrolledwindow ;< window
     gtk_widget_show <scrolledwindow
   end.
@@ -212,9 +213,9 @@ case. wdcl_listbox do.
   elseif. (<'lbs_extendedsel') e. styles do. gtk_tree_selection_set_mode select ;< GTK_SELECTION_MULTIPLE
   elseif. do. gtk_tree_selection_set_mode select ;< GTK_SELECTION_SINGLE
   end.
-  if. 1 do.
+  if. (vsc=. (<'ws_vscroll') e. styles) +. hsc=. (<'ws_hscroll') e. styles do.
     scrolledwindow=. gtk_scrolled_window_new 0,0
-    gtk_scrolled_window_set_policy scrolledwindow, GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC
+    gtk_scrolled_window_set_policy scrolledwindow, (hsc{GTK_POLICY_NEVER,GTK_POLICY_AUTOMATIC), (vsc{GTK_POLICY_NEVER,GTK_POLICY_AUTOMATIC)
     gtk_container_add scrolledwindow ;< window
     gtk_widget_show <scrolledwindow
   end.
@@ -240,8 +241,9 @@ case. wdcl_scrollbarv do.
   window=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x x')&cd ( gtk_vscrollbar_get_type '') ; 'adjustment' ; adjust ;< 0
   consig window ; 'value-changed' ; 'scrollbar_change'
 case. wdcl_static do.
-  window=. gtk_label_new <<0
-  ((>libgobject), ' g_object_set ', gtkcv, 'n x *c *c x')&cd window ; 'label' ; id ;< 0
+  window=. gtk_label_new <id
+  gtk_label_set_line_wrap window, 1
+  gtk_label_set_line_wrap_mode window, 0
 case. wdcl_staticbox do.
   if. (<'ss_blackframe') e. styles do.
     if. (<'ss_sunken') e. styles do.
@@ -300,7 +302,7 @@ else.
   asize=. 10
 end.
 if. iclass e. wdcl_combobox, wdcl_combodrop, wdcl_combolist do.
-  cxywh1=. (3{.cxywh) , >.12 * asize % 10
+  cxywh1=. (3{.cxywh) , 13
 else.
   cxywh1=. cxywh
 end.
@@ -331,9 +333,12 @@ if. (<'nopas') -.@e. styles do.
     containerList=: (<wh0) (<idx, 2)} containerList
   end.
 end.
+if. (0~:defpushbutton) *. 0= cContainer do.
+  idx=. windowlistidx cWindow
+  windowList=: (<window) (<idx, WindowListDefpushbutton) } windowList
+end.
 if. iclass = wdcl_isigraph do.
   idx=. windowlistidx cWindow
-  glxList=: glxList, cWindow ; cChild ; (>canvasloc) ; styleOpengl ; fontdef ; 0 ; 0 ; 1 0 ; 1 ; 0 ; 0 0 ; 0 ; 0 0 _1 _1 ; 0 0
   windowList=: (<cChild) (<idx, WindowListGlx) } windowList
 else.
   consig window ; 'realize' ; 'widget_realize'
@@ -429,12 +434,12 @@ case. wdcl_edit ; wdcl_editm ; wdcl_static do.
   end.
   select. iclass
   case. wdcl_edit do.
-    ((>libgobject), ' g_object_set ', gtkcv, 'n x *c *c x')&cd window ; 'text' ; s ;< 0
+    gtk_entry_set_text window ; s
   case. wdcl_editm do.
     buf=. gtk_text_view_get_buffer <window
     gtk_text_buffer_set_text buf ; s ;< _1
   case. wdcl_static do.
-    ((>libgobject), ' g_object_set ', gtkcv, 'n x *c *c x')&cd window ; 'label' ; s ;< 0
+    gtk_label_set_text window ; s
   end.
 case. wdcl_checkbox ; wdcl_radiobutton do.
   if. 1= #args do. s=. ,'1'
@@ -456,27 +461,27 @@ case. wdcl_combobox ; wdcl_combodrop ; wdcl_combolist ; wdcl_listbox do.
       pa=. pa, s1
     end.
   end.
-  ls=. gtk_list_store_new_1 1,G_TYPE_STRING
-  iter=. i.ITERSIZE
-  for_item. pa do.
-    gtk_list_store_append ls ;< iter
-    ((>libgtk), ' gtk_list_store_set ', gtkcv, 'n x *x x *c x')&cd ls ; iter ; 0 ; (>item) ;< _1
-  end.
-  if. _1~: ix=. getcchildidx window do. childList=: (<1) (<ix,ChildListNotrigger)}childList end.
-  if. iclass e. wdcl_listbox do.
-    gtk_tree_view_set_model window ;< ls
-  elseif. iclass e. wdcl_combolist do.
-    gtk_combo_box_set_model window ;< ls
-  elseif. do.
-    if. 3=GTKVER_j_ do.
-      gtk_combo_box_set_model window ;< ls
-      gtk_combo_box_set_entry_text_column window ;< 0
-    else.
-      gtk_combo_box_set_model window ;< ls
-      gtk_combo_box_entry_set_text_column window ;< 0
+  if. #pa do.
+    ls=. gtk_list_store_new_1 1,G_TYPE_STRING
+    iter=. i.ITERSIZE
+    for_item. pa do.
+      gtk_list_store_append ls ;< iter
+      ((>libgtk), ' gtk_list_store_set ', gtkcv, 'n x *x x *c x')&cd ls ; iter ; 0 ; (>item) ;< _1
     end.
+    if. _1~: ix=. getcchildidx window do. childList=: (<1) (<ix,ChildListNotrigger)}childList end.
+    if. iclass e. wdcl_listbox do.
+      gtk_tree_view_set_model window ;< ls
+    elseif. iclass e. wdcl_combolist do.
+      gtk_combo_box_set_model window ;< ls
+    elseif. do.
+      if. 3=GTKVER_j_ do.
+        gtk_combo_box_set_model window ;< ls
+      else.
+        gtk_combo_box_set_model window ;< ls
+      end.
+    end.
+    g_object_unref <ls
   end.
-  g_object_unref <ls
   if. _1~: ix=. getcchildidx window do. childList=: (<0) (<ix,ChildListNotrigger)}childList end.
 case. wdcl_progress do.
   if. 1= #args do. seterr 'bad number : ' return.
@@ -496,7 +501,7 @@ case. wdcl_scrollbar ; wdcl_scrollbarv do.
     item1=. {.@(0&".) 1{::args
     gtk_range_set_value window ;< (0.5-0.5)&+ item1
   else.
-    'item1 item2 item3 item4'=. {.@(0&".)&> 2}.args
+    'item1 item2 item3 item4'=. {.@(0&".)&> 4{. }.args
     gtk_range_set_range window ; <("0) (0.5-0.5)&+ item1, item3
     gtk_range_set_increments window ; <("0) (0.5-0.5)&+ 1, item4
     gtk_range_set_value window ;< (0.5-0.5)&+ item2
@@ -518,7 +523,7 @@ case. wdcl_trackbar ; wdcl_trackbarv do.
     item1=. {.@(0&".) 1{::args
     gtk_range_set_value window ;< (0.5-0.5)&+ item1
   else.
-    'item1 item2 item3 item4 item5'=. 5{. {.@(0&".)&> 2}.args
+    'item1 item2 item3 item4 item5'=. {.@(0&".)&> 5{. }.args
     gtk_range_set_range window ; <("0) (0.5-0.5)&+ item1, item3
     gtk_range_set_increments window ; <("0) (0.5-0.5)&+ 1, item4
     gtk_range_set_value window ;< (0.5-0.5)&+ item2
@@ -553,7 +558,13 @@ case. wdcl_editm ; wdcl_richeditm do.
   elseif. do. s=. 1{::args
   end.
   if. -.@isnum s do. seterr 'bad number : ' return. end.
-  line=. {.@(0&".) s
+  line=. 0 >. <: {.@(0&".) s
+  buf=. gtk_text_view_get_buffer <window
+  gtk_text_buffer_get_iter_at_line buf ; (iter=. i.ITERSIZE) ;< line
+  mark=. gtk_text_buffer_create_mark buf;'setscroll';iter;0
+  assert. 0~:mark
+  gtk_text_view_scroll_to_mark window; mark; 0; 0; 0; 0
+  gtk_text_buffer_delete_mark buf;mark
 case. do. seterr 'bad class : ' return.
 end.
 cChild=: window
@@ -840,6 +851,9 @@ case. wdcl_tab ; wdcl_combobox ; wdcl_combodrop ; wdcl_combolist ; wdcl_listbox 
   item=. {.@(0&".) s
   if. _1~: ix=. getcchildidx window do. childList=: (<1) (<ix,ChildListNotrigger)}childList end.
   if. wdcl_tab = iclass do.
+    if. item < gtk_notebook_get_n_pages window do.
+      gtk_notebook_set_current_page window, item
+    end.
   elseif. wdcl_combolist = iclass do.
     gtk_combo_box_set_active window,item
   elseif. iclass e. wdcl_listbox do.
@@ -850,10 +864,11 @@ case. wdcl_tab ; wdcl_combobox ; wdcl_combodrop ; wdcl_combolist ; wdcl_listbox 
       if. g_type_check_instance_is_a window ;< gtk_tree_view_get_type '' do.
         model=. gtk_tree_view_get_model window
         assert. 0~:model
-        gtk_tree_model_iter_nth_child model ; (iter=. i.ITERSIZE) ; 0 ; item
-        select=. gtk_tree_view_get_selection <window
-        assert. 0~:select
-        gtk_tree_selection_select_iter select ; iter
+        if. 0~: gtk_tree_model_iter_nth_child model ; (iter=. i.ITERSIZE) ; 0 ; item do.
+          select=. gtk_tree_view_get_selection <window
+          assert. 0~:select
+          gtk_tree_selection_select_iter select ; iter
+        end.
       end.
     end.
   elseif. do.
@@ -890,11 +905,10 @@ if. -.@isnum s do. seterr 'bad number : ' return. end.
 if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
 if. 0= window=. cWindow getcchild id do.
 else.
-  ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd window ; 'visible' ; flag ;< 0
-  select. getcchildclass window
-  case. wdcl_editm do.
-    win=. gtk_widget_get_parent <window
-    ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd win ; 'visible' ; flag ;< 0
+  if. (0~: g_type_check_instance_is_a wg, gtk_scrolled_window_get_type '') *. 0~: wg=. gtk_widget_get_parent window do.
+    gtk_widget_hide`gtk_widget_show@.flag wg
+  else.
+    gtk_widget_hide`gtk_widget_show@.flag window
   end.
   cChild=: window
 end.
@@ -1240,7 +1254,19 @@ qcolor=: ".;._2 [ 0 : 0
 )
 
 wdbeep=: 3 : 0
-if. 1< #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
+if. 0= #args=. shiftargs'' do. s=. ,'1'
+elseif. 1= #args do. s=. >@{.args
+elseif. 1< #args do. seterr 'extra parameter : ' return.
+end.
+if. -.@isnum s do. seterr 'bad number : ' return. end.
+gdk_beep''
+)
+
+wdmsgs=: 3 : 0
+if. 0~: #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
+whilst. gtk_events_pending'' do.
+  if. gtk_main_iteration'' do. return. end.
+end.
 )
 
 wdq=: 3 : 0
@@ -1392,7 +1418,7 @@ if. 0 > delay=. <. {.@(0&".) ax do.seterr 'bad number : ' return. end.
 timerdelay=: delay
 if. 0~:systimerid do. systimerid=: 0 [ g_source_remove systimerid end.
 if. timerdelay>0 do.
-  systimerid=: g_timeout_add_full G_PRIORITY_DEFAULT_IDLE;timerdelay;cb1;(cbreg 'timer_event','_',(>coname''),'_');0
+  systimerid=: g_timeout_add_full G_PRIORITY_DEFAULT;timerdelay;cb1;(cbreg 'timer_event','_',(>coname''),'_');0
 end.
 )
 
@@ -1413,7 +1439,11 @@ syslocalep=. locale
 syslocalec=. ''
 syshwndp=. ":widget
 syshwndc=. ":cChild
-sysfocus=. getcchildid ::(''"_) gtk_window_get_focus <widget
+if. ''-: sysfocus=. getcchildid ::(''"_) w=. gtk_window_get_focus widget do.
+  if. 0~: w do.
+    sysfocus=. getcchildid ::(''"_) gtk_widget_get_parent w
+  end.
+end.
 syslastfocus=. ''
 wdd=. ;: 'syshandler sysevent sysdefault sysparent syschild systype syslocalep syslocalec syshwndp syshwndc sysfocus syslastfocus sysmodifiers', (0<#sysdata)#' sysdata'
 wddata=. ".&.>wdd
@@ -1454,6 +1484,7 @@ childdata=. 0 2$0
 if. 0=eventcat do.
   if. 0&= #ls=. (widget = >1{"1 childList)#childList do. return. end.
   'pawin childid iclass'=. 0 2 3{ {.ls
+  assert. pawin= gtk_widget_get_toplevel widget
   for_ls. (pawin = >{."1 childList)#childList do.
     childdata=. childdata, childevtdata 1 2 3{ls
   end.
@@ -1483,7 +1514,11 @@ systype=. event
 syslocalep=. locale
 syshwndp=. ":pawin
 syshwndc=. ":widget
-sysfocus=. getcchildid ::(''"_) gtk_window_get_focus <pawin
+if. ''-: sysfocus=. getcchildid ::(''"_) w=. gtk_window_get_focus pawin do.
+  if. 0~: w do.
+    sysfocus=. getcchildid ::(''"_) gtk_widget_get_parent w
+  end.
+end.
 syslastfocus=. ''
 wdd=. ;: 'syshandler sysevent sysdefault sysparent syschild systype syslocalep syslocalec syshwndp syshwndc sysfocus syslastfocus sysmodifiers', (0<#sysdata)#' sysdata'
 wdqdata=: (wdd ,. ".&.>wdd) , childdata
@@ -1542,10 +1577,14 @@ case. wdcl_editm do.
   wddata=. wddata, < ": sel
   wdd=. wdd, <id, '_scroll'
   scrollwin=. gtk_widget_get_parent <widget
-  vadj=. gtk_scrolled_window_get_vadjustment <scrollwin
-  vvalue=. ,0.5-0.5
-  vupper=. ,0.5-0.5
-  ((>libgobject), ' g_object_get ', gtkcv, 'n x *c *d *c *d x')&cd vadj ; 'value' ; vvalue ; 'upper' ; vupper ;< 0
+  if. g_type_check_instance_is_a scrollwin ;< gtk_scrolled_window_get_type '' do.
+    vadj=. gtk_scrolled_window_get_vadjustment <scrollwin
+    vvalue=. ,0.5-0.5
+    vupper=. ,0.5-0.5
+    ((>libgobject), ' g_object_get ', gtkcv, 'n x *c *d *c *d x')&cd vadj ; 'value' ; vvalue ; 'upper' ; vupper ;< 0
+  else.
+    vvalue=. vupper=. 1
+  end.
   linecount=. gtk_text_buffer_get_line_count <buf
   wddata=. wddata, < ": (0), (<.linecount*vvalue%vupper)
 case. wdcl_checkbox ; wdcl_radiobutton do.
@@ -1650,6 +1689,9 @@ keyevent=. '' [ child=. ''
 if. (GDK_Return = key) *. 0 = ctrl do.
   if. _1= getcchildidx w=. gtk_window_get_focus widget do.
     if. _1= getcchildidx w=. gtk_widget_get_parent w do.
+      if. 0~: but=. (<ix, WindowListDefpushbutton){::windowList do.
+        1 [ 0 child_evt but ; 'button' return.
+      end.
       keyevent=. 'enter'
     end.
   end.
@@ -1665,7 +1707,7 @@ elseif. (key e. GDK_A + i.26) *. 1=ctrl do.
   child=. (((a.i.'a')+(key - GDK_A)){a.),(ctrl#'ctrl'),'shift'
 end.
 if. #keyevent do.
-  sysdata=: utf8 u: key
+  sysdata=: key
   sysmodifiers=: ,":shift+2*ctrl
   1 [ form_evt widget ; keyevent ; child
 end.
@@ -1690,7 +1732,6 @@ window_destroy=: 3 : 0
 'widget data'=. y
 if. _1~: ix=. windowlistidx widget do.
   if. 0~: tbimg=. (<ix, WindowListTbimg) {:: windowList do. g_object_unref tbimg end.
-  if. 0~: pawin=. (<ix, WindowListOwner) {:: windowList do. gtk_widget_set_sensitive pawin, 1 end.
   windowList=: (<<<ix){windowList
 end.
 if. 1 e. ix=. (widget = (>{."1 containerList)) do. containerList=: (-.ix)#containerList end.
@@ -1699,12 +1740,12 @@ if. 1 e. ix=. (widget = (>{."1 childList)) do. childList=: (-.ix)#childList end.
 if. 1 e. ix=. (widget = (>{."1 menuList)) do. menuList=: (-.ix)#menuList end.
 if. 1 e. ix=. (widget = (>{."1 toolbarList)) do. toolbarList=: (-.ix)#toolbarList end.
 if. 1 e. ix=. (widget = (>{."1 statusbarList)) do. statusbarList=: (-.ix)#statusbarList end.
-if. 1 e. ix=. (widget = (>{."1 glxList)) do. glxList=: (-.ix)#glxList end.
 if. (widget=cWindow) +. 0=#windowList do.
   cSubform=: '' [ cSetFont=: '' [ cContainer=: cRadio=: cChild=: cWindow=: 0
 end.
 if. 0=#windowList do.
   cleanup''
+  if. -.IFGTK do. gtk_main_quit_jgtk_'' [ gtkMainLoop_jgtk_=: 0 end.
 end.
 0
 )
@@ -1793,7 +1834,7 @@ if. widget -.@e. ls=. >1{"1 childList do. 0 return. end.
 'state key'=. gtkeventkey event
 'ctrl j shift'=. 2 2 2 #: state
 if. (GDK_Return = key) *. 0 = ctrl do.
-  sysdata=: utf8 u: key
+  sysdata=: key
   sysmodifiers=: ,":shift+2*ctrl
   0 child_evt widget ; 'button'
   1 return.
@@ -1807,7 +1848,7 @@ if. widget -.@e. ls=. >1{"1 childList do. 0 return. end.
 'state key'=. gtkeventkey event
 'ctrl j shift'=. 2 2 2 #: state
 if. (GDK_Return = key) *. 0 = ctrl do.
-  sysdata=: utf8 u: key
+  sysdata=: key
   sysmodifiers=: ,":shift+2*ctrl
   0 child_evt widget ; 'button'
   1 return.
@@ -1861,9 +1902,7 @@ if. widget -.@e. ls=. >1{"1 toolbarList do. 0 return. end.
 )
 
 isigraph_event=: 4 : 0
-canvas=. y
-if. canvas -.@e. ls=. 2{"1 glxList do. 0 return. end.
-widget=. >1{(ls i. canvas){glxList
+widget=. canvas__y
 select. evt=. >@{.x
 case. 'paint';'focus';'focuslost' do.
   0 child_evt widget ; evt
@@ -1880,11 +1919,7 @@ end.
 
 timer_event=: 3 : 0
 system_evt 'timer';'sys_timer'
-if. 0~:systimerid do. systimerid=: 0 [ g_source_remove systimerid end.
-if. timerdelay>0 do.
-  systimerid=: g_timeout_add_full G_PRIORITY_DEFAULT_IDLE;timerdelay;cb1;(cbreg 'timer_event','_',(>coname''),'_');0
-end.
-0
+0~:systimerid
 )
 wdfontdef=: 3 : 0
 f=. getfontspec args=. shiftargs''
@@ -1921,6 +1956,18 @@ for_s1. 2}.args do.
   end.
 end.
 font ; (0&". asize) ; style ; angle
+)
+wdmbfont=: 3 : 0
+f=. ''
+if. 0< #args=. shiftargs'' do.
+  f=. getfontspec args
+  if. 0~:WDERRN do. return. end.
+end.
+if. #f do.
+  fontdialog ''; (>@{.f),' ', (": >1{f)
+else.
+  fontdialog '';''
+end.
 )
 wdmb=: 3 : 0
 args=. shiftargs''
@@ -1988,6 +2035,7 @@ elseif. (<'mb_iconstop') e. styles do.
   gtk_box_pack_start hbox ; stock ; 0 ; 0 ;< 0
 end.
 lb=. gtk_label_new <txt
+gtk_label_set_line_wrap lb, 1
 gtk_box_pack_start hbox ; lb ; 1 ; 1 ;< 0
 gtk_widget_show_all <hbox
 result=. gtk_dialog_run <dialog
@@ -2132,14 +2180,16 @@ end.
 
 wdpactive=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-if. 0~: #args=. shiftargs'' do. seterr' extra parameter : ' return. end.
-gtk_window_activate_focus <cWindow
+if. 0~: #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
+if. 0= gtk_window_has_toplevel_focus cWindow do.
+  gtk_window_present_with_time cWindow,GDK_CURRENT_TIME_jgtk_
+end.
 )
 
 wdpas=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-if. 2> #args=. shiftargs'' do. seterr' bad number : ' return.
-elseif. 2< #args do. seterr' extra parameter : ' return.
+if. 2> #args=. shiftargs'' do. seterr 'bad number : ' return.
+elseif. 2< #args do. seterr 'extra parameter : ' return.
 end.
 if. 0 e. isnum&> args do. seterr 'bad number : ' return. end.
 if. 0~: cContainer do. return. end.
@@ -2210,8 +2260,11 @@ else.
   end.
 end.
 if. 0= cContainer do.
-  windowList=: windowList, window ; id ; (jloc '') ; '' ; 0 ; 0 ; cFontdef ; 0 ; (,0) ; (,0) ; 0 ; acl ; 0 0 0 0 ; (owner{0, cWindow) ; 0 ; closeok
-  if. owner *. 0~:cWindow do. gtk_widget_set_sensitive cWindow, 0 end.
+  windowList=: windowList, window ; id ; (jloc '') ; '' ; 0 ; 0 ; cFontdef ; 0 ; (,0) ; (,0) ; 0 ; acl ; 0 0 0 0 ; 0 ; 0 ; closeok
+  if. owner do.
+    gtk_window_set_modal window, 1
+    if. 0~:cWindow do. gtk_window_set_transient_for window, cWindow end.
+  end.
   cSubform=: '' [ cSetFont=: '' [ cContainer=: cRadio=: cChild=: 0 [ cWindow=: window
 else.
   cSubform=: id
@@ -2221,20 +2274,20 @@ end.
 
 wdpcenter=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-if. 0~: #args=. shiftargs'' do. seterr' extra parameter : ' return. end.
+if. 0~: #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
 gtk_window_set_position cWindow ;< GTK_WIN_POS_CENTER
 )
 
 wdpclose=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-if. 0~: #args=. shiftargs'' do. seterr' extra parameter : ' return. end.
+if. 0~: #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
 gtk_widget_destroy <cWindow
 )
 
 wdpgroup=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 1> #args=. shiftargs'' do. seterr'bad id : ' return.
-elseif. 1< #args do. seterr' extra parameter : ' return.
+elseif. 1< #args do. seterr 'extra parameter : ' return.
 end.
 s=. 0{::args
 if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
@@ -2243,11 +2296,24 @@ else.
   assert. 0
 end.
 )
+wdpicon=: 3 : 0
+if. 0= cWindow do. seterr 'no parent selected : ' return. end.
+if. 0= #args=. shiftargs'' do. seterr'bad number : ' return.
+elseif. 1= #args do. seterr'bad number : ' return.
+elseif. 2< #args do. seterr 'extra parameter : ' return.
+end.
+s=. 0{::args
+ax=. 1{::args
+if. 0= isnum ax do. seterr 'bad number : ' return. end.
+if. (<tolower _4{.s) e. '.exe';'.dll' do. return. end.
+gtk_window_set_icon_from_file cWindow ; s ; 0
+)
+
 
 wdpmove=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-if. 4> #args=. shiftargs'' do. seterr' bad number : ' return.
-elseif. 4< #args do. seterr' extra parameter : ' return.
+if. 4> #args=. shiftargs'' do. seterr 'bad number : ' return.
+elseif. 4< #args do. seterr 'extra parameter : ' return.
 end.
 if. 0 e. isnum&> args do. seterr 'bad number : ' return. end.
 xywh=. <. {.@(0&".)&> args
@@ -2258,8 +2324,8 @@ gtk_container_resize_children <cWindow
 
 wdpmovex=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-if. 4> #args=. shiftargs'' do. seterr' bad number : ' return.
-elseif. 4< #args do. seterr' extra parameter : ' return.
+if. 4> #args=. shiftargs'' do. seterr 'bad number : ' return.
+elseif. 4< #args do. seterr 'extra parameter : ' return.
 end.
 if. 0 e. isnum&> args do. seterr 'bad number : ' return. end.
 xywh=. <. {.@(0&".)&> args
@@ -2320,7 +2386,7 @@ case. 'sw_shownormal' do. ''
 case. do. seterr 'bad style : ' return.
 end.
 if. 'sw_show'-:7{.style do.
-  gtk_widget_show_all <cWindow
+  gtk_widget_show <cWindow
 end.
 if. (<style) e. ;:'sw_restore sw_show sw_shownormal sw_showmaximized sw_showminimized' do.
   if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
@@ -2334,7 +2400,7 @@ end.
 wdptop=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do. s=. ,'1'
-elseif. 1< #args do. seterr' extra parameter : ' return.
+elseif. 1< #args do. seterr 'extra parameter : ' return.
 elseif. do. s=. 0{::args
 end.
 if. 0 e. isnum s do. seterr 'bad number : ' return. end.
@@ -2362,7 +2428,6 @@ menuList=: (widget ~: >0{"1 menuList)#menuList
 toolbarList=: (widget ~: >0{"1 toolbarList)#toolbarList
 statusbarList=: (widget ~: >0{"1 statusbarList)#statusbarList
 childList=: (widget ~: >0{"1 childList)#childList
-glxList=: (widget ~: >GLXLISTPARENT{"1 glxList)#glxList
 windowList=: (widget ~: >WindowListHandle{"1 windowList)#windowList
 0
 )
@@ -2417,7 +2482,7 @@ case. 'creategroup' do. wdcreategroup ''
 case. 'fontdef' do. wdfontdef ''
 case. 'mb' do. t=. wdmb ''
 case. 'mbcolor' do. t=. ": 51$255
-case. 'mbfont' do. t=. ''
+case. 'mbfont' do. t=. wdmbfont ''
 case. 'mbopen' do. t=. wdmbopen ''
 case. 'mbprinter' do. t=. wdmbprinter ''
 case. 'mbsave' do. t=. wdmbsave ''
@@ -2425,12 +2490,14 @@ case. 'menu' do. wdmenu ''
 case. 'menupop' do. wdmenupop ''
 case. 'menupopz' do. wdmenupopz ''
 case. 'menusep' do. wdmenusep ''
+case. 'msgs' do. wdmsgs ''
 case. 'pactive' do. wdpactive ''
 case. 'pas' do. wdpas ''
 case. 'pc' do. wdpc ''
 case. 'pcenter' do. wdpcenter ''
 case. 'pclose' do. wdpclose ''
 case. 'pgroup' do. wdpgroup ''
+case. 'picon' do. wdpicon ''
 case. 'pmove' do. wdpmove ''
 case. 'pmovex' do. wdpmovex ''
 case. 'pn' do. wdpn ''
@@ -2489,19 +2556,18 @@ case. 'sminputlog' do. t=. ''
 case. ;:'oleget olegetlic oleinfo' do. t=. ''
 case. ;:'oledlg oleenable oleid oleload olemethod olemethodx oleocx olerelease olesave oleset olesetlic' do. ''
 case. ;:'qhinst qhwndx qkeystate qrtf' do. t=. ''
-case. ;:'clipcopyx clippastex msgs pcolor picon security setcolor setcolwidth setpclip setupdate settabstops tnomsgs wait' do. ''
+case. ;:'clipcopyx clippastex pcolor security setcolor setcolwidth setpclip setupdate settabstops tnomsgs wait' do. ''
 
 case. do. seterr 'invalid command : '
 end.
 if. ((<'qer') -.@e.~ cmd) *. 0~:WDERRN do. 13!:8[3 end.
 (EMPTY-:t){::t;''
 )
-session_printer=: ''
 wdqprinters=: 3 : 0
 if. 0~: #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
 if. 0= #prn=. gtk_qprinters'' do. session_printer=: '' return. end.
 ses=. {.prn
-if. #session_printer do. ses=. <session_printer end.
+if. #ses1=. cairo_settings_printer_jglcanvas_ '' do. ses=. <ses1 end.
 ; (ses,prn) ,&.> <LF
 )
 
@@ -2510,12 +2576,12 @@ if. 0= #args=. shiftargs'' do. opt=. ''
 elseif. 1= #args do. opt=. >@{.args
 elseif. 1< #args do. seterr 'extra parameter : ' return.
 end.
-if. (<opt) -.@e. '';'pd_pagesetup' do. seterr 'bad style : ' return. end.
+if. (<opt) -.@e. '';'pd_printsetup' do. seterr 'bad style : ' return. end.
+z=. ''
 if. 1= cairo_printer_dialog_jglcanvas_ '' do.
-  session_printer=: cairo_settings_printer_jglcanvas_ ''
-else.
-  ''
+  z=. cairo_settings_printer_jglcanvas_ ''
 end.
+z, (*#z)#LF,'0',LF
 )
 wdsbar=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
@@ -2531,6 +2597,7 @@ if. -.@isnum s=. >@{.args do. seterr 'bad number : ' return. end.
 if. 0>: count=. {.@(0&".) s do. seterr 'bad number : ' return. end.
 vbox1=. gtk_bin_get_child <cWindow
 sbarwin=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x *c x x')&cd ( gtk_hbox_get_type '') ; 'spacing' ; 2 ; 'visible' ; 0 ;< 0
+gtk_widget_set_can_focus sbarwin, 0
 gtk_widget_show <sbarwin
 for_i. i. count do.
   st=. gtk_statusbar_new ''
@@ -2634,6 +2701,7 @@ else.
   seterr 'wrong file type : ' return.
 end.
 tbarwin=. gtk_toolbar_new ''
+gtk_widget_set_can_focus tbarwin, 0
 ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x *c x x')&cd tbarwin ; 'visible' ; 0 ; 'toolbar-style' ; GTK_TOOLBAR_ICONS ;< 0
 vbox1=. gtk_bin_get_child <cWindow
 gtk_box_pack_start vbox1 ; tbarwin ; 0 ; 0 ;< 0
@@ -2885,16 +2953,9 @@ wh
 )
 getchildxy=: 3 : 0
 widget=. y
-if. _1= {. xy=. 2{. getGtkWidgetAllocation widget do.
-  if. _1= {. xy=. 2{. getGtkWidgetGeometry widget do. xy return. end.
-end.
-while. (0= gtk_widget_is_toplevel widget) *. (0= g_type_check_instance_is_a widget, gtk_fixed_get_type '') *. 0~: widget=. gtk_widget_get_parent widget do.
-  if. _1= {. xy1=. 2{. getGtkWidgetAllocation widget do.
-    xy1=. 0 >. 2{. getGtkWidgetGeometry widget
-  end.
-  xy=. xy + xy1
-end.
-xy
+wg=. gtk_widget_get_ancestor widget, gtk_fixed_get_type ''
+gtk_widget_translate_coordinates widget ; wg ; 0 ; 0 ; (x=.,_1) ;  (y=.,_1)
+x, y
 )
 getchildwin=: 3 : 0
 widget=. win=. y
@@ -2939,7 +3000,6 @@ childList=: 0 12$<''
 menuList=: 0 4$<''
 toolbarList=: 0 5$<''
 statusbarList=: 0 3$<''
-glxList=: 0 14$<''
 activeidx=: 0
 cxywh=: 0 0 100 100
 cFontdef=: ''
@@ -3044,6 +3104,10 @@ end.
 if. 1=chg do. gtk_container_resize_children <parent end.
 )
 18!:4 <'z'
+wdloop_z_=: 3 : 0
+if. gtkInitDone_jgtk_ > IFGTK +. gtkMainLoop_jgtk_ do. gtk_main_jgtk_'' [ gtkMainLoop_jgtk_=: 1 end.
+EMPTY
+)
 wd_z_=: 3 : 0"1
 if. gtkInitDone_jgtk_ do.
   wd_gtkwd_ y [ WDLOC_gtkwd_=: >coname''

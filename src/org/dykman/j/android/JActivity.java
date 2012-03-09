@@ -1,7 +1,6 @@
 package org.dykman.j.android;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.dykman.j.ExecutionListener;
 
@@ -26,39 +25,35 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 //		container = (ViewGroup) findViewById(R.id.mainLayout);
 		theApp = (JConsoleApp) this.getApplication();
 		console = (Console) findViewById(R.id.ws);
-		console.setActivity(this);
+		console.setJActivity(this);
 
 		theApp.setup(this,console);
 		Intent ii = new Intent(getIntent());
 		theApp.addFile(JCONSOLE, ii);
+		/*
 		if(savedInstanceState != null) {
 			console.setText(savedInstanceState.getCharSequence("console"));
 			int n = savedInstanceState.getInt("cursor");
 			console.setSelection(n);
 		}
+		*/
 	}
 	@Override
 	public void onBackPressed() {
 		testQuit();
 	}
-	public String buildTitle(File f)  throws IOException {
-		return JCONSOLE;
-	}
-
-	/*
-	public ViewGroup getContainer() {
-		return container;
-	}
-	*/
 	@Override
-	public void onRestoreInstanceState(Bundle outState) {
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		console.setText(savedInstanceState.getCharSequence("console"));
+		int n = savedInstanceState.getInt("cursor");
+		console.setSelection(n);
+
 	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		int pos = console.getSelectionStart();
 		outState.putCharSequence("console",console.getText());
 		outState.putInt("cursor",pos);
-//		outState.putParcelable("console", console);
 	}
 
 	@Override

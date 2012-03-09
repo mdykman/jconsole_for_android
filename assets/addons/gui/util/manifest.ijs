@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 cobrowse - famous SmallTalk tool for J
 )
 
-VERSION=: '1.0.7'
+VERSION=: '1.0.9'
 
 RELEASE=: 'j601 j602 j701'
 

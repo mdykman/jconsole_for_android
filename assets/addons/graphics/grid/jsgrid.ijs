@@ -1,5 +1,5 @@
 coclass 'jsgrid'
-coinsert 'jzgrid'
+coinsert 'jzgrid jgl2'
 
 CELLEDIT=: 0
 CELLCOLORS=: 0 0 0,255 255 255,255 255 255,51 102 204
@@ -21,7 +21,7 @@ end.
 )
 key=: 3 : 0
 'Char Ctrl Shift'=: y
-if. (Char = CR) *. ifselectresult'' do.
+if. (Char = u: kbENTER) *. ifselectresult'' do.
   select_result__COCREATOR {.CELLMARK
 else.
   keyx''

@@ -198,6 +198,12 @@ p=. mema #t
 t memw p,0,#t
 p + +/\ 0,}:len
 )
+fliprgb_z_=: 3 : 0
+s=. $y
+d=. ((#y),4)$2 (3!:4) y=. ,y
+d=. 2 1 0 3{"1 d
+s$_2(3!:4),d
+)
 settimer=: 3 : 0
 g_timeout_add_full 200;y;cb1;(cbreg 'sys_timer__');0
 )
@@ -845,6 +851,7 @@ g_thread_init > n x
 )
 libgdk cddef each <;._2 [ 0 : 0
 gdk_atom_intern > x *c i
+gdk_beep > n
 gdk_cursor_new > x i
 gdk_display_get_default > x
 gdk_draw_arc > n x x i x x x x x x
@@ -983,6 +990,7 @@ gtk_clipboard_get > x x
 gtk_clipboard_set_image > n x x
 gtk_clipboard_set_text > n x *c x
 gtk_clipboard_store > n x
+gtk_clipboard_wait_for_image > x x
 gtk_clipboard_wait_for_text > x x
 
 : color selection dialog
@@ -1296,6 +1304,8 @@ gtk_text_view_scroll_mark_onscreen > n x x
 gtk_text_view_scroll_to_iter > i x *x d i d d
 gtk_text_view_scroll_to_mark > n x x d x d d : n,view,mark,d within_margin,use_align,d xalign,d yalign
 gtk_text_view_set_editable > n x i
+gtk_text_view_set_left_margin > n x i
+gtk_text_view_set_right_margin > n x i
 gtk_text_view_set_wrap_mode > n x x
 gtk_text_view_window_to_buffer_coords > n x x x x *x *x
 
@@ -1416,9 +1426,9 @@ gtk_widget_add_events > n x x
 gtk_widget_create_pango_context > x x
 gtk_widget_create_pango_layout > x x *c
 gtk_widget_destroy > n x
-gtk_widget_get_allocation > n x *i
 gtk_widget_get_allocated_height > i x
 gtk_widget_get_allocated_width > i x
+gtk_widget_get_allocation > n x *i
 gtk_widget_get_can_default > i x
 gtk_widget_get_name > x x
 gtk_widget_get_pango_context > x x
@@ -1430,9 +1440,9 @@ gtk_widget_get_toplevel > x x
 gtk_widget_get_window > x x
 gtk_widget_grab_default > n x
 gtk_widget_grab_focus > n x
+gtk_widget_hide > i x
 gtk_widget_hide > n x
 gtk_widget_hide_all > n x
-gtk_widget_hide > i x
 gtk_widget_is_ancestor > i x x
 gtk_widget_is_toplevel > i x
 gtk_widget_modify_base > n x i *c
@@ -1452,6 +1462,7 @@ gtk_widget_set_tooltip_text > n x *c
 gtk_widget_show > n x
 gtk_widget_show_all > n x
 gtk_widget_show_now > n x
+gtk_widget_translate_coordinates > i x x i i *i *i
 
 gtk_window_activate_focus > i x
 gtk_window_add_accel_group > n x x
@@ -1461,6 +1472,7 @@ gtk_window_get_position > n x *i *i
 gtk_window_get_screen > x x
 gtk_window_get_size > n x *i *i
 gtk_window_get_title > x x
+gtk_window_has_toplevel_focus > i x
 gtk_window_is_active > i x
 gtk_window_list_toplevels > x
 gtk_window_maximize > n x
@@ -1680,23 +1692,25 @@ gtk_enumerate_printers > n x x x i
 )
 libpixbuf cddef each <;._2 [ 0 : 0
 gdk_pixbuf_add_alpha > x x i x x x : buf,use_substitute_color?,r,g,b
+gdk_pixbuf_get_bits_per_sample > x x
+gdk_pixbuf_get_has_alpha > x x
+gdk_pixbuf_get_height > x x
+gdk_pixbuf_get_n_channels > x x
+gdk_pixbuf_get_pixels > x x
+gdk_pixbuf_get_rowstride > x x
+gdk_pixbuf_get_width > x x
 gdk_pixbuf_new > x x x x x x : GDK_COLORSPACE_RGB,alpha,bits,w,h
 gdk_pixbuf_new_from_data > x x x x x x x x x x : ad,cmap,alpha,bits,w,h,rowstride,destroyfn,fndata
 gdk_pixbuf_new_from_file > x *c x : filename,errorloc
-gdk_pixbuf_new_from_file_utf8 > x *c x : win64 version
-gdk_pixbuf_new_from_file_at_size > x *c x x x
-gdk_pixbuf_new_from_file_at_size_utf8 > x *c x x x : win64 version
 gdk_pixbuf_new_from_file_at_scale > x *c x x i x
 gdk_pixbuf_new_from_file_at_scale_utf8 > x *c x x i x : win64 version
+gdk_pixbuf_new_from_file_at_size > x *c x x x
+gdk_pixbuf_new_from_file_at_size_utf8 > x *c x x x : win64 version
+gdk_pixbuf_new_from_file_utf8 > x *c x : win64 version
 gdk_pixbuf_new_subpixbuf > x x i i i i
-gdk_pixbuf_get_width > x x
-gdk_pixbuf_get_height > x x
-gdk_pixbuf_get_pixels > x x
-gdk_pixbuf_get_rowstride > x x
-gdk_pixbuf_get_n_channels > x x
-gdk_pixbuf_get_has_alpha > x x
-gdk_pixbuf_get_bits_per_sample > x x
 gdk_pixbuf_save > i x *c *c x x
+gdk_pixbuf_save_to_buffer > i x *x *x *c x x
+gdk_pixbuf_save_to_buffer_2 > i x *x *x *c x *c *c x
 gdk_pixbuf_save_utf8 > i x *c *c x x
 )
 libgobject cddef each <;._2 [ 0 : 0
@@ -1720,6 +1734,7 @@ pango_context_get_font_description > x x
 pango_context_get_metrics > x x x x
 pango_context_set_font_description > n x x
 pango_context_set_matrix > n x *d
+pango_create_layout > x x
 pango_font_description_free > n x         : font_desc
 pango_font_description_from_string > x *c : font_desc font_string
 pango_font_description_get_size > i x
@@ -2048,6 +2063,7 @@ pango_cairo_context_set_shape_renderer > n x x x x
 pango_cairo_context_get_shape_renderer > x x *x
 pango_cairo_create_context > x x
 pango_cairo_create_layout > x x
+pango_cairo_update_context > n x x
 pango_cairo_update_layout > n x x
 pango_cairo_show_glyph_string > n x x x
 pango_cairo_show_glyph_item > n x *c x
@@ -2513,6 +2529,12 @@ if. 0~: 4!:0 <'gtkInitDone_jgtk_' do.
 end.
 ''
 )
+3 : 0''
+if. 0~: 4!:0 <'gtkMainLoop_jgtk_' do.
+  gtkMainLoop_jgtk_=: 0
+end.
+''
+)
 ifMatchBrackets=: 0
 DefCmt=: 'NB. '
 DefLang=: 'j'
@@ -2522,6 +2544,7 @@ Debug=: 0
 
 IFSV=: 1
 GtkSetEnv=: 0
+RGBSEQ_j_=: 1
 f=. [: 15!:13 (IFWIN#'+') , ' x' $~ +:
 cb1=: f 2
 cb2=: f 3
@@ -3449,9 +3472,48 @@ state=. 2{;gdk_event_get_state y;,0
 )
 
 cocurrent 'jgtk'
+OR=: 23 b./
+NOTALPHA=: 0{_2 ic 255 255 255 0{a.
 readimg=: 3 : 0
-  if. -.IFGTK do. gtkinit'' end.
-  if. 0= buf=. gdk_pixbuf_new_from_file y;0 do. 0 0$0 return. end.
+if. -.IFGTK do. gtkinit'' end.
+if. 0= buf=. gdk_pixbuf_new_from_file y;0 do. 0 0$0 return. end.
+img=. gdk_pixbuf_add_alpha buf;0;0;0;0
+g_object_unref buf
+ad=. gdk_pixbuf_get_pixels img
+w=. gdk_pixbuf_get_width img
+h=. gdk_pixbuf_get_height img
+s=. gdk_pixbuf_get_rowstride img
+assert. s=4*w
+if. IF64 do.
+  r=. _2 ic memr ad,0,(w*h*4),JCHAR
+else.
+  r=. memr ad,0,(w*h),JINT
+end.
+g_object_unref img
+r=. fliprgb^:(RGBSEQ_j_) r (17 b.) NOTALPHA
+(h,w)$r
+)
+getimg=: 3 : 0
+if. -.IFGTK do. gtkinit'' end.
+if. 0~: s=. g_memory_input_stream_new_from_data y; (#y); 0 do.
+  try.
+    buf=. gdk_pixbuf_new_from_stream s,0 0
+  catch.
+    g_input_stream_close s,0 0
+    if. IFUNIX do.
+      s=. LF -.~ 2!:0 'mktemp'
+    else.
+      a=. 'kernel32 GetTempPathW i i *w'&cd (256 ; uucp 256{.'')
+      s=. '\/' charsub uft8 ((0{::a){. 2{::a)
+      s=. '.image',~ s, '/gtkimg_', ":(2!:6)''
+    end.
+    y 1!:2 <s
+    data=. readimg s
+    1!:55 <s
+    data return.
+  end.
+  g_input_stream_close s,0 0
+  if. 0= buf do. 0 0$0 return. end.
   img=. gdk_pixbuf_add_alpha buf;0;0;0;0
   g_object_unref buf
   ad=. gdk_pixbuf_get_pixels img
@@ -3465,10 +3527,118 @@ readimg=: 3 : 0
     r=. memr ad,0,(w*h),JINT
   end.
   g_object_unref img
+  r=. fliprgb^:(RGBSEQ_j_) r (17 b.) NOTALPHA
   (h,w)$r
+end.
+)
+writeimg=: 4 : 0
+if. -.IFGTK do. gtkinit'' end.
+'h w'=. $x
+d=. ,x
+if. 2> #y=. boxopen y do.
+  f=. >@{.y
+  type=. tolower }. (}.~ i:&'.') f
+  opt=. ''
+elseif. 2= #y do.
+  f=. >@{.y
+  type=. >1{y
+  opt=. ''
+elseif. do.
+  f=. utf8 >@{.y
+  type=. >1{y
+  opt=. 2{.2}.y
+  opt=. (":&.>1{opt) 1}opt
+end.
+if. 'jpg'-:type do. type=. 'jpeg'
+elseif. 'tif'-:type do. type=. 'tiff'
+end.
+d=. fliprgb^:(RGBSEQ_j_) d
+d=. d OR ALPHA
+if. IF64 do. d=. 2 ic d end.
+buf=. gdk_pixbuf_new_from_data (15!:14<'d'),GDK_COLORSPACE_RGB,1,8,w,h,(4*w),0,0
+if. buf do.
+  if. ''-:opt do.
+    gdk_pixbuf_save buf;f;type;0;0
+  else.
+    gdk_pixbuf_save_2 buf;f;type;0;opt,<0
+  end.
+  g_object_unref buf
+end.
+EMPTY
+)
+putimg=: 4 : 0
+if. -.IFGTK do. gtkinit'' end.
+'h w'=. $x
+d=. ,x
+if. 2> #y=. boxopen y do.
+  type=. >@{.y
+  opt=. ''
+elseif. do.
+  type=. >@{.y
+  opt=. 2{.}.y
+  opt=. (":&.>1{opt) 1}opt
+end.
+if. 'jpg'-:type do. type=. 'jpeg'
+elseif. 'tif'-:type do. type=. 'tiff'
+end.
+d=. fliprgb^:(RGBSEQ_j_) d
+d=. d OR ALPHA
+if. IF64 do. d=. 2 ic d end.
+buf=. gdk_pixbuf_new_from_data (15!:14<'d'),GDK_COLORSPACE_RGB,1,8,w,h,(4*w),0,0
+rc=. 0
+if. buf do.
+  if. ''-:opt do.
+    rc=. gdk_pixbuf_save_to_buffer buf;(m=. ,_1);(s=. ,_1);type;0;0
+  else.
+    rc=. gdk_pixbuf_save_to_buffer_2 buf;(m=. ,_1);(s=. ,_1);type;0;opt,<0
+  end.
+  g_object_unref buf
+end.
+if. rc do.
+  assert. 0~:m
+  z=. memr m,0,s,2
+  z [ g_free {.m
+else.
+  ''
+end.
+)
+clipreadimg=: 3 : 0
+if. -.IFGTK do. gtkinit'' end.
+cb=. gtk_clipboard_get gdk_atom_intern 'CLIPBOARD';0
+if. 0= buf=. gtk_clipboard_wait_for_image cb do. 0 0$0 return. end.
+img=. gdk_pixbuf_add_alpha buf;0;0;0;0
+assert. 0~:img
+g_object_unref buf
+ad=. gdk_pixbuf_get_pixels img
+w=. gdk_pixbuf_get_width img
+h=. gdk_pixbuf_get_height img
+s=. gdk_pixbuf_get_rowstride img
+assert. s=4*w
+assert. 0~:ad
+if. IF64 do.
+  r=. _2 ic memr ad,0,(w*h*4),JCHAR
+else.
+  r=. memr ad,0,(w*h),JINT
+end.
+g_object_unref img
+r=. fliprgb^:(RGBSEQ_j_) r (17 b.) NOTALPHA
+(h,w)$r
+)
+clipwriteimg=: 3 : 0
+if. -.IFGTK do. gtkinit'' end.
+'h w'=. $y
+d=. ,y
+d=. fliprgb^:(RGBSEQ_j_) d
+d=. d OR ALPHA
+if. IF64 do. d=. 2 ic d end.
+buf=. gdk_pixbuf_new_from_data (15!:14<'d'),GDK_COLORSPACE_RGB,1,8,w,h,(4*w),0,0
+cb=. gtk_clipboard_get gdk_atom_intern 'CLIPBOARD';0
+gtk_clipboard_set_image cb,buf
+gtk_clipboard_store cb
+g_object_unref buf
+h,w
 )
 
-OR=: 23 b./
 3 : 0''
 if. IF64 do.
   ALPHA=: 0{_3 ic 0 0 0 255 255 255 255 255{a.
@@ -3477,11 +3647,11 @@ else.
 end.
 ''
 )
-NOTALPHA=: 0{_2 ic 255 255 255 0{a.
 pixbufpx_setpixels=: 4 : 0
 gtkpx=. x
 'a b w h'=. 4{.y
 d=. 4}.y
+d=. fliprgb^:(RGBSEQ_j_) d
 d=. d OR ALPHA
 if. IF64 do. d=. 2 ic d end.
 buf=. gdk_pixbuf_new_from_data (15!:14<'d'),GDK_COLORSPACE_RGB,1,8,w,h,(4*w),0,0
@@ -3495,6 +3665,7 @@ pixbufcr_setpixels=: 4 : 0
 cr=. x
 'a b w h'=. 4{.y
 d=. 4}.y
+d=. fliprgb^:(RGBSEQ_j_) d
 d=. d OR ALPHA
 if. IF64 do. d=. 2 ic d end.
 buf=. gdk_pixbuf_new_from_data (15!:14<'d'),GDK_COLORSPACE_RGB,1,8,w,h,(4*w),0,0
@@ -3935,12 +4106,6 @@ end.
 ''
 )
 NOTALPHA=: 0{_2 ic 255 255 255 0{a.
-
-flip_rgb=: 3 : 0
-d=. ((#y),4)$2 (3!:4) y
-d=. 2 1 0 3{"1 d
-_2(3!:4),d
-)
 degree64=: 0.5 <.@:+ 64 * dfr
 get_button=: 3 : 0
 if. IF64 do.
@@ -4002,7 +4167,7 @@ if. 0=gtkgc do. gtkgc=: gdk_gc_new gtkwin end.
 0
 )
 
-expose_event=: 0[glpaintx
+expose_event=: 0[glpaint
 destroy_event=: 3 : 0
 'widget data'=. y
 if. -.IFGTK do.
@@ -4104,12 +4269,12 @@ if. IF64 do. y=. _3 ic 2 ic y end.
 gdk_draw_lines gtkpx;gtkgc;y;c
 )
 glpaint=: 3 : 0 "1
-gtk_widget_queue_draw gtkda
-)
-glpaintx=: 3 : 0 "1
 glclear''
 paint''
 gdk_draw_drawable gtkwin,gtkdagc,gtkpx,0 0 0 0 _1 _1
+)
+glpaintx=: 3 : 0 "1
+gtk_widget_queue_draw gtkda
 )
 glpen=: 3 : 0 "1
 gtkpenrgb=: gtkrgb

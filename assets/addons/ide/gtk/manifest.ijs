@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 GTK IDE
 )
 
-VERSION=: '1.0.77'
+VERSION=: '1.0.78'
 
 FILES=: 0 : 0
 gtk.ijs

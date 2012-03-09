@@ -10,7 +10,7 @@ After it is installed, run lab 'Tara and Excel' for examples of using the system
 Tara was developed and is copyrighted by Bill Lam, bbill.lam@gmail.com, but may be used freely, even for commercial purposes.
 )
 
-VERSION=: '1.2.14'
+VERSION=: '1.2.15'
 
 RELEASE=: 'j601 j602 j701'
 

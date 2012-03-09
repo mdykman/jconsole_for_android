@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -35,7 +36,7 @@ public abstract class AbstractActivity extends Activity {
 	public static final String EMPTY = " -- empty -- ";
 	JConsoleApp theApp;
 	public static final String CONSOLE_NAME = "J Console";
-	static final String tempDir = "user/temp";
+//	static final String tempDir = "user/temp";
 //	Console console;
 
 
@@ -304,6 +305,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 			ViewGroup.LayoutParams.WRAP_CONTENT));
 		et.setSingleLine();
 		et.setText(ff.getName());
+		et.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 		
 		FileAction fs = new SaveAsAction(et); 
 		File dir = ff.getParentFile();
@@ -383,8 +385,15 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 		}
 		return path;
 	}
+	public String buildTitle(File f)  throws IOException {
+		String title =  filePath(f.getCanonicalPath());
+		if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") || title.equals("/sdcard")) {
+			title = "/";
+		}
+		return (theApp.isLocalFile() ? "local: " : "sdcard: ") + title;
+	}
 
-	public abstract String buildTitle(File f)  throws IOException;
+//	public abstract String buildTitle(File f)  throws IOException;
 
 	public void requestFileSelect(final File dir, final FileAction ffa,
 			final TextView textView) {
@@ -496,7 +505,7 @@ Log.d(JConsoleApp.LogTag,"in request file select");
 					File myfile = new File(theApp.getCurrentDirectory(),name);
 					FileEdit fe = getEditor();
 					try {
-						theApp.saveAs(fe,myfile);
+						theApp.saveAs(AbstractActivity.this,fe,myfile);
 					} catch(IOException e) {
 						Toast.makeText(AbstractActivity.this, "there was an error saving " + myfile.getName(), 
 							Toast.LENGTH_LONG);

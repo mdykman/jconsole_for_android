@@ -14,8 +14,8 @@ ncm=. com < (1|.0,}.com) +. (0,}._1|.com)
 msk=. com +: ncm *. dat=a:
 dat=. msk # dat
 
-f=. 'NB.'&E. <: ~:/\@(e.&'''')
-g=. #~ *./\@f
+f=. *./\ @ ('NB.'&E. <: ~:/\@(e.&''''))
+g=. f dtb@#^:(0 e. [) ]
 ; (g each dat) ,each LF
 )
 ffoldername=: 3 : 0
@@ -41,9 +41,12 @@ getprojname=: 3 : 0
 ProjectName,(0=#ProjectName)#ProjectPath
 )
 projname2path=: 3 : 0
+y=. jpathsep y
 if. '~'={. y do.
   jpath y
-elseif. ('/'={.y) +: </ y i. ':/' do.
+elseif. ('./'-:y) +. '.' -:&, y do.
+  1!:43''
+elseif. ('./'e.~{.y) +: </ y i. ':/' do.
   jpath '~',y
 elseif. do.
   y
@@ -69,6 +72,13 @@ end.
 projssource=: 3 : 0
 projread''
 Source;<projsname each Source
+)
+fixdot=: 4 : 0
+if. IFUNIX do.
+  if. '/'~:{.y do. x,'/',y else. y end.
+else.
+  if. '.'={.y do. x,'/',y else. y end.
+end.
 )
 PPScript=: jpath '~system/util/pp.ijs'
 Project=: ProjectPath=: ProjectName=: ''
@@ -548,7 +558,7 @@ coerase <'jptemp'
 r
 )
 readsource1=: 4 : 0
-s=. readprojectsource y
+s=. (projname2path y)&fixdot&.> readprojectsource y
 dat=. freads each s
 if. (<_1) e. dat do.
   fls=. ; ' ' ,each toprojectfolder each s #~ (<_1) = dat

@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 wd demos using gtkwd
 )
 
-VERSION=: '1.0.14'
+VERSION=: '1.0.20'
 
 RELEASE=: 'j701'
 
@@ -38,6 +38,7 @@ life.ijs
 mouse.ijs
 name.ijs
 printer.ijs
+regdemo.ijs
 rtf.ijs
 unicode.ijs
 unisimple.ijs

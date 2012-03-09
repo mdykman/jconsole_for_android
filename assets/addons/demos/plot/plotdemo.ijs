@@ -1,6 +1,6 @@
 NB. plotdemo.ijs   - plot demos
 NB.
-NB. uses locale jdplot
+NB. uses locale jdplotgtk
 
 3 : 0''
 if. -.IFJ6 do.
@@ -14,8 +14,8 @@ end.
 
 path=. jpath '~Demos/plot/'
 files=. path&,@(,&'.ijs') each ;: 'plexam plotdwin pledit plview'
-coclass 'jdplot'
+coclass 'jdplotgtk'
 coinsert 'jgtk jzplot jafm jgl2'
 load files
 
-plotdemo_run_jdplot_''
+plotdemo_run_jdplotgtk_''

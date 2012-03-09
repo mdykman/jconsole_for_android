@@ -1,6 +1,6 @@
 math/deoptim - change history
 
-== 1.0.7 ==
+== 1.0.7/8 ==
  * chg: j701 gtkwd
 
 == 1.0.5/6 ==

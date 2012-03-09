@@ -5,7 +5,7 @@ if. -.IFGTK do. gtkinit_jgtk_'' end.
 ''
 )
 
-coclass 'jdplot'
+coclass 'jdplotgtk'
 coinsert 'jgtk jzplot jgl2'
 
 
@@ -16,7 +16,7 @@ CMDS=: ''
 plotruns=: plotrunsx=: 3 : 0
 CMDS=: ". y
 glsel PIdLoc
-glpaint''
+glpaintx''
 )
 
 PLTIMER=: 3000
@@ -161,9 +161,9 @@ cbfree''
 0
 )
 
-plotdemo_saveeps_button=: pd_jdplot_ bind 'eps'
-plotdemo_savepdf_button=: pd_jdplot_ bind 'pdf'
-plotdemo_clip_button=: pd_jdplot_ bind 'clip'
+plotdemo_saveeps_button=: pd_jdplotgtk_ bind 'eps'
+plotdemo_savepdf_button=: pd_jdplotgtk_ bind 'pdf'
+plotdemo_clip_button=: pd_jdplotgtk_ bind 'clip'
 plotdemo_print_button=: 0:
 
 NB. =========================================================

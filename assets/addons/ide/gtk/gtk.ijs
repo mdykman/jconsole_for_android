@@ -645,6 +645,7 @@ menu_init''
 sview_init''
 main_open''
 main_run''
+gtkMainLoop_jgtk_=: 1
 0
 )
 main_init=: 3 : 0
@@ -2712,6 +2713,10 @@ codestroy''
 0
 )
 Gray=: rgb2gtk 232 232 232
+edit_insert=: 3 : 0
+edit_current_def''
+viewinsert pSB;y
+)
 getselext=: 3 : 0
 r=. (1 + y i: '.') }. y
 if. 0=#r do. 0 pick ValExt end.
@@ -7694,6 +7699,7 @@ term_clear=: 3 : 0
 gtk_text_buffer_delete bufiterbounds termSB
 term_append getprompt''
 )
+term_insert=: 3 : 'viewinsert termSB;y'
 coclass 'jtextview'
 coinsert 'jgtkide'
 create=: makeview

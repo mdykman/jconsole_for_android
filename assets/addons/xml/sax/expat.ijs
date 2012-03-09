@@ -18,7 +18,7 @@ IFMACOSX=: UNAME-:'Darwin'
 if. IFGTK do. 'libexpat not supported on JGTK' (13!:8) 10 end.  NB. possible conflict in cdcallback
 
 if. UNAME-:'Linux' do.
-  LIB=: > (IFDEF'android') { 'libexpat.so.1';'libexpat.so;
+  LIB=: > (IFDEF'android') { 'libexpat.so.1';'libexpat.so'
 elseif. UNAME-:'Darwin' do.
   LIB=: '/usr/lib/libexpat.dylib'
   if. 0= #1!:0 <LIB do.

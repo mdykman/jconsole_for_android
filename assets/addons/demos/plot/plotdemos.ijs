@@ -13,11 +13,11 @@ end.
 
 load '~Demos/plot/plexam.ijs'
 
-coinsert_jdplot_ 'jzplot'
+coinsert_jdplotgtk_ 'jzplot'
 
 NB. =========================================================
 plotdemos_z_=: 3 : 0
-cocurrent 'jdplot'
+cocurrent 'jdplotgtk'
 sel=. {.y,0
 sel=. 0 >. sel <. <:#PLOTNAMES
 cmd=. ". 'D',sel pick PLOTNAMES

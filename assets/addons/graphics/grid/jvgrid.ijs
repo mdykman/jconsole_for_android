@@ -1,5 +1,5 @@
 coclass 'jvgrid'
-coinsert 'jzgrid'
+coinsert 'jzgrid jgl2'
 DATANAME=: ''
 GRIDVIRTUALMODE=: 1
 HDRCOL=: 0

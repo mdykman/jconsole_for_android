@@ -1,5 +1,5 @@
 coclass 'jdgrid'
-coinsert 'jzgrid'
+coinsert 'jzgrid jgl2'
 
 DFLIP=: 0
 HDRCOL2=: ''

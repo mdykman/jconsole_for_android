@@ -1,5 +1,5 @@
 
-require 'gui/gtkwd/wdjview'
+require 'gtkwd gui/gtkwd/jview'
 
 load '~addons/demos/wd/citycalc.ijs'
 load '~addons/demos/wd/citywp.ijs'

@@ -16,9 +16,14 @@ Tags
 UserDict
 Editor
 Editor_nox
+GL2Backend
+GL2ExtGlcmds
+GTKVER
+RGBSEQ
 )
 
 cbname=: {.~ i.&' ' <. i.&'='
+foldernub=: #~ [: ~:&.|. {."1
 
 NB. =========================================================
 cpath=: 3 : 0
@@ -85,8 +90,8 @@ ids=. ndx {.each dat
 pts=. jpath each filecase each (ndx+1) }. each dat
 uf=. ids,.pts
 msk=. (=tolower) {.&>ids
-SystemFolders_j_=: SystemFolders,msk#uf
-UserFolders_j_=: (-.msk)#uf
+SystemFolders_j_=: foldernub SystemFolders,msk#uf
+UserFolders_j_=: foldernub (-.msk)#uf
 SystemFolders_j_=: cpath SystemFolders_j_
 UserFolders_j_=: cpath UserFolders_j_
 EMPTY

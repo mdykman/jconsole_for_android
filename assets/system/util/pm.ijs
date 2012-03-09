@@ -1,10 +1,10 @@
 coclass 'jpm'
 
-SIZE=: 1e7                
-SCREENGLOBALS=: 0         
-unpack=: 6!:11            
-counter=: 6!:12           
-stats=: 6!:13             
+SIZE=: 1e7
+SCREENGLOBALS=: 0
+unpack=: 6!:11
+counter=: 6!:12
+stats=: 6!:13
 start=: 3 : 0
 '' start y
 :
@@ -15,7 +15,7 @@ if. (0 < #y) *: 2 = 3!:0 y do.
 end.
 ([ [: (6!:12) 1:) x 6!:10 y
 )
-stop=: 6!:10 bind ($0)     
+stop=: 6!:10 bind ($0)
 reset=: 3 : 0
 4!:55 <'PMTESTDATA'
 PM=: $0
@@ -31,7 +31,7 @@ bracket=: ('['"_ , ": , '] '"_) each
 dab=: -. & ' '
 firstones=: > (0: , }:)
 groupndx=: 4 : '<: (#x) }. (+/\r<#x) /: r=. /: x,y'
-info=: wdinfo @ ('Performance Monitor'&;)
+info=: mbinfo @ ('Performance Monitor'&;)
 lastones=: > (}. , 0:)
 maskdef=: [: * [: +/\ _1&= - 0: , }:@:(_2&=)
 nolocale=: (i.&'_') {. ]
@@ -103,7 +103,7 @@ if. x do.
   n ,. }."1 (j. x) ": ,. 1 || y
 end.
 )
-SCALE=: 1 1   
+SCALE=: 1 1
 
 timeformat=: 6 & ffmt
 TIMETEXT=: ' Time (seconds)'
@@ -321,7 +321,7 @@ if. '_' ~: {:name do. name,'_',loc,'_' else. name end.
 getnames=: 4 : 0
 
 'nms lcs j'=. |: PMDECODE #: x
-xjp=. lcs ~: PMLOCALES i. <'jpm'         
+xjp=. lcs ~: PMLOCALES i. <'jpm'
 
 if. 0=#y do. xjp return. end.
 
@@ -635,7 +635,7 @@ if. 0 = #ndx do. a: return. end.
 ndx=. ndx - 2 | ndx
 nub=. ~. ndx
 
-rms=. nub getnames y  
+rms=. nub getnames y
 req=. rms#nub
 'all her rep'=. t gettotals ndx;lns;dat;nub;rms
 
@@ -805,7 +805,7 @@ case. 'dblclick' do.
   end.
   0
 case. do.
-  1  
+  1
 end.
 )
 destroy_jvtot=: 3 : 0
@@ -847,7 +847,7 @@ wd 'pshow'
 getused=: 3 : 0
 if. 0=read '' do. i. 0 0 return. end.
 'nms lcs j'=. |: PMDECODE #: ~. PMNDX
-xjp=. lcs ~: PMLOCALES i. <'jpm'         
+xjp=. lcs ~: PMLOCALES i. <'jpm'
 sort xjp # (nms { PMNAMES) ,. lcs { PMLOCALES
 )
 getnotused=: 3 : 0

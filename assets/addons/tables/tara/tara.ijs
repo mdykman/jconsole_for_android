@@ -3495,19 +3495,10 @@ end.
 stream=. ('Workbook' ; '' ; '') conew 'oleppsfile'
 append__stream olehead
 append__stream olesheet
-
-NB. hardwire summary info
-stream1=. (((5{a.),'SummaryInformation') ; '' ; '') conew 'oleppsfile'
-append__stream1 a.{~ 254 255 0 0 4 10 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 224 133 159 242 249 79 104 16 171 145 8 0 43 39 179 217 48 0 0 0 24 0 0 0 1 0 0 0 1 0 0 0 16 0 0 0 2 0 0 0 228 4 0 0
-stream2=. (((5{a.),'DocumentSummaryInformation') ; '' ; '') conew 'oleppsfile'
-append__stream2 a.{~ 254 255 0 0 4 10 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 2 213 205 213 156 46 27 16 147 151 8 0 43 44 249 174 48 0 0 0 24 0 0 0 1 0 0 0 1 0 0 0 16 0 0 0 2 0 0 0 228 4 0 0
-
-root=. (0 ; 0 ; <stream1,stream2,stream) conew 'oleppsroot'
+root=. (0 ; 0 ; <stream) conew 'oleppsroot'
 rc=. save__root fn ; 0 ; ''
 destroy__root ''
 destroy__stream ''
-destroy__stream1 ''
-destroy__stream2 ''
 rc
 )
 

@@ -1,8 +1,12 @@
 NB. built from project: ~Source/examples/unicode/unicode
 NB. init
 
+require 'gtkwd gui/gtkwd/jview gl2'
+
+GTKOUTPUT_jzplot_=: 'gtk'
+CONSOLEOUTPUT_jzplot_=: 'gtk'
+
 require 'jzgrid plot'
-require 'gui/gtkwd/wdjview'
 
 coclass 'judemo'
 
@@ -89,7 +93,7 @@ pc unicode;pn "Unicode Demo";
 xywh 8 9 258 34;cc notes static rightmove;cn "";
 xywh 195 46 70 12;cc viewsource button leftmove rightmove;cn "View Source";
 xywh 3 62 265 5;cc sb staticbox ss_etchedhorz rightmove;
-xywh 9 72 174 14;cc edit edit rightmove;
+xywh 9 72 174 14;cc edit0 edit rightmove;
 xywh 9 91 174 86;cc grid isigraph rightmove bottomscale;
 xywh 8 182 258 110;cc plot isigraph ws_border topscale rightmove bottommove;
 xywh 195 75 70 12;cc ok button leftmove rightmove;cn "";
@@ -105,13 +109,15 @@ wd UNIDEMO
 wd 'set notes *',NOTES
 PForm=: 'unicode'
 PFormhwnd=: wd'qhwndp'
-wd 'pshow;'
+wd^:(-.IFJ6) 'pshow;pshow sw_hide'
 grid=: '' conew 'jzgrid'
 plot=: '' conew 'jzplot'
 PForm__plot=: 'unicode'
 PFormhwnd__plot=: wd 'qhwndp'
 PId__plot=: 'plot'
 show''
+wd 'pshow;'
+wdloop^:(-.IFJ6)''
 )
 
 NB. =========================================================
@@ -123,7 +129,7 @@ show''
 
 NB. =========================================================
 unicode_viewsource_button=: 3 : 0
-fview jpath '~addons/demo/wd/unicode.ijs'
+fview jpath '~addons/demos/wd/unicode.ijs'
 )
 
 NB. =========================================================
@@ -133,15 +139,17 @@ wdinfo 'Unicode';ALLNOTES
 
 NB. =========================================================
 read=: 3 : 0
-EDITTEXTS=: (<edit) IFUNICODE } EDITTEXTS
+EDITTEXTS=: (<edit0) IFUNICODE } EDITTEXTS
 )
 
 NB. =========================================================
 show=: 3 : 0
 setdata''
+glsel_jgl2_ 'grid'
 unicode_grid_paint''
+glsel_jgl2_ 'plot'
 unicode_plot_paint''
-wd 'set edit *',IFUNICODE pick EDITTEXTS
+wd 'set edit0 *',IFUNICODE pick EDITTEXTS
 wd 'setcaption ok *',OK
 wd 'setcaption cancel *',CLOSE
 wd 'setcaption toggle *',TOGGLE

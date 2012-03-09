@@ -3,6 +3,8 @@ NB. GUI for DE example
 NB. http://www.icsi.berkeley.edu/~storn/code.html
 
 require 'gtkwd'
+GTKOUTPUT_jzplot_=: 'gtk'
+CONSOLEOUTPUT_jzplot_=: 'gtk'
 
 require 'plot strings'
 require 'math/deoptim'
@@ -103,6 +105,7 @@ create=: 3 : 0
   PForm__deplot=: 'myplot'
   PFormhwnd__deplot=: wd 'qhwndp'
   PId__deplot=: 'deplot'
+  wdloop^:(-.IFJ6)''
 )
 
 destroy=: 3 : 0

@@ -84,3 +84,6 @@ ide/gtk - change history
 
 == 1.0.77 ==
  * ide/gtk: qualify spwan and fork
+
+== 1.0.78 ==
+ * ide/gtk: add gtkMainLoop

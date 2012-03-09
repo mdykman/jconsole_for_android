@@ -1,6 +1,6 @@
 NB. illustrates events in J
 
-require 'gl2 numeric trig gui/gtkwd/wdjview'
+require 'gtkwd gl2 numeric trig gui/gtkwd/jview'
 coclass 'jevents'
 coinsert 'jgl2'
 
@@ -120,6 +120,7 @@ wd 'pshow;'
 events_isigraph''
 
 if. IFWINCE do. wceview 'Events';'';TEXT;1 end.
+wdloop^:(-.IFJ6)''
 )
 
 NB. =========================================================

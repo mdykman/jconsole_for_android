@@ -62,19 +62,20 @@ sep2under=: '/' & (I.@('_' = ])})
 termLF=: , (0 < #) # LF -. {:
 todel=: ; @: (DEL&, @ (,&(DEL,' ')) each)
 tolist=: }. @ ; @: (LF&,@,@":each)
+isjpkgout=: ((4 = {:) *. 2 = #)@$ *. 1 = L.
 getintro=: ('...' ,~ -&3@[ {. ])^:(<#)
 info=: smoutput
 getnames=: 3 : 0
   select. L.y
-  case. 0 do.                        
-    if. +/ BASELIB E. y do.          
+  case. 0 do.
+    if. +/ BASELIB E. y do.
       y=. (<BASELIB), cutnames y rplc BASELIB;''
     else.
       y=. cutnames y
     end.
   case. 1 do.
-    if. 2 = #$y  do.                 
-      y=. {."1 y                     
+    if. 2 = #$y  do.
+      y=. {."1 y
     else.
       y=. ,y
     end.
@@ -446,9 +447,6 @@ readconfig=: 3 : 0
 ReadCatalog=: 2
 0!:0 :: ] <PACMANCFG
 )
-
-load ^:(IFDEF'android') '~system/util/android.ijs'
-
 httpget=: 3 : 0
 'f t'=. 2 {. (boxxopen y),a:
 n=. f #~ -. +./\. f e. '=/'
@@ -459,20 +457,7 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  if. IFDEF'android' do.
-   rr=. f anddf_z_ p
-   if. rr < 0 do.
-     msg=.'anddf_z_ returns ',rr
-     log 'Download failed: ',msg
-     info 'Download failed:',LF2,msg
-     ferase p
-     r=. 1;msg
-   else.
-     r=. 0;'downloaded: ', f, ' to ', p
-   end.
-  else.
-    e=. shellcmd cmd
-  end.
+  e=. shellcmd cmd
 catch. fail=. 1 end.
 if. fail +. 0 >: fsize p do.
   if. _1-:msg=. freads q do.
@@ -512,7 +497,7 @@ install_console=: 3 : 0
   if. -. init_console 'server' do. '' return. end.
   pkgs=. getnames y
   if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
-  pkgs=. pkgs (e. # [) ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA  
+  pkgs=. pkgs (e. # [) ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
   if. 0 = num=. #pkgs do. '' return. end.
   many=. 1 < num
   msg=. 'Installing ',(":num),' package',many#'s'
@@ -527,7 +512,7 @@ upgrade_console=: 3 : 0
   if. -. init_console 'read' do. '' return. end.
   pkgs=. getnames y
   if. (0=#pkgs) +. pkgs -: ,<'all' do. pkgs=. 1{"1 PKGDATA end.
-  pkgs=. pkgs (e. # [) (pkgups # 1&{"1@])PKGDATA 
+  pkgs=. pkgs (e. # [) (pkgups # 1&{"1@])PKGDATA
   install_console pkgs
 )
 installdo=: 3 : 0
@@ -614,17 +599,20 @@ show_console=: 4 : 0
     if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
     res=. (msk=. pkgshow pkgs) # 5 {"1 PKGDATA
     if. #res do.
-      res=. ,((<'== '), &.> msk # 1 {"1 PKGDATA) ,. res      
-      res=. (2#LF) joinstring (70&foldtext)&.> res 
+      res=. ,((<'== '), &.> msk # 1 {"1 PKGDATA) ,. res
+      res=. (2#LF) joinstring (70&foldtext)&.> res
     end.
   case. 'showinstalled' do.
-    res=. (-.@pkgnew # 1 2 3 4&{"1@])PKGDATA
+    dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
+    res=. (-.@pkgnew # ])dat
     res=. curtailcaption res
   case. 'shownotinstalled' do.
-    res=. (pkgnew # 1 3 4&{"1@])PKGDATA
+    dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
+    res=. (pkgnew # 0 2 3&{"1@])dat
     res=. curtailcaption res
   case. 'showupgrade' do.
-    res=. (pkgups # 1 2 3 4&{"1@])PKGDATA
+    dat=. (isjpkgout y) {:: (1 2 3 4 {"1 PKGDATA);<y
+    res=. (pkgups # ])dat
     res=. curtailcaption res
   case. 'status' do.
     res=. checklastupdate''
@@ -635,13 +623,13 @@ show_console=: 4 : 0
 showfiles_console=: 4 : 0
   if. -. init_console 'read' do. '' return. end.
   pkgs=. getnames y
-  pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA  
-  pkgs=. pkgs -. <BASELIB                             
+  pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA
+  pkgs=. pkgs -. <BASELIB
   if. 0=#pkgs do. '' return. end.
   fn=. (<'~addons/') ,&.> (pkgs) ,&.> <'/',x,(x-:'history'){::'.ijs';'.txt'
   res=. res #~ msk=. (<_1) ~: res=. fread@jpath &.> fn
   if. #res do.
-    res=. ,((<'== '), &.> msk#pkgs) ,. res      
+    res=. ,((<'== '), &.> msk#pkgs) ,. res
     res=. (2#LF) joinstring res
   end.
 )
@@ -649,8 +637,8 @@ remove_console=: 3 : 0
   if. -. init_console 'edit' do. '' return. end.
   pkgs=. getnames y
   if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
-  pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA  
-  pkgs=. pkgs -. <BASELIB 
+  pkgs=. pkgs (e. # [) (-.@pkgnew # 1&{"1@]) PKGDATA
+  pkgs=. pkgs -. <BASELIB
   if. 0 = num=. #pkgs do. '' return. end.
   many=. 1 < num
   msg=. 'Removing ',(":num),' package',many#'s'
@@ -666,8 +654,8 @@ remove_addon=: 3 : 0
   log 'Removing ',y,'...'
   treepath=. jpath '~addons/',y
   if. ((0 < #@dirtree) *. -.@deltree) treepath do.
-    nf=. #dirtree treepath  
-    nd=. <: # dirpath treepath 
+    nf=. #dirtree treepath
+    nd=. <: # dirpath treepath
     nd=. nd + (tolower treepath) e. dirpath jpath '~addons/', '/' taketo y
     msg=. (":nd),' directories and ',(":nf),' files not removed.'
     log 'Remove failed: ',msg
@@ -694,8 +682,8 @@ remove_labs=: 3 : 0
   txt=. txt #~ (<jpathsep y) ~: (#y)&{. each txt
   ADDLABS=: ; txt ,each LF
 )
-LOG=: 1 
-LOGMAX=: 100 
+LOG=: 1
+LOGMAX=: 100
 log=: 3 : 0
 if. LOG do. smoutput y end.
 )
@@ -808,17 +796,19 @@ masklib=: 3 : 0
 (1 {"1 y) = <BASELIB
 )
 pkglater=: 3 : 0
-if. 0=#PKGDATA do. $0 return. end.
-loc=. fixvers > 2 {"1 PKGDATA
-srv=. fixvers > 3 {"1 PKGDATA
+dat=. (s=.isjpkgout y){:: PKGDATA;<y
+if. 0=#dat do. $0 return. end.
+loc=. fixvers > (2-s) {"1 dat
+srv=. fixvers > (3-s) {"1 dat
 {."1 /:"2 srv ,:"1 loc
 )
 pkgnew=: 3 : 0
-0 = # &> 2 {"1 PKGDATA
+dat=. (s=.isjpkgout y){:: PKGDATA;<y
+if. 0=#dat do. $0 return. end.
+0 = # &> (2-s) {"1 dat
 )
-pkgups=: 3 : 0
-(pkgnew'') < pkglater''
-)
+pkgups=: pkgnew < pkglater
+
 pkgsearch=: 3 : 0
   +./"1 +./ y E."1&>"(0 _) 1{"1 PKGDATA
 )
@@ -876,7 +866,7 @@ init_console=: 3 : 0
     readlocal''
     pacman_init ''
     res=. 1
-  case. do. res=. 0  
+  case. do. res=. 0
   end.
   if. y -: 'server' do. res=. getserver''  end.
   res
@@ -896,7 +886,7 @@ jpkg=: 4 : 0
     x show_console y
   case. 'update'  do.
     updatejal ''
-  case. 'upgrade' do.  
+  case. 'upgrade' do.
     upgrade_console y
   case. do.
     msg=. 'Valid options are:',LF
@@ -913,3 +903,4 @@ jpkg_z_=: 3 : 0
   destroy__a''
   res
 )
+jpkgv_z_=: (<@:>"1@|:^:(0 ~: #))@jpkg

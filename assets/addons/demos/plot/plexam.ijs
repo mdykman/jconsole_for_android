@@ -1,6 +1,6 @@
 NB. Plot examples
 
-coclass 'jdplot'
+coclass 'jdplotgtk'
 
 NB. include definitions from math/misc/trig
 rfd=: *&(1p1%180)
@@ -8,6 +8,15 @@ sin=: 1&o.
 cos=: 2&o.
 sind=: sin @ rfd
 cosd=: cos @ rfd
+
+NB. include from color
+hue=: 4 : 0
+y=. y*<:#x
+b=. x {~ <.y
+t=. x {~ >.y
+k=. y-<.y
+(t*k)+b*-.k
+)
 
 0!:0 <jpath '~Demos/plot/pldata.ijs'
 DATHILO=: }. 'm' fread jpath '~Demos/plot/dm0396.txt'

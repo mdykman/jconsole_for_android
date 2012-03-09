@@ -47,7 +47,7 @@ glpolygon_jgl2_ y
 )
 grgb=: 3 : 0
 clr=. y
-if. 1=#clr do. clr=. |.^:RGBSEQ_jgl2_ 256 256 256 #: {.clr end.
+if. 1=#clr do. clr=. 1 BGR`RGB@.RGBSEQ_j_ {.clr end.
 glrgb_jgl2_ clr
 )
 gscale=: 500&* @ >:

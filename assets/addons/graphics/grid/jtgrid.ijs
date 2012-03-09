@@ -1,5 +1,5 @@
 coclass 'jtgrid'
-coinsert 'jzgrid'
+coinsert 'jzgrid jgl2'
 
 CELLEDIT=: 0
 CELLRANGE=: 100 100

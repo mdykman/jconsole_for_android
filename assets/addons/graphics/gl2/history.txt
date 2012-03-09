@@ -44,3 +44,21 @@ graphics/gl2 - change history
 
 == 1.0.19/20 ==
  * gl2: gtkwd printing
+
+== 1.0.21 ==
+ * gl2: decommit gtk pixmap ,gdiplus backends
+
+== 1.0.22 ==
+ * gl2: glqhandles
+
+== 1.0.23/26 ==
+ * gl2: swap glpaint and glpaintx to agree with J504
+ * gl2: glcmds binary
+
+== 1.0.27 ==
+ * gl2: gl2 cmds buffer
+
+== 1.0.28/31 ==
+ * gl2: glcmds binary
+ * gl2: RGBSEQ
+ * gl2: FIXFONT,PROFONT

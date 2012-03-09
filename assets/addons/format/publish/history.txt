@@ -1,6 +1,6 @@
 format/publish - change history
 
-== 1.0.8 ==
+== 1.0.8/9 ==
  * j701
 
 == 1.0.5-7 ==

@@ -40,7 +40,7 @@ public class JConsoleApp extends Application {
 	protected Map<String,Intent> intentMap = new HashMap<String, Intent>();
 	
 	protected java.util.List<String> history = new LinkedList<String>();
-	protected final String tempDir = "user/temp";
+	protected final String tempDir = "j701-user/temp";
 	protected File root;
 	protected File currentLocalDir;
 	protected File currentExternDir = new File("/sdcard");
@@ -208,14 +208,15 @@ public class JConsoleApp extends Application {
 		context.startActivity(intent);
 	}
 
-	private void _saveas(final FileEdit fe,final File f) 
+	private void _saveas(Activity _activity, final FileEdit fe,final File f) 
 		throws IOException {
+		
 		fe.setTextChanged(true);
 		fe.save(f);
-		activity.setTitle(fe.createTitle());
+		_activity.setTitle(fe.createTitle());
 	}
 	
-	public void saveAs(final FileEdit fe,final File f) throws IOException {
+	public void saveAs(final Activity _activity,final FileEdit fe,final File f) throws IOException {
 		
 		if(f.exists()) {
 			AlertDialog.Builder builder= new AlertDialog.Builder(activity);
@@ -223,7 +224,7 @@ public class JConsoleApp extends Application {
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					try {
-						_saveas(fe,f);
+						_saveas(_activity,fe,f);
 					} catch(IOException e) {
 						Toast.makeText(activity, "there was an error overwriting file " + 
 								f.getName() +  ":" + e.getLocalizedMessage(),Toast.LENGTH_LONG);
@@ -237,7 +238,7 @@ public class JConsoleApp extends Application {
 				}
 			});
 		} else {
-			_saveas(fe,f);
+			_saveas(_activity,fe,f);
 		}
 	}
 	
@@ -520,6 +521,10 @@ public class JConsoleApp extends Application {
 			this.context = context;
 		}
 		
+		@Override
+		protected void onPreExecute() {
+			consoleOutput(JInterface.MTYOFM, "Android will start your default browser when the server is ready.");
+		}
 		@Override
 		protected String doInBackground(String... params) {
 			boolean loop = true;

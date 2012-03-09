@@ -1,15 +1,10 @@
 NB. Thu 01 Dec 2011 04:39:47 TABULA scientific calculator topend
 NB. based on JWD gui: j7 not supported
 
-3 : 0''
-if. IFJ6 do.
-  require 'strings'	NB. for: rplc
-  require 'gl2'		NB. load gl2 definitions in jgl2 locale
-else.
-  require 'gui/gtkwd'	NB. for: wd
-end.
-''
-)
+require 'gtkwd'	NB. for: J7 wd
+require 'strings'	NB. for: rplc
+require 'gl2'		NB. load gl2 definitions in jgl2 locale
+
 coclass 'tab'
 coinsert'jgl2'		NB. allows use of gl2 verbs unlocalised
 
@@ -517,6 +512,10 @@ convert=: convert_uu_
 convicon=: 3 : 0
 	NB. convert char-represented pixel to rgb num
 z=. 0 16bff0000 16bffff00 16b00ff00 16b0000ff 16b3c90fc 16b8e530f 16b9500fc 16ba9a9a9 16be6e6e6 16bffffff
+if. -.IFJ6 do.
+NB. flip if 255 is red
+  z=. fliprgb^:(-.RGBSEQ_j_) z
+end.
 z{~ '=rygbaMv.;' i. y -. LF
 )
 
@@ -1136,9 +1135,14 @@ print=: 3 : 0
 	NB. Print the ttable
 	NB. (For now: simply create an IJS window)
 z=. tabengine 'TFIL'
-z=. z,LF,LF,LF
-z=. z,tabengine 'CTBU'
-ijsstr z
+if. IFJ6 do.
+  z=. z,LF,LF,LF
+  z=. z,tabengine 'CTBU'
+  ijsstr z
+else.
+  require 'graphics/print'
+  if.''-.@-: wd 'mbprinter' do. print_jprint_ z end.
+end.
 )
 
 putpanel=: 3 : 0
@@ -1427,7 +1431,7 @@ if. coldstart do.
 	inf_run''
 	wd 'creategroup'
 	wd 'setshow ttable 1'
-wd 'pshow'
+  wd^:(-.IFJ6) 'pshow;pshow sw_hide'
 end.
 calco=: ''	NB. used by: calcmd...
 sess 'start_tab_: init the form'
@@ -1435,13 +1439,15 @@ paneL0'' [panel_select=: ,'1'
 setpreci 3	NB. set precision in dropdown
 setunits 0
 winpos''	NB. restore saved window position,size
-wd 'pshow'
+wd^:(-.IFJ6) 'pshow;pshow sw_hide'
 wd 'pn "Tabula"'
 	NB. Define toolbar buttons ...
 toolbar_make''
 	NB. Finish off ...
 sess 'start_tab_: completed'
 empty inputfocus''
+wd 'pshow'
+wdloop^:(-.IFJ6)''
 )
 
 stept=: 3 : 0

@@ -21,6 +21,10 @@ public class EditActivity extends AbstractActivity {
 	FileEdit editor;
 	File file;
 	boolean textChanged = false;
+	
+	public void setFile(File f) {
+		this.file = f;
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,13 +76,6 @@ public class EditActivity extends AbstractActivity {
 		}
 	}
 
-	public String buildTitle(File f)  throws IOException {
-		String title =  filePath(f.getCanonicalPath());
-		if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") || title.equals("/sdcard")) {
-			title = "/";
-		}
-		return (theApp.isLocalFile() ? "local: " : "sdcard: ") + title;
-	}
 
 	protected FileEdit getEditor() {
 		return editor;
@@ -111,7 +108,9 @@ public class EditActivity extends AbstractActivity {
 
 	public void save() {
 		try {
+			
 			editor.save(file);
+//			setTitle(buildTitle(file));
 		} catch (IOException e) {
 			Log.e(JConsoleApp.LogTag,"error saving file " + file.getName(),e);
 			Toast.makeText(this, "error saving file " + file.getName() 

@@ -62,8 +62,8 @@ noun \define
 )
 findfor=: 'for_'&-: @ (4&{.) *. ('.'&=) @ {:
 info=: mbinfo @ ('Lint'&;)
-lastones=: > (}. , 0:)  
-tolist=: }.@;@:(LF&,@,@":&.>) 
+lastones=: > (}. , 0:)
+tolist=: }.@;@:(LF&,@,@":&.>)
 findcontrols=: (1: e. (CONTS"_ (1: e. E.) &> <)) &>
 firstones=: > (0 , }:)
 maskselectside=: +./\ *. +./\.
@@ -367,7 +367,7 @@ case. 'try.' do.
   b=. (1 e. dat e. c) *. 0 = +/ dat e. CONTROLM -. c
 case. 'while.';'whilst.' do.
   b=. (1 = +/ dat = <'do.') *. 0 = +/ dat e. CONTROLM -. <'do.'
-case. do. 
+case. do.
   b=. 1 = +/ dat = <'do.'
   b=. b *. 0 = +/ dat e. CONTROLM -. <'do.'
 end.

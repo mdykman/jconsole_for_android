@@ -100,3 +100,14 @@ gui/gtk - change history
 == 1.0.88/89 ==
  * gui/gtk: print api
  * gui/gtk: pango api
+
+== 1.0.90/92 ==
+ * gui/gtk: add api
+ * gui/gtk: swap glpaint glpaintx
+ * gui/gtk: add gtkMainLoop
+
+== 1.0.93 ==
+ * gui/gtk: getimg writeimg putimg
+
+== 1.0.94/96 ==
+ * gui/gtk: RGBSEQ

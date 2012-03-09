@@ -11,11 +11,10 @@ require 'dll strings libpath'
 coclass 'psqlite'
 
 ADDONDIR=: jpath '~addons/data/sqlite/'
-
 3 : 0 ''
   if. IFWIN do. LIBSQLITE=: jpathsep ADDONDIR,'lib/sqlite3.dll'
-            elseif. UNAME-:'Linux' do. LIBSQLITE=: > (IFDEF'android') { 'libsqlite3.so.0';'libsqlite.so'
-            elseif. do. LIBSQLITE=: find_dll 'sqlite3' end.
+  elseif. UNAME-:'Linux' do. LIBSQLITE=: > (IFDEF'android') { 'libsqlite3.so.0';'libsqlite.so'
+  elseif. do. LIBSQLITE=: find_dll 'sqlite3' end.
 )
 
 cdsq=: 1 : '(deb ''"'',LIBSQLITE,''" '',m)&cd'

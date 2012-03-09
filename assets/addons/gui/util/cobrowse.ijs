@@ -9,16 +9,8 @@ NB.   load 'gui/util/cobrowse'
 NB.
 NB. 03/21/2007 Oleg Kobchenko
 
-require 'gtkwd'
+require 'gtkwd jzgrid coutil scriptdoc strings'
 
-3 : 0''
-if. IFJ6 do.
-require 'jzgrid coutil scriptdoc strings'
-else.
-require 'jzgrid coutil general/scriptdoc strings'
-end.
-''
-)
 coclass 'pcobrowse'
 
 F=: 0 : 0
@@ -46,14 +38,11 @@ rem form end;
 
 TITLE=: 'Class Browser'
 TYPES=: ;:'Noun Adverb Conj Verb All'
-
 create=: 3 : 0
   wd F rplc 'TOOLBAR';jpath IFJ6{::'~addons/gui/util/isitbar8.bmp';'~system/examples/data/isitbar8.bmp'
   wd 'pn *',TITLE
-  if. IFJ6 do.
   wd 'setfont eview ',FIXFONT
-  end.
-  wd 'pshow;'
+  wd^:(-.IFJ6) 'pshow;pshow sw_hide'
   
   makegrid 'gloc'
   HDRCOL__gloc=: <'Locales'
@@ -79,6 +68,8 @@ create=: 3 : 0
   ginst_update ''
   gname_update ''
   wd 'setfocus gloc'
+  wd 'pshow;'
+  wdloop^:(-.IFJ6)''
 )
 
 destroy=: 3 : 0

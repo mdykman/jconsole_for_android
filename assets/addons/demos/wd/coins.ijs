@@ -1,6 +1,6 @@
 NB. init
 
-require 'gl2 gui/gtkwd/wdjview'
+require 'gl2 gui/gtkwd/jview'
 
 coclass 'jcoins'
 
@@ -509,8 +509,10 @@ coin_run=: 3 : 0
 DONE=: 0
 wd COIN
 setparentname''
-wd 'pshow;'
+wd^:(-.IFJ6) 'pshow;pshow sw_hide'
 paint''
+wd 'pshow;'
+wdloop^:(-.IFJ6)''
 )
 
 NB. =========================================================

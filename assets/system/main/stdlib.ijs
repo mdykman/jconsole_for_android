@@ -1,10 +1,9 @@
 18!:4 <'z'
-
-IFDEF_z_=: 3 : '0=4!:0<''DEF'',y,''_z_'''
-
 3 : 0 ''
 
+
 notdef=. 0: ~: 4!:0 @ <
+IFDEF=: 3 : '0=4!:0<''DEF'',y,''_z_'''
 hostpathsep=: ('/\'{~6=9!:12'')&(I. @ (e.&'/\')@] })
 jpathsep=: '/'&(('\' I.@:= ])})
 winpathsep=: '\'&(('/' I.@:= ])})
@@ -14,7 +13,7 @@ IF64=: 16={:$3!:3[2
 IFGTK=: IFJHS=: IFBROADWAY=: 0
 IFJ6=: 0
 IFWINE=: IFWIN > 0-:2!:5'_'
-if. IF64 +. IFDEF'android' do.
+if. IF64 do.
   IFWOW64=: 0
 else.
   if. IFUNIX do.
@@ -24,7 +23,7 @@ else.
   end.
 end.
 if. IFDEF'android' do.
-  UNAME=: 'Linux'
+  UNAME=:'Linux'
 elseif. IFUNIX do.
   UNAME=: (2!:0 'uname')-.10{a.
 elseif. do.
@@ -33,8 +32,7 @@ end.
 )
 jcwdpath=: (1!:43@(0&$),])@jpathsep@((*@# # '/'"_),])
 jsystemdefs=: 3 : 0
-xuname=. > (IFDEF'android') { UNAME;'Android'
-0!:0 <jpath '~system/defs/',y,'_',(tolower xuname),(IF64#'_64'),'.ijs'
+0!:0 <jpath '~system/defs/',y,'_',(tolower UNAME),(IF64#'_64'),'.ijs'
 )
 18!:4 <'z'
 'TAB LF FF CR DEL EAV'=: 9 10 12 13 127 255{a.
@@ -52,6 +50,12 @@ each=: &.>
 echo=: 0 0&$ @ (1!:2&2)
 exit=: 2!:55
 every=: &>
+fliprgb=: 3 : 0
+s=. $y
+d=. ((#y),4)$2 (3!:4) y=. <.,y
+d=. 2 1 0 3{"1 d
+s$_2(3!:4),d
+)
 getargs=: 3 : 0
 ARGV getargs y
 :
@@ -63,8 +67,7 @@ getenv=: 2!:5
 inv=: inverse=: ^:_1
 3 : 0''
 if. 'Linux'-:UNAME do.
-  llib=. > (IFDEF'android'){'libc.so.6';'libc.so'
-  isatty=: (llib , ' isatty > i i') & (15!:0)
+  isatty=: 'libc.so.6 isatty > i i' & (15!:0)
 elseif. 'Darwin'-:UNAME do.
   isatty=: 'libc.dylib isatty > i i' & (15!:0)
 elseif. do.
@@ -180,8 +183,7 @@ type=: {&t@(2&+)@(4!:0)&boxopen
 ucp=: 7&u:
 ucpcount=: # @ (7&u:)
 3 : 0''
-llib=.>(IFDEF'android'){'libc.so.6';'libc.so'
-if. 'Linux'-:UNAME do. usleep=: 3 : '(llib,'' usleep > i i'')&(15!:0) >.y'
+if. 'Linux'-:UNAME do. usleep=: 3 : '''libc.so.6 usleep > i i''&(15!:0) >.y'
 elseif. 'Darwin'-:UNAME do. usleep=: 3 : '''libc.dylib usleep > i i''&(15!:0) >.y'
 elseif. do. usleep=: 3 : '0: ''kernel32 Sleep > n i''&(15!:0) >.y % 1000'
 end.
@@ -341,30 +343,6 @@ Endian=: |.^:('a'~:{.2 ic a.i.'a')
 AND=: $:/ : (17 b.)
 OR=: $:/ : (23 b.)
 XOR=: $:/ : (22 b.)
-cocurrent 'z'
-3 : 0 ''
-if. -. (UNAME-:'Darwin')+.(UNAME-:'SunOS') do. DLL_PATH=: '' return. end.
-llp=. 2!:5 'LD_LIBRARY_PATH',~'DY'#~UNAME-:'Darwin'
-if. 0 -: llp do. llp=. '' end.
-def_path=. >(IFDEF'android') { ':/usr/local/lib:/usr/lib:/usr/lib/ccs/lib:/etc/lib:/lib':'/system/lib'
-DLL_PATH=: a: -.~ <;._1 ':',llp,def_path
-)
-find_dll=: 3 : 0
-DLL_PATH find_dll y
-:
-if. UNAME-:'Linux' do. ('find_dll decommitted') 13!:8 ] 24 end.
-if. -.IFUNIX do. y return. end.
-y=. ,y
-if. (UNAME-:'Darwin') do. ext=. '.dylib*' else. ext=. '.so*' end.
-for_dir. x do.
-  l=. (>dir), '/lib', y, ext
-  if. # fns=. \:~ 1!: 0 l do.
-    (>dir), '/', > (<0 0) { fns
-    return.
-  end.
-end.
-('could not locate dll ',y) 13!:8 ] 24
-)
 break=: 3 : 0
 class=. >(0=#y){y;'default'
 p=. 9!:46''
