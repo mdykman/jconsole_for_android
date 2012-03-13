@@ -134,6 +134,7 @@ public class FileEdit extends EditText {
 			out.close();
 			textChanged = false;
 			editActivity.setFile(file);
+			setName(file.getName());
 			editActivity.setTitle(createTitle());
 		}
 	}

@@ -1,4 +1,0 @@
-general/userdict - change history
-
-== 1.0.0 ==
- * publish in JAL

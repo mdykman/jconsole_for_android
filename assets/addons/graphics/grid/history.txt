@@ -1,4 +1,0 @@
-graphics/grid - change history
-
-== 1.0.0/8 ==
- * initial 701 release

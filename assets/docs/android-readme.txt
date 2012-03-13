@@ -21,22 +21,19 @@ Many thanks to Eric Iverson and Jsoftware for providing the source code for the 
 
 To enable the J-specific soft keyboard which is provided with this package, you must go to Settings/Languages and Keyboards to explicitly enable JKeyboard.  Within the console app, long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the newly-enabled JKeyboard.
 
- ** Addons under Android
+ ** Pacman
 
-Pacman (the J package manager) is broken in this release as it depends on the system having wget available.  Even if a binary for wget was bundled or already present on Android, it would be to no avail as non-rooted apps are prohibited from executing binaries, even if they are bundled within the calling application.
-
-As a strategy towards fixing this, two avenues suggest themselves:
-  one could build an HTTP client in J using the socket library.
-  one could bundle libcurl and use J to wrap calls to that.
-
-I am opting for the latter option as it presents the highest likelihood of a stable HTTP client. I expect to bundle libcurl in a near-future release of this package.
-
-As some compensation for this shortcoming, I have bundled all available addons from the current distribution as long as they satisfied basic compatibility criteria: 
-  Any addon which depends on bundled native libraries has been eliminated from this release. Examples of these include math/lapack.ijs and math/fftw.ijs.
-  Any addon which depends on GL or GTK has also been eliminated from this release. See Graphics/GL2 below.
+Pacman works in this released but with a catch.  As android provides me no means of dealing with a tar file, the android console is using .zip files which requires it to 'impersonate' windows during transations.
+There being no binaries for arm-linux currently in the JAL, this works as a short-term solution, but we hope to establish an update archive format specifically for android in the near future. 
 
  ** JHS
- The JHS Server may be launched from the conlse via the menu option Script/Launch JHS.
+ The JHS Server may be launched from the console via the menu option Script/Launch JHS.  
+ 
+ Once JHS has been started, there is no way to revert to console mode without quitting and restarting the app.
+ 
+ The default browser for Android is not very good.  I recommend:
+    Firefox Mobile
+    Opera Mobile (NOT Opera-mini)   
 
  ** Shared Libraries
  The following shared libraries which are known to be referenced by J scripts are provided by Android:

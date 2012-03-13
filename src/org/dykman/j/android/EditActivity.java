@@ -37,9 +37,8 @@ public class EditActivity extends AbstractActivity {
 		file = new File(s);
 		theApp.addFile(file.getAbsolutePath(),getIntent());
 		editor.setName(file.getName());
-		setTitle(file.getName());
 		
-		if((savedInstanceState== null) || ! savedInstanceState.getBoolean("loaded")) {			
+		if((savedInstanceState== null) || ! savedInstanceState.containsKey("editor")) {			
 			try {
 				if(file.exists()) {
 					BufferedReader reader = new BufferedReader(
@@ -50,6 +49,7 @@ public class EditActivity extends AbstractActivity {
 						sb.append(line).append("\n");
 					}
 					editor.setText(sb.toString());
+					editor.textChanged = false;
 				}
 			} catch(IOException e) {
 				editor.setText("The was an error reading the requested file " + s);
@@ -59,9 +59,12 @@ public class EditActivity extends AbstractActivity {
 		if(savedInstanceState != null) {
 			editor.setText 	(savedInstanceState.getCharSequence("editor"));
 			int n = savedInstanceState.getInt("cursor");
+			boolean tc = savedInstanceState.getBoolean("textchanged");
+			editor.textChanged = tc;
 			editor.setSelection(n);
 		}
 
+		setTitle(file.getName());
 	}
 
 	@Override
@@ -124,10 +127,10 @@ public class EditActivity extends AbstractActivity {
 	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		outState.putBoolean("loaded",true);
 		int pos = editor.getSelectionStart();
 		outState.putCharSequence("editor",editor.getText());
 		outState.putInt("cursor",pos);
+		outState.putBoolean("textchanged",textChanged);
 //		outState.putParcelable("console", console);
 	}
 	
@@ -138,11 +141,11 @@ public class EditActivity extends AbstractActivity {
 		outState.putInt("cursor",pos);
 		outState.putBoolean("loaded",true);
 	}
-	*/
 	
 	public void onTextChanged() {
 		
 	}
+	*/
 	protected void runCurrentFile() {
 		try {
 			if(editor.textChanged) {

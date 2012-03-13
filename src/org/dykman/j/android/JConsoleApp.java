@@ -151,7 +151,7 @@ public class JConsoleApp extends Application {
 			ltask.execute(arg);
 		} else {
 			Intent myIntent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse("http://localhost:65001/jijxipad"));
+					Uri.parse(getResources().getString(R.string.jhs_start)));
 				consoleOutput(JInterface.MTYOFM,"launching browser\n");
 				context.startActivity(myIntent);
 		}
@@ -392,11 +392,7 @@ public class JConsoleApp extends Application {
 			installDirectory(base, "docs");
 
 			publishProgress("installing addons");
-			publishProgress("(addons take awhile, please be patient)");
 			installDirectory(base, "addons");			
-			
-			publishProgress("installing test files");
-			installDirectory(base, "test");
 			
 			publishProgress("installation complete");
 
@@ -528,15 +524,11 @@ public class JConsoleApp extends Application {
 		@Override
 		protected String doInBackground(String... params) {
 			boolean loop = true;
-			if(params != null && params.length > 0 && "ready".equals(params[0])) {
-				ready = true;
-				loop = false;
-			}
 			
 			long start = System.currentTimeMillis();
 			publishProgress(0);
 			// try to wait for JHS to start
-			long waitFor = 500;
+			long waitFor = 250;
 			while(loop) {
 				try {
 					if(loop && waitFor > 0) Thread.sleep(waitFor);
@@ -556,7 +548,6 @@ public class JConsoleApp extends Application {
 				} else {
 					publishProgress((int)(ll/100));
 				}
-				waitFor = 250;
 			}
 			return null;
 		}
@@ -564,7 +555,10 @@ public class JConsoleApp extends Application {
 		protected void onPostExecute(String code) {
 			if(ready) {
 				Intent myIntent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse("http://localhost:65001/jijxipad"));
+						Uri.parse(getResources().getString(R.string.jhs_start)));
+							
+							//"http://localhost:65001/jijxipad"));
+				
 				consoleOutput(JInterface.MTYOFM,"launching browser\n");
 				context.startActivity(myIntent);
 			} else {

@@ -9,8 +9,8 @@
  -->
     <org.dykman.j.android.FileEdit xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/edit"
-        android:layout_width="match_parent" 
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent"
         android:autoLink="none"
         android:saveEnabled="true"
         android:freezesText="true"

@@ -160,16 +160,6 @@ public abstract class AbstractActivity extends Activity {
 					ad.dismiss();
 				}
 			});
-			
-			ad.setOnShowListener(new DialogInterface.OnShowListener() {
-				public void onShow(DialogInterface dialog) {
-					int nn = lv.getChildCount();
-					if(nn >0) {
-	//					lv.smoothScrollToPosition(nn-1);
-						lv.setSelection(0);
-					}
-				}
-			});
 		} else {
 			builder.setView(emptyView());
 			myadd = builder.create();
@@ -342,6 +332,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 	}
 
 	public void quit() {
+		super.finish();
 		theApp.stop();		int pid = android.os.Process.myPid();
 		android.os.Process.killProcess(pid);
 	}

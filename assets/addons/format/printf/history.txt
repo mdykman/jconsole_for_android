@@ -1,6 +1,0 @@
-format/printf - change history
-
-== 1.0.1 ==
- * support for 0 flag
- * initial release as addon
-

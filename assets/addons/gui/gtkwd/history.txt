@@ -1,4 +1,0 @@
-gui/gtkwd - change history
-
-== 1.0.0/34 ==
- * initial import

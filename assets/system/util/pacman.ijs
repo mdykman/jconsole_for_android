@@ -138,7 +138,8 @@ siz=. <&> 0 ". (ndx+1) }.&> fls
 fls=. ndx {.each fls
 zps=. <;._2 &> fls ,each '_'
 pfm=. 3 {"1 zps
-msk=. IFUNIX ~: (1 e. 'win'&E.) &> pfm
+msk=. (IFUNIX*.-.IFDEF'android')~: (1 e. 'win'&E.) &> pfm
+NB. msk=. IFUNIX ~: (1 e. 'win'&E.) &> pfm
 msk # zps,.fls,.siz
 )
 fixrev=: 3 : 0
@@ -189,6 +190,7 @@ if. ischar y do. y return. end.
 fmtverlib=: 3 : 0
 fmtver y
 )
+
 fixzips=: 3 : 0
 if. 2 > #y do. i.0 5 return. end.
 fls=. <;._2 y
@@ -206,7 +208,12 @@ select. UNAME
 case. 'Win' do.
   zps=. win # zps
 case. 'Linux' do.
-  zps=. lnx # zps
+  if.(IFDEF'android') do.
+NB. this will have to do for the time being
+    zps=. win # zps
+  else.
+    zps=. lnx # zps
+  end.
 case. 'Darwin' do.
   zps=. (lnx +. mac) # zps
   zps=. zps /: 3 {"1 zps
@@ -292,7 +299,14 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  e=. shellcmd 'tar -xzf ',file,' -C ',dir
+  if. IFDEF'android' do.
+    require '~addons/api/android/android.ijs'
+    'file dir'=. y
+	e=. dir andunzip_droid_ file
+	if. -. e = 0 do. smoutput 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end. 
+  else.
+    e=. shellcmd 'tar -xzf ',file,' -C ',dir
+  end.
 else.
    dir=. (_2&}. , '/' -.~ _2&{.) dir
   e=. shellcmd UNZIP,' ',file,' -d ',dir
@@ -300,7 +314,7 @@ end.
 e
 )
 zipext=: 3 : 0
-y, IFUNIX pick '.zip';'.tar.gz'
+y, (IFUNIX*.-.IFDEF'android')pick '.zip';'.tar.gz'
 )
 CHECKADDONSDIR=: 0 : 0
 The addons directory does not exist and cannot be created.
@@ -458,14 +472,17 @@ fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
   if. IFDEF'android' do.
-    anddf=: 4 : '''libj.so android_download_file i *c *c'' 15!:0 x;y'
-	 rr=.f anddf p
-	 if. rr >: 0 do
+    require '~addons/api/android/android.ijs'
+	rr=.f anddf_droid_ p
+	if. rr >: 0 do.
       r=. 0;p
     else.
-      r=. 1; 'failed to download ',p,'. returned ',": rr
-	 end.
-	 return. r
+      msg=. 'Download failed: ',p,'. returned ',": rr
+      log msg
+      info 'Connection failed:',LF2,msg
+      r=. 1; msg
+	end.
+	return.
   else.
     e=. shellcmd cmd
   end.
@@ -533,6 +550,7 @@ if. 0 e. msk do.
 end.
 install_addon each msk # y
 )
+
 install_addon=: 3 : 0
 ndx=. ({."1 ZIPS) i. <y
 if. ndx = #ZIPS do. EMPTY return. end.
@@ -542,7 +560,6 @@ f=. 3 pick ndx { ZIPS
 if. rc do. return. end.
 log 'Installing ',y,'...'
 msg=. unzip p;jpath'~addons'
-ferase p
 if. 0>:fsize jpath'~addons/',y,'/manifest.ijs' do.
   log 'Extraction failed: ',msg
   info 'Extraction failed:',LF2,msg
@@ -550,6 +567,7 @@ if. 0>:fsize jpath'~addons/',y,'/manifest.ijs' do.
 end.
 install_addins y
 install_config y
+0 0$0
 )
 install_addins=: 3 :0
 fl=. ADDCFG,'addins.txt'

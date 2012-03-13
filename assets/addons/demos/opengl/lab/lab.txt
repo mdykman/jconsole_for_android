@@ -1,4 +1,0 @@
-directory: addons/demos/opengl/lab
-
-This directory contains scripts used in the
-OpenGL lab.

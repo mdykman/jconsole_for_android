@@ -14,5 +14,7 @@
     <string name="learning">http://www.jsoftware.com/help/learning/contents.htm</string>
     <string name="aboutj">docs/aboutj.txt</string>
     <string name="readme">docs/android-readme.txt</string>
+
+    <string name="jhs_start">http://localhost:65001/jijxipad</string>
         
 </resources>

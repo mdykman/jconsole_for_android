@@ -1,2 +1,0 @@
-library_current_7.1.58_win.zip 82260
-library_current_7.1.58_linux.tar.gz 70535

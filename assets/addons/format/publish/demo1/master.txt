@@ -1,5 +1,0 @@
-NB. Publish example
-
-<title>Demo</title>
-<author>Raven Mad</author>
-<include>section1.txt</include>

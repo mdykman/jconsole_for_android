@@ -1,8 +1,6 @@
 package org.dykman.j.android;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,12 +8,9 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.dykman.j.ExecutionListener;
@@ -35,7 +30,6 @@ public class AndroidJInterface extends JInterface {
 	public AndroidJInterface(JConsoleApp theApp) {
 		this.theApp = theApp;
 		runner = new JRunner();
-//		runner.execute(new String[]{});
 	}
 	
 	public void stop() {
@@ -52,6 +46,7 @@ public class AndroidJInterface extends JInterface {
 			thread.interrupt();
 		}
 	}
+	
 	public void addLine(String sentence) {
 		synchronized (commandBuffer) {
 			commandBuffer.addFirst(sentence);
@@ -85,13 +80,14 @@ public class AndroidJInterface extends JInterface {
 	}
 	
 	int downloadFile(String urlS, String fileS) {
-
+Log.d(LOGTAG,"downlloading " + urlS + " to " + fileS);
 		int result = -1;
 		try {
 			URL url = new URL(urlS);
 			
 			HttpGet get = new HttpGet(url.toURI());
-			HttpClient client = new DefaultHttpClient();
+			get.setHeader("User-Agent", "Mozilla/4.0 (compatible;) JConsoleForAndroid");
+			DefaultHttpClient client = new DefaultHttpClient();
 			HttpResponse response = client.execute(get);
 			HttpEntity entity = response.getEntity();
 			InputStream in = null;
@@ -170,11 +166,12 @@ public class AndroidJInterface extends JInterface {
 		}
 		return 0;
 	}
-	
+
+
+
 	class JRunner extends AsyncTask<String, Object, Integer> 
 		implements ExecutionListener, OutputListener {
 		LinkedList<String> cms = new LinkedList<String>();
-		Thread thread;
 		boolean running = true;
 		
 		public void stop() {
@@ -218,65 +215,6 @@ public class AndroidJInterface extends JInterface {
 			}
 			AndroidJInterface.this.removeOutputListener(this);
 			return 0;
-		}
-
-		public int unzip(String fs) {
-			return unzip(fs,null);
-		}
-		
-		public int unzip(String fs, String toDirs) {
-			File f = new File(fs);
-			File dir = toDirs == null || toDirs.length() == 0 ? null : new File(toDirs);
-			return unzip(f,dir);
-		}
-		public int unzip(File f) {
-			return unzip(f,null);
-		}
-		public int unzip(File f, File toDir) {
-			final int BUFFER = 8192;
-			File of = null;
-			ZipInputStream zin = null;
-			int result = 0;
-			try {
-				if(toDir == null) toDir = f.getParentFile();
-				
-				FileInputStream fin = new FileInputStream(f);
-				zin = new ZipInputStream(fin);
-				ZipEntry entry;
-				byte[] buff = new byte[BUFFER];
-				while((entry = zin.getNextEntry())!=null) {
-					of = new File(toDir,entry.getName());
-					of.mkdirs();
-					BufferedOutputStream bout = null;
-					try {
-						FileOutputStream fos = new FileOutputStream(of);
-						bout = new BufferedOutputStream(fos);
-						int n;
-						while((n = zin.read(buff,0,BUFFER)) != -1) {
-							fos.write(buff, 0, n);
-						}
-						bout.flush();
-					} finally {
-						if(bout!=null) {
-							bout.close();
-						}
-					}
-				}
-				zin.close();
-			} catch(IOException e) {
-				Log.e(LOGTAG,"error unzipping file " + f.getName() + ": " + e.getLocalizedMessage(),e);
-				if(of != null) {
-					of.delete();
-				}
-				result = -1;
-			} finally {
-				try {
-					if(zin!=null) zin.close();
-				}catch(Exception e) {
-					
-				}
-			}
-			return result;
 		}
 		
 		public void onCommandComplete(int resultCode) {

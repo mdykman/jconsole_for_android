@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:id="@+id/mainLayout">
-     -->
     <org.dykman.j.android.Console xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ws"
-        android:enabled="false"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:cursorVisible="true"
         android:textSize="16sp"
         android:typeface="monospace"
@@ -27,6 +18,3 @@
         <requestFocus />
 
    </org.dykman.j.android.Console>
-<!-- 
-</LinearLayout>
- -->

@@ -1,8 +1,0 @@
-graphics/jturtle - change history
-
-== 1.0.0 ==
- * addon for j602 copied from packages/misc
-
-== 1.0.1 ==
- * updated for j701
- * lab updated
