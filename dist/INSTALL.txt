@@ -1,0 +1,19 @@
+In order to install this on Android:
+The follwing are instructions which apply to any non-market app.
+
+Your device must be Android 2.1 or greater.
+
+Before installation, go to 
+	Settings -> Applications -> Allow Non-Market Apps; set to on
+
+You will need a file manager app.  If you do not have one, go to the market and get one; anyone will do.
+
+To install: 
+	j-console.apk must first be physically transferred to your device. This may be done with an sdcard or by transferring via USB while the device is attached to your computer. When j-console.apk is on your device and visible to your file manager, click it.  This should initiate the installation.  Once the app is installed, you may safely delete the apk file.
+
+See the README file packaged with the app (via Help->README) for instructions on enabling the softkeyboard.
+
+
+ - michael dykman
+ - mdykman@gmail.com
+ - March 14, 2012, Toronto
