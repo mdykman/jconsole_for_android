@@ -33,3 +33,11 @@ andunzip =: 3 : 0
 :
  >{. 'libj.so java_unzip_file i *c *c' 15!:0 y;x
 )
+
+safeupgrade=: 3 : 0
+require'pacman'
+'update'jpkg_z_''
+'upgrade'jpkg_z_''
+NB. copy pacman back in place
+(1!:1<jpath'~addons/api/android/pacman.ijs')1!:2<jpath'~system/util/pacman.ijs'
+)

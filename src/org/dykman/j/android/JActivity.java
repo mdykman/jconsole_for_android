@@ -71,7 +71,6 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		switch(itemId) {
 			case R.id.clear:   console.clear();                break;
 			case R.id.jbreak:  callBreak();                   break;
-			case R.id.reset:   theApp.reset();                break;
 			default : result = false;
 		}
 		if(!result) {

@@ -271,7 +271,7 @@ public class JConsoleApp extends Application {
 	public boolean hasEditor(String name) {
 		return intentMap.keySet().contains(name);
 	}
-	
+
 	public void callJ(String... sentences) {
 		callJ(sentences,true);
 	}

@@ -85,6 +85,7 @@ public abstract class AbstractActivity extends Activity {
 			case R.id.runc:    runFile();               break;
 			case R.id.vocab:   showHelp(R.string.help_start); break;
 			case R.id.jhs:		theApp.launchJHS(this);		  break;
+			case R.id.upgrade:	updateJ();		  			  break;
 			case R.id.learning: showHelp(R.string.learning);  break;
 			case R.id.readme:  showTextFile(R.string.readme); break;
 			case R.id.aboutj:  showTextFile(R.string.aboutj); break;
@@ -102,9 +103,16 @@ public abstract class AbstractActivity extends Activity {
 		theApp.consoleOutput(JInterface.MTYOFM, line + "\n");
 		theApp.callJ(line);
 	}
+
+	protected void updateJ() {
+		theApp.consoleOutput(JInterface.MTYOFM, "Updating J...\n");
+		theApp.callJ(new String[] {
+				"require '~addons/api/android/android.ijs'",
+				"safeupgrade_droid_''",
+		});
+	}
 	
 	public void requestWindowSelect() {
-		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		ArrayAdapter<String> add = new ArrayAdapter<String>(this,
 				R.layout.list_item, theApp.getWindowsAsArray());
