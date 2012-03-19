@@ -31,6 +31,7 @@
             <item android:id="@+id/learning" android:title="Learning J"  android:orderInCategory="2"/>
             <item android:id="@+id/readme" android:title="Readme"  android:orderInCategory="3"/>
             <item android:id="@+id/aboutj" android:title="About J"  android:orderInCategory="4"/>
-        </menu>
+            <item android:id="@+id/writable" android:title="Make Writable"  android:orderInCategory="5"/>
+            </menu>
     </item>
 </menu>

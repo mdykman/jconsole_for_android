@@ -17,8 +17,6 @@ import android.widget.EditText;
 public class FileEdit extends EditText {
 
 	boolean textChanged = false;
-	int cursorPosition = 0;
-//	File file;
 	String name;
 	protected EditActivity editActivity;
 
@@ -27,26 +25,15 @@ public class FileEdit extends EditText {
 	}
 	public FileEdit(Context context, AttributeSet attrs, int defStyle) {
 		super(context,attrs,defStyle);
-//		this.jActivity = (JActivity)jActivity;
-//		init();
 	}
 	
 	public FileEdit(Context context, AttributeSet attrs) {
 		super(context,attrs);
-//		this.jActivity = (JActivity)jActivity;
-//		init();
 	}
 	
 	public FileEdit(Context jActivity) {
 		super(jActivity);
-//		this.jActivity = (JActivity)jActivity;
-//		init();
 	}
-	/*
-	public File getFile() {
-		return file;
-	}
-	 */
 	public void setName(String s) {
 		Log.d(JConsoleApp.LogTag,"setname: " + s);
 		name =s ;
@@ -63,42 +50,14 @@ public class FileEdit extends EditText {
 		return sb.substring(start + 1, end == -1 ? sb.length() : end);
 	}
 
-	public void markCursor() {
-		cursorPosition = getSelectionStart();
-	}
-	
-	public void restoreCursor() {
-		setSelection(cursorPosition);
-	}
-	/*
-	public void setFile(File file) {
-		this.file = file;
-	}
-	*/
 	public boolean isTextChanged() {
 		return textChanged;
 	}
 	public void setTextChanged(boolean b) {
 		textChanged = b;
 	}
-	/*
-	final private void init() {
-		ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-			ViewGroup.LayoutParams.MATCH_PARENT,
-			ViewGroup.LayoutParams.MATCH_PARENT);
-//		setLayoutParams(params);
-//		setGravity(Gravity.TOP);
-		setTypeface(Typeface.MONOSPACE);
-		setHorizontallyScrolling(true);
-		this.setFreezesText(true);
-	}
-*/
+
 	public void open(File f) throws IOException {
-/*
-		if(f != null) {
-			this.file = f;
-		}
-*/
 		ByteArrayOutputStream bb = new ByteArrayOutputStream();
 		byte[] buf = new byte[4096];
 		if(f.exists()) {
@@ -127,7 +86,6 @@ public class FileEdit extends EditText {
 	}
 
 	public void save(File file) throws IOException {
-		Log.d(JConsoleApp.LogTag,"in save(),textChanged = " + textChanged);
 		if(textChanged) {
 			OutputStream out = new FileOutputStream(file);
 			out.write(getText().toString().getBytes());

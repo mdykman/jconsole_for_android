@@ -78,9 +78,11 @@ public class AndroidJInterface extends JInterface {
 		}
 		return null;
 	}
-	
+	public void quit() {
+		theApp.quit();
+	}
 	int downloadFile(String urlS, String fileS) {
-Log.d(LOGTAG,"downlloading " + urlS + " to " + fileS);
+Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 		int result = -1;
 		try {
 			URL url = new URL(urlS);

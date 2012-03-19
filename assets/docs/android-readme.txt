@@ -15,16 +15,30 @@ See docs/gpl3.txt for GNU General Public License version 3. Additional info at h
 
 This Android package was created by Michael Dykman (mdykman@gmail.com) in 2012. It is licensed under GPL3.
 
-This package is compatible with Android versions 2.2 and up.
+This package is compatible with Android versions 2.1 and up.
 
 Many thanks to Eric Iverson and Jsoftware for providing the source code for the J7 engine as well as allowing the use of script, document and image resources to make this package.
 
-To enable the J-specific soft keyboard which is provided with this package, you must go to Settings/Languages and Keyboards to explicitly enable JKeyboard.  Within the console app, long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the newly-enabled JKeyboard.
+ ** Introduction
+ 
+ J is an astonishingly powerful mathematical tool which should be in the hands of every thinking person. Approached interactively, the user can start with simple problems and naturally build their skills until they can solve problems of enormous complexity. It defines the highest standard of what constitutes " A Tool For Thought".
+ 
+ The present implementation does not yet provide all of the power available to modern J users, but it is the goal of this project to deliver precisely that.
+
+  - michael dykman
+  - Toronto, 2012
+   
+ ** Soft Keyboard
+ 
+To enable the J-specific soft keyboard which is provided with this package, go to Settings/Languages and Keyboards to explicitly enable JKeyboard.  Within the console app, long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the newly-enabled JKeyboard.
 
  ** Pacman
 
 Pacman works in this released but with a catch.  As android provides me no means of dealing with a tar file, the android console is using .zip files which requires it to 'impersonate' windows during transations.
+
 There being no binaries for arm-linux currently in the JAL, this works as a short-term solution, but we hope to establish an update archive format specifically for android in the near future. 
+
+At alpha-release time, the version of pacman.ijs in the JAL is not android-compatible.  This is likely to be corrected in the next release.  As an interim patch, pacman.ijs is overwritten from ide/android at the end of every update cycle run from the android menu. 
 
  ** JHS
  The JHS Server may be launched from the console via the menu option Script/Launch JHS.  
@@ -33,14 +47,18 @@ There being no binaries for arm-linux currently in the JAL, this works as a shor
  
  The default browser for Android is not very good.  I recommend:
     Firefox Mobile
-    Opera Mobile (NOT Opera-mini)   
+    Opera Mobile (NOT Opera-Mini)   
 
  ** Shared Libraries
+ libjregex.so is bundled with the application.
+ 
  The following shared libraries which are known to be referenced by J scripts are provided by Android:
     libc.so
     libz.so
     libsqlite.so
     libexpat.so
+
+To the best of the authors knowledge, no other libraries are directly supported.
 
  ** Graphics/GL2
 
@@ -53,4 +71,4 @@ There is a project of unknown quality on github seeking to provide build files i
  ** Foreign 2!:[0-3] Do not work on Android as on non-unix systems. 2!:5 and 2!:6 work as expected. The utility of 2!:55 is somewhat doubtful on this platform.
 
  ** Tests
-The is a high number of failing unit tests in this release.  It is my hope that the community can guide towards those which are most dire.
+There is a high number of failing unit tests in this release.  It is my hope that the community can guide towards those which are most dire.

@@ -3,6 +3,7 @@ package org.dykman.j.android;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,6 +27,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.FileObserver;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -35,7 +37,7 @@ public class JConsoleApp extends Application {
 	public static final String LogTag = "j-console";
 
 	protected AndroidJInterface jInterface = null;
-	private JActivity activity;
+	private AbstractActivity activity;
 
 	protected Map<String,Intent> intentMap = new HashMap<String, Intent>();
 	
@@ -93,28 +95,78 @@ public class JConsoleApp extends Application {
 			console.consoleOutput(output.type, output.content);
 		}
 	}
+	
+	public void setWorldReadable(Runtime runtime, File f, boolean recurse) {
+		if(recurse && f.isDirectory()) {
+			File[]ff= f.listFiles();
+			for(File fi:ff) {
+				setWorldReadable(runtime,fi, recurse);
+			}
+		}
+		
+		try {
+			runtime.exec("/system/bin/chmod 0777 " + f.getAbsolutePath());
+		} catch(IOException e) {
+			Log.e(LogTag, "ioexception changing permissions on " + f.getAbsolutePath(),e);
+		}
+	}	
+	public void setWorldReadable(final File f,final boolean recurse) {
+		final Runtime runtime = Runtime.getRuntime();
+		AsyncTask<String, String, String> task = new AsyncTask<String, String, String>() {
+			@Override
+			protected void onPreExecute() {
+				Toast.makeText(activity, "resetting file permission to world-readable", Toast.LENGTH_LONG).show();
+			}
+			@Override
+			protected String doInBackground(String... params) {
+				setWorldReadable(runtime,f, recurse);
+				
+				return null;
+			}
+			@Override
+			protected void onPostExecute(String s) {
+				Toast.makeText(activity, "file permissions reset", Toast.LENGTH_LONG).show();
+			}
+			
+		};
+		task.execute();
+	}
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		root = getDir("jconsole", Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
+//		this.getApplicationContext().
+		final Runtime runtime = Runtime.getRuntime();
+		
 		currentLocalDir = root;
+		try {
+			runtime.exec("su -c \"/system/bin/chmod 03777 " + root.getAbsolutePath() + '"');
+		} catch(IOException e) {
+			Log.e(LogTag, "ioexception changing permissions on " + root.getAbsolutePath(),e);
+		}
 		jInterface = new AndroidJInterface(this);
 		jInterface.setEnv("HOME", root.getAbsolutePath());
 		jInterface.callSuperJ(new String[]{
 			"DEFandroid_z_=:1",
-			"anddf_z_=: 4 : ' ''libj.so android_download_file i *c *c'' 15!:0 x;y'"});
+			});
 	}
 	
 	
-	public void stop() 
-	{
+	public void stop() {
 		jInterface.stop();
+	}
+	
+	public void quit() {
+		activity.quit();
 	}
 
 	public void setEnableConsole(boolean b) {
 		console.setEnabled(b);
 	}
 	
+	public void setActivity(AbstractActivity a) {
+		this.activity = a;
+	}
 	public void setup(JActivity activity,Console console) {
 		this.activity = activity;
 		this.console = console;
@@ -216,7 +268,7 @@ public class JConsoleApp extends Application {
 		_activity.setTitle(fe.createTitle());
 	}
 	
-	public void saveAs(final Activity _activity,final FileEdit fe,final File f) throws IOException {
+	public void saveAs(final FileEdit fe,final File f) throws IOException {
 		
 		if(f.exists()) {
 			AlertDialog.Builder builder= new AlertDialog.Builder(activity);
@@ -224,7 +276,7 @@ public class JConsoleApp extends Application {
 			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					try {
-						_saveas(_activity,fe,f);
+						_saveas(activity,fe,f);
 					} catch(IOException e) {
 						Toast.makeText(activity, "there was an error overwriting file " + 
 								f.getName() +  ":" + e.getLocalizedMessage(),Toast.LENGTH_LONG);
@@ -238,7 +290,7 @@ public class JConsoleApp extends Application {
 				}
 			});
 		} else {
-			_saveas(_activity,fe,f);
+			_saveas(activity,fe,f);
 		}
 	}
 	
@@ -290,7 +342,7 @@ public class JConsoleApp extends Application {
 		bootStrapSession(activity,"''");
 	}
 
-	protected void bootStrapSession(JActivity apctivity, String... args) {
+	protected void bootStrapSession(Activity apctivity, String... args) {
 		String argv = "''";
 		if(args.length > 0) {
 			argv = args[0];

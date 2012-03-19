@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -45,7 +46,9 @@ public abstract class AbstractActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		theApp = (JConsoleApp) this.getApplication();
+		theApp.setActivity(this);
 		root = theApp.getRoot();
+		
 //		console = theApp.getConsole();
 
 
@@ -59,7 +62,6 @@ public abstract class AbstractActivity extends Activity {
 				dialog.dismiss();
 			}
 		});
-		
 	}
 	public void runFile() {
 		alert("You cannot run this object");
@@ -68,7 +70,7 @@ public abstract class AbstractActivity extends Activity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		boolean result = true;
 		int itemId = item.getItemId();
-		Log.d(JConsoleApp.LogTag,"selection " + itemId + ", " + getClass().getName());
+
 		switch(itemId) {
 			case R.id.newf:    theApp.newFile(this);                     break;
 //			case R.id.open:    requestFileOpen(); 	          break;
@@ -82,16 +84,20 @@ public abstract class AbstractActivity extends Activity {
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
 			case R.id.runf:    requestFileRun();              break;
-			case R.id.runc:    runFile();               break;
+			case R.id.runc:    runFile();               	  break;
 			case R.id.vocab:   showHelp(R.string.help_start); break;
-			case R.id.jhs:		theApp.launchJHS(this);		  break;
-			case R.id.upgrade:	updateJ();		  			  break;
 			case R.id.learning: showHelp(R.string.learning);  break;
 			case R.id.readme:  showTextFile(R.string.readme); break;
 			case R.id.aboutj:  showTextFile(R.string.aboutj); break;
+			case R.id.jhs:		theApp.launchJHS(this);		  break;
+			case R.id.upgrade:	updateJ();		  			  break;
+			case R.id.writable: setWorldReadable();                break;
 			default: result = false;
 		}
 		return result;
+	}
+	protected void setWorldReadable() {
+		theApp.setWorldReadable(root, true);
 	}
 	protected abstract FileEdit getEditor();
 	
@@ -296,6 +302,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 		}
 		
 	}
+	
 	public void requestFileSaveAs(File ff) {
 		final EditText et = new EditText(AbstractActivity.this);
 		et.setLayoutParams(new ViewGroup.LayoutParams(
@@ -341,7 +348,8 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 
 	public void quit() {
 		super.finish();
-		theApp.stop();		int pid = android.os.Process.myPid();
+		theApp.stop();		
+		int pid = android.os.Process.myPid();
 		android.os.Process.killProcess(pid);
 	}
 
@@ -504,7 +512,7 @@ Log.d(JConsoleApp.LogTag,"in request file select");
 					File myfile = new File(theApp.getCurrentDirectory(),name);
 					FileEdit fe = getEditor();
 					try {
-						theApp.saveAs(AbstractActivity.this,fe,myfile);
+						theApp.saveAs(fe,myfile);
 					} catch(IOException e) {
 						Toast.makeText(AbstractActivity.this, "there was an error saving " + myfile.getName(), 
 							Toast.LENGTH_LONG);

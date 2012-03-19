@@ -477,7 +477,7 @@ try.
 	if. rr >: 0 do.
       r=. 0;p
     else.
-      msg=. 'Download failed: ',p,'. returned ',": rr
+      msg=. 'Download failed: ',f,'. returned ',": rr
       log msg
       info 'Connection failed:',LF2,msg
       r=. 1; msg

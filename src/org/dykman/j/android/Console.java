@@ -179,11 +179,7 @@ public class Console extends FileEdit {
 	}
 
 	public void consoleOutput(int type,String s) {
-		appendSeq(s,getColorForType(type));
-//		Editable sp = getText();
-// JIC:
-		//        bringPointIntoView(sp.length());
- //       placeCursor();
+		if(s!=null) appendSeq(s,getColorForType(type));
 	}
 	
 	
