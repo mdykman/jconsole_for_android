@@ -14,7 +14,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -35,23 +34,13 @@ import android.widget.Toast;
 public abstract class AbstractActivity extends Activity {
 
 	public static final String EMPTY = " -- empty -- ";
-	JConsoleApp theApp;
+	JConsoleApp theApp=null;
 	public static final String CONSOLE_NAME = "J Console";
-//	static final String tempDir = "user/temp";
-//	Console console;
 
-
-	protected File root;
-	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		theApp = (JConsoleApp) this.getApplication();
 		theApp.setActivity(this);
-		root = theApp.getRoot();
-		
-//		console = theApp.getConsole();
-
-
 	}
 
 	public void alert(String message) {
@@ -63,41 +52,34 @@ public abstract class AbstractActivity extends Activity {
 			}
 		});
 	}
-	public void runFile() {
-		alert("You cannot run this object");
-	}
+
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		boolean result = true;
 		int itemId = item.getItemId();
 
 		switch(itemId) {
-			case R.id.newf:    theApp.newFile(this);                     break;
-//			case R.id.open:    requestFileOpen(); 	          break;
-			case R.id.open:    {
-				requestFileOpen(); 	          
-				break;
-			}
+			case R.id.newf:    theApp.newFile(this);          break;
+			case R.id.open:    requestFileOpen();			  break;
 			case R.id.window:  requestWindowSelect();     	  break;
 			case R.id.jbreak:  callBreak();                   break;
 			case R.id.exit:    testQuit();					  break;
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
 			case R.id.runf:    requestFileRun();              break;
-			case R.id.runc:    runFile();               	  break;
 			case R.id.vocab:   showHelp(R.string.help_start); break;
 			case R.id.learning: showHelp(R.string.learning);  break;
 			case R.id.readme:  showTextFile(R.string.readme); break;
 			case R.id.aboutj:  showTextFile(R.string.aboutj); break;
-			case R.id.jhs:		theApp.launchJHS(this);		  break;
-			case R.id.upgrade:	updateJ();		  			  break;
-			case R.id.writable: setWorldReadable();                break;
+			case R.id.jhs:	   theApp.launchJHS(this);		  break;
+			case R.id.upgrade: updateJ();		  			  break;
+			case R.id.writable: setWorldReadable();           break;
 			default: result = false;
 		}
 		return result;
 	}
 	protected void setWorldReadable() {
-		theApp.setWorldReadable(root, true);
+		theApp.setWorldReadable(theApp.getRoot(), true);
 	}
 	protected abstract FileEdit getEditor();
 	
@@ -208,13 +190,10 @@ public abstract class AbstractActivity extends Activity {
 				res.add(s);
 			}
 		}
-
 		String[] r = res.toArray(new String[res.size()]);
 		if(nfiles > 0) Arrays.sort(r, new FileComparator(dir));
 		return r;
-}
-
-
+	}
 	
 	protected AlertDialog fileListDialog(File dir,ListView lv,boolean dirsOnly) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -223,14 +202,15 @@ public abstract class AbstractActivity extends Activity {
 				ArrayAdapter<String> add = createDirAdapter(dir,dirsOnly);
 				lv.setAdapter(add);
 				String title =  filePath(dir.getCanonicalPath());
-				if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") || title.equals("/sdcard")) {
+				if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") 
+						|| title.equals("/sdcard")) {
 					title = "/";
 				}
 				builder.setTitle(title);
 				builder.setView(lv);
 			} else {
-				theApp.setLocalFile(true);
-				theApp.setCurrentDirectory(root);
+				theApp.setLocalFile(false);
+				theApp.setCurrentDirectory(theApp.userDir);
 				builder.setMessage(dir.getAbsolutePath() + " does not exist.");
 			}
 			return builder.create();
@@ -239,7 +219,7 @@ public abstract class AbstractActivity extends Activity {
 		}
 		return null;
 	}
-	
+
 	public void requestFileOpen() {
 		
 		File f = theApp.getCurrentDirectory();
@@ -338,7 +318,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 		intent.setClass(this.getApplicationContext(), HelpActivity.class);
 		
 		intent.putExtra("file", getResources().getString(resId));
-		intent.putExtra("base", root.getAbsolutePath());
+		intent.putExtra("base", theApp.getRoot().getAbsolutePath());
 		this.startActivity(intent);
 
 	}
@@ -386,25 +366,25 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 
 
 	protected String filePath(String path) {
-		String rp = root.getAbsolutePath();
+		String rp = theApp.getRoot().getAbsolutePath();
 		if (path.startsWith(rp)) {
 			path = path.substring(rp.length());
 		}
 		return path;
 	}
+
 	public String buildTitle(File f)  throws IOException {
 		String title =  filePath(f.getCanonicalPath());
 		if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") || title.equals("/sdcard")) {
 			title = "/";
 		}
-		return (theApp.isLocalFile() ? "local: " : "sdcard: ") + title;
+		return (theApp.isLocalFile() ? "system: " : "user: ") + title;
 	}
 
 //	public abstract String buildTitle(File f)  throws IOException;
 
 	public void requestFileSelect(final File dir, final FileAction ffa,
 			final TextView textView) {
-Log.d(JConsoleApp.LogTag,"in request file select");		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		final LinearLayout ll = new LinearLayout(AbstractActivity.this);
@@ -555,15 +535,13 @@ Log.d(JConsoleApp.LogTag,"in request file select");
 		return result;
 	}
 
-
 	protected ArrayAdapter<String> createDirAdapter(File dir,boolean dirsOnly) {
 		List<String> files = loadFileList(dir, null,dirsOnly);
 		int nfiles = files.size();
-		if(!(dir.equals(root) || dir.getAbsolutePath().equals("/mnt/sdcard") || dir.getAbsolutePath().equals("/sdcard"))) {
+		if(!(dir.equals(theApp.getRoot()) || dir.getAbsolutePath().equals("/mnt/sdcard") || dir.getAbsolutePath().equals("/sdcard"))) {
 			files.add(0, "..");
 		}
 		String[] fl = filterFilelist(dir, files,nfiles);
 		return new ArrayAdapter<String>(this,R.layout.list_item, fl);
-
 	}
 }

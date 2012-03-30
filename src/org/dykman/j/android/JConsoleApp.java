@@ -3,10 +3,10 @@ package org.dykman.j.android;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilePermission;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,13 +21,13 @@ import org.dykman.j.JInterface;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.FileObserver;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -42,12 +42,14 @@ public class JConsoleApp extends Application {
 	protected Map<String,Intent> intentMap = new HashMap<String, Intent>();
 	
 	protected java.util.List<String> history = new LinkedList<String>();
-	protected final String tempDir = "j701-user/temp";
+	private static final String SDCARD = "/sdcard";
+	protected final File userDir = new File(SDCARD,"j701-user");
+	protected File currentExternDir = userDir;
+	protected final File tmpDir = new File(userDir,"temp");
 	protected File root;
-	protected File currentLocalDir;
-	protected File currentExternDir = new File("/sdcard");
+	protected File currentLocalDir = null;
 	private Console console;
-	boolean localFile = true;
+	boolean localFile = false;
 
 	List<EngineOutput> outputs = new LinkedList<EngineOutput>();
 	
@@ -136,16 +138,21 @@ public class JConsoleApp extends Application {
 		super.onCreate();
 		root = getDir("jconsole", Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
 //		this.getApplicationContext().
-		final Runtime runtime = Runtime.getRuntime();
-		
-		currentLocalDir = root;
+//		final Runtime runtime = Runtime.getRuntime();
+//		currentLocalDir = new File(sdcard);
+//		currentLocalDir = root;
+		/*
 		try {
 			runtime.exec("su -c \"/system/bin/chmod 03777 " + root.getAbsolutePath() + '"');
 		} catch(IOException e) {
 			Log.e(LogTag, "ioexception changing permissions on " + root.getAbsolutePath(),e);
 		}
+		*/
 		jInterface = new AndroidJInterface(this);
-		jInterface.setEnv("HOME", root.getAbsolutePath());
+//		File tmp = new File(root,tempDir);
+		jInterface.setEnv("TMP", tmpDir.getAbsolutePath());
+		jInterface.setEnv("HOME", SDCARD);
+//		jInterface.setEnv("HOME", root.getAbsolutePath());
 		jInterface.callSuperJ(new String[]{
 			"DEFandroid_z_=:1",
 			});
@@ -177,20 +184,19 @@ public class JConsoleApp extends Application {
         	console.setEnabled(false);
            started = true;
            // change to root directory
-           sb.append("1!:44 '").append(root.getAbsolutePath()).append("'");
+           sb.append("1!:44 '").append(userDir.getAbsolutePath()).append("'");
            jInterface.callSuperJ(new String[]{sb.toString()});
            jInterface.start();
            installSystemFiles(activity,console,root,false);
            sb.setLength(0);
         }
         setConsoleState(true);
-
 	}
-	
 
 	public Dimension getDimension() {
 		return console.getDimension();
 	}
+
 	public void launchJHS(Context context) {
 		String arg= null;
 		if(!testJHSServer()) {
@@ -207,6 +213,20 @@ public class JConsoleApp extends Application {
 				consoleOutput(JInterface.MTYOFM,"launching browser\n");
 				context.startActivity(myIntent);
 		}
+	}
+	
+	public int launchActivity(String action,String data, String type) {
+		int result = 0;
+		Intent intent = new Intent(action);
+		intent.setDataAndType(Uri.parse(data), type);
+		try {
+		activity.startActivity(intent);
+		} catch(ActivityNotFoundException e) {
+			Log.e(LogTag,"activity not found for action=" + action 
+					+ ", data=" + data + ", type=" + type);
+			result = -1;
+		}
+		return result;
 	}
 	public void setConsoleState(boolean n) {
 		consoleState = n;
@@ -247,11 +267,11 @@ public class JConsoleApp extends Application {
 	}	
 	
 	public void newFile(Context context) {
-		File tmp = new File(root, tempDir);
+//		File tmp = new File(root, tempDir);
 		int i = 1;
-		File newf = new File(tmp, Integer.toString(i) + ".ijs");
+		File newf = new File(tmpDir, Integer.toString(i) + ".ijs");
 		while (hasEditor(newf.getName()) || newf.exists()) {
-			newf = new File(tmp, Integer.toString(++i) + ".ijs");
+			newf = new File(tmpDir, Integer.toString(++i) + ".ijs");
 		}
 		Intent intent = new Intent();
 		intent.setClass(getApplicationContext(), EditActivity.class);
@@ -542,10 +562,11 @@ public class JConsoleApp extends Application {
 		}
 		return f;
 	}
+	/*
 	public String getTempDir() {
 		return tempDir;
 	}
-
+*/
 
 	boolean testJHSServer() {
 		boolean result = false;

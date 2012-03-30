@@ -41,3 +41,31 @@ require'pacman'
 NB. copy pacman back in place
 (1!:1<jpath'~addons/api/android/pacman.ijs')1!:2<jpath'~system/util/pacman.ijs'
 )
+
+
+NB. 2!:1 under android invokes android apps.
+NB. return 0 when an activity is found matching your request, otherise _1
+
+NB. 2!:1 action; uri; type
+NB. ie. 2!:1 ACTION_VIEW; 'http://www.jsoftware.com'; 'text/html'
+NB. ie. 2!:1 ACTION_VIEW; (jpath'~temp/plot.pdf') ; 'application/pdf'
+
+NB. describing the full scope of android intents 
+NB. is beyond the scope of the present document.
+NB. more information can be found at
+NB. http://developer.android.com/reference/android/content/Intent.html
+
+ACTION_VIEW=: 'android.intent.action.VIEW'
+
+NB. the default built-in browser does not view local files
+NB. browse 'http://www.jsoftware.com'
+browse =: 3 : 0"1
+2!:1 ACTION_VIEW;y;'text/html'
+''
+)
+
+NB. viewpdf jpath '~temp/plot.pdf'
+viewpdf =: 3 : 0"1
+2!:1 ACTION_VIEW;y;'application/pdf'
+''
+)

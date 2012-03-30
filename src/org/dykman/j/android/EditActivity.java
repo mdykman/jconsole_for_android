@@ -66,11 +66,12 @@ public class EditActivity extends AbstractActivity {
 
 		setTitle(file.getName());
 	}
-
-	@Override
+/*
+//	@Override
 	public void runFile() {
 		runFile(file);
 	}
+ */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -99,6 +100,7 @@ public class EditActivity extends AbstractActivity {
 			case R.id.close:   close();         break;
 			case R.id.save:    save();          break;
 			case R.id.runc:    runCurrentFile(); break;
+//			case R.id.runc:    runFile();               	  break;
 			case R.id.saveas:  requestFileSaveAs(file); break;
 			default : result = false;
 		}

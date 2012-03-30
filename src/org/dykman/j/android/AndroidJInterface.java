@@ -54,6 +54,9 @@ public class AndroidJInterface extends JInterface {
 		}
 	}
 	
+	public int launchActivity(String action,String data, String type) {
+		return theApp.launchActivity(action,data,type);
+	}
 	public String nextLine() {
 		try {
 			while(true) {
@@ -158,6 +161,13 @@ Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 
 		return result;
 	}
+
+	public Process createProcess(String cmd) 
+		throws IOException {
+		Runtime runtime = Runtime.getRuntime();
+			return runtime.exec(cmd);
+	}
+
 	public int callSuperJ(String []sentence) {
 		return super.callJ(sentence);
 	}	
@@ -168,8 +178,6 @@ Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 		}
 		return 0;
 	}
-
-
 
 	class JRunner extends AsyncTask<String, Object, Integer> 
 		implements ExecutionListener, OutputListener {
@@ -218,14 +226,12 @@ Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 			AndroidJInterface.this.removeOutputListener(this);
 			return 0;
 		}
-		
+
 		public void onCommandComplete(int resultCode) {
 			EngineOutput eo = new EngineOutput(AndroidJInterface.MTYOFM, "  ");
 			publishProgress(eo);
-
-//			theApp.consoleOutput(AndroidJInterface.MTYOFM, "\n  ");
-			Log.d(LOGTAG,"command completes receives " + resultCode);
 		}
+		
 		public void onOutput(int type, String s) {
 			EngineOutput eo = new EngineOutput(type, s);
 			publishProgress(eo);
