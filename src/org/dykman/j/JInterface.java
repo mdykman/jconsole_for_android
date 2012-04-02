@@ -174,7 +174,7 @@ public class JInterface {
 	
 /// not implemented, returns null
     native public Object getVariableNative(long inst,String name); 
-  /// not implemented, returns null
+  /// not implemented
     native public void setVariableNative(long inst,String name, Object value); 
 	
     native public int callJNative(long inst,String s); 

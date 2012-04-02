@@ -27,9 +27,9 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		console = (Console) findViewById(R.id.ws);
 		console.setJActivity(this);
 
-		theApp.setup(this,console);
 		Intent ii = new Intent(getIntent());
 		theApp.addFile(JCONSOLE, ii);
+		theApp.setConsoleState(true);
 		/*
 		if(savedInstanceState != null) {
 			console.setText(savedInstanceState.getCharSequence("console"));
@@ -37,6 +37,11 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 			console.setSelection(n);
 		}
 		*/
+	}
+	@Override
+	public void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		theApp.setup(this,console);
 	}
 	@Override
 	public void onBackPressed() {

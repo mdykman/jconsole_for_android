@@ -54,8 +54,8 @@ public class AndroidJInterface extends JInterface {
 		}
 	}
 	
-	public int launchActivity(String action,String data, String type) {
-		return theApp.launchActivity(action,data,type);
+	public int launchActivity(String action,String data, String type,int flags) {
+		return theApp.launchActivity(action,data,type,flags);
 	}
 	public String nextLine() {
 		try {

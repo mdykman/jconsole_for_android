@@ -28,11 +28,17 @@ public class LatinKeyboardView extends KeyboardView {
 
     public LatinKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public LatinKeyboardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-//        this.on
+        init();
+    }
+
+    protected final void init() {
+    	this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), 
+    		this.getPaddingRight(), this.getPaddingBottom()+5);
     }
     @Override
     protected boolean onLongPress(Key key) {

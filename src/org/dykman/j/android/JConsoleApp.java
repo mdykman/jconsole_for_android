@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,136 +32,158 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 public class JConsoleApp extends Application {
-	
+
 	public static final String LogTag = "j-console";
 
 	protected AndroidJInterface jInterface = null;
 	private AbstractActivity activity;
 
-	protected Map<String,Intent> intentMap = new HashMap<String, Intent>();
-	
+	protected Map<String, Intent> intentMap = new HashMap<String, Intent>();
+
 	protected java.util.List<String> history = new LinkedList<String>();
 	private static final String SDCARD = "/sdcard";
-	protected final File userDir = new File(SDCARD,"j701-user");
-	protected File currentExternDir = userDir;
-	protected final File tmpDir = new File(userDir,"temp");
+	protected  File userDir;
+	protected File currentExternDir;
+	protected File tmpDir;
 	protected File root;
 	protected File currentLocalDir = null;
 	private Console console;
 	boolean localFile = false;
 
 	List<EngineOutput> outputs = new LinkedList<EngineOutput>();
-	
+
 	boolean consoleState = false;
 	boolean started = false;
-	
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
+
+	public void setup(JActivity activity, Console console) {
+		this.activity = activity;
+		this.console = console;
+		this.console.setApplication(this);
+		flushOutputs();
+		StringBuilder sb = new StringBuilder();
+		if (!started) {
+			started = true;
+			console.setEnabled(false);
+			root = getDir("jconsole", Context.MODE_WORLD_READABLE
+					| Context.MODE_WORLD_WRITEABLE);
+			
+			userDir = new File(SDCARD, "j701-user");
+			tmpDir = new File(userDir, "temp");
+			currentExternDir = userDir;
+			jInterface = new AndroidJInterface(this);
+			jInterface.setEnv("HOME", SDCARD);
+			jInterface.setEnv("TMP", tmpDir.getAbsolutePath());
+			sb.append("1!:44 '").append(userDir.getAbsolutePath()).append("'");
+			jInterface.callSuperJ(new String[] { 
+					"DEFandroid_z_=:1",
+					sb.toString() });
+			jInterface.start();
+			installSystemFiles(activity, console, root, false);
+			sb.setLength(0);
+		}
+		// setConsoleState(true);
+	}
+
 	public void setWindow(Context context, String label) {
 		Intent intent = intentMap.get(label);
 		context.startActivity(intent);
 	}
-	
-	protected void addFile(String path,Intent intent) {
-		if(!JActivity.JCONSOLE.equals(path)) {
+
+	protected void addFile(String path, Intent intent) {
+		if (!JActivity.JCONSOLE.equals(path)) {
 			path = new File(path).getName();
-		} 
-		
+		}
+
 		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
 		intentMap.put(path, intent);
 	}
+
 	protected void removeFile(String path) {
 		intentMap.remove(path);
 	}
+
 	public boolean isLocalFile() {
 		return localFile;
 	}
+
 	public void setLocalFile(boolean localFile) {
 		this.localFile = localFile;
 	}
 
 	protected void flushOutputs() {
-		for(EngineOutput eo : outputs) {
+		for (EngineOutput eo : outputs) {
 			console.consoleOutput(eo.type, eo.content);
 		}
 		outputs.clear();
 	}
+
 	public synchronized void consoleOutput(int type, String content) {
 		consoleOutput(new EngineOutput(type, content));
-	}	
+	}
+
 	public synchronized void consoleOutput(EngineOutput output) {
-		if(!consoleState) {
+		if (!consoleState) {
 			outputs.add(output);
 		} else {
 			flushOutputs();
 			console.consoleOutput(output.type, output.content);
 		}
 	}
-	
+
 	public void setWorldReadable(Runtime runtime, File f, boolean recurse) {
-		if(recurse && f.isDirectory()) {
-			File[]ff= f.listFiles();
-			for(File fi:ff) {
-				setWorldReadable(runtime,fi, recurse);
+		if (recurse && f.isDirectory()) {
+			File[] ff = f.listFiles();
+			for (File fi : ff) {
+				setWorldReadable(runtime, fi, recurse);
 			}
 		}
-		
+
 		try {
 			runtime.exec("/system/bin/chmod 0777 " + f.getAbsolutePath());
-		} catch(IOException e) {
-			Log.e(LogTag, "ioexception changing permissions on " + f.getAbsolutePath(),e);
+		} catch (IOException e) {
+			Log.e(LogTag,
+					"ioexception changing permissions on "
+							+ f.getAbsolutePath(), e);
 		}
-	}	
-	public void setWorldReadable(final File f,final boolean recurse) {
+	}
+
+	public void setWorldReadable(final File f, final boolean recurse) {
 		final Runtime runtime = Runtime.getRuntime();
 		AsyncTask<String, String, String> task = new AsyncTask<String, String, String>() {
 			@Override
 			protected void onPreExecute() {
-				Toast.makeText(activity, "resetting file permission to world-readable", Toast.LENGTH_LONG).show();
+				Toast.makeText(activity,
+						"resetting file permission to world-readable",
+						Toast.LENGTH_LONG).show();
 			}
+
 			@Override
 			protected String doInBackground(String... params) {
-				setWorldReadable(runtime,f, recurse);
-				
+				setWorldReadable(runtime, f, recurse);
+
 				return null;
 			}
+
 			@Override
 			protected void onPostExecute(String s) {
-				Toast.makeText(activity, "file permissions reset", Toast.LENGTH_LONG).show();
+				Toast.makeText(activity, "file permissions reset",
+						Toast.LENGTH_LONG).show();
 			}
-			
+
 		};
 		task.execute();
 	}
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		root = getDir("jconsole", Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
-//		this.getApplicationContext().
-//		final Runtime runtime = Runtime.getRuntime();
-//		currentLocalDir = new File(sdcard);
-//		currentLocalDir = root;
-		/*
-		try {
-			runtime.exec("su -c \"/system/bin/chmod 03777 " + root.getAbsolutePath() + '"');
-		} catch(IOException e) {
-			Log.e(LogTag, "ioexception changing permissions on " + root.getAbsolutePath(),e);
-		}
-		*/
-		jInterface = new AndroidJInterface(this);
-//		File tmp = new File(root,tempDir);
-		jInterface.setEnv("TMP", tmpDir.getAbsolutePath());
-		jInterface.setEnv("HOME", SDCARD);
-//		jInterface.setEnv("HOME", root.getAbsolutePath());
-		jInterface.callSuperJ(new String[]{
-			"DEFandroid_z_=:1",
-			});
-	}
-	
-	
+
 	public void stop() {
 		jInterface.stop();
 	}
-	
+
 	public void quit() {
 		activity.quit();
 	}
@@ -170,27 +191,9 @@ public class JConsoleApp extends Application {
 	public void setEnableConsole(boolean b) {
 		console.setEnabled(b);
 	}
-	
+
 	public void setActivity(AbstractActivity a) {
 		this.activity = a;
-	}
-	public void setup(JActivity activity,Console console) {
-		this.activity = activity;
-		this.console = console;
-		this.console.setApplication(this);
-		flushOutputs();
-        StringBuilder sb = new StringBuilder();
-        if(!started) {
-        	console.setEnabled(false);
-           started = true;
-           // change to root directory
-           sb.append("1!:44 '").append(userDir.getAbsolutePath()).append("'");
-           jInterface.callSuperJ(new String[]{sb.toString()});
-           jInterface.start();
-           installSystemFiles(activity,console,root,false);
-           sb.setLength(0);
-        }
-        setConsoleState(true);
 	}
 
 	public Dimension getDimension() {
@@ -198,62 +201,73 @@ public class JConsoleApp extends Application {
 	}
 
 	public void launchJHS(Context context) {
-		String arg= null;
-		if(!testJHSServer()) {
-			String[] cmds = {
-					"load '~addons/ide/jhs/core.ijs'",
-					"init_jhs_''"
-			};
+		String arg = null;
+		if (!testJHSServer()) {
+			String[] cmds = { "load '~addons/ide/jhs/core.ijs'", "init_jhs_''" };
 			jInterface.callJ(cmds);
 			JHSLauncherTask ltask = new JHSLauncherTask(context);
 			ltask.execute(arg);
 		} else {
 			Intent myIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse(getResources().getString(R.string.jhs_start)));
-				consoleOutput(JInterface.MTYOFM,"launching browser\n");
-				context.startActivity(myIntent);
+			consoleOutput(JInterface.MTYOFM, "launching browser\n");
+			context.startActivity(myIntent);
 		}
 	}
-	
-	public int launchActivity(String action,String data, String type) {
+
+	public int launchActivity(String action, String data, String type,int flags) {
 		int result = 0;
 		Intent intent = new Intent(action);
-		intent.setDataAndType(Uri.parse(data), type);
+		if(data!=null && data.length() >0) {
+			if(type!=null&&type.length()>0) {
+				intent.setDataAndType(Uri.parse(data), type);
+			} else {
+				intent.setData(Uri.parse(data));
+			}
+		} else if(type!=null&&type.length()>0) {
+			intent.setType(type);
+		}
+		if(flags!=0) {
+			intent.setFlags(flags);
+		}
 		try {
-		activity.startActivity(intent);
-		} catch(ActivityNotFoundException e) {
-			Log.e(LogTag,"activity not found for action=" + action 
-					+ ", data=" + data + ", type=" + type);
+			activity.startActivity(intent);
+		} catch (ActivityNotFoundException e) {
+			Log.e(LogTag, "activity not found for action=" + action + ", data="
+					+ data + ", type=" + type);
 			result = -1;
 		}
 		return result;
 	}
+
 	public void setConsoleState(boolean n) {
 		consoleState = n;
 	}
+
 	protected String[] getHistoryAsArray() {
 		return history.toArray(new String[history.size()]);
 	}
-	
+
 	protected String[] getWindowsAsArray() {
 		Set<String> k = intentMap.keySet();
 		return k.toArray(new String[k.size()]);
 	}
-	
+
 	public void callWithHistory(String line) {
 		addHistory(line);
 		callJ(line);
 	}
+
 	public void addHistory(String line) {
 		if (line != null && line.trim().length() > 0) {
 			line = line.trim();
 			if (history.size() >= 100) {
-				history.remove(history.size()-1);
+				history.remove(history.size() - 1);
 			}
-			if(history.contains(line)) {
+			if (history.contains(line)) {
 				history.remove(line);
 			}
-			history.add(0,line);
+			history.add(0, line);
 		}
 	}
 
@@ -261,13 +275,13 @@ public class JConsoleApp extends Application {
 		Toast.makeText(this, "resetting console", Toast.LENGTH_SHORT).show();
 		getjInterface().reset();
 		console.replaceText("");
-		bootStrapSession(null,"''");
+		bootStrapSession(null, "''");
 		InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 		imm.restartInput(console);
-	}	
-	
+	}
+
 	public void newFile(Context context) {
-//		File tmp = new File(root, tempDir);
+		// File tmp = new File(root, tempDir);
 		int i = 1;
 		File newf = new File(tmpDir, Integer.toString(i) + ".ijs");
 		while (hasEditor(newf.getName()) || newf.exists()) {
@@ -280,138 +294,150 @@ public class JConsoleApp extends Application {
 		context.startActivity(intent);
 	}
 
-	private void _saveas(Activity _activity, final FileEdit fe,final File f) 
-		throws IOException {
-		
+	private void _saveas(Activity _activity, final FileEdit fe, final File f)
+			throws IOException {
+
 		fe.setTextChanged(true);
 		fe.save(f);
 		_activity.setTitle(fe.createTitle());
 	}
-	
-	public void saveAs(final FileEdit fe,final File f) throws IOException {
-		
-		if(f.exists()) {
-			AlertDialog.Builder builder= new AlertDialog.Builder(activity);
+
+	public void saveAs(final FileEdit fe, final File f) throws IOException {
+
+		if (f.exists()) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 			builder.setMessage("Do you want to overwrite " + f.getName() + "?");
-			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					try {
-						_saveas(activity,fe,f);
-					} catch(IOException e) {
-						Toast.makeText(activity, "there was an error overwriting file " + 
-								f.getName() +  ":" + e.getLocalizedMessage(),Toast.LENGTH_LONG);
-						Log.e(JConsoleApp.LogTag, "there was an error overwriting file " + f.getName(),e);
-					}
-				}
-			});
-			builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-				}
-			});
+			builder.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							try {
+								_saveas(activity, fe, f);
+							} catch (IOException e) {
+								Toast.makeText(
+										activity,
+										"there was an error overwriting file "
+												+ f.getName() + ":"
+												+ e.getLocalizedMessage(),
+										Toast.LENGTH_LONG);
+								Log.e(JConsoleApp.LogTag,
+										"there was an error overwriting file "
+												+ f.getName(), e);
+							}
+						}
+					});
+			builder.setNegativeButton("Cancel",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
 		} else {
-			_saveas(activity,fe,f);
+			_saveas(activity, fe, f);
 		}
 	}
-	
-	protected void promptSaveWithAction(final FileEdit fe, final File file, final ResponseAction action) 
-			throws IOException {
+
+	protected void promptSaveWithAction(final FileEdit fe, final File file,
+			final ResponseAction action) throws IOException {
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setMessage("Save " + fe.getName() +"?")
-			.setPositiveButton("Yes",
-				new DialogInterface.OnClickListener() {
+		builder.setMessage("Save " + fe.getName() + "?")
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								try {
+									fe.save(file);
+									if (action != null)
+										action.action(true);
+									dialog.dismiss();
+								} catch (IOException e) {
+									Log.e(JConsoleApp.LogTag,
+											"error saving file", e);
+								}
+							}
+						})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						try {
-							fe.save(file);
-							if(action != null) action.action(true);
-							dialog.dismiss();
-						} catch(IOException e) {
-							Log.e(JConsoleApp.LogTag,"error saving file",e);
-						}
+						if (action != null)
+							action.action(false);
+						dialog.cancel();
 					}
-				})
-			.setNegativeButton("No", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					if(action != null) action.action(false);
-					dialog.cancel();
-				}
 				});
 		AlertDialog dd = builder.create();
 		dd.show();
 	}
-	
+
 	public boolean hasEditor(String name) {
 		return intentMap.keySet().contains(name);
 	}
 
 	public void callJ(String... sentences) {
-		callJ(sentences,true);
+		callJ(sentences, true);
 	}
-	
-	public void callJ(String[] sentences,boolean async) {
-		if(async) {
+
+	public void callJ(String[] sentences, boolean async) {
+		if (async) {
 			jInterface.callJ(sentences);
 		} else {
 			jInterface.callSuperJ(sentences);
 		}
 	}
 
-	
 	protected void bootstrap() {
 		Toast.makeText(activity, "booting session", Toast.LENGTH_SHORT).show();
-		bootStrapSession(activity,"''");
+		bootStrapSession(activity, "''");
 	}
 
 	protected void bootStrapSession(Activity apctivity, String... args) {
 		String argv = "''";
-		if(args.length > 0) {
+		if (args.length > 0) {
 			argv = args[0];
 		}
 		String home = root.getPath();
 		StringBuilder sb = new StringBuilder();
 		sb.append("(3 : '0!:0 y')<BINPATH,'/profile.ijs' [ ARGV_z_=: ")
-				.append(argv).append(" [ BINPATH_z_ =: '")
-				.append(home)
+				.append(argv).append(" [ BINPATH_z_ =: '").append(home)
 				.append("/bin").append("'");
 		Log.d(JConsoleApp.LogTag, "initialize engine: " + sb.toString());
-		
-		if(args.length > 1) {
-			String [] ss = new String[args.length];
+
+		if (args.length > 1) {
+			String[] ss = new String[args.length];
 			ss[0] = sb.toString();
-//			Log.d(JConsoleApp.LogTag,ss[0]);
-			for(int i =1; i<args.length; ++i) {
+			// Log.d(JConsoleApp.LogTag,ss[0]);
+			for (int i = 1; i < args.length; ++i) {
 				ss[i] = args[i];
-				Log.d(JConsoleApp.LogTag,ss[i]);
+				Log.d(JConsoleApp.LogTag, ss[i]);
 			}
 			callJ(ss);
 		} else {
-//			Log.d(JConsoleApp.LogTag,sb.toString());
-			callJ(new String[]{sb.toString()});
+			// Log.d(JConsoleApp.LogTag,sb.toString());
+			callJ(new String[] { sb.toString() });
 		}
 	}
 
-
-	protected void installSystemFiles(JActivity activity,Console console,File base,boolean force) {
-		if(force || !checkInstall(base)) {
-			InstallationTask task = new InstallationTask(activity,console);
+	protected void installSystemFiles(JActivity activity, Console console,
+			File base, boolean force) {
+		if (force || !checkInstall(base)) {
+			InstallationTask task = new InstallationTask(activity, console);
 			task.execute(base);
 		} else {
-			Log.d(JConsoleApp.LogTag,"bootstraping session");
+			Log.d(JConsoleApp.LogTag, "bootstraping session");
 			bootstrap();
 		}
 	}
+
 	protected boolean checkInstall(File base) {
 		return new File(base, "system").exists();
 	}
+
 	protected void showToast(String message) {
-		showToast(message,false);
+		showToast(message, false);
 	}
+
 	protected void showToast(String message, boolean islong) {
 		Toast toast = Toast.makeText(this, message, islong ? Toast.LENGTH_LONG
 				: Toast.LENGTH_SHORT);
 		toast.show();
 	}
-	
+
 	interface ResponseAction {
 		public void action(boolean state);
 	}
@@ -434,7 +460,7 @@ public class JConsoleApp extends Application {
 		@Override
 		public void onPostExecute(String s) {
 			bootstrap();
-//			console.setEnabled(true);
+			// console.setEnabled(true);
 		}
 
 		@Override
@@ -464,15 +490,15 @@ public class JConsoleApp extends Application {
 			installDirectory(base, "docs");
 
 			publishProgress("installing addons");
-			installDirectory(base, "addons");			
-			
+			installDirectory(base, "addons");
+
 			publishProgress("installation complete");
 
 			return true;
 		}
 
-		protected boolean _installFile(File base, String path) 
-			throws IOException {
+		protected boolean _installFile(File base, String path)
+				throws IOException {
 			byte buff[] = new byte[8092];
 			InputStream in = getAssets().open(path);
 			OutputStream out = new FileOutputStream(new File(base, path));
@@ -483,12 +509,11 @@ public class JConsoleApp extends Application {
 			out.close();
 			in.close();
 			return true;
-		}		
-		
-		
+		}
+
 		protected boolean installFile(File base, String path) {
 			try {
-				return _installFile(base,path);
+				return _installFile(base, path);
 			} catch (Exception e) {
 				Log.e(JConsoleApp.LogTag, "failed to install " + path);
 			}
@@ -510,73 +535,82 @@ public class JConsoleApp extends Application {
 			for (String t : tests) {
 				try {
 					res &= _installFile(base, directory + "/" + t);
-				} catch(FileNotFoundException e) {
-					Log.i(JConsoleApp.LogTag,"recursing to " + directory + "/" + t);
-					installDirectory(base,directory + "/" + t);
+				} catch (FileNotFoundException e) {
+					Log.i(JConsoleApp.LogTag, "recursing to " + directory + "/"
+							+ t);
+					installDirectory(base, directory + "/" + t);
 				}
 			}
 			return res;
 		}
 	}
-	
+
 	public AndroidJInterface getjInterface() {
 		return jInterface;
 	}
+
 	public java.util.List<String> getHistory() {
 		return history;
 	}
+
 	public void setHistory(java.util.List<String> history) {
 		this.history = history;
 	}
+
 	public File getRoot() {
 		return root;
 	}
+
 	public void setRoot(File root) {
 		this.root = root;
 	}
+
 	public File getCurrentLocalDir() {
 		return currentLocalDir;
 	}
+
 	public void setCurrentLocalDir(File currentDir) {
 		currentLocalDir = currentDir;
 	}
+
 	public File getCurrentExternDir() {
 		return currentExternDir;
 	}
+
 	public void setCurrentExternDir(File currentDir) {
 		currentExternDir = currentDir;
 	}
-	
+
 	public void setCurrentDirectory(File dir) {
-		if(localFile) setCurrentLocalDir(dir);
-		else setCurrentExternDir(dir);			
+		if (localFile)
+			setCurrentLocalDir(dir);
+		else
+			setCurrentExternDir(dir);
 	}
 
-	
 	public File getCurrentDirectory() {
 		File f = null;
-		if(localFile) {
+		if (localFile) {
 			f = getCurrentLocalDir();
 		} else {
 			f = getCurrentExternDir();
 		}
 		return f;
 	}
+
 	/*
-	public String getTempDir() {
-		return tempDir;
-	}
-*/
+	 * public String getTempDir() { return tempDir; }
+	 */
 
 	boolean testJHSServer() {
 		boolean result = false;
 		HttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet("http://localhost:65001/jijx");
-		
+
 		try {
 			client.execute(get);
 			result = true;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			// ignore
 		}
 		return result;
@@ -586,77 +620,85 @@ public class JConsoleApp extends Application {
 
 		Context context;
 		boolean ready = false;
+
 		public JHSLauncherTask(Context context) {
 			this.context = context;
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
-			consoleOutput(JInterface.MTYOFM, "Android will start your default browser when the server is ready.");
+			consoleOutput(JInterface.MTYOFM,
+					"Android will start your default browser when the server is ready.");
 		}
+
 		@Override
 		protected String doInBackground(String... params) {
 			boolean loop = true;
-			
+
 			long start = System.currentTimeMillis();
 			publishProgress(0);
 			// try to wait for JHS to start
 			long waitFor = 250;
-			while(loop) {
+			while (loop) {
 				try {
-					if(loop && waitFor > 0) Thread.sleep(waitFor);
-				} catch(Exception e) {
+					if (loop && waitFor > 0)
+						Thread.sleep(waitFor);
+				} catch (Exception e) {
 					// ignore
 				}
 
-				if(testJHSServer()) {
+				if (testJHSServer()) {
 					ready = true;
 					loop = false;
 				}
 				// wait no more than 15 seconds, then abort
 				long ll = System.currentTimeMillis() - start;
-				if(ll > 15000) {
+				if (ll > 15000) {
 					loop = false;
 					publishProgress(-1);
 				} else {
-					publishProgress((int)(ll/100));
+					publishProgress((int) (ll / 100));
 				}
 			}
 			return null;
 		}
+
 		@Override
 		protected void onPostExecute(String code) {
-			if(ready) {
+			if (ready) {
 				Intent myIntent = new Intent(Intent.ACTION_VIEW,
 						Uri.parse(getResources().getString(R.string.jhs_start)));
-							
-							//"http://localhost:65001/jijxipad"));
-				
-				consoleOutput(JInterface.MTYOFM,"launching browser\n");
+
+				// "http://localhost:65001/jijxipad"));
+
+				consoleOutput(JInterface.MTYOFM, "launching browser\n");
 				context.startActivity(myIntent);
 			} else {
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setMessage("failed to connect to JHS server");
-				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+				builder.setPositiveButton("OK",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.dismiss();
+							}
+						});
 				builder.show();
 			}
-			
-		}		
-		
+
+		}
+
 		@Override
 		public void onProgressUpdate(Integer... oo) {
 			EngineOutput out;
-			if(oo[0] == -1) {
-				out = new EngineOutput(JInterface.MTYOLOG, "failed to establish JHS server.\n");
+			if (oo[0] == -1) {
+				out = new EngineOutput(JInterface.MTYOLOG,
+						"failed to establish JHS server.\n");
 				consoleOutput(out);
 			} else {
-				
+
 			}
-			Log.d(LogTag,"waiting: " + oo[0]);
+			Log.d(LogTag, "waiting: " + oo[0]);
 		}
 	}
 }
