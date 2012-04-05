@@ -65,28 +65,36 @@ public class JConsoleApp extends Application {
 		this.console = console;
 		this.console.setApplication(this);
 		flushOutputs();
-		StringBuilder sb = new StringBuilder();
 		if (!started) {
+			StringBuilder sb = new StringBuilder();
 			started = true;
 			console.setEnabled(false);
 			root = getDir("jconsole", Context.MODE_WORLD_READABLE
 					| Context.MODE_WORLD_WRITEABLE);
 			
-			userDir = new File(SDCARD, "j701-user");
-			tmpDir = new File(userDir, "temp");
-			currentExternDir = userDir;
 			jInterface = new AndroidJInterface(this);
-			jInterface.setEnv("HOME", SDCARD);
+			if(new File(SDCARD).exists()) {
+				jInterface.setEnv("HOME", SDCARD);
+				userDir = new File(SDCARD, "j701-user");
+				currentExternDir = userDir;
+				currentLocalDir = root;
+			} else {
+				jInterface.setEnv("HOME", root.getAbsolutePath());
+				userDir = new File(root, "j701-user");
+				currentLocalDir = userDir;
+			}
+			tmpDir = new File(userDir, "temp");
 			jInterface.setEnv("TMP", tmpDir.getAbsolutePath());
+			currentExternDir = userDir;
 			sb.append("1!:44 '").append(userDir.getAbsolutePath()).append("'");
 			jInterface.callSuperJ(new String[] { 
-					"DEFandroid_z_=:1",
-					sb.toString() });
+				"DEFandroid_z_=:1",
+				"UNAME_z_=: 'Android'",
+				sb.toString() });
 			jInterface.start();
 			installSystemFiles(activity, console, root, false);
 			sb.setLength(0);
 		}
-		// setConsoleState(true);
 	}
 
 	public void setWindow(Context context, String label) {

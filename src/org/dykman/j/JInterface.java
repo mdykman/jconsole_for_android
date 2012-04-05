@@ -138,7 +138,7 @@ public class JInterface {
 					BufferedOutputStream bout = null;
 					try {
 						FileOutputStream fos = new FileOutputStream(of);
-						bout = new BufferedOutputStream(fos);
+						bout = new BufferedOutputStream(fos,8192);
 						int n;
 						while((n = zin.read(buff,0,BUFFER)) != -1) {
 							fos.write(buff, 0, n);
