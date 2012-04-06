@@ -31,6 +31,7 @@ jsgrid     ~addons/graphics/grid/jsgrid.ijs
 jtable     ~addons/graphics/grid/jtable.ijs
 jtags      ~addons/general/jtags/jtags.ijs
 jtgrid     ~addons/graphics/grid/jtgrid.ijs
+jview      ~addons/gui/gtkwd/jview.ijs
 jvgrid     ~addons/graphics/grid/jvgrid.ijs
 jzgraph    ~addons/graphics/graph/jzgraph.ijs
 jzgrid     ~addons/graphics/grid/jzgrid.ijs

@@ -19,7 +19,7 @@ NB.  <= _100 negation of unsuccessful http response code (!=200), ie. _404 "Not 
 
 
 
-anddf=: 4 : '>{. ''libj.so android_download_file i *c *c'' 15!:0 x;y'
+anddf=: 4 : '''libj.so android_download_file > i *c *c'' 15!:0 x;y'
 
 NB. andunzip_z_ usage: andunzip y ; x andunzip y
 NB. monadically, it unzips the file at y into the same directory
@@ -34,7 +34,7 @@ NB.  _4 zip format exception
 andunzip =: 3 : 0
  '' andunzip y
 :
- >{. 'libj.so java_unzip_file i *c *c' 15!:0 y;x
+ 'libj.so java_unzip_file > i *c *c' 15!:0 y;x
 )
 
 safeupgrade=: 3 : 0

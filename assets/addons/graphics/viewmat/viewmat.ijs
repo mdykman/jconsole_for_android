@@ -151,7 +151,7 @@ glpixels (0 0, mwh), mat
 viewmat_g_paint=: 3 : 0
 mat=. finite MAT
 'rws cls'=. $mat
-gwh=. gtkwh__gloc
+gwh=. glqwh''
 if. ifRGB > SHOW do.
   glbrush glrgb 0 0 0
   glrect 0 0,gwh
@@ -309,7 +309,7 @@ empty x vmcc y
 )
 vmrun=: 4 : 0
 if. 0 > nc <'VMH' do. setvmh '' end.
-SHOW=: 0 
+SHOW=: 0
 ifRGB=: x -: 'rgb'
 'DAT MAT ANG TITLE'=: x getvm y
 mat=. finite MAT
@@ -327,9 +327,19 @@ newwindow TITLE
 gtk_window_set_position window,GTK_WIN_POS_CENTER_ALWAYS
 consig3 window;'key-press-event';'viewmat_key_press'
 consig3 window;'focus-in-event';'viewmat_focus_in'
-gloc=: glcanvas 'viewmat';'g';y;coname''
-gtk_container_add window,canvas__gloc
+canvas=: glcanvas y;coname''
+gtk_container_add window,canvas
 windowfinish''
+)
+gtkwidget_event=: 4 : 0
+evt=. >@{.y
+syshandler=. 'viewmat_handler'
+sysevent=. 'viewmat_g_', evt
+sysdefault=. 'viewmat_default'
+wdd=. ;: 'syshandler sysevent sysdefault'
+wdqdata=. (wdd ,. ".&.>wdd)
+evthandler wdqdata
+0
 )
 viewmat_z_=: viewmat_jviewmat_
 viewbmp_z_=: viewbmp_jviewmat_

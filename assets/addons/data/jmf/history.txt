@@ -3,5 +3,8 @@ data/jmf - change history
 == 1.0.0 ==
  * moved to addons
 
-== 1.0.1/3 ==
+== 1.0.1/5 ==
  * J701 beta release
+
+== 1.0.6 ==
+ * UNAME android

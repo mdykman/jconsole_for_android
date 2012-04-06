@@ -52,7 +52,21 @@ graphics/plot - change history
 == 1.0.83 ==
  * plot: bugfix gtk_show, isi_show
 
-== 1.0.84/85 ==
+== 1.0.84/89 ==
  * plot: swap glpaint and glpaintx
  * plot: run gtkwd from jconsole
  * plot: bugfix gtk_show, isi_show
+ * plot: glsel
+ * plot: gtkwidget_event
+
+== 1.0.90 ==
+ * plot: evtloop
+
+== 1.0.91 ==
+ * plot: gl2 api change
+
+== 1.0.92 ==
+ * plot: move gtkwidget_event to jzplot locale
+
+== 1.0.93/6 ==
+ * plot: android

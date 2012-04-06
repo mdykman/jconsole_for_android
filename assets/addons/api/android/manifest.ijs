@@ -15,4 +15,4 @@ Support functions for the Android platform.
 
 RELEASE=: 'j701'
 
-PLATFORMS=: 'linux'
+PLATFORMS=: 'android'
