@@ -295,7 +295,7 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  if. UNAME-:'Android' do.
+  if. (UNAME-:'Android') *. '.zip'-:_4{.file do.
     e=. ''
     'file dir'=. y
     e1=. dir andunzip file
