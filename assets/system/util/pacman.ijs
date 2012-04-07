@@ -138,7 +138,10 @@ siz=. <&> 0 ". (ndx+1) }.&> fls
 fls=. ndx {.each fls
 zps=. <;._2 &> fls ,each '_'
 pfm=. 3 {"1 zps
-msk=. (IFUNIX>UNAME-:'Android') ~: (1 e. 'win'&E.) &> pfm
+uname=. tolower UNAME
+if. UNAME-:'Darwin' do. uname=. 'linux' end.
+msk=. (uname -: ({.~ i.&'.')) &> pfm
+assert. 1 = +/msk
 msk # zps,.fls,.siz
 )
 fixrev=: 3 : 0
@@ -295,7 +298,7 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  if. (UNAME-:'Android') *. '.zip'-:_4{.file do.
+  if. (UNAME-:'Android') *. '.zip"'-:_5{.file do.
     e=. ''
     'file dir'=. y
     e1=. dir andunzip file

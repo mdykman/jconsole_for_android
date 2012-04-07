@@ -10,3 +10,6 @@ graphics/viewmat - change history
  * opengl color RGB byte order with R in the lowest byte
  * viewmat: gtk+3 compatible
  * viewmat: gl2 changes
+
+== 1.0.6/7 ==
+ * android

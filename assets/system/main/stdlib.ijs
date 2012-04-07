@@ -35,6 +35,17 @@ xuname=. UNAME
 0!:0 <jpath '~system/defs/',y,'_',(tolower xuname),(IF64#'_64'),'.ijs'
 )
 18!:4 <'z'
+UNXLIB=: ([: <;._1 ' ',]);._2 (0 : 0)
+libc.so.6 libc.so libc.dylib libc.dylib
+libz.so.1 libz.so libz.dylib libz.dylib
+libsqlite3.so.0 libsqlite.so libsqlite3.dylib libsqlite3.dylib
+)
+unxlib=: 3 : 0
+r=. (;: 'c z sqlite3') i. <,y
+c=. (;: 'Linux Android Darwin iOS') i. <UNAME_z_
+(<r,c) {:: UNXLIB_z_
+)
+18!:4 <'z'
 'TAB LF FF CR DEL EAV'=: 9 10 12 13 127 255{a.
 LF2=: LF,LF
 CRLF=: CR,LF
@@ -66,13 +77,9 @@ parm=. 32 = ;(3!:0)&.> argb
 getenv=: 2!:5
 inv=: inverse=: ^:_1
 3 : 0''
-if. 'Linux'-:UNAME do.
-  isatty=: 'libc.so.6 isatty > i i' & (15!:0)
-elseif. 'Android'-:UNAME do.
-  isatty=: 'libc.so isatty > i i' & (15!:0)
-elseif. 'Darwin'-:UNAME do.
-  isatty=: 'libc.dylib isatty > i i' & (15!:0)
-elseif. do.
+if. IFUNIX do.
+  isatty=: (unxlib 'c'),' isatty > i i' & (15!:0)
+else.
   isatty=: 2: = ('kernel32 GetFileType > i x' & (15!:0)) @ ('kernel32 GetStdHandle > x i'& (15!:0)) @ - @ (10&+)
 end.
 ''
@@ -185,11 +192,10 @@ type=: {&t@(2&+)@(4!:0)&boxopen
 ucp=: 7&u:
 ucpcount=: # @ (7&u:)
 3 : 0''
-if. 'Linux'-:UNAME do. 
-  usleep=: 3 : '''libc.so.6 usleep > i i'')&(15!:0) >.y'
-elseif. 'Android'-:UNAME do. usleep=: 3 : '''libc.so usleep > i i'')&(15!:0) >.y'
-elseif. 'Darwin'-:UNAME do. usleep=: 3 : '''libc.dylib usleep > i i''&(15!:0) >.y'
-elseif. do. usleep=: 3 : '0: ''kernel32 Sleep > n i''&(15!:0) >.y % 1000'
+if. IFUNIX do.
+  usleep=: 3 : ('''',(unxlib 'c'),' usleep > i i'')&(15!:0) >.y')
+else.
+  usleep=: 3 : '0: ''kernel32 Sleep > n i''&(15!:0) >.y % 1000'
 end.
 EMPTY
 )
@@ -1021,20 +1027,9 @@ elseif. 'm'e.x do. dat=. ];._2 dat
 end.
 )
 frename=: 4 : 0
-x=. > fboxname x
-y=. > fboxname y
-if. x -: y do. return. end.
+if. x -: y do. 1 return. end.
 if. IFUNIX do.
-  if. UNAME-:'Android' do.
-    try.
-      2!:0 'mv -f "',y,'" "',x,'"'
-    catch.
-      2!:0 'cp "',y,'" "',x,'"'
-      1!:55 <y
-    end.
-  else.
-    2!:0 'mv -f "',y,'" "',x,'"'
-  end.
+  0=((unxlib 'c'),' rename > i *c *c') 15!:0 y;x
 else.
   'kernel32 MoveFileW > i *w *w' 15!:0 (uucp y);uucp x
 end.
@@ -1852,7 +1847,7 @@ if. 0=L.y do.
   end.
 end.
 y=. y -. Ignore, IFJHS#;:'viewmat'
-y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk'
+y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public

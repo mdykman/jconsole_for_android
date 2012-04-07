@@ -716,12 +716,10 @@ end.
 dobind=: 3 : 0
 sdcleanup_jsocket_''
 SKLISTEN=: 0 pick sdcheck_jsocket_ sdsocket_jsocket_''
-select. UNAME
-case. 'Linux'   do. 'libc.so.6 fcntl i i i i' cd SKLISTEN,F_SETFD_jsocket_,FD_CLOEXEC_jsocket_
-case. 'Android' do. 'libc.so fcntl i i i i' cd SKLISTEN,F_SETFD_jsocket_,FD_CLOEXEC_jsocket_
-case. 'Darwin'  do. 'libc.dylib fcntl i i i i' cd SKLISTEN,F_SETFD_jsocket_,FD_CLOEXEC_jsocket_
+if. IFUNIX do.
+  ((unxlib 'c'),' fcntl i i i i') cd SKLISTEN,F_SETFD_jsocket_,FD_CLOEXEC_jsocket_
+  sdsetsockopt_jsocket_ SKLISTEN;SOL_SOCKET_jsocket_;SO_REUSEADDR_jsocket_;2-1
 end.
-if. IFUNIX do. sdsetsockopt_jsocket_ SKLISTEN;SOL_SOCKET_jsocket_;SO_REUSEADDR_jsocket_;2-1 end.
 sdbind_jsocket_ SKLISTEN;AF_INET_jsocket_;y;PORT
 )
 

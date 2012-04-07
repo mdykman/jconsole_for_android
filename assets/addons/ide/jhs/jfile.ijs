@@ -325,13 +325,9 @@ end.
 NB. newname frename oldname - return 1 if rename ok
 frename=: 4 : 0
 if. x -: y do. return. end.
-if. UNAME-:'Linux' do.
-  0='libc.so.6 rename > i *c *c' 15!:0 y;x
-elseif. UNAME-:'Android' do.
-  0='libc.so rename > i *c *c' 15!:0 y;x
-elseif. UNAME-:'Darwin' do.
-  0='libc.dylib rename > i *c *c' 15!:0 y;x
-elseif. do.
+if. IFUNIX do.
+  0=((unxlib 'c'),' rename > i *c *c') 15!:0 y;x
+else.
   'kernel32 MoveFileA > i *c *c' 15!:0 y;x
 end.
 )

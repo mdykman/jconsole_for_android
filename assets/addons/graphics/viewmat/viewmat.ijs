@@ -3,20 +3,23 @@ require 'graphics/bmp graphics/gl2'
 coclass 'jviewmat'
 
 coinsert 'jgtk jgl2'
+GUI=: -. IFJHS +. UNAME-:'Android'
 MINWH=: 200 200
 DEFWH=: 360 360
 
 create=: 3 : 0
-if. -.IFGTK do.
+if. GUI *. -.IFGTK do.
   require 'gui/gtk'
   gtkinit_jgtk_''
 end.
 )
 destroy=: 3 : 0
-if. -.IFGTK do.
-  gtk_main_quit''
+if. GUI do.
+  if. -.IFGTK do.
+    gtk_main_quit''
+  end.
+  cbfree''
 end.
-cbfree''
 codestroy''
 )
 finite=: x: ^: _1
@@ -121,7 +124,7 @@ hadd=: 3 : 0
 setvmh VMH,~coname''
 )
 hcascade=: 3 : 0
-if. IFGTK *. 0~:#VMH do.
+if. GUI *. IFGTK *. 0~:#VMH do.
   loc=. {.VMH
   siz=. 2 3 { getwinpos window
   prv=. 2 {. getwinpos window__loc
@@ -137,6 +140,15 @@ setvmh=: 3 : 0
 VMH_jviewmat_=: (~.y) intersect conl 1
 )
 rgb1=: 256&(#. flipwritergb_jbmp_)
+no_gui_bmp=: 3 : 0
+mat=. finite MAT
+'rws cls'=. $mat
+mwh=. cls,rws
+if. -. ifRGB do.
+  mwh=. MINWH >. <. mwh * <./ DEFWH % cls,rws
+end.
+mat=. mwh fitvm mat
+)
 vmcc=: 4 : 0
 ifRGB=: x -: 'rgb'
 'mat gid'=. y
@@ -300,7 +312,15 @@ viewmat=: 3 : 0
 :
 a=. '' conew 'jviewmat'
 empty x vmrun__a y
-if. -.IFGTK do. gtk_main '' end.
+if. GUI do.
+  if. -.IFGTK do. gtk_main '' end.
+else.
+  (no_gui_bmp__a'') writebmp jpath '~temp/viewmat.bmp'
+  if. UNAME-:'Android' do.
+    2!:1 'android.intent.action.VIEW';(jpath '~temp/viewmat.bmp');'image/image'
+  end.
+  destroy__a ''
+end.
 )
 viewmatcc=: 3 : 0
 '' viewmatcc y
@@ -318,7 +338,7 @@ mwh=. cls,rws
 if. -. ifRGB do.
   mwh=. MINWH >. <. mwh * <./ DEFWH % cls,rws
 end.
-vmwin mwh
+vmwin^:GUI mwh
 hcascade''
 hadd''
 )
