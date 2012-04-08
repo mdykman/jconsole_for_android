@@ -141,7 +141,7 @@ pfm=. 3 {"1 zps
 uname=. tolower UNAME
 if. UNAME-:'Darwin' do. uname=. 'linux' end.
 msk=. (uname -: ({.~ i.&'.')) &> pfm
-assert. 1 = +/msk
+if. 1 ~: +/msk do. msk=. 1,~ }:0*.msk end.
 msk # zps,.fls,.siz
 )
 fixrev=: 3 : 0
@@ -532,7 +532,7 @@ install_console=: 3 : 0
   if. -. init_console 'server' do. '' return. end.
   pkgs=. getnames y
   if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
-  pkgs=. pkgs (e. # [) ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
+  pkgs=. pkgs (e. # [) ~. (<'base library'), ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
   if. 0 = num=. #pkgs do. '' return. end.
   many=. 1 < num
   msg=. 'Installing ',(":num),' package',many#'s'
@@ -610,6 +610,11 @@ ADDLABS=: ; txt ,each LF
 install_library=: 3 : 0
 log 'Downloading base library...'
 f=. 1 pick LIB
+if. UNAME-:'Android' do.
+  if. -. 1 e. '_android.zip' E. f do.
+    f=. '_android.zip',~ ({.~ i:&'_') f
+  end.
+end.
 'rc p'=. httpget WWW,'library/',f
 if. rc do. return. end.
 log 'Installing base library...'
