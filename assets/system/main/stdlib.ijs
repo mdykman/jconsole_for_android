@@ -1899,7 +1899,11 @@ if. UNAME-:'Android' do.
   if. -. isURL file do.
     file=. 'file://',file
   end.
+<<<<<<< HEAD
   2!:1 'android.intent.action.VIEW';file;'text/plain'
+=======
+  2!:1 'android.intent.action.EDIT';file;'text/plain'
+>>>>>>> c304179879c4fff9cfacd20f6f91b5c5e66abca3
   EMPTY return.
 end.
 editor=. (Editor_j_;Editor_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'
