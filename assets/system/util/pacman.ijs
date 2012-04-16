@@ -141,11 +141,7 @@ pfm=. 3 {"1 zps
 uname=. tolower UNAME
 if. UNAME-:'Darwin' do. uname=. 'linux' end.
 msk=. (uname -: ({.~ i.&'.')) &> pfm
-<<<<<<< HEAD
-if. 1 ~: +/msk do. msk=. 1,~ }:msk end.
-=======
 if. 1 ~: +/msk do. msk=. 1,~ }:0*.msk end.
->>>>>>> c304179879c4fff9cfacd20f6f91b5c5e66abca3
 msk # zps,.fls,.siz
 )
 fixrev=: 3 : 0

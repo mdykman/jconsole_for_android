@@ -37,14 +37,10 @@ andunzip =: 3 : 0
  'libj.so java_unzip_file > i *c *c' 15!:0 y;x
 )
 
-copy=: 4 : '(1!:1<jpath x)1!:2<jpath y'
-
 safeupgrade=: 3 : 0
-'~addons/api/android/pacman.ijs'copy'~system/util/pacman.ijs'
-load'pacman'
+require'pacman'
 'update'jpkg_z_''
 'upgrade'jpkg_z_''
-'~addons/api/android/pacman.ijs'copy'~system/util/pacman.ijs'
 )
 
 NB. 2!:1 under android invokes android apps.
@@ -79,6 +75,7 @@ NB. type viewers
 
 NB. browse 'http://www.google.com'
 browse=:'text/html'&view
+
 
 viewpdf=:'application/pdf'&view
 
