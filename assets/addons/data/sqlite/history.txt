@@ -1,0 +1,46 @@
+data/sqlite - change history
+
+== 1.0.14/5 ==
+ * chg: UNAME android
+
+== 1.0.10/13 ==
+ * chg: move test scripts/files to sub-folder
+ * chg: j701
+ * chg: compatible with j602/j601 upon next base library release
+
+== 1.0.9 ==
+ * chg: binary version 3.6.14.2
+
+== 1.0.8 ==
+ * chg: replaced adverb queryloop with verb and global reference
+ * chg: converted Self-reference verbs to pure explicit
+ * see: http://www.jsoftware.com/pipermail/programming/2008-November/012942.html
+
+== 1.0.7 ==
+ * chg: find_dll for Mac and Linux
+ * chg: 64-bit support (sometimes crashes)
+
+== 1.0.6 ==
+ * chg: binary version 3.5.9
+
+== 1.0.5 ==
+ * chg: j602
+
+== 1.0.3 ==
+ * chg: binary version 3.3.17
+ * chg: menu and title in browser
+
+== 1.0.2 ==
+ * JAL
+
+== 1.0.1 ==
+ * add: SQLite Browser application views and queries database schema and data
+ * add: blobsize
+ * add: optional transaction in apply (per Bill Lam)
+ * add: strtbl (per David Mitchell)
+ * fix: double binding fix
+ * fix: lib location fix to allow spaces in folder names (per Yuvaraj Athur Raghuvir)
+
+== 1.0.0 ==
+ * add: created
+ * add: A new object-oriented database API
