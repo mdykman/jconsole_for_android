@@ -4,9 +4,6 @@ IFWIN=: 6=9!:12''
 
 jpathsep_z_=: '/'&(('\' I.@:= ])})
 GTKPATH=: '/gtk/' ,~ ({.~ i:&'/') jpathsep BINPATH
-log=: 3 : 0
-((":y),10{a.) 1!:3 <'/tmp/t1.txt'
-)
 run=: 3 : 0
 gtkinit_z_''
 File=: y
@@ -38,16 +35,7 @@ p=. gdk_pixbuf_new_from_file_at_scale File;;/y,0,0
 gtk_image_set_from_pixbuf image,p
 )
 3 : 0''
-if. IFWIN do. 
-  UNAME=: 'Win' 
-elseif. IFDEF'android' do.
-  UNAME=: 'Linux' 
-elseif. do.
-  UNAME=: LF -.~ 2!:0 'uname' 
-end.
-
-
-
+if. IFWIN do. UNAME=: 'Win' else. UNAME=: LF -.~ 2!:0 'uname' end.
 select. UNAME
 case. 'Darwin' do.
   libdir=. GTKPATH,'lib/'

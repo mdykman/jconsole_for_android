@@ -5,7 +5,7 @@ require 'graphics/color/colortab'
 3 : 0''
 if. -.IFJ6 do.
   if. 0 ~: 4!:0 <'JHSOUTPUT' do. JHSOUTPUT=: 'canvas' end.
-  if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: 'cairo' end.
+  if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: (UNAME-:'Android'){::'cairo';'pdf' end.
   if. 0 ~: 4!:0 <'GTKOUTPUT' do. GTKOUTPUT=: 'gtk' end.
   if. 0 ~: 4!:0 <'IFTESTPLOTJHS' do. IFTESTPLOTJHS_z_=: 0 end.
   if. IFTESTPLOTJHS +. IFJHS do.
@@ -15,7 +15,7 @@ if. -.IFJ6 do.
   elseif. IFGTK do.
     require 'graphics/bmp'
     require 'gui/gtk graphics/gl2'
-    if. GTKOUTPUT -: 'isi' do.
+    if. 0[ GTKOUTPUT -: 'isi' do.
       require 'gtkwd'
     end.
     coinsert 'jgl2'
@@ -291,6 +291,32 @@ smooth=: (cubicspline@:(,:~ i.@#) interspline i.&.(4&*)@#)"1
 steps=: {. + (1&{ - {.) * (i.@>: % ])@{:
 unquot=: 3 : 0
 '" ' charsub y
+)
+selectpid=: 3 : 0
+if. 0~: (0&". ::]) PIdhwnd do.
+  glsel PIdhwnd
+elseif. #PId do.
+  glsel PId
+end.
+)
+gtkwidget_event=: 4 : 0
+evt=. >@{.y
+syshandler=. PForm, '_handler'
+sysevent=. PForm,'_',PId,'_', evt
+sysdefault=. PForm, '_default'
+if. 1=#y do.
+  wdd=. ;: 'syshandler sysevent sysdefault'
+elseif. 2=#y do.
+  sysdata=. ": >1{y
+  wdd=. ;: 'syshandler sysevent sysdefault sysdata'
+elseif. 3=#y do.
+  sysdata=. ": >1{y
+  sysmodifiers=. ": >2{y
+  wdd=. ;: 'syshandler sysevent sysdefault sysdata sysmodifiers'
+end.
+wdqdata=. (wdd ,. ".&.>wdd)
+evthandler wdqdata
+0
 )
 rectcenter=: 2&{. + -:@(2 3&{)
 angle2=: [: r.^:_1 *@(j./)"1
@@ -652,6 +678,7 @@ Data=: ''
 PForm=: 'plot'
 Ch=: Cw=: 0
 PId=: 'gs'
+PIdhwnd=: 0
 Plot=: i. 0 0
 PFormhwnd=: 0[''
 Poutput=: _1
@@ -738,7 +765,7 @@ end.
 if. -.IFJ6 do.
   if. -. IFTESTPLOTJHS +. IFJHS +. IFGTK do.
     if. ('gtk' -: CONSOLEOUTPUT) *. (3 = 4!:0 <'gtkinit_jgtk_') *. (UNAME -: 'Linux') *: (0 -: 2!:5 'DISPLAY') do.
-      if. 'isi' -: GTKOUTPUT do.
+      if. 0[ 'isi' -: GTKOUTPUT do.
         r=. 'OUTPUT=: ''isi'''
       else.
         r=. 'OUTPUT=: ''gtk'''
@@ -1128,7 +1155,7 @@ subres
 )
 plotshow=: 3 : 0
 gtk_window_present_with_time_jgtk_ ((0&". ::]) PFormhwnd),GDK_CURRENT_TIME_jgtk_
-glsel PIdLoc
+selectpid''
 gpinit''
 make ''
 gtk_show 1
@@ -1304,7 +1331,7 @@ if. -.IFJ6 do.
   if. IFTESTPLOTJHS +. IFJHS do.
     r=. 'OUTPUT=: JHSOUTPUT'
   elseif. IFGTK do.
-    if. 'isi' -: GTKOUTPUT do.
+    if. 0[ 'isi' -: GTKOUTPUT do.
       r=. 'OUTPUT=: ''isi'''
     else.
       r=. 'OUTPUT=: ''gtk'''
@@ -2247,7 +2274,13 @@ try.
   PFormhwnd=: 0
   pd 'reset'
 catch. end.
-if. (ifjwplot'') *. -.IFGTK do. gtk_main_quit_jgtk_ '' end.
+if. (ifjwplot'') *. -.IFGTK do.
+  f=. 1
+  if. (0: <: 18!:0) <'gtkwd' do.
+    if. 0~: #windowList_gtkwd_ do. f=. 0 end.
+  end.
+  if. f do. gtk_main_quit_jgtk_'' [ gtkMainLoop_jgtk_=: 0 end.
+end.
 0
 )
 popen_gtk=: 3 : 0
@@ -2256,7 +2289,7 @@ if. 0~: (0&". ::]) PFormhwnd do.
     if. 0= gtk_window_has_toplevel_focus_jgtk_ ((0&". ::]) PFormhwnd) do.
       gtk_window_present_with_time_jgtk_ ((0&". ::]) PFormhwnd),GDK_CURRENT_TIME_jgtk_
     end.
-    glsel PIdLoc
+    selectpid''
     0 return.
   end.
 end.
@@ -2264,10 +2297,10 @@ PFormhwnd=: window=. gtk_window_new_jgtk_ GTK_WINDOW_TOPLEVEL_jgtk_
 'Cw Ch'=: 480 360
 gtk_window_set_title_jgtk_ window;PLOTCAPTION
 gtk_widget_set_name_jgtk_ window;PForm
-PIdLoc=: glcanvas_jgl2_ PForm;PId;(Cw,Ch);coname''
+PIdhwnd=: glcanvas_jgl2_ (Cw,Ch);coname''
 box=. gtk_vbox_new_jgtk_ 0 0
 gtk_container_add_jgtk_ window,box
-gtk_box_pack_start_jgtk_ box, canvas__PIdLoc, 1 1 0
+gtk_box_pack_start_jgtk_ box, PIdhwnd, 1 1 0
 consig_jgtk_ window;'destroy';'pclose';coname''
 
 if. ifjwplot'' do.
@@ -2279,8 +2312,8 @@ id=. fm,PId,'_'
 (fm,'close')=: pclose_gtk
 (fm,'cancel')=: pclose_gtk
 (fm,'tctrl_fkey')=: ptop_gtk
-(id,'paint')=: ppaint
-(id,'size')=: ppaint
+(id,'paint')=: ppaint_gtk
+(id,'size')=: ppaint_gtk
 (id,'mmove')=: ]
 
 (fm,'f10_fkey')=: pd bind 'eps'
@@ -2291,9 +2324,10 @@ PShow=: 0
 1
 )
 ppaint_gtk=: 3 : 0
-if. newsize__PIdLoc do.
+l=. glgetloc PIdhwnd
+if. newsize__l do.
   gtk_show ''
-  newsize__PIdLoc=: 0
+  newsize__l=: 0
 end.
 0
 )
@@ -2307,12 +2341,11 @@ PTop=: -. PTop
 gtk_window_set_keep_above_jgtk_ ((0&". ::]) PFormhwnd), PTop
 0
 )
-
-pclose=: 3 : 'pclose_gtk`pclose_isi@.((_1=Poutput){(iISI=Poutput),GTKOUTPUT-:''isi'') y'
-popen=: 3 : 'popen_gtk`popen_isi@.((_1=Poutput){(iISI=Poutput),GTKOUTPUT-:''isi'') y'
-ppaint=: 3 : 'ppaint_gtk`ppaint_isi@.((_1=Poutput){(iISI=Poutput),GTKOUTPUT-:''isi'') y'
-psize=: 3 : 'psize_gtk`psize_isi@.((_1=Poutput){(iISI=Poutput),GTKOUTPUT-:''isi'') y'
-ptop=: 3 : 'ptop_gtk`ptop_isi@.((_1=Poutput){(iISI=Poutput),GTKOUTPUT-:''isi'') y'
+pclose=: pclose_gtk
+popen=: popen_gtk
+ppaint=: ppaint_gtk
+psize=: psize_gtk
+ptop=: ptop_gtk
 PMenu=: 0 : 0
 menupop "&File";
 menu clip "&Clip" "" "" "";
@@ -5435,9 +5468,9 @@ while. _1 -: dat flwrites file do.
   else.
     info msg,'The file name is invalid.' return. end.
 end.
-if. 0 = 4!:0 <'EPSREADER_j_' do.
-  if. check_epsreader EPSREADER_j_ do.
-    wd 'winexec *',EPSREADER_j_,' ',file
+if. 0 = 4!:0 <'EPSReader_j_' do.
+  if. check_EPSReader EPSReader_j_ do.
+    fork_jtask_ (dquote EPSReader_j_),' ',dquote file
   else.
     info 'File written: ',file
   end.
@@ -5819,7 +5852,7 @@ sty=. (bld#' bold'),(ita#' italic'),und#' underline'
 )
 gtk_getsize=: 3 : 0
 if. 0=(0&". ::]) PFormhwnd do. '' return. end.
-_2{.getGtkWidgetAllocation_jgtk_ canvas__PIdLoc
+_2{.getGtkWidgetAllocation_jgtk_ (0&". ::]) PIdhwnd
 )
 output_parms=: 4 : 0
 'size file'=. x
@@ -6172,9 +6205,10 @@ gtk_gpbuf ,gtk_gpcount 2029 ,"1 p
 gtk_print=: 3 : 0
 if. IFGTK < ifjwplot'' do. pdcmdprint=: 1 return. end.
 window=. gtk_window_new_jgtk_ GTK_WINDOW_TOPLEVEL_jgtk_
-gloc=. glcanvas_jgl2_ '';'';540 400;coname''
-print__gloc''
-if. -.IFGTK do. gtk_main_jgtk_ '' end.
+canvas=. glcanvas_jgl2_ 540 400;coname''
+l=. glgetloc_jgl2_ canvas
+print__l''
+evtloop_jgtk_''
 )
 gtk_def=: 4 : 0
 type=. x
@@ -6184,7 +6218,7 @@ file=. jpath ('.',type) fext (;qchop y),(0=#y) # GTK_DEFFILE
 gtk_emf=: 0:
 gtk_gif=: 0:
 gtk_getrgb=: 3 : 0
-glsel PIdLoc
+selectpid''
 box=. 0 0,glqwh''
 (2}.box),glqpixels box
 )
@@ -6193,14 +6227,14 @@ type=. 'bmp'
 file=. jpath ('.',type) fext (;qchop y),(0=#y) # GTK_DEFFILE
 rgb=. gtk_getrgb''
 if. IFWIN do.
-  ((1 0{rgb) $ flip_rgb 2}.rgb) writebmp file
+  ((1 0{rgb) $ fliprgb 2}.rgb) writebmp file
 else.
   rgb saveimg type;file
 end.
 )
 gtk_emf=: 3 : 0
 file=. jpath '.emf' fext (;qchop y),(0=#y) # GTK_DEFFILE
-glsel PIdLoc
+glsel PIdhwnd
 glfile file
 glemfopen''
 gtk_paint''
@@ -6255,12 +6289,6 @@ end.
 
 OR=: 23 b./
 
-flip_rgb=: 3 : 0
-d=. ((#y),4)$2 (3!:4) y
-d=. 2 1 0 3{"1 d
-_2(3!:4),d
-)
-
 saveimg=: 4 : 0
 'type fl'=. 2{.y
 type=. type, (type-:'tif')#'f'
@@ -6295,10 +6323,10 @@ if. PShow=0 do.
 end.
 gtk_paint''
 glpaint''
-if. -.gtkMainLoop_jgtk_ do. gtk_main_jgtk_ '' end.
+evtloop_jgtk_''
 )
 gtk_paint=: 3 : 0
-glsel PIdLoc
+selectpid''
 'Cw Ch'=: glqwh''
 gtk_paintit 0 0,Cw,Ch
 )
@@ -6849,7 +6877,7 @@ if. PShow=0 do.
 end.
 isi_paint''
 glpaint''
-wdloop^:(-.IFJ6)''
+evtloop^:(-.IFJ6)''
 )
 isi_paint=: 3 : 0
 glsel PId
@@ -6928,15 +6956,13 @@ while. _1 -: dat flwrite file do.
   else.
     info msg,'The file name is invalid.' return. end.
 end.
-if. VISIBLE *. 0 = 4!:0 <'PDFReader_j_' do.
-  if. #PDFReader_j_ do.
-    if. -.IFJ6 do.
-      fork_jtask_ (dquote PDFReader_j_),' ',dquote file
-    else.
-      if. IFUNIX *. IFCONSOLE do.
-        hostcmd (dquote PDFReader_j_),' ',dquote file
-      else.
-        wd 'winexec *',PDFReader_j_,' ',dquote file
+if. VISIBLE do.
+  if. -.IFJ6 do.
+    viewpdf_j_ file
+  else.
+    if. 0 = 4!:0 <'PDFReader_j_' do.
+      if. #PDFReader_j_ do.
+        fork_jtask_ (dquote PDFReader_j_),' ',dquote file
       end.
     end.
   end.

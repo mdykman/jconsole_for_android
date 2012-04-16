@@ -66,33 +66,33 @@ isjpkgout=: ((4 = {:) *. 2 = #)@$ *. 1 = L.
 getintro=: ('...' ,~ -&3@[ {. ])^:(<#)
 info=: smoutput
 getnames=: 3 : 0
-  select. L.y
-  case. 0 do.
-    if. +/ BASELIB E. y do.
-      y=. (<BASELIB), cutnames y rplc BASELIB;''
-    else.
-      y=. cutnames y
-    end.
-  case. 1 do.
-    if. 2 = #$y  do.
-      y=. {."1 y
-    else.
-      y=. ,y
-    end.
-  case. do.
-    '' return.
+select. L.y
+case. 0 do.
+  if. +/ BASELIB E. y do.
+    y=. (<BASELIB), cutnames y rplc BASELIB;''
+  else.
+    y=. cutnames y
   end.
-  y
+case. 1 do.
+  if. 2 = #$y do.
+    y=. {."1 y
+  else.
+    y=. ,y
+  end.
+case. do.
+  '' return.
+end.
+y
 )
 curtailcaption=: 3 : 0
-  idx=. <_1;~I. 45<#&>{:"1 y
-  y=. (45&getintro &.> idx{y) idx}y
+idx=. <_1;~I. 45<#&>{:"1 y
+y=. (45&getintro &.> idx{y) idx}y
 )
 deltree=: 3 : 0
-  try.
-    res=. 0< ferase {."1 dirtree y
-    *./ res,0<ferase |.dirpath y
-  catch. 0 end.
+try.
+  res=. 0< ferase {."1 dirtree y
+  *./ res,0<ferase |.dirpath y
+catch. 0 end.
 )
 fixjal=: 3 : 0
 if. 2 > #y do. i.0 5 return. end.
@@ -138,8 +138,10 @@ siz=. <&> 0 ". (ndx+1) }.&> fls
 fls=. ndx {.each fls
 zps=. <;._2 &> fls ,each '_'
 pfm=. 3 {"1 zps
-msk=. (IFUNIX*.-.IFDEF'android')~: (1 e. 'win'&E.) &> pfm
-NB. msk=. IFUNIX ~: (1 e. 'win'&E.) &> pfm
+uname=. tolower UNAME
+if. UNAME-:'Darwin' do. uname=. 'linux' end.
+msk=. (uname -: ({.~ i.&'.')) &> pfm
+if. 1 ~: +/msk do. msk=. 1,~ }:msk end.
 msk # zps,.fls,.siz
 )
 fixrev=: 3 : 0
@@ -190,7 +192,6 @@ if. ischar y do. y return. end.
 fmtverlib=: 3 : 0
 fmtver y
 )
-
 fixzips=: 3 : 0
 if. 2 > #y do. i.0 5 return. end.
 fls=. <;._2 y
@@ -200,6 +201,7 @@ fls=. ndx {.each fls
 zps=. <;._2 &> fls ,each '_'
 zps=. zps,.fls,.<&>siz
 pfm=. 3 {"1 zps
+and=. (1 e. 'android'&E.) &> pfm
 lnx=. (1 e. 'linux'&E.) &> pfm
 mac=. (1 e. 'darwin'&E.) &> pfm
 win=. mac < (1 e. 'win'&E.) &> pfm
@@ -208,12 +210,9 @@ select. UNAME
 case. 'Win' do.
   zps=. win # zps
 case. 'Linux' do.
-  if.(IFDEF'android') do.
-NB. this will have to do for the time being
-    zps=. win # zps
-  else.
-    zps=. lnx # zps
-  end.
+  zps=. lnx # zps
+case. 'Android' do.
+  zps=. (lnx +. and) # zps
 case. 'Darwin' do.
   zps=. (lnx +. mac) # zps
   zps=. zps /: 3 {"1 zps
@@ -281,14 +280,14 @@ a=. a #~ '-d' -:"1 [ 1 4 {"1 > 4 {"1 a
 (<y) ,each ({."1 a) ,each '/'
 )
 testaccess=: 3 : 0
-f=. <jpath'~bin\installer.txt'
+f=. <jpath'~bin/installer.txt'
 d=. 1!:1 f
 try.
- 1!:55 f
- d 1!:2 f
- 1
+  1!:55 f
+  d 1!:2 f
+  1
 catch.
- 0
+  0
 end.
 )
 toupper1=: 3 : 0
@@ -299,22 +298,29 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  if. IFDEF'android' do.
-    require '~addons/api/android/android.ijs'
+  if. (UNAME-:'Android') *. '.zip"'-:_5{.file do.
+    e=. ''
     'file dir'=. y
-	e=. dir andunzip_droid_ file
-	if. -. e = 0 do. smoutput 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end. 
+    e1=. dir andunzip file
+    if. -. e1 = 0 do. e=. 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end.
   else.
     e=. shellcmd 'tar -xzf ',file,' -C ',dir
   end.
 else.
-   dir=. (_2&}. , '/' -.~ _2&{.) dir
+  dir=. (_2&}. , '/' -.~ _2&{.) dir
   e=. shellcmd UNZIP,' ',file,' -d ',dir
 end.
 e
 )
 zipext=: 3 : 0
-y, (IFUNIX*.-.IFDEF'android')pick '.zip';'.tar.gz'
+y, (IFUNIX>UNAME-:'Android')pick '.zip';'.tar.gz'
+)
+anddf=: 4 : '''libj.so android_download_file > i *c *c'' 15!:0 x;y'
+andurl =:'http://www.jsoftware.com/moin_static180/common/jwlogo.png'
+andunzip =: 3 : 0
+ '' andunzip y
+:
+ 'libj.so java_unzip_file > i *c *c' 15!:0 y;x
 )
 CHECKADDONSDIR=: 0 : 0
 The addons directory does not exist and cannot be created.
@@ -424,7 +430,7 @@ select. 0 < addnim,addupm
 case. 0 0 do.
   msg=. 'Addons are up to date.'
 case. 0 1 do.
-  msg=. 'All addons are installed, ',(":addupm), ' can be updated.'
+  msg=. 'All addons are installed, ',(":addupm), ' can be upgraded.'
 case. 1 0 do.
   if. addnim = <:#PKGDATA do.
     msg=. 'No addons are installed.'
@@ -433,7 +439,7 @@ case. 1 0 do.
     msg=. 'Installed addons are up to date, ',(":addnim),j
   end.
 case. 1 1 do.
-  j=. (":addupm),' addon',('s'#~1<addupm),' can be updated, '
+  j=. (":addupm),' addon',('s'#~1<addupm),' can be upgraded, '
   msg=. j,(":addnim), ' addon',('s'#~1<addnim),' are not yet installed.'
 end.
 if. 0 = libupm do.
@@ -471,10 +477,9 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  if. IFDEF'android' do.
-    require '~addons/api/android/android.ijs'
-	rr=.f anddf_droid_ p
-	if. rr >: 0 do.
+  if. UNAME-:'Android' do.
+    rr=. f anddf p
+    if. rr >: 0 do.
       r=. 0;p
     else.
       msg=. 'Download failed: ',f,'. returned ',": rr
@@ -484,7 +489,7 @@ try.
     end.
     ferase q
     r
-	return.
+    return.
   else.
     e=. shellcmd cmd
   end.
@@ -527,7 +532,7 @@ install_console=: 3 : 0
   if. -. init_console 'server' do. '' return. end.
   pkgs=. getnames y
   if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
-  pkgs=. pkgs (e. # [) ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
+  pkgs=. pkgs (e. # [) ~. (<'base library'), ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
   if. 0 = num=. #pkgs do. '' return. end.
   many=. 1 < num
   msg=. 'Installing ',(":num),' package',many#'s'
@@ -552,7 +557,6 @@ if. 0 e. msk do.
 end.
 install_addon each msk # y
 )
-
 install_addon=: 3 : 0
 ndx=. ({."1 ZIPS) i. <y
 if. ndx = #ZIPS do. EMPTY return. end.
@@ -562,6 +566,7 @@ f=. 3 pick ndx { ZIPS
 if. rc do. return. end.
 log 'Installing ',y,'...'
 msg=. unzip p;jpath'~addons'
+ferase p
 if. 0>:fsize jpath'~addons/',y,'/manifest.ijs' do.
   log 'Extraction failed: ',msg
   info 'Extraction failed:',LF2,msg
@@ -569,7 +574,6 @@ if. 0>:fsize jpath'~addons/',y,'/manifest.ijs' do.
 end.
 install_addins y
 install_config y
-0 0$0
 )
 install_addins=: 3 :0
 fl=. ADDCFG,'addins.txt'
@@ -606,6 +610,11 @@ ADDLABS=: ; txt ,each LF
 install_library=: 3 : 0
 log 'Downloading base library...'
 f=. 1 pick LIB
+if. UNAME-:'Android' do.
+  if. -. 1 e. '_android.zip' E. f do.
+    f=. '_android.zip',~ ({.~ i:&'_') f
+  end.
+end.
 'rc p'=. httpget WWW,'library/',f
 if. rc do. return. end.
 log 'Installing base library...'

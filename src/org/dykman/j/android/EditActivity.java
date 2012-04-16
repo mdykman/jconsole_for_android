@@ -32,8 +32,9 @@ public class EditActivity extends AbstractActivity {
 		editor = (FileEdit) findViewById(R.id.edit);
 		editor.setActivity(this);
 		theApp = (JConsoleApp) this.getApplication();
-		Bundle b = getIntent().getExtras();
-		String s = b.getString("file");
+		String s = getIntent().getData().getPath();
+//		Bundle b = getIntent().getExtras();
+//		String s = b.getString("file");
 		file = new File(s);
 		theApp.addFile(file.getAbsolutePath(),getIntent());
 		editor.setName(file.getName());

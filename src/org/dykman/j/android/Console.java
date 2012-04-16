@@ -178,6 +178,9 @@ public class Console extends FileEdit {
 		return res;
 	}
 
+	public void quit() {
+		jActivity.quit();
+	}
 	public void consoleOutput(int type,String s) {
 		if(s!=null) appendSeq(s,getColorForType(type));
 	}

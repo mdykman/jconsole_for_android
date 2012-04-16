@@ -107,6 +107,25 @@ memf py
 x,y,w,h,m
 )
 gtkeventkey=: 3 : '_2 ic memr y,GdkEventKey,8'
+
+get_mousebutton=: 3 : 0
+256#.endian a.i.memr y,GdkEventButton_button,4
+)
+get_mousetype=: 3 : 0
+{. memri4 y
+)
+gtkeventmouse=: 3 : 0
+event=. y
+button=. get_mousebutton event
+evt=. get_mousetype event
+gdk_event_get_coords event;(x1=. ,1.5-1.5);(y1=. ,1.5-1.5)
+mousepos=. <.x1,y1
+dir=. 256#.endian a.i.memr event,GdkEventScroll_direction,4
+rc=. gdk_event_get_state event;state=. ,_1
+assert. 0~:rc
+state=. {.state
+button,evt,mousepos,dir,state
+)
 gtkfixf10=: 3 : 0
 a=. gtk_settings_get_default''
 gtk_settings_set_string_property a;'gtk-menu-bar-accel';'';''
@@ -198,12 +217,6 @@ p=. mema #t
 t memw p,0,#t
 p + +/\ 0,}:len
 )
-fliprgb_z_=: 3 : 0
-s=. $y
-d=. ((#y),4)$2 (3!:4) y=. ,y
-d=. 2 1 0 3{"1 d
-s$_2(3!:4),d
-)
 settimer=: 3 : 0
 g_timeout_add_full 200;y;cb1;(cbreg 'sys_timer__');0
 )
@@ -238,7 +251,7 @@ elseif. UNAME-:'Win' do.
     dngettext_z_=: 3 : 'decodecesc helper_g_locale_to_utf8_jgtk_ < ''intl.dll dngettext > + x *c *c *c x''&cd _1 |.y'
     gettext_noop_z_=: decodecesc
   end.
-elseif. UNAME-:'Darwin' do.
+elseif. do.
   bindtextdomain_z_=: bind_textdomain_codeset_z_=: textdomain_z_=: 0:
   gettext_z_=: decodecesc
   dgettext_z_=: decodecesc@>@{.
@@ -248,7 +261,38 @@ elseif. UNAME-:'Darwin' do.
 end.
 ''
 )
-
+evtloop_z_=: 3 : 0
+if. gtkInitDone_jgtk_ > IFGTK +. gtkMainLoop_jgtk_ do. gtk_main_jgtk_'' [ gtkMainLoop_jgtk_=: 1 end.
+EMPTY
+)
+evthandler_z_=: 3 : 0
+evtdata=: y
+evt_val=. {:"1 evtdata
+({."1 evtdata)=: evt_val
+if. 3=4!:0<'evthandler_debug' do.
+  try. evthandler_debug'' catch. end.
+end.
+evt_ndx=. 1 i.~ 3 = 4!:0 [ 3 {. evt_val
+if. 3 > evt_ndx do.
+  evt_fn=. > evt_ndx { evt_val
+  if. 13!:17'' do.
+    evt_fn~''
+  else.
+    try. evt_fn~''
+    catch.
+      evt_err=. 13!:12''
+      if. 0=4!:0 <'ERM_j_' do.
+        evt_erm=. ERM_j_
+        ERM_j_=: ''
+        if. evt_erm -: evt_err do. i.0 0 return. end.
+      end.
+      evt_err=. LF,,LF,.}.;._2 evt_err
+      sminfo 'evthandler';'error in: ',evt_fn,evt_err
+    end.
+  end.
+end.
+i.0 0
+)
 3 : 0''
 if. 0~:nc<'GTKVER_j_' do. GTKVER_j_=: 2 end.
 if. 3=GTKVER_j_ do.
@@ -269,7 +313,7 @@ if. 3=GTKVER_j_ do.
     libpixbuf=: <dquote libdir,'libgdk_pixbuf-2.0.0.dylib'
     libxml=: <dquote libdir,'libxml2.2.dylib'
     if. -.fexist '"'-.~>libigemac do. libigemac=: '' end.
-  case. 'Linux' do.
+  case. 'Linux';'Android' do.
     libglib=: <'libglib-2.0.so.0'
     libcairo=: <'libcairo.so.2'
     libgdk=: <'libgdk-3.so.0'
@@ -319,7 +363,7 @@ else.
       libgdk=: <dquote libdir,'libgdk-x11-2.0.0.dylib'
       libgtk=: <dquote libdir,'libgtk-x11-2.0.0.dylib'
     end.
-  case. 'Linux' do.
+  case. 'Linux';'Android' do.
     libcairo=: <'libcairo.so.2'
     libgdk=: <'libgdk-x11-2.0.so.0'
     libgio=: <'libgio-2.0.so.0'
@@ -835,13 +879,16 @@ g_key_file_free > n x
 g_key_file_get_string > x x *c *c x
 g_key_file_load_from_file > i x *c x *x
 g_key_file_new > x
+g_list_free > n x
 g_list_length > i x
 g_list_nth_data > x x x
-g_list_free  n x
 g_locale_from_utf8 > x *c x *x *x x
 g_locale_to_utf8 > x *c x *x *x x
 g_log0 > n *c i *c : doamin, loglevel, format with 0 optional arg
+g_markup_escape_text > x *c x
 g_pattern_match_simple > i *c *c
+g_slist_length > i x
+g_slist_nth_data > x x i
 g_source_remove > i i
 g_timeout_add_full > x x x x x x
 g_utf8_validate > i *c x x
@@ -866,8 +913,8 @@ gdk_draw_point > n x x x x
 gdk_draw_polygon > n x x i *x x
 gdk_draw_rectangle > n x x i x x x x
 gdk_drawable_get_colormap > x x
-gdk_event_get_coords x x *d *d
-gdk_event_get_state x x *x
+gdk_event_get_coords > i x *d *d
+gdk_event_get_state > i x *i
 gdk_gc_new > x x
 gdk_gc_set_clip_rectangle > n x *c : xwyh in char (2(3!:4)xywh)
 gdk_gc_set_line_attributes > n x x x x x
@@ -923,7 +970,7 @@ libgtk cddef each <;._2 [ 0 : 0
 : isigraph
 
 gtk_about_dialog_new > x
-gtk_about_dialog_set_comments  n x *c
+gtk_about_dialog_set_comments > n x *c
 gtk_about_dialog_set_copyright > n x *c
 gtk_about_dialog_set_logo_icon_name > n x *c
 gtk_about_dialog_set_name > n x *c              : decommited in 3.0
@@ -939,10 +986,12 @@ gtk_accelerator_valid > i i i
 gtk_adjustment_get_value > d x
 gtk_adjustment_new > x d d d d d d
 
+gtk_alignment_get_padding > n x *i *i *i *i
 gtk_alignment_new > x f f f f
-gtk_alignment_set_padding > n x x x x x
+gtk_alignment_set_padding > n x i i i i
 
 gtk_bin_get_child > x x
+
 gtk_box_pack_start > n x x x x x
 gtk_box_pack_end > n x x i i x
 gtk_box_reorder_child > n x x i
@@ -996,7 +1045,7 @@ gtk_clipboard_wait_for_text > x x
 : color selection dialog
 gtk_color_selection_dialog_get_color_selection > x x
 gtk_color_selection_dialog_new > x *c
-gtk_color_selection_get_current_color n x *x
+gtk_color_selection_get_current_color > n x *x
 
 gtk_combo_box_append_text > x x *c
 gtk_combo_box_entry_new > x                     : decommited in 3.0
@@ -1019,11 +1068,11 @@ gtk_combo_box_get_has_entry > i x               : since 2.24
 gtk_combo_box_text_new > x                      : since 2.24
 gtk_combo_box_text_get_active_text > x x        : since 2.24
 
-gtk_container_add n x x
+gtk_container_add > n x x
 gtk_container_get_children > x x
 gtk_container_remove > n x x
 gtk_container_resize_children > n x
-gtk_container_set_border_width n x x
+gtk_container_set_border_width > n x x
 
 gtk_dialog_add_action_widget > n x x x
 gtk_dialog_add_button > x x *c i
@@ -1044,8 +1093,8 @@ gtk_entry_get_text > x x
 gtk_entry_new > x
 gtk_entry_set_editable > n x x
 gtk_entry_set_max_length > n x x
-gtk_entry_set_text n x *c
-gtk_entry_set_visibility n x i
+gtk_entry_set_text > n x *c
+gtk_entry_set_visibility > n x i
 
 gtk_event_box_new > x
 gtk_events_pending > x
@@ -1111,13 +1160,14 @@ gtk_image_set_from_file > n x *c
 gtk_image_set_from_file_utf8 > n x *c : win64 version
 gtk_image_set_from_pixbuf > n x x
 
-gtk_init  n *x x
+gtk_init > n *x x
 
 gtk_label_get_label > x x
 gtk_label_new > x *c
 gtk_label_new_with_mnemonic > x *c
 gtk_label_set_justify > n x x
 gtk_label_set_line_wrap > n x i
+gtk_label_set_line_wrap_mode > n x i
 gtk_label_set_markup > n x *c
 gtk_label_set_mnemonic_widget > n x x
 gtk_label_set_text > n x *c
@@ -1199,6 +1249,9 @@ gtk_paned_get_position > x x
 gtk_progress_bar_new > x
 gtk_progress_bar_set_fraction > n x d
 
+gtk_radio_button_get_group > x x
+gtk_radio_button_new_with_label > x x *c
+gtk_radio_button_new_with_label_from_widget > x x *c
 gtk_radio_button_new_with_mnemonic_from_widget > x x *c
 
 gtk_range_get_value > d x
@@ -1250,7 +1303,7 @@ gtk_text_buffer_delete_mark > n x x
 gtk_text_buffer_delete_selection > i x i i
 gtk_text_buffer_end_user_action > n x
 gtk_text_buffer_get_bounds > n x *x *x
-gtk_text_buffer_get_end_iter x x *x
+gtk_text_buffer_get_end_iter > x x *x
 gtk_text_buffer_get_insert > x x           : mark,buffer
 gtk_text_buffer_get_iter_at_line > n x *x i
 gtk_text_buffer_get_iter_at_mark > n x *x x : n, buffer,iter,mark
@@ -1259,7 +1312,7 @@ gtk_text_buffer_get_line_count > i x
 gtk_text_buffer_get_mark > x x *c
 gtk_text_buffer_get_selection_bound > x x
 gtk_text_buffer_get_selection_bounds > i x *x *x
-gtk_text_buffer_get_start_iter x x *x
+gtk_text_buffer_get_start_iter > x x *x
 gtk_text_buffer_get_text > x x *x *x x
 gtk_text_buffer_insert > n x *x *c x       : n, buffer,iter,text,len
 gtk_text_buffer_insert_at_cursor > n x *c i : n, buffer,text,len
@@ -1280,9 +1333,8 @@ gtk_text_iter_equal > i *x *x
 gtk_text_iter_forward_chars > i *x i
 gtk_text_iter_forward_to_line_end > i *x
 gtk_text_iter_forward_word_end > i *x
-gtk_text_iter_get_char > x *x
-gtk_text_iter_get_char i *x
-gtk_text_iter_get_line > x *x
+gtk_text_iter_get_char > i *x
+gtk_text_iter_get_line > i *x
 gtk_text_iter_get_line_offset > i *x
 gtk_text_iter_get_offset > i *x
 gtk_text_iter_get_text > x *x *x
@@ -1340,7 +1392,7 @@ gtk_tree_model_iter_nth_child > i x *x x i
 gtk_tree_model_iter_next > i x *x
 
 gtk_tree_path_free > n x
-gtk_tree_path_get_indices * *
+gtk_tree_path_get_indices > x *
 gtk_tree_path_new_from_string > x *c
 gtk_tree_path_to_string > x x
 
@@ -1429,6 +1481,7 @@ gtk_widget_destroy > n x
 gtk_widget_get_allocated_height > i x
 gtk_widget_get_allocated_width > i x
 gtk_widget_get_allocation > n x *i
+gtk_widget_get_ancestor > x x x
 gtk_widget_get_can_default > i x
 gtk_widget_get_name > x x
 gtk_widget_get_pango_context > x x
@@ -1714,13 +1767,13 @@ gdk_pixbuf_save_to_buffer_2 > i x *x *x *c x *c *c x
 gdk_pixbuf_save_utf8 > i x *c *c x x
 )
 libgobject cddef each <;._2 [ 0 : 0
-g_object_get n x *c *x x : get int property - last arg 0 ends vararg
+g_object_get > n x *c *x x : get int property - last arg 0 ends vararg
 g_object_get_data > x x *c
-g_object_set n x *c x x : set int property - last arg 0 ends vararg
+g_object_set > n x *c x x : set int property - last arg 0 ends vararg
 g_object_set_data > n x *c x
 g_object_ref > x x
 g_object_unref > n x
-g_signal_connect_data x x *c x x x x
+g_signal_connect_data > x x *c x x x x
 g_type_init > n
 g_type_check_instance_is_a > i x x
 g_type_name > x x
@@ -1749,7 +1802,7 @@ pango_layout_context_changed > n x
 pango_layout_get_context > x x
 pango_layout_get_font_description > x x
 pango_layout_get_pixel_extents > n x x *x
-pango_layout_get_pixel_size n x *x *x
+pango_layout_get_pixel_size > n x *i *i
 pango_layout_new > x x
 pango_layout_set_attributes > n x x
 pango_layout_set_font_description > n x x
@@ -2544,7 +2597,6 @@ Debug=: 0
 
 IFSV=: 1
 GtkSetEnv=: 0
-RGBSEQ_j_=: 1
 f=. [: 15!:13 (IFWIN#'+') , ' x' $~ +:
 cb1=: f 2
 cb2=: f 3
@@ -2636,7 +2688,9 @@ i[gtk_text_buffer_get_start_iter y;i=. i.ITERSIZE
 )
 gtkinit=: 3 : 0
 if. gtkInitDone_jgtk_ do. i.0 0 return. end.
-if. UNAME-:'Linux' do.
+if. UNAME-:'Android' do.
+  i.0 0 return.
+elseif. UNAME-:'Linux' do.
   if. ((2=GTKVER_j_) +. ((3=GTKVER_j_) *. 'broadway' -.@-: 2!:5 'GDK_BACKEND')) *. 0 -: 2!:5 'DISPLAY' do. 13!:8[3 end.
 end.
 try.
@@ -3053,7 +3107,9 @@ if. isdir path do.
   gtk_file_chooser_set_current_folder w;path
 else.
   gtk_file_chooser_set_current_folder w;}:0 pick fpathname path
-  gtk_file_chooser_set_current_name w;1{fpathname path
+  if. type e. 1 2 do.
+    gtk_file_chooser_set_current_name w;1{fpathname path
+  end.
 end.
 for_p. pattern do.
   addpattern w;>p
@@ -3140,7 +3196,7 @@ d=. mema IF64{4 8
 gtk_tree_view_get_cursor y;c;d
 p=. {. memr c,0 1 4
 if. p=0 do. _1 return. end.
-r=. 0 pick gtk_tree_path_get_indices <<p
+r=. gtk_tree_path_get_indices <<p
 row=. {. _2 ic memr r,0 4
 gtk_tree_path_free p
 memf c
@@ -3152,7 +3208,7 @@ c=. mema IF64{4 8
 d=. mema IF64{4 8
 gtk_tree_view_get_visible_range y;c;d
 p=. {. memr c,0 1 4
-r=. 0 pick gtk_tree_path_get_indices <<p
+r=. gtk_tree_path_get_indices <<p
 row=. {. _2 ic memr r,0 4
 gtk_tree_path_free p
 memf c
@@ -3161,7 +3217,7 @@ row
 )
 listbox_row_activated=: 3 : 0
 'w p c d'=. y
-r=. 0 pick gtk_tree_path_get_indices <<p
+r=. gtk_tree_path_get_indices <<p
 row=. {. _2 ic memr r,0 4
 )
 listbox_select=: 3 : 0
@@ -3225,7 +3281,7 @@ d=. mema IF64{4 8
 gtk_tree_view_get_cursor y;c;d
 p=. {. memr c,0 1 4
 if. p=0 do. _1 return. end.
-r=. 0 pick gtk_tree_path_get_indices <<p
+r=. gtk_tree_path_get_indices <<p
 row=. {. _2 ic memr r,0 4
 gtk_tree_path_free p
 memf c
@@ -3237,7 +3293,7 @@ c=. mema IF64{4 8
 d=. mema IF64{4 8
 gtk_tree_view_get_visible_range y;c;d
 p=. {. memr c,0 1 4
-r=. 0 pick gtk_tree_path_get_indices <<p
+r=. gtk_tree_path_get_indices <<p
 row=. {. _2 ic memr r,0 4
 gtk_tree_path_free p
 memf c
@@ -3246,7 +3302,7 @@ row
 )
 listgrid_row_activated=: 3 : 0
 'w p c d'=. y
-r=. 0 pick gtk_tree_path_get_indices <<p
+r=. gtk_tree_path_get_indices <<p
 row=. {. _2 ic memr r,0 4
 )
 listgrid_select=: 3 : 0
@@ -3466,8 +3522,11 @@ memr y,0 1,JINT
 get_button_event_data=: 3 : 0
 gtkda get_button_event_data y
 :
-mousepos=. <.2 3{;gdk_event_get_coords y;(,0.0);,0.0
-state=. 2{;gdk_event_get_state y;,0
+gdk_event_get_coords y;(x1=. ,1.5-1.5);(y1=. ,1.5-1.5)
+mousepos=. <.x1,y1
+rc=. gdk_event_get_state y;state=. ,_1
+assert. 0~: rc
+state=. {.state
 (get_button y),(get_type y),mousepos,(2 3{getGtkWidgetAllocation x),state
 )
 
@@ -4142,8 +4201,11 @@ button_event=: 4 : 0
 n=. ,(get_button y){' lmr'
 x=. ,>(5=get_type y){x;'dbl'
 name=. 'mb',n,x
-mousepos=. <.2 3{;gdk_event_get_coords y;(,0.0);,0.0
-state=. 2{;gdk_event_get_state y;,0
+gdk_event_get_coords y;(x1=. ,1.5-1.5);(y1=. ,1.5-1.5)
+mousepos=. <.x1,y1
+rc=. gdk_event_get_state y;state=. ,_1
+assert. 0~: rc
+state=. {.state
 wh=. glqwh''
 sysdata=: 0":mousepos,wh,state
 if. _1=nc <name do. 0 return. end.
@@ -4179,8 +4241,11 @@ destroy ''
 motion_notify_event=: 3 : 0
 if. _1=nc <'mmove' do. 0 return. end.
 'widget event gpointer'=. y
-mousepos=. <.2 3{;gdk_event_get_coords event;(,0.0);,0.0
-state=. 2{;gdk_event_get_state event;,0
+gdk_event_get_coords event;(x1=. ,1.5-1.5);(y1=. ,1.5-1.5)
+mousepos=. <.x1,y1
+rc=. gdk_event_get_state event;state=. ,_1
+assert. 0~: rc
+state=. {.state
 wh=. glqwh''
 sysdata=: 0":mousepos,wh,state
 mmove''
@@ -4375,7 +4440,8 @@ gtktextxy=: y
 )
 glqextent=: 3 : 0 "1
 pango_layout_set_text gtkpl;(,y);#y
-_2 {. ;pango_layout_get_pixel_size gtkpl;(,2);,3
+pango_layout_get_pixel_size gtkpl;(w=. ,_1);h=. ,_1
+w,h
 )
 glqextentw=: 3 : 0 "1
 {."1>glqextent each<;._2 y,LF#~LF~:{:y
@@ -4421,7 +4487,8 @@ end.
 )
 gtkextent1=: 4 : 0
 pango_layout_set_text x;(,y);#y
-_2 {. ;pango_layout_get_pixel_size x;(,2);,3
+pango_layout_get_pixel_size x;(w=. ,_1);h=. ,_1
+w,h
 )
 gtkextentink=: 3 : 0
 'p txt font'=. y

@@ -21,13 +21,16 @@ Many thanks to Eric Iverson and Jsoftware for providing the source code for the 
 
  ** Introduction
  
- J is an astonishingly powerful mathematical tool which should be in the hands of every thinking person. Approached interactively, the user can start with simple problems and naturally build their skills until they can solve problems of enormous complexity. It defines the highest standard of what constitutes " A Tool For Thought".
+J is an astonishingly powerful mathematical tool which should be in the hands of every thinking person. Approached interactively, the user can start with simple problems and naturally build their skills until they can solve problems of enormous complexity. It defines the highest standard of what constitutes "A Tool For Thought".
  
- The present implementation does not yet provide all of the power available to modern J users, but it is the goal of this project to deliver precisely that.
+The goal of the present implementation is to make J available to the highest number of mobile users possible to promote J as a standard tool of mathematical anaysis.
 
   - michael dykman
   - Toronto, 2012
    
+ ** Usage
+Android uses 'activities' to present functionality to users, treating each windows a first-class UI entitiy. Exiting the console does not close open editors.  While it is possible to make the Android J console act close all windows, the pattern is deprecated in this environment. Rather than swim upstream against the prevailing environment, we have elected to let the native environment dictate this behaviour.
+
  ** Soft Keyboard
  
 To enable the J-specific soft keyboard which is provided with this package, go to Settings/Languages and Keyboards to explicitly enable JKeyboard.  Within the console app, long-pressing on the console screen will bring up a menu with the item "Input Method".  That sub-menu will allow you select the newly-enabled JKeyboard.

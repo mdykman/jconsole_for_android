@@ -1,41 +1,49 @@
 18!:4 <'z'
 3 : 0 ''
 
-
 notdef=. 0: ~: 4!:0 @ <
-IFDEF=: 3 : '0=4!:0<''DEF'',y,''_z_'''
 hostpathsep=: ('/\'{~6=9!:12'')&(I. @ (e.&'/\')@] })
 jpathsep=: '/'&(('\' I.@:= ])})
 winpathsep=: '\'&(('/' I.@:= ])})
 PATHJSEP_j_=: '/'
+IFDEF=: 3 : '0=4!:0<''DEF'',y,''_z_'''
 IF64=: 16={:$3!:3[2
 'IFUNIX IFWIN IFWINCE'=: 5 6 7 = 9!:12''
 IFGTK=: IFJHS=: IFBROADWAY=: 0
 IFJ6=: 0
 IFWINE=: IFWIN > 0-:2!:5'_'
-if. IF64 +. IFDEF'android' do.
+if. notdef 'UNAME' do.
+  if. IFUNIX do.
+    UNAME=: (2!:0 'uname')-.10{a.
+  elseif. do.
+    UNAME=: 'Win'
+  end.
+end.
+if. IF64 +. UNAME-:'Android' do.
   IFWOW64=: 0
-elseif. do.
+else.
   if. IFUNIX do.
     IFWOW64=: '64'-:_2{.(2!:0 'uname -m')-.10{a.
   else.
     IFWOW64=: 'AMD64'-:2!:5'PROCESSOR_ARCHITEW6432'
   end.
 end.
-
-if. IFDEF'android' do.
-  UNAME=:'Linux'
-elseif. IFUNIX do.
-  UNAME=: (2!:0 'uname')-.10{a.
-elseif. do.
-  UNAME=: 'Win'
-end.
-
 )
 jcwdpath=: (1!:43@(0&$),])@jpathsep@((*@# # '/'"_),])
 jsystemdefs=: 3 : 0
-xuname=.>(IFDEF'android'){UNAME;'android'
+xuname=. UNAME
 0!:0 <jpath '~system/defs/',y,'_',(tolower xuname),(IF64#'_64'),'.ijs'
+)
+18!:4 <'z'
+UNXLIB=: ([: <;._1 ' ',]);._2 (0 : 0)
+libc.so.6 libc.so libc.dylib libc.dylib
+libz.so.1 libz.so libz.dylib libz.dylib
+libsqlite3.so.0 libsqlite.so libsqlite3.dylib libsqlite3.dylib
+)
+unxlib=: 3 : 0
+r=. (;: 'c z sqlite3') i. <,y
+c=. (;: 'Linux Android Darwin iOS') i. <UNAME_z_
+(<r,c) {:: UNXLIB_z_
 )
 18!:4 <'z'
 'TAB LF FF CR DEL EAV'=: 9 10 12 13 127 255{a.
@@ -69,11 +77,9 @@ parm=. 32 = ;(3!:0)&.> argb
 getenv=: 2!:5
 inv=: inverse=: ^:_1
 3 : 0''
-if. 'Linux'-:UNAME do.
-  isatty=: 'libc.so.6 isatty > i i' & (15!:0)
-elseif. 'Darwin'-:UNAME do.
-  isatty=: 'libc.dylib isatty > i i' & (15!:0)
-elseif. do.
+if. IFUNIX do.
+  isatty=: (unxlib 'c'),' isatty > i i' & (15!:0)
+else.
   isatty=: 2: = ('kernel32 GetFileType > i x' & (15!:0)) @ ('kernel32 GetStdHandle > x i'& (15!:0)) @ - @ (10&+)
 end.
 ''
@@ -186,9 +192,10 @@ type=: {&t@(2&+)@(4!:0)&boxopen
 ucp=: 7&u:
 ucpcount=: # @ (7&u:)
 3 : 0''
-if. 'Linux'-:UNAME do. usleep=: 3 : '''libc.so.6 usleep > i i''&(15!:0) >.y'
-elseif. 'Darwin'-:UNAME do. usleep=: 3 : '''libc.dylib usleep > i i''&(15!:0) >.y'
-elseif. do. usleep=: 3 : '0: ''kernel32 Sleep > n i''&(15!:0) >.y % 1000'
+if. IFUNIX do.
+  usleep=: 3 : ('''',(unxlib 'c'),' usleep > i i'')&(15!:0) >.y')
+else.
+  usleep=: 3 : '0: ''kernel32 Sleep > n i''&(15!:0) >.y % 1000'
 end.
 EMPTY
 )
@@ -952,7 +959,7 @@ fpathcreate=: 3 : 0
 if. 0=#y do. 1 return. end.
 p=. (,'/'-.{:) jpathsep y
 if. # 1!:0 }: p do. 1 return. end.
-for_n. I. p='/' do.  1!:5 :: 0: < n{.p end.
+for_n. I. p='/' do. 1!:5 :: 0: < n{.p end.
 )
 fpathname=: +./\.@:=&'/' (# ; -.@[ # ]) ]
 fread=: 3 : 0
@@ -1020,13 +1027,11 @@ elseif. 'm'e.x do. dat=. ];._2 dat
 end.
 )
 frename=: 4 : 0
-x=. > fboxname x
-y=. > fboxname y
-if. x -: y do. return. end.
+if. x -: y do. 1 return. end.
 if. IFUNIX do.
-  2!:0 'mv "',y,'" "',x,'"'
+  0=((unxlib 'c'),' rename > i *c *c') 15!:0 y;x
 else.
-  'kernel32 MoveFileW i *w *w' 15!:0 (uucp y);uucp x
+  'kernel32 MoveFileW > i *w *w' 15!:0 (uucp y);uucp x
 end.
 )
 freplace=: 4 : 0
@@ -1110,7 +1115,7 @@ case. 'all' do.
 end.
 )
 getgtkbin=: 3 : 0
-if. UNAME -: 'Linux' do. return. end.
+if. (<UNAME) -.@e. 'Darwin';'Win' do. return. end.
 if. (0={.y,0) *. 0 < #1!:0 jpath '~install/gtk/lib' do. return. end.
 require 'pacman'
 smoutput 'Installing gtk binaries...'
@@ -1454,7 +1459,7 @@ if. LF e. t do.
 end.
 u=. isutf8 t
 x=. a. i. t
-m=. x < 32
+m=. (x e. 9 13) < x < 32
 if. u > 1 e. m do. t return. end.
 n=. I. m=. m +. u < x > 126
 s=. '\',.}.1 ": 8 (#.^:_1) 255,n{x
@@ -1564,7 +1569,8 @@ if. IFJHS do.
   EMPTY return.
 end.
 browser=. Browser_j_
-if. IFWIN do.
+select. UNAME
+case. 'Win' do.
   ShellExecute=. 'shell32 ShellExecuteW > i x *w *w *w *w i'&cd
   SW_SHOWNORMAL=. 1
   NULL=. <0
@@ -1579,26 +1585,32 @@ if. IFWIN do.
     r=. ShellExecute 0;(uucp 'open');(uucp browser);(uucp dquote cmd);NULL;SW_SHOWNORMAL
   end.
   if. r<33 do. sminfo 'browse error:',browser,' ',cmd,LF2,1{::cderx'' end.
-  EMPTY return.
-end.
-if. 0 = #browser do.
-  browser=. dfltbrowser''
-end.
-browser=. dquote (browser;Browser_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'
-cmd=. '/' (I. cmd='\') } cmd
-if. -. isURL cmd do.
-  cmd=. 'file://',cmd
-end.
-cmd=. browser,' ',dquote cmd
-try.
-  2!:1 cmd, (0=nox)#' >/dev/null 2>&1 &'
-catch.
-  msg=. 'Could not run the browser with the command:',LF2
-  msg=. msg, cmd,LF2
-  if. IFGTK do.
-    msg=. msg, 'You can change the browser definition in Edit|Configure|Base',LF2
+case. 'Android' do.
+  cmd=. '/' (I. cmd='\') } cmd
+  if. -. isURL cmd do.
+    cmd=. 'file://',cmd
   end.
-  sminfo 'Run Browser';msg
+  2!:1 'android.intent.action.VIEW';cmd;'text/html'
+case. do.
+  if. 0 = #browser do.
+    browser=. dfltbrowser''
+  end.
+  browser=. dquote (browser;Browser_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'
+  cmd=. '/' (I. cmd='\') } cmd
+  if. -. isURL cmd do.
+    cmd=. 'file://',cmd
+  end.
+  cmd=. browser,' ',dquote cmd
+  try.
+    2!:1 cmd, (0=nox)#' >/dev/null 2>&1 &'
+  catch.
+    msg=. 'Could not run the browser with the command:',LF2
+    msg=. msg, cmd,LF2
+    if. IFGTK do.
+      msg=. msg, 'You can change the browser definition in Edit|Configure|Base',LF2
+    end.
+    sminfo 'Run Browser';msg
+  end.
 end.
 EMPTY
 )
@@ -1627,6 +1639,7 @@ end.
 )
 viewpdf=: 3 : 0
 cmd=. dlb@dtb y
+isURL=. 1 e. '://'&E.
 if. IFBROADWAY do.
   sminfo 'viewpdf error: not yet implemented'
   EMPTY return.
@@ -1638,7 +1651,8 @@ if. IFJHS do.
   EMPTY return.
 end.
 PDFReader=. PDFReader_j_
-if. IFWIN do.
+select. UNAME
+case. 'Win' do.
   ShellExecute=. 'shell32 ShellExecuteW > i x *w *w *w *w i'&cd
   SW_SHOWNORMAL=. 1
   NULL=. <0
@@ -1650,23 +1664,29 @@ if. IFWIN do.
     r=. ShellExecute 0;(uucp 'open');(uucp PDFReader);(uucp dquote cmd);NULL;SW_SHOWNORMAL
   end.
   if. r<33 do. sminfo 'view pdf error:',PDFReader,' ',cmd,LF2,1{::cderx'' end.
-  EMPTY return.
-end.
-if. 0 = #PDFReader do.
-  PDFReader=. dfltpdfreader''
-end.
-PDFReader=. dquote PDFReader
-cmd=. '/' (I. cmd='\') } cmd
-cmd=. PDFReader,' ',dquote cmd
-try.
-  2!:1 cmd
-catch.
-  msg=. 'Could not run the PDFReader with the command:',LF2
-  msg=. msg, cmd,LF2
-  if. IFGTK do.
-    msg=. msg, 'You can change the PDFReader definition in Edit|Configure|Base',LF2
+case. 'Android' do.
+  cmd=. '/' (I. cmd='\') } cmd
+  if. -. isURL cmd do.
+    cmd=. 'file://',cmd
   end.
-  sminfo 'Run PDFReader';msg
+  2!:1 'android.intent.action.VIEW';cmd;'application/pdf'
+case. do.
+  if. 0 = #PDFReader do.
+    PDFReader=. dfltpdfreader''
+  end.
+  PDFReader=. dquote PDFReader
+  cmd=. '/' (I. cmd='\') } cmd
+  cmd=. PDFReader,' ',dquote cmd
+  try.
+    2!:1 cmd
+  catch.
+    msg=. 'Could not run the PDFReader with the command:',LF2
+    msg=. msg, cmd,LF2
+    if. IFGTK do.
+      msg=. msg, 'You can change the PDFReader definition in Edit|Configure|Base',LF2
+    end.
+    sminfo 'Run PDFReader';msg
+  end.
 end.
 EMPTY
 )
@@ -1827,6 +1847,7 @@ if. 0=L.y do.
   end.
 end.
 y=. y -. Ignore, IFJHS#;:'viewmat'
+y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public
@@ -1862,6 +1883,7 @@ r fwritenew jpath '~config/recent.dat'
 )
 xedit=: 0&$: : (4 : 0)
 'file row'=. 2{.(boxopen y),<0
+isURL=. 1 e. '://'&E.
 if. IFBROADWAY do.
   msg=. '|Could not run the editor:',cmd,LF
   msg=. msg,'|Not yet implemented'
@@ -1870,6 +1892,14 @@ if. IFBROADWAY do.
 end.
 if. IFJHS do.
   xmr ::0: file
+  EMPTY return.
+end.
+if. UNAME-:'Android' do.
+  file=. '/' (I. file='\') } file
+  if. -. isURL file do.
+    file=. 'file://',file
+  end.
+  2!:1 'android.intent.action.VIEW';file;'text/plain'
   EMPTY return.
 end.
 editor=. (Editor_j_;Editor_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'

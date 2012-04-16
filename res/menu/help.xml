@@ -3,7 +3,6 @@
         <menu>
             <item android:id="@+id/newf" android:title="New" android:orderInCategory="1"/>
             <item android:id="@+id/open" android:title="Open..." android:orderInCategory="2"/>
-            <item android:id="@+id/exit" android:title="Exit" android:orderInCategory="8"/>
         </menu>
     </item>
 

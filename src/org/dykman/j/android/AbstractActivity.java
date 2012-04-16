@@ -63,7 +63,6 @@ public abstract class AbstractActivity extends Activity {
 			case R.id.open:    requestFileOpen();			  break;
 			case R.id.window:  requestWindowSelect();     	  break;
 			case R.id.jbreak:  callBreak();                   break;
-			case R.id.exit:    testQuit();					  break;
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
 			case R.id.runf:    requestFileRun();              break;
@@ -247,8 +246,9 @@ public abstract class AbstractActivity extends Activity {
 Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 			Intent intent = new Intent();
 			intent.setClass(getApplicationContext(), EditActivity.class);
+			intent.setData(Uri.parse("file://" + f.getAbsolutePath()));
 
-			intent.putExtra("file", f.getAbsolutePath());
+//			intent.putExtra("file", f.getAbsolutePath());
 			theApp.setCurrentDirectory(f.getParentFile());
 			
 			
@@ -326,32 +326,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 		theApp.getjInterface().callSuperJ(new String[]{"break_z_ ''"});
 	}
 
-	public void quit() {
-		super.finish();
-		theApp.stop();		
-		int pid = android.os.Process.myPid();
-		android.os.Process.killProcess(pid);
-	}
 
-	public void testQuit() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Are you sure you want to exit J?")
-			.setCancelable(false)
-			.setPositiveButton("Yes",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						quit();
-					}
-				})
-			.setNegativeButton("No", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
-		AlertDialog dialog = builder.create();
-		dialog.show();
-		
-	}
 
 	protected FileEdit openFileEditor(File f) {
 		FileEdit ef = new FileEdit(this);

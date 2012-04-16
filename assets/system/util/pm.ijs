@@ -744,20 +744,18 @@ end.
 
 |: req # all ,. her ,. rep
 )
-JVDET=: 0 : 0
-pc jvdet;
-xywh 0 0 200 200;cc dgrid isigraph rightmove bottommove;
-pas 0 0;pmove 217 113 215 220;
-rem form end;
+3 : 0''
+if. 0~: 4!:0 <'jvdet_jpm_' do. jvdet_jpm_=: 0 end.
+if. 0~: 4!:0 <'jvtot_jpm_' do. jvtot_jpm_=: 0 end.
+''
 )
-destroy_jvdet=: 3 : 0
-wd'pclose'
+jvdetdestroy=: 3 : 0
+gtk_widget_destroy_jgtk_ ::0: jvdet
 destroy__dgrid''
+jvdet=: 0
 )
-jvdet_cancel=: jvdet_close=: destroy_jvdet
-
 viewdetail=: 3 : 0
-require 'jzgrid'
+require 'gl2 jzgrid'
 0 viewdetail y
 :
 if. 0=read '' do. i. 0 0 return. end.
@@ -777,54 +775,57 @@ else.
 end.
 data=: > join <"1 each txt
 
-if. wdisparent 'jvdet' do.
-  wd 'psel jvdet'
+if. 0~: jvdet do.
+  gtk_window_present_with_time_jgtk_ jvdet,GDK_CURRENT_TIME_jgtk_
 else.
-  wd JVDET
+  jvdet=: gtk_window_new_jgtk_ 0
+  gtk_window_set_position_jgtk_ jvdet, GTK_WIN_POS_CENTER
+  consig_jgtk_ jvdet;'destroy';'jvdetdestroy';coname''
+  dcanvas=: glcanvas_jgl2_ 400 400;coname''
+  gtk_container_add_jgtk_ jvdet, dcanvas
+  gtk_widget_show_jgtk_ jvdet
   dgrid=: '' conew 'jzgrid'
 end.
 
 hdr=. 'HDRCOL' ,&< 'All';'Here';'Rep';'Lines'
 hdr=. hdr , ('CELLALIGN';2 2 2 0) ,: ('CELLEDIT';0)
-show__dgrid hdr , ('GRIDID';'dgrid') , ('GRIDSORT' ; 1) ,: 'CELLDATA' ;< data
-wd 'pn *Execution Details for ',sname
-wdfit''
-wd 'pshow'
-)
-JVTOT=: 0 : 0
-pc jvtot;
-xywh 0 0 200 200;cc tgrid isigraph rightmove bottommove;
-pas 0 0;
-rem form end;
+show__dgrid hdr , ('GRIDPID';'jvdet') ,('GRIDHWNDC';dcanvas) ,('GRIDID';'dgrid') , ('GRIDSORT' ; 1) ,: 'CELLDATA' ;< data
+gtk_window_set_title_jgtk_ jvdet ; 'Execution Details for ',sname
 )
 tgrid_gridhandler=: 3 : 0
 select. y
 case. 'dblclick' do.
   if. 0 <: Row__tgrid do.
-    TOTSPACE viewdetail (<Row__tgrid;0 1) { CELLDATA__tgrid
+    if. '['~: {. 0{:: vl=. (<Row__tgrid;0 1) { CELLDATA__tgrid do.
+      TOTSPACE viewdetail vl
+    end.
   end.
   0
 case. do.
   1
 end.
 )
-destroy_jvtot=: 3 : 0
-wd'pclose'
+jvtotdestroy=: 3 : 0
+gtk_widget_destroy_jgtk_ ::0: jvtot
 destroy__tgrid''
+jvtot=: 0
 )
-jvtot_cancel=: jvtot_close=: destroy_jvtot
-
 viewtotal=: 3 : 0
-require 'jzgrid'
+require 'gl2 jzgrid'
 0 viewtotal y
 :
 if. 0=read '' do. i. 0 0 return. end.
 
-if. wdisparent 'jvtot' do.
-  wd 'psel jvtot;pshow' return.
+if. 0~: jvtot do.
+  gtk_window_present_with_time_jgtk_ jvtot,GDK_CURRENT_TIME_jgtk_ return.
 end.
 
-wd JVTOT
+jvtot=: gtk_window_new_jgtk_ 0
+gtk_window_set_position_jgtk_ jvtot, GTK_WIN_POS_CENTER
+consig_jgtk_ jvtot;'destroy';'jvtotdestroy';coname''
+tcanvas=: glcanvas_jgl2_ 400 400;coname''
+gtk_container_add_jgtk_ jvtot, tcanvas
+gtk_widget_show_jgtk_ jvtot
 
 pn=. 'PM',x pick TIMETEXT;SPACETEXT
 'TOTSPACE TOTSUB TOTPCT'=: opt=. totaloption x
@@ -839,10 +840,8 @@ tgrid=: '' conew 'jzgrid'
 
 hdr=. 'HDRCOL' ,&< 'Name';'Locale';'All';'Here';'Here%';'Cum%';'Rep'
 hdr=. hdr , ('CELLALIGN';0 0 2 2 2 2 2) ,: ('CELLEDIT';0)
-show__tgrid hdr , ('GRIDID';'tgrid') , ('GRIDSORT' ; 1) ,: 'CELLDATA' ;< data
-wd 'pn *',pn
-wdfit''
-wd 'pshow'
+show__tgrid hdr , ('GRIDPID';'jvtot') , ('GRIDHWNDC';tcanvas) , ('GRIDID';'tgrid') , ('GRIDSORT' ; 1) ,: 'CELLDATA' ;< data
+gtk_window_set_title_jgtk_ jvtot ; pn
 )
 getused=: 3 : 0
 if. 0=read '' do. i. 0 0 return. end.

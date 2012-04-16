@@ -107,7 +107,7 @@ public class JConsoleApp extends Application {
 			path = new File(path).getName();
 		}
 
-		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 		intentMap.put(path, intent);
 	}
@@ -193,7 +193,10 @@ public class JConsoleApp extends Application {
 	}
 
 	public void quit() {
-		activity.quit();
+//		for(Intent intent: this.intentMap.values()) {
+//		this.startActivity(intent);
+//		}
+		console.quit();
 	}
 
 	public void setEnableConsole(boolean b) {

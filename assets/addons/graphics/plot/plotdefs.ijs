@@ -169,7 +169,7 @@ if. -.IFJ6 do.
   if. IFTESTPLOTJHS +. IFJHS do.
     r=. 'OUTPUT=: JHSOUTPUT'
   elseif. IFGTK do.
-    if. 'isi' -: GTKOUTPUT do.
+    if. 0[ 'isi' -: GTKOUTPUT do.
       r=. 'OUTPUT=: ''isi'''
     else.
       r=. 'OUTPUT=: ''gtk'''

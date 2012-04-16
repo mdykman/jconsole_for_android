@@ -37,8 +37,10 @@ public class LatinKeyboardView extends KeyboardView {
     }
 
     protected final void init() {
+    	/*
     	this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), 
-    		this.getPaddingRight(), this.getPaddingBottom()+5);
+    		this.getPaddingRight(), this.getPaddingBottom()+10);
+    */
     }
     @Override
     protected boolean onLongPress(Key key) {

@@ -4,6 +4,8 @@ import java.io.File;
 
 import org.dykman.j.ExecutionListener;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,35 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 			console.setSelection(n);
 		}
 		*/
+	}
+	public void quit() {
+		this.finish();
+		int pid = android.os.Process.myPid();
+		android.os.Process.killProcess(pid);
+	}
+	public void testQuit() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure you want to exit J?")
+			.setCancelable(false)
+			.setPositiveButton("Yes",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						quit();
+					}
+				})
+			.setNegativeButton("No", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+		
+	}
+
+	@Override
+	public void finish() {
+		super.finish();
 	}
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
@@ -76,6 +107,7 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		switch(itemId) {
 			case R.id.clear:   console.clear();                break;
 			case R.id.jbreak:  callBreak();                   break;
+			case R.id.exit:    testQuit();					  break;
 			default : result = false;
 		}
 		if(!result) {

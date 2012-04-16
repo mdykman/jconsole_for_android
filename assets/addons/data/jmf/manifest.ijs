@@ -6,11 +6,11 @@ DESCRIPTION=: 0 : 0
 J Memory Mapped File
 )
 
-VERSION=: '1.0.4'
+VERSION=: '1.0.7'
 
 RELEASE=: 'j701'
 
-PLATFORMS=: 'linux win darwin'
+PLATFORMS=: ''
 
 FILES=: 0 : 0
 history.txt

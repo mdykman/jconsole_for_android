@@ -134,7 +134,7 @@ rws;lns
 NB. hacked version of j602 fif
 NB. defines to let jhs load fif code
 IFWINNT=: 0
-IFWIN32=: 0
+IFWIN=: 0
 PATHSEP=: '/'
 PATHSEP_j_=: '/'
 SYSTEMFOLDERS=: SystemFolders_j_
@@ -168,7 +168,7 @@ fn=. y
 if. 0 = #fn do. return. end.
 if. '~' = {. fn do. return. end.
 if. PATHSEP = {. fn do. return. end.
-if. IFWIN32 *. ':' = 1 { fn,':' do. return. end.
+if. IFWIN *. ':' = 1 { fn,':' do. return. end.
 tofoldername1 fullname fn
 )
 fromfoldername=: 3 : 0
@@ -349,7 +349,7 @@ txt=. deb each txt
 txt -. a:
 )
 fiflower=: 3 : 0
-if. IFWIN32 do.
+if. IFWIN do.
   PIDPATH=: tolower PIDPATH
   PJFILES=: tolower each PJFILES
   PROJECTFILE=: tolower PROJECTFILE
@@ -357,7 +357,7 @@ end.
 )
 fopenfile=: 4 : 0
 if. #FIFOPENFILE do.
-  wd 'winexec "',FIFOPENFILE,' ',y,'"'
+  fork_jtask_ '"',FIFOPENFILE,' ',y,'"'
 else.
   'row hit'=. x
   try.
@@ -1426,7 +1426,7 @@ if. r do.
   p=. fullname@addfret each {:"1 FIFFOLDERS
   x=. \: # &> p
   p=. x { p
-  if. IFWIN32 do. p=. tolower each p end.
+  if. IFWIN do. p=. tolower each p end.
   b=. p m &> <PROJECTFILE
   if. -. 1 e. b do.
   else.

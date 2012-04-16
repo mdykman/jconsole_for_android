@@ -109,5 +109,17 @@ gui/gtk - change history
 == 1.0.93 ==
  * gui/gtk: getimg writeimg putimg
 
-== 1.0.94/96 ==
+== 1.0.94/98 ==
  * gui/gtk: RGBSEQ
+ * gui/gtk: api
+
+== 1.0.99 ==
+ * gui/gtk: android and reverted
+
+== 1.0.100/1 ==
+ * gui/gtk: should pass ,_1 instead of ,0 for *i
+ * gui/gtk: api
+
+== 1.0.102 ==
+ * gui/gtk: UNAME android
+
