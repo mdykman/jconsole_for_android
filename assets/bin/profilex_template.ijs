@@ -21,8 +21,8 @@ NB.     user=.   home,'/Documents',userx
 NB. example 4: user in same folder as install
 NB.     user=.   ('/'(i:~{.])install),userx
 
-user=.   home,userx   NB. profile default - edit to change
+user=.    home,userx   NB. profile default - edit to change
 break=.   user,'/break'
+config=.  user,'/config'
 snap=.    user,'/snap'
 temp=.    user,'/temp'
-config=.  user,'/config'

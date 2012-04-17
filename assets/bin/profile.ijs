@@ -7,19 +7,29 @@ jpathsep_z_=: '/'&(('\' I.@:= ])}) NB. convert to / separator
 BINPATH_z_=: jpathsep BINPATH_z_
 
 NB. create SystemFolders
-bin=.     BINPATH
+bin=. BINPATH
 install=. (bin i: '/'){.bin
-addons=.  install,'/addons'
-system=.  install,'/system'
-tools=.   install,'/tools'
-home=.    >(systype-5){(2!:5'HOME');2!:5'USERPROFILE'
-
-userx=.   '\j',('64-'#~16={:$3!:3[2),'701-user'
-user=.    home,userx
-break=.   user,'/break'
-snap=.    user,'/snap'
-temp=.    user,'/temp'
-config=.  user,'/config'
+addons=. install,'/addons'
+system=. install,'/system'
+tools=. install,'/tools'
+3 : 0''
+notdef=. 0: ~: 4!:0 @ <
+if. notdef 'UNAME_z_' do.
+  if. 5=9!:12'' do.
+    UNAME_z_=: (2!:0 'uname')-.10{a.
+  elseif. do.
+    UNAME_z_=: 'Win'
+  end.
+end.
+''
+)
+home=. >(systype-5){(2!:5'HOME');2!:5'USERPROFILE'
+userx=. '\j',('64-'#~16={:$3!:3[2),'701-user'
+user=. home,userx
+break=. user,'/break'
+config=. user,'/config'
+snap=. user,'/snap'
+temp=. user,'/temp'
 ids=. ;:'addons bin break config home install snap system tools temp user'
 
 0!:0 :: ] <jpathsep bin,'/profilex.ijs' NB. override
@@ -29,16 +39,16 @@ SystemFolders_j_=: ids,.jpathsep@".&.>ids
 md=. 3 : 0 NB. recursive makedir
 a=. jpathsep y,'/'
 if. -.#1!:0 }:a do.
- for_n. I. a='/' do. 1!:5 :: [ <n{.a end.
+  for_n. I. a='/' do. 1!:5 :: [ <n{.a end.
 end.
 )
 
 NB. try to ensure user folders exist
 md user,'/projects'
-md temp
 md break
 md config
 md snap
+md temp
 
 NB. boot up J and load startup.ijs if it exists
 0!:0 <jpathsep system,'/util/boot.ijs'

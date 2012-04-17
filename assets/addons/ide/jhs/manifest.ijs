@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 JHS IDE
 )
 
-VERSION=: '1.0.145'
+VERSION=: '1.0.146'
 
 FILES=: 0 : 0
 history.txt
@@ -45,6 +45,7 @@ demo/jdemo6.ijs
 demo/jdemo7.ijs
 demo/jdemo8.ijs
 demo/jdemo9.ijs
+js/jquery-1.5.1.min.js
 js/excanvas.js
 )
 
