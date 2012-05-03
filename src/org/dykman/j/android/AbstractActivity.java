@@ -62,7 +62,6 @@ public abstract class AbstractActivity extends Activity {
 			case R.id.newf:    theApp.newFile(this);          break;
 			case R.id.open:    requestFileOpen();			  break;
 			case R.id.window:  requestWindowSelect();     	  break;
-			case R.id.jbreak:  callBreak();                   break;
 			case R.id.log:     showHistoryDialog();			  break;
 			case R.id.runl:    runCurrentLine();              break;
 			case R.id.runf:    requestFileRun();              break;
@@ -321,9 +320,6 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 		intent.putExtra("base", theApp.getRoot().getAbsolutePath());
 		this.startActivity(intent);
 
-	}
-	protected void callBreak() {
-		theApp.getjInterface().callSuperJ(new String[]{"break_z_ ''"});
 	}
 
 

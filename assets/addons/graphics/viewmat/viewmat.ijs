@@ -3,7 +3,7 @@ require 'graphics/bmp graphics/gl2'
 coclass 'jviewmat'
 
 coinsert 'jgtk jgl2'
-GUI=: -. IFJHS +. UNAME-:'Android'
+GUI=: -. IFJHS +. (<UNAME) e. 'Android';'iOS'
 MINWH=: 200 200
 DEFWH=: 360 360
 

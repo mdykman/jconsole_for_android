@@ -1,10 +1,13 @@
 package org.dykman.j.android;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -27,6 +30,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -292,7 +296,6 @@ public class JConsoleApp extends Application {
 	}
 
 	public void newFile(Context context) {
-		// File tmp = new File(root, tempDir);
 		int i = 1;
 		File newf = new File(tmpDir, Integer.toString(i) + ".ijs");
 		while (hasEditor(newf.getName()) || newf.exists()) {
@@ -300,14 +303,12 @@ public class JConsoleApp extends Application {
 		}
 		Intent intent = new Intent();
 		intent.setClass(getApplicationContext(), EditActivity.class);
-
-		intent.putExtra("file", newf.getAbsolutePath());
+		intent.setData(Uri.fromFile(newf));
 		context.startActivity(intent);
 	}
 
 	private void _saveas(Activity _activity, final FileEdit fe, final File f)
 			throws IOException {
-
 		fe.setTextChanged(true);
 		fe.save(f);
 		_activity.setTitle(fe.createTitle());
@@ -327,7 +328,7 @@ public class JConsoleApp extends Application {
 								Toast.makeText(
 										activity,
 										"there was an error overwriting file "
-												+ f.getName() + ":"
+												+ f.getName() + ": "
 												+ e.getLocalizedMessage(),
 										Toast.LENGTH_LONG);
 								Log.e(JConsoleApp.LogTag,
@@ -436,7 +437,20 @@ public class JConsoleApp extends Application {
 	}
 
 	protected boolean checkInstall(File base) {
-		return new File(base, "system").exists();
+		try {
+			File f = new File(base,"docs/android-version.txt");
+			InputStream in = new FileInputStream(f);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			String line = reader.readLine();
+			reader.close();
+			String version = getResources().getString(R.string.version);
+			if(line!=null && line.equals(version)) {
+				return true;
+			}
+		} catch(IOException e) {
+			// so what? just install
+		}
+		return false;
 	}
 
 	protected void showToast(String message) {
@@ -483,6 +497,18 @@ public class JConsoleApp extends Application {
 		@Override
 		protected String doInBackground(File... params) {
 			try {
+				if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+					File lo = new File(params[0],"j701-user");
+					if(lo.exists()) {
+						File ex = new File("/sdcard");
+						if(ex.canWrite()) {
+							String cmd = "2!:0 'cp -r " + lo.getAbsolutePath()
+									+ " /sdcard'";
+							publishProgress("migrating user files");
+							jInterface.callSuperJ(new String[]{cmd});
+						}
+					}
+				}
 				doInstall(params[0]);
 			} catch (IOException e) {
 				publishProgress("error during installation: "

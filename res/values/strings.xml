@@ -16,5 +16,6 @@
     <string name="readme">docs/android-readme.txt</string>
 
     <string name="jhs_start">http://localhost:65001/jijxipad</string>
+    <string name="version">1.0.5</string>
         
 </resources>

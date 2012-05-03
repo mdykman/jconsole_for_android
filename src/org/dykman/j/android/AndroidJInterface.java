@@ -205,8 +205,8 @@ Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 			thread = Thread.currentThread();
 			while (running) {
 				String cmd = nextLine();
-
 				if(cmd != null) {
+					publishProgress(false);
 					StringBuilder sb = new StringBuilder();
 			        Dimension dd = theApp.getDimension();
 			        if(dd != null) {

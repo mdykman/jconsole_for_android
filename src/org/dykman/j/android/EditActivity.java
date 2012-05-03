@@ -25,6 +25,7 @@ public class EditActivity extends AbstractActivity {
 	public void setFile(File f) {
 		this.file = f;
 	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,12 +33,12 @@ public class EditActivity extends AbstractActivity {
 		editor = (FileEdit) findViewById(R.id.edit);
 		editor.setActivity(this);
 		theApp = (JConsoleApp) this.getApplication();
+//		Uri uri = getIntent().getData();
 		String s = getIntent().getData().getPath();
-//		Bundle b = getIntent().getExtras();
-//		String s = b.getString("file");
 		file = new File(s);
 		theApp.addFile(file.getAbsolutePath(),getIntent());
 		editor.setName(file.getName());
+		setTitle(file.getName());
 		
 		if((savedInstanceState== null) || ! savedInstanceState.containsKey("editor")) {			
 			try {
@@ -57,6 +58,7 @@ public class EditActivity extends AbstractActivity {
 				Log.e(JConsoleApp.LogTag,"error loading file",e);
 			}
 		}
+		
 		if(savedInstanceState != null) {
 			editor.setText 	(savedInstanceState.getCharSequence("editor"));
 			int n = savedInstanceState.getInt("cursor");
@@ -65,7 +67,6 @@ public class EditActivity extends AbstractActivity {
 			editor.setSelection(n);
 		}
 
-		setTitle(file.getName());
 	}
 /*
 //	@Override

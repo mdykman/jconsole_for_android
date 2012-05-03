@@ -2,7 +2,7 @@ J from Jsoftware (www.jsoftware.com) source released under GPL version 3.
 
 *** copyright and license
 
-JSOFTWARE SOURCES refers to the native "C" source files used to generate libj.so as well as all files in directories system/, bin/, addons/, docs/, and test/ with the exceptions of docs/android-readme.txt (this file) and docs/gpl3.txt .
+JSOFTWARE SOURCES refers to the native "C" source files used to generate libj.so as well as all files in directories system/, bin/, addons/, and test/ with the exceptions of docs/android-readme.txt (this file) and docs/gpl3.txt .
 
 JSOFTWARE SOURCES are: Copyright 1990-2012, Jsoftware Inc.  All rights reserved.
 
@@ -13,23 +13,32 @@ See docs/gpl3.txt for GNU General Public License version 3. Additional info at h
 
 *** Android
 
-This Android package was created by Michael Dykman (mdykman@gmail.com) in 2012. It is licensed under GPL3.
+J-Console for Android 1.0.5
 
 This package is compatible with Android versions 2.1 and up.
 
-Many thanks to Eric Iverson and Jsoftware for providing the source code for the J7 engine as well as allowing the use of script, document and image resources to make this package.
+This package was created by Michael Dykman (mdykman@gmail.com) in 2012. It is licensed under GPL3.
+
+Many thanks to Eric Iverson and Jsoftware for providing the source code for the J7 engine, allowing the use of script, document and image resources as well as providing full JAL integation to make this package.
+
+Thanks to Chris Burke who suggested the current layout of the soft keyboard.
+
+Special thanks to Bill Lam for his work in making plot and viewmat work on this platform.
 
  ** Introduction
  
-J is an astonishingly powerful mathematical tool which should be in the hands of every thinking person. Approached interactively, the user can start with simple problems and naturally build their skills until they can solve problems of enormous complexity. It defines the highest standard of what constitutes "A Tool For Thought".
+J is an astonishingly powerful mathematical tool which should be in the hands of every thinking person. Approached interactively, the user can start with simple problems and naturally build their skills until they can solve problems of enormous complexity. It defines the highest standard of what constitutes a "Tool of Thought". (http://www.jsoftware.com/papers/tot.htm)
  
-The goal of the present implementation is to make J available to the highest number of mobile users possible to promote J as a standard tool of mathematical anaysis.
+The goal of the present implementation is to make J available to the highest number of mobile users possible to promote J as a standard tool of mathematical analysis.
 
   - michael dykman
   - Toronto, 2012
    
  ** Usage
-Android uses 'activities' to present functionality to users, treating each windows a first-class UI entitiy. Exiting the console does not close open editors.  While it is possible to make the Android J console act close all windows, the pattern is deprecated in this environment. Rather than swim upstream against the prevailing environment, we have elected to let the native environment dictate this behaviour.
+
+Android uses 'activities' to present functionality to users, treating each window as a first-class UI entitiy. Exiting the console does not close open editors.  While it is possible to make the Android J console act close all windows, the pattern is deprecated in this environment. Rather than swim upstream against the prevailing environment, we have elected to let the native environment dictate this behaviour.
+
+Graphical viewers for viewing bitmaps, PDFs, etc. are not provided by this package.  The plot package requires a third party PDF viewer to be installed on your device just as viewmat relies on your preferred viewer for bitmap graphic files.
 
  ** Soft Keyboard
  
@@ -37,16 +46,11 @@ To enable the J-specific soft keyboard which is provided with this package, go t
 
  ** Pacman
 
-Pacman works in this released but with a catch.  As android provides me no means of dealing with a tar file, the android console is using .zip files which requires it to 'impersonate' windows during transations.
-
-There being no binaries for arm-linux currently in the JAL, this works as a short-term solution, but we hope to establish an update archive format specifically for android in the near future. 
-
-At alpha-release time, the version of pacman.ijs in the JAL is not android-compatible.  This is likely to be corrected in the next release.  As an interim patch, pacman.ijs is overwritten from ide/android at the end of every update cycle run from the android menu. 
+Thanks to contributions by Chris Burke and Bill Lam, the J Application Library is fully integrated with this Android release.
 
  ** JHS
+
  The JHS Server may be launched from the console via the menu option Script/Launch JHS.  
- 
- Once JHS has been started, there is no way to revert to console mode without quitting and restarting the app.
  
  The default browser for Android is not very good.  I recommend:
     Firefox Mobile
@@ -71,7 +75,3 @@ GL2 is available to Android via system-provided libGLESv2.so and libEGL.so.  The
 
 There is a project of unknown quality on github seeking to provide build files in order to build libcairo for the Android: https://github.com/anoek/android-cairo . It is hoped that this can be leveraged towards providing graphics support for J under the Android environment.
 
- ** Foreign 2!:[0-3] Do not work on Android as on non-unix systems. 2!:5 and 2!:6 work as expected. The utility of 2!:55 is somewhat doubtful on this platform.
-
- ** Tests
-There is a high number of failing unit tests in this release.  It is my hope that the community can guide towards those which are most dire.

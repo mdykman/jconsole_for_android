@@ -316,7 +316,6 @@ zipext=: 3 : 0
 y, (IFUNIX>UNAME-:'Android')pick '.zip';'.tar.gz'
 )
 anddf=: 4 : '''libj.so android_download_file > i *c *c'' 15!:0 x;y'
-andurl =:'http://www.jsoftware.com/moin_static180/common/jwlogo.png'
 andunzip =: 3 : 0
  '' andunzip y
 :

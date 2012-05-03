@@ -98,6 +98,9 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		inflater.inflate(R.menu.main, menu);
 		return true;
 	}
+	protected void callBreak() {
+		theApp.getjInterface().callSuperJ(new String[]{"break_z_ ''"});
+	}
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
