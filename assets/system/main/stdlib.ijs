@@ -19,7 +19,7 @@ if. notdef 'UNAME' do.
     UNAME=: 'Win'
   end.
 end.
-if. IF64 +. UNAME-:'Android' do.
+if. IF64 +. (<UNAME) e. 'Android';'iOS' do.
   IFWOW64=: 0
 else.
   if. IFUNIX do.
@@ -44,6 +44,15 @@ unxlib=: 3 : 0
 r=. (;: 'c z sqlite3') i. <,y
 c=. (;: 'Linux Android Darwin iOS') i. <UNAME_z_
 (<r,c) {:: UNXLIB_z_
+)
+18!:4 <'z'
+
+anddf=: 4 : '''libj.so android_download_file > i *c *c'' 15!:0 x;y'
+andurl =:'http://www.jsoftware.com/moin_static180/common/jwlogo.png'
+andunzip =: 3 : 0
+ '' andunzip y
+:
+ 'libj.so java_unzip_file > i *c *c' 15!:0 y;x
 )
 18!:4 <'z'
 'TAB LF FF CR DEL EAV'=: 9 10 12 13 127 255{a.
@@ -193,7 +202,7 @@ ucp=: 7&u:
 ucpcount=: # @ (7&u:)
 3 : 0''
 if. IFUNIX do.
-  usleep=: 3 : ('''',(unxlib 'c'),' usleep > i i'')&(15!:0) >.y')
+  usleep=: 3 : ('''',(unxlib 'c'),' usleep > i i''&(15!:0) >.y')
 else.
   usleep=: 3 : '0: ''kernel32 Sleep > n i''&(15!:0) >.y % 1000'
 end.
@@ -1847,7 +1856,7 @@ if. 0=L.y do.
   end.
 end.
 y=. y -. Ignore, IFJHS#;:'viewmat'
-y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
+y=. y -. ((<UNAME) e. 'Android';'iOS')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public

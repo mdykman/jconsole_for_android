@@ -315,12 +315,6 @@ e
 zipext=: 3 : 0
 y, (IFUNIX>UNAME-:'Android')pick '.zip';'.tar.gz'
 )
-anddf=: 4 : '''libj.so android_download_file > i *c *c'' 15!:0 x;y'
-andunzip =: 3 : 0
- '' andunzip y
-:
- 'libj.so java_unzip_file > i *c *c' 15!:0 y;x
-)
 CHECKADDONSDIR=: 0 : 0
 The addons directory does not exist and cannot be created.
 

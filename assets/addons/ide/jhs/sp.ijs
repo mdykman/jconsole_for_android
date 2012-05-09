@@ -161,7 +161,11 @@ i.0 0
 spe=: 3 : 0
 assert. 0~:#EDITX['no editor set - speinit required'
 smoutput f=. spf y
-fork_jtask_ EDITX,' "',(jpath f),'"',EDITXTAIL
+if. UNAME-:'Android' do.
+  2!:1 'android.intent.action.EDIT';('file://',jpath f);'text/plain'
+else.
+  fork_jtask_ EDITX,' "',(jpath f),'"',EDITXTAIL
+end.
 )
 
 spg=: 3 : 0
