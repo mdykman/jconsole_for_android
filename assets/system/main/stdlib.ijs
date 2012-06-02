@@ -12,6 +12,9 @@ IF64=: 16={:$3!:3[2
 IFGTK=: IFJHS=: IFBROADWAY=: 0
 IFJ6=: 0
 IFWINE=: IFWIN > 0-:2!:5'_'
+if. notdef 'IFIOS' do.
+  IFIOS=: 0
+end.
 if. notdef 'UNAME' do.
   if. IFUNIX do.
     UNAME=: (2!:0 'uname')-.10{a.
@@ -42,7 +45,7 @@ libsqlite3.so.0 libsqlite.so libsqlite3.dylib libsqlite3.dylib
 )
 unxlib=: 3 : 0
 r=. (;: 'c z sqlite3') i. <,y
-c=. (;: 'Linux Android Darwin iOS') i. <UNAME_z_
+c=. IFIOS + (;: 'Linux Android Darwin iOS') i. <UNAME_z_
 (<r,c) {:: UNXLIB_z_
 )
 18!:4 <'z'

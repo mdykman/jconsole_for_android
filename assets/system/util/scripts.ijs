@@ -52,6 +52,7 @@ rgb        ~addons/graphics/color/rgb.ijs
 scriptdoc  ~addons/general/scriptdoc/scriptdoc.ijs
 socket     ~system/main/socket.ijs
 stats      ~addons/stats/base/base.ijs
+tar        ~system/main/tar.ijs
 task       ~system/main/task.ijs
 trig       ~addons/math/misc/trig.ijs
 unicode    ~addons/convert/misc/unicode.ijs
