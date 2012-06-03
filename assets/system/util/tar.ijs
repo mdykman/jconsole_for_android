@@ -1,7 +1,7 @@
 coclass'jtar'
 
 tarhelp=: 0 : 0
-tar utitlies - implements simple tar subset
+tar utilities - implements simple tar subset
 
 unix tar
  tar -x -f f.tar -C path
@@ -28,13 +28,15 @@ J gzip
   data gzip '~/temp/f.gz' - write data to f.gz
 )
 
-libz=: unxlib 'z'
+NB. for windows, copy zlib1.dll from gtk binary to j.dll folder or windows/system32
+libz=: IFUNIX{::'zlib1.dll';unxlib^:IFUNIX 'z'
+cv=: IFWIN#'+'
 null=: {.a.
 chksum=: 148+i.8
 folderx=: '000755 ',null,'000765 ',null,'000024 ',null
 filex=: '000644 ',null,'000765 ',null,'000024 ',null
 
-IFIOS=: 0
+no_gzbuffer=: 0
 NB. tar util
 
 NB. =========================================================
@@ -50,7 +52,11 @@ NB. =========================================================
 ftree=: 3 : 0
 r=. ''
 d=. 1!:0<'/*',~jpath y
-m=. 'd'=>{.each 5{"1 d
+if. IFUNIX do.
+  m=. 'd'=>{.each 5{"1 d
+else.
+  m=. 'd'=>4{each 4{"1 d
+end.
 t=. m#{."1 d
 r=. r,(<y,'/'),each t
 for_n. t do.
@@ -75,11 +81,16 @@ select. {.t-.'z'
 case. 'x' do.
   assert. 3=#y['needs 3 paramters'
   if. z do.
-    fz=. _3}.f
+    f=. jpathsep^:IFWIN f
+    fz=. (jpath '~temp'),((}.~ i:&'/') f),'.tar',":2!:6''
+    ferase ::[ fz
+    assert. 0=fexist fz
     (gzip f) fwrite fz
     y=. (<fz) 1}y
   end.
-  tarx }.y
+  r=. tarx }.y
+  if. z do. ferase ::[ fz end.
+  r
 case. 'c' do.
   assert. 4=#y['needs 4 paramters'
   tarc }.y
@@ -87,11 +98,16 @@ case. 'c' do.
 case. 't' do.
   assert. 2=#y['needs 2 paramters'
   if. z do.
-    fz=. _3}.f
+    f=. jpathsep^:IFWIN f
+    fz=. (jpath '~temp'),((}.~ i:&'/') f),'.tar',":2!:6''
+    ferase ::[ fz
+    assert. 0=fexist fz
     (gzip f) fwrite fz
     y=. (<fz) 1}y
   end.
-  tart }.y
+  r=. tart }.y
+  if. z do. ferase ::[ fz end.
+  r
 case. do.
   assert. 0['unsupported feature'
 end.
@@ -102,6 +118,7 @@ NB. tarx (extract)
 NB. tarx tar;path - write tar files to path
 tarx=: 3 : 0
 'file path'=. y
+file=. jpathsep^:IFWIN file [ path=. jpathsep^:IFWIN path
 assert. 2=ftype path['path folder must exist'
 d=. fread file
 while. #d do.
@@ -119,7 +136,7 @@ while. #d do.
   case. '5' do.
     d=. 512}.d
     mkdir_j_ jpath f
-    assert. fexist f
+    assert. 1:`fexist@.IFUNIX f    NB. 1!:4 on directory will raise error on windows
   case. '0' do.
     data=. count{.512}.d
     d=. (512*1+>.count%512)}.d
@@ -163,6 +180,7 @@ NB. =========================================================
 NB. tar create
 tarc=: 3 : 0
 'file path folder'=. y
+file=. jpathsep^:IFWIN file [ path=. jpathsep^:IFWIN path [ folder=. jpathsep^:IFWIN folder
 assert. 2=ftype path['path must exist'
 folder=. ('/'={.folder)}.folder
 '' fwrite file
@@ -201,15 +219,17 @@ i.0 0
 NB. =========================================================
 gzopen=: 3 : 0
 'f m'=. y
-f=. jpath f
+f=. jpath jpathsep^:IFWIN f
 f=. (('/'={.f)*.IFIOS)}.f
-assert. 0~:h=. (libz,' gzopen > x *c *c') cd f;,m
-assert. 0=(libz,' gzbuffer > i x i') cd h;128*1024
+assert. 0~:h=. (libz,' gzopen >',cv,' x *c *c') cd f;,m
+if. -.no_gzbuffer do.
+  try. 0=(libz,' gzbuffer >',cv,' i x i') cd h;128*1024 catch. no_gzbuffer=: 1 end.  NB. not available in older version
+end.
 h
 )
 
 NB. =========================================================
-gzclose=: (libz,' gzclose > i x')&cd
+gzclose=: (libz,' gzclose >',cv,' i x')&cd
 
 NB. =========================================================
 NB.      gzip '~temp/f.gz' - return data from f.gz
@@ -218,7 +238,7 @@ gzip=: 3 : 0
 r=. ''
 d=. (128*1024)$' '
 h=. gzopen y;'rb'
-while. c=. (libz,' gzread > i x *c i') cd h;d;#d do.
+while. c=. (libz,' gzread >',cv,' i x *c i') cd h;d;#d do.
   assert. _1~:c
   r=. r,c{.d
 end.
@@ -226,7 +246,7 @@ assert. 0=gzclose h
 r
 :
 h=. gzopen y;'wb'
-assert. (#x)=(libz,' gzwrite > i x *c i') cd h;(,x);#x
+assert. (#x)=(libz,' gzwrite >',cv,' i x *c i') cd h;(,x);#x
 assert. 0=gzclose h
 i.0 0
 )
