@@ -2,7 +2,7 @@ NB. android
 
 CAPTION=: 'Android-specific functions'
 
-VERSION=: '1.0.4'
+VERSION=: '1.0.5'
 
 FILES=: 0 : 0
 android.ijs

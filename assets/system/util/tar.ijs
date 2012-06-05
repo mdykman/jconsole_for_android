@@ -14,6 +14,8 @@ J tar
  tar 'c';'f.tar';path;folder
  tar 't';'f.tar'
 
+ if the tar file name ended with .tar.gz or .tgz, compression flag z is implied
+
 for example,
  on computer
   $> tar -c -f ~/j64-701-user/temp/math.tar -C ~/j64-701/addons fiance
@@ -52,11 +54,7 @@ NB. =========================================================
 ftree=: 3 : 0
 r=. ''
 d=. 1!:0<'/*',~jpath y
-if. IFUNIX do.
-  m=. 'd'=>{.each 5{"1 d
-else.
-  m=. 'd'=>4{each 4{"1 d
-end.
+m=. 'd'=>4{each 4{"1 d
 t=. m#{."1 d
 r=. r,(<y,'/'),each t
 for_n. t do.
@@ -80,6 +78,7 @@ end.
 select. {.t-.'z'
 case. 'x' do.
   assert. 3=#y['needs 3 paramters'
+  assert. fexist f['file must exist'
   if. z do.
     f=. jpathsep^:IFWIN f
     fz=. (jpath '~temp'),((}.~ i:&'/') f),'.tar',":2!:6''
@@ -94,9 +93,11 @@ case. 'x' do.
 case. 'c' do.
   assert. 4=#y['needs 4 paramters'
   tarc }.y
+  assert. fexist f['file must exist'
   if. z do. (fread f)gzip f end.
 case. 't' do.
   assert. 2=#y['needs 2 paramters'
+  assert. fexist f['file must exist'
   if. z do.
     f=. jpathsep^:IFWIN f
     fz=. (jpath '~temp'),((}.~ i:&'/') f),'.tar',":2!:6''
@@ -119,8 +120,10 @@ NB. tarx tar;path - write tar files to path
 tarx=: 3 : 0
 'file path'=. y
 file=. jpathsep^:IFWIN file [ path=. jpathsep^:IFWIN path
+mkdir_j_ jpath path
 assert. 2=ftype path['path folder must exist'
 d=. fread file
+assert. _1-.@-:d['can not read file'
 while. #d do.
   type=. 156{d
   if. type=null do.
@@ -130,13 +133,13 @@ while. #d do.
   name=. (d i. null){.d
   assert. 100>#name
   f=. path,'/',name
-  count=. 8#._48+a.i.11{.124}.d
-  assert. (chksum{d) -: getchk d
+  count=. 8#._48+a.i. ' '-.~ ({.~ i.&null) 12{.124}.d
+  assert. (chksum{d) =&((0&".)@:({.~ i.&null)) (getchk d)
   select. type
   case. '5' do.
     d=. 512}.d
     mkdir_j_ jpath f
-    assert. 1:`fexist@.IFUNIX f    NB. 1!:4 on directory will raise error on windows
+    assert. 2=ftype f
   case. '0' do.
     data=. count{.512}.d
     d=. (512*1+>.count%512)}.d
@@ -153,6 +156,7 @@ NB. tart (test)
 NB. tart file
 tart=: 3 : 0
 d=. fread ,>y
+assert. _1-.@-:d['can not read file'
 r=. ''
 while. #d do.
   type=. 156{d
@@ -162,8 +166,8 @@ while. #d do.
   end.
   name=. (d i. null){.d
   r=. r,name,LF
-  count=. 8#._48+a.i.11{.124}.d
-  assert. (chksum{d) -: getchk d
+  count=. 8#._48+a.i. ' '-.~ ({.~ i.&null) 12{.124}.d
+  assert. (chksum{d) =&((0&".)@:({.~ i.&null)) (getchk d)
   select. type
   case. '5' do.
     d=. 512}.d
