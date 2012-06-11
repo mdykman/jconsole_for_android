@@ -178,13 +178,10 @@ public abstract class AbstractActivity extends Activity {
 		}
 		res = new ArrayList<String>(files.size());
 		for (String s : files) {
-			Log.d(JConsoleApp.LogTag,"testing " + s);
 			File f = new File(dir, s);
 			if (s.startsWith("..") || f.isDirectory()) {
-				Log.d(JConsoleApp.LogTag,f.getAbsolutePath() + " is a directory");
 				res.add(s + "/");
 			} else {
-				Log.d(JConsoleApp.LogTag,f.getAbsolutePath() + " is a file");
 				res.add(s);
 			}
 		}
@@ -436,7 +433,6 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 					Log.d(JConsoleApp.LogTag, "file selected: " + newfile.getPath());
 					
 					if (newfile.isDirectory()) {
-						Log.d(JConsoleApp.LogTag, "directory " + newfile.getPath());
 						theApp.setCurrentDirectory(newfile);
 						ArrayAdapter<String> add = createDirAdapter(newfile,false);
 						lv.setAdapter(add);
@@ -447,7 +443,6 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 						}
 						lv.setAdapter(add);
 					} else {
-						Log.d(JConsoleApp.LogTag, "file " + newfile.getPath());
 						if(EMPTY.equals(ss)) {
 							return;
 						}

@@ -43,6 +43,7 @@ public class JConsoleApp extends Application {
 	private AbstractActivity activity;
 
 	protected Map<String, Intent> intentMap = new HashMap<String, Intent>();
+	protected Map<String, EditorData> editorMap = new HashMap<String, EditorData>();
 
 	protected java.util.List<String> history = new LinkedList<String>();
 	private static final String SDCARD = "/sdcard";
@@ -101,17 +102,20 @@ public class JConsoleApp extends Application {
 		}
 	}
 
-	public void setWindow(Context context, String label) {
+	public void setWindow(Context context, String label) {		
 		Intent intent = intentMap.get(label);
 		context.startActivity(intent);
 	}
 
-	protected void addFile(String path, Intent intent) {
+	protected void addIntent(String path, Intent intent) {
 		if (!JActivity.JCONSOLE.equals(path)) {
 			path = new File(path).getName();
+		} else {
+//			intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+			
 		}
 
-		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS|Intent.FLAG_DEBUG_LOG_RESOLUTION);
 
 		intentMap.put(path, intent);
 	}
@@ -304,6 +308,7 @@ public class JConsoleApp extends Application {
 		Intent intent = new Intent();
 		intent.setClass(getApplicationContext(), EditActivity.class);
 		intent.setData(Uri.fromFile(newf));
+		intentMap.put(newf.getName(), intent);
 		context.startActivity(intent);
 	}
 

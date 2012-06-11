@@ -21,6 +21,7 @@ public class EditActivity extends AbstractActivity {
 	FileEdit editor;
 	File file;
 	boolean textChanged = false;
+	EditorData edat;
 	
 	public void setFile(File f) {
 		this.file = f;
@@ -33,13 +34,30 @@ public class EditActivity extends AbstractActivity {
 		editor = (FileEdit) findViewById(R.id.edit);
 		editor.setActivity(this);
 		theApp = (JConsoleApp) this.getApplication();
-//		Uri uri = getIntent().getData();
-		String s = getIntent().getData().getPath();
-		file = new File(s);
-		theApp.addFile(file.getAbsolutePath(),getIntent());
-		editor.setName(file.getName());
-		setTitle(file.getName());
+		/*
+
+		if(!restore(s)) {
+			try {
+				if(file.exists()) {
+					BufferedReader reader = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file)));
+					StringBuilder sb = new StringBuilder();
+					String line;
+					while((line = reader.readLine())!=null) {
+						sb.append(line).append("\n");
+					}
+					editor.setText(sb.toString());
+					editor.textChanged = false;
+				}
+			} catch(IOException e) {
+				editor.setText("The was an error reading the requested file " + s);
+				Log.e(JConsoleApp.LogTag,"error loading file",e);
+			}
+			capture();
+		}
+		*/
 		
+		/*
 		if((savedInstanceState== null) || ! savedInstanceState.containsKey("editor")) {			
 			try {
 				if(file.exists()) {
@@ -66,7 +84,62 @@ public class EditActivity extends AbstractActivity {
 			editor.textChanged = tc;
 			editor.setSelection(n);
 		}
-
+		*/
+	}
+	@Override
+	public void onPause() {
+		super.onPause();
+		capture();
+	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		String s = getIntent().getData().getPath();
+		file = new File(s);
+		theApp.addIntent(file.getAbsolutePath(),getIntent());
+		editor.setName(file.getName());
+		if(!restore(s)) {
+			try {
+				if(file.exists()) {
+					BufferedReader reader = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file)));
+					StringBuilder sb = new StringBuilder();
+					String line;
+					while((line = reader.readLine())!=null) {
+						sb.append(line).append("\n");
+					}
+					editor.setText(sb.toString());
+					editor.textChanged = false;
+				}
+			} catch(IOException e) {
+				editor.setText("The was an error reading the requested file " + s);
+				Log.e(JConsoleApp.LogTag,"error loading file",e);
+			}
+			
+		}
+		setTitle(file.getName());
+		
+	}
+	public void capture() {
+		theApp.editorMap.put(file.getAbsolutePath(), new EditorData(file.getName(), 
+			file.getAbsolutePath(), 
+			editor.getText(),
+			editor.getSelectionStart(),
+			textChanged));
+	}
+	
+	public boolean restore(String path) {
+		boolean result = false;
+		
+		EditorData edat = theApp.editorMap.get(path);
+		if(edat!=null) {
+			editor.setText(edat.text);
+			editor.setSelection(edat.cursorPosition);
+			editor.textChanged = edat.changed;
+			setFile(new File(edat.path));
+			result = true;
+		}
+		return result;
 	}
 /*
 //	@Override
@@ -76,8 +149,9 @@ public class EditActivity extends AbstractActivity {
  */
 	@Override
 	public void onDestroy() {
+		capture();
 		super.onDestroy();
-		if(this.isFinishing()) {
+		if(isFinishing()) {
 			theApp.removeFile(file.getAbsolutePath());
 		}
 	}
@@ -97,13 +171,12 @@ public class EditActivity extends AbstractActivity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		boolean result = true;
 		int itemId = item.getItemId();
-		Log.d(JConsoleApp.LogTag,"selection " + itemId + ", " + getClass().getName());
 		switch(itemId) {
 			case R.id.close:   close();         break;
 			case R.id.save:    save();          break;
 			case R.id.runc:    runCurrentFile(); break;
-//			case R.id.runc:    runFile();               	  break;
 			case R.id.saveas:  requestFileSaveAs(file); break;
+
 			default : result = false;
 		}
 		if(!result) {
@@ -129,6 +202,7 @@ public class EditActivity extends AbstractActivity {
 		theApp.removeFile(file.getAbsolutePath());
 		this.finish();
 	}
+	/*
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		int pos = editor.getSelectionStart();
@@ -137,6 +211,7 @@ public class EditActivity extends AbstractActivity {
 		outState.putBoolean("textchanged",textChanged);
 //		outState.putParcelable("console", console);
 	}
+	*/
 	
 	/*
 	public void onSaveInstanceState(Bundle outState) {

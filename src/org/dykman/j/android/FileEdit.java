@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import android.content.Context;
 import android.text.Editable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.EditText;
 
 public class FileEdit extends EditText {
@@ -34,8 +33,8 @@ public class FileEdit extends EditText {
 	public FileEdit(Context jActivity) {
 		super(jActivity);
 	}
+
 	public void setName(String s) {
-		Log.d(JConsoleApp.LogTag,"setname: " + s);
 		name =s ;
 	}
 	
@@ -67,9 +66,7 @@ public class FileEdit extends EditText {
 				bb.write(buf, 0, n);
 			}
 			in.close();
-			beginBatchEdit();
-			setTextKeepState(bb.toString());
-			endBatchEdit();
+			setText(bb.toString());
 		}
 		if(getText().length() > 0) {
 			this.setSelection(1);

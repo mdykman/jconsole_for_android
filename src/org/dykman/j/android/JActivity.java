@@ -30,7 +30,8 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		console.setJActivity(this);
 
 		Intent ii = new Intent(getIntent());
-		theApp.addFile(JCONSOLE, ii);
+		ii.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		theApp.addIntent(JCONSOLE, ii);
 		theApp.setConsoleState(true);
 		/*
 		if(savedInstanceState != null) {

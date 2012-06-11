@@ -53,8 +53,9 @@ public class Console extends FileEdit {
 					if(line != null && line.equals(last)) {
 //						appendSeq("\n");
 						handleEnter(line, false);
-					}
-					last = line;
+						placeCursor();
+						last = null;
+					} else last = line;
 				}
 			}
 		});
