@@ -34,7 +34,7 @@ y=. jpath(5*'~root/'-:6{.y)}.y
 d=. fread y
 NB. Firefox 8 requires a response header
 if. ('.htm'-:_4{.y)+.'.html'-:_5{.y do. htmlresponse d,~fsrchead rplc '<TYPE>';'text/html' return. end.
-if. (#mimetypes) > i=. ({:"1 mimetypes) i. <@}.(}.~ i:&'.') y do.
+if. (#mimetypes) > i=. ({:"1 mimetypes) i. <@tolower@}.(}.~ i:&'.') y do.
  t=. i{:: {."1 mimetypes
 else. smoutput 'will not get file ',y return. end.
 t gsrcf d

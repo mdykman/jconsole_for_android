@@ -140,6 +140,7 @@ zps=. <;._2 &> fls ,each '_'
 pfm=. 3 {"1 zps
 uname=. tolower UNAME
 if. UNAME-:'Darwin' do. uname=. 'linux' end.
+if. UNAME-:'Android' do. uname=. 'linux' end.
 msk=. (uname -: ({.~ i.&'.')) &> pfm
 if. 1 ~: +/msk do. msk=. 1,~ }:0*.msk end.
 msk # zps,.fls,.siz
@@ -298,11 +299,17 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  if. (UNAME-:'Android') *. '.zip"'-:_5{.file do.
-    e=. ''
-    'file dir'=. y
-    e1=. dir andunzip file
-    if. -. e1 = 0 do. e=. 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end.
+  if. IFIOS+.(UNAME-:'Android') do.
+    if. '.zip"'-:_5{.file do.
+      e=. ''
+      'file dir'=. y
+      e1=. dir andunzip file
+      if. -. e1 = 0 do. e=. 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end.
+    else.
+      require 'tar'
+      'file dir'=. y
+      if. (i.0 0) -: tar 'x';file;dir do. e=. '' end.
+    end.
   else.
     e=. shellcmd 'tar -xzf ',file,' -C ',dir
   end.
@@ -313,13 +320,7 @@ end.
 e
 )
 zipext=: 3 : 0
-y, (IFUNIX>UNAME-:'Android')pick '.zip';'.tar.gz'
-)
-anddf=: 4 : '''libj.so android_download_file > i *c *c'' 15!:0 x;y'
-andunzip =: 3 : 0
- '' andunzip y
-:
- 'libj.so java_unzip_file > i *c *c' 15!:0 y;x
+y, IFUNIX pick '.zip';'.tar.gz'
 )
 CHECKADDONSDIR=: 0 : 0
 The addons directory does not exist and cannot be created.
@@ -609,11 +610,6 @@ ADDLABS=: ; txt ,each LF
 install_library=: 3 : 0
 log 'Downloading base library...'
 f=. 1 pick LIB
-if. UNAME-:'Android' do.
-  if. -. 1 e. '_android.zip' E. f do.
-    f=. '_android.zip',~ ({.~ i:&'_') f
-  end.
-end.
 'rc p'=. httpget WWW,'library/',f
 if. rc do. return. end.
 log 'Installing base library...'
