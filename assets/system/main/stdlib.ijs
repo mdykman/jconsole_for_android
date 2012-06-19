@@ -22,7 +22,7 @@ if. notdef 'UNAME' do.
     UNAME=: 'Win'
   end.
 end.
-if. IF64 +. (<UNAME) e. 'Android';'iOS' do.
+if. IF64 +. IFIOS +. (<UNAME) e. <'Android' do.
   IFWOW64=: 0
 else.
   if. IFUNIX do.
@@ -45,7 +45,7 @@ libsqlite3.so.0 libsqlite.so libsqlite3.dylib libsqlite3.dylib
 )
 unxlib=: 3 : 0
 r=. (;: 'c z sqlite3') i. <,y
-c=. IFIOS + (;: 'Linux Android Darwin iOS') i. <UNAME_z_
+c=. IFIOS + (;: 'Linux Android Darwin') i. <UNAME_z_
 (<r,c) {:: UNXLIB_z_
 )
 18!:4 <'z'
@@ -1859,7 +1859,7 @@ if. 0=L.y do.
   end.
 end.
 y=. y -. Ignore, IFJHS#;:'viewmat'
-y=. y -. ((<UNAME) e. 'Android';'iOS')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
+y=. y -. (IFIOS +. (<UNAME) e. <'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public

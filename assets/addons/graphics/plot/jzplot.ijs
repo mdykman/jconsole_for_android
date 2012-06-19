@@ -5,7 +5,7 @@ require 'graphics/color/colortab'
 3 : 0''
 if. -.IFJ6 do.
   if. 0 ~: 4!:0 <'JHSOUTPUT' do. JHSOUTPUT=: 'canvas' end.
-  if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: ((<UNAME) e. 'Android';'iOS'){::'cairo';'pdf' end.
+  if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: ((<UNAME) e. <'Android'){::'cairo';'pdf' end.
   if. 0 ~: 4!:0 <'GTKOUTPUT' do. GTKOUTPUT=: 'gtk' end.
   if. 0 ~: 4!:0 <'IFTESTPLOTJHS' do. IFTESTPLOTJHS_z_=: 0 end.
   if. IFTESTPLOTJHS +. IFJHS do.
