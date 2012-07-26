@@ -80,7 +80,7 @@
         <Key android:codes="61" android:keyLabel="="/>
         <Key android:codes="46" android:keyLabel="."
                 android:keyWidth="10%p"/>
-        <Key android:codes="44" android:keyLabel=":"
+        <Key android:codes="58" android:keyLabel=":"
                 android:keyWidth="10%p"/>
         <Key android:codes="10" android:keyIcon="@drawable/sym_keyboard_return" 
                 android:keyWidth="15%p" android:keyEdgeFlags="right"/>
