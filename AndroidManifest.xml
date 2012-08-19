@@ -44,6 +44,11 @@
             </intent-filter>
         </activity>
             
+        <activity
+            android:label="@string/activity_name"
+            android:name="org.dykman.jn.android.app.Activity" >
+        </activity>
+            
         <service android:name=".SoftKeyboard"
             android:permission="android.permission.BIND_INPUT_METHOD" 
             android:exported="true" 
