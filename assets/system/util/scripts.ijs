@@ -26,6 +26,7 @@ jdgrid     ~addons/graphics/grid/jdgrid.ijs
 jfiles     ~addons/data/jfiles/jfiles.ijs
 jhs        ~addons/ide/jhs/core.ijs
 jmf        ~addons/data/jmf/jmf.ijs
+jni        ~addons/api/jni/jni.ijs
 jpm        ~system/util/pm.ijs
 jsgrid     ~addons/graphics/grid/jsgrid.ijs
 jtable     ~addons/graphics/grid/jtable.ijs

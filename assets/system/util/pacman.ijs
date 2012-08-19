@@ -299,7 +299,7 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  if. IFIOS+.(UNAME-:'Android') do.
+  if. IFIOS +. (UNAME-:'Android') *. 0=isatty 0 do.
     if. '.zip"'-:_5{.file do.
       e=. ''
       'file dir'=. y
@@ -477,7 +477,7 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  if. UNAME-:'Android' do.
+  if. (UNAME-:'Android') *. 0=isatty 0 do.
     rr=. f anddf p
     if. rr >: 0 do.
       r=. 0;p
