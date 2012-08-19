@@ -17,12 +17,25 @@ if. notdef 'IFIOS' do.
 end.
 if. notdef 'UNAME' do.
   if. IFUNIX do.
-    UNAME=: (2!:0 'uname')-.10{a.
+    if. -.IFIOS do.
+      UNAME=: (2!:0 'uname')-.10{a.
+    else.
+      UNAME=: 'Darwin'
+    end.
   elseif. do.
     UNAME=: 'Win'
   end.
 end.
-if. IF64 +. IFIOS +. (<UNAME) e. <'Android' do.
+if. notdef 'IFARM' do.
+  if. IFIOS do.
+    IFARM=: 1
+  elseif. IFUNIX do.
+    IFARM=: 'arm' -: 3{.(2!:0 'uname -m')-.10{a.
+  elseif. do.
+    IFARM=: 0
+  end.
+end.
+if. IF64 +. IFARM +. IFIOS +. UNAME-:'Android' do.
   IFWOW64=: 0
 else.
   if. IFUNIX do.
@@ -90,7 +103,7 @@ getenv=: 2!:5
 inv=: inverse=: ^:_1
 3 : 0''
 if. IFUNIX do.
-  isatty=: (unxlib 'c'),' isatty > i i' & (15!:0)
+  isatty=: ((unxlib 'c'),' isatty > i i') & (15!:0)
 else.
   isatty=: 2: = ('kernel32 GetFileType > i x' & (15!:0)) @ ('kernel32 GetStdHandle > x i'& (15!:0)) @ - @ (10&+)
 end.
@@ -1039,6 +1052,8 @@ elseif. 'm'e.x do. dat=. ];._2 dat
 end.
 )
 frename=: 4 : 0
+x=. > fboxname x
+y=. > fboxname y
 if. x -: y do. 1 return. end.
 if. IFUNIX do.
   0=((unxlib 'c'),' rename > i *c *c') 15!:0 y;x
@@ -1597,31 +1612,33 @@ case. 'Win' do.
     r=. ShellExecute 0;(uucp 'open');(uucp browser);(uucp dquote cmd);NULL;SW_SHOWNORMAL
   end.
   if. r<33 do. sminfo 'browse error:',browser,' ',cmd,LF2,1{::cderx'' end.
-case. 'Android' do.
-  cmd=. '/' (I. cmd='\') } cmd
-  if. -. isURL cmd do.
-    cmd=. 'file://',cmd
-  end.
-  2!:1 'android.intent.action.VIEW';cmd;'text/html'
 case. do.
-  if. 0 = #browser do.
-    browser=. dfltbrowser''
-  end.
-  browser=. dquote (browser;Browser_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'
-  cmd=. '/' (I. cmd='\') } cmd
-  if. -. isURL cmd do.
-    cmd=. 'file://',cmd
-  end.
-  cmd=. browser,' ',dquote cmd
-  try.
-    2!:1 cmd, (0=nox)#' >/dev/null 2>&1 &'
-  catch.
-    msg=. 'Could not run the browser with the command:',LF2
-    msg=. msg, cmd,LF2
-    if. IFGTK do.
-      msg=. msg, 'You can change the browser definition in Edit|Configure|Base',LF2
+  if. (UNAME-:'Android') *. 0=isatty 0 do.
+    cmd=. '/' (I. cmd='\') } cmd
+    if. -. isURL cmd do.
+      cmd=. 'file://',cmd
     end.
-    sminfo 'Run Browser';msg
+    2!:1 'android.intent.action.VIEW';cmd;'text/html'
+  else.
+    if. 0 = #browser do.
+      browser=. dfltbrowser''
+    end.
+    browser=. dquote (browser;Browser_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'
+    cmd=. '/' (I. cmd='\') } cmd
+    if. -. isURL cmd do.
+      cmd=. 'file://',cmd
+    end.
+    cmd=. browser,' ',dquote cmd
+    try.
+      2!:1 cmd, (0=nox)#' >/dev/null 2>&1 &'
+    catch.
+      msg=. 'Could not run the browser with the command:',LF2
+      msg=. msg, cmd,LF2
+      if. IFGTK do.
+        msg=. msg, 'You can change the browser definition in Edit|Configure|Base',LF2
+      end.
+      sminfo 'Run Browser';msg
+    end.
   end.
 end.
 EMPTY
@@ -1676,28 +1693,30 @@ case. 'Win' do.
     r=. ShellExecute 0;(uucp 'open');(uucp PDFReader);(uucp dquote cmd);NULL;SW_SHOWNORMAL
   end.
   if. r<33 do. sminfo 'view pdf error:',PDFReader,' ',cmd,LF2,1{::cderx'' end.
-case. 'Android' do.
-  cmd=. '/' (I. cmd='\') } cmd
-  if. -. isURL cmd do.
-    cmd=. 'file://',cmd
-  end.
-  2!:1 'android.intent.action.VIEW';cmd;'application/pdf'
 case. do.
-  if. 0 = #PDFReader do.
-    PDFReader=. dfltpdfreader''
-  end.
-  PDFReader=. dquote PDFReader
-  cmd=. '/' (I. cmd='\') } cmd
-  cmd=. PDFReader,' ',dquote cmd
-  try.
-    2!:1 cmd
-  catch.
-    msg=. 'Could not run the PDFReader with the command:',LF2
-    msg=. msg, cmd,LF2
-    if. IFGTK do.
-      msg=. msg, 'You can change the PDFReader definition in Edit|Configure|Base',LF2
+  if. (UNAME-:'Android') *. 0=isatty 0 do.
+    cmd=. '/' (I. cmd='\') } cmd
+    if. -. isURL cmd do.
+      cmd=. 'file://',cmd
     end.
-    sminfo 'Run PDFReader';msg
+    2!:1 'android.intent.action.VIEW';cmd;'application/pdf'
+  else.
+    if. 0 = #PDFReader do.
+      PDFReader=. dfltpdfreader''
+    end.
+    PDFReader=. dquote PDFReader
+    cmd=. '/' (I. cmd='\') } cmd
+    cmd=. PDFReader,' ',dquote cmd
+    try.
+      2!:1 cmd
+    catch.
+      msg=. 'Could not run the PDFReader with the command:',LF2
+      msg=. msg, cmd,LF2
+      if. IFGTK do.
+        msg=. msg, 'You can change the PDFReader definition in Edit|Configure|Base',LF2
+      end.
+      sminfo 'Run PDFReader';msg
+    end.
   end.
 end.
 EMPTY
@@ -1859,7 +1878,7 @@ if. 0=L.y do.
   end.
 end.
 y=. y -. Ignore, IFJHS#;:'viewmat'
-y=. y -. (IFIOS +. (<UNAME) e. <'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
+y=. y -. IFARM#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public
@@ -1906,7 +1925,7 @@ if. IFJHS do.
   xmr ::0: file
   EMPTY return.
 end.
-if. UNAME-:'Android' do.
+if. (UNAME-:'Android') *. 0=isatty 0 do.
   file=. '/' (I. file='\') } file
   if. -. isURL file do.
     file=. 'file://',file

@@ -3,7 +3,7 @@ require 'graphics/bmp graphics/gl2'
 coclass 'jviewmat'
 
 coinsert 'jgtk jgl2'
-GUI=: -. IFJHS +. IFIOS +. (<UNAME) e. <'Android'
+GUI=: -. IFJHS +. IFARM
 MINWH=: 200 200
 DEFWH=: 360 360
 
@@ -316,7 +316,7 @@ if. GUI do.
   if. -.IFGTK do. gtk_main '' end.
 else.
   (no_gui_bmp__a'') writebmp jpath '~temp/viewmat.bmp'
-  if. UNAME-:'Android' do.
+  if. (UNAME-:'Android') *. 0=isatty 0  do.
     2!:1 'android.intent.action.VIEW';('file://',jpath '~temp/viewmat.bmp');'image/bitmap'
   end.
   destroy__a ''

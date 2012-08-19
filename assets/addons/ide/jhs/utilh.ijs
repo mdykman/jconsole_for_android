@@ -618,7 +618,7 @@ end.
 r
 )
 
-NB.* docjs*docjs_jhs)'' - framework javascript overview
+NB.* docjs*docjs_jhs_'' - framework javascript overview
 docjs=: 3 : 0
 r=. ''
 t=. <;.2 LF,~fread jpath'~addons/ide/jhs/utiljs.ijs'

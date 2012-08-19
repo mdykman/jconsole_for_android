@@ -4,8 +4,9 @@ require 'graphics/color/colortab'
 
 3 : 0''
 if. -.IFJ6 do.
+  if. 0~:4!:0<'IFJAVA' do. IFJAVA=: 0 end.
   if. 0 ~: 4!:0 <'JHSOUTPUT' do. JHSOUTPUT=: 'canvas' end.
-  if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: ((<UNAME) e. <'Android'){::'cairo';'pdf' end.
+  if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: (UNAME-:'Android'){::'cairo';'android' end.
   if. 0 ~: 4!:0 <'GTKOUTPUT' do. GTKOUTPUT=: 'gtk' end.
   if. 0 ~: 4!:0 <'IFTESTPLOTJHS' do. IFTESTPLOTJHS_z_=: 0 end.
   if. IFTESTPLOTJHS +. IFJHS do.
@@ -691,7 +692,7 @@ Pxywh=: ''
 PStyle=: ''
 TypeRest=: ''
 ('i',each ;: 'LEFT CENTER RIGHT')=: i. 3
-j=. ;: 'ISI EPS GTK PDF CANVAS CAIRO'
+j=. ;: 'ISI EPS GTK PDF CANVAS CAIRO ANDROID'
 ('i' ,each j)=: i.#j
 j=. 'i' ,each cutopen toupper 0 : 0
 background
@@ -4455,6 +4456,7 @@ if. 2 ~: 3!:0 v do. y return. end.
 v=. < caller plotdefverbm`plotdefverbd@.(3=#y) v
 v _1 } y
 )
+pd_android=: android_show
 pd_eps=: eps_show
 pd_canvas=: canvas_show
 pd_canvasr=: canvas_get
@@ -4512,6 +4514,888 @@ fn~arg
 EMPTY
 )
 
+coclass 'jzplot'
+ANDROID_DEFSIZE=: 400 200
+ANDROID_DEFFILE=: jpath '~temp/plot'
+ANDROID_PENSCALE=: 0.4
+fext=: 4 : 0
+f=. deb y
+f, (-. x -: (-#x) {. f) # x
+)
+gettemp=: 3 : 0
+p=. jpath '~temp/'
+d=. 1!:0 p,'*.',y
+a=. 0, {.@:(0&".)@> _4 }. each {."1 d
+a=. ": {. (i. >: #a) -. a
+p,a,'.',y
+)
+android_getsize=: 3 : 0
+if. -. wdishandle :: 0: ": PFormhwnd do. '' return. end.
+wd 'psel ', ":PFormhwnd
+s=. wd :: 0: 'qchildxywhx ',PId
+if. s -: 0 do. '' return. end.
+2 3 { 0 ". s
+)
+output_parms=: 4 : 0
+'size file'=. x
+if. #y do.
+  prm=. qchop y
+  select. #prm
+  case. 1 do.
+    file=. 0 pick prm
+  case. 2 do.
+    size=. 0 ".&> prm
+  case. 3 do.
+    file=. 0 pick prm
+    size=. 0 ". &> _2 {. prm
+    if. 0 e. size do.
+      size=. 0 ". &> 2 {. prm
+      file=. 2 pick prm
+    end.
+  end.
+else.
+  if. #sz=. android_getsize'' do.
+    size=. sz
+  end.
+end.
+size;file
+)
+android_clip=: 3 : 0
+if. -. IFWIN do.
+  info 'Save plot to clipboard is only available in Windows'
+  return.
+end.
+f=. gettemp 'emf'
+android_emf dquote f
+wd 'clipcopyx enhmetafile ',dquote f
+1!:55 <f
+)
+android_gpcount=: ,"1~ 1 + [: {: 1 , $
+android_gpcut=: 3 : 0
+r=. ''
+while. #y do.
+  n=. {. y
+  if. n=0 do.
+    info 'zero length segment at: ',":#;r
+    r
+    return.
+  end.
+  r=. r, < n {. y
+  y=. n }. y
+end.
+r
+)
+android_gpbuf=: 3 : 0
+assert. 2 > #$y
+buf=: buf,y
+)
+android_gpapply=: 3 : 0
+if. 1=GL2ExtGlcmds_j_ do.
+  if. #buf do. android_glcmds 2 2007, buf end.
+else.
+  if. #buf do. android_glcmds2 2 2007, buf end.
+end.
+buf=: $0
+)
+android_gpflip=: flipxy @ rndint
+android_gpfliplast=: 3 : 0
+(<android_gpflip _1 pick y) _1 } y
+)
+android_gpinit=: 3 : 0
+buf=: bufdef=: $0
+r=. ''
+r=. r,3 2003 1
+r=. r,3 2071 1
+android_gpapply''
+)
+android_gpbrushnull=: 3 : '2 2005'
+android_gppens=: 4 : 0
+y=. rndint y
+5 2032,"1 x,"1 [ 4 2022,"1 y,.5*y=0
+)
+android_gppen=: 4 : 0
+y=. rndint y
+5 2032,(,x),4 2022,y,5*y=0
+)
+android_gppens1=: 3 : 0
+5 2032,"1 y,"1 [ 4 2022 1 0
+)
+android_gppen1=: 3 : 0
+5 2032,(,y),4 2022 1 0
+)
+android_gppenbrush1=: 3 : 0
+5 2032,(,y),4 2022 1 0 2 2004
+)
+android_gppixel=: 3 : 0
+'s t f e c p'=. y
+p=. android_gpcount 2024 ,"1 android_gpflip p
+if. is1color e do.
+  android_gpbuf e android_gppen 1
+  android_gpbuf ,p
+else.
+  rws=. #p
+  e=. rws $ citemize e
+  pen=. e android_gppens 1
+  android_gpbuf ,pen ,. p
+end.
+)
+android_gppline=: 4 : 0
+'s t f e c p'=. y
+if. (is1color e) *. 1 = #s do.
+  android_gpbuf (,e) android_gppen s
+  android_gpbuf ,android_gpcount x,"1 p
+else.
+  rws=. #p
+  e=. rws $ citemize e
+  s=. rws $ s
+  pen=. e android_gppens s
+  android_gpbuf ,pen ,. android_gpcount x,"1 p
+end.
+)
+android_gppshape=: 4 : 0
+'v s f e c p'=. y
+
+if. v=0 do. e=. c end.
+
+if. is1color e do.
+  android_gpbuf e android_gppen v
+  if. isempty c do.
+    android_gpbuf android_gpbrushnull''
+    android_gpbuf ,android_gpcount x,"1 p
+  elseif. is1color c do.
+    android_gpbuf 5 2032,(,c),2 2004
+    android_gpbuf ,android_gpcount x,"1 p
+  elseif. do.
+    c=. (#p) $ c
+    clr=. 5 2032 ,"1 c ,"1 [ 2 2004
+    android_gpbuf , clr ,. android_gpcount x,"1 p
+  end.
+else.
+  e=. (#p) $ e
+  e=. e android_gppens v
+  if. isempty c do.
+    android_gpbuf android_gpbrushnull''
+    android_gpbuf , e ,. android_gpcount x,"1 p
+  elseif. is1color c do.
+    android_gpbuf 5 2032,(,c),2 2004
+    android_gpbuf , e ,. android_gpcount x,"1 p
+  elseif. do.
+    c=. (#p) $ c
+    clr=. 5 2032 ,"1 c ,"1 [ 2 2004
+    android_gpbuf , e ,. clr ,. android_gpcount x,"1 p
+  end.
+
+end.
+)
+androidarc=: 3 : '2001 android_gppline android_gpfliplast y'
+androidline=: 3 : '2015 android_gppline android_gpfliplast y'
+androidpie=: 3 : '2023 android_gppshape android_gpfliplast y'
+androidpoly=: 3 : '2029 android_gppshape android_gpfliplast y'
+androidcircle=: 3 : 0
+p=. _1 pick y
+ctr=. android_gpflip 0 1 {"1 p
+rad=. rndint 2 {"1 p
+xy=. ctr - rad
+wh=. +: rad ,. rad
+p=. xy ,. wh
+2008 android_gppshape (<p) _1 } y
+)
+androiddot=: 3 : 0
+'v s f e c p'=. y
+select. v
+case. 1 do.
+  android_gppixel y
+case. 2 do.
+  p=. android_gpflip p
+  p=. (p-1) ,"1 [ 2 2
+  dat=. 1;0;0;e;e;p
+  2031 android_gppshape dat
+case. 3 do.
+  h=. (p-"1[1 0) ,. p+"1[2 0
+  v=. (p-"1[0 1) ,. p+"1[0 2
+  androidline 1;0;0;e;e;h,v
+case. do.
+  o=. >. -: v
+  p=. p ,"1 v,.v
+  androidcircle 1;0;0;e;e;p
+end.
+)
+androidfxywh=: 3 : 0
+p=. _1 pick y
+if. #p do.
+  'x y w h'=. p
+  xy=. _1 + <. x,Ch-y+h
+  wh=. 2 + >. w,h
+  android_gpbuf 6 2078,xy,wh
+else.
+  android_gpbuf 2 2079
+end.
+)
+androidmarker=: 3 : 0
+'s m f e c p'=. y
+p=. android_gpflip p
+android_gpbuf android_gppenbrush1 e
+s ('androidmark_',m)~ p
+)
+androidpie=: 3 : 0
+p=. _1 pick y
+ctr=. android_gpflip 0 1 {"1 p
+rad=. 2 {"1 p
+ang=. 3 4 {"1 p
+xy=. ctr - rad
+wh=. +: rad ,. rad
+tx=. ({."1 ctr) + rad * sind ang
+ty=. ({:"1 ctr) + rad * cosd ang
+p=. rndint xy ,. wh ,. ,"2 tx ,"0 ty
+2023 android_gppshape (<p) _1 } y
+)
+androidpline=: 3 : 0
+'s t f e c p'=. y
+if. *./ t = 0 do.
+  androidline y return.
+end.
+p=. android_gpflip p
+t=. t { PENPATTERN
+if. (is1color e) *. 1 = #s do.
+  android_gpbuf 5 2032,(,e),4 2022,s,0
+  pos=. t linepattern"0 1 p
+  android_gpbuf ,android_gpcount 2015,"1 pos
+else.
+  rws=. #p
+  e=. rws $ citemize e
+  s=. rws $ s
+  t=. rws $ t
+  pen=. e android_gppens s
+  for_i. i.#p do.
+    android_gpbuf i{pen
+    pos=. (i{t) linepattern i{p
+    android_gpbuf ,android_gpcount 2015,"1 pos
+  end.
+end.
+)
+androidrect=: 3 : 0
+p=. boxrs2wh^:1 android_gpflip _1 pick y
+if. IFJAVA do.
+  if. 0 = 1 pick y do.
+    p=. 1 1 _2 _2 +"1 p
+  end.
+end.
+y=. (<p) _1 } y
+2031 android_gppshape y
+)
+androidtext=: 3 : 0
+'t f a e c p'=. y
+
+p=. android_gpflip p
+t=. text2utf8 each boxopen t
+'fnx fst fsz fan und'=. f
+rot=. 3 | 0 90 270 i. fan
+asc=. pgetascender f
+fnm=. getfntname fnx,fst
+bold=. italic=. ''
+if. (1 e. '-Oblique' E. fnm)+.(1 e. '-Bold' E. fnm)+.(1 e. '-Italic' E. fnm) do.
+  bold=. (1 e. 'Bold' E. fnm)#'bold '
+  italic=. ((1 e. 'Oblique' E. fnm)+.(1 e. 'Italic' E. fnm))#'italic '
+  fnm=. ({.~ i:&'-') fnm
+end.
+font=. dtb '"', fnm ,'" ', (": getplotfontsize f), ' ', italic, bold
+select. rot
+case. 0 do. p=. 0 >. p -"1 [ 0, asc
+case. 1 do. p=. p +"1 asc, 0
+case. 2 do. p=. p -"1 asc, 0
+end.
+'face size style degree'=. parseFontSpec font
+android_gpbuf android_gpcount 2312,(<.size*10),style,(<.degree*10),alfndx,face
+if. is1color e do.
+  android_gpbuf 5 2032,(,e),2 2040
+  if. rank01 p do.
+    android_gpbuf android_gpcount 2056,p
+    android_gpbuf android_gpcount 2038,alfndx,>t
+  else.
+    t=. android_gpcount each 2038 ,each alfndx each t
+    t=. (<"1 android_gpcount 2056 ,"1 p) ,each t
+    android_gpbuf ; t
+  end.
+else.
+  t=. android_gpcount each 2038 ,each alfndx each t
+  t=. t ,each <"1 android_gpcount 2056 ,"1 p
+  t=. (<"1 (5 2032 ,"1 e) ,"1 [ 2 2040) ,each t
+  android_gpbuf ; t
+end.
+)
+androidmark_circle=: 4 : 0
+s=. rndint x * 3
+p=. (y - s) ,"1 >: +: s,s
+android_gpbuf ,android_gpcount 2008 ,"1 p
+)
+androidmark_diamond=: 4 : 0
+s=. rndint x * 4
+'x y'=. |: y
+p=. (x-s),.y,.x,.(y+s),.(x+s),.y,.x,.y-s
+android_gpbuf ,android_gpcount 2029 ,"1 p
+)
+androidmark_line=: 4 : 0
+'x y'=. , y
+p=. >.(x--:KeyLen),(y--:KeyPen),<:KeyLen,KeyPen
+android_gpbuf ,android_gpcount 2031 ,p
+)
+androidmark_plus=: 4 : 0
+s=. rndint 4 1 * x
+p=. (y -"1 s) ,"1 +: s
+s=. |. s
+p=. p , (y -"1 s) ,"1 +: s
+android_gpbuf ,android_gpcount 2031 ,"1 p
+)
+androidmark_square=: 4 : 0
+s=. rndint x * 3
+p=. (y - s) ,"1 +: s,s
+android_gpbuf ,android_gpcount 2031 ,"1 p
+)
+androidmark_times=: 4 : 0
+if. x = 1 do.
+  p=. (y - 3) ,. y + 4
+  q=. (y - "1 [ 3 _3) ,. y +"1 [ 4 _4
+  p=. p, (p +"1 [ 0 1 _1 0), p + "1 [ 1 0 0 _1
+  q=. q, (q +"1 [ 0 _1 _1 0), q +"1 [ 1 0 0 1
+  android_gpbuf ,android_gpcount 2015 ,"1 p,q
+else.
+  s=. rndint _1 + 3 * x
+  n=. rndint 2 * x
+  p=. (y - s) ,. y + s
+  q=. (y - "1 s * 1 _1) ,. y +"1 s * 1 _1
+  android_gpbuf 4 2022,n,0
+  android_gpbuf ,android_gpcount 2015 ,"1 p,q
+end.
+)
+androidmark_triangle=: 4 : 0
+s=. rndint 2 * x
+t=. rndint 4 * x
+'x y'=. |: y
+p=. rndint (x-t),.(y+s),.(x+t),.(y+s),.x,.y-t
+android_gpbuf ,android_gpcount 2029 ,"1 p
+)
+PRINTP=: ''
+android_print=: 3 : 0
+if. #PRINTP do. wd 'psel ',PRINTP,';pclose' end.
+wd 'pc print;cc g canvas'
+PRINTP=: wd 'qhwndp'
+PRINTED=: 0
+opt=. '"" "" "" orientation ',":ORIENTATION
+glprint opt
+)
+print_g_print=: 3 : 0
+'page pass'=. ". sysdata
+select. pass
+case. _1 do.
+  PRINTP=: PRINTPXYWH=: ''
+  wd 'pclose'
+case. 0 do.
+  glprintmore -.PRINTED
+case. do.
+  'Cw Ch'=: glqprintwh''
+  android_paintit android_printwin''
+  PRINTED=: 1
+end.
+)
+android_printwin=: 3 : 0
+'pw ph mw mh'=. 4 {. glqprintpaper''
+mrg=. 0 >. PRINTMARGIN - mw,(ph - mh + Ch),(pw - mw + Cw),mh
+xywh=. (0 0,Cw,Ch) shrinkrect mrg
+if. 0 = #PRINTWINDOW do.
+  xywh
+else.
+  if. 4 ~: #PRINTWINDOW do.
+    info 'PRINTWINDOW should be of form: x y wh' return.
+  end.
+  'x y w h'=. xywh
+  'px py pw ph'=. PRINTWINDOW%1000
+  fx=. x + px * w
+  fy=. y + py * h
+  fw=. (x-fx) + pw * w
+  fh=. (y-fy) + ph * h
+  fx,fy,fw,fh
+end.
+)
+android_bmp=: 3 : 0
+if. #y do.
+  arg=. qchop y
+  num=. __ ". &.> arg
+  msk=. __ e. &> num
+  file=. > {. msk # arg
+  wh=. >(-.msk) # num
+  if. -. (#wh) e. 0 2 do.
+    info 'invalid [w h] parameter in save bmp' return.
+  end.
+else.
+  wh=. file=. ''
+end.
+file=. file,(0=#file)#android_DEFFILE
+file=. jpath '.bmp' fext file
+if. (2 = #wh) > wh -: Pw,Ph do.
+  a=. cocreate''
+  coinsert__a (,copath) coname''
+  bmp=. android_getbmpwh__a wh
+  coerase a
+else.
+  bmp=. android_getbmp''
+end.
+bmp writebmp file
+)
+android_def=: 4 : 0
+type=. x
+file=. jpath ('.',type) fext (;qchop y),(0=#y) # android_DEFFILE
+(android_getrgb'') writeimg file
+)
+android_defstr=: 4 : 0
+type=. x
+(android_getrgb'') putimg type
+)
+android_emf=: 3 : 0
+file=. jpath '.emf' fext (;qchop y),(0=#y) # android_DEFFILE
+wd 'psel ',": PFormhwnd
+glsel PId
+glfile file
+glemfopen''
+android_paint''
+glemfclose''
+)
+android_getbmp=: 3 : 0
+wd 'psel ',": PFormhwnd
+glsel PId
+box=. 0 ". wd 'qchildxywhx ',PId
+res=. glqpixels box
+(3 2 { box) $ res
+)
+android_getbmpwh=: 3 : 0
+wd 'pc a owner;xywh 0 0 240 200;cc g canvas rightmove bottommove;pas 0 0'
+PFormhwnd=: 0 ". wd 'qhwndp'
+PId=: 'g'
+wd 'setxywhx g 0 0 ',":y
+wd 'pshow'
+android_paintx''
+glpaint''
+res=. android_getbmp''
+wd 'pclose'
+res
+)
+android_getrgb=: 3 : 0
+wd 'psel ',": PFormhwnd
+glsel PId
+box=. 0 ". wd 'qchildxywhx ',PId
+(3 2 { box) $ 256 256 256 #: glqpixels box
+)
+android_jpg=: 3 : 0
+file=. ''
+qual=. 100
+if. #y do.
+  arg=. qchop y
+  num=. __ ". &.> arg
+  msk=. +./ &> num = &.> __
+  file=. > {. msk # arg
+  qual=. <. {. (>(-.msk) # num),qual
+end.
+file=. jpath '.jpg' fext file,(0=#file) # android_DEFFILE
+rgb=. android_getrgb''
+rgb writeimg file
+)
+android_png=: 3 : 0
+file=. ''
+comp=. 9
+if. #y do.
+  arg=. qchop y
+  num=. __ ". &.> arg
+  msk=. +./ &> num = &.> __
+  file=. > {. msk # arg
+  comp=. <. {. (>(-.msk) # num),comp
+end.
+file=. jpath '.png' fext file,(0=#file) # android_DEFFILE
+rgb=. android_getrgb''
+rgb writeimg file
+)
+android_save=: 3 : 0
+if. Poutput ~: iANDROID do.
+  msg=. 'First display an canvas Plot.'
+  info msg return.
+end.
+if. 0=#y do.
+  android_clip'' return.
+end.
+type=. tolower firstword y
+if. (<type) e. ;: 'gif jpg png tif gifr jpgr pngr tifr' do.
+  af=. jpath '~addons/media/platimg/platimg.ijs'
+  if. -. flexist af do.
+    info 'Save to ',type,' requires the platimg addon.' return.
+  end.
+  require af
+end.
+('android_',type)~ (1+#type) }. y
+)
+
+android_get=: 3 : 0
+if. #y do.
+  type=. tolower firstword y
+  if. (<type) e. ;: 'gif jpg png tif' do.
+    y=. type,'r ', (#type)}. y
+  end.
+end.
+android_save y
+)
+android_gif=: 'gif' & android_def
+android_tif=: 'tif' & android_def
+android_pngr=: 'png' & android_defstr
+android_jpgr=: 'jpg' & android_defstr
+android_gifr=: 'gif' & android_defstr
+android_tifr=: 'tif' & android_defstr
+android_show=: 3 : 0
+popen_android''
+)
+android_paint=: 3 : 0
+coinsert 'ja'
+
+paint=: 'android.graphics.Paint' jniNewObject~ ''
+
+FILL=: ('FILL Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
+FILL_AND_STROKE=: ('FILL_AND_STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
+STROKE=: ('STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
+
+paint ('setAntiAlias (Z)V' jniMethod)~ 1
+
+jnicheck canvas=: GetObjectArrayElement (3{y);0
+
+w=. canvas ('getWidth ()I' jniMethod)~ ''
+h=. canvas ('getHeight ()I' jniMethod)~ ''
+
+'Cw Ch'=: w,h
+android_paintit 0 0,Cw,Ch
+
+DeleteLocalRef <FILL
+DeleteLocalRef <FILL_AND_STROKE
+DeleteLocalRef <STROKE
+DeleteLocalRef <paint
+DeleteLocalRef <canvas
+0
+)
+android_paintit=: 3 : 0
+android_gpinit''
+make iANDROID;y
+ids=. 1 {"1 Plot
+fns=. 'android'&, each ids
+dat=. 3 }."1 Plot
+for_d. dat do.
+  (>d_index{fns)~d
+end.
+android_gpapply''
+)
+
+android_glcmds=: 3 : 0
+
+buf=. y
+if. 0=#buf do. 0 return. end.
+buf=. <.buf
+jbuf=. NewIntArray <#buf
+SetIntArrayRegion jbuf; 0; (#buf); buf
+andw=: Cw [ andh=: Ch
+ipar=. andclipped,andw,andh,andrgb,andtextxy,andunderline,andfontangle,andpenrgb,andbrushrgb,andtextrgb,andbrushnull,andorgx,andorgy
+assert. 14=#ipar
+ibuf=. NewIntArray <#ipar
+SetIntArrayRegion ibuf; 0; (#ipar); ipar
+PROFONT_jgl2_=: 'android 10'
+glc=. 'org/dykman/jn/Glcmds' jniNewObject~ ''
+rc=. glc ('glcmds (Landroid/graphics/Canvas;Landroid/graphics/Paint;[ILjava/lang/String;[III)I' jniMethod)~ canvas;paint;ibuf;(utf8 PROFONT_jgl2_);jbuf;(#buf);RGBSEQ_j_
+
+GetIntArrayRegion ibuf; 0; (#ipar); ipar=. 14#2-2
+'clip andw andh rgb tx ty underline angle penrgb brushrgb textrgb brushnull orgx orgy'=. ipar
+andclipped=: clip [ andrgb=: rgb [ andtextxy=: tx,ty [ andunderline=: underline [ andfontangle=: angle
+andpenrgb=: penrgb [ andbrushrgb=: brushrgb [ andtextrgb=: textrgb [ andbrushnull=: brushnull [ andorgx=: orgx ] andorgy=: orgy
+
+DeleteLocalRef <jbuf
+DeleteLocalRef <ibuf
+DeleteLocalRef <glc
+rc return.
+)
+
+RGBA=: 3 : 'r (23 b.) 8 (33 b.) g (23 b.) 8 (33 b.) b (23 b.) 8 (33 b.) 255 [ ''r g b''=. y'
+BGRA=: 3 : 'b (23 b.) 8 (33 b.) g (23 b.) 8 (33 b.) r (23 b.) 8 (33 b.) 255 [ ''r g b''=. y'
+
+andbrushrgb=: andpenrgb=: andrgb=: RGBA 0 0 0
+andbrushnull=: 0
+androidcolor=: 3 : 0
+'paint andcolor'=. y
+paint ('setColor (I)V' jniMethod)~ andcolor
+)
+
+tors=: 3 : 0
+(2{.y),(2{.y)+2}.y
+)
+
+androidarcisi=: 3 : 0
+'x y w h xa ya xz yz'=. y
+rect=. tors x,y,w,h
+'xc yc'=. (x,y)+0.5*w,h
+a=. (xa-xc) [ b=. (ya-yc)
+if. 0=a do.
+  ang1=. 90*(b>0){_1 1
+else.
+  ang1=. 180p_1 * _3 o. b%a
+end.
+if. (0<:ang1) *. (a<0) do. ang1=. 180 + ang1
+elseif. (0>ang1) *. (a<0) do. ang1=. 180 + ang1
+end.
+a=. (xz-xc) [ b=. (yz-yc)
+if. 0=a do.
+  ang2=. 90*(b>0){_1 1
+else.
+  ang2=. 180p_1 * _3 o. b%a
+end.
+if. (0<:ang2) *. (a<0) do. ang2=. 180 + ang2
+elseif. (0>ang2) *. (a<0) do. ang2=. 180 + ang2
+end.
+rect,ang2,360|ang1-ang2
+)
+
+android_glcmds2=: 3 : 0
+buf=. y
+if. 0=#buf do. 0 return. end.
+buf=. <.buf
+andw=: Cw [ andh=: Ch
+ipar=. andclipped,andw,andh,andrgb,andtextxy,andunderline,andfontangle,andpenrgb,andbrushrgb,andtextrgb,andbrushnull,andorgx,andorgy
+assert. 14=#ipar
+PROFONT_jgl2_=: 'android 10'
+
+path=. 'android/graphics/Path' jniNewObject~ ''
+
+ncnt=. #buf=. y
+errcnt=. 0
+p=. 0
+while. p<ncnt do.
+  cnt=. p{buf
+  cmd=. (p+1){buf
+  select. cmd
+
+  case. 2001 do.
+    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
+    androidcolor paint, andpenrgb
+    'x y r s ang1 ang2'=. androidarcisi (p+2+i.8){buf
+    rectf=. 'android/graphics/RectF FFFF' jniNewObject~ x;y;r;s
+    canvas ('drawArc (Landroid/graphics/RectF;FFZLandroid/graphics/Paint;)V' jniMethod)~ rectf;ang1;ang2;0;paint
+    DeleteLocalRef <rectf
+
+  case. 2004 do.
+    andbrushrgb=: andrgb
+    andbrushnull=: 0
+
+  case. 2005 do.
+    andbrushnull=: 1
+  case. 2007 do.
+    andrgb=: BGRA 0 0 0
+    andunderline=: 0
+    andfontangle=: 0
+    andorgx=: 0
+    andorgy=: 0
+    andpenrgb=: andrgb
+    paint ('setStrokeWidth (F)V' jniMethod)~ >./ 1
+    androidcolor paint, BGRA 255 255 255
+    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
+    canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ 0;0;andw;andh;paint
+    andbrushnull=: 1
+    andtextx=: 0
+    andtexty=: 0
+    andtextrgb=: andrgb
+  case. 2008 do.
+    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
+    androidcolor paint, andbrushrgb
+    'x y r s ang1 ang2'=. androidarcisi (4#0),~ (p+2+i.4){buf
+    rectf=. 'android/graphics/RectF FFFF' jniNewObject~ x;y;r;s
+    canvas ('drawOval (Landroid/graphics/RectF;Landroid/graphics/Paint;)V' jniMethod)~ rectf;paint
+
+    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
+    androidcolor paint, andpenrgb
+    canvas ('drawOval (Landroid/graphics/RectF;Landroid/graphics/Paint;)V' jniMethod)~ rectf;paint
+    DeleteLocalRef <rectf
+  case. 2015 do.
+    androidcolor paint, andpenrgb
+    c=. <.2%~cnt-2
+    pt=. (2 3+p){buf
+    path ('reset ()V' jniMethod)~ ''
+    path ('moveTo (FF)V' jniMethod)~ <"0 pt
+    for_i. i.c-1 do.
+      pt=. (0 1 + p + 2 + 2*1+i){buf
+      path ('lineTo (FF)V' jniMethod)~ (<"0 pt)
+    end.
+    canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
+
+  case. 2022 do.
+    andpenrgb=: andrgb
+    paint ('setStrokeWidth (F)V' jniMethod)~ >./ 0.5,(p+2){buf
+
+  case. 2023 do.
+    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
+    androidcolor paint, andbrushrgb
+    'x y r s ang1 ang2'=. androidarcisi (p+2+i.8){buf
+    rectf=. 'android/graphics/RectF FFFF' jniNewObject~ x;y;r;s
+    canvas ('drawArc (Landroid/graphics/RectF;FFZLandroid/graphics/Paint;)V' jniMethod)~ rectf;ang1;ang2;1;paint
+    DeleteLocalRef <rectf
+
+  case. 2024 do.
+    androidcolor paint, andrgb
+    i=. 2
+    while. i<cnt do.
+      canvas 'drawPoint (FFZLandroid/graphics/Paint;)V' jniMethod)~ (<"0 (0 1+p+i){buf), <paint
+      i=. 2+i
+    end.
+  case. 2029 do.
+    c=. <.2%~cnt-2
+    path ('reset ()V' jniMethod)~ ''
+    if. 0 = andbrushnull do.
+      pt=. (2 3+p){buf
+      path ('moveTo (FF)V' jniMethod)~ <"0 pt
+      for_i. i.c-1 do.
+        pt=. (0 1 + p + 2 + 2*1+i){buf
+        path ('lineTo (FF)V' jniMethod)~ <"0 pt
+      end.
+      path ('lineTo (FF)V' jniMethod)~ <"0 pt
+      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
+      androidcolor paint, andbrushrgb
+      canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
+      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
+      androidcolor paint, andpenrgb
+      canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
+    else.
+      pt=. (2 3+p){buf
+      path ('moveTo (FF)V' jniMethod)~ <"0 pt
+      for_i. i.c-1 do.
+        pt=. (0 1 + p + 2 + 2*1+i){buf
+        path ('lineTo (FF)V' jniMethod)~ <"0 pt
+      end.
+      path ('lineTo (FF)V' jniMethod)~ <"0 pt
+      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
+      androidcolor paint, andpenrgb
+      canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
+    end.
+    DeleteLocalRef <path
+
+  case. 2031 do.
+    if. (0 = andbrushnull) do.
+      i=. 2
+      while. i<cnt do.
+        androidcolor paint , andbrushrgb
+        paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
+        canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ (<"0 tors (0 1 2 3 + p+i){buf), <paint
+        androidcolor paint , andpenrgb
+        paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
+        canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ (<"0 tors (0 1 2 3 + p+i){buf), <paint
+        i=. i+4
+      end.
+    else.
+      androidcolor paint , andpenrgb
+      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
+      i=. 2
+      while. i<cnt do.
+        canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ (<"0 tors (0 1 2 3 + p+i){buf), <paint
+        i=. i+4
+      end.
+    end.
+
+  case. 2032 do.
+    if. RGBSEQ_j_ do.
+      andrgb=: RGBA (p+2 3 4){buf
+    else.
+      andrgb=: BGRA (p+2 3 4){buf
+    end.
+
+  case. 2038 do.
+    androidcolor paint , andtextrgb
+    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
+    ys=. a.{~ (p+2 + i.cnt-2){buf
+    canvas ('drawText (Ljava/lang/String;FFLandroid/graphics/Paint;)V' jniMethod)~ ys;andtextx;andtexty;paint
+  case. 2040 do.
+    andtextrgb=: andrgb
+
+  case. 2056 do.
+    andtextx=: (p+2){buf
+    andtexty=: (p+3){buf
+  case. do.
+    log_d_ja_ 'JJNI';'glcmds: cmd not implemented ', ":cmd
+    errcnt=. >:errcnt
+  end.
+  p=. p + cnt
+end.
+
+DeleteLocalRef <path
+
+'clip andw andh rgb tx ty underline angle penrgb brushrgb textrgb brushnull orgx orgy'=. ipar
+andclipped=: clip [ andrgb=: rgb [ andtextxy=: tx,ty [ andunderline=: underline [ andfontangle=: angle
+andpenrgb=: penrgb [ andbrushrgb=: brushrgb [ andtextrgb=: textrgb [ andbrushnull=: brushnull [ andorgx=: orgx ] andorgy=: orgy
+
+errcnt
+)
+load 'gui/android'
+pclose_android=: 3 : 0
+0
+)
+popen_android=: 3 : 0
+fm=. PForm,'_'
+id=. fm,PId,'_'
+(fm,'close')=: pclose_android
+(id,'paint')=: ppaint
+(id,'mmove')=: ]
+
+Pxywh=: ''
+PShow=: 0
+PFormhwnd=: (18!:5'') StartActivity_ja_~ 0;0;'plotactivity'
+)
+ppaint_android=: 3 : 0
+ android_show ''
+)
+
+coclass 'plotactivity'
+coinsert 'jnobject'
+
+ClassName=: 'org.dykman.jn.android.app.Activity'
+
+create=: 18!:5
+
+onCreate=: 3 : 0
+this=: 2{y
+this addOverride~ 'onDestroy'
+FEATURE_NO_TITLE=: 1
+FEATURE_NO_TITLE=: ('FEATURE_NO_TITLE I' jniStaticField) 'android/view/Window'
+FLAG_FULLSCREEN=: 1024
+
+this ('requestWindowFeature (I)Z' jniMethod)~ FEATURE_NO_TITLE
+win=. this ('getWindow ()Landroid/view/Window;' jniMethod)~ ''
+win ('setFlags (II)V' jniMethod)~ FLAG_FULLSCREEN;FLAG_FULLSCREEN
+DeleteLocalRef <win
+                
+view=: conew 'plotview'
+cls=. GetObjectClass <this
+assert. 0~:cls
+jargx=. ('jargx Ljava/lang/String;' jniField) this
+cargx=. GetStringUTFChars jargx;<<0
+assert. 0~:cargx
+argx=. memr cargx,0,_1
+ReleaseStringUTFChars jargx;<<cargx
+onDraw__view=: ('android_paint_',argx,'_')~
+('andclipped_',argx,'_')=: ('andw_',argx,'_')=: ('andh_',argx,'_')=: ('andrgb_',argx,'_')=: ('andunderline_',argx,'_')=: ('andfontangle_',argx,'_')=: ('andpenrgb_',argx,'_')=: ('andbrushrgb_',argx,'_')=: ('andtextrgb_',argx,'_')=: ('andbrushnull_',argx,'_')=: ('andorgx_',argx,'_')=: ('andorgy_',argx,'_')=: 0
+('andtextxy_',argx,'_')=: 0 0 
+thisview=. 'Landroid/content/Context;' create__view~ this
+this ('setContentView (Landroid/view/View;)V' jniMethod)~ thisview
+thisview ('requestFocus ()Z' jniMethod)~ ''
+DeleteLocalRef <thisview
+0
+)
+
+onDestroy=: 3 : 0
+destroy__view''
+)
+coclass 'plotview'
+coinsert 'jnobject'
+ClassName=: 'org.dykman.jn.android.view.View'
+
+jcreate=: 3 : 0
+(2{y) addOverride~ 'onDraw'
+0
+)
 coclass 'jzplot'
 CAIRO_DEFSHOW=: 'jijx'
 CAIRO_DEFSIZE=: 400 200
