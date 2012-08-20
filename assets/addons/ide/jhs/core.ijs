@@ -493,7 +493,7 @@ end.
 )
 
 open_z_=: 3 : 0
-t=. (JIJSAPP_jhs_,'?mid=open&path=',>{.getscripts_j_ y)jhref_jhs_ y
+t=. (JIJSAPP_jhs_,'?mid=open&path=',jpath y)jhref_jhs_ y
 jhtml'<div contenteditable="false">',t,'</div>'
 )
 
@@ -533,8 +533,8 @@ jjs';',y
 
 NB. somewhat unique query string - avoid cache - not quaranteed to be unigue!
 jhsuqs_z_=: 3 : 0
-canvasnum=: >:canvasnum
-'?',((":6!:0'')rplc' ';'_';'.';'_'),'_',":canvasnum
+canvasnum_jhs_=: >:canvasnum_jhs_
+'?',((":6!:0'')rplc' ';'_';'.';'_'),'_',":canvasnum_jhs_
 )
 
 NB. f file.png
@@ -563,8 +563,8 @@ jjs 'window.open("',(y,jhsuqs''),'","',x,'");'
 )
 
 plotjijx_z_=: 3 : 0
-canvasnum=: >:canvasnum
-canvasname=. 'canvas',":canvasnum
+canvasnum_jhs_=: >:canvasnum_jhs_
+canvasname=. 'canvas',":canvasnum_jhs_
 d=. fread y
 c=. (('<canvas 'E.d)i.1)}.d 
 c=. (9+('</canvas>'E.c)i.1){.c
@@ -809,7 +809,7 @@ init=: 3 : 0
 :
 'already initialized' assert _1=nc<'SKLISTEN'
 IFJHS_z_=: 1
-canvasnum_z_=: 1
+canvasnum_jhs_=: 1
 x jhscfg y
 PATH=: jpath'~addons/ide/jhs/'
 NB. IP=: getexternalip''

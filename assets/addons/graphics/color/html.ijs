@@ -5,16 +5,16 @@ NB. customize this for other color tables
 
 NB. =========================================================
 makehtml=: 3 : 0
-load '~addons/graphics/color/colortab.ijs'
-tab=. makehtmlcell each <"1 COLORTABLE
+'file clr'=. y
+tab=. makehtmlcell each <"1 clr
 r=. '<html><head><style>table{border:1px solid black;}'
 r=. r,'td{text-align:center;}</style></head><body><table>',LF
 for_t. _6 [\ tab do. r=. r,'<tr>',(;t),'</tr>',LF end.
 r=. r,'</table><p><table>',LF
-tab=. tab \: +/"1 [ 0 ". COLORTABLE
+tab=. tab \: +/"1 [ 0 ". clr
 for_t. _6 [\ tab do. r=. r,'<tr>',(;t),'</tr>',LF end.
 r=. r,'</table></body></html'
-r fwrites jpath '~Addons/graphics/color/colortab.html'
+r fwrites jpath '~Addons/graphics/color/',file,'.html'
 )
 
 NB. =========================================================
@@ -29,4 +29,8 @@ r,'">',id,'<br/>',(":val),', #',hex,'</td>'
 )
 
 NB. =========================================================
-makehtml''
+load '~Addons/graphics/color/colortab.ijs'
+makehtml 'colortab';COLORTABLE
+
+load '~Addons/graphics/color/colorx256.ijs'
+makehtml 'colorx256';COLORX256

@@ -188,7 +188,32 @@ public class JInterface {
     		oo.onOutput(type,s);
     	}
     }
-    
+
+// callback to j
+//cover for native method
+    public synchronized Object Jnido(Object appobj,String verb,Object[] objref) { return jnido(nativeInstance,appobj,verb,objref); }
+    public synchronized boolean[] Jnidoz(Object appobj,String verb,Object[] objref) { return jnidoz(nativeInstance,appobj,verb,objref); }
+    public synchronized short[] Jnidos(Object appobj,String verb,Object[] objref) { return jnidos(nativeInstance,appobj,verb,objref); }
+    public synchronized int[] Jnidoi(Object appobj,String verb,Object[] objref) { return jnidoi(nativeInstance,appobj,verb,objref); }
+    public synchronized long[] Jnidol(Object appobj,String verb,Object[] objref) { return jnidol(nativeInstance,appobj,verb,objref); }
+    public synchronized float[] Jnidof(Object appobj,String verb,Object[] objref) { return jnidof(nativeInstance,appobj,verb,objref); }
+    public synchronized double[] Jnidod(Object appobj,String verb,Object[] objref) { return jnidod(nativeInstance,appobj,verb,objref); }
+    public synchronized byte[] Jnidoc(Object appobj,String verb,Object[] objref) { return jnidoc(nativeInstance,appobj,verb,objref); }
+    public synchronized char[] Jnidow(Object appobj,String verb,Object[] objref) { return jnidow(nativeInstance,appobj,verb,objref); }
+    public synchronized Object[] Jnidox(Object appobj,String verb,Object[] objref) { return jnidox(nativeInstance,appobj,verb,objref); }
+
+//native method declaration
+    native public Object jnido(long jt,Object appobj,String verb,Object[] objref);
+    native public boolean[] jnidoz(long jt,Object appobj,String verb,Object[] objref);
+    native public short[] jnidos(long jt,Object appobj,String verb,Object[] objref);
+    native public int[] jnidoi(long jt,Object appobj,String verb,Object[] objref);
+    native public long[] jnidol(long jt,Object appobj,String verb,Object[] objref);
+    native public float[] jnidof(long jt,Object appobj,String verb,Object[] objref);
+    native public double[] jnidod(long jt,Object appobj,String verb,Object[] objref);
+    native public byte[] jnidoc(long jt,Object appobj,String verb,Object[] objref);
+    native public char[] jnidow(long jt,Object appobj,String verb,Object[] objref);
+    native public Object[] jnidox(long jt,Object appobj,String verb,Object[] objref);
+
     static {
     	try {
     		System.loadLibrary("j");
@@ -196,7 +221,5 @@ public class JInterface {
     		Log.e("J-interface", "failed to load j shared object", e);
     	}
     }
-
-    
  
 }

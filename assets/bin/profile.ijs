@@ -16,10 +16,17 @@ tools=. install,'/tools'
 notdef=. 0: ~: 4!:0 @ <
 if. notdef 'UNAME_z_' do.
   if. 5=9!:12'' do.
-    UNAME_z_=: (2!:0 'uname')-.10{a.
+    if. notdef 'IFIOS_z_' do.
+      UNAME_z_=: (2!:0 'uname')-.10{a.
+    else.
+      UNAME_z_=: 'Darwin'
+    end.
   elseif. do.
     UNAME_z_=: 'Win'
   end.
+end.
+if. notdef 'IFARM_z_' do.
+  IFARM_z_=: (-. notdef 'IFIOS_z_') +. UNAME_z_-:'Android'
 end.
 ''
 )

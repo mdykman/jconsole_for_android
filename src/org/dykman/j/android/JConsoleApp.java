@@ -31,6 +31,9 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -39,8 +42,10 @@ public class JConsoleApp extends Application {
 
 	public static final String LogTag = "j-console";
 
-	protected AndroidJInterface jInterface = null;
-	private AbstractActivity activity;
+	public AndroidJInterface jInterface = null;
+	public AbstractActivity activity;
+  private static Context context;
+  public static JConsoleApp theApp = null;
 
 	protected Map<String, Intent> intentMap = new HashMap<String, Intent>();
 	protected Map<String, EditorData> editorMap = new HashMap<String, EditorData>();
@@ -60,9 +65,30 @@ public class JConsoleApp extends Application {
 	boolean consoleState = false;
 	boolean started = false;
 
+  public Handler handler = new Handler() {
+  @Override
+  public void handleMessage(Message msg) {
+   // get the bundle and extract data by key
+   Bundle b = msg.getData();
+
+   Intent intent = new Intent();
+   ClassLoader clz = JConsoleApp.class.getClassLoader();
+   try {
+   intent.setClass(activity.getApplicationContext(), clz.loadClass(b.getString("class")));
+   intent.putExtra("locale", b.getString("locale"));
+   intent.putExtra("jargx", b.getString("jargx"));
+   intent.putExtra("jargy", b.getString("jargy"));
+   activity.startActivity(intent);
+   } catch (ClassNotFoundException e) {
+           // fail
+   }
+  }
+ };
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+    JConsoleApp.theApp = (JConsoleApp) this;
 	}
 
 	public void setup(JActivity activity, Console console) {
