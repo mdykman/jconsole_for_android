@@ -12,9 +12,7 @@
 
 LOCAL_PATH:=(call my-dir)
 
-TARGET_PLATFORM := android-8
-
-#include $(call all-subdir-makefiles)
+TARGET_PLATFORM := android-7
 
 include jni/openj-core/Android.mk
 include jni/pcre-8.21/Android.mk
