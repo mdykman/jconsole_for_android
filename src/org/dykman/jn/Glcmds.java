@@ -59,6 +59,9 @@ andbrushnull = ipar[ ANDBRUSHNULL ];
 andorgx = ipar[ ANDORGX ];
 andorgy = ipar[ ANDORGY ];
 
+float[] tarc = new float [8];
+Path path = new Path();
+
 int errcnt =  0;
 int cmd;
 int p =  0;
@@ -72,7 +75,6 @@ while (p<ncnt) {
 
   case 2001 :    // glarc
     {
-    float[] tarc = new float [8];
     paint.setStyle(Paint.Style.STROKE);
     paint.setColor(andpenrgb);
     for (i=0;i<8;i++)tarc[i] = buf[p + 2 + i];
@@ -113,7 +115,6 @@ Log.d("JJNI", "Glcmds clear: ");
 
   case 2008 :    // glellipse
     {
-    float[] tarc = new float [8];
     paint.setStyle(Paint.Style.FILL);
     paint.setColor(andbrushrgb);
     for (i=0;i<4;i++)tarc[i] = buf[p + 2 + i];
@@ -133,11 +134,17 @@ Log.d("JJNI", "Glcmds clear: ");
     paint.setStyle(Paint.Style.STROKE);
      c = (cnt - 2) / 2;
      if (0 == c) break;
+/*
     {
-     Path path = new Path();
+     for (i = 0; i < c-1; i++) canvas.drawLine(buf[ p + 2 + 2 * i], buf[ p + 3 + 2 * i], buf[ p + 4 + 2 * i], buf[ p + 5 + 2 * i],paint);
+     }
+*/
+    {
+     path.reset();
      path.moveTo(buf[p+2],buf[p+3]);
      for (i = 0; i < c - 1; i++) path.lineTo(buf[ p + 2 + 2 * (1 + i)], buf[ p + 2 + 1 + 2 * (1 + i)]);
      canvas.drawPath(path, paint);
+     path.reset();
      }
      break;
 
@@ -148,7 +155,6 @@ Log.d("JJNI", "Glcmds clear: ");
 
   case 2023 :    // glpie
    {
-    float[] tarc = new float [8];
     paint.setStyle(Paint.Style.FILL);
     paint.setColor(andbrushrgb);
     for (i=0;i<8;i++)tarc[i] = buf[p + 2 + i];
@@ -170,20 +176,26 @@ Log.d("JJNI", "Glcmds clear: ");
     break;
 
   case 2029 :    // glpolygon
-      {
       c = (cnt - 2) / 2;
-      Path path = new Path();
+      if (0 == c) break;
+      {
+      path.reset();
       path.moveTo(buf[p+2], buf[p+3]);
       for (i=0;i<c-1;i++) path.lineTo(buf[p+2+2*(1+i)], buf[p+2+1+2*(1+i)]);
-      path.lineTo(buf[p+2], buf[p+3]);
+      path.close();
       if (0 == andbrushnull) {
       paint.setStyle(Paint.Style.FILL);
       paint.setColor(andbrushrgb);
       canvas.drawPath(path, paint);
+      path.reset();
+      path.moveTo(buf[p+2], buf[p+3]);
+      for (i=0;i<c-1;i++) path.lineTo(buf[p+2+2*(1+i)], buf[p+2+1+2*(1+i)]);
+      path.close();
       }
       paint.setStyle(Paint.Style.STROKE);
       paint.setColor(andpenrgb);
       canvas.drawPath(path, paint);
+      path.reset();
       }
       break;
 
