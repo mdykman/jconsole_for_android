@@ -20,6 +20,12 @@ if. -.IFJ6 do.
       require 'gtkwd'
     end.
     coinsert 'jgl2'
+  elseif. (UNAME -: 'Android') do.
+    if. 0 < #1!:0 jpath '~addons/gui/android/android.ijs' do.
+      require 'gui/android'
+    else.
+      if. CONSOLEOUTPUT-:'android' do. CONSOLEOUTPUT=: 'pdf' end.
+    end.
   elseif. do.
     if. 0 < #1!:0 jpath '~addons/gui/gtk/gtk.ijs' do.
       require 'gui/gtk'
@@ -4591,9 +4597,9 @@ buf=: buf,y
 )
 android_gpapply=: 3 : 0
 if. 1=GL2ExtGlcmds_j_ do.
-  if. #buf do. android_glcmds 2 2007, buf end.
+  if. #buf do. android_glcmds buf=: <.2 2007, buf end.
 else.
-  if. #buf do. android_glcmds2 2 2007, buf end.
+  if. #buf do. android_glcmds2 buf=: <.2 2007, buf end.
 end.
 buf=: $0
 )
@@ -5048,29 +5054,28 @@ android_gifr=: 'gif' & android_defstr
 android_tifr=: 'tif' & android_defstr
 android_show=: 3 : 0
 popen_android''
+view_onDraw=: android_paint
+EMPTY
+)
+
+view_onTouch=: 3 : 0
+if. this_plotactivity_ do. this_plotactivity_ ('finish ()V' jniMethod)~ '' end.
+1
 )
 android_paint=: 3 : 0
-coinsert 'ja'
+coinsert 'jni'
 
 paint=: 'android.graphics.Paint' jniNewObject~ ''
 
-FILL=: ('FILL Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
-FILL_AND_STROKE=: ('FILL_AND_STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
-STROKE=: ('STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
-
 paint ('setAntiAlias (Z)V' jniMethod)~ 1
 
-jnicheck canvas=: GetObjectArrayElement (3{y);0
+jniCheck canvas=: GetObjectArrayElement (3{y);0
 
-w=. canvas ('getWidth ()I' jniMethod)~ ''
-h=. canvas ('getHeight ()I' jniMethod)~ ''
+Cw=: canvas ('getWidth ()I' jniMethod)~ ''
+Ch=: canvas ('getHeight ()I' jniMethod)~ ''
 
-'Cw Ch'=: w,h
 android_paintit 0 0,Cw,Ch
 
-DeleteLocalRef <FILL
-DeleteLocalRef <FILL_AND_STROKE
-DeleteLocalRef <STROKE
 DeleteLocalRef <paint
 DeleteLocalRef <canvas
 0
@@ -5089,9 +5094,7 @@ android_gpapply''
 
 android_glcmds=: 3 : 0
 
-buf=. y
 if. 0=#buf do. 0 return. end.
-buf=. <.buf
 jbuf=. NewIntArray <#buf
 SetIntArrayRegion jbuf; 0; (#buf); buf
 andw=: Cw [ andh=: Ch
@@ -5154,9 +5157,12 @@ rect,ang2,360|ang1-ang2
 )
 
 android_glcmds2=: 3 : 0
-buf=. y
 if. 0=#buf do. 0 return. end.
-buf=. <.buf
+
+FILL=. ('FILL Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
+FILL_AND_STROKE=. ('FILL_AND_STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
+STROKE=. ('STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
+
 andw=: Cw [ andh=: Ch
 ipar=. andclipped,andw,andh,andrgb,andtextxy,andunderline,andfontangle,andpenrgb,andbrushrgb,andtextrgb,andbrushnull,andorgx,andorgy
 assert. 14=#ipar
@@ -5214,6 +5220,7 @@ while. p<ncnt do.
     DeleteLocalRef <rectf
   case. 2015 do.
     androidcolor paint, andpenrgb
+    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
     c=. <.2%~cnt-2
     pt=. (2 3+p){buf
     path ('reset ()V' jniMethod)~ ''
@@ -5223,6 +5230,7 @@ while. p<ncnt do.
       path ('lineTo (FF)V' jniMethod)~ (<"0 pt)
     end.
     canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
+    path ('reset ()V' jniMethod)~ ''
 
   case. 2022 do.
     andpenrgb=: andrgb
@@ -5253,7 +5261,7 @@ while. p<ncnt do.
         pt=. (0 1 + p + 2 + 2*1+i){buf
         path ('lineTo (FF)V' jniMethod)~ <"0 pt
       end.
-      path ('lineTo (FF)V' jniMethod)~ <"0 pt
+      path ('close ()V' jniMethod)~ ''
       paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
       androidcolor paint, andbrushrgb
       canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
@@ -5267,12 +5275,12 @@ while. p<ncnt do.
         pt=. (0 1 + p + 2 + 2*1+i){buf
         path ('lineTo (FF)V' jniMethod)~ <"0 pt
       end.
-      path ('lineTo (FF)V' jniMethod)~ <"0 pt
+      path ('close ()V' jniMethod)~ ''
       paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
       androidcolor paint, andpenrgb
       canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
     end.
-    DeleteLocalRef <path
+    path ('reset ()V' jniMethod)~ ''
 
   case. 2031 do.
     if. (0 = andbrushnull) do.
@@ -5327,9 +5335,12 @@ DeleteLocalRef <path
 andclipped=: clip [ andrgb=: rgb [ andtextxy=: tx,ty [ andunderline=: underline [ andfontangle=: angle
 andpenrgb=: penrgb [ andbrushrgb=: brushrgb [ andtextrgb=: textrgb [ andbrushnull=: brushnull [ andorgx=: orgx ] andorgy=: orgy
 
+DeleteLocalRef <FILL
+DeleteLocalRef <FILL_AND_STROKE
+DeleteLocalRef <STROKE
+
 errcnt
 )
-load 'gui/android'
 pclose_android=: 3 : 0
 0
 )
@@ -5342,58 +5353,51 @@ id=. fm,PId,'_'
 
 Pxywh=: ''
 PShow=: 0
-PFormhwnd=: (18!:5'') StartActivity_ja_~ 0;0;'plotactivity'
+PFormhwnd=: 0 StartActivity_ja_ 0;0;'plotactivity';(>18!:5'');'onDestroy'
 )
 ppaint_android=: 3 : 0
- android_show ''
+android_show ''
 )
 
 coclass 'plotactivity'
-coinsert 'jnobject'
+coinsert 'jni'
 
-ClassName=: 'org.dykman.jn.android.app.Activity'
+jniImport ::0: (0 : 0)
+android.content.Context
+android.view.View
+android.view.View$OnTouchListener
+android.view.Window
+)
 
-create=: 18!:5
+this=: 0
 
 onCreate=: 3 : 0
-this=: 2{y
-this addOverride~ 'onDestroy'
-FEATURE_NO_TITLE=: 1
-FEATURE_NO_TITLE=: ('FEATURE_NO_TITLE I' jniStaticField) 'android/view/Window'
-FLAG_FULLSCREEN=: 1024
+jniCheck this=: NewGlobalRef <2{y
+japparg=. ('japparg Ljava/lang/String;' jniField) this
+apparg=. jniToJString japparg
+DeleteLocalRef <japparg
 
-this ('requestWindowFeature (I)Z' jniMethod)~ FEATURE_NO_TITLE
-win=. this ('getWindow ()Landroid/view/Window;' jniMethod)~ ''
-win ('setFlags (II)V' jniMethod)~ FLAG_FULLSCREEN;FLAG_FULLSCREEN
+('andclipped_',apparg,'_')=: ('andw_',apparg,'_')=: ('andh_',apparg,'_')=: ('andrgb_',apparg,'_')=: ('andunderline_',apparg,'_')=: ('andfontangle_',apparg,'_')=: ('andpenrgb_',apparg,'_')=: ('andbrushrgb_',apparg,'_')=: ('andtextrgb_',apparg,'_')=: ('andbrushnull_',apparg,'_')=: ('andorgx_',apparg,'_')=: ('andorgy_',apparg,'_')=: 0
+('andtextxy_',apparg,'_')=: 0 0
+this ('requestWindowFeature (I)Z' jniMethod)~ Window_FEATURE_NO_TITLE_ja_
+win=. this ('getWindow ()LWindow;' jniMethod)~ ''
+win ('setFlags (II)V' jniMethod)~ WindowManager_LayoutParams_FLAG_FULLSCREEN_ja_;WindowManager_LayoutParams_FLAG_FULLSCREEN_ja_
 DeleteLocalRef <win
-                
-view=: conew 'plotview'
-cls=. GetObjectClass <this
-assert. 0~:cls
-jargx=. ('jargx Ljava/lang/String;' jniField) this
-cargx=. GetStringUTFChars jargx;<<0
-assert. 0~:cargx
-argx=. memr cargx,0,_1
-ReleaseStringUTFChars jargx;<<cargx
-onDraw__view=: ('android_paint_',argx,'_')~
-('andclipped_',argx,'_')=: ('andw_',argx,'_')=: ('andh_',argx,'_')=: ('andrgb_',argx,'_')=: ('andunderline_',argx,'_')=: ('andfontangle_',argx,'_')=: ('andpenrgb_',argx,'_')=: ('andbrushrgb_',argx,'_')=: ('andtextrgb_',argx,'_')=: ('andbrushnull_',argx,'_')=: ('andorgx_',argx,'_')=: ('andorgy_',argx,'_')=: 0
-('andtextxy_',argx,'_')=: 0 0 
-thisview=. 'Landroid/content/Context;' create__view~ this
-this ('setContentView (Landroid/view/View;)V' jniMethod)~ thisview
-thisview ('requestFocus ()Z' jniMethod)~ ''
+
+jniCheck thisview=. this jniOverride 'org.dykman.jn.android.view.View LContext;' ; apparg ; 'view' ; 'onDraw'
+jniCheck listener=. '' jniOverride 'org.dykman.jn.android.view.View$OnTouchListener' ; apparg ; 'view'
+jniCheck thisview ('setOnTouchListener (LView$OnTouchListener;)V' jniMethod)~ listener
+jniCheck this ('setContentView (LView;)V' jniMethod)~ thisview
+jniCheck thisview ('requestFocus ()Z' jniMethod)~ ''
+DeleteLocalRef <listener
 DeleteLocalRef <thisview
+
 0
 )
 
 onDestroy=: 3 : 0
-destroy__view''
-)
-coclass 'plotview'
-coinsert 'jnobject'
-ClassName=: 'org.dykman.jn.android.view.View'
-
-jcreate=: 3 : 0
-(2{y) addOverride~ 'onDraw'
+if. this do. DeleteGlobalRef <this end.
+this=: 0
 0
 )
 coclass 'jzplot'

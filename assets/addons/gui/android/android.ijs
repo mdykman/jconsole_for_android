@@ -1,121 +1,17 @@
-load 'jni'
+require 'jni'
 
 coclass 'ja'
 coinsert 'jni'
-jnhandler_z_=: 4 : 0
-if. 3=4!:0<'jnhandler_debug' do.
-  try. x jnhandler_debug y catch. end.
-end.
-jn_fn=. x
-log_d_ja_ 'JJNI';'jnhandler ',jn_fn
-if. 13!:17'' do.
-  z=. jn_fn~ y
-else.
-  try. z=. jn_fn~ y
-  catch.
-    if. 0~:exc=. ExceptionOccurred_jni_'' do.
-      if. ''-:jn_err=. ExceptionMessage_jni_ exc do.
-        jn_err=. 'JNI exception'
-      end.
-      jn_err=. '|', jn_err, LF
-    else.
-      jn_err=. 13!:12''
-    end.
-    if. 0=4!:0 <'ERM_j_' do.
-      jn_erm=. ERM_j_
-      ERM_j_=: ''
-      if. jn_erm -: jn_err do. 0 return. end.
-    end.
-    jn_err=. LF,,LF,.}.;._2 jn_err
-    smoutput 'jnhandler error in: ',jn_fn,jn_err
-    log_d_ja_ 'JJNI';'jnhandler error in: ',,jn_fn,jn_err
-    0
-  end.
-end.
-)
-getenv=: 3 : 0
-'JNIVM_z_ JNIENV_z_'=: , > }. 'libj.so GetJavaVM i *x *x'&cd (,_1);,_1
-JNIENV_z_
-)
-StartActivity=: 4 : 0
-'act ctx jcls'=. x
-'jargx jargy'=. 2{.boxopen y
-app=. ('theApp Lorg/dykman/j/android/JConsoleApp;' jniStaticField) 'org/dykman/j/android/JConsoleApp'
-if. 0= act do.
-  cact=. ('activity Lorg/dykman/j/android/AbstractActivity;' jniField) app
-else.
-  cact=. act
-end.
-if. 0=ctx do. cctx=. app ('getApplicationContext ()Landroid/content/Context;' jniMethod)~ '' else. cctx=. ctx end.
-l=. conew jcls
-intent=. 'android.content.Intent' jniNewObject~ ''
-jnicheck jnact=. FindClass <'org/dykman/jn/android/app/Activity'
-intent ('setClass (Landroid/content/Context;Ljava/lang/Class;)Landroid/content/Intent;' jniMethod)~ cctx;jnact
-intent ('putExtra (Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;' jniMethod)~ 'locale';>l
-intent ('putExtra (Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;' jniMethod)~ 'jargx';jargx
-intent ('putExtra (Ljava/lang/String;Ljava/lang/String;)Landroid/content/Intent;' jniMethod)~ 'jargy';jargy
-cact ('startActivity (Landroid/content/Intent;)V' jniMethod)~ intent
-if. 0=act do. jnicheck DeleteLocalRef <cact end.
-if. 0=ctx do. jnicheck DeleteLocalRef <cctx end.
-jnicheck DeleteLocalRef <app
-jnicheck DeleteLocalRef <jnact
-l
-)
-StartActivity=: 4 : 0
-'act ctx jcls'=. x
-'jargx jargy'=. 2{.boxopen y
-'JNIVM_z_ JNIENV_z_'=: , > }. 'libj.so GetJavaVM i *x *x'&cd (,_1);,_1
-try.
-  app=. ('theApp Lorg/dykman/j/android/JConsoleApp;' jniStaticField) 'org/dykman/j/android/JConsoleApp'
-  handler=. ('handler Landroid/os/Handler;' jniField) app
-  l=. conew jcls
-  msg=. 'android.os.Message' jniNewObject~ ''
-  b=. 'android.os.Bundle' jniNewObject~ ''
-  b ('putString (Ljava/lang/String;Ljava/lang/String;)V' jniMethod)~ 'class';'org.dykman.jn.android.app.Activity'
-  b ('putString (Ljava/lang/String;Ljava/lang/String;)V' jniMethod)~ 'locale';>l
-  b ('putString (Ljava/lang/String;Ljava/lang/String;)V' jniMethod)~ 'jargx';jargx
-  b ('putString (Ljava/lang/String;Ljava/lang/String;)V' jniMethod)~ 'jargy';jargy
-  msg ('setData (Landroid/os/Bundle;)V' jniMethod)~ b
-  handler ('sendMessage (Landroid/os/Message;)Z' jniMethod)~ msg
-  l
-catch.
-  if. 0~:exc=. ExceptionOccurred_jni_'' do.
-    if. ''-:jn_err=. ExceptionMessage_jni_ exc do.
-      jn_err=. 'JNI exception'
-    end.
-    jn_err=. '|', jn_err, LF
-  else.
-    jn_err=. 13!:12''
-  end.
-  smoutput jn_err
-end.
-)
+GetJNIENV''
 
-toast=: 3 : 0
-y=. uucp y
-ExceptionClear''
-try.
-  app=. ('theApp Lorg/dykman/j/android/JConsoleApp;' jniStaticField) 'org/dykman/j/android/JConsoleApp'
-  ctx=. app ('getApplicationContext ()Landroid/content/Context;' jniMethod)~ ''
-  cls=. FindClass <'android/widget/Toast'
-  cs=. NewCharArray <#y
-  SetCharArrayRegion cs;0;(#y);y
-  toast=. cls ('makeText (Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;' jniStaticMethod)~ ctx;cs;1
-  toast ('show ()V' jniMethod) ''
-  jnicheck DeleteLocalRef <toast
-  jnicheck DeleteLocalRef <cs
-  jnicheck DeleteLocalRef <cls
-  jnicheck DeleteLocalRef <ctx
-  jnicheck DeleteLocalRef <app
-catch.
-  if. 0~:exc=. ExceptionOccurred'' do.
-    smoutput (ExceptionMessage exc)
-  else.
-    smoutput (13!:12'')
-  end.
-end.
+jniImport (0 : 0)
+android.app.Activity
+android.content.Context
+android.content.Intent
+org.dykman.j.android.AbstractActivity
+org.dykman.j.android.JConsoleApp
+org.dykman.jn.android.app.Activity'
 )
-
 ANDROID_LOG_UNKNOWN=: 0
 ANDROID_LOG_DEFAULT=: 1
 ANDROID_LOG_VERBOSE=: 2
@@ -132,35 +28,118 @@ log_i=: 'liblog.so __android_log_print > i i *c *c'&(15!:0) @: (ANDROID_LOG_INFO
 log_w=: 'liblog.so __android_log_print > i i *c *c'&(15!:0) @: (ANDROID_LOG_WARN&;)
 log_e=: 'liblog.so __android_log_print > i i *c *c'&(15!:0) @: (ANDROID_LOG_ERROR&;)
 log_f=: 'liblog.so __android_log_print > i i *c *c'&(15!:0) @: (ANDROID_LOG_FATAL&;)
-getenv''
-coclass 'jnobject'
-coinsert 'jni'
-
-ClassName=: ''
-create=: 4 : 0
-assert. ''-.@-:ClassName [ 'jnobject is an abstract class'
-x=. boxxopen x
-if. 0=#x do.
-  y=. 'Ljava/lang/String;'
+StartActivity=: 4 : 0
+'act ctx locale japparg override'=. 5{.y
+app=. ('theApp LJConsoleApp;' jniStaticField) 'JConsoleApp'
+if. 0= act do.
+  cact=. ('activity LAbstractActivity;' jniField) app
 else.
-  if. ')' e. y do.
-    y=. '(' -.~ ({.~ i.&')') y
-  end.
-  y=. y, 'Ljava/lang/String;'
+  cact=. act
 end.
-obj=. ((<str=. NewStringUTF 18!:5''),~ x) jniNewObject ClassName, ' ', y
-jnicheck DeleteLocalRef <str
-obj
+if. 0=ctx do. cctx=. app ('getApplicationContext ()LContext;' jniMethod)~ '' else. cctx=. ctx end.
+if. 0=x do.
+  intent=. 'android.content.Intent' jniNewObject~ ''
+  jniCheck jnact=. FindClass <'org/dykman/jn/android/app/Activity'
+  intent ('setClass (LContext;LClass;)LIntent;' jniMethod)~ cctx;jnact
+  intent ('putExtra (LString;LString;)LIntent;' jniMethod)~ 'locale';locale
+  intent ('putExtra (LString;LString;)LIntent;' jniMethod)~ 'override';override
+  intent ('putExtra (LString;LString;)LIntent;' jniMethod)~ 'japparg';japparg
+  cact ('startActivity (LIntent;)V' jniMethod)~ intent
+  jniCheck DeleteLocalRef <intent
+  jniCheck DeleteLocalRef <jnact
+else.
+  cact ('startActivity (LIntent;)V' jniMethod)~ x
+end.
+if. 0=act do. jniCheck DeleteLocalRef <cact end.
+if. 0=ctx do. jniCheck DeleteLocalRef <cctx end.
+jniCheck DeleteLocalRef <app
+0
 )
-
-jcreate=: 0:
-
-destroy=: 3 : 'codestroy $0 [ ExceptionClear $0'
-addOverride=: 4 : 0
-if. ' ' e. x do. x=. <;._1 ' ', deb x end.
-x=. boxxopen x
-for_m. x do.
-  y ('setjnOverride (Ljava/lang/String;)V' jniMethod)~ m
+android_constants=: 4 : 0
+if. 'Android'-:UNAME do.
+  l=. <;._2 y
+  class=. './' charsub >@{.l
+  p=. '_',~ '$_' charsub }. (}.~ i:&'/') class
+  if. 4=x do.
+    "."1 p,"1 (>}.l),"1 '=: (''',"1 (>}.l),"1 ' I'' jniStaticField) ''',"1 class,"1 ''''
+  else.
+    "."1 p,"1 (>}.l),"1 '=: (''',"1 (>}.l),"1 ' F'' jniStaticField) ''',"1 class,"1 ''''
+  end.
 end.
 EMPTY
+)
+
+4 android_constants (0 : 0)
+android.view.Window
+FEATURE_ACTION_BAR
+FEATURE_ACTION_BAR_OVERLAY
+FEATURE_ACTION_MODE_OVERLAY
+FEATURE_CONTEXT_MENU
+FEATURE_CUSTOM_TITLE
+FEATURE_INDETERMINATE_PROGRESS
+FEATURE_LEFT_ICON
+FEATURE_NO_TITLE
+FEATURE_OPTIONS_PANEL
+FEATURE_PROGRESS
+FEATURE_RIGHT_ICON
+)
+
+4 android_constants (0 : 0)
+android.view.WindowManager$LayoutParams
+FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
+FLAG_ALT_FOCUSABLE_IM
+FLAG_BLUR_BEHIND
+FLAG_DIM_BEHIND
+FLAG_DISMISS_KEYGUARD
+FLAG_DITHER
+FLAG_FORCE_NOT_FULLSCREEN
+FLAG_FULLSCREEN
+FLAG_HARDWARE_ACCELERATED
+FLAG_IGNORE_CHEEK_PRESSES
+FLAG_KEEP_SCREEN_ON
+FLAG_LAYOUT_INSET_DECOR
+FLAG_LAYOUT_IN_SCREEN
+FLAG_LAYOUT_NO_LIMITS
+FLAG_NOT_FOCUSABLE
+FLAG_NOT_TOUCHABLE
+FLAG_NOT_TOUCH_MODAL
+FLAG_SCALED
+FLAG_SECURE
+FLAG_SHOW_WALLPAPER
+FLAG_SHOW_WHEN_LOCKED
+FLAG_SPLIT_TOUCH
+FLAG_TOUCHABLE_WHEN_WAKING
+FLAG_TURN_SCREEN_ON
+FLAG_WATCH_OUTSIDE_TOUCH
+)
+
+4 android_constants (0 : 0)
+android.widget.LinearLayout
+HORIZONTAL
+SHOW_DIVIDER_BEGINNING
+SHOW_DIVIDER_END
+SHOW_DIVIDER_MIDDLE
+SHOW_DIVIDER_NONE
+VERTICAL
+)
+
+4 android_constants (0 : 0)
+android.widget.RelativeLayout
+ABOVE
+ALIGN_BASELINE
+ALIGN_BOTTOM
+ALIGN_LEFT
+ALIGN_PARENT_BOTTOM
+ALIGN_PARENT_LEFT
+ALIGN_PARENT_RIGHT
+ALIGN_PARENT_TOP
+ALIGN_RIGHT
+ALIGN_TOP
+BELOW
+CENTER_HORIZONTAL
+CENTER_IN_PARENT
+CENTER_VERTICAL
+LEFT_OF
+RIGHT_OF
+TRUE
 )

@@ -8,9 +8,11 @@ J ANDROID GUI
 Contributed by Bill Lam
 )
 
-VERSION=: '1.0.0'
+VERSION=: '1.0.2'
 
 RELEASE=: 'j701'
+
+PLATFORMS=: 'android'
 
 FILES=: 0 : 0
 history.txt
