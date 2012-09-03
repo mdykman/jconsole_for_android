@@ -246,6 +246,7 @@ public class JConsoleApp extends Application {
 	}
 
 	public void launchJHS(Context context) {
+/*
 		String arg = null;
 		if (!testJHSServer()) {
 			String[] cmds = { "load '~addons/ide/jhs/core.ijs'", "init_jhs_''" };
@@ -258,6 +259,7 @@ public class JConsoleApp extends Application {
 			consoleOutput(JInterface.MTYOFM, "launching browser\n");
 			context.startActivity(myIntent);
 		}
+*/
 	}
 
 	public int launchActivity(String action, String data, String type,int flags) {
@@ -300,7 +302,8 @@ public class JConsoleApp extends Application {
 
 	public void callWithHistory(String line) {
 		addHistory(line);
-		callJ(line);
+		jInterface.callSuperJ(new String[] {line});
+		//callJ(line);
 	}
 
 	public void addHistory(String line) {
@@ -536,7 +539,7 @@ public class JConsoleApp extends Application {
 							String cmd = "2!:0 'cp -r " + lo.getAbsolutePath()
 									+ " /sdcard'";
 							publishProgress("migrating user files");
-							jInterface.callSuperJ(new String[]{cmd});
+//							jInterface.callSuperJ(new String[]{cmd});
 						}
 					}
 				}
