@@ -11,5 +11,5 @@ graphics/viewmat - change history
  * viewmat: gtk+3 compatible
  * viewmat: gl2 changes
 
-== 1.0.6/12 ==
+== 1.0.6/13 ==
  * android/iOS

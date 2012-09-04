@@ -1,4 +1,12 @@
 coclass'jni'
+GetJNIENV=: 3 : 0
+if. 'Android'-:UNAME do.
+  'JNIVM_z_ JNIENV_z_'=: , > }. 'libj.so GetJavaVM i *x *x'&cd (,_1);,_1
+  JNIENV_z_
+else.
+  0
+end.
+)
 JNIInvalidRefType=: 0
 JNILocalRefType=: 1
 JNIGlobalRefType=: 2
@@ -282,29 +290,6 @@ opt=. IFUNIX{::' > + ';' > '
 ". 3}. (>func),"1 ('=: 3 : (''''''1 ',"1 (":,.i.#JNIVM_FUNCTION),"1 opt,"1 (>func_sig),"1 '''''&(15!:0) (<JNIVM), y''',"1 ';'':'';',"1 '''''''1 ',"1 (":,.i.#JNIVM_FUNCTION),"1 opt,"1 (>func_sig),"1 '''''&(15!:0) (<x), y'')')
 EMPTY
 )
-jnivararg=: 1 : 0
-:
-opt=. IFUNIX{::' > + ';' > '
-((":1,m), opt, x)&(15!:0) (<JNIENV), y
-)
-jnivarargs=: 2 : 0
-:
-opt=. IFUNIX{::' > + ';' > '
-((":1,m), opt, x)&(15!:0) (<n), y
-)
-jnicheck=: 3 : 0
-]`('JNI exception' (13!:8) 3:)@.(0 ~: a. i. ExceptionCheck_jni_@(''"_)) y
-:
-]`('JNI exception' (13!:8) 3:)@.(0 ~: a. i. x&ExceptionCheck_jni_@(''"_)) y
-)
-jniproxy=: 4 : 0
-cls=. GetObjectClass <x
-mid=. GetMethodID cls;'CreateProxy';'(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;'
-s1=. NewStringUTF {.y
-s2=. NewStringUTF {:y
-s=. 'x x x x x x' (ID_CallObjectMethod jnivararg) x;mid;s1;s2
-s
-)
 3 : 0''
 if. 0 -: jvm=. 2!:5 'LIBJVM_PATH' do. jvm=. '' end.
 if. #jvm do. jvm=. jvm, (-.({:jvm)e.'/\')#'/' end.
@@ -354,7 +339,45 @@ if. noptions do. memf options end.
 memf initargs
 (0>rc){::(vm,env);0 0
 )
-va_list_jni_=: 3 : 0
+JNI_IMPORT=: (<;._1);._2 (0 : 0)
+ Boolean Ljava/lang/Boolean
+ Btye Ljava/lang/Btye
+ Char Ljava/lang/Char
+ Class Ljava/lang/Class
+ CharSequence Ljava/lang/CharSequence
+ Double Ljava/lang/Double
+ Float Ljava/lang/Float
+ Integer Ljava/lang/Integer
+ Long Ljava/lang/Long
+ Object Ljava/lang/Object
+ Short Ljava/lang/Short
+ String Ljava/lang/String
+)
+
+jniImport=: 3 : 0
+if. (<'jni') -: 18!:5'' do. EMPTY return. end.
+if. 0~:4!:0<'JNI_IMPORT' do. JNI_IMPORT=: JNI_IMPORT_jni_ end.
+for_b. <;._2 y do.
+  d=. }. (}.~ i:&'/') c=. './' charsub >b
+  if. (<d) e. {."1 JNI_IMPORT do. continue. end.
+  JNI_IMPORT=: JNI_IMPORT, d;'L',c
+end.
+EMPTY
+)
+jniResolve=: 0&$: : (4 : 0)
+if. 'L'~:{.y do. y return. end.
+if. 0~:4!:0<'JNI_IMPORT' do. }.^:x y return. end.
+if. 0=#JNI_IMPORT do. }.^:x y return. end.
+if. 1 e. './' e. y do. }.^:x y return. end.
+y1=. }:^:(';'={:) }.y
+a=. {."1 JNI_IMPORT
+if. (i=. a i. <y1) < #a do.
+  }.^:x ((';'={:y)#';'),~ (<i,1){::JNI_IMPORT
+else.
+  }.^:x y
+end.
+)
+va_list=: 3 : 0
 (3!:0 &> y) va_list y
 :
 assert. (#x)=#y [ 'va_list_jni'
@@ -371,92 +394,38 @@ for_i. i.#x do.
 end.
 z
 )
-
-ExceptionMessage=: 3 : 0
-try.
-  ExceptionClear''
-  jnicheck cls=. GetObjectClass <y
-  jnicheck mid=. GetMethodID cls;'getMessage';'()Ljava/lang/String;'
-  jnicheck DeleteLocalRef <cls
-  jnicheck jstr=. 'x x x x' (ID_CallObjectMethod jnivararg) y ; mid
-  jnicheck cstr=. GetStringUTFChars jstr;<<0
-  assert. 0~:cstr [ 'ExceptionMessage'
-  z=. memr cstr,0,_1
-  ReleaseStringUTFChars jstr;<<cstr
-  DeleteLocalRef <y
-  z
-catch.
-  DeleteLocalRef <y
-  ExceptionClear''
-  '' return.
-end.
+jniVararg=: 1 : 0
+:
+opt=. IFUNIX{::' > + ';' > '
+((":1,m), opt, x)&(15!:0) (<JNIENV), y
 )
-
-GetClassName=: 0&$: : (4 : 0)
-try.
-  jnicheck ccls=. FindClass <'java/lang/Class'
-  jnicheck mid=. GetMethodID ccls;'getName';'()Ljava/lang/String;'
-  jnicheck DeleteLocalRef <ccls
-  if. 0=x do.
-    jnicheck ecls=. GetObjectClass <y
-  else.
-    ecls=. y
-  end.
-  jnicheck jstr=. 'x x x x' (ID_CallObjectMethod jnivararg) ecls ; mid
-  if. 0=x do.
-    jnicheck DeleteLocalRef <ecls
-  end.
-  jnicheck cstr=. GetStringUTFChars jstr;<<0
-  assert. 0~:cstr [ 'GetClassName'
-  z=. memr cstr,0,_1
-  ReleaseStringUTFChars jstr;<<cstr
-  z
-catch.
-  ExceptionClear''
-  '' return.
-end.
+jniVarargs=: 2 : 0
+:
+opt=. IFUNIX{::' > + ';' > '
+((":1,m), opt, x)&(15!:0) (<n), y
 )
-jnisig_idx=: 4 : 0
-sig=. jnisig_addsep x
-'attr class member'=. y
-if. 1 4 e.~ 3!:0 class do.
-  class=. 1&GetClassName cls
+jniSigniture=: 3 : 0
+if. '#' e. y=. deb y do. y return. end.
+if. '('={.y do.
+  w1=. }. ({.~ i.&')') y
+  w2=. }. (}.~ i.&')') y
+  '(', (jniSigniture w1), ')', jniSigniture w2 return.
 end.
-class=. './' charsub class
-m1=. ({."1 jitfcattr) = +/ '#'=sig
-m2=. ((jitfc_class,jitfc_member){"1 jitfc) -:"1 class;member
-if. 0= nm=. +/m=. m1*.m2 do. _1 return.
-elseif. 1= nm do. {.I. m return.
-elseif. do.
-  m3=. ((1+#attr){."1 jitfcattr) -:"1 attr,~ +/ '#'=sig
-  m4=. (jitfc_paramtype{"1 jitfc) = <,x
-  if. # idx=. I. m*.m3*.m4 do. {.idx else. _1 end.
-end.
-)
-
-jnisig_addsep=: 3 : 0
-if. '#' e. y do. y return. end.
 z=. ''
 i=. 0 [ ar=. 0
 while. i<#y do.
   if. '[' = (tp=. i{y) do.
     i=. >:i [ ar=. 1 continue.
   else.
-    if. tp e. 'BSIJFDZC' do.
+    if. tp e. 'BSIJFDZCV' do.
       z=. z, '#', (ar#'['), i{y
       i=. >:i [ ar=. 0
-    elseif. tp='W' do.
-      z=. z, '#', (ar#'['), 'Ljava/lang/String;'
-      i=. >:i [ ar=. 0
-    elseif. tp='O' do.
-      z=. z, '#', (ar#'['), 'Ljava/lang/Object;'
-      i=. >:i [ ar=. 0
-    elseif. do.
-      assert. 'L'=tp [ 'jnisig_addsep'
+    else.
+      assert. 'L'=tp [ 'jniSigniture'
       if. (#k) = j=. ';' i.~ k=. i}.y do.
-        z=. z, '#', (ar#'['), k, ';' break.
+        z=. z, '#', (ar#'['), (jniResolve k), ';' break.
       else.
-        z=. z, '#', (ar#'['), (j{.k), ';'
+        z=. z, '#', (ar#'['), (jniResolve j{.k), ';'
         i=. i + j + 1 [ ar=. 0
       end.
     end.
@@ -464,7 +433,7 @@ while. i<#y do.
 end.
 z
 )
-jnisig_x15=: 1&$: : (4 : 0)
+jniSigx15=: 1&$: : (4 : 0)
 z=. ''
 for_t. <;._1 y do.
   t1=. >t
@@ -485,16 +454,15 @@ for_t. <;._1 y do.
 end.
 }.z
 )
-
-jnisig_arg=: 4 : 0
+jniSigarg=: 4 : 0
 y=. boxxopen y
-assert. (#y) = +/ '#'=x [ 'jnisig_arg'
+assert. (#y) = +/ '#'=x [ 'jniSigarg'
 z=. 0$<''
 for_t. <;._1 x do.
   a1=. t_index{::y
   t1=. >t
   if. ar=. '['={.t1 do.
-    assert. 1 4 e.~ 3!:0 a1 [ 'jnisig_arg array not object'
+    assert. 1 4 e.~ 3!:0 a1 [ 'jniSigarg array not object'
     z=. z, < a1
   else.
     a1=. {.a1
@@ -502,115 +470,227 @@ for_t. <;._1 x do.
       if. 2=3!:0 a1 do.
         z=. z, < a.i.a1
       else.
-        assert. 1 4 e.~ 3!:0 a1 [ 'jnisig_arg'
+        assert. 1 4 e.~ 3!:0 a1 [ 'jniSigarg'
         z=. z, < a1
       end.
     elseif. t2 e. 'C' do.
-      assert. 2 131072 e.~ 3!:0 a1 [ 'jnisig_arg'
+      assert. 2 131072 e.~ 3!:0 a1 [ 'jniSigarg'
       z=. z, <{. uucp a1
     elseif. t2 e. 'SIJFD' do.
-      assert. 1 4 8 e.~ 3!:0 a1 [ 'jnisig_arg'
+      assert. 1 4 8 e.~ 3!:0 a1 [ 'jniSigarg'
       z=. z, <a1
     elseif. t2 e. 'L' do.
-      assert. 1 4 32 e.~ 3!:0 a1 [ 'jnisig_arg'
+      assert. 1 4 32 e.~ 3!:0 a1 [ 'jniSigarg'
       z=. z, <>a1
     elseif. do.
-      assert. 0 [ 'jnisig_arg'
+      assert. 0 [ 'jniSigarg'
     end.
   end.
 end.
 z
+)
+jniCheck=: 3 : 0
+]`('JNI exception' (13!:8) 3:)@.(0 ~: a. i. ExceptionCheck_jni_@(''"_)) y
+:
+]`('JNI exception' (13!:8) 3:)@.(0 ~: a. i. x&ExceptionCheck_jni_@(''"_)) y
+)
+jniToJString=: 3 : 0
+assert. 0~:y
+jniCheck str=. GetStringUTFChars y;<<0
+z=. memr str,0,_1
+jniCheck ReleaseStringUTFChars y;<<str
+z
+)
+jniException=: 3 : 0
+try.
+  ExceptionClear''
+  jniCheck cls=. GetObjectClass <y
+  jniCheck mid=. GetMethodID cls;'getMessage';'()Ljava/lang/String;'
+  jniCheck jstr=. 'x x x x' (ID_CallObjectMethod jniVararg) y ; mid
+  z=. jniToJString jstr
+  DeleteLocalRef <jstr
+  DeleteLocalRef <cls
+  DeleteLocalRef <y
+  ExceptionClear''
+  z
+catch.
+  DeleteLocalRef <y
+  ExceptionClear''
+  '' return.
+end.
+)
+jniClassName=: 0&$: : (4 : 0)
+try.
+  jniCheck ccls=. FindClass <'java/lang/Class'
+  jniCheck mid=. GetMethodID ccls;'getName';'()Ljava/lang/String;'
+  if. 0=x do.
+    jniCheck ecls=. GetObjectClass <y
+  else.
+    ecls=. y
+  end.
+  jniCheck jstr=. 'x x x x' (ID_CallObjectMethod jniVararg) ecls ; mid
+  z=. jniToJString jstr
+  if. 0=x do. DeleteLocalRef <ecls end.
+  DeleteLocalRef <jstr
+  DeleteLocalRef <ccls
+  ExceptionClear''
+  z
+catch.
+  ExceptionClear''
+  '' return.
+end.
+)
+jniField=: 1 : 0
+'field sig'=. <;._1 ' ', deb m
+rt=. field,' ',jniSigniture sig
+assert. 1 4 e.~ 3!:0 y [ 'jniField'
+assert. 0-.@-:y [ 'jniField'
+jniCheck cls=. GetObjectClass_jni_ <y
+z=. rt jniCallField_jni_ 0;y;cls
+jniCheck DeleteLocalRef_jni_ <cls
+z
+:
+'field sig'=. <;._1 ' ', deb m
+rt=. field,' ',jniSigniture sig
+assert. 1 4 e.~ 3!:0 y [ 'jniField'
+assert. 0-.@-:y [ 'jniField'
+jniCheck cls=. GetObjectClass_jni_ <y
+rt jniCallField_jni_ (0;y;cls), boxxopen x
+jniCheck DeleteLocalRef_jni_ <cls
+EMPTY
+)
+jniStaticField=: 1 : 0
+'field sig'=. <;._1 ' ', deb m
+rt=. field,' ',jniSigniture sig
+if. 1 4 e.~ 3!:0 y do.
+  assert. 0-.@-:y [ 'jniStaticField'
+  jniCheck cls=. GetObjectClass_jni_ <y
+else.
+  assert. ''-.@-:y [ 'jniStaticField'
+  class=. './' charsub y -. ';'
+  class=. 1&jniResolve 'L',class
+  jniCheck cls=. FindClass_jni_ <class
+end.
+z=. rt jniCallField_jni_ 1;y;cls
+jniCheck DeleteLocalRef_jni_ <cls
+z
+:
+'field sig'=. <;._1 ' ', deb m
+rt=. field,' ',jniSigniture sig
+if. 1 4 e.~ 3!:0 y do.
+  assert. 0-.@-:y [ 'jniStaticField'
+  jniCheck cls=. GetObjectClass_jni_ <y
+else.
+  assert. ''-.@-:y [ 'jniStaticField'
+  class=. './' charsub y -. ';'
+  class=. 1&jniResolve 'L',class
+  jniCheck cls=. FindClass_jni_ <class
+end.
+rt jniCallField_jni_ (1;y;cls), boxxopen x
+jniCheck DeleteLocalRef_jni_ <cls
+EMPTY
 )
 
-jnisig_guesstype=: 3 : 0
-z=. ''
-for_t. y do.
-  t1=. >t
-  ar=. 0~: $$t1
-  if. (tp=. 3!:0 t1) = 1 do.
-    z=. z, (ar#'['), 'Z'
-  elseif. tp = 2 do.
-    if. ar do.
-      z=. z, 'Ljava/lang/String;'
-    else.
-      z=. z, 'C'
+jniCallField=: 4 : 0
+'field sig'=. <;._1 ' ', deb x
+'attr obj cls'=. 3{.y
+static=. {.attr
+y=. 3}.y
+
+assert. 1=+/'#'=sig [ 'jniCallField'
+rt=. sig-.'#'
+jniCheck mid=. GetFieldID`GetStaticFieldID@.static cls;field;({.a.),~ rt
+if. static do. obj=. cls end.
+if. 0=#y do.
+  if. '[' e. rt do.
+    jniCheck rc=. ('x x x x ') ((static{ID_GetObjectField,ID_GetStaticObjectField) jniVararg) (obj ; mid)
+  else.
+    select. {.rt
+    case. 'V' do. jniCheck rc=. ('x x x x ') ((static{ID_GetVoidField,ID_GetStaticVoidField) jniVararg) (obj ; mid)
+    case. 'L' do. jniCheck rc=. ('x x x x ') ((static{ID_GetObjectField,ID_GetStaticObjectField) jniVararg) (obj ; mid)
+    case. 'B' do. jniCheck rc=. ('c x x x ') ((static{ID_GetByteField,ID_GetStaticByteField) jniVararg) (obj ; mid)
+    case. 'Z' do. jniCheck rc=. ('i x x x ') ((static{ID_GetBooleanField,ID_GetStaticBooleanField) jniVararg) (obj ; mid)
+    case. 'I' do. jniCheck rc=. ('i x x x ') ((static{ID_GetIntField,ID_GetStaticIntField) jniVararg) (obj ; mid)
+    case. 'J' do. jniCheck rc=. ('l x x x ') ((static{ID_GetLongField,ID_GetStaticLongField) jniVararg) (obj ; mid)
+    case. 'S' do. jniCheck rc=. ('s x x x ') ((static{ID_GetShortField,ID_GetStaticShortField) jniVararg) (obj ; mid)
+    case. 'F' do. jniCheck rc=. ('f x x x ') ((static{ID_GetFloatField,ID_GetStaticFloatField) jniVararg) (obj ; mid)
+    case. 'D' do. jniCheck rc=. ('d x x x ') ((static{ID_GetDoubleField,ID_GetStaticDoubleField) jniVararg) (obj ; mid)
+    case. 'C' do. jniCheck rc=. ('w x x x ') ((static{ID_GetCharField,ID_GetStaticCharField) jniVararg) (obj ; mid)
+    case. do. assert. 0 [ 'jniCallField return type'
     end.
-  elseif. tp = 4 do.
-    z=. z, (ar#'['), 'I'
-  elseif. tp = 8 do.
-    z=. z, (ar#'['), 'F'
-  elseif. tp = 32 do.
-    z=. z, (ar#'['), 'Ljava/lang/Object;'
+  end.
+else.
+  if. '[' e. rt do.
+    jniCheck rc=. ('x x x x ', jniSigx15 sig) ((static{ID_SetObjectField,ID_SetStaticObjectField) jniVararg) (obj ; mid), sig jniSigarg y
+  else.
+    select. {.rt
+    case. 'V' do. jniCheck rc=. ('x x x x ', jniSigx15 sig) ((static{ID_SetVoidField,ID_SetStaticVoidField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'L' do. jniCheck rc=. ('x x x x ', jniSigx15 sig) ((static{ID_SetObjectField,ID_SetStaticObjectField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'B' do. jniCheck rc=. ('c x x x ', jniSigx15 sig) ((static{ID_SetByteField,ID_SetStaticByteField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'Z' do. jniCheck rc=. ('i x x x ', jniSigx15 sig) ((static{ID_SetBooleanField,ID_SetStaticBooleanField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'I' do. jniCheck rc=. ('i x x x ', jniSigx15 sig) ((static{ID_SetIntField,ID_SetStaticIntField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'J' do. jniCheck rc=. ('l x x x ', jniSigx15 sig) ((static{ID_SetLongField,ID_SetStaticLongField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'S' do. jniCheck rc=. ('s x x x ', jniSigx15 sig) ((static{ID_SetShortField,ID_SetStaticShortField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'F' do. jniCheck rc=. ('f x x x ', jniSigx15 sig) ((static{ID_SetFloatField,ID_SetStaticFloatField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'D' do. jniCheck rc=. ('d x x x ', jniSigx15 sig) ((static{ID_SetDoubleField,ID_SetStaticDoubleField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'C' do. jniCheck rc=. ('w x x x ', jniSigx15 sig) ((static{ID_SetCharField,ID_SetStaticCharField) jniVararg) (obj ; mid), sig jniSigarg y
+    case. do. assert. 0 [ 'jniCallField return type'
+    end.
   end.
 end.
-z
+rc
 )
-jniCallMethod=: 3 : 0
-'' jniCallMethod y
+jniMethod=: 1 : 0
 :
-y=. boxxopen y
-if. 4>#y do.
-  sig=. ''
+assert. 0 4 e.~ 3!:0 y [ 'jniMethod'
+assert. 0-.@-:y [ 'jniMethod'
+jniCheck cls=. GetObjectClass_jni_ <y
+assert. 0~:cls [ 'jniMethod'
+
+'method proto'=. <;._1 ' ', deb m
+proto=. jniSigniture proto
+sig=. }. ({.~ i.&')') proto
+rt=. }. (}.~ i.&')') proto
+m=. method,' ',proto
+
+rc=. m jniCall_jni_ (boxxopen x),~ 2 0 0;y;cls
+DeleteLocalRef_jni_ <cls
+rc
+)
+jniStaticMethod=: 1 : 0
+:
+if. 1 4 e.~ 3!:0 y do.
+  assert. 0-.@-:y [ 'jniStaticMethod'
+  jniCheck cls=. GetObjectClass_jni_ <y
 else.
-  if. ''-:x do.
-    sig=. jnisig_guesstype boxopen 3}.y
-  else.
-    sig=. x
-  end.
+  assert. ''-.@-:y [ 'jniStaticMethod'
+  class=. './' charsub }.^:('L'={.) y -. ';'
+  jniCheck cls=. FindClass_jni_ <class
 end.
-sig=. jnisig_addsep sig
-assert. (+/'#'=sig) = _3 + #y [ 'jniCallMethod'
-y=. 3}.y [ 'obj class method'=. 3{.y
-assert. 1 4 e.~ 3!:0 obj [ 'jniCallMethod'
-assert. 1 2 4 e.~ 3!:0 obj ['jniCallMethod'
-assert. 2 e.~ 3!:0 method [ 'jniCallMethod'
+assert. 0~:cls [ 'jniStaticMethod'
+
+'method proto'=. <;._1 ' ', deb m
+proto=. jniSigniture proto
+sig=. }. ({.~ i.&')') proto
+rt=. }. (}.~ i.&')') proto
+m=. method,' ',proto
+
+rc=. m jniCall_jni_ (boxxopen x),~ 2 1 0;y;cls
+DeleteLocalRef_jni_ <cls
+rc
+)
+jniCall=: 4 : 0
+'method proto'=. <;._1 ' ', deb x
+sig=. }. ({.~ i.&')') proto
+rt=. '#'-.~ }. (}.~ i.&')') proto
+'attr obj cls'=. 3{.y
+'member static nonvirtual'=. attr
+y=. 3}.y
+assert. (+/'#'=sig) = #y [ 'jniCall incorrect number of arguments'
+
 str=. stri=. 0$0
-if. '<init>'-:method do.
-  assert. 0= obj
-  assert. 1 2 4 e.~ 3!:0 class [ 'jniCallMethod'
-  assert. '' -.@-: class [ 'jniCallMethod'
-  assert. 0 -.@-: class [ 'jniCallMethod'
-end.
-cls=. 0
-newcls=. 1
-if. (0-.@-:class) *. 1 4 e.~ 3!:0 class do.
-  newcls=. 0
-  cls=. class
-  class=. 1&GetClassName cls
-else.
-  if. '<init>'-:method do.
-    if. 0=obj do.
-      assert. ''-.@-:class ['jniCallMethod'
-      assert. 0-.@-:class [ 'jniCallMethod'
-      class=. './' charsub ('L'={.class) }. class -. ';'
-      jnicheck cls=. FindClass <class
-    else.
-      newcls=. 0
-      cls=. obj
-    end.
-  else.
-    if. (0-:class) +. ''-:class do.
-      assert. 0~:obj [ 'jniCallMethod'
-      jnicheck cls=. GetObjectClass <obj
-      class=. GetClassName obj
-    else.
-      class=. './' charsub ('L'={.class) }. class -. ';'
-      jnicheck cls=. FindClass <class
-    end.
-  end.
-end.
-assert. 0~:cls [ 'jniCallMethod'
-assert. ''-.@-:class [ 'jniCallMethod'
-attr=. 2 1{~ '<init>'-:method
-if. _1= idx=. sig jnisig_idx attr;class;method do.
-  'java class/member not found in jitfc' (13!:8) 3
-end.
-pty=. '(', ('#'-.~(<idx, jitfc_paramtype){::jitfc), ')', rt=. (<idx, jitfc_rettype){::jitfc
-attr=. }. idx{jitfcattr
-static=. 1{attr
-if. static *. 0=obj do. obj=. cls end.
-jnicheck mid=. GetMethodID`GetStaticMethodID@.static cls;method;pty
-if. 1 e. s1=. (<'Ljava/lang/String;') = <;._1 sig do.
+jniCheck mid=. GetMethodID`GetStaticMethodID@.static cls;method;({.a.),~ proto-.'#'
+if. 1 e. s1=. ((<'Ljava/lang/CharSequence;') = sig1) +. (<'Ljava/lang/String;') = sig1=. <;._1 sig do.
   for_i. I. s1 do.
     if. 2 131072 e.~ 3!:0 y1=. i{::y do.
       str=. str, <NewStringUTF < 8&u: y1
@@ -620,122 +700,28 @@ if. 1 e. s1=. (<'Ljava/lang/String;') = <;._1 sig do.
   if. #stri do. y=. str stri}y end.
 end.
 if. '<init>'-:method do.
-  jnicheck rc=. ('x x x x ', jnisig_x15 sig) (ID_NewObject jnivararg) (cls ; mid), sig jnisig_arg y
+  jniCheck rc=. ('x x x x ', jniSigx15 sig) (ID_NewObject jniVararg) (cls ; mid), sig jniSigarg y
 else.
+  if. static do. obj=. cls end.
   if. '[' e. rt do.
-    jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_CallObjectMethod,ID_CallStaticObjectMethod) jnivararg) (obj ; mid), sig jnisig_arg y
+    jniCheck rc=. ('x x x x ', jniSigx15 sig) ((static{ID_CallObjectMethod,ID_CallStaticObjectMethod) jniVararg) (obj ; mid), sig jniSigarg y
   else.
     select. {.rt
-    case. 'V' do. jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_CallVoidMethod,ID_CallStaticVoidMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'L' do. jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_CallObjectMethod,ID_CallStaticObjectMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'B' do. jnicheck rc=. ('c x x x ', jnisig_x15 sig) ((static{ID_CallByteMethod,ID_CallStaticByteMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'Z' do. jnicheck rc=. ('i x x x ', jnisig_x15 sig) ((static{ID_CallBooleanMethod,ID_CallStaticBooleanMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'I' do. jnicheck rc=. ('i x x x ', jnisig_x15 sig) ((static{ID_CallIntMethod,ID_CallStaticIntMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'J' do. jnicheck rc=. ('l x x x ', jnisig_x15 sig) ((static{ID_CallLongMethod,ID_CallStaticLongMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'S' do. jnicheck rc=. ('s x x x ', jnisig_x15 sig) ((static{ID_CallShortMethod,ID_CallStaticShortMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'F' do. jnicheck rc=. ('f x x x ', jnisig_x15 sig) ((static{ID_CallFloatMethod,ID_CallStaticFloatMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'D' do. jnicheck rc=. ('d x x x ', jnisig_x15 sig) ((static{ID_CallDoubleMethod,ID_CallStaticDoubleMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'C' do. jnicheck rc=. ('w x x x ', jnisig_x15 sig) ((static{ID_CallCharMethod,ID_CallStaticCharMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. do. assert. 0 [ 'jniCallMethod'
+    case. 'V' do. jniCheck rc=. ('x x x x ', jniSigx15 sig) ((static{ID_CallVoidMethod,ID_CallStaticVoidMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'L' do. jniCheck rc=. ('x x x x ', jniSigx15 sig) ((static{ID_CallObjectMethod,ID_CallStaticObjectMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'B' do. jniCheck rc=. ('c x x x ', jniSigx15 sig) ((static{ID_CallByteMethod,ID_CallStaticByteMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'Z' do. jniCheck rc=. ('i x x x ', jniSigx15 sig) ((static{ID_CallBooleanMethod,ID_CallStaticBooleanMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'I' do. jniCheck rc=. ('i x x x ', jniSigx15 sig) ((static{ID_CallIntMethod,ID_CallStaticIntMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'J' do. jniCheck rc=. ('l x x x ', jniSigx15 sig) ((static{ID_CallLongMethod,ID_CallStaticLongMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'S' do. jniCheck rc=. ('s x x x ', jniSigx15 sig) ((static{ID_CallShortMethod,ID_CallStaticShortMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'F' do. jniCheck rc=. ('f x x x ', jniSigx15 sig) ((static{ID_CallFloatMethod,ID_CallStaticFloatMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'D' do. jniCheck rc=. ('d x x x ', jniSigx15 sig) ((static{ID_CallDoubleMethod,ID_CallStaticDoubleMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'C' do. jniCheck rc=. ('w x x x ', jniSigx15 sig) ((static{ID_CallCharMethod,ID_CallStaticCharMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. do. assert. 0 [ 'jniCall return type'
     end.
   end.
 end.
-if. newcls do. DeleteLocalRef <cls end.
-rc
-)
-
-jniField=: 1 : 0
-rt=. m
-assert. 1 4 e.~ 3!:0 y [ 'jniField'
-assert. 0-.@-:y [ 'jniField'
-jnicheck cls=. GetObjectClass_jni_ <y
-z=. rt jniCallField_jni_ 0;y;cls
-DeleteLocalRef_jni_ <cls
-z
-:
-rt=. m
-assert. 1 4 e.~ 3!:0 y [ 'jniField'
-assert. 0-.@-:y [ 'jniField'
-jnicheck cls=. GetObjectClass_jni_ <y
-rt jniCallField_jni_ (0;y;cls), boxxopen x
-DeleteLocalRef_jni_ <cls
-EMPTY
-)
-jniStaticField=: 1 : 0
-rt=. m
-if. 1 4 e.~ 3!:0 y do.
-  assert. 0-.@-:y [ 'jniStaticField'
-  jnicheck cls=. GetObjectClass_jni_ <y
-else.
-  assert. ''-.@-:y [ 'jniStaticField'
-  class=. './' charsub }.^:('L'={.) y -. ';'
-  jnicheck cls=. FindClass_jni_ <class
-end.
-z=. rt jniCallField_jni_ 1;y;cls
-DeleteLocalRef_jni_ <cls
-z
-:
-rt=. m
-if. 1 4 e.~ 3!:0 y do.
-  assert. 0-.@-:y [ 'jniStaticField'
-  jnicheck cls=. GetObjectClass_jni_ <y
-else.
-  assert. ''-.@-:y [ 'jniStaticField'
-  class=. './' charsub }.^:('L'={.) y -. ';'
-  jnicheck cls=. FindClass_jni_ <class
-end.
-rt jniCallField_jni_ (1;y;cls), boxxopen x
-DeleteLocalRef_jni_ <cls
-EMPTY
-)
-
-jniCallField=: 4 : 0
-'field sig'=. <;._1 ' ', deb x
-sig=. jnisig_addsep sig
-'attr obj cls'=. 3{.y
-static=. {.attr
-y=. 3}.y
-assert. 1=+/'#'=sig [ 'jniCallField'
-rt=. sig-.'#'
-jnicheck mid=. GetFieldID`GetStaticFieldID@.static cls;field;rt
-if. static do. obj=. cls end.
-if. 0=#y do.
-  if. '[' e. rt do.
-    jnicheck rc=. ('x x x x ') ((static{ID_GetObjectField,ID_GetStaticObjectField) jnivararg) (obj ; mid)
-  else.
-    select. {.rt
-    case. 'V' do. jnicheck rc=. ('x x x x ') ((static{ID_GetVoidField,ID_GetStaticVoidField) jnivararg) (obj ; mid)
-    case. 'L' do. jnicheck rc=. ('x x x x ') ((static{ID_GetObjectField,ID_GetStaticObjectField) jnivararg) (obj ; mid)
-    case. 'B' do. jnicheck rc=. ('c x x x ') ((static{ID_GetByteField,ID_GetStaticByteField) jnivararg) (obj ; mid)
-    case. 'Z' do. jnicheck rc=. ('i x x x ') ((static{ID_GetBooleanField,ID_GetStaticBooleanField) jnivararg) (obj ; mid)
-    case. 'I' do. jnicheck rc=. ('i x x x ') ((static{ID_GetIntField,ID_GetStaticIntField) jnivararg) (obj ; mid)
-    case. 'J' do. jnicheck rc=. ('l x x x ') ((static{ID_GetLongField,ID_GetStaticLongField) jnivararg) (obj ; mid)
-    case. 'S' do. jnicheck rc=. ('s x x x ') ((static{ID_GetShortField,ID_GetStaticShortField) jnivararg) (obj ; mid)
-    case. 'F' do. jnicheck rc=. ('f x x x ') ((static{ID_GetFloatField,ID_GetStaticFloatField) jnivararg) (obj ; mid)
-    case. 'D' do. jnicheck rc=. ('d x x x ') ((static{ID_GetDoubleField,ID_GetStaticDoubleField) jnivararg) (obj ; mid)
-    case. 'C' do. jnicheck rc=. ('w x x x ') ((static{ID_GetCharField,ID_GetStaticCharField) jnivararg) (obj ; mid)
-    case. do. assert. 0 [ 'jniCallField'
-    end.
-  end.
-else.
-  if. '[' e. rt do.
-    jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_SetObjectField,ID_SetStaticObjectField) jnivararg) (obj ; mid), sig jnisig_arg y
-  else.
-    select. {.rt
-    case. 'V' do. jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_SetVoidField,ID_SetStaticVoidField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'L' do. jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_SetObjectField,ID_SetStaticObjectField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'B' do. jnicheck rc=. ('c x x x ', jnisig_x15 sig) ((static{ID_SetByteField,ID_SetStaticByteField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'Z' do. jnicheck rc=. ('i x x x ', jnisig_x15 sig) ((static{ID_SetBooleanField,ID_SetStaticBooleanField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'I' do. jnicheck rc=. ('i x x x ', jnisig_x15 sig) ((static{ID_SetIntField,ID_SetStaticIntField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'J' do. jnicheck rc=. ('l x x x ', jnisig_x15 sig) ((static{ID_SetLongField,ID_SetStaticLongField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'S' do. jnicheck rc=. ('s x x x ', jnisig_x15 sig) ((static{ID_SetShortField,ID_SetStaticShortField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'F' do. jnicheck rc=. ('f x x x ', jnisig_x15 sig) ((static{ID_SetFloatField,ID_SetStaticFloatField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'D' do. jnicheck rc=. ('d x x x ', jnisig_x15 sig) ((static{ID_SetDoubleField,ID_SetStaticDoubleField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'C' do. jnicheck rc=. ('w x x x ', jnisig_x15 sig) ((static{ID_SetCharField,ID_SetStaticCharField) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. do. assert. 0 [ 'jniCallField'
-    end.
-  end.
-end.
+for_js. str do. DeleteLocalRef js end.
 rc
 )
 jniNewObject=: 4 : 0
@@ -744,84 +730,75 @@ if. ' ' e. y do.
 else.
   class=. y [ sig=. '()V'
 end.
-if. ')' -.@e. sig do. sig=. '(',sig,')V' end.
-class=. './' charsub }.^:('L'={.) class -. ';'
-jnicheck cls=. FindClass_jni_ <class
+if. ')' -.@e. sig do. sig=. '(', ')V',~ sig end.
+sig=. jniSigniture sig
+class=. './' charsub class -. ';'
+class=. 1&jniResolve 'L',class
+jniCheck cls=. FindClass_jni_ <class
 assert. 0~:cls [ 'jniNewObjet'
 rc=. ('<init> ',sig) jniCall_jni_ (boxxopen x),~ 1 0 0;0;cls
-DeleteLocalRef_jni_ <cls
+jniCheck DeleteLocalRef <cls
 rc
 )
-jniMethod=: 1 : 0
-:
-assert. 0 4 e.~ 3!:0 y [ 'jniMethod'
-assert. 0-.@-:y [ 'jniMethod'
-jnicheck cls=. GetObjectClass_jni_ <y
-assert. 0~:cls [ 'jniMethod'
-rc=. m jniCall_jni_ (boxxopen x),~ 2 0 0;y;cls
-DeleteLocalRef_jni_ <cls
-rc
-)
-
-jniStaticMethod=: 1 : 0
-:
-if. 1 4 e.~ 3!:0 y do.
-  assert. 0-.@-:y [ 'jniStaticMethod'
-  jnicheck cls=. GetObjectClass_jni_ <y
+jniOverride=: 4 : 0
+x=. boxxopen x
+assert. 32=3!:0 y [ 'jniOverride: y must be box'
+assert. 2 3 4 e.~ #y [ 'jniOverride: y must be class_signiture ; locale [; childid [; override]]'
+if. 0=#x do.
+  class=. >@{.y
+  sig=. 'Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;'
 else.
-  assert. ''-.@-:y [ 'jniStaticMethod'
-  class=. './' charsub }.^:('L'={.) y -. ';'
-  jnicheck cls=. FindClass_jni_ <class
-end.
-assert. 0~:cls [ 'jniStaticMethod'
-rc=. m jniCall_jni_ (boxxopen x),~ 2 1 0;y;cls
-DeleteLocalRef_jni_ <cls
-rc
-)
-jniCall=: 4 : 0
-
-'method proto'=. <;._1 ' ', deb x
-sig=. jnisig_addsep }. ({.~ i.&')') proto
-rt=. }. (}.~ i.&')') proto
-
-'attr obj cls'=. 3{.y
-'member static nonvirtual'=. attr
-y=. 3}.y
-assert. (+/'#'=sig) = #y [ 'jniCall'
-
-str=. stri=. 0$0
-jnicheck mid=. GetMethodID`GetStaticMethodID@.static cls;method;proto-.'#'
-if. 1 e. s1=. (<'Ljava/lang/String;') = <;._1 sig do.
-  for_i. I. s1 do.
-    if. 2 131072 e.~ 3!:0 y1=. i{::y do.
-      str=. str, <NewStringUTF < 8&u: y1
-      stri=. stri, i
-    end.
+  'class sig'=. <;._1 ' ', >@{.y
+  if. ')' e. sig do.
+    sig=. '(' -.~ ({.~ i.&')') sig
   end.
-  if. #stri do. y=. str stri}y end.
+  sig=. sig, 'Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;'
 end.
-if. '<init>'-:method do.
-  jnicheck rc=. ('x x x x ', jnisig_x15 sig) (ID_NewObject jnivararg) (cls ; mid), sig jnisig_arg y
+if. ')' -.@e. sig do. sig=. '(',sig,')V' end.
+class=. './' charsub }.^:('L'={.) class -. ';'
+
+obj=. ((3{.}.y),~ x) jniNewObject class, ' ', sig
+)
+jniProxy=: 4 : 0
+cls=. GetObjectClass <x
+mid=. GetMethodID cls;'CreateProxy';'(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;'
+s1=. NewStringUTF {.y
+s2=. NewStringUTF {:y
+s=. 'x x x x x x' (ID_CallObjectMethod jniVararg) x;mid;s1;s2
+jniCheck DeleteLocalRef <s1
+jniCheck DeleteLocalRef <s2
+jniCheck DeleteLocalRef <cls
+s
+)
+jnhandler_z_=: 4 : 0
+if. 3=4!:0<'jnhandler_debug' do.
+  try. x jnhandler_debug y catch. end.
+end.
+jn_fn=. x
+if. 'Android'-:UNAME do. log_d_ja_ 'JJNI';'jnhandler ',jn_fn end.
+if. 13!:17'' do.
+  z=. jn_fn~ y
 else.
-  if. static do. obj=. cls end.
-  if. '[' e. rt do.
-    jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_CallObjectMethod,ID_CallStaticObjectMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-  else.
-    select. {.rt
-    case. 'V' do. jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_CallVoidMethod,ID_CallStaticVoidMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'L' do. jnicheck rc=. ('x x x x ', jnisig_x15 sig) ((static{ID_CallObjectMethod,ID_CallStaticObjectMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'B' do. jnicheck rc=. ('c x x x ', jnisig_x15 sig) ((static{ID_CallByteMethod,ID_CallStaticByteMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'Z' do. jnicheck rc=. ('i x x x ', jnisig_x15 sig) ((static{ID_CallBooleanMethod,ID_CallStaticBooleanMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'I' do. jnicheck rc=. ('i x x x ', jnisig_x15 sig) ((static{ID_CallIntMethod,ID_CallStaticIntMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'J' do. jnicheck rc=. ('l x x x ', jnisig_x15 sig) ((static{ID_CallLongMethod,ID_CallStaticLongMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'S' do. jnicheck rc=. ('s x x x ', jnisig_x15 sig) ((static{ID_CallShortMethod,ID_CallStaticShortMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'F' do. jnicheck rc=. ('f x x x ', jnisig_x15 sig) ((static{ID_CallFloatMethod,ID_CallStaticFloatMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'D' do. jnicheck rc=. ('d x x x ', jnisig_x15 sig) ((static{ID_CallDoubleMethod,ID_CallStaticDoubleMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. 'C' do. jnicheck rc=. ('w x x x ', jnisig_x15 sig) ((static{ID_CallCharMethod,ID_CallStaticCharMethod) jnivararg) (obj ; mid), sig jnisig_arg y
-    case. do. assert. 0 [ 'jniCall'
+  try. z=. jn_fn~ y
+  catch.
+    if. 0~:exc=. ExceptionOccurred_jni_'' do.
+      if. ''-:jn_err=. jniException_jni_ exc do.
+        jn_err=. 'JNI exception'
+      end.
+      jn_err=. '|', jn_err, LF
+    else.
+      jn_err=. 13!:12''
     end.
+    if. 0=4!:0 <'ERM_j_' do.
+      jn_erm=. ERM_j_
+      ERM_j_=: ''
+      if. jn_erm -: jn_err do. 0 return. end.
+    end.
+    jn_err=. LF,,LF,.}.;._2 jn_err
+    smoutput 'jnhandler error in: ',jn_fn,jn_err
+    if. 'Android'-:UNAME do. log_d_ja_ 'JJNI';'jnhandler error in: ',,jn_fn,jn_err end.
+    0
   end.
 end.
-for_js. str do. DeleteLocalRef js end.
-rc
 )
+

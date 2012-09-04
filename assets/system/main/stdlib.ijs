@@ -26,16 +26,7 @@ if. notdef 'UNAME' do.
     UNAME=: 'Win'
   end.
 end.
-if. notdef 'IFARM' do.
-  if. IFIOS do.
-    IFARM=: 1
-  elseif. IFUNIX do.
-    IFARM=: 'arm' -: 3{.(2!:0 'uname -m')-.10{a.
-  elseif. do.
-    IFARM=: 0
-  end.
-end.
-if. IF64 +. IFARM +. IFIOS +. UNAME-:'Android' do.
+if. IF64 +. IFIOS +. UNAME-:'Android' do.
   IFWOW64=: 0
 else.
   if. IFUNIX do.
@@ -1878,7 +1869,7 @@ if. 0=L.y do.
   end.
 end.
 y=. y -. Ignore, IFJHS#;:'viewmat'
-y=. y -. IFARM#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
+y=. y -. (IFIOS+.UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public
