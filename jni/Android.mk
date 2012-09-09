@@ -16,6 +16,7 @@ TARGET_PLATFORM := android-9
 
 #include $(call all-subdir-makefiles)
 
+include jni/libm/Android.mk
 include jni/openj-core/Jconsole.mk
 include jni/openj-core/Tsdll.mk
 include jni/openj-core/Android.mk
