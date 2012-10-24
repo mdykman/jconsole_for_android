@@ -1,13 +1,13 @@
 package org.dykman.jn;
 
 import java.io.UnsupportedEncodingException;
-import android.util.Log;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class Glcmds {
 
@@ -65,7 +65,8 @@ Path path = new Path();
 int errcnt =  0;
 int cmd;
 int p =  0;
-int i,j,c,cnt;
+int i,c,cnt;
+//int i,j,c,cnt;
 
 Log.d("JJNI", "Glcmds ncnt: " + Integer.toString(ncnt));
 while (p<ncnt) {

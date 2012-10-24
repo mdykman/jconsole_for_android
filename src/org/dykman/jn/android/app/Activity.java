@@ -4,14 +4,14 @@ protected org.dykman.j.JInterface jInterface = null;
 protected java.lang.String jlocale = null;
 protected java.lang.String jchildid = null;
 protected java.lang.String jchildidx = null;
-protected java.util.ArrayList jnOverrideList = null;
+protected java.util.ArrayList<Object> jnOverrideList = null;
 protected java.lang.String japparg = null;
 protected void jparseargs (java.lang.String jlocale, java.lang.String jchildid, java.lang.String joverride ) { this.jlocale = jlocale; this.jchildid = jchildid; if (jchildid != null && jchildid.length() > 0) jchildidx = jchildid + "_"; else jchildidx = ""; if (joverride != null && joverride.length() > 0) { java.lang.String[] ss = joverride.split(" "); for (int i = 0; i < ss.length; i++) setjnOverride(ss[i]); } }
 public void clearjnOverride () { jnOverrideList.clear (); }
 public void setjnOverride (java.lang.String arg1 ) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); }
 public void setjnOverride (java.lang.String arg1, boolean arg2 ) { if (arg2) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); } else jnOverrideList.remove (arg1); }
 public boolean testjnOverride (java.lang.String arg1 ) { return jnOverrideList.contains (arg1); }
-public Activity(){ super(); jnOverrideList = new java.util.ArrayList(); jnOverrideList.add ("onCreate"); }
+public Activity(){ super(); jnOverrideList = new java.util.ArrayList<Object>(); jnOverrideList.add ("onCreate"); }
 @Override protected void finalize() throws java.lang.Throwable{ if (!testjnOverride( "finalize" )) { super.finalize(); return; } jInterface.Jnido( this, jchildidx + "finalize_" + jlocale + "_", null ); }
 @Override public android.content.Intent getIntent(){ if (!testjnOverride( "getIntent" )) return super.getIntent(); return (android.content.Intent) jInterface.Jnido( this, jchildidx + "getIntent_" + jlocale + "_", null ); }
 @Override public void setIntent(android.content.Intent arg1) { if (!testjnOverride( "setIntent" )) { super.setIntent( arg1); return; } jInterface.Jnido( this, jchildidx + "setIntent_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }

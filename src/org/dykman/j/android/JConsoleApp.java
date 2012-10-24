@@ -44,7 +44,7 @@ public class JConsoleApp extends Application {
 
 	public AndroidJInterface jInterface = null;
 	public AbstractActivity activity;
-  private static Context context;
+//  private static Context context;
   public static JConsoleApp theApp = null;
 
 	protected Map<String, Intent> intentMap = new HashMap<String, Intent>();
@@ -80,7 +80,7 @@ public class JConsoleApp extends Application {
    intent.putExtra("jargy", b.getString("jargy"));
    activity.startActivity(intent);
    } catch (ClassNotFoundException e) {
-           // fail
+	   Log.e(LogTag, "failed to launch class " + b.getString("class"),e);
    }
   }
  };
@@ -88,7 +88,7 @@ public class JConsoleApp extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-    JConsoleApp.theApp = (JConsoleApp) this;
+		JConsoleApp.theApp = (JConsoleApp) this;
 	}
 
 	public void setup(JActivity activity, Console console) {
@@ -137,7 +137,8 @@ public class JConsoleApp extends Application {
 		if (!JActivity.JCONSOLE.equals(path)) {
 			path = new File(path).getName();
 		} else {
-//			intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+
+			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY|Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 			
 		}
 
@@ -538,8 +539,8 @@ public class JConsoleApp extends Application {
 						if(ex.canWrite()) {
 							String cmd = "2!:0 'cp -r " + lo.getAbsolutePath()
 									+ " /sdcard'";
-							publishProgress("migrating user files");
-//							jInterface.callSuperJ(new String[]{cmd});
+							publishProgress("migrating user files to sdcard");
+							jInterface.callSuperJ(new String[]{cmd});
 						}
 					}
 				}

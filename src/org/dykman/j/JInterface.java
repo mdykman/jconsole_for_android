@@ -216,9 +216,13 @@ public class JInterface {
 
     static {
     	try {
-    		System.loadLibrary("j");
+    		
+//    		System.loadLibrary("j");
+    		// load the laoder
+    		System.loadLibrary("jld");
     	} catch(Exception e) {
     		Log.e("J-interface", "failed to load j shared object", e);
+    		throw new RuntimeException(e);
     	}
     }
  
