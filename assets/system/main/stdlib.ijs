@@ -351,6 +351,7 @@ gh=. 15!:8
 fh=. 15!:9
 symget=: 15!:6
 symset=: 15!:7
+symdat=: 15!:14
 cdcb=: 15!:13
 JB01=: 1
 JCHAR=: 2
@@ -1868,8 +1869,9 @@ if. 0=L.y do.
     y=. cutnames y
   end.
 end.
-y=. y -. Ignore, IFJHS#;:'viewmat'
-y=. y -. (IFIOS+.UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2'
+y=. y -. Ignore, IFIOS#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2 viewmat'
+y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk'
+y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public

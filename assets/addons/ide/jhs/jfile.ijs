@@ -40,6 +40,9 @@ jhresize''
 'sel'       jhdiv'<FILES>'
 )
 
+LASTPATH=: jpath'~temp\'
+
+
 NB. y - error;file
 create=: 3 : 0
 'r f'=. y
@@ -52,7 +55,7 @@ jev_get=: 3 : 0
 if. 'open'-:getv'mid' do.
  ev_edit_click''
 else.
- create '&nbsp;';jpath'~temp\'
+ create '&nbsp;';LASTPATH
 end.
 )
 
@@ -72,6 +75,7 @@ buttons 'paths';(2#<({."1 UserFolders_j_,SystemFolders_j_)-.<'Demos'),<' '
 ev_paths_click=: 3 : 0
 sid=. getv'jsid'
 f=. jpath'~',sid,'/'
+LASTPATH=: f
 jhrajax (jshortname f),JASEP,buttons 'files';(2#<folderinfo remlev f),<'<br>'
 )
 
@@ -86,6 +90,7 @@ if. sid-:'..' do.
 else.
  f=. (remlev path),PS,sid,PS
 end.
+LASTPATH=: f
 jhrajax (jshortname f),JASEP,buttons 'files';(2#<folderinfo remlev f),<'<br>'
 )
 

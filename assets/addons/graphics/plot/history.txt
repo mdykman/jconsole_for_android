@@ -71,5 +71,5 @@ graphics/plot - change history
 == 1.0.93/100 ==
  * plot: android/iOS
 
-== 1.0.101/104 ==
+== 1.0.101/105 ==
  * plot: android jni

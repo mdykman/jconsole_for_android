@@ -1,0 +1,31 @@
+Addon:  math/misc
+
+This Addon directory contains mathematical scripts.
+amoeba           Nelder-Mead minimization for multidimensional optimization
+bigpi            Calculate pi to many digits
+brent            Brent's method
+contfrac         Continued fraction utilities
+det              Definitions for determinants
+fermat           Fermat factorization
+gamesolver       Find optimal mixed strategies for 2-person games
+gcd              Calculate GCD (alternative to J primitive +.)
+integer          Verbs to generate various integer sequences
+integrat         Various methods for numeric integration
+jacobi           Jacobi's method for eigenvalues and vectors
+legendre         Legendre symbol, quadratic reciprocity
+linear           Solve linear equations
+makemat          Make various standard matrices
+matfacto         Matrix factorization
+mathutil         Math utilities
+matutil          Matrix utilities
+mean             Various means
+numbers          Various number definitions (Stirling, Euler ...)
+pollard          Pollard factorization
+poly             Polynomial functions
+primutil         Primes - prime testing programs
+quatern          Definitions for quaternions
+simplex          Simplex method
+simplexnr        Simplex method (after Numerical Recipes in C)
+spline           Spline utilities
+svd              Singular value decomposition
+trig             Trigonometric functions

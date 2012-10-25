@@ -11,3 +11,6 @@ data/ddsqlite - change history
 
 == 1.0.4/9 ==
  * android/iOS limitation
+
+== 1.0.10 ==
+ * ddfch should coerce long data to empty

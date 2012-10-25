@@ -4,6 +4,10 @@ coclass'jijs'
 coinsert'jhs'
 
 HBS=: 0 : 0
+'<script src="~addons/ide/jhs/js/codemirror/codemirror.js"></script>'
+'<link rel="stylesheet" href="~addons/ide/jhs/js/codemirror/codemirror.css">'
+'<link rel="stylesheet" href="~addons/ide/jhs/js/codemirror/j/jtheme.css">'
+'<script src="~addons/ide/jhs/js/codemirror/j/j.js"></script>'
 jhma''
 jhjmlink''
 'action'    jhmg'action';1;10
@@ -11,8 +15,11 @@ jhjmlink''
  'runwd'    jhmab'run display'
  'save'     jhmab'save        s^'
  'saveas'   jhmab'save as...'
+ 'undo'     jhmab'undo        z^'
+ 'redo'     jhmab'redo        y^'
 'option'    jhmg'option';1;8
  'ro'       jhmab'readonly    t^'
+ 'numbers'  jhmab'numbers'
 jhmz''
 
 'saveasdlg'    jhdivadlg''
@@ -33,13 +40,12 @@ jhresize''
 'textarea'    jhhidden''
 )
 
-FNMS=: ''
-
 NB. y file
 create=: 3 : 0
-rep=. >(FNMS e.~<y){'';'WARNING: file already open!' 
-FNMS=: FNMS,<y
-try. d=. 1!:1<y catch.
+rep=.''
+try.
+ d=. (1!:1<y) rplc '&';'&amp;';'<';'&lt;'
+catch.
  d=. ''
  rep=. 'WARNING: file read failed!'
 end.
@@ -88,9 +94,11 @@ try.
   load__ f
  else.
   loadd__ f
- end.  
- jhrajax 'ran saved without error'
+ end.
+ smoutput'ran without error'  
+ jhrajax 'ran without error'
 catch.
+ smoutput 'ran with error:',LF,13!:12''
  jhrajax 13!:12''
 end.
 )
@@ -117,13 +125,6 @@ catch.
 end.
 )
 
-ev_body_unload=: 3 : 0
-f=. getv'filename'
-save f
-FNMS=:(-.(i.#FNMS)=(FNMS=<f)i.1)#FNMS
-jhrajax''
-)
-
 NB. new ijs temp filename
 jnew=: 3 : 0
 d=. 1!:0 jpath '~temp\*.ijs'
@@ -135,15 +136,17 @@ f=. <jpath'~temp\',a,'.ijs'
 )
 
 NB. p{} klduge because IE inserts <p> instead of <br> for enter
+NB. codemirror needs jresizeb without scroll
 CSS=: 0 : 0
 #rep{color:red}
 #filenamed{color:blue;}
 *{font-family:"courier new","courier","monospace";font-size:<PC_FONTSIZE>;}
 p{margin:0;}
+#jresizeb{overflow:visible;border:solid;border-width:1px;clear:left;}
 )
 
 JS=: 0 : 0
-var ta,rep,readonly,saveasx;
+var ta,rep,readonly,saveasx,cm,dirty=false;
 
 function ev_body_load()
 {
@@ -151,9 +154,24 @@ function ev_body_load()
  rep= jbyid("rep");
  ta= jbyid("textarea");
  saveasx=jbyid("saveasx");
+
+ //! dresize();
+ ce.focus();
+
+ cm = CodeMirror.fromTextArea(ce,
+  {lineNumbers: true,
+   mode:  "j",
+   tabSize: 1,
+   gutter: false,
+   onChange: setdirty,
+   extraKeys: {
+    "Ctrl-S": function(instance) { jscdo("save"); },
+    "Ctrl-R": function(instance) { jscdo("runw"); }
+   }
+  }
+ );
  ro(0!=ce.innerHTML.length);
  dresize();
- ce.focus();
 }
 
 window.onresize= dresize;
@@ -165,10 +183,9 @@ function dresize()
  var a= jgpwindowh(); // window height
  a-= jgpbodymh();     // body margin h (top+bottom)
  a-= jgpdivh("jresizea"); // header height
- a-= 26               // fudge extra
+ a-= 5               // fudge extra
  a=  a<0?0:a;        // negative causes problems
- ce.style.height= a+"px";
- ce.style.width= (jgpwindoww()-26)+"px";
+ cm.setSize(jgpwindoww()-10,a);
 }
 
 //! should be in utiljs.ijs
@@ -180,23 +197,30 @@ function jgpwindoww()
   return document.documentElement.clientWidth;
 }
 
-function ev_body_unload()
+window.onbeforeunload = confirmExit;
+function setdirty(){dirty=true;}
+function confirmExit(){return dirty?"Page has unsaved changes.":null;}
+
+function setnamed()
 {
- ta.value= ce.value;
- jdoajax(["filename","textarea","saveasx"],"",jevsentence,false);
+  jbyid("filenamed").innerHTML=jbyid("filename").value;
 }
 
 function ro(only)
 {
  readonly= only;
- ce.readOnly=readonly?true:false;
- ce.style.background= readonly?"#eee":"#fff";
+ cm.setOption('readOnly', readonly?true:false)
+ cm.getWrapperElement().style.background= readonly?"#ddd":"#fff";
+ cm.focus();
 }
 
-function click(){ta.value= ce.value;jdoajax(["filename","textarea","saveasx"]);}
+function click(){ta.value= cm.getValue().replace(/\t/g,' ');jdoajax(["filename","textarea","saveasx"]);dirty=false;}
 function ev_save_click() {click();}
 function ev_runw_click() {click();}
 function ev_runwd_click(){click();}
+
+function ev_undo_click(){cm.undo();}
+function ev_redo_click(){cm.redo();}
 
 function ev_saveasdo_click(){click();}
 function ev_saveasx_enter() {click();}
@@ -205,6 +229,10 @@ function ev_saveas_click()     {jdlgshow("saveasdlg","saveasx");}
 function ev_saveasclose_click(){jhide("saveasdlg");}
 
 function ev_ro_click(){ro(readonly= !readonly);}
+function ev_numbers_click()
+{
+ cm.setOption('lineNumbers',cm.getOption('lineNumbers')?false:true);
+}
 
 // called with ajax response
 function ajax(ts)
@@ -213,13 +241,16 @@ function ajax(ts)
  if(2==ts.length&&(jform.jmid.value=="saveasx"||jform.jmid.value=="saveasdo"))
  {
   jhide("saveasdlg");
-  jbyid("filenamed").innerHTML=ts[1];
   jbyid("filename").value=ts[1];
+  setnamed();
   document.title=ts[0].substring(9);
  }
 }
 
 function ev_ijs_enter(){return true;}
+
+function ev_z_shortcut(){cm.undo();}
+function ev_y_shortcut(){cm.redo();}
 
 function ev_t_shortcut(){jscdo("ro");}
 function ev_r_shortcut(){jscdo("runw");}

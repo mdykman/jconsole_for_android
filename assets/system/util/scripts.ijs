@@ -14,6 +14,7 @@ color16    ~addons/graphics/color/color16.ijs
 colortab   ~addons/graphics/color/colortab.ijs
 csv        ~addons/tables/csv/csv.ijs
 dd         ~addons/data/odbc/odbc.ijs
+droidwd    ~addons/gui/droidwd/droidwd.ijs
 gl2        ~addons/graphics/gl2/gl2.ijs
 gl3        ~addons/api/gl3/gl3.ijs
 graph      ~addons/graphics/graph/graph.ijs

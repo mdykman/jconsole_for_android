@@ -5,3 +5,9 @@ gui/android - change history
 
 == 1.0.2 ==
  * tidy up
+
+== 1.0.3 ==
+ * fix for api-7
+
+== 1.0.4 ==
+ * create view and menu from xml

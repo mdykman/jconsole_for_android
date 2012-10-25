@@ -147,6 +147,14 @@ For more complicated requirements use host facilities such
 as Windows Explorer or Mac Finder.
 
 <br><br><span class="h">jijs</span>
+CodeMirror (www.codemirror.net) editor. In addition to menu
+commands and standard shortcuts, Ctrl shortcuts s r z
+and y also work. <a href="#codemirror">CodeMirror Copyright</a>
+
+
+
+
+<br><br><span class="h">jijsta</span>
 edit file in textarea
 
 <br><br><span class="h">jijsce</span>
@@ -431,6 +439,35 @@ development of state of the art GUI desktop applications.
 
 Run jgtk from jconsole with sentence:
 <pre class="jcode">   load'gtkide'</pre>
+
+
+<a name="codemirror"><h1>CodeMirror Copyright</h1>
+
+CodeMirror code (folder ~addons/ide/jhs/js/codemirror) that provides the jijs editor is covered by the following copyright:<br><br>
+
+Copyright (C) 2012 by Marijn Haverbeke <marijnh@gmail.com><br><br>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:<br><br>
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.<br><br>
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.<br><br>
+
+Please note that some subdirectories of the CodeMirror distribution
+include their own LICENSE files, and are released under different
+licences.
 
 <a name="about"><h1>About</h1></a>
 <pre class="jcode">
