@@ -1,0 +1,67 @@
+NB. project file: c:/users/rsherloc/documents/j602-user/jsrc/addons/math/misc/misc
+
+coclass 'jproject'
+
+PRIMARYFILES=: 0 : 0
+~Addons/math/misc/amoeba
+~Addons/math/misc/bigpi
+~Addons/math/misc/brent
+~Addons/math/misc/contfrac
+~Addons/math/misc/det
+~Addons/math/misc/fermat
+~Addons/math/misc/gamesolver
+~Addons/math/misc/gcd
+~Addons/math/misc/integer
+~Addons/math/misc/integrat
+~Addons/math/misc/jacobi
+~Addons/math/misc/legendre
+~Addons/math/misc/linear
+~Addons/math/misc/makemat
+~Addons/math/misc/matfacto
+~Addons/math/misc/mathutil
+~Addons/math/misc/matutil
+~Addons/math/misc/mean
+~Addons/math/misc/numbers
+~Addons/math/misc/pollard
+~Addons/math/misc/poly
+~Addons/math/misc/primutil
+~Addons/math/misc/quatern
+~Addons/math/misc/rsa
+~Addons/math/misc/simplex
+~Addons/math/misc/simplexnr
+~Addons/math/misc/spline
+~Addons/math/misc/svd
+)
+
+PRIMARYLIBS=: ''
+
+DEVFILES=: ''
+
+DEVLIBS=: ''
+
+OTHERFILES=: 0 : 0
+~Addons/math/misc/history.txt
+~Addons/math/misc/math.txt
+)
+
+TARGETFILE=: ''
+
+TARGETLOCALE=: ''
+
+TARGETHEADER=: ''
+
+TARGETEXTRA=: ''
+
+BUILDOPTS=: 0 1 0 0 0 0 0
+
+PREBUILDFILE=: ''
+
+POSTBUILDFILE=: ''
+
+TESTFILE=: ''
+
+NOTES=: ''
+
+VERSION=: ''
+
+WINDOWS=: ''

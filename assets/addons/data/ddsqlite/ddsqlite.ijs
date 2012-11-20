@@ -733,7 +733,7 @@ r=. (r<0){r,_1
 if. 0=#ci=. getallcolinfo sh do.
   errret sh_to_ch sh
 else.
-  z=. ci getdata sh,r
+  z=. ci getdata sh,r,1
   if. UseErrRet do.
     if. (<<<0)-:{.z do.
       r=. fmtfch&.>^:(_2~:x) }.z
@@ -757,7 +757,7 @@ r=. (r<0){r,_1
 if. 0=#ci=. getallcolinfo sh do.
   errret sh_to_ch sh
 else.
-  z=. ci getdata sh,r
+  z=. ci getdata sh,r,0
   if. UseErrRet do.
     if. (<<<0)-:{.z do.
       r=. }.z
@@ -1364,7 +1364,7 @@ else.
 end.
 )
 getdata=: 4 : 0
-'sh r'=. y
+'sh r ignorelongdata'=. 3{.y
 assert. 15={:$x
 oty=. ; 8 {"1 x
 ln=. ; 9 {"1 x
@@ -1412,9 +1412,9 @@ while.do.
     elseif. (SQL_CHAR,SQL_WCHAR,SQL_VARCHAR,SQL_WVARCHAR) e.~ i{ty do.
       (pref,":i)=. (pref,":i)~, datchar i{cc
     elseif. (SQL_LONGVARCHAR,SQL_WLONGVARCHAR) e.~ i{ty do.
-      (pref,":i)=. (pref,":i)~, datchar i{cc
+      (pref,":i)=. (pref,":i)~, datchar`((<'')"_)@.ignorelongdata i{cc
     elseif. SQL_LONGVARBINARY = i{ty do.
-      (pref,":i)=. (pref,":i)~, datblob i{cc
+      (pref,":i)=. (pref,":i)~, datblob`((<'')"_)@.ignorelongdata i{cc
     elseif. SQL_TYPE_DATE = i{ty do.
       (pref,":i)=. (pref,":i)~, datdate i{cc
     elseif. SQL_TYPE_TIME = i{ty do.

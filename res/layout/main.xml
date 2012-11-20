@@ -5,6 +5,7 @@
         android:layout_height="fill_parent"
         android:cursorVisible="true"
         android:textSize="16sp"
+        android:textColor="@color/basetext"
         android:typeface="monospace"
         android:editable="true" 
         android:saveEnabled="true"

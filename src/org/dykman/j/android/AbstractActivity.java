@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
@@ -198,7 +199,7 @@ public abstract class AbstractActivity extends Activity {
 				lv.setAdapter(add);
 				String title =  filePath(dir.getCanonicalPath());
 				if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") 
-						|| title.equals("/sdcard")) {
+						|| title.equals(Environment.getExternalStorageDirectory().getPath())) {
 					title = "/";
 				}
 				builder.setTitle(title);
@@ -343,7 +344,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 
 	public String buildTitle(File f)  throws IOException {
 		String title =  filePath(f.getCanonicalPath());
-		if(title == null || title.length() == 0 || title.equals("/mnt/sdcard") || title.equals("/sdcard")) {
+		if(title == null || title.length() == 0 || title.equals(Environment.getExternalStorageDirectory().getPath())) {
 			title = "/";
 		}
 		return (theApp.isLocalFile() ? "system: " : "user: ") + title;
@@ -461,7 +462,8 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 						theApp.saveAs(fe,myfile);
 					} catch(IOException e) {
 						Toast.makeText(AbstractActivity.this, "there was an error saving " + myfile.getName(), 
-							Toast.LENGTH_LONG);
+							Toast.LENGTH_LONG).show();
+						
 						Log.e(JConsoleApp.LogTag,"there was an error saving the file " + myfile.getName(),e);
 					}
 					ad.dismiss();
@@ -504,7 +506,7 @@ Log.d(JConsoleApp.LogTag,"OpenEditorAction.useFile()");
 	protected ArrayAdapter<String> createDirAdapter(File dir,boolean dirsOnly) {
 		List<String> files = loadFileList(dir, null,dirsOnly);
 		int nfiles = files.size();
-		if(!(dir.equals(theApp.getRoot()) || dir.getAbsolutePath().equals("/mnt/sdcard") || dir.getAbsolutePath().equals("/sdcard"))) {
+		if(!(dir.equals(theApp.getRoot()) || dir.getAbsolutePath().equals("/mnt/sdcard") || dir.getAbsolutePath().equals(Environment.getExternalStorageDirectory().getPath()))) {
 			files.add(0, "..");
 		}
 		String[] fl = filterFilelist(dir, files,nfiles);

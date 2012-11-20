@@ -1,3 +1,5 @@
+require'~addons/ide/jhs/jfile.ijs' NB. need LASTPATH_jfile_ etc.
+
 coclass'jfif'
 coinsert'jhs'
 
@@ -6,18 +8,19 @@ jhma''
 jhjmlink''
 jhmz''
 'find'   jhb'Find'
-'what'   jhtext FIFWHAT;10
+'what'   jhtext FIFWHAT;20
+'where'  jhtext ((jshortname_jfile_ LASTPATH_jfile_),'*.ijs');50
 'context'jhselect(<;._2 FIFCONTEXT);1;FIFCONTEXTNDX
 'matchcase' jhcheckbox'case';FIFCASE
-jhbr
-'type'   jhselect JHSFILTERS;1;JHSFILTERS i. <FIFTYPE
-'where'  jhselect JHSFOLDERS;1;JHSFOLDERS i. <FIFDIR
 'subfolders'jhcheckbox'sub';FIFSUBDIR
-'nameonly'  jhcheckbox'names only';FIFNAMEONLY
+'nameonly'  jhcheckbox'lines';FIFNAMEONLY
 jhbr
 jhresize''
 'area'   jhdiv''
 )
+
+NB. 'wherex'  jhselect JHSFOLDERS;1;JHSFOLDERS i. <FIFDIR
+NB. 'type'   jhselect JHSFILTERS;1;JHSFILTERS i. <FIFTYPE
 
 NB. regex option not supported in UI, but could be
 
@@ -27,8 +30,8 @@ getfoldernames''
 FIFFOLDERS=: UserFolders_j_,SystemFolders_j_
 fif_rundef''
 FIFINFO=: ''
-JHSFILTERS=: {."1 FIFFILTERS
-JHSFOLDERS=: {."1 FIFFOLDERS
+NB. JHSFILTERS=: {."1 FIFFILTERS
+NB. JHSFOLDERS=: {."1 FIFFOLDERS
 'jfif'jhr''
 )
 
@@ -37,11 +40,14 @@ jev_get=: create
 ev_find_click=: 3 : 0
 t=. <;._2 getv'jdata'
 'FIFWHAT FIFCONTEXTNDX FIFTYPE FIFDIR FIFCASE FIFSUBDIR FIFREGEX FIFNAMEONLY'=: t
+i=. FIFDIR i:'/'
+FIFTYPE=: (>:i)}.FIFDIR
+FIFDIR=: i{.FIFDIR
 FIFCONTEXTNDX=: ".FIFCONTEXTNDX
 FIFCASE=: ".FIFCASE
 FIFSUBDIR=: ".FIFSUBDIR
 FIFREGEX=: ".FIFREGEX
-FIFNAMEONLY=: ".FIFNAMEONLY
+FIFNAMEONLY=: -.".FIFNAMEONLY
 FIFINFO=: ''
 JHSFOUNDFILES=: ''
 fiff_find_button''
@@ -55,13 +61,14 @@ CSS=: 0 : 0
 JS=: 0 : 0
 function ev_body_load(){jbyid("what").focus();jresize();}
 function ev_what_enter(){jscdo("find");}
+function ev_where_enter(){jscdo("find");}
 function ev_find_click_ajax(ts){jbyid("area").innerHTML=ts[0];}
 
 function ev_find_click()
 {
  var t=jform.what.value+JASEP;
  t+=jform.context.selectedIndex+JASEP;
- t+=jform.type.value+JASEP;
+ t+=0+JASEP; // type is part of where - jform.type.value+JASEP;
  t+=jform.where.value+JASEP;
  t+=(jform.matchcase.checked?1:0)+JASEP;
  t+=(jform.subfolders.checked?1:0)+JASEP;
@@ -404,7 +411,7 @@ FIFFOUND=: ''
 FIFFRET=: LF
 FIFHELP=: 'Dictionary'
 FIFMSK=: ''
-FIFNAMEONLY=: 0
+FIFNAMEONLY=: 1
 FIFREGEX=: 0
 FIFSHOW=: 0           
 FIFSUBDIR=: 1
@@ -1618,7 +1625,7 @@ JHSFOUND=: ''
 FIFCONTEXT=: 0 : 0
 any
 name
-=: or =.
+=: =.
 =:
 =.
 )

@@ -1,14 +1,14 @@
 NB. gui/android manifest
 
-CAPTION=: 'JANDROID'
+CAPTION=: 'jandroid'
 
 DESCRIPTION=: 0 : 0
-J ANDROID GUI
+J Android Gui
 
 Contributed by Bill Lam
 )
 
-VERSION=: '1.0.2'
+VERSION=: '1.0.4'
 
 RELEASE=: 'j701'
 

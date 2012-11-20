@@ -1,0 +1,10 @@
+math/misc - change history
+
+== 1.1.3 ==
+ * update for j701
+
+== 1.1.0/2 ==
+ * add amoeba script
+
+== 1.0.0 ==
+ * addon for j602 copied from packages/math

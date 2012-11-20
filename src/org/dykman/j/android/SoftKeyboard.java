@@ -50,6 +50,7 @@ public class SoftKeyboard extends InputMethodService implements
 	 * primarily intended to be used for on-screen text entry.
 	 */
 	static final boolean PROCESS_HARD_KEYS = true;
+	protected boolean volDownPressed = false;
 
 	private KeyboardView mInputView;
 	// private CompletionInfo[] mCompletions;
@@ -151,6 +152,15 @@ public class SoftKeyboard extends InputMethodService implements
 		mInputView.closing();
 	}
 
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+			volDownPressed = false;
+			return true;
+		} else {
+			return super.onKeyUp(keyCode, event);
+		}
+	}
 	/**
 	 * Use this to monitor key events being delivered to the application. We get
 	 * first crack at them, and can either resume them or let them continue to
@@ -158,6 +168,14 @@ public class SoftKeyboard extends InputMethodService implements
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		// trying to make control characters with vol down as ctl key
+		if(volDownPressed && Character.isLetter(keyCode)) {
+			int n = Character.toLowerCase(keyCode);
+			keyDownUp(n-96);
+			return true;
+		}
+		
 		switch (keyCode) {
 		case KeyEvent.KEYCODE_BACK:
 			// The InputMethodService already takes care of the back
@@ -177,6 +195,15 @@ public class SoftKeyboard extends InputMethodService implements
 		case KeyEvent.KEYCODE_ENTER:
 			// Let the underlying text editor always handle these.
 			return false;
+			
+//		case KeyEvent.k
+		case KeyEvent.KEYCODE_VOLUME_DOWN:
+			volDownPressed = true;
+			return true;
+
+		case KeyEvent.KEYCODE_VOLUME_UP:
+			volDownPressed = false;
+			return true;
 
 		default:
 			if (PROCESS_HARD_KEYS) {

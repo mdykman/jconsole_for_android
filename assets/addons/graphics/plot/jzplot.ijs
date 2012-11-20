@@ -5353,7 +5353,7 @@ id=. fm,PId,'_'
 
 Pxywh=: ''
 PShow=: 0
-PFormhwnd=: 0 StartActivity_ja_ 0;0;'plotactivity';(>18!:5'');'onDestroy'
+PFormhwnd=: 0 StartActivity_ja_ 0;0;'plotactivity';'onDestroy';(>18!:5'')
 )
 ppaint_android=: 3 : 0
 android_show ''

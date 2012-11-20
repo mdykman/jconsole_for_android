@@ -51,7 +51,7 @@ public class JConsoleApp extends Application {
 	protected Map<String, EditorData> editorMap = new HashMap<String, EditorData>();
 
 	protected java.util.List<String> history = new LinkedList<String>();
-	private static final String SDCARD = "/sdcard";
+	private static final String SDCARD = Environment.getExternalStorageDirectory().getPath();
 	protected  File userDir;
 	protected File currentExternDir;
 	protected File tmpDir;
@@ -64,7 +64,10 @@ public class JConsoleApp extends Application {
 
 	boolean consoleState = false;
 	boolean started = false;
-
+	
+	public Handler handler;
+	
+/*
   public Handler handler = new Handler() {
   @Override
   public void handleMessage(Message msg) {
@@ -84,16 +87,37 @@ public class JConsoleApp extends Application {
    }
   }
  };
-
+*/
 	@Override
 	public void onCreate() {
+		
 		super.onCreate();
 		JConsoleApp.theApp = (JConsoleApp) this;
 	}
 
 	public void setup(JActivity activity, Console console) {
-		this.activity = activity;
 		this.console = console;
+		final Activity myact = this.activity = activity;
+		final Context mycontext = myact.getApplicationContext();
+		 handler = new Handler() {
+			  @Override
+			  public void handleMessage(Message msg) {
+			   // get the bundle and extract data by key
+			   Bundle b = msg.getData();
+
+			   Intent intent = new Intent();
+			   ClassLoader clz = JConsoleApp.class.getClassLoader();
+			   try {
+			   intent.setClass(mycontext, clz.loadClass(b.getString("class")));
+			   intent.putExtra("locale", b.getString("locale"));
+			   intent.putExtra("jargx", b.getString("jargx"));
+			   intent.putExtra("jargy", b.getString("jargy"));
+			   myact.startActivity(intent);
+			   } catch (ClassNotFoundException e) {
+				   Log.e(LogTag, "failed to launch class " + b.getString("class"),e);
+			   }
+			  }
+			 };
 		this.console.setApplication(this);
 		flushOutputs();
 		if (!started) {
@@ -128,7 +152,8 @@ public class JConsoleApp extends Application {
 		}
 	}
 
-	public void setWindow(Context context, String label) {		
+	public void setWindow(Context context, String label) {
+Log.d(LogTag,"set Window: " + label);
 		Intent intent = intentMap.get(label);
 		context.startActivity(intent);
 	}
@@ -365,7 +390,7 @@ public class JConsoleApp extends Application {
 										"there was an error overwriting file "
 												+ f.getName() + ": "
 												+ e.getLocalizedMessage(),
-										Toast.LENGTH_LONG);
+										Toast.LENGTH_LONG).show();
 								Log.e(JConsoleApp.LogTag,
 										"there was an error overwriting file "
 												+ f.getName(), e);
@@ -535,7 +560,7 @@ public class JConsoleApp extends Application {
 				if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 					File lo = new File(params[0],"j701-user");
 					if(lo.exists()) {
-						File ex = new File("/sdcard");
+						File ex = new File(Environment.getExternalStorageDirectory().getPath());
 						if(ex.canWrite()) {
 							String cmd = "2!:0 'cp -r " + lo.getAbsolutePath()
 									+ " /sdcard'";

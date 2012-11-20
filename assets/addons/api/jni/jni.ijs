@@ -501,6 +501,28 @@ z=. memr str,0,_1
 jniCheck ReleaseStringUTFChars y;<<str
 z
 )
+jniFromObjarr=: 3 : 0
+jniCheck GetObjectArrayElement"1 y;"0 i. GetArrayLength <y
+)
+jniToObjarr=: 3 : 0
+clz=. FindClass <'java/lang/Object'
+z=. jniCheck NewObjectArray (#y);clz;0
+jniCheck DeleteLocalRef <clz
+for_i. i.#y do.
+  jniCheck SetObjectArrayElement z;i;i{y
+end.
+z
+)
+jniToStringarr=: 3 : 0
+clz=. FindClass <'java/lang/String'
+z=. jniCheck NewObjectArray (#y);clz;0
+jniCheck DeleteLocalRef <clz
+for_i. i.#y do.
+  jniCheck SetObjectArrayElement z;i;s=. NewStringUTF i{y
+  jniCheck DeleteLocalRef <s
+end.
+z
+)
 jniException=: 3 : 0
 try.
   ExceptionClear''

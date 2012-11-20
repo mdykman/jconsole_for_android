@@ -4,5 +4,5 @@ Download the latest source of pcre from http://www.pcre.org/ here, making this t
 
 The present version of jconsole-for-android uses pcre-8.21 although any modern version should do. The J scripts which use libpcre.so use the posix finctions exclusively.
 
-As the Android NDK is NOT a './configure'-enabled platform, config.h is created by manually editing config.h.in.  An sample has been provided which can likely be used instead if you are unsure what to do.  The macro HAVE_CONFIG_H must be defined during the coompilation cycle.  This is taken care of with the provided Android.mk
+As the Android NDK is NOT a './configure'-enabled platform, config.h is created by manually editing config.h.in.  An sample has been provided which can ikely be used instead if you are unsure what to do.  The macro HAVE_CONFIG_H must be defined during the coompilation cycle.  This is taken care of with the provided Android.mk
 
