@@ -12,11 +12,16 @@
 
 LOCAL_PATH:=(call my-dir)
 
-TARGET_PLATFORM := android-9
+TARGET_PLATFORM := android-7
 
 #include $(call all-subdir-makefiles)
 
-include jni/openj-core/Jconsole.mk
-include jni/openj-core/Tsdll.mk
-include jni/openj-core/Android.mk
+
+#include jni/openj-core/Jconsole.mk
+#include jni/openj-core/Tsdll.mk
+
+include jni/bill/Android.mk
+#include jni/openj-core/Android.mk
+
 include jni/pcre-8.21/Android.mk
+include jni/openj-core/jld/Android.mk

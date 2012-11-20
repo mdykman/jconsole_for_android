@@ -3,4 +3,4 @@ APP_STL=stlport_static
 
 APP_ABI=all
 
-APP_OPTIM=debug
+APP_OPTIM=release
