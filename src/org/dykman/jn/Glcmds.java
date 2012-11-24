@@ -38,11 +38,20 @@ if (0>ang1-ang2) v[5] = 360+(ang1-ang2);
 else v[5] = ang1-ang2;
 }
 
-public int glcmds ( Canvas canvas, Paint paint, int[] ipar, String font, int[] buf,int ncnt, int RGBSEQ ) {
+private void fliprgb (int[] da, int cnt) {
+  int i,a;
+  for (i = 0; i < cnt; i++)
+    {
+      da[i] = Integer.rotateRight(Integer.reverseBytes(da[i]), 8);
+    }
+}
 
-final int ANDCLIPPED=0,ANDW=1,ANDH=2,ANDRGB=3,ANDTEXTX=4,ANDTEXTY=5,ANDUNDERLINE=6,ANDFONTANGLE=7,ANDPENRGB=8,ANDBRUSHRGB=9,ANDTEXTRGB=10,ANDBRUSHNULL=11,ANDORGX=12,ANDORGY=13;
 
-int andclipped,andw,andh,andrgb,andtextx,andtexty,andunderline,andfontangle,andpenrgb,andbrushrgb,andtextrgb,andbrushnull,andorgx,andorgy;
+public int glcmds ( Canvas canvas, Paint paint, Path path, int[] ipar, String font, int[] buf,int ncnt, int RGBSEQ ) {
+
+final int ANDCLIPPED=0,ANDW=1,ANDH=2,ANDRGB=3,ANDTEXTX=4,ANDTEXTY=5,ANDUNDERLINE=6,ANDFONTANGLE=7,ANDPENRGB=8,ANDBRUSHRGB=9,ANDTEXTRGB=10,ANDBRUSHNULL=11,ANDORGX=12,ANDORGY=13,NODOUBLEBUF=14;
+
+int andclipped,andw,andh,andrgb,andtextx,andtexty,andunderline,andfontangle,andpenrgb,andbrushrgb,andtextrgb,andbrushnull,andorgx,andorgy,nodoublebuf;
 
 andclipped = ipar[ ANDCLIPPED ];
 andw = ipar[ ANDW ];
@@ -58,9 +67,9 @@ andtextrgb = ipar[ ANDTEXTRGB ];
 andbrushnull = ipar[ ANDBRUSHNULL ];
 andorgx = ipar[ ANDORGX ];
 andorgy = ipar[ ANDORGY ];
+nodoublebuf = ipar[ NODOUBLEBUF ];
 
 float[] tarc = new float [8];
-Path path = new Path();
 
 int errcnt =  0;
 int cmd;
@@ -103,7 +112,7 @@ Log.d("JJNI", "Glcmds clear: ");
     andorgy = 0;
     andpenrgb = andrgb;
     andbrushrgb = andrgb;
-    paint.setStrokeWidth(1);
+    paint.setStrokeWidth(2f);
     paint.setARGB(255,255,255,255);
     paint.setStyle(Paint.Style.FILL);
     canvas.drawRect(0,0,andw,andh,paint);
@@ -134,11 +143,6 @@ Log.d("JJNI", "Glcmds clear: ");
     paint.setStyle(Paint.Style.STROKE);
      c = (cnt - 2) / 2;
      if (0 == c) break;
-/*
-    {
-     for (i = 0; i < c-1; i++) canvas.drawLine(buf[ p + 2 + 2 * i], buf[ p + 3 + 2 * i], buf[ p + 4 + 2 * i], buf[ p + 5 + 2 * i],paint);
-     }
-*/
     {
      path.reset();
      path.moveTo(buf[p+2],buf[p+3]);
@@ -150,7 +154,7 @@ Log.d("JJNI", "Glcmds clear: ");
 
   case 2022 :    // glpen
     andpenrgb = andrgb;
-    paint.setStrokeWidth(buf[p+2]);
+    paint.setStrokeWidth(Math.max(1.3f,(float)buf[p+2]));
     break;
 
   case 2023 :    // glpie
@@ -173,6 +177,20 @@ Log.d("JJNI", "Glcmds clear: ");
      for (i = 0; i < cnt - 2; i++) pts[i] = (float)buf[p + 2 + i];
      canvas.drawPoints(pts, paint);
      }
+    break;
+
+  case 2076 :    // glpixels
+     {
+     int a = buf[p + 2];
+     int b = buf[p + 3];
+     int w = Math.abs( buf[p + 4] );
+     int h = buf[p + 5];
+     if ((cnt -6) == w*h) {
+     int[] colors = new int[w*h];
+     System.arraycopy(buf, p + 2 + 4, colors, 0, w*h);
+     if (0==RGBSEQ) fliprgb (colors, w*h);
+     canvas.drawBitmap(colors, 0, w, a, b, w, h, false, paint);
+     }}
     break;
 
   case 2029 :    // glpolygon
@@ -272,6 +290,7 @@ ipar[ ANDTEXTRGB ] = andtextrgb;
 ipar[ ANDBRUSHNULL ] = andbrushnull;
 ipar[ ANDORGX ] = andorgx;
 ipar[ ANDORGY ] = andorgy;
+ipar[ NODOUBLEBUF ] = nodoublebuf;
 
 return errcnt;
 }
