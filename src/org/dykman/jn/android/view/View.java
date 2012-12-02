@@ -4,7 +4,7 @@ protected org.dykman.j.JInterface jInterface = null;
 protected java.lang.String jlocale = null;
 protected java.lang.String jchildid = null;
 protected java.lang.String jchildidx = null;
-protected java.util.ArrayList jnOverrideList = null;
+protected java.util.ArrayList<Object> jnOverrideList = null;
 protected void jparseargs (java.lang.String jlocale, java.lang.String jchildid, java.lang.String joverride ) { this.jlocale = jlocale; this.jchildid = jchildid; if (jchildid != null && jchildid.length() > 0) jchildidx = jchildid + "_"; else jchildidx = ""; if (joverride != null && joverride.length() > 0) { java.lang.String[] ss = joverride.split(" "); for (int i = 0; i < ss.length; i++) setjnOverride(ss[i]); } }
 public void clearjnOverride () { jnOverrideList.clear (); }
 public void setjnOverride (java.lang.String arg1 ) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); }

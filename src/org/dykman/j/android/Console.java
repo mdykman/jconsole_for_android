@@ -44,6 +44,9 @@ public class Console extends FileEdit {
 	final private  void yinit() {
 		setText("", BufferType.EDITABLE);
 		this.setBackgroundColor(backgroundColor);
+		this.setTextColor(inputColor);
+		
+		/*
 		this.setOnClickListener(new OnClickListener() {
 			String last = null;
 			public void onClick(View v) {
@@ -59,7 +62,7 @@ public class Console extends FileEdit {
 				}
 			}
 		});
-
+		*/
 		this.setOnKeyListener(new OnKeyListener() {
 
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
