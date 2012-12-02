@@ -272,6 +272,29 @@ try browsing to url again<br>
 additional info in jijx
 )
 
+gsrchead=: toCRLF 0 : 0
+HTTP/1.1 200 OK
+Server: JHS
+Last-Modified: Mon, 01 Mar 2010 00:23:24 GMT
+Accept-Ranges: bytes
+Content-Length: <LENGTH>
+Keep-Alive: timeout=15, max=100
+Connection: Keep-Alive
+Content-Type: <TYPE>
+
+)
+
+gsrcf=: 4 : 0
+htmlresponse y,~gsrchead rplc '<TYPE>';x;'<LENGTH>';":#y
+)
+
+fsrchead=: toCRLF 0 : 0
+HTTP/1.1 200 OK
+Server: JHS
+Content-Type: <TYPE>
+
+)
+
 NB. html for jajax response
 NB. no-cache critical - otherwise we get old
 NB. answers to the same question!

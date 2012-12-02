@@ -183,7 +183,9 @@ Note=: 3 : '0 0 $ 0 : 0' : [
 script=: [: 3 : '0!:0 y [ 4!:55<''y''' jpath_z_ &.: >
 scriptd=: [: 3 : '0!:1 y [ 4!:55<''y''' jpath_z_ &.: >
 sminfo=: 3 : 0
-if. IFGTK do. mbinfo_jgtk_ y else. smoutput >_1{.boxopen y end.
+if. ('Android'-:UNAME) *. 3=4!:0<'mbinfo_ja_' do. mbinfo_ja_ y
+elseif. IFGTK do. mbinfo_jgtk_ y
+elseif. do. smoutput >_1{.boxopen y end.
 )
 smoutput=: 0 0 $ 1!:2&2
 tmoutput=: 0 0 $ 1!:2&4
@@ -1149,7 +1151,9 @@ if. IFWIN do.
   unzip_jpacman_ p;d
 else.
   hostcmd_jpacman_ 'unzip ',(dquote p),' -d ',dquote d
-  ('INSTALLPATH';jpath '~install/gtk') dirss jpath '~install/gtk/etc'
+  f=. 4 : 'if. #1!:0 y do. x dirss y end.'
+  ('INSTALLPATH';jpath '~install') f jpath '~install/gtk/etc'
+  ('INSTALLPATH';jpath '~install') f jpath '~install/gtk3/etc'
 end.
 if. #1!:0 jpath '~install/gtk/lib' do.
   m=. 'Finished install of gtk binaries.'
@@ -1869,9 +1873,9 @@ if. 0=L.y do.
     y=. cutnames y
   end.
 end.
-y=. y -. Ignore, IFIOS#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2 viewmat'
-y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk'
-y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd'
+y=. y -. Ignore, (IFIOS+.IFJHS>IFBROADWAY)#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd droidwd gui/droidwd android gui/android wdclass gui/wdclass jview gtkide ide/gtk gl2 graphics/gl2 viewmat'
+y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd jview gtkide ide/gtk'
+y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd android gui/android jview'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public

@@ -1,6 +1,6 @@
 NB. script supporting the FFTW lab
 
-require '~system\packages\graphics\bmp.ijs'
+require 'bmp'
 
 real=: [: {."1 +.
 imag=: [: {:"1 +.

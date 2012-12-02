@@ -9,6 +9,7 @@ NB. Public definitions
 NB. form:  shortname fpathname
 buildpublic 0 : 0
 afm        ~addons/graphics/afm/afm.ijs
+android    ~addons/gui/android/android.ijs
 bmp        ~addons/graphics/bmp/bmp.ijs
 color16    ~addons/graphics/color/color16.ijs
 colortab   ~addons/graphics/color/colortab.ijs
@@ -33,7 +34,6 @@ jsgrid     ~addons/graphics/grid/jsgrid.ijs
 jtable     ~addons/graphics/grid/jtable.ijs
 jtags      ~addons/general/jtags/jtags.ijs
 jtgrid     ~addons/graphics/grid/jtgrid.ijs
-jview      ~addons/gui/gtkwd/jview.ijs
 jvgrid     ~addons/graphics/grid/jvgrid.ijs
 jzgraph    ~addons/graphics/graph/jzgraph.ijs
 jzgrid     ~addons/graphics/grid/jzgrid.ijs
@@ -60,4 +60,5 @@ trig       ~addons/math/misc/trig.ijs
 unicode    ~addons/convert/misc/unicode.ijs
 validate   ~addons/general/misc/validate.ijs
 viewmat    ~addons/graphics/viewmat/viewmat.ijs
+wdclass    ~addons/gui/wdclass/wdclass.ijs
 )

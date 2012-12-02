@@ -155,6 +155,7 @@ getdata'' NB. get and parse http request
 if. 1=NVDEBUG do. smoutput seebox NV end. NB. HNV,NV
 if. (-.OKURL-:URL)*.(0~:#PASS)*.(1~:+/cookie E. gethv'Cookie:')*.-.LHOK*.PEER-:LOCALHOST
                        do. r=. 'jev_get_jlogin_ 0'
+elseif. 1=RAW          do. r=. 'jev_post_raw_',URL,'_'''''
 elseif. 'post'-:METHOD do. r=. getv'jdo'
 elseif. '.'e.URL       do. r=. 'jev_get_jfilesrc_ URL_jhs_'
 elseif. 1              do. r=. 'jev_get_',URL,'_'''''
@@ -171,12 +172,12 @@ end.
 )
 
 NB. J has output - x is type, y is string
-NB. MTYOFM		1	formatted result array
-NB. MTYOER		2	error
-NB. MTYOLOG		3	log
-NB. MTYOSYS		4	system assertion failure
-NB. MTYOEXIT	5	exit - not used
-NB. MTYOFILE	6	output 1!:2[2
+NB. MTYOFM  1 formatted result array
+NB. MTYOER  2 error
+NB. MTYOLOG  3 log
+NB. MTYOSYS  4 system assertion failure
+NB. MTYOEXIT 5 exit - not used
+NB. MTYOFILE 6 output 1!:2[2
 NB. x is type, y is string
 output=: 4 : 0
 logapp 'output type : ',":x
@@ -211,37 +212,42 @@ catch.
 end.
 )
 
-NB. get/post data - headers end with LF,LF
+NB. get/post data - headers end with CRLF,CRLF
 NB. post has Content-Length: bytes after the header
 NB. listen and read until a complete request is ready
-NB. headers have CRLF but we do toJ in srecv
-NB.  the toJ in srecv in toJ might be a mistake
 getdata=: 3 : 0
+RAW=: 0
 while. 1 do.
  logapp 'getdata loop'
  SKSERVER_jhs_=: 0 pick sdcheck_jsocket_ sdaccept_jsocket_ SKLISTEN
+
+ NB. JHS runs blocking sockets and uses sdselect for timeouts
+ NB. sdioctl_jsocket_ SKSERVER,FIONBIO_jsocket_,1
+
  try.
   PEER=: >2{sdgetpeername_jsocket_ SKSERVER
-  t=. LF,LF
-  h=. ''
+  d=. h=. ''
   while. 1 do.
-   h=. h,srecv''
-   i=. (t E. h)i.1
+   h=. h,  srecv''
+   i=. (h E.~ CRLF,CRLF)i.1
    if. i<#h do. break. end.
   end.
-  d=. (i+2)}.h
-  h=. (>:i){.h
+  i=. 4+i
+  d=. i}.h
+  h=. i{.h
   parseheader h
   if. 'POST '-:5{.h do.
    len=.".gethv'Content-Length:'
-   d=. (len<.#d){.d
-   while. len~:#d do.
-    d=. d,srecv''
-   end.
+   while. len>#d do. d=. d,srecv'' end.
+   d=. len{.d
    METHOD=: 'post'
    seturl'POST'
-   parse d
-   if. 30000<#d do. PD__=: d end.
+   if. 3=nc<'jev_post_raw_',URL,'_' do.
+    RAW=: 1
+    NV=: d
+   else.
+    parse d
+   end.
   else.
    METHOD=: 'get'
    seturl'GET'
@@ -277,9 +283,9 @@ NB. return SKSERVER data (toJ)
 NB. serror on 
 NB.  timeout, socket error, or no data (disconnect)
 NB. PC_RECVSLOW 1 gets small chunks with time delay 
+
 srecv=: 3 : 0
 z=. sdselect_jsocket_ SKSERVER;'';'';PC_RECVTIMEOUT
-
 if. -.SKSERVER e.>1{z do.
  'recv timeout' serror 1  NB.0;'';'';'' is a timeout
 end.
@@ -294,7 +300,7 @@ end.
 'c r'=. sdrecv_jsocket_ SKSERVER,bs,0
 ('recv error: ',":c) serror 0~:c
 'recv no data' serror 0=#r
-toJ r
+r NB. used to do toJ here!
 )
 
 secs=: 3 : 0
@@ -329,6 +335,7 @@ end.
 
 NB. set HNV from request headers
 parseheader=: 3 : 0
+y=. toJ y
 a=. <;._2 y
 i=. (y i.' '),>:}.>a i. each ':'
 HNV=: (i{.each a),.dlb each i}.each a
@@ -340,6 +347,7 @@ NB. namevalue is name[=[value]]
 NB. name0value[&name1value1[&name2...]]
 parse=: 3 : 0
 try.
+ y=. toJ y
  d=. <;._2 y,'&'#~0~:#y
  d=. ;d,each('='e.each d){'=&';'&'
  d=. <;._2 d rplc '&';'='
@@ -519,6 +527,11 @@ smoutput jmarka_jhs_,y,jmarkz_jhs_
 i.0 0
 )
 
+jaudio_z_=: 3 : 0
+assert fexist y
+jhtml'<audio controls="controls"><source src="',y,'" type="audio/mp3">not supported</audio>'
+)
+
 NB. eval javascript sentences
 NB. starting without ';' is evaluated only in ajax
 NB. starting with ';' is evaluated in ajax and in refresh
@@ -659,6 +672,7 @@ If JHS is serving the port, close this task and use the running server.
 
 If JHS server is not working, close it, close this task, and restart.
 
+
 See file: <CFGFILE>
 for information on using another PORT.
 )
@@ -741,6 +755,7 @@ cocurrent 'jhs'
 )
 
 NB. config_file jhscfg username
+NB. config_file 'PORT=:....' does ". instead of load
 NB. USERNAME not '' adjusts SystemFolders and does cd ~temp
 NB. load config files to set PORT LHOK BIND PASS USER
 NB. configuration loads
@@ -754,7 +769,8 @@ NB. USER used in jlogin - JUM forces USER=:USERNAME
 jhscfg=: 4 : 0
 fixuf y
 lcfg jpath'~addons/ide/jhs/config/jhs_default.ijs'
-if.     -.''-:t=. jpath x                                do. lcfg t
+if.     'PORT=:'-:6{.x                                   do. ".x 
+elseif.     -.''-:t=. jpath x                            do. lcfg t
 elseif. fexist t=. jpath'~config/jhs.ijs'                do. lcfg t
 elseif. fexist t=. jpath'~addons/ide/jhs/config/jhs.ijs' do. lcfg t
 end.

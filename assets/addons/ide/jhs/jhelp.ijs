@@ -150,11 +150,15 @@ as Windows Explorer or Mac Finder.
 CodeMirror (www.codemirror.net) editor. In addition to menu
 commands and standard shortcuts, Ctrl shortcuts s r z
 and y also work. <a href="#codemirror">CodeMirror Copyright</a>
+<pre class="jcode">
+   search     Ctrl+F       / Cmd+F
+   next       Ctrl+G       / Cmd+G
+   previous   Ctrl+Shift+G / Cmd+Shift+G
+   replace    Ctrl+Shift+F / Cmd+Option+F
+   replaceall Ctrl+Shift+R / Cmd+Shift+Option+F
+</pre>
 
-
-
-
-<br><br><span class="h">jijsta</span>
+<span class="h">jijsta</span>
 edit file in textarea
 
 <br><br><span class="h">jijsce</span>
@@ -357,10 +361,6 @@ sudo make install
 
 Noun sphelp has information on Simple Project utilities.<br><br>
 
-Using JHS locally, you might prefer desktop tools rather than the apps provided by JHS. For example, your desktop editor (notepad, gedit, emacs,..), OS file mangager (windows explorer, finder, ...), and grep might be better than JHS jijs, jfile, and jfif.<br><br>
-
-SP utilities make it easier to use your desktop tools.
-
 <a name="gui"><h1>GUI</h1>
 
 GUI applications are built with J, JHS framework, html,
@@ -465,6 +465,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.<br><br>
 
+
 Please note that some subdirectories of the CodeMirror distribution
 include their own LICENSE files, and are released under different
 licences.
@@ -472,6 +473,7 @@ licences.
 <a name="about"><h1>About</h1></a>
 <pre class="jcode">
    JVERSION
+
 <JVERSION>
 </pre>
 </div>

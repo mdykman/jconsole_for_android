@@ -22,10 +22,4 @@ FILES=: 0 : 0
 history.txt
 manifest.ijs
 droidwd.ijs
-isigraph.ijs
-sms.ijs
-view2.ijs
-vkeys.ijs
-jview.ijs
-wdviewmat.ijs
 )

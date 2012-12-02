@@ -1,10 +1,14 @@
-NB. JHS initialization loads files to initialize
+NB. JHS initialization
 NB.  loads
 NB.   ~addons/ide/jhs/config/jhs_default.ijs
 NB.  then loads first file (if any) that exists from
-NB.   jhs x argument (error if not '' and does not exist)
+NB.   init x arg (error if not '' and does not exist)
 NB.   ~config/jhs.ijs
 NB.   ~addons/ide/jhs/config/jhs.ijs
+
+NB.  if init x arg starts with PORT=: then ". instead of load
+NB.  start server on port 65011 without editing files with:
+NB.  ...jconsole ~addons/ide/jhs/core.ijs -js " 'PORT=:65011'init_jhs_'' "
 
 NB. jhs_default.ijs is a default/template (do not edit)
 NB. copy 2nd and 3rd from default and edit as required

@@ -2,23 +2,36 @@ require 'graphics/bmp graphics/gl2'
 
 coclass 'jviewmat'
 
-coinsert 'jgtk jgl2'
-GUI=: -. IFJHS +. IFIOS +. UNAME-:'Android'
+coinsert 'jgtk jgl2 jni jaresu'
+GUI=: -. IFJHS +. IFIOS
+
+jniImport ::0: (0 : 0)
+android.content.Context
+android.view.View
+android.view.Window
+)
 MINWH=: 200 200
 DEFWH=: 360 360
 
 create=: 3 : 0
 if. GUI *. -.IFGTK do.
-  require 'gui/gtk'
-  gtkinit_jgtk_''
+  if. 'Android'-:UNAME do.
+    require 'gui/android'
+  else.
+    require 'gui/gtk'
+    gtkinit_jgtk_''
+  end.
 end.
 )
 destroy=: 3 : 0
 if. GUI do.
-  if. -.IFGTK do.
-    gtk_main_quit''
+  if. 'Android'-:UNAME do.
+  else.
+    if. -.IFGTK do.
+      gtk_main_quit''
+    end.
+    cbfree''
   end.
-  cbfree''
 end.
 codestroy''
 )
@@ -48,7 +61,7 @@ ext=. sc * max - min
 getbmp=: 3 : 0
 gid=. y, (0=#y) # GID
 glsel gid
-box=. 0 0,gtkwh
+box=. 0 0,glqwh''
 res=. glqpixels box
 (3 2 { box) $ res
 )
@@ -155,7 +168,8 @@ ifRGB=: x -: 'rgb'
 'DAT MAT ANG TITLE'=: x getvm mat
 mat=. finite MAT
 'rws cls'=. $mat
-mwh=. gtkwh
+glsel gid
+mwh=. glqwh''
 if. #ANG do. mwh vf_show mat return. end.
 mat=. , mwh fitvm mat
 glpixels (0 0, mwh), mat
@@ -174,12 +188,16 @@ end.
 if. #ANG do. mwh vf_show mat return. end.
 mat=. , mwh fitvm mat
 glpixels (0 0, mwh), mat
+glpaint''
 SHOW=: 1
 )
 viewmat_close=: 3 : 0
 hremove''
-gtk_widget_destroy window
-if. -.IFGTK do. gtk_main_quit '' end.
+if. 'Android'-:UNAME do.
+else.
+  gtk_widget_destroy window
+  if. -.IFGTK do. gtk_main_quit '' end.
+end.
 destroy''
 1
 )
@@ -311,12 +329,18 @@ viewmat=: 3 : 0
 '' viewmat y
 :
 a=. '' conew 'jviewmat'
-empty x vmrun__a y
+xx__a=: x [ yy__a=: y
 if. GUI do.
-  if. -.IFGTK do. gtk_main '' end.
+  if. 'Android'-:UNAME do.
+    0 StartActivity_ja_ (>a); 'onDestroy'
+  else.
+    empty vmrun__a ''
+    if. -.IFGTK do. gtk_main '' end.
+  end.
 else.
+  empty vmrun__a ''
   (no_gui_bmp__a'') writebmp jpath '~temp/viewmat.bmp'
-  if. (UNAME-:'Android') *. 0=isatty 0  do.
+  if. (UNAME-:'Android') *. 0=isatty 0 do.
     2!:1 'android.intent.action.VIEW';('file://',jpath '~temp/viewmat.bmp');'image/bitmap'
   end.
   destroy__a ''
@@ -327,7 +351,8 @@ viewmatcc=: 3 : 0
 :
 empty x vmcc y
 )
-vmrun=: 4 : 0
+vmrun=: 3 : 0
+x=. xx [ y=. yy
 if. 0 > nc <'VMH' do. setvmh '' end.
 SHOW=: 0
 ifRGB=: x -: 'rgb'
@@ -338,20 +363,24 @@ mwh=. cls,rws
 if. -. ifRGB do.
   mwh=. MINWH >. <. mwh * <./ DEFWH % cls,rws
 end.
+mwh0=: mwh
 vmwin^:GUI mwh
 hcascade''
 hadd''
 )
 vmwin=: 3 : 0
-newwindow TITLE
-gtk_window_set_position window,GTK_WIN_POS_CENTER_ALWAYS
-consig3 window;'key-press-event';'viewmat_key_press'
-consig3 window;'focus-in-event';'viewmat_focus_in'
-canvas=: glcanvas y;coname''
-gtk_container_add window,canvas
-windowfinish''
+if. 'Android'-:UNAME do.
+else.
+  newwindow TITLE
+  gtk_window_set_position window,GTK_WIN_POS_CENTER_ALWAYS
+  consig3 window;'key-press-event';'viewmat_key_press'
+  consig3 window;'focus-in-event';'viewmat_focus_in'
+  canvas=: glcanvas y;coname''
+  gtk_container_add window,canvas
+  windowfinish''
+end.
 )
-gtkwidget_event=: 4 : 0
+gtkwidget_event=: androidwidget_event=: 4 : 0
 evt=. >@{.y
 syshandler=. 'viewmat_handler'
 sysevent=. 'viewmat_g_', evt
@@ -359,6 +388,34 @@ sysdefault=. 'viewmat_default'
 wdd=. ;: 'syshandler sysevent sysdefault'
 wdqdata=. (wdd ,. ".&.>wdd)
 evthandler wdqdata
+0
+)
+Activity=: 0
+
+onCreate=: 3 : 0
+jniCheck Activity=: NewGlobalRef <2{y
+jniCheck Activity ('requestWindowFeature (I)Z' jniMethod)~ FEATURE_NO_TITLE
+jniCheck win=. Activity ('getWindow ()LWindow;' jniMethod)~ ''
+jniCheck win ('setFlags (II)V' jniMethod)~ FLAG_FULLSCREEN;FLAG_FULLSCREEN
+jniCheck DeleteLocalRef <win
+option=. 0
+vmrun''
+wh=. mwh0
+idnx=: (0,Activity) glcanvas_jgl2_ wh ; coname''
+l=. glgetloc_jgl2_ idnx
+thisview=. view__l
+jniCheck Activity ('setContentView (LView;)V' jniMethod)~ thisview
+jniCheck thisview ('requestFocus ()Z' jniMethod)~ ''
+jniCheck DeleteLocalRef <thisview
+
+0
+)
+
+onDestroy=: 3 : 0
+if. Activity do.
+  jniCheck DeleteGlobalRef <Activity
+end.
+Activity=: idnx=: 0
 0
 )
 viewmat_z_=: viewmat_jviewmat_

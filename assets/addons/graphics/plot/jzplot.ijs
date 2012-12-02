@@ -22,7 +22,8 @@ if. -.IFJ6 do.
     coinsert 'jgl2'
   elseif. (UNAME -: 'Android') do.
     if. 0 < #1!:0 jpath '~addons/gui/android/android.ijs' do.
-      require 'gui/android'
+      require 'droidwd gui/android'
+      coinsert 'jgl2 jni jaresu'
     else.
       if. CONSOLEOUTPUT-:'android' do. CONSOLEOUTPUT=: 'pdf' end.
     end.
@@ -49,6 +50,13 @@ else.
   coinsert 'jafm jgl2'
 end.
 ''
+)
+
+jniImport ::0: (0 : 0)
+android.content.Context
+android.view.View
+android.view.View$OnTouchListener
+android.view.Window
 )
 NOAXES=: 'axes 0;boxed 0;frame 0;grids 0;labels 0;tics 0;'
 NOFRAME=: 'axes 1;frame 0'
@@ -222,7 +230,7 @@ ifplotf=: 3 : 0
 2 e. 3!:0 (S:0) _1 pick y
 )
 info=: 3 : 0
-wdinfo@('Plot'&;) :: smoutput y
+sminfo@('Plot'&;) :: smoutput y
 )
 interp01=: 3 : 0
 y=. y * <: #x
@@ -306,7 +314,7 @@ elseif. #PId do.
   glsel PId
 end.
 )
-gtkwidget_event=: 4 : 0
+gtkwidget_event=: androidwidget_event=: 4 : 0
 evt=. >@{.y
 syshandler=. PForm, '_handler'
 sysevent=. PForm,'_',PId,'_', evt
@@ -771,7 +779,9 @@ fcase. do.
 end.
 if. -.IFJ6 do.
   if. -. IFTESTPLOTJHS +. IFJHS +. IFGTK do.
-    if. ('gtk' -: CONSOLEOUTPUT) *. (3 = 4!:0 <'gtkinit_jgtk_') *. (UNAME -: 'Linux') *: (0 -: 2!:5 'DISPLAY') do.
+    if. 'Android'-:UNAME do.
+      r=. 'OUTPUT=: ''android'''
+    elseif. ('gtk' -: CONSOLEOUTPUT) *. (3 = 4!:0 <'gtkinit_jgtk_') *. (UNAME -: 'Linux') *: (0 -: 2!:5 'DISPLAY') do.
       if. 0[ 'isi' -: GTKOUTPUT do.
         r=. 'OUTPUT=: ''isi'''
       else.
@@ -1343,6 +1353,8 @@ if. -.IFJ6 do.
     else.
       r=. 'OUTPUT=: ''gtk'''
     end.
+  elseif. 'Android'-:UNAME do.
+    r=. 'OUTPUT=: ''android'''
   elseif. do.
     r=. 'OUTPUT=: CONSOLEOUTPUT'
   end.
@@ -2348,11 +2360,22 @@ PTop=: -. PTop
 gtk_window_set_keep_above_jgtk_ ((0&". ::]) PFormhwnd), PTop
 0
 )
+3 : 0''
+if. 'Android'-:UNAME do.
+pclose=: pclose_android
+popen=: popen_android
+ppaint=: ppaint_android
+psize=: psize_android
+ptop=: ptop_android
+else.
 pclose=: pclose_gtk
 popen=: popen_gtk
 ppaint=: ppaint_gtk
 psize=: psize_gtk
 ptop=: ptop_gtk
+end.
+EMPTY
+)
 PMenu=: 0 : 0
 menupop "&File";
 menu clip "&Clip" "" "" "";
@@ -2432,7 +2455,41 @@ ptop_isi=: 3 : 0
 PTop=: -. PTop
 wd 'ptop ',":PTop
 )
+pclose_android=: 3 : 0
+0
+)
+popen_android=: 3 : 0
+if. (-.ifjwplot'') *. 0~: (0&". ::]) PFormhwnd do.
+    selectpid''
+    0 return.
+end.
+fm=. PForm,'_'
+id=. fm,PId,'_'
+(fm,'close')=: pclose_android
+(id,'paint')=: ppaint
+(id,'mmove')=: ]
 
+Pxywh=: ''
+PShow=: 0
+StartActivity_ja_ (>coname'');'onDestroy'
+)
+ppaint_android=: 3 : 0
+cwh=. glqwh''
+if. 1[ cwh -.@-: Cw,Ch do.
+  android_show ''
+end.
+)
+
+3 : 0''
+if. 'Android'-:UNAME do.
+  pclose=: pclose_android
+  popen=: popen_android
+  ppaint=: ppaint_android
+  psize=: psize_android
+  ptop=: ptop_android
+end.
+EMPTY
+)
 fzskludge=: 4%3
 pgetascender=: 3 : 0
 if. Poutput = iISI do.
@@ -2444,7 +2501,14 @@ if. Poutput = iISI do.
   end.
 elseif. Poutput = iGTK do.
   if. 1=GL2Backend_jgl2_ do.
-    CF gtkfontdesc y
+    glfont gtkfontdesc y
+    1 { glqtextmetrics''
+  else.
+    FontScale * getascender y
+  end.
+elseif. Poutput = iANDROID do.
+  if. 1 [ 1=GL2Backend_jgl2_ do.
+    glfont andfontdesc y
     1 { glqtextmetrics''
   else.
     FontScale * getascender y
@@ -2463,7 +2527,10 @@ case. iISI do.
   glfont x
   |: glqextent &> y
 case. iGTK do.
-  glfont gtkfontdesc x
+  glfont gtkfontdesc^:(0={.0#x) x
+  |: glqextent &> y
+case. iANDROID do.
+  glfont andfontdesc^:(0={.0#x) x
   |: glqextent &> y
 case. iCAIRO do.
   FontScale * fzskludge *  x getextent y
@@ -2483,7 +2550,10 @@ case. iISI do.
   glfont x
   glqextent y
 case. iGTK do.
-  glfont gtkfontdesc x
+  glfont gtkfontdesc^:(0={.0#x) x
+  glqextent y
+case. iANDROID do.
+  glfont andfontdesc^:(0={.0#x) x
   glqextent y
 case. iCANVAS do.
   FontScale * fzskludge * ((FontSizeMin >. 2{x) 2} x) getextent1 y
@@ -2518,6 +2588,13 @@ if. Poutput = iISI do.
   SymbolFont=: getisifontid SymbolFontX
   TitleFont=: getisifontid TitleFontX
 elseif. Poutput e. iGTK do.
+  CaptionFont=: getgtkfontid CaptionFontX
+  KeyFont=: getgtkfontid KeyFontX
+  LabelFont=: getgtkfontid LabelFontX
+  SubTitleFont=: getgtkfontid SubTitleFontX
+  SymbolFont=: getgtkfontid SymbolFontX
+  TitleFont=: getgtkfontid TitleFontX
+elseif. Poutput e. iANDROID do.
   CaptionFont=: getgtkfontid CaptionFontX
   KeyFont=: getgtkfontid KeyFontX
   LabelFont=: getgtkfontid LabelFontX
@@ -2693,6 +2770,9 @@ elseif. do.
   wh=. KeyLen,KeyPen
   dat=. xy ,"1 xy +"1 wh
   drawrect iKEY;AXISCOLOR;0;clr;dat
+end.
+if. Poutput = iANDROID do.
+  ty=. ty - <. 0.75 * {.th
 end.
 pos=. tx,.ty
 
@@ -4322,6 +4402,8 @@ for_p. Text do.
       font=. getisifontid font
     elseif. Poutput e. iGTK do.
       font=. getgtkfontid font
+    elseif. Poutput e. iANDROID do.
+      font=. getgtkfontid font
     end.
 
     drawtext iTEXT;align;font;TEXTCOLOR;text;pos
@@ -4362,7 +4444,7 @@ PDDefs=: ;: toupper j
 j=. 'brushcolor end lines pen pencolor rect'
 PDgd=: 'gd'&, each ;: j
 PDGD=: 'GD'&, each ;: toupper j
-PDshow=: ;: 'cairo canvas eps gtk isi jpf pdf print show'
+PDshow=: ;: 'cairo canvas eps gtk isi android jpf pdf print show'
 PDcopy=: ;: 'clip save get'
 PDget=: ;: 'pdfr cairor canvasr'
 PDcmds=: ;: 'multi new use'
@@ -4535,6 +4617,14 @@ a=. 0, {.@:(0&".)@> _4 }. each {."1 d
 a=. ": {. (i. >: #a) -. a
 p,a,'.',y
 )
+andfontdesc=: 3 : 0
+'ind fst siz ang und'=. y
+'ita bld'=. 2 2 #: fst
+sty=. (bld#' bold'),(ita#' italic'),und#' underline'
+if. ' ' e. nam=. ind pick ANDFONTNAMES do. nam=. '"', nam, '"' end.
+nam,sty,' ',":siz
+)
+
 android_getsize=: 3 : 0
 if. -. wdishandle :: 0: ": PFormhwnd do. '' return. end.
 wd 'psel ', ":PFormhwnd
@@ -4596,11 +4686,7 @@ assert. 2 > #$y
 buf=: buf,y
 )
 android_gpapply=: 3 : 0
-if. 1=GL2ExtGlcmds_j_ do.
-  if. #buf do. android_glcmds buf=: <.2 2007, buf end.
-else.
-  if. #buf do. android_glcmds2 buf=: <.2 2007, buf end.
-end.
+glcmds buf
 buf=: $0
 )
 android_gpflip=: flipxy @ rndint
@@ -4792,25 +4878,21 @@ y=. (<p) _1 } y
 androidtext=: 3 : 0
 't f a e c p'=. y
 
+f=. andfontdesc^:(0={.0#f) f
 p=. android_gpflip p
 t=. text2utf8 each boxopen t
-'fnx fst fsz fan und'=. f
-rot=. 3 | 0 90 270 i. fan
-asc=. pgetascender f
-fnm=. getfntname fnx,fst
-bold=. italic=. ''
-if. (1 e. '-Oblique' E. fnm)+.(1 e. '-Bold' E. fnm)+.(1 e. '-Italic' E. fnm) do.
-  bold=. (1 e. 'Bold' E. fnm)#'bold '
-  italic=. ((1 e. 'Oblique' E. fnm)+.(1 e. 'Italic' E. fnm))#'italic '
-  fnm=. ({.~ i:&'-') fnm
+if. a do.
+  glfont f
+  off=. <. -: a * {."1 wh=. glqextent &> t
+  if. 1 e. 'angle900' E. f do.
+    p=. p +"1 [ 0,.off
+  elseif. 1 e. 'angle2700' E. f do.
+    p=. p -"1 [ 0,.off
+  elseif. do.
+    p=. p -"1 off,. - {:"1 wh
+  end.
 end.
-font=. dtb '"', fnm ,'" ', (": getplotfontsize f), ' ', italic, bold
-select. rot
-case. 0 do. p=. 0 >. p -"1 [ 0, asc
-case. 1 do. p=. p +"1 asc, 0
-case. 2 do. p=. p -"1 asc, 0
-end.
-'face size style degree'=. parseFontSpec font
+'face size style degree'=. parseFontSpec f
 android_gpbuf android_gpcount 2312,(<.size*10),style,(<.degree*10),alfndx,face
 if. is1color e do.
   android_gpbuf 5 2032,(,e),2 2040
@@ -4828,6 +4910,27 @@ else.
   t=. (<"1 (5 2032 ,"1 e) ,"1 [ 2 2040) ,each t
   android_gpbuf ; t
 end.
+
+)
+parseFontname=: 3 : 0
+font=. ' ',y
+b=. (font=' ') > ~:/\font='"'
+a: -.~ b <@(-.&'"');._1 font
+)
+FontStyle=: ;:'regular bold italic underline strikeout'
+
+parseFontSpec=: 3 : 0
+'ns styleangle'=. 2 split parseFontname y
+'face size'=. ns
+size=. 12". size
+style=. FontStyle i. tolower each styleangle
+style=. <.+/2^<:(style ((> 0) *. <) #FontStyle) # style
+if. 1 e. an=. ('angle'-:5&{.)&> styleangle do.
+  degree=. 10%~ 0". 5}.>(an i. 1){styleangle
+else.
+  degree=. 0
+end.
+face;size;style;degree
 )
 androidmark_circle=: 4 : 0
 s=. rndint x * 3
@@ -5054,30 +5157,22 @@ android_gifr=: 'gif' & android_defstr
 android_tifr=: 'tif' & android_defstr
 android_show=: 3 : 0
 popen_android''
-view_onDraw=: android_paint
-EMPTY
-)
+if. ifjwplot'' do.
+  (PForm,'_',PId,'_paint')=: android_paint
+end.
+if. PShow=0 do.
+  PShow=: 1
+end.
 
-view_onTouch=: 3 : 0
-if. this_plotactivity_ do. this_plotactivity_ ('finish ()V' jniMethod)~ '' end.
-1
+if. -.ifjwplot'' do.
+  android_paint''
+  glpaint''
+end.
 )
 android_paint=: 3 : 0
-coinsert 'jni'
-
-paint=: 'android.graphics.Paint' jniNewObject~ ''
-
-paint ('setAntiAlias (Z)V' jniMethod)~ 1
-
-jniCheck canvas=: GetObjectArrayElement (3{y);0
-
-Cw=: canvas ('getWidth ()I' jniMethod)~ ''
-Ch=: canvas ('getHeight ()I' jniMethod)~ ''
-
+selectpid''
+'Cw Ch'=: glqwh''
 android_paintit 0 0,Cw,Ch
-
-DeleteLocalRef <paint
-DeleteLocalRef <canvas
 0
 )
 android_paintit=: 3 : 0
@@ -5092,314 +5187,6 @@ end.
 android_gpapply''
 )
 
-android_glcmds=: 3 : 0
-
-if. 0=#buf do. 0 return. end.
-jbuf=. NewIntArray <#buf
-SetIntArrayRegion jbuf; 0; (#buf); buf
-andw=: Cw [ andh=: Ch
-ipar=. andclipped,andw,andh,andrgb,andtextxy,andunderline,andfontangle,andpenrgb,andbrushrgb,andtextrgb,andbrushnull,andorgx,andorgy
-assert. 14=#ipar
-ibuf=. NewIntArray <#ipar
-SetIntArrayRegion ibuf; 0; (#ipar); ipar
-PROFONT_jgl2_=: 'android 10'
-glc=. 'org/dykman/jn/Glcmds' jniNewObject~ ''
-rc=. glc ('glcmds (Landroid/graphics/Canvas;Landroid/graphics/Paint;[ILjava/lang/String;[III)I' jniMethod)~ canvas;paint;ibuf;(utf8 PROFONT_jgl2_);jbuf;(#buf);RGBSEQ_j_
-
-GetIntArrayRegion ibuf; 0; (#ipar); ipar=. 14#2-2
-'clip andw andh rgb tx ty underline angle penrgb brushrgb textrgb brushnull orgx orgy'=. ipar
-andclipped=: clip [ andrgb=: rgb [ andtextxy=: tx,ty [ andunderline=: underline [ andfontangle=: angle
-andpenrgb=: penrgb [ andbrushrgb=: brushrgb [ andtextrgb=: textrgb [ andbrushnull=: brushnull [ andorgx=: orgx ] andorgy=: orgy
-
-DeleteLocalRef <jbuf
-DeleteLocalRef <ibuf
-DeleteLocalRef <glc
-rc return.
-)
-
-RGBA=: 3 : 'r (23 b.) 8 (33 b.) g (23 b.) 8 (33 b.) b (23 b.) 8 (33 b.) 255 [ ''r g b''=. y'
-BGRA=: 3 : 'b (23 b.) 8 (33 b.) g (23 b.) 8 (33 b.) r (23 b.) 8 (33 b.) 255 [ ''r g b''=. y'
-
-andbrushrgb=: andpenrgb=: andrgb=: RGBA 0 0 0
-andbrushnull=: 0
-androidcolor=: 3 : 0
-'paint andcolor'=. y
-paint ('setColor (I)V' jniMethod)~ andcolor
-)
-
-tors=: 3 : 0
-(2{.y),(2{.y)+2}.y
-)
-
-androidarcisi=: 3 : 0
-'x y w h xa ya xz yz'=. y
-rect=. tors x,y,w,h
-'xc yc'=. (x,y)+0.5*w,h
-a=. (xa-xc) [ b=. (ya-yc)
-if. 0=a do.
-  ang1=. 90*(b>0){_1 1
-else.
-  ang1=. 180p_1 * _3 o. b%a
-end.
-if. (0<:ang1) *. (a<0) do. ang1=. 180 + ang1
-elseif. (0>ang1) *. (a<0) do. ang1=. 180 + ang1
-end.
-a=. (xz-xc) [ b=. (yz-yc)
-if. 0=a do.
-  ang2=. 90*(b>0){_1 1
-else.
-  ang2=. 180p_1 * _3 o. b%a
-end.
-if. (0<:ang2) *. (a<0) do. ang2=. 180 + ang2
-elseif. (0>ang2) *. (a<0) do. ang2=. 180 + ang2
-end.
-rect,ang2,360|ang1-ang2
-)
-
-android_glcmds2=: 3 : 0
-if. 0=#buf do. 0 return. end.
-
-FILL=. ('FILL Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
-FILL_AND_STROKE=. ('FILL_AND_STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
-STROKE=. ('STROKE Landroid/graphics/Paint$Style;' jniStaticField) 'android/graphics/Paint$Style'
-
-andw=: Cw [ andh=: Ch
-ipar=. andclipped,andw,andh,andrgb,andtextxy,andunderline,andfontangle,andpenrgb,andbrushrgb,andtextrgb,andbrushnull,andorgx,andorgy
-assert. 14=#ipar
-PROFONT_jgl2_=: 'android 10'
-
-path=. 'android/graphics/Path' jniNewObject~ ''
-
-ncnt=. #buf=. y
-errcnt=. 0
-p=. 0
-while. p<ncnt do.
-  cnt=. p{buf
-  cmd=. (p+1){buf
-  select. cmd
-
-  case. 2001 do.
-    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
-    androidcolor paint, andpenrgb
-    'x y r s ang1 ang2'=. androidarcisi (p+2+i.8){buf
-    rectf=. 'android/graphics/RectF FFFF' jniNewObject~ x;y;r;s
-    canvas ('drawArc (Landroid/graphics/RectF;FFZLandroid/graphics/Paint;)V' jniMethod)~ rectf;ang1;ang2;0;paint
-    DeleteLocalRef <rectf
-
-  case. 2004 do.
-    andbrushrgb=: andrgb
-    andbrushnull=: 0
-
-  case. 2005 do.
-    andbrushnull=: 1
-  case. 2007 do.
-    andrgb=: BGRA 0 0 0
-    andunderline=: 0
-    andfontangle=: 0
-    andorgx=: 0
-    andorgy=: 0
-    andpenrgb=: andrgb
-    paint ('setStrokeWidth (F)V' jniMethod)~ >./ 1
-    androidcolor paint, BGRA 255 255 255
-    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
-    canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ 0;0;andw;andh;paint
-    andbrushnull=: 1
-    andtextx=: 0
-    andtexty=: 0
-    andtextrgb=: andrgb
-  case. 2008 do.
-    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
-    androidcolor paint, andbrushrgb
-    'x y r s ang1 ang2'=. androidarcisi (4#0),~ (p+2+i.4){buf
-    rectf=. 'android/graphics/RectF FFFF' jniNewObject~ x;y;r;s
-    canvas ('drawOval (Landroid/graphics/RectF;Landroid/graphics/Paint;)V' jniMethod)~ rectf;paint
-
-    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
-    androidcolor paint, andpenrgb
-    canvas ('drawOval (Landroid/graphics/RectF;Landroid/graphics/Paint;)V' jniMethod)~ rectf;paint
-    DeleteLocalRef <rectf
-  case. 2015 do.
-    androidcolor paint, andpenrgb
-    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
-    c=. <.2%~cnt-2
-    pt=. (2 3+p){buf
-    path ('reset ()V' jniMethod)~ ''
-    path ('moveTo (FF)V' jniMethod)~ <"0 pt
-    for_i. i.c-1 do.
-      pt=. (0 1 + p + 2 + 2*1+i){buf
-      path ('lineTo (FF)V' jniMethod)~ (<"0 pt)
-    end.
-    canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
-    path ('reset ()V' jniMethod)~ ''
-
-  case. 2022 do.
-    andpenrgb=: andrgb
-    paint ('setStrokeWidth (F)V' jniMethod)~ >./ 0.5,(p+2){buf
-
-  case. 2023 do.
-    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
-    androidcolor paint, andbrushrgb
-    'x y r s ang1 ang2'=. androidarcisi (p+2+i.8){buf
-    rectf=. 'android/graphics/RectF FFFF' jniNewObject~ x;y;r;s
-    canvas ('drawArc (Landroid/graphics/RectF;FFZLandroid/graphics/Paint;)V' jniMethod)~ rectf;ang1;ang2;1;paint
-    DeleteLocalRef <rectf
-
-  case. 2024 do.
-    androidcolor paint, andrgb
-    i=. 2
-    while. i<cnt do.
-      canvas 'drawPoint (FFZLandroid/graphics/Paint;)V' jniMethod)~ (<"0 (0 1+p+i){buf), <paint
-      i=. 2+i
-    end.
-  case. 2029 do.
-    c=. <.2%~cnt-2
-    path ('reset ()V' jniMethod)~ ''
-    if. 0 = andbrushnull do.
-      pt=. (2 3+p){buf
-      path ('moveTo (FF)V' jniMethod)~ <"0 pt
-      for_i. i.c-1 do.
-        pt=. (0 1 + p + 2 + 2*1+i){buf
-        path ('lineTo (FF)V' jniMethod)~ <"0 pt
-      end.
-      path ('close ()V' jniMethod)~ ''
-      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
-      androidcolor paint, andbrushrgb
-      canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
-      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
-      androidcolor paint, andpenrgb
-      canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
-    else.
-      pt=. (2 3+p){buf
-      path ('moveTo (FF)V' jniMethod)~ <"0 pt
-      for_i. i.c-1 do.
-        pt=. (0 1 + p + 2 + 2*1+i){buf
-        path ('lineTo (FF)V' jniMethod)~ <"0 pt
-      end.
-      path ('close ()V' jniMethod)~ ''
-      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
-      androidcolor paint, andpenrgb
-      canvas ('drawPath (Landroid/graphics/Path;Landroid/graphics/Paint;)V' jniMethod)~ path;paint
-    end.
-    path ('reset ()V' jniMethod)~ ''
-
-  case. 2031 do.
-    if. (0 = andbrushnull) do.
-      i=. 2
-      while. i<cnt do.
-        androidcolor paint , andbrushrgb
-        paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
-        canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ (<"0 tors (0 1 2 3 + p+i){buf), <paint
-        androidcolor paint , andpenrgb
-        paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
-        canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ (<"0 tors (0 1 2 3 + p+i){buf), <paint
-        i=. i+4
-      end.
-    else.
-      androidcolor paint , andpenrgb
-      paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ STROKE
-      i=. 2
-      while. i<cnt do.
-        canvas ('drawRect (FFFFLandroid/graphics/Paint;)V' jniMethod)~ (<"0 tors (0 1 2 3 + p+i){buf), <paint
-        i=. i+4
-      end.
-    end.
-
-  case. 2032 do.
-    if. RGBSEQ_j_ do.
-      andrgb=: RGBA (p+2 3 4){buf
-    else.
-      andrgb=: BGRA (p+2 3 4){buf
-    end.
-
-  case. 2038 do.
-    androidcolor paint , andtextrgb
-    paint ('setStyle (Landroid/graphics/Paint$Style;)V' jniMethod)~ FILL
-    ys=. a.{~ (p+2 + i.cnt-2){buf
-    canvas ('drawText (Ljava/lang/String;FFLandroid/graphics/Paint;)V' jniMethod)~ ys;andtextx;andtexty;paint
-  case. 2040 do.
-    andtextrgb=: andrgb
-
-  case. 2056 do.
-    andtextx=: (p+2){buf
-    andtexty=: (p+3){buf
-  case. do.
-    log_d_ja_ 'JJNI';'glcmds: cmd not implemented ', ":cmd
-    errcnt=. >:errcnt
-  end.
-  p=. p + cnt
-end.
-
-DeleteLocalRef <path
-
-'clip andw andh rgb tx ty underline angle penrgb brushrgb textrgb brushnull orgx orgy'=. ipar
-andclipped=: clip [ andrgb=: rgb [ andtextxy=: tx,ty [ andunderline=: underline [ andfontangle=: angle
-andpenrgb=: penrgb [ andbrushrgb=: brushrgb [ andtextrgb=: textrgb [ andbrushnull=: brushnull [ andorgx=: orgx ] andorgy=: orgy
-
-DeleteLocalRef <FILL
-DeleteLocalRef <FILL_AND_STROKE
-DeleteLocalRef <STROKE
-
-errcnt
-)
-pclose_android=: 3 : 0
-0
-)
-popen_android=: 3 : 0
-fm=. PForm,'_'
-id=. fm,PId,'_'
-(fm,'close')=: pclose_android
-(id,'paint')=: ppaint
-(id,'mmove')=: ]
-
-Pxywh=: ''
-PShow=: 0
-PFormhwnd=: 0 StartActivity_ja_ 0;0;'plotactivity';'onDestroy';(>18!:5'')
-)
-ppaint_android=: 3 : 0
-android_show ''
-)
-
-coclass 'plotactivity'
-coinsert 'jni'
-
-jniImport ::0: (0 : 0)
-android.content.Context
-android.view.View
-android.view.View$OnTouchListener
-android.view.Window
-)
-
-this=: 0
-
-onCreate=: 3 : 0
-jniCheck this=: NewGlobalRef <2{y
-japparg=. ('japparg Ljava/lang/String;' jniField) this
-apparg=. jniToJString japparg
-DeleteLocalRef <japparg
-
-('andclipped_',apparg,'_')=: ('andw_',apparg,'_')=: ('andh_',apparg,'_')=: ('andrgb_',apparg,'_')=: ('andunderline_',apparg,'_')=: ('andfontangle_',apparg,'_')=: ('andpenrgb_',apparg,'_')=: ('andbrushrgb_',apparg,'_')=: ('andtextrgb_',apparg,'_')=: ('andbrushnull_',apparg,'_')=: ('andorgx_',apparg,'_')=: ('andorgy_',apparg,'_')=: 0
-('andtextxy_',apparg,'_')=: 0 0
-this ('requestWindowFeature (I)Z' jniMethod)~ Window_FEATURE_NO_TITLE_ja_
-win=. this ('getWindow ()LWindow;' jniMethod)~ ''
-win ('setFlags (II)V' jniMethod)~ WindowManager_LayoutParams_FLAG_FULLSCREEN_ja_;WindowManager_LayoutParams_FLAG_FULLSCREEN_ja_
-DeleteLocalRef <win
-
-jniCheck thisview=. this jniOverride 'org.dykman.jn.android.view.View LContext;' ; apparg ; 'view' ; 'onDraw'
-jniCheck listener=. '' jniOverride 'org.dykman.jn.android.view.View$OnTouchListener' ; apparg ; 'view'
-jniCheck thisview ('setOnTouchListener (LView$OnTouchListener;)V' jniMethod)~ listener
-jniCheck this ('setContentView (LView;)V' jniMethod)~ thisview
-jniCheck thisview ('requestFocus ()Z' jniMethod)~ ''
-DeleteLocalRef <listener
-DeleteLocalRef <thisview
-
-0
-)
-
-onDestroy=: 3 : 0
-if. this do. DeleteGlobalRef <this end.
-this=: 0
-0
-)
 coclass 'jzplot'
 CAIRO_DEFSHOW=: 'jijx'
 CAIRO_DEFSIZE=: 400 200
@@ -6357,7 +6144,7 @@ while. _1 -: dat flwrites file do.
     info msg,'The file name is invalid.' return. end.
 end.
 if. 0 = 4!:0 <'EPSReader_j_' do.
-  if. check_EPSReader EPSReader_j_ do.
+  if. check_EPSReader ::0: EPSReader_j_ do.
     fork_jtask_ (dquote EPSReader_j_),' ',dquote file
   else.
     info 'File written: ',file
@@ -8913,7 +8700,7 @@ plot_symbol=: 3 : 0
 dat=. getgrafmat y
 clr=. getitemcolor #dat
 font=. SymbolFont
-if. Poutput e. iISI,iGTK,iCANVAS,iCAIRO do.
+if. Poutput e. iISI,iGTK,iANDROID,iCANVAS,iCAIRO do.
   sym=. utf8 each ucp text2utf8 SYMBOLS
 else.
   sym=. <&> text2ascii8 SYMBOLS

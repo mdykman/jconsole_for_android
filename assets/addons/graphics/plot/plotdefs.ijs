@@ -174,6 +174,8 @@ if. -.IFJ6 do.
     else.
       r=. 'OUTPUT=: ''gtk'''
     end.
+  elseif. 'Android'-:UNAME do.
+    r=. 'OUTPUT=: ''android'''
   elseif. do.  NB. jconsole
     r=. 'OUTPUT=: CONSOLEOUTPUT'
   end.

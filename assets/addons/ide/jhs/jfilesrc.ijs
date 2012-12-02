@@ -2,29 +2,6 @@ NB. JHS - file source stuff - favicon.ico ...
 coclass'jfilesrc'
 coinsert'jhs'
 
-gsrchead=: toCRLF 0 : 0
-HTTP/1.1 200 OK
-Server: JHS
-Last-Modified: Mon, 01 Mar 2010 00:23:24 GMT
-Accept-Ranges: bytes
-Content-Length: <LENGTH>
-Keep-Alive: timeout=15, max=100
-Connection: Keep-Alive
-Content-Type: <TYPE>
-
-)
-
-gsrcf=: 4 : 0
-htmlresponse y,~gsrchead rplc '<TYPE>';x;'<LENGTH>';":#y
-)
-
-fsrchead=: toCRLF 0 : 0
-HTTP/1.1 200 OK
-Server: JHS
-Content-Type: <TYPE>
-
-)
-
 NB. serves .htm .js etc pages from anywhere
 NB. possible security issues! careful on allowing other suffixes!
 NB. ~root kludge to read gnuplot js files from /usr/share/gnuplot/gnuplot/4.4/js/
@@ -55,6 +32,7 @@ application/x-gnumeric         gnumeric
 application/x-gtar-compressed  tgz
 application/x-sc               sc
 application/zip                zip
+audio/mp3                      mp3
 image/gif                      gif
 image/jpeg                     jpeg
 image/jpeg                     jpg
@@ -71,6 +49,7 @@ text/plain                     text
 text/plain                     txt
 video/x-ms-wmv                 wmv
 video/x-msvideo                avi
+
 )
 
 favicon=: 3 : 0

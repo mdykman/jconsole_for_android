@@ -1,0 +1,7 @@
+directory:  examples/graphics/plot
+
+This directory contains a demo of Plot.
+
+To load, using the standard profile:
+
+   load '~Demos/wdplot/plotdemo.ijs'
