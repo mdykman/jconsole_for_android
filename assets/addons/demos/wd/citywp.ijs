@@ -32,7 +32,7 @@ cities_cancel_button=: wd bind 'pclose'
 cities_ok_button=: 3 : 0
 ndx=. ".clist_select
 if. 0=#ndx do.
-  wdinfo 'City not found'
+  sminfo 'City not found'
   return.
 end.
 clistmsk=. ndx ~: i.#BNAMES

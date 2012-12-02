@@ -5,3 +5,6 @@ graphics/grid - change history
 
 == 1.0.12 ==
  * android
+
+== 1.0.13 ==
+ * cover verb for wd query cmds

@@ -157,7 +157,7 @@ deigenpic=: 3 : 0
 if. fexist jpath '~addons/math/lapack/lapack.ijs' do.
   load '~addons/math/eigenpic/eigenpic.ijs'
 else.
-  wdinfo 'Eigenpicture';'This demo requires the LAPACK Addon'
+  sminfo 'Eigenpicture';'This demo requires the LAPACK Addon'
 end.
 )
 

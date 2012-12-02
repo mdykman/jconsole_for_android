@@ -49,6 +49,7 @@ plot       ~addons/graphics/plot/plot.ijs
 primitives ~addons/general/primitives/primitives.ijs
 print      ~addons/graphics/print/print.ijs
 project    ~system/util/project.ijs
+qtide      ~addons/ide/qt/qt.ijs
 regex      ~system/main/regex.ijs
 rgb        ~addons/graphics/color/rgb.ijs
 scriptdoc  ~addons/general/scriptdoc/scriptdoc.ijs

@@ -16,3 +16,9 @@ graphics/viewmat - change history
 
 == 1.0.14 ==
  * android
+
+== 1.0.15/18 ==
+ * qt
+
+== 1.0.19 ==
+ * cover verb for wd query cmds

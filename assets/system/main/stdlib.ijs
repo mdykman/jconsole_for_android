@@ -15,6 +15,9 @@ IFWINE=: IFWIN > 0-:2!:5'_'
 if. notdef 'IFIOS' do.
   IFIOS=: 0
 end.
+if. notdef 'IFQT' do.
+  IFQT=: 0
+end.
 if. notdef 'UNAME' do.
   if. IFUNIX do.
     if. -.IFIOS do.
@@ -77,6 +80,7 @@ each=: &.>
 echo=: 0 0&$ @ (1!:2&2)
 exit=: 2!:55
 every=: &>
+evtloop=: EMPTY"_
 fliprgb=: 3 : 0
 s=. $y
 d=. ((#y),4)$2 (3!:4) y=. <.,y
@@ -184,6 +188,7 @@ script=: [: 3 : '0!:0 y [ 4!:55<''y''' jpath_z_ &.: >
 scriptd=: [: 3 : '0!:1 y [ 4!:55<''y''' jpath_z_ &.: >
 sminfo=: 3 : 0
 if. ('Android'-:UNAME) *. 3=4!:0<'mbinfo_ja_' do. mbinfo_ja_ y
+elseif. IFQT do. wdinfo_jqtide_ y
 elseif. IFGTK do. mbinfo_jgtk_ y
 elseif. do. smoutput >_1{.boxopen y end.
 )
@@ -1630,7 +1635,7 @@ case. do.
     catch.
       msg=. 'Could not run the browser with the command:',LF2
       msg=. msg, cmd,LF2
-      if. IFGTK do.
+      if. IFGTK+.IFQT do.
         msg=. msg, 'You can change the browser definition in Edit|Configure|Base',LF2
       end.
       sminfo 'Run Browser';msg
@@ -1708,7 +1713,7 @@ case. do.
     catch.
       msg=. 'Could not run the PDFReader with the command:',LF2
       msg=. msg, cmd,LF2
-      if. IFGTK do.
+      if. IFGTK+.IFQT do.
         msg=. msg, 'You can change the PDFReader definition in Edit|Configure|Base',LF2
       end.
       sminfo 'Run PDFReader';msg
@@ -1873,9 +1878,12 @@ if. 0=L.y do.
     y=. cutnames y
   end.
 end.
-y=. y -. Ignore, (IFIOS+.IFJHS>IFBROADWAY)#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd droidwd gui/droidwd android gui/android wdclass gui/wdclass jview gtkide ide/gtk gl2 graphics/gl2 viewmat'
+y=. y -. Ignore, (IFIOS+.IFJHS)#<;._1 '  droidwd gui/droidwd android gui/android jview qtide ide/qt'
+y=. y -. (IFIOS+.IFJHS>IFBROADWAY)#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk wdclass gui/wdclass viewmat gl2 graphics/gl2'
 y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd jview gtkide ide/gtk'
 y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd android gui/android jview'
+y=. y -. IFQT#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk droidwd gui/droidwd'
+y=. y -. IFGTK#<;._1 ' qtide ide/qt'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public
@@ -1992,7 +2000,7 @@ a=. (,&'=: ',sub @ (3 : j)) each y
 )
 xedit=: xedit_j_
 wcsize=: 3 : 0
-if. (-.IFGTK+.IFJHS) *. UNAME-:'Linux' do.
+if. (-.IFGTK+.IFQT+.IFJHS) *. UNAME-:'Linux' do.
   |.@".@(-.&LF)@(2!:0) :: (Cwh_j_"_) '/bin/stty size 2>/dev/null'
 else.
   Cwh_j_

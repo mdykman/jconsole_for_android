@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 Plot demos on JGTK,JHS and Android
 )
 
-VERSION=: '1.0.13'
+VERSION=: '1.0.17'
 
 RELEASE=: 'j701'
 

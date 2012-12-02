@@ -369,16 +369,16 @@ To experiment, modify the commands, then Redisplay.
 )
 
 gridedit_help_button=: 3 : 0
-wdinfo 'Grid Demo';GRIDEDITHELP
+sminfo 'Grid Demo';GRIDEDITHELP
 )
 gridedit_redisplay_button=: 3 : 0
 GDEF=: gdef
 try.
-  wd 'psel ',PForm
+  wd 'psel ', ":PForm
   gridrun gdef
   wd 'psel gridedit'
 catch.
-  wdinfo 'error in grid definition'
+  sminfo 'error in grid definition'
   0 return.
 end.
 1
@@ -399,7 +399,7 @@ ftr=. ndx }. dat
 ftr=. ftr, LF -. {:ftr
 new=. hdr,grf,ftr
 new fwrites f
-wdinfo 'Grid';'Saved: ',GNAME
+sminfo 'Grid';'Saved: ',GNAME
 )
 sumdata=: (,+/) @: (,.+/"1)
 j=. <;._2 (0 : 0)
@@ -795,7 +795,7 @@ rem form end;
 gridnotes_run=: 3 : 0
 NNAME=: 'N',y,(0=#y)#'GRID'
 if. -. '2' e. sysmodifiers do.
-  wdinfo 'Grid Notes';". NNAME
+  sminfo 'Grid Notes';". NNAME
   return.
 end.
 if. wdisparent 'gridnotes' do.
@@ -803,7 +803,7 @@ if. wdisparent 'gridnotes' do.
 else.
   wd GNOTES
   wd 'setfont gdef ',PROFONT
-  wd 'setcolor gdef ',": 0 0 0,6 $ 0 ". wd 'qcolor 15'
+  wd 'setcolor gdef ',": 0 0 0,6 $ wdqcolor 15
 end.
 wd 'set gdef *',".NNAME
 wd 'setfocus gdef'
@@ -831,7 +831,7 @@ ftr=. ndx }. dat
 ftr=. ftr, LF -. {:ftr
 new=. hdr,grf,ftr
 new fwrites f
-wdinfo 'Grid';'Saved: ',NNAME
+sminfo 'Grid';'Saved: ',NNAME
 )
 GRIDDEMO=: 0 : 0
 pc griddemo;
@@ -938,10 +938,10 @@ else.
 end.
 wd 'pshow;'
 wdfit ''
-PForm=: wd 'qhwndp'
+PForm=: wdqhwndp''
 gridruns GRIDDEMOSEL
 wd 'setfocus grid'
-evtloop^:(-.IFJ6)''
+evtloop''
 )
 griddemo_default=: 3 : 0
 if. systype -: 'button' do.
@@ -971,11 +971,11 @@ wd 'psel griddemo;pclose;'
 try. wd 'psel gridedit;pclose' catch. end.
 )
 griddemo_contents_button=: 3 : 0
-wdinfo 'help contents'
+sminfo 'help contents'
 )
 griddemo_about_button=: 3 : 0
 j=. 'Grid Demo VJ602'
-wdinfo 'Grid';j
+sminfo 'Grid';j
 )
 griddemo_step=: 3 : 0
 ndx=. (#GRIDALL) | y + GRIDALL i. <'D',GRIDDEMOSEL
@@ -988,7 +988,7 @@ griddemo_pn=: 3 : 0
 wd 'pn *Grid - ',y
 )
 griddemo_close=: destroy
-formselect=: 3 : 'wd ''psel '',formhwnd'
+formselect=: 3 : 'wd ''psel '',":formhwnd'
 3 : 0 ''
 if. IFWINCE do.
   griddemo_actrl_fkey=: griddemo_next_button

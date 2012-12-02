@@ -2,6 +2,9 @@ NB. plotdwin
 NB.
 NB. includes reduced set for wince
 
+cocurrent 'jdplot'
+coinsert 'jdplotexam'
+
 NB. =========================================================
 PLOTDEMO=: 0 : 0
 pc plotdemo closeok;pn "Plot";

@@ -5,13 +5,14 @@ coinsert 'jni jaresu'
 GetJNIENV''
 
 jniImport (0 : 0)
+android.app.Activity
 android.app.AlertDialog
 android.app.AlertDialog$Builder
-android.app.Activity
 android.content.Context
 android.content.DialogInterface$OnClickListener
 android.content.Intent
 android.graphics.Bitmap
+android.graphics.Bitmap$CompressFormat
 android.graphics.BitmapFactory
 android.graphics.Typeface
 android.graphics.drawable.BitmapDrawable
@@ -20,6 +21,9 @@ android.util.DisplayMetrics
 android.view.Display
 android.view.WindowManager
 android.widget.Toast
+java.io.ByteArrayOutputStream
+java.io.FileOutputStream
+java.io.OutputStream
 org.dykman.j.android.AbstractActivity
 org.dykman.j.android.JConsoleApp
 org.dykman.jn.android.app.Activity
@@ -75,6 +79,10 @@ jniCheck DeleteLocalRef"0 colors;bm
 d=. fliprgb^:(-.RGBSEQ_j_) d (17 b.) NOTALPHA
 (h,w)$d
 )
+
+CompressFormat_JPEG=: 0
+CompressFormat_PNG=: 1
+CompressFormat_WEBP=: 2
 writeimg=: 4 : 0
 'h w'=. $x
 d=. ,x
@@ -92,25 +100,30 @@ elseif. do.
   opt=. 2{.2}.y
   opt=. (":&.>1{opt) 1}opt
 end.
-if. 'jpg'-:type do. type=. 'jpeg'
-elseif. 'tif'-:type do. type=. 'tiff'
+qaulity=. 75
+if. ('jpeg'-:type)+.('jpg'-:type) do. type=. CompressFormat_JPEG
+elseif. 'png'-:type do. type=. CompressFormat_PNG
+elseif. 'webp'-:type do. type=. CompressFormat_WEBP
+elseif. do. EMPTY return.
 end.
 d=. fliprgb^:(RGBSEQ_j_) d
 d=. d OR ALPHA
 if. IF64 do. d=. 2 ic d end.
-buf=. gdk_pixbuf_new_from_data (15!:14<'d'),GDK_COLORSPACE_RGB,1,8,w,h,(4*w),0,0
-    jniCheck colors=. NewIntArray <#d
-    jniCheck SetIntArrayRegion colors;0;(#d);d
-    jniCheck bm=. ('createBitmap ([IIIIILBitmap$Config;)LBitmap;' jniStaticMethod)~ colors;0;w;w;h;0
-    jniCheck DeleteLocalRef"0 ba;bm
-if. buf do.
-  if. ''-:opt do.
-    gdk_pixbuf_save buf;f;type;0;0
-  else.
-    gdk_pixbuf_save_2 buf;f;type;0;opt,<0
-  end.
-  g_object_unref buf
+jniCheck colors=. NewIntArray <#d
+jniCheck SetIntArrayRegion colors;0;(#d);d
+jniCheck bm=. ('createBitmap ([IIIIILBitmap$Config;)LBitmap;' jniStaticMethod)~ colors;0;w;w;h;0
+jniCheck DeleteLocalRef <ba
+if. bm do.
+  jniCheck bos=. '' jniNewObject 'ByteArrayOutputStream'
+  jniCheck bm ('compress (IILOutputStream;)Z' jniMethod)~ type;quality;bos
+  jniCheck bmc=. bos ('toByteArray ()[B' jniMethod)~ ''
+  jniCheck fos=. (<f) jniNewObject 'FileOutputStream LString;'
+  jniCheck fos ('write ([B)V' jniMethod)~ bmc
+  jniCheck fos ('flush ()V' jniMethod)~ ''
+  jniCheck fos ('close ()V' jniMethod)~ ''
+  jniCheck DeleteLocalRef"0 bos;bmc;fos
 end.
+jniCheck DeleteLocalRef <bm
 EMPTY
 )
 putimg=: 4 : 0
@@ -212,7 +225,6 @@ end.
 g_object_unref buf
 EMPTY
 )
-evtloop_z_=: empty
 evthandler_z_=: 3 : 0
 evtdata=: y
 evt_val=. {:"1 evtdata

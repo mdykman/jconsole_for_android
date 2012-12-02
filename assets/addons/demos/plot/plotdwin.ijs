@@ -1,5 +1,8 @@
 NB. plotdwin
 
+cocurrent 'jdplotgtk'
+coinsert 'jdplotexam'
+
 make_main_window=: 3 : 0
 window=: gtk_window_new GTK_WINDOW_TOPLEVEL
 gtk_window_set_title window;(gettext 'Plot')

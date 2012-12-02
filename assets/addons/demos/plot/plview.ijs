@@ -1,7 +1,7 @@
 NB. Plot viewer
 
 3 : 0''
-if. -.IFGTK+IFIOS+.UNAME-:'Android' do. gtkinit_jgtk_'' end.
+if. -.IFGTK+IFIOS+.IFQT+.UNAME-:'Android' do. gtkinit_jgtk_'' end.
 ''
 )
 
@@ -111,7 +111,7 @@ plotdemo_run=: 3 : 0
 
 Cw=: Ch=: _1 NB. ensure plot window is sized
 f=. jpath '~system/packages/graphics/'&, @ (,&'.ijs')
-DATHILO=: }. 'm' fread jpath '~Demos/plot/dm0396.txt'
+DATHILO=: }. 'm' fread jpath '~addons/demos/plot/dm0396.txt'
 
 MyPlotDefaults=: '' NB. turn off user defaults
 
@@ -137,7 +137,7 @@ gtk_widget_show_all window
 
 plotruns 'D',PLDEMOSEL
 
-if. -.IFGTK do. gtk_main'' end.
+if. -.IFGTK+.IFQT do. gtk_main'' end.
 )
 
 NB. =========================================================
@@ -197,7 +197,7 @@ l=. glgetloc canvas
 if. newsize__l do.
   if. #CMDS do.
     glclear''
-    pd 'reset ',PForm
+    pd 'reset ',":PForm
     0!:100 CMDS
   end.
   if. 'Android'-:UNAME do.
@@ -249,7 +249,7 @@ plotdemo_destroy=: 3 : 0
 if. 0~:RUNID1 do. RUNID1=: 0 [ g_source_remove RUNID1 end.
 if. plotedit do. gtk_widget_destroy ::0: plotedit end.
 window=: 0
-if. -.IFGTK do. gtk_main_quit'' end.
+if. -.IFGTK+.IFQT do. gtk_main_quit'' end.
 cbfree''
 0
 )

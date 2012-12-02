@@ -15,4 +15,4 @@ gclear 0 128 255
 dat=. 0 >. 1000 <. refine ^:4 tri
 dat=. ({."1 dat),.1000-{:"1 dat
 dat=. dat *"1 [ 2 3{GSIZE%1000
-YELLOW gpolygon_z_ ,dat
+YELLOW gpolygon ,dat

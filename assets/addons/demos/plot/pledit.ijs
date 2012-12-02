@@ -95,7 +95,7 @@ graftext=: getgraftext''
 GRAF=: graftext
 try.
   gtk_window_present_with_time PFormhwnd,GDK_CURRENT_TIME
-  pd 'reset ',PForm
+  pd 'reset ',":PForm
   plotrun graftext
   gtk_window_present_with_time plotedit,GDK_CURRENT_TIME
 catch.

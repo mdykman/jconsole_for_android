@@ -50,6 +50,7 @@ load 'task'
 load '~system/util/configure.ijs'
 load '~system/main/ctag.ijs'
 load '~system/util/jadetag.ijs'
+load^:IFQT '~addons/ide/qt/qt.ijs'
 startupide''
 
 NB. ---------------------------------------------------------

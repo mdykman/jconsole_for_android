@@ -126,7 +126,7 @@ evtloop^:(-.IFJ6)''
 
 NB. =========================================================
 events_isigraph=: 3 : 0
-wh=. 2}.". wd 'qchildxywhx g'
+wh=. 2}.wdqchildxywhx 'g'
 glrgb 0 255 255
 glbrush''
 glrect 0 0,wh

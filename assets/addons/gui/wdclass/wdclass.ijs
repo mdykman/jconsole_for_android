@@ -12,13 +12,13 @@ copybuffer=: ''
 if. GSCALE=0 do.
   wd 'pc gscale;xywh 0 0 200 200;cc g static'
   wd^:(-.IFJ6) 'pshow;pshow sw_hide'
-  s=. 2 { 0 ". wd 'qchildxywh g'
-  x=. 2 { 0 ". wd 'qchildxywhx g'
+  s=. 2 { wdqchildxywh 'g'
+  x=. 2 { wdqchildxywhx 'g'
   wd 'pclose'
   GSCALE_jformedit_=: x % s
   topixels_jformedit_=: roundint @ (*&GSCALE) f.
   tounits_jformedit_=: roundint @ (%&GSCALE) f.
-  GWH_jformedit_=: 2 {. 0 ". wd 'qm'
+  GWH_jformedit_=: 2 {. wdqm''
   XYWH_jformedit_=: '0 0 ',": <.GWH % GSCALE
 end.
 
@@ -45,7 +45,7 @@ wd 'pn "Design - ',PID,'"'
 wdfit''
 nd=. 'undo redo center minus plus size space touch'
 wd 3 |. ; ' 0;setenable '&, each ;: nd
-selectdesign=: wd bind ('psel ',wd 'qhwndp')
+selectdesign=: wd bind ('psel ',":@wdqhwndp'')
 
 drawform''
 selectdesign''
@@ -163,7 +163,7 @@ end.
 )
 getwhx=: 3 : 0
 selectform''
-2 3 { 0 ". wd 'qchildxywhx g'
+2 3 { wdqchildxywhx 'g'
 )
 globals=: 3 : 0
 rx=. rxcomp '([[:alpha:]][[:alnum:]_]*|x\.|y\.|m\.|n\.|u\.|v\.) *=:'
@@ -178,7 +178,7 @@ ifshiftkey=: 3 : '''1'' e. sysmodifiers'
 ifctrlkey=: 3 : '''2'' e. sysmodifiers'
 ifctrlshiftkey=: 3 : '''3'' e. sysmodifiers'
 info=: 3 : 0
-wdinfo 'Form Edit';y
+sminfo 'Form Edit';y
 )
 makeccx=: 3 : 0
 CCX=: topixelsxywh viewccs''
@@ -193,7 +193,7 @@ m=. 2 | x + y
 minform=: 3 : 0
 if. IFUNIX do. return. end.
 smsel_jijs_ FNAME
-wd 'psel ',SMSEL_jijs_
+wd 'psel ',":SMSEL_jijs_
 wd 'pshow sw_showminimized'
 )
 mousepos=: 3 : 0
@@ -291,7 +291,7 @@ if. IFJAVA do.
   LIGHT=: 241 239 226
 else.
   nms=. 'FACE SHADOW TEXT HIGH DKSHADOW LIGHT'
-  (nms)=: 0 ". wd 'qcolor ',"1 ": ,.15 16 18 20 21 22
+  (nms)=: wdqcolor "1 ,.15 16 18 20 21 22
 end.
 )
 PID=: ''
@@ -319,7 +319,7 @@ MOUSETIME=: sessiontime''
 GWH=: 0 0
 XYWH=: ''
 MINWH=: 160 20
-HWNDP=: ''
+HWNDP=: 0
 LOCK=: 0
 BOX=: ''
 CURSOR=: 0
@@ -330,7 +330,7 @@ PDF=: ''
 SELECT=: $0
 STEP=: 1
 TESTLOC=: ''
-TESTHWNDP=: ''
+TESTHWNDP=: 0
 WINDIR=: 0
 GFONT=: PROFONT
 OLEOCX=: ''
@@ -349,7 +349,7 @@ PID=: ''
 WDNAMES=: <;._2 (0 : 0)
 wd
 wdhandler
-wdinfo
+sminfo
 wdq
 )
 j=. 0 : 0
@@ -653,7 +653,7 @@ rem form end;
 )
 wcode_run=: 3 : 0
 wd WCODE
-HCODE=: wd 'qhwndp'
+HCODE=: wdqhwndp''
 wd 'set wccontrol 1'
 'wccontrol wcfkey wcform wcorphan'=: ": each 1 0 0 0
 wclist=: ''
@@ -681,7 +681,7 @@ wd 'pclose'
 wcode_show=: 3 : 0
 smopen FNAME
 GLOBALS=: globals smread ''
-wd 'psel ',HCODE
+wd 'psel ',":HCODE
 select. (wccontrol,wcfkey,wcform,wcorphan) i. '1'
 case. 0 do.
   wcodelist controlevents''
@@ -1158,16 +1158,17 @@ bufsnap''
 )
 design_view_button=: 3 : 0
 if. #TESTLOC do.
-  open=. wd :: 0: 'psel ',TESTHWNDP,';pclose'
+  open=. wd :: 0: 'psel ',(":TESTHWNDP),';pclose'
   coerase :: ] TESTLOC
-  TESTLOC=: TESTHWNP=: ''
+  TESTLOC=: ''
+  TESTHWNP=: 0
   if. open do. return. end.
 end.
 TESTLOC=: cocreate ''
 a=. form_create 1
 try. wd__TESTLOC a
 catch.
-  err=. wd 'qer'
+  err=. wdqer''
   ndx=. >: err i. ':'
   msg=. ndx {. err
   pos=. {.". ndx }. err
@@ -1180,7 +1181,7 @@ catch.
   return.
 end.
 wd 'pshow'
-TESTHWNDP=: wd 'qhwndp'
+TESTHWNDP=: wdqhwndp''
 selectdesign''
 )
 design_ok_button=: design_close
@@ -1265,8 +1266,8 @@ drawinit=: 3 : 0
 wd 'pc form'
 wd 'xywh 0 0 100 100;cc s static;setshow s 0'
 wd 'cc g isigraph nopas;'
-HWNDP=: wd 'qhwndp'
-HWNDG=: wd 'qhwndc g'
+HWNDP=: wdqhwndp''
+HWNDG=: wdqhwndc 'g'
 wd 'pn "',((*#PCN) pick PID;PCN),'"'
 wd MNU
 wd SBR
@@ -1281,7 +1282,7 @@ if. # SELECT do.
   selectdesign''
   wd 'set id *', ({.SELECT) pick IDS
   wd 'set pos *',": ({.SELECT) { CCS
-  wd 'psel ',HWNDP
+  wd 'psel ',":HWNDP
 end.
 )
 drawsize=: 3 : 0
@@ -1289,13 +1290,13 @@ makeccx''
 fwh=. MINWH >. PAS + >./ +/"2 [ _2 [\"1 CCX
 if. y *. fwh -: FWH do. return. end.
 FWH=: fwh
-wh=. _2 {. 0 ". wd 'qchildxywhx s'
-fx=. 0 ". wd 'qformx'
+wh=. _2 {. wdqchildxywhx 's'
+fx=. wdqformx''
 wd 'setxywhx s 0 0 ',":FWH
 wd 'pmovex ',":fx + 0 0,FWH - wh
 )
 form_g_paint=: 3 : 0
-glsel HWNDG
+glsel ":HWNDG
 glclear''
 glfont GFONT
 glcursor IDC_ARROW
@@ -2131,7 +2132,7 @@ form_pctrl_fkey=: form_parent_button
 form_sctrl_fkey=: saveform
 form_tctrl_fkey=: order
 selectform=: 3 : 0
-wd 'psel ',HWNDP
+wd 'psel ',":HWNDP
 )
 copyselect=: 3 : 0
 copybuffer=: SELECT
@@ -2209,7 +2210,7 @@ rem form end;
 wmenu_run=: 3 : 0
 wd WMENU
 wd 'pn "Menu - ',PID,'"'
-selectmenu=: wd bind ('psel ',wd 'qhwndp')
+selectmenu=: wd bind ('psel ',":@wdqhwndp'')
 wd 'set menudef *',getmenudef MNU
 wd 'pshow;'
 )
@@ -2428,7 +2429,7 @@ if. CAPTURE do.
   selectdesign''
   wd 'set pos *',": tocoordsxywh1 c
   wd 'setupdate pos'
-  glsel HWNDG
+  glsel ":HWNDG
 elseif. #SELECT do.
   if. CURSOR = IDC_CROSS do.
     capture CAPMOVE,,SELECT { CCX
@@ -2493,7 +2494,7 @@ wd NEWCC
 if. IFJAVA do.
   wd 'setenable ocx 0'
 end.
-selectnewcc=: wd bind ('psel ',wd 'qhwndp')
+selectnewcc=: wd bind ('psel ',":@wdqhwndp'')
 newcc_standard_button ''
 wd 'setfocus class'
 wd 'pshow'
@@ -2597,7 +2598,7 @@ rem form end;
 newform_run=: 3 : 0
 frm=. {."1 [ 1!:0 jpath '~addons/gui/wdclass/forms/*.ijs'
 wd NEWFORM
-NEWFORMHWNDP=: wd 'qhwndp'
+NEWFORMHWNDP=: wdqhwndp''
 wd 'set formtype ', ; frm ,each LF
 wd 'setselect formtype 0'
 wd 'setfocus formid'
@@ -2637,7 +2638,7 @@ FNAME fwrite~ toHOST dat
 openform _1 pick nms
 )
 newform_close=: 3 : 0
-wd 'psel ',NEWFORMHWNDP
+wd 'psel ',":NEWFORMHWNDP
 wd 'pclose'
 )
 newform_cancel=: newform_cancel_button=: newform_close
@@ -2706,7 +2707,7 @@ sty=. 'closeok dialog nomax nomenu nomin nosize owner'
 opt=. 'pcenter ptop'
 Wpmv=: PMV
 wd WPARENT
-selectparent=: wd bind ('psel ',wd 'qhwndp')
+selectparent=: wd bind ('psel ',":@wdqhwndp'')
 wd 'set styles ',sty
 for_n. I. (;:sty) e. ;: PST do.
   wd 'setselect styles ',":n
@@ -2734,7 +2735,7 @@ if. #Wpmv do.
   Wpmv=: ''
 else.
   selectform''
-  Wpmv=: roundint (0 ". wd 'qformx') % GSCALE
+  Wpmv=: roundint (wdqformx'') % GSCALE
 end.
 selectparent''
 wd 'setcaption pmove *',": Wpmv
@@ -2806,7 +2807,7 @@ rem form end;
 wstatus_run=: 3 : 0
 wd WSTATUS
 wd 'pn "Status - ',PID,'"'
-selectstatus=: wd bind ('psel ',wd 'qhwndp')
+selectstatus=: wd bind ('psel ',":@wdqhwndp'')
 wd 'set statusdef *',getstatusdef SBR
 wd 'pshow;'
 )
@@ -2887,12 +2888,12 @@ rem form end;
 wtbar_run=: 3 : 0
 rerun=. 1 = {. y
 if. rerun do.
-  xywh=. wd 'qformx'
+  xywh=. wdformx''
   wd 'psel wtbar;pclose'
 end.
 wd WTBAR
 wd 'pn "Toolbar - ',PID,'"'
-selecttoolbar=: wd bind ('psel ',wd 'qhwndp')
+selecttoolbar=: wd bind ('psel ',":@wdqhwndp'')
 wd 'setcaption sdef *Definition: id  index  tooltip  _  statushelp'
 wtbar_showdef''
 if. rerun do.
@@ -2913,22 +2914,22 @@ wtbar_showtoolbar=: 3 : 0
 try.
   dat=. 1!:1 < TBFN
 catch.
-  wdinfo 'Toolbar';'file read error: ',":>TBFN return.
+  sminfo 'Toolbar';'file read error: ',":>TBFN return.
 end.
 if. -. '.bmp' -: tolower _4 {. TBFN do.
   msg=. 'The Form Editor only supports bitmap toolbar files with extension .bmp.'
-  wdinfo 'Toolbar';msg return.
+  sminfo 'Toolbar';msg return.
 end.
 
 bits=. 0 pick getbmphdr dat
 if. -. bits e. 4 8 24 do.
-  wdinfo 'Toolbar';'Only 4, 8 or 24 bit bitmaps supported by Toolbar' return.
+  sminfo 'Toolbar';'Only 4, 8 or 24 bit bitmaps supported by Toolbar' return.
 end.
 BMP=: readbmp TBFN
 'rws cls'=. $ BMP
 cnt=. cls % 16
 if. cnt ~: <.cnt do.
-  wdinfo 'Toolbar';'Bitmaps should have a width of 16 pixels' return.
+  sminfo 'Toolbar';'Bitmaps should have a width of 16 pixels' return.
 end.
 
 wtbar_showbar''
@@ -2941,7 +2942,7 @@ wtbar_showbar=: 3 : 0
 
 'rws cls'=. $ BMP
 cnt=. cls % 16
-wh=. _2 {. 0 ". wd 'qchildxywhx tbbmp'
+wh=. _2 {. wdqchildxywhx 'tbbmp'
 scl=. <./ wh % cls,rws
 'w h'=. <. scl * cls,rws
 exp=. (- 0: , }:) <. 0.5 + +/\ rws $ h % rws
@@ -2951,15 +2952,15 @@ bmp=. exp #"1 bmp
 
 glsel 'tbbmp'
 glclear''
-glrgb 0 ". wd 'qcolor 15'
+glrgb wdqcolor 15
 glpen 0 0
 glbrush''
 glrect 0 0,wh
 glpixels (0 0, |.$bmp), ,bmp
-wh=. _2 {. 0 ". wd 'qchildxywhx tbids'
+wh=. _2 {. wdqchildxywhx 'tbids'
 glsel 'tbids'
 glclear''
-glrgb 0 ". wd 'qcolor 15'
+glrgb wdqcolor 15
 glpen 0 0
 glbrush''
 glrect 0 0,wh
@@ -2976,7 +2977,7 @@ toi=. 256&#.@(a.&i.)@(|."1)
 dat=. y
 bits=. toi 28 29 {dat
 if. toi 30 31 32 33{dat do.
-  wdinfo 'Toolbar';'Compressed format not supported'
+  sminfo 'Toolbar';'Compressed format not supported'
   0 return.
 end.
 'off shdr cls rws'=. toi (10+i.4 4){dat
@@ -3113,14 +3114,14 @@ gllines_jgl2_ y
 gopen=: 3 : 0
 y=. 2{.}.0;y
 'c n'=. (<'isigraph') (I. y=<'') }y
-if. (<c) e. <;._2 wd 'qp;' do.
-  wd 'psel ',c
+if. (<c) e. <;._2 wdqp'' do.
+  wd 'psel ',":c
   glclear_jgl2_''
 else.
   wd 'pc ',c,' closeok;pn *',n
   wd 'xywh 0 0 150 150;cc g0 isigraph rightmove bottommove'
   wd 'pas 0 0;pcenter'
-  fx=. 0 ". wd 'qformx'
+  fx=. wdqformx''
   wd 'pmove 150 5 ',": 2 }. fx
   wd 'pshow;'
 end.
@@ -3146,7 +3147,7 @@ gscale=: 500&* @ >:
 gshow=: 3 : 0
 'isigraph' gshow y
 :
-wd 'psel ',x,';'
+wd 'psel ',(":x),';'
 glpaint_jgl2_''
 )
 HUES=: 255*|."1#:7|3^i.7
@@ -3407,7 +3408,7 @@ end.
 wd 'setfont e0 ',VIEWFONT
 wd 'setfont e1 ',VIEWFONT
 wd 'pas 0 0;pcenter;'
-formhwnd=: wd 'qhwndp'
+formhwnd=: wdqhwndp''
 )
 jview_getargs=: 3 : 0
 defprint=. (0<#VIEWPRINT) *. 0=IFWINCE
@@ -3452,7 +3453,7 @@ if. MAXSIZE <: #txt do.
   msg=. 'Text size of ',(cifmt1 #txt),' characters is too large to view.'
   msg=. msg,LF,LF,'Truncated to ',(cifmt1 MAXSIZE),' characters.'
   txt=. (MAXSIZE {. txt),LF,'...'
-  wdinfo name;msg
+  sminfo name;msg
 end.
 TEXT=: txt
 
@@ -3472,8 +3473,8 @@ try.
     wd 'setshow e1 1;setshow e0 0'
   end.
 catch.
-  msg=. LF,LF,({.~ i.&':') wd 'qer'
-  wdinfo 'jview';'Unable to view text',msg
+  msg=. LF,LF,({.~ i.&':') wdqer''
+  sminfo 'jview';'Unable to view text',msg
   wd 'psel jview;pclose'
   destroy''
   return.
@@ -3489,7 +3490,7 @@ jview_close 1
 jview_Print_button=: 3 : 0
 txt=. jview_gettext''
 try. '' VIEWPRINT~ txt
-catch. wdinfo 'Print';'Print failed.',LF,LF,'Check the printer is installed'
+catch. sminfo 'Print';'Print failed.',LF,LF,'Check the printer is installed'
 end.
 )
 jview_Top_button=: 3 : 0
@@ -3561,7 +3562,7 @@ EMPTY
 )
 coclass 'jijs'
 getSMSEL=: 3 : 0
-'' return.
+0 return.
 if. -. (<SMSEL) e. 1 {"1 wdforms'' do.
   smsel ''
 end.
@@ -3644,8 +3645,8 @@ msk # 1 {"1 fms
 )
 qsmsize=: 3 : 0
 0 0 200 200 return.
-wd 'psel ',SMSEL
-0 ". wd 'qformx'
+wd 'psel ',":SMSEL
+wdqformx''
 )
 qsmlastijs=: 3 : 0
 '' return.
@@ -3693,7 +3694,7 @@ end.
 )
 smfocus=: 3 : 0
 EMPTY return.
-wd 'psel ',SMSEL
+wd 'psel ',":SMSEL
 wd 'pactive'
 wd 'setfocus e'
 )
@@ -3701,8 +3702,8 @@ smfocusact=: smfocus @ smselact
 smfocusout=: smfocus @ smselout
 smgetsel=: 3 : 0
 _1 return.
-wd 'psel ',SMSEL
-dat=. wd 'qd'
+wd 'psel ',":SMSEL
+dat=. wdqd''
 ndx=. ({."1 dat) i. <'e_select'
 0 ". 1 pick ndx { dat
 )
@@ -3714,22 +3715,22 @@ if. 0 = #id do.
   create__a y
 else.
   smsel id
-  wd 'psel ',SMSEL
+  wd 'psel ',":SMSEL
 end.
 wd 'setfocus e'
 empty''
 )
 smmove=: 3 : 0
 EMPTY return.
-wd 'psel ',SMSEL
+wd 'psel ',":SMSEL
 wd 'pmovex ',": y
 )
 smprompt=: 3 : 0
 EMPTY return.
 'txt def'=. 2 {. boxxopen y
 smsel qsmout''
-wd 'psel ',SMSEL
-dat=. wd 'qd'
+wd 'psel ',":SMSEL
+dat=. wdqd''
 ndx=. ({."1 dat) i. <,'e'
 ses=. 1 pick ndx { dat
 ses=. ses, (LF ~: _1 {. ses) # LF
@@ -3743,7 +3744,7 @@ readid16 SMSEL
 )
 smreplace=: 3 : 0
 EMPTY return.
-wd 'psel ',SMSEL
+wd 'psel ',":SMSEL
 wd 'setreplace e *',utf8 y
 )
 smsave=: 3 : 0
@@ -3756,7 +3757,7 @@ end.
 )
 smscroll=: 3 : 0
 EMPTY return.
-wd 'psel ',SMSEL
+wd 'psel ',":SMSEL
 loc=. id2loc SMSEL
 txt=. SMTEXT__loc
 if. (y=0) +. 0=#txt do.
@@ -3780,7 +3781,7 @@ FKEYS=: sort (~: {."1 def) # def
 )
 smsetselect=: 3 : 0
 EMPTY return.
-wd 'psel ',SMSEL
+wd 'psel ',":SMSEL
 wd 'setselect e ',": y
 )
 smsetsaved=: 3 : 0
@@ -3790,6 +3791,6 @@ IFSAVED__loc=: 1
 )
 smwrite=: 3 : 0
 EMPTY return.
-wd 'psel ',SMSEL
+wd 'psel ',":SMSEL
 wd 'set e *',utf8 y
 )

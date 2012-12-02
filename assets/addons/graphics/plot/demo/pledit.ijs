@@ -60,19 +60,19 @@ pd 'reset'
 )
 
 plotedit_help_button=: 3 : 0
-wdinfo 'Plot Demo';PLOTEDITHELP,DBAR,'pd ''show'''
+sminfo 'Plot Demo';PLOTEDITHELP,DBAR,'pd ''show'''
 )
 
 NB. =========================================================
 plotedit_redisplay_button=: 3 : 0
 GRAF=: graf
 try.
-  wd 'psel ',PForm
+  wd 'psel ',":PForm
   pd 'reset ',PForm
   plotrun graf
   wd 'psel plotedit'
 catch.
-  wdinfo 'error in graph definition'
+  sminfo 'error in graph definition'
   0 return.
 end.
 1
@@ -97,5 +97,5 @@ ftr=. ndx }. dat
 ftr=. ftr, LF -. {:ftr
 new=. hdr,grf,ftr
 new fwrites f
-wdinfo 'Plot';'Saved: ',GNAME
+sminfo 'Plot';'Saved: ',GNAME
 )

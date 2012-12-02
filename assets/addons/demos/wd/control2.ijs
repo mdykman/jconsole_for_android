@@ -15,14 +15,14 @@ pas 6 6;pcenter;
 rem form end;
 )
 
-wdedits=: wdinfo bind ('edit definition'&;)
+wdedits=: sminfo bind ('edit definition'&;)
 
 edits_run=: 3 : 0
 wd EDITS
 ITALIC=: 0
 SIZE=: 15
 wd 'set edit *single line edit box'
-c=. 0". wd 'qhwndc richeditm'
+c=. wdqhwndc 'richeditm'
 j4r=. '<span font="Arial Black 32" fgcolor="red">J Release 7</span>'
 if. 'Android'-.@-:UNAME do.
   gtk_label_set_markup_jgtk_ c ; j4r
@@ -34,7 +34,7 @@ edits_cancel_button=: wd bind 'pclose'
 
 edits_brich_button=: wdedits bind (0 : 0)
 wd 'cc richeditm richeditm;'
-hc=. 0". wd 'qhwndc richeditm'
+hc=. wdqhwndc 'richeditm'
 j4r=. '<span font="Arial Black 32" fgcolor="red">J Release 7</span>'
 if. 'Android'-.@-:UNAME do.
   gtk_label_set_markup_jgtk_ hc ; j4r

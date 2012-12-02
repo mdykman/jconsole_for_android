@@ -12,7 +12,7 @@ EMPTY
 )
 destroy=: 3 : 0
 try.
-  glsel GRIDHWNDC
+  glsel ":GRIDHWNDC
   capture 0
 catch. end.
 codestroy''
@@ -24,7 +24,7 @@ BOXTYPE=: 32
 SPARSETYPE=: 1024 2048 4096 8192 16384 32768
 CHARTYPE=: 2 131072
 3 : 0''
-if. 'Android'-:UNAME do.
+if. IFQT +. 'Android'-:UNAME do.
   NonAlfaNum=: $0
 else.
   NonAlfaNum=: (GDK_F1_jgtk_ + i.12), GDK_BackSpace_jgtk_, GDK_Tab_jgtk_, GDK_Linefeed_jgtk_, GDK_Clear_jgtk_, GDK_Return_jgtk_
@@ -158,7 +158,7 @@ gpixel=: 3 : 0
 glcmds ,4 2024 ,"1 y
 )
 gridfocus=: 3 : 0
-if. 1 4 8 e.~ 3!:0 GRIDHWNDC do. return. end.
+if. 0~: 4!:0 <'sysfocus__locV' do. return. end.
 if. IFUNIX >: GRIDID -: sysfocus__locV do.
   wd 'setfocus ',GRIDID
 end.
@@ -426,7 +426,7 @@ NaN=: __
 
 NoShow=: 0
 
-'Scw Sch'=: 2 {. 0 ". wd :: ('800 600'"_) 'qm'
+'Scw Sch'=: 2 {. wdqm :: (800 600"_) ''
 Roff=: 0
 Hier=: 0
 Sparse=: 0
@@ -501,7 +501,7 @@ GRIDFLIP=: 0
 GRIDMARGIN=: 4 6 2 0
 GRIDWINDOW=: 0
 GRIDID=: 'grid'
-GRIDHWNDC=: 0 [ ''
+GRIDHWNDC=: 0
 GRIDPID=: ''
 GRIDLOC=: ''
 
@@ -627,17 +627,17 @@ if. 0 = #cc=. CELLCOLOR do.
   cc=. CELLCOLORDEF
 end.
 if. 1 = */ $ cc do.
-  CellColor=: {. cc
+  CellColor=: '' ($,) cc
 else.
   CellColor=: rws $ cls $"1 tomatrix cc
 end.
 if. 1 = */ $ CELLEDIT do.
-  CellEdit=: {. CELLEDIT
+  CellEdit=: '' ($,) CELLEDIT
 else.
   CellEdit=: rws $ cls $"1 tomatrix CELLEDIT
 end.
 if. 1 = */ $ CELLFONT do.
-  CellFont=: {. CELLFONT
+  CellFont=: '' ($,) CELLFONT
 else.
   CellFont=: rws $ cls $"1 tomatrix CELLFONT
 end.
@@ -708,14 +708,14 @@ EMPTY
 j=. 'mbldbl mbldown mblup mbmdown mbmdbl mbmup mbrdbl mbrdown mbrup mmove mwheel'
 EVENTS=: ;: j,' char copy focus focuslost paint paste print undo'
 initevents=: 3 : 0
-if. (''-:GRIDHWNDC) +. 0-:GRIDHWNDC do.
-  GRIDHWNDC=: wd ::(''"_) 'qhwndc ',GRIDID
+if. 0=GRIDHWNDC do.
+  GRIDHWNDC=: wdqhwndc ::0: GRIDID
 end.
-assert. -. (''-:GRIDHWNDC) +. 0-:GRIDHWNDC
+assert. 0~:GRIDHWNDC
 if. #GRIDPID do.
   pid=. GRIDPID
 else.
-  if. 2 131072 e.~ 3!:0 GRIDHWNDC do. pid=. getparentid locP end.
+  if. 4 e.~ 3!:0 GRIDHWNDC do. pid=. getparentid locP end.
 end.
 GridPid=: pid
 if. 3=nameclass__locP <GRIDID,'_gridhandler' do.
@@ -740,7 +740,7 @@ if. GRIDFORMEVENTS do.
   end.
 else.
   locV=: coname''
-  glsel GRIDHWNDC
+  glsel ":GRIDHWNDC
   glsetlocale ::0: >locV
   wd ::0: 'setlocale ',GRIDID,' ',>locV
   f=. (<pid,'_',GRIDID,'_') ,each EVENTS
@@ -750,7 +750,7 @@ end.
 0
 )
 getparentid=: 3 : 0
-if. 0=#fms=. <;._2;._2 wd 'qpx' do. '' return. end.
+if. 0=#fms=. <;._2;._2 wdqpx'' do. '' return. end.
 act=. 0 ". &> 4 {"1 fms
 fms=. fms \: (act=0),.act
 ndx=. (2 {"1 fms) i. y
@@ -1033,7 +1033,7 @@ Twh=: 1 + (Ts - Tx),Tt - Ty
 )
 showit=: 3 : 0
 showitn y
-glpaint''
+glpaint`glpaintx@.(IFQT+.'Android'-:UNAME)''
 )
 showitn=: 3 : 0
 select. Show >. {. y,0
@@ -2222,7 +2222,11 @@ drawcelltext=: 3 : 0
 
 x=. (Vlen $ Mx + }:Vcx) + Valn=0
 s=. x + >. Valn * (Vlen $ Vcmw) - -: Vhex
-y=. (Vcls # My + }:Vcy) + CELLALIGNV * (Vcls # Vcmh) - -: Vvex
+if. IFQT do.
+  y=. (--:Vvex) + (Vcls # My + }.Vcy) + CELLALIGNV * (Vcls # Vcmh) - -: Vvex
+else.
+  y=. (Vcls # My + }:Vcy) + CELLALIGNV * (Vcls # Vcmh) - -: Vvex
+end.
 pos=. Hwh +"1 s,.y
 clr=. Vclr { CellColorFore
 pcf=. 5 2032 ,"1 clr,"1 [ 2 2040
@@ -2489,7 +2493,7 @@ else.
 end.
 )
 drawinit=: 3 : 0
-glsel GRIDHWNDC
+glsel ":GRIDHWNDC
 glclear''
 glcursor IDC_ARROW
 HvRects=: i.0 4
@@ -3916,7 +3920,7 @@ end.
 )
 coclass 'jzgrid'
 gridpinfo=: sminfo @ ('Grid'&;)
-gtkwidget_event=: 4 : 0
+isigraph_event=: 4 : 0
 evt=. >@{.y
 syshandler=. GRIDPID, '_handler'
 sysevent=. GRIDPID,'_',GRIDID,'_', evt
@@ -4000,20 +4004,21 @@ gridpshow=: 4 : 0
 CELLDATA=: y
 cube=. 2 < #$CELLDATA
 defs=. towords gridpdefs x
-if. 0 do.
+if. IFQT do.
   wd GRIDP
   destroy=: gridpdestroy
-  formx=. 0 ". wd 'qformx'
+  formx=. wdqformx''
   wh=. _2 {. getxywhx''
   grid=: '' conew 'jzgrid'
+  GRIDPID=: 'gridp'
+  GRIDID=: 'grid'
+  GRIDHWNDC=: wdqhwndc 'grid'
   wd 'pshow;'
-  show__grid defs
+  show__grid defs, ' GRIDPID GRIDID GRIDHWNDC'
   twh=. MinGrid >. readsize__grid wh
   del=. 0 <. twh - wh
-  if. -. IFJAVA do.
-    wd 'setxywhx grid 0 0 ',":wh + del
-  end.
-  wd 'pmovex ',":formx + 0 0,0 <. del+1+5*IFJAVA
+  wd 'setxywhx grid 0 0 ',":wh + del
+  wd 'pmovex ',":formx + 0 0,0 <. del+1
 else.
   if. -.IFGTK do. gtkinit_jgtk_ '' end.
   make_window''
@@ -4030,7 +4035,7 @@ else.
   del=. 0 <. twh - wh
   gtk_widget_set_size_request_jgtk_ canvas ; <("0) wh + del
   gtk_window_move_jgtk_ window ; <("0) <. del+1
-  evtloop_jgtk_''
+  evtloop''
 end.
 EMPTY
 )
@@ -4043,13 +4048,15 @@ rem form end;
 gridpdestroy=: 3 : 0
 destroy__grid''
 wd ::0: 'pclose'
-gtk_widget_destroy_jgtk_ ::0: window
-if. -.IFGTK do.
-  f=. 1
-  if. (0: <: 18!:0) <'gtkwd' do.
-    if. 0~: #windowList_gtkwd_ do. f=. 0 end.
+if. IFQT +: 'Android'-:UNAME do.
+  gtk_widget_destroy_jgtk_ ::0: window
+  if. -.IFGTK do.
+    f=. 1
+    if. (0: <: 18!:0) <'gtkwd' do.
+      if. 0~: #windowList_gtkwd_ do. f=. 0 end.
+    end.
+    if. f do. gtk_main_quit_jgtk_'' [ gtkMainLoop_jgtk_=: 0 end.
   end.
-  if. f do. gtk_main_quit_jgtk_'' [ gtkMainLoop_jgtk_=: 0 end.
 end.
 codestroy''
 )
@@ -4285,7 +4292,7 @@ mbmdown=: 3 : 0
 gridfocus''
 mouseset''
 if. Mxy inrect Vxywh do.
-  mclick mousepos ''
+  mclickx mousepos ''
 end.
 )
 mbmup=: 3 : 0

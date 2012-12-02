@@ -14,7 +14,7 @@ MINWH=: 200 200
 DEFWH=: 360 360
 
 create=: 3 : 0
-if. GUI *. -.IFGTK do.
+if. GUI > IFGTK+.IFQT do.
   if. 'Android'-:UNAME do.
     require 'gui/android'
   else.
@@ -26,7 +26,8 @@ end.
 destroy=: 3 : 0
 if. GUI do.
   if. 'Android'-:UNAME do.
-  else.
+  elseif. IFQT do.
+  elseif. do.
     if. -.IFGTK do.
       gtk_main_quit''
     end.
@@ -146,6 +147,11 @@ if. GUI *. IFGTK *. 0~:#VMH do.
   (txy,siz) setwinpos window
 end.
 )
+hforms=: 3 : 0
+fms=. <;._2 &> <;._2 wdqpx''
+fms=. fms #~ (1{"1 fms) e. VMH
+fms \: 0 ". &> 4{"1 fms
+)
 hremove=: 3 : 0
 setvmh VMH -. coname''
 )
@@ -190,11 +196,13 @@ mat=. , mwh fitvm mat
 glpixels (0 0, mwh), mat
 glpaint''
 SHOW=: 1
+EMPTY
 )
 viewmat_close=: 3 : 0
 hremove''
 if. 'Android'-:UNAME do.
-else.
+elseif. IFQT do.
+elseif. do.
   gtk_widget_destroy window
   if. -.IFGTK do. gtk_main_quit '' end.
 end.
@@ -284,7 +292,7 @@ if. 0=#fms
 do. mbinfo 'viewmat';'No viewmat forms.' return.
 end.
 wd 'psel ',(<0 1) pick fms
-_2 {. 0 ". wd 'qchildxywhx ',GID
+_2 {. wdqchildxywh GID
 )
 readmat=: 3 : 0
 fms=. hforms''
@@ -313,8 +321,8 @@ do. mbinfo 'viewmat';'No viewmat forms.' return.
 end.
 loc=. (<0 2) { fms
 wd 'psel ',(<0 1) pick fms
-form=. 0 ". wd 'qformx'
-xywh=. 0 ". wd 'qchildxywhx ',GID
+form=. wdqformx''
+xywh=. wdqchildxywh GID
 dif=. 0 0, y - _2 {. xywh
 wd 'pmovex ',":form + dif
 )
@@ -335,7 +343,7 @@ if. GUI do.
     0 StartActivity_ja_ (>a); 'onDestroy'
   else.
     empty vmrun__a ''
-    if. -.IFGTK do. gtk_main '' end.
+    if. -.IFGTK+.IFQT do. gtk_main '' end.
   end.
 else.
   empty vmrun__a ''
@@ -367,10 +375,17 @@ mwh0=: mwh
 vmwin^:GUI mwh
 hcascade''
 hadd''
+if. IFQT do.
+  wd 'pshow'
+end.
 )
 vmwin=: 3 : 0
 if. 'Android'-:UNAME do.
-else.
+elseif. IFQT do.
+  wd 'pc viewmat;pn *',TITLE
+  wd 'cc g isigraph'
+  wd 'pmovex 50 100 ', ":mwh0
+elseif. do.
   newwindow TITLE
   gtk_window_set_position window,GTK_WIN_POS_CENTER_ALWAYS
   consig3 window;'key-press-event';'viewmat_key_press'
@@ -380,7 +395,7 @@ else.
   windowfinish''
 end.
 )
-gtkwidget_event=: androidwidget_event=: 4 : 0
+isigraph_event=: 4 : 0
 evt=. >@{.y
 syshandler=. 'viewmat_handler'
 sysevent=. 'viewmat_g_', evt

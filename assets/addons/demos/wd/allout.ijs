@@ -328,7 +328,7 @@ NB. =========================================================
 sub_sgm_button=: sub_sgn_button=: sub_ok_button
 
 NB. =========================================================
-wdpclose=: [:wd :: empty 'psel '&,@(,&';pclose')
+wdpclose=: [: wd :: empty 'psel ' , ';pclose' ,~ ":
 main_close=: main_cancel=: wdpclose bind 'main'
 
 main_run''

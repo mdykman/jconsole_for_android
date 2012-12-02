@@ -64,7 +64,7 @@ Poly_auto_button=: pauto
 pauto=: 3 : 0
 v=. 3
 h=. 5
-wds=. 1&e. @ ('Poly'&E.) @ wd bind 'qp'
+wds=. 1&e. @ ('Poly'&E.) @ wdqp
 
 while. 1 do.
   HP=: HP+h

@@ -1,7 +1,7 @@
 NB. regular expression demo
 
 NB. use markup language for gtklabel instead of real richeditm
-HWNDP=: ''
+HWNDP=: 0
 
 require 'gtkwd files regex strings'
 
@@ -52,7 +52,7 @@ NB. =========================================================
 regdemo_run=: 3 : 0
 wd REGDEMO
 wd 'setfont out ',FIXFONT
-HWNDP=: wd 'qhwndp'
+HWNDP=: wdqhwndp''
 newtext STDTEXT
 wd 'setfocus pat'
 dopattern 6
@@ -86,7 +86,7 @@ p=. g_markup_escape_text_jgtk_ t ; #t
 assert. 0~:p
 g_free_jgtk_ p [ t=. memr p,0 _1 2
 t=. t rplc (125{a.);'<span fgcolor="red">';(126{a.);'</span>'
-hc=. 0". wd 'qhwndc out'
+hc=.  wdqhwndc 'out'
 gtk_label_set_markup_jgtk_ hc ; t
 )
 

@@ -12,7 +12,7 @@ if. 0~: 4!:0 <'gtkInitDone_jgtk_' do. gtkInitDone_jgtk_=: 0 end.
 coclass 'droidwd'
 coinsert 'jni jaresu'
 
-wantstatusbar=: 0
+wantstatusbar=: 1
 barsheight=: 12
 
 jniImport ::0: (0 : 0)
@@ -1585,7 +1585,7 @@ syslocalep=. >WindowListLocale{pa
 syslocalec=. ''
 syshwndp=. ":cWindow
 syshwndc=. ":cChild
-sysfocus=. getcchildid gtk_window_get_focus cWindow
+sysfocus=. ''
 syslastfocus=. ''
 sysmodifiers=. ''
 wdd=. ;: 'syslocalep syslocalec syshwndp syshwndc sysfocus syslastfocus sysmodifiers'
@@ -2291,7 +2291,7 @@ jniCheck DeleteLocalRef <dialog
 1
 )
 
-androidwidget_event=: 4 : 0
+isigraph_event=: 4 : 0
 assert. 'jglcanvas' -: >@{.x
 l=. 1{x
 widget=. canvas__l
@@ -2610,29 +2610,37 @@ if. 0= cContainer do.
     jniCheck scrollvw ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
     jniCheck DeleteLocalRef <lp
     jniCheck view ('addView (LView;)V' jniMethod)~ scrollvw
+    jniCheck tbar=. activity jniNewObject 'LinearLayout LContext;'
+    jniCheck tbar ('setId (I)V' jniMethod)~ tbaridn=: idn=. >:idn
+    jniCheck tbar ('setOrientation (I)V' jniMethod)~ HORIZONTAL
+    jniCheck lp=. ('AbsoluteLayout$LayoutParams IIII') jniNewObject~ <"0 dpw2px (MATCH_PARENT, WRAP_CONTENT), 0 0
+    jniCheck tbar ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
+    jniCheck tbar ('setVisibility (I)V' jniMethod)~ 8
+    jniCheck DeleteLocalRef <lp
+    jniCheck view ('addView (LView;)V' jniMethod)~ tbar
     jniCheck fixed1=. activity jniOverride 'org.dykman.jn.android.widget.AbsoluteLayout LContext;' ; 'droidwd' ; 'fixed1' ; 'onLayout'
     jniCheck fixed1 ('setId (I)V' jniMethod)~ fixedidn=: idn=. >:idn
-    jniCheck lp=. ('FrameLayout$LayoutParams II') jniNewObject~ MATCH_PARENT;wantstatusbar{MATCH_PARENT,WRAP_CONTENT
+    jniCheck lp=. ('LinearLayout$LayoutParams IIF') jniNewObject~ MATCH_PARENT;(wantstatusbar{MATCH_PARENT,WRAP_CONTENT);1
     jniCheck fixed1 ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
     jniCheck DeleteLocalRef <lp
     jniCheck scrollvw ('addView (LView;)V' jniMethod)~ fixed1
   else.
+    jniCheck tbar=. activity jniNewObject 'LinearLayout LContext;'
+    jniCheck tbar ('setId (I)V' jniMethod)~ tbaridn=: idn=. >:idn
+    jniCheck tbar ('setOrientation (I)V' jniMethod)~ HORIZONTAL
+    jniCheck lp=. ('AbsoluteLayout$LayoutParams IIII') jniNewObject~ <"0 dpw2px (MATCH_PARENT, WRAP_CONTENT), 0 0
+    jniCheck tbar ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
+    jniCheck tbar ('setVisibility (I)V' jniMethod)~ 8
+    jniCheck DeleteLocalRef <lp
+    jniCheck view ('addView (LView;)V' jniMethod)~ tbar
     jniCheck fixed1=. activity jniOverride 'org.dykman.jn.android.widget.AbsoluteLayout LContext;' ; 'droidwd' ; 'fixed1' ; 'onLayout'
     jniCheck fixed1 ('setId (I)V' jniMethod)~ fixedidn=: idn=. >:idn
-    jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ MATCH_PARENT;wantstatusbar{MATCH_PARENT,WRAP_CONTENT
+    jniCheck lp=. ('LinearLayout$LayoutParams IIF') jniNewObject~ MATCH_PARENT;(wantstatusbar{MATCH_PARENT,WRAP_CONTENT);1
     jniCheck fixed1 ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
     jniCheck DeleteLocalRef <lp
     jniCheck view ('addView (LView;)V' jniMethod)~ fixed1
     scrollvw=. 0
   end.
-  jniCheck tbar=. activity jniNewObject 'LinearLayout LContext;'
-  jniCheck tbar ('setId (I)V' jniMethod)~ tbaridn=: idn=. >:idn
-  jniCheck tbar ('setOrientation (I)V' jniMethod)~ HORIZONTAL
-  jniCheck lp=. ('AbsoluteLayout$LayoutParams IIII') jniNewObject~ <"0 dpw2px (MATCH_PARENT, WRAP_CONTENT), 0 0
-  jniCheck tbar ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-  jniCheck tbar ('setVisibility (I)V' jniMethod)~ 8
-  jniCheck DeleteLocalRef <lp
-  jniCheck fixed1 ('addView (LView;)V' jniMethod)~ tbar
   jniCheck sbar=. activity jniNewObject 'LinearLayout LContext;'
   jniCheck sbar ('setId (I)V' jniMethod)~ sbaridn=: idn=. >:idn
   jniCheck sbar ('setOrientation (I)V' jniMethod)~ HORIZONTAL
@@ -3654,8 +3662,8 @@ a: -.~ dat -. each <del
 )
 wdcenter=: 3 : 0
 'fx fy fw fh'=. 0&". :: ] y
-'sx sy'=. sxy=. 2 {. 0 ". wd 'qm'
-'w h'=. sxy <. _2 {. 0 ". wd 'qformx'
+'sx sy'=. sxy=. 2 {. wdqm''
+'w h'=. sxy <. _2 {. wdqformx''
 x=. 0 >. (sx-w) <. fx + <. -: fw-w
 y=. 0 >. (sy-h) <. fy + <. -: fh-h
 wd 'pmovex ',": x,y,w,h
@@ -3674,7 +3682,7 @@ wd 'clipcopy *',toHOST txt
 wde=: 3 : 0
 try. res=. wd y
 catch.
-  err=. wd 'qer'
+  err=. wdqer''
   ndx=. >: err i. ':'
   msg=. ndx {. err
   pos=. {.". ndx }. err
@@ -3689,8 +3697,8 @@ end.
 wdfit=: 3 : 0
 
 'mx my'=. 2{.y,(#y)}.1 1
-'x y w h'=. 0 ". wd 'qformx'
-'fx fy zx zy yc ym sx sy sw sh'=. 6 }. 0 ". wd 'qm'
+'x y w h'=. wdqformx''
+'fx fy zx zy yc ym sx sy sw sh'=. 6 }. wdqm''
 
 select. mx
 case. 0 do.
@@ -3727,7 +3735,7 @@ end.
 wd 'pmovex ',":x,y,w,h
 )
 wdforms=: 3 : 0
-if. 0=# z=. <;._2;._2 @ wd 'qpx' do. z=. 0 6$<'' end.
+if. 0=# z=. <;._2;._2 @ wdqpx '' do. z=. 0 6$<'' end.
 z
 )
 wdget=: 4 : 0
@@ -3740,7 +3748,7 @@ end.
 
 SYSPPC=: (<'syschild'),.'ppcnext';'ppcprevious'
 wdhandler=: 3 : 0
-wdq=: wd 'q'
+wdq=: wdqq''
 wd_val=. {:"1 wdq
 ({."1 wdq)=: wd_val
 if. 3=4!:0<'wdhandler_debug' do.
@@ -3748,6 +3756,9 @@ if. 3=4!:0<'wdhandler_debug' do.
 end.
 wd_ndx=. 1 i.~ 3 = 4!:0 [ 3 {. wd_val
 if. 3 > wd_ndx do.
+  if. (<sysevent) e. ;:'paint print char mwheel focus focuslost mmove mbldown mbldbl mblup mbmdown mbmdbl mbmup mbrdown mbrdbl mbrup' do.
+    glsel_jgl2_ ::0: syshwndc
+  end.
   wd_fn=. > wd_ndx { wd_val
   if. 13!:17'' do.
     wd_fn~''
@@ -3776,20 +3787,20 @@ if. 2=#$b=. ":b do. b=. }.,LF,.b end.
 f=. 8 u: DEL&, @ (,&DEL) @ -.&(0 127{a.)
 empty wd 'mb ',(f a),' ',(f b),' mb_iconinformation'
 )
-wdisparent=: boxopen e. <;._2 @ wd bind 'qp'
+wdisparent=: boxopen e. <;._2 @ wdqp
 wdishandle=: boxopen e. 1: {"1 wdforms
 wdmove=: 3 : 0
 '' wdmove y
 :
 'px py'=. y
-'sx sy sw sh'=. 12 13 14 15 { 0 ". wd 'qm'
-if. #x do. wd 'psel ',x end.
-'x y w h'=. 0 ". wd 'qformx'
+'sx sy sw sh'=. 12 13 14 15 { wdqm''
+if. (*#x)*.(x-.@-:0) do. wd 'psel ',":x end.
+'x y w h'=. wdqformx''
 if. px < 0 do. px=. sw - w - 1 + px end.
 if. py < 0 do. py=. sh - h - 1 + py end.
 wd 'pmovex ',": (px+sx),(py+sy),w,h
 )
-wdpclose=: [: wd :: empty 'psel ' , ,&';pclose'
+wdpclose=: [: wd :: empty 'psel ' , ';pclose' ,~ ":
 wdqshow=: 3 : 0
 txt=. (>{."1 wdq),.TAB,.>{:"1 wdq
 wdinfo 'wdq';(60 <. {:$txt) {."1 txt
@@ -3827,7 +3838,7 @@ sel=. ;sel ,each LF
 c=. 205 <. 80 >. (4*#hdr) >. c
 r=. 128 <. r
 
-if. (<'wdselect') e. <;._2 wd 'qp' do.
+if. (<'wdselect') e. <;._2 wdqp'' do.
   wd 'psel wdselect;pn '",hdr,'";'
 else.
   wd 'pc wdselect;pn *',hdr
@@ -3874,7 +3885,7 @@ end.
 
 pn=. (*#x)#'pn ',DEL,x,DEL,';'
 
-if. (<'status') e. <;._2 wd 'qp;' do.
+if. (<'status') e. <;._2 wdqp'' do.
   wd 'psel status;',pn
 else.
   size=. |. 0 100 >. 8 4*$];._2 msg,LF
@@ -3893,6 +3904,25 @@ jpathsep wd 8 u: 'mbopen ',y
 mbsave=: 3 : 0
 jpathsep wd 8 u: 'mbsave ',y
 )
+wdclippaste=: (wd bind 'clippaste') :: (''"_)
+wdqq=: (wd bind 'q') :: (''"_)
+wdqchildxywh=: (0 ". [: wd 'qchildxywh ' , ]) :: (0 0 0 0"_)
+wdqchildxywhx=: (0 ". [: wd 'qchildxywhx ' , ] ) :: (0 0 0 0"_)
+wdqcolor=: (0 ". [: wd 'qcolor ' , ":) :: ( 0 0 0"_)
+wdqd=: (wd bind 'qd') :: (''"_)
+wdqer=: (wd bind 'qer') :: (''"_)
+wdqformx=: (0 ". wd bind 'qformx') :: (0 0 800 600"_)
+wdqhinst=: (0 ". wd bind 'qhinst') :: 0:
+wdqhwndc=: (0 ". [: wd 'qhwndc ' , ]) :: 0:
+wdqhwndp=: (0 ". wd bind 'qhwndp') :: 0:
+wdqhwndx=: (0 ". wd bind 'qhwndx') :: 0:
+wdqm=: (0 ". wd bind 'qm') :: (800 600 8 16 1 1 3 3 4 4 19 19 0 0 800 570"_)
+wdqp=: (wd bind 'qp') :: (''"_)
+wdqprinters=: (wd bind 'qprinters') :: (''"_)
+wdqpx=: (wd bind 'qpx') :: (''"_)
+wdqscreen=: (0 ". wd bind 'qscreen') :: (264 211 800 600 96 96 32 1 _1 36 36 51"_)
+wdqwd=: (wd bind 'qwd')
+
 coclass 'wdbase'
 coinsert 'jni jaresu'
 

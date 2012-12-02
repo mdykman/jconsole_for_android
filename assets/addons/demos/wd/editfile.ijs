@@ -46,7 +46,7 @@ editfile_cancel_button=: 3 : 0
 editfile_open_button=: 3 : 0
 select=. {.".FileList_select
 if. FILENDX=select do.
-  wdinfo FORMNAME;'File is already open: ',FILENAME
+  sminfo FORMNAME;'File is already open: ',FILENAME
 else.
   if. 2 ~: savefile 1 do. displayfile select end.
 end.
@@ -56,7 +56,7 @@ editfile_FileList_button=: editfile_open_button
 
 editfile_save_button=: 3 : 0
 if. OLDTEXT -: FileText do.
-  wdinfo FORMNAME;'Text has not changed: ', FILENAME
+  sminfo FORMNAME;'Text has not changed: ', FILENAME
 else.
   savefile 0
 end.
@@ -86,7 +86,7 @@ savefile=: 3 : 0
 if. OLDTEXT -: FileText do. 0 return. end.
 if. y do.
   res=. 3 wdquery`0:@.('Android'-:UNAME) FORMNAME;'Text has changed: ',FILENAME,LF,LF,'OK to save it?'
-  if. res=1 do. wdinfo FORMNAME;'Not saved: ',FILENAME end.
+  if. res=1 do. sminfo FORMNAME;'Not saved: ',FILENAME end.
   if. res e. 1 2 do.
     displayselect''
     res return.
@@ -94,7 +94,7 @@ if. y do.
 end.
 FileText fwrite FILENAME
 OLDTEXT=: FileText
-wdinfo FORMNAME;'Text saved to: ',FILENAME
+sminfo FORMNAME;'Text saved to: ',FILENAME
 0
 )
 

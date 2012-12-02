@@ -11,3 +11,6 @@ graphics/afm - change history
 
 == 1.0.4 ==
  * android fonts
+
+== 1.0.5 ==
+ * qt fonts

@@ -49,11 +49,16 @@ PShow=: 0
 
 wd PLOTDEMO
 PForm=: 'plotdemo'
-PFormhwnd=: 0 ". wd 'qhwndp'
+if. IFQT do.
+  PFormhwnd=: wdqhwndp''
+  PIdhwnd=: wdqhwndc 'ps'
+else.
+  PFormhwnd=: wdqhwndp''
+  PIdhwnd=: wdqhwndc 'ps'
+end.
 PId=: 'ps'
-PIdhwnd=: wd 'qhwndc ps'
 wd 'pshow'
-pd 'reset ',PForm
+pd 'reset ',":PForm
 wd 'set M',PLDEMOSEL,' 1'
 plotruns 'D',PLDEMOSEL
 )
@@ -70,7 +75,7 @@ if. systype -: 'button' do.
     wd 'set M',PLDEMOSEL,' 0'
     PLDEMOSEL=: name
     wd 'set M',PLDEMOSEL,' 1'
-    pd 'reset ',PForm
+    pd 'reset ',":PForm
     if. 'Android'-:UNAME do.
       plotruns 'D',PLDEMOSEL
       glpaintx''
@@ -96,13 +101,13 @@ try. wd 'psel plotedit;pclose' catch. end.
 
 NB. =========================================================
 plotdemo_contents_button=: 3 : 0
-wdinfo 'help contents'
+sminfo 'help contents'
 )
 
 NB. =========================================================
 plotdemo_about_button=: 3 : 0
 j=. 'Plot Demo V',(4j2 ": PLDEMOVER)
-wdinfo 'Plot';j
+sminfo 'Plot';j
 )
 
 NB. =========================================================
@@ -134,7 +139,7 @@ ndx=. (#PLOTALL) | y + PLOTALL i. <'D',PLDEMOSEL
 wd 'set M',PLDEMOSEL,' 0'
 PLDEMOSEL=: }.ndx pick PLOTALL
 wd 'set M',PLDEMOSEL,' 1'
-pd 'reset ',PForm
+pd 'reset ',":PForm
 if. 'Android'-:UNAME do.
   plotruns 'D',PLDEMOSEL
   glpaintx''
