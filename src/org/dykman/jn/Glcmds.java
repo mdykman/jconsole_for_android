@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 
 public class Glcmds {
 
@@ -46,6 +48,19 @@ private void fliprgb (int[] da, int cnt) {
     }
 }
 
+
+public int[] qextentwv ( Paint paint, String text, int[] lens, int ncnt) {
+Rect rect = new Rect();
+int[] wlen = new int[ncnt];
+int p = 0;
+
+for (int i=0; i<ncnt; i++) {
+  paint.getTextBounds(text,p,p+lens[i],rect);
+  wlen[i] = rect.width();
+  p = p + lens[i];
+  }
+return wlen;
+}
 
 public int glcmds ( Canvas canvas, Paint paint, Path path, int[] ipar, String font, int[] buf,int ncnt, int RGBSEQ ) {
 
@@ -137,6 +152,73 @@ Log.d("JJNI", "Glcmds clear: ");
     canvas.drawOval ( rectf,  paint);
     }
     break;
+
+	case 2012:		// glfont
+    try {
+    String face, sizestyle;
+    int bold=0,italic=0,underline=0,strikeout=0;
+    float size=0f;
+      byte[] textbuf = new byte[cnt-2];
+      for (i=0;i<cnt-2;i++) textbuf[i] = (byte)buf[p+2+i];
+      String textstring = new String(textbuf, "UTF-8");
+      if (textstring.startsWith("\"")) {
+        java.lang.String[] ss = textstring.substring(1).split("\"");
+        face = ss[0];
+        if (ss.length>1) {
+        sizestyle = ss[1];
+        java.lang.String[] ss1 = textstring.split(" ");
+        size = Float.parseFloat(ss1[0]);
+        if (ss1.length>1) {
+          for (j = 1; j < ss1.length; j++) {
+          if (ss1[j].equals("bold")) bold = 1;
+          else if (ss1[j].equals("italic")) italic = 1;
+          else if (ss1[j].equals("underline")) andunderline = 1;
+          else if (ss1[j].equals("strikeout")) strikeout = 1;
+             } } }
+      } else {
+        java.lang.String[] ss = textstring.split(" ");
+        face = ss[0]; 
+        if (ss.length>1) {
+        size = Float.parseFloat(ss[1]);
+        if (ss.length>2) {
+          for (j = 2; j < ss.length; j++) {
+          if (ss[j].equals("bold")) bold = 1;
+          else if (ss[j].equals("italic")) italic = 1;
+          else if (ss[j].equals("underline")) andunderline = 1;
+          else if (ss[j].equals("strikeout")) strikeout = 1;
+        } } } }    
+
+        Typeface ft= Typeface.create(face,(bold + 2*italic));
+        paint.setTypeface(ft);
+        if (0f != size) paint.setTextSize(Math.abs(size*96f/72f));   // gl2 assume density for desktop
+
+      } catch (UnsupportedEncodingException e) {}
+	  break;
+
+	case 2312:		// glfont2
+    try {
+	  int size10 = buf[ p + 2 ];
+	  int bold = 1 & buf[ p + 3 ];
+	  int italic = 2 & buf[ p + 3 ]; 
+	  andunderline = 4 & buf[ p + 3 ]; 
+	  int strikeout = 8 & buf[ p + 3 ]; 
+	  int degree10 =  buf[ p + 4 ]; 
+	  andfontangle = degree10;
+
+    byte[] textbuf = new byte[cnt-5];
+    for (i=0;i<cnt-5;i++) textbuf[i] = (byte)buf[p+5+i];
+    String face = new String(textbuf, "UTF-8");
+
+    Typeface ft= Typeface.create(face,(bold + 2*italic));
+    paint.setTypeface(ft);
+    paint.setTextSize(Math.abs((float)size10*0.1f*96f/72f));   // gl2 assume density for desktop
+
+    } catch (UnsupportedEncodingException e) {}
+	  break;
+
+	case 2342:		//glfontangle
+	  andfontangle = buf[ p + 2 ];
+	  break;
 
   case 2015 :    // gllines
     paint.setColor(andpenrgb);

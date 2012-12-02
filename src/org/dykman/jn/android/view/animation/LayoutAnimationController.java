@@ -1,0 +1,31 @@
+package org.dykman.jn.android.view.animation;
+public class LayoutAnimationController extends android.view.animation.LayoutAnimationController{
+protected org.dykman.j.JInterface jInterface = null;
+protected java.lang.String jlocale = null;
+protected java.lang.String jchildid = null;
+protected java.lang.String jchildidx = null;
+protected java.util.ArrayList jnOverrideList = null;
+protected void jparseargs (java.lang.String jlocale, java.lang.String jchildid, java.lang.String joverride ) { this.jlocale = jlocale; this.jchildid = jchildid; if (jchildid != null && jchildid.length() > 0) jchildidx = jchildid + "_"; else jchildidx = ""; if (joverride != null && joverride.length() > 0) { java.lang.String[] ss = joverride.split(" "); for (int i = 0; i < ss.length; i++) setjnOverride(ss[i]); } }
+public void clearjnOverride () { jnOverrideList.clear (); }
+public void setjnOverride (java.lang.String arg1 ) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); }
+public void setjnOverride (java.lang.String arg1, boolean arg2 ) { if (arg2) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); } else jnOverrideList.remove (arg1); }
+public boolean testjnOverride (java.lang.String arg1 ) { return jnOverrideList.contains (arg1); }
+public LayoutAnimationController(android.content.Context arg1,android.util.AttributeSet arg2, java.lang.String jlocale,String jchildid,String joverride ) { super( arg1, arg2); jnOverrideList = new java.util.ArrayList(); jparseargs( jlocale, jchildid, joverride ); jInterface = org.dykman.j.android.JConsoleApp.theApp.jInterface; if (testjnOverride( "jcreate" )) jInterface.Jnido( this, jchildidx + "jcreate_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+public LayoutAnimationController(android.view.animation.Animation arg1, java.lang.String jlocale,String jchildid,String joverride ) { super( arg1); jnOverrideList = new java.util.ArrayList(); jparseargs( jlocale, jchildid, joverride ); jInterface = org.dykman.j.android.JConsoleApp.theApp.jInterface; if (testjnOverride( "jcreate" )) jInterface.Jnido( this, jchildidx + "jcreate_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+public LayoutAnimationController(android.view.animation.Animation arg1,float arg2, java.lang.String jlocale,String jchildid,String joverride ) { super( arg1, arg2); jnOverrideList = new java.util.ArrayList(); jparseargs( jlocale, jchildid, joverride ); jInterface = org.dykman.j.android.JConsoleApp.theApp.jInterface; if (testjnOverride( "jcreate" )) jInterface.Jnido( this, jchildidx + "jcreate_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override public void start(){ if (!testjnOverride( "start" )) { super.start(); return; } jInterface.Jnido( this, jchildidx + "start_" + jlocale + "_", null ); }
+@Override public int getOrder(){ if (!testjnOverride( "getOrder" )) return super.getOrder(); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "getOrder_" + jlocale + "_", null ); }
+@Override public void setOrder(int arg1) { if (!testjnOverride( "setOrder" )) { super.setOrder( arg1); return; } jInterface.Jnido( this, jchildidx + "setOrder_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public void setAnimation(android.content.Context arg1,int arg2) { if (!testjnOverride( "setAnimation" )) { super.setAnimation( arg1, arg2); return; } jInterface.Jnido( this, jchildidx + "setAnimation_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override public void setAnimation(android.view.animation.Animation arg1) { if (!testjnOverride( "setAnimation" )) { super.setAnimation( arg1); return; } jInterface.Jnido( this, jchildidx + "setAnimation_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public android.view.animation.Animation getAnimation(){ if (!testjnOverride( "getAnimation" )) return super.getAnimation(); return (android.view.animation.Animation) jInterface.Jnido( this, jchildidx + "getAnimation_" + jlocale + "_", null ); }
+@Override public void setInterpolator(android.content.Context arg1,int arg2) { if (!testjnOverride( "setInterpolator" )) { super.setInterpolator( arg1, arg2); return; } jInterface.Jnido( this, jchildidx + "setInterpolator_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override public void setInterpolator(android.view.animation.Interpolator arg1) { if (!testjnOverride( "setInterpolator" )) { super.setInterpolator( arg1); return; } jInterface.Jnido( this, jchildidx + "setInterpolator_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public android.view.animation.Interpolator getInterpolator(){ if (!testjnOverride( "getInterpolator" )) return super.getInterpolator(); return (android.view.animation.Interpolator) jInterface.Jnido( this, jchildidx + "getInterpolator_" + jlocale + "_", null ); }
+@Override public float getDelay(){ if (!testjnOverride( "getDelay" )) return super.getDelay(); return (java.lang.Float) jInterface.Jnido( this, jchildidx + "getDelay_" + jlocale + "_", null ); }
+@Override public void setDelay(float arg1) { if (!testjnOverride( "setDelay" )) { super.setDelay( arg1); return; } jInterface.Jnido( this, jchildidx + "setDelay_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public boolean willOverlap(){ if (!testjnOverride( "willOverlap" )) return super.willOverlap(); return (java.lang.Boolean) jInterface.Jnido( this, jchildidx + "willOverlap_" + jlocale + "_", null ); }
+@Override public boolean isDone(){ if (!testjnOverride( "isDone" )) return super.isDone(); return (java.lang.Boolean) jInterface.Jnido( this, jchildidx + "isDone_" + jlocale + "_", null ); }
+@Override protected long getDelayForView(android.view.View arg1) { if (!testjnOverride( "getDelayForView" )) return super.getDelayForView( arg1); return (java.lang.Long) jInterface.Jnido( this, jchildidx + "getDelayForView_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override protected int getTransformedIndex(android.view.animation.LayoutAnimationController.AnimationParameters arg1) { if (!testjnOverride( "getTransformedIndex" )) return super.getTransformedIndex( arg1); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "getTransformedIndex_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+}

@@ -1,0 +1,27 @@
+package org.dykman.jn.android.preference;
+public class EditTextPreference extends android.preference.EditTextPreference{
+protected org.dykman.j.JInterface jInterface = null;
+protected java.lang.String jlocale = null;
+protected java.lang.String jchildid = null;
+protected java.lang.String jchildidx = null;
+protected java.util.ArrayList jnOverrideList = null;
+protected void jparseargs (java.lang.String jlocale, java.lang.String jchildid, java.lang.String joverride ) { this.jlocale = jlocale; this.jchildid = jchildid; if (jchildid != null && jchildid.length() > 0) jchildidx = jchildid + "_"; else jchildidx = ""; if (joverride != null && joverride.length() > 0) { java.lang.String[] ss = joverride.split(" "); for (int i = 0; i < ss.length; i++) setjnOverride(ss[i]); } }
+public void clearjnOverride () { jnOverrideList.clear (); }
+public void setjnOverride (java.lang.String arg1 ) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); }
+public void setjnOverride (java.lang.String arg1, boolean arg2 ) { if (arg2) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); } else jnOverrideList.remove (arg1); }
+public boolean testjnOverride (java.lang.String arg1 ) { return jnOverrideList.contains (arg1); }
+public EditTextPreference(android.content.Context arg1,android.util.AttributeSet arg2,int arg3, java.lang.String jlocale,String jchildid,String joverride ) { super( arg1, arg2, arg3); jnOverrideList = new java.util.ArrayList(); jparseargs( jlocale, jchildid, joverride ); jInterface = org.dykman.j.android.JConsoleApp.theApp.jInterface; if (testjnOverride( "jcreate" )) jInterface.Jnido( this, jchildidx + "jcreate_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2, arg3 } ); }
+public EditTextPreference(android.content.Context arg1,android.util.AttributeSet arg2, java.lang.String jlocale,String jchildid,String joverride ) { super( arg1, arg2); jnOverrideList = new java.util.ArrayList(); jparseargs( jlocale, jchildid, joverride ); jInterface = org.dykman.j.android.JConsoleApp.theApp.jInterface; if (testjnOverride( "jcreate" )) jInterface.Jnido( this, jchildidx + "jcreate_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+public EditTextPreference(android.content.Context arg1, java.lang.String jlocale,String jchildid,String joverride ) { super( arg1); jnOverrideList = new java.util.ArrayList(); jparseargs( jlocale, jchildid, joverride ); jInterface = org.dykman.j.android.JConsoleApp.theApp.jInterface; if (testjnOverride( "jcreate" )) jInterface.Jnido( this, jchildidx + "jcreate_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public void setText(java.lang.String arg1) { if (!testjnOverride( "setText" )) { super.setText( arg1); return; } jInterface.Jnido( this, jchildidx + "setText_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public java.lang.String getText(){ if (!testjnOverride( "getText" )) return super.getText(); return (java.lang.String) jInterface.Jnido( this, jchildidx + "getText_" + jlocale + "_", null ); }
+@Override protected void onBindDialogView(android.view.View arg1) { if (!testjnOverride( "onBindDialogView" )) { super.onBindDialogView( arg1); return; } jInterface.Jnido( this, jchildidx + "onBindDialogView_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override protected void onAddEditTextToDialogView(android.view.View arg1,android.widget.EditText arg2) { if (!testjnOverride( "onAddEditTextToDialogView" )) { super.onAddEditTextToDialogView( arg1, arg2); return; } jInterface.Jnido( this, jchildidx + "onAddEditTextToDialogView_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override protected void onDialogClosed(boolean arg1) { if (!testjnOverride( "onDialogClosed" )) { super.onDialogClosed( arg1); return; } jInterface.Jnido( this, jchildidx + "onDialogClosed_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override protected java.lang.Object onGetDefaultValue(android.content.res.TypedArray arg1,int arg2) { if (!testjnOverride( "onGetDefaultValue" )) return super.onGetDefaultValue( arg1, arg2); return (java.lang.Object) jInterface.Jnido( this, jchildidx + "onGetDefaultValue_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override protected void onSetInitialValue(boolean arg1,java.lang.Object arg2) { if (!testjnOverride( "onSetInitialValue" )) { super.onSetInitialValue( arg1, arg2); return; } jInterface.Jnido( this, jchildidx + "onSetInitialValue_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override public boolean shouldDisableDependents(){ if (!testjnOverride( "shouldDisableDependents" )) return super.shouldDisableDependents(); return (java.lang.Boolean) jInterface.Jnido( this, jchildidx + "shouldDisableDependents_" + jlocale + "_", null ); }
+@Override public android.widget.EditText getEditText(){ if (!testjnOverride( "getEditText" )) return super.getEditText(); return (android.widget.EditText) jInterface.Jnido( this, jchildidx + "getEditText_" + jlocale + "_", null ); }
+@Override protected android.os.Parcelable onSaveInstanceState(){ if (!testjnOverride( "onSaveInstanceState" )) return super.onSaveInstanceState(); return (android.os.Parcelable) jInterface.Jnido( this, jchildidx + "onSaveInstanceState_" + jlocale + "_", null ); }
+@Override protected void onRestoreInstanceState(android.os.Parcelable arg1) { if (!testjnOverride( "onRestoreInstanceState" )) { super.onRestoreInstanceState( arg1); return; } jInterface.Jnido( this, jchildidx + "onRestoreInstanceState_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+}

@@ -1,0 +1,31 @@
+package org.dykman.jn.android.speech.tts;
+public class TextToSpeech extends android.speech.tts.TextToSpeech{
+protected org.dykman.j.JInterface jInterface = null;
+protected java.lang.String jlocale = null;
+protected java.lang.String jchildid = null;
+protected java.lang.String jchildidx = null;
+protected java.util.ArrayList jnOverrideList = null;
+protected void jparseargs (java.lang.String jlocale, java.lang.String jchildid, java.lang.String joverride ) { this.jlocale = jlocale; this.jchildid = jchildid; if (jchildid != null && jchildid.length() > 0) jchildidx = jchildid + "_"; else jchildidx = ""; if (joverride != null && joverride.length() > 0) { java.lang.String[] ss = joverride.split(" "); for (int i = 0; i < ss.length; i++) setjnOverride(ss[i]); } }
+public void clearjnOverride () { jnOverrideList.clear (); }
+public void setjnOverride (java.lang.String arg1 ) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); }
+public void setjnOverride (java.lang.String arg1, boolean arg2 ) { if (arg2) { if (!testjnOverride (arg1)) jnOverrideList.add (arg1); } else jnOverrideList.remove (arg1); }
+public boolean testjnOverride (java.lang.String arg1 ) { return jnOverrideList.contains (arg1); }
+public TextToSpeech(android.content.Context arg1,android.speech.tts.TextToSpeech.OnInitListener arg2, java.lang.String jlocale,String jchildid,String joverride ) { super( arg1, arg2); jnOverrideList = new java.util.ArrayList(); jparseargs( jlocale, jchildid, joverride ); jInterface = org.dykman.j.android.JConsoleApp.theApp.jInterface; if (testjnOverride( "jcreate" )) jInterface.Jnido( this, jchildidx + "jcreate_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override public void shutdown(){ if (!testjnOverride( "shutdown" )) { super.shutdown(); return; } jInterface.Jnido( this, jchildidx + "shutdown_" + jlocale + "_", null ); }
+@Override public java.util.Locale getLanguage(){ if (!testjnOverride( "getLanguage" )) return super.getLanguage(); return (java.util.Locale) jInterface.Jnido( this, jchildidx + "getLanguage_" + jlocale + "_", null ); }
+@Override public int stop(){ if (!testjnOverride( "stop" )) return super.stop(); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "stop_" + jlocale + "_", null ); }
+@Override public int addSpeech(java.lang.String arg1,java.lang.String arg2,int arg3) { if (!testjnOverride( "addSpeech" )) return super.addSpeech( arg1, arg2, arg3); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "addSpeech_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2, arg3 } ); }
+@Override public int addSpeech(java.lang.String arg1,java.lang.String arg2) { if (!testjnOverride( "addSpeech" )) return super.addSpeech( arg1, arg2); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "addSpeech_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override public int addEarcon(java.lang.String arg1,java.lang.String arg2,int arg3) { if (!testjnOverride( "addEarcon" )) return super.addEarcon( arg1, arg2, arg3); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "addEarcon_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2, arg3 } ); }
+@Override public int addEarcon(java.lang.String arg1,java.lang.String arg2) { if (!testjnOverride( "addEarcon" )) return super.addEarcon( arg1, arg2); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "addEarcon_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2 } ); }
+@Override public int speak(java.lang.String arg1,int arg2,java.util.HashMap arg3) { if (!testjnOverride( "speak" )) return super.speak( arg1, arg2, arg3); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "speak_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2, arg3 } ); }
+@Override public int playEarcon(java.lang.String arg1,int arg2,java.util.HashMap arg3) { if (!testjnOverride( "playEarcon" )) return super.playEarcon( arg1, arg2, arg3); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "playEarcon_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2, arg3 } ); }
+@Override public int playSilence(long arg1,int arg2,java.util.HashMap arg3) { if (!testjnOverride( "playSilence" )) return super.playSilence( arg1, arg2, arg3); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "playSilence_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2, arg3 } ); }
+@Override public boolean isSpeaking(){ if (!testjnOverride( "isSpeaking" )) return super.isSpeaking(); return (java.lang.Boolean) jInterface.Jnido( this, jchildidx + "isSpeaking_" + jlocale + "_", null ); }
+@Override public int setSpeechRate(float arg1) { if (!testjnOverride( "setSpeechRate" )) return super.setSpeechRate( arg1); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "setSpeechRate_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public int setPitch(float arg1) { if (!testjnOverride( "setPitch" )) return super.setPitch( arg1); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "setPitch_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public int setLanguage(java.util.Locale arg1) { if (!testjnOverride( "setLanguage" )) return super.setLanguage( arg1); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "setLanguage_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public int isLanguageAvailable(java.util.Locale arg1) { if (!testjnOverride( "isLanguageAvailable" )) return super.isLanguageAvailable( arg1); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "isLanguageAvailable_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+@Override public int synthesizeToFile(java.lang.String arg1,java.util.HashMap arg2,java.lang.String arg3) { if (!testjnOverride( "synthesizeToFile" )) return super.synthesizeToFile( arg1, arg2, arg3); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "synthesizeToFile_" + jlocale + "_", new java.lang.Object[]{ arg1, arg2, arg3 } ); }
+@Override public int setOnUtteranceCompletedListener(android.speech.tts.TextToSpeech.OnUtteranceCompletedListener arg1) { if (!testjnOverride( "setOnUtteranceCompletedListener" )) return super.setOnUtteranceCompletedListener( arg1); return (java.lang.Integer) jInterface.Jnido( this, jchildidx + "setOnUtteranceCompletedListener_" + jlocale + "_", new java.lang.Object[]{ arg1 } ); }
+}
