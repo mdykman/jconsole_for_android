@@ -1,0 +1,75 @@
+graphics/gl2 - change history
+
+== 1.0.0 ==
+ * initial 701 release
+
+== 1.0.1 ==
+ * new commands for grid
+
+== 1.0.2 ==
+ * graphics/gl2: add opengl option
+
+== 1.0.3 ==
+ * graphics/gl2: move gtkcanvas into gl2
+
+== 1.0.4 ==
+ * graphics/gl2: set current opengl context in events
+
+== 1.0.5 ==
+ * graphics/gl2: support multiple backends
+
+== 1.0.6 ==
+ * graphics/gl2: add gdi32 backend
+
+== 1.0.7/9 ==
+  graphics/gl2: glcmds shared library
+
+== 1.0.10 ==
+  graphics/gl2: dquote LIBGLCMDS
+
+== 1.0.11 ==
+  graphics/gl2: add glpixels glpixelsx glqpixels 
+
+== 1.0.12/13 ==
+  graphics/gl2: gtk+3 compatible
+
+== 1.0.14 ==
+ * gl2: fix cairo glpaintx
+ * gl2 plot: bug fix
+ * opengl color RGB byte order with R in the lowest byte
+ * fix gtk clipread/write
+
+== 1.0.15/18 ==
+ * gl2: work with gtkwd
+
+== 1.0.19/20 ==
+ * gl2: gtkwd printing
+
+== 1.0.21 ==
+ * gl2: decommit gtk pixmap ,gdiplus backends
+
+== 1.0.22 ==
+ * gl2: glqhandles
+
+== 1.0.23/26 ==
+ * gl2: swap glpaint and glpaintx to agree with J504
+ * gl2: glcmds binary
+
+== 1.0.27 ==
+ * gl2: gl2 cmds buffer
+
+== 1.0.28/36 ==
+ * gl2: glcmds binary
+ * gl2: RGBSEQ
+ * gl2: FIXFONT,PROFONT
+ * gl2: api
+ * gl2: more robust event callback
+
+== 1.0.37 ==
+  graphics/gl2: gtk+3 compatible
+
+== 1.0.38 ==
+  graphics/gl2: glcmds shared library for macosx
+
+== 1.0.39 ==
+  graphics/gl2: android
