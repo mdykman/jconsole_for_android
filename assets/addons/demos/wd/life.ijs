@@ -44,7 +44,7 @@ FILE=: ''
 create=: ]
 destroy=: life_close
 fix=: 0: ". ];._2
-info=: wdinfo @ ('Life'&;)
+info=: sminfo @ ('Life'&;)
 ischar=: 2: = 3!:0
 isempty=: 0: e. $
 pathname=: 3 : '(b#y);(-.b=.+./\.y=PATHSEP_j_)#y'
@@ -937,7 +937,7 @@ rem form end;
 )
 wcfg_run=: 3 : 0
 if. 'Android'-:UNAME do.
-  wdinfo 'Life';'This option is for desktop versions only' return.
+  sminfo 'Life';'This option is for desktop versions only' return.
 end.
 Nboard=: BOARD
 Nscale=: SCALE
@@ -1164,7 +1164,7 @@ end.
 )
 life_load_button=: 3 : 0
 if. 'Android'-:UNAME do.
-  wdinfo 'Life';'This option is for desktop versions only' return.
+  sminfo 'Life';'This option is for desktop versions only' return.
 end.
 fl=. wd 'mbopen  "Load *.lif File" "',PATH,'"  ""  "Life(*.lif)|*.lif|All Files(*.*)|*.*"'
 if. 0=#fl do. return. end.

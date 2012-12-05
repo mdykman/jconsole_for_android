@@ -319,7 +319,7 @@ else.
 end.
 0
 )
-finfo=: 3 : 'wdinfo FIFTITLE;y'
+finfo=: 3 : 'sminfo FIFTITLE;y'
 fquery=: 4 : 'x wdquery FIFTITLE;y'
 groupndx=: [: <: I. + e.~
 isempty=: 0: e. $

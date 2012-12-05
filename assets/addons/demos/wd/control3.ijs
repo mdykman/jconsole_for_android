@@ -28,7 +28,7 @@ pas 6 2;pcenter;
 rem form end;
 )
 
-wdselects=: wdinfo @ ('select definition'&;)
+wdselects=: sminfo @ ('select definition'&;)
 
 selects_run=: 3 : 0
 if. 'Android'-:UNAME do. SELECTS=: ('spinv;';'static;';'spin;';'static;';'trackbarv tbs_autoticks;';'static;') stringreplace SELECTS end.

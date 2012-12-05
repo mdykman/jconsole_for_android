@@ -51,7 +51,7 @@ isedit_close=: isedit_cancel_button
 
 isedit_redisplay_button=: 3 : 0
 if. 'Android'-:UNAME do.
-  wdinfo 'J Graphics';'This demo is for desktop versions only' return.
+  sminfo 'J Graphics';'This demo is for desktop versions only' return.
 end.
 ISEDTEXT=: graf
 try.
@@ -60,7 +60,7 @@ try.
   ISDEMODAT=: graf
   wd 'psel isedit;setfocus graf'
 catch.
-  wdinfo 'error in graph definition'
+  sminfo 'error in graph definition'
   return.
 end.
 )

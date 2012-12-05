@@ -18,7 +18,7 @@ rem form end;
 
 week_run=: 3 : 0
 if. -. IFWIN do.
-  wdinfo 'Days';'This demo is for Windows 95/NT only'
+  sminfo 'Days';'This demo is for Windows 95/NT only'
   return.
 end.
 wd WEEK

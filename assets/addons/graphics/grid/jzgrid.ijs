@@ -627,17 +627,17 @@ if. 0 = #cc=. CELLCOLOR do.
   cc=. CELLCOLORDEF
 end.
 if. 1 = */ $ cc do.
-  CellColor=: {. cc
+  CellColor=: '' ($,) cc
 else.
   CellColor=: rws $ cls $"1 tomatrix cc
 end.
 if. 1 = */ $ CELLEDIT do.
-  CellEdit=: {. CELLEDIT
+  CellEdit=: '' ($,) CELLEDIT
 else.
   CellEdit=: rws $ cls $"1 tomatrix CELLEDIT
 end.
 if. 1 = */ $ CELLFONT do.
-  CellFont=: {. CELLFONT
+  CellFont=: '' ($,) CELLFONT
 else.
   CellFont=: rws $ cls $"1 tomatrix CELLFONT
 end.

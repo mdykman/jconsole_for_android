@@ -178,7 +178,7 @@ ifshiftkey=: 3 : '''1'' e. sysmodifiers'
 ifctrlkey=: 3 : '''2'' e. sysmodifiers'
 ifctrlshiftkey=: 3 : '''3'' e. sysmodifiers'
 info=: 3 : 0
-wdinfo 'Form Edit';y
+sminfo 'Form Edit';y
 )
 makeccx=: 3 : 0
 CCX=: topixelsxywh viewccs''
@@ -349,7 +349,7 @@ PID=: ''
 WDNAMES=: <;._2 (0 : 0)
 wd
 wdhandler
-wdinfo
+sminfo
 wdq
 )
 j=. 0 : 0
@@ -2913,22 +2913,22 @@ wtbar_showtoolbar=: 3 : 0
 try.
   dat=. 1!:1 < TBFN
 catch.
-  wdinfo 'Toolbar';'file read error: ',":>TBFN return.
+  sminfo 'Toolbar';'file read error: ',":>TBFN return.
 end.
 if. -. '.bmp' -: tolower _4 {. TBFN do.
   msg=. 'The Form Editor only supports bitmap toolbar files with extension .bmp.'
-  wdinfo 'Toolbar';msg return.
+  sminfo 'Toolbar';msg return.
 end.
 
 bits=. 0 pick getbmphdr dat
 if. -. bits e. 4 8 24 do.
-  wdinfo 'Toolbar';'Only 4, 8 or 24 bit bitmaps supported by Toolbar' return.
+  sminfo 'Toolbar';'Only 4, 8 or 24 bit bitmaps supported by Toolbar' return.
 end.
 BMP=: readbmp TBFN
 'rws cls'=. $ BMP
 cnt=. cls % 16
 if. cnt ~: <.cnt do.
-  wdinfo 'Toolbar';'Bitmaps should have a width of 16 pixels' return.
+  sminfo 'Toolbar';'Bitmaps should have a width of 16 pixels' return.
 end.
 
 wtbar_showbar''
@@ -2976,7 +2976,7 @@ toi=. 256&#.@(a.&i.)@(|."1)
 dat=. y
 bits=. toi 28 29 {dat
 if. toi 30 31 32 33{dat do.
-  wdinfo 'Toolbar';'Compressed format not supported'
+  sminfo 'Toolbar';'Compressed format not supported'
   0 return.
 end.
 'off shdr cls rws'=. toi (10+i.4 4){dat
@@ -3452,7 +3452,7 @@ if. MAXSIZE <: #txt do.
   msg=. 'Text size of ',(cifmt1 #txt),' characters is too large to view.'
   msg=. msg,LF,LF,'Truncated to ',(cifmt1 MAXSIZE),' characters.'
   txt=. (MAXSIZE {. txt),LF,'...'
-  wdinfo name;msg
+  sminfo name;msg
 end.
 TEXT=: txt
 
@@ -3473,7 +3473,7 @@ try.
   end.
 catch.
   msg=. LF,LF,({.~ i.&':') wd 'qer'
-  wdinfo 'jview';'Unable to view text',msg
+  sminfo 'jview';'Unable to view text',msg
   wd 'psel jview;pclose'
   destroy''
   return.
@@ -3489,7 +3489,7 @@ jview_close 1
 jview_Print_button=: 3 : 0
 txt=. jview_gettext''
 try. '' VIEWPRINT~ txt
-catch. wdinfo 'Print';'Print failed.',LF,LF,'Check the printer is installed'
+catch. sminfo 'Print';'Print failed.',LF,LF,'Check the printer is installed'
 end.
 )
 jview_Top_button=: 3 : 0

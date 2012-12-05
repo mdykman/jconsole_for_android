@@ -129,7 +129,7 @@ if. wdisparent 'isdemo' do.
     isdemo_run1 ISDEMODAT
   else.
     if. ('Android'-:UNAME) *. (<ISDEMOSEL) e. ;:'PAINT SMESSER ' do.
-      wdinfo 'J Graphics';'This demo is for desktop versions only'
+      sminfo 'J Graphics';'This demo is for desktop versions only'
       return.
     end.
     glsel 'g'
@@ -160,14 +160,14 @@ glpaint''
 NB. =========================================================
 isdemo_about_button=: 3 : 0
 j=. 'Isigraph Graphics Demo V',(4j2 ": ISDEMOVER)
-wdinfo 'Isigraph Graphics';j
+sminfo 'Isigraph Graphics';j
 )
 
 NB. =========================================================
 NB. following works only in Win32, need to make this
 isdemo_clip_button=: 3 : 0
 if. -. IFWIN do.
-  wdinfo 'Save graphics to clipboard is only available in Windows'
+  sminfo 'Save graphics to clipboard is only available in Windows'
   return.
 end.
 f=. jpath '~temp/isdemo.emf'

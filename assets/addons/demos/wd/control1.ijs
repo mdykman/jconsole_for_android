@@ -36,7 +36,7 @@ ndx=. I. 'j.bmp' E. BUTTOD
 BUTTOD=. (ndx {. BUTTOD),PATH,ndx }. BUTTOD
 
 NB. =========================================================
-wdbuttons=: wdinfo @ ('button definition'&;)
+wdbuttons=: sminfo @ ('button definition'&;)
 
 buttons_run=: 3 : 0
 wd BUTTONS

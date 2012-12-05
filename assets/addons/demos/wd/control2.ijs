@@ -15,7 +15,7 @@ pas 6 6;pcenter;
 rem form end;
 )
 
-wdedits=: wdinfo bind ('edit definition'&;)
+wdedits=: sminfo bind ('edit definition'&;)
 
 edits_run=: 3 : 0
 wd EDITS

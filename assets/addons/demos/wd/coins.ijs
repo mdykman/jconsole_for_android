@@ -35,7 +35,7 @@ round=: [ * [: <. 0.5"_ + %~
 roundint=: <. @: +&0.5
 where=: #~
 
-info=: wdinfo @ ('Coins'&;)
+info=: sminfo @ ('Coins'&;)
 query=: wdquery 'Coins'&;
 
 NB. =========================================================

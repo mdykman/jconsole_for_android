@@ -137,7 +137,7 @@ fview jpath '~addons/demos/wd/unicode.ijs'
 
 NB. =========================================================
 unicode_viewnotes_button=: 3 : 0
-wdinfo 'Unicode';ALLNOTES
+sminfo 'Unicode';ALLNOTES
 )
 
 NB. =========================================================
