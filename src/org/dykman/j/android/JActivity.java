@@ -113,7 +113,7 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
     if (i > 10 || i < 0) return;
     timerHandler[i].removeCallbacks(timerTask[i]);
     timerInterval[i]  = Math.max (0l, (long)time);
-    if (verb != null && !verb.isEmpty() && !verb.trim().isEmpty()) timerVerb[i]  = verb;
+    if (verb != null && verb.length() > 0 && verb.trim().length() > 0) timerVerb[i]  = verb;
     if (timerVerb[i] != null && (timerInterval[i] > 0))
       timerHandler[i].postDelayed(timerTask[i], timerInterval[i]);
   }

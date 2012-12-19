@@ -171,7 +171,7 @@ Log.d("JJNI", "Glcmds clear: ");
         java.lang.String[] ss1 = textstring.split(" ");
         size = Float.parseFloat(ss1[0]);
         if (ss1.length>1) {
-          for (j = 1; j < ss1.length; j++) {
+          for (int j = 1; j < ss1.length; j++) {
           if (ss1[j].equals("bold")) bold = 1;
           else if (ss1[j].equals("italic")) italic = 1;
           else if (ss1[j].equals("underline")) andunderline = 1;
@@ -183,7 +183,7 @@ Log.d("JJNI", "Glcmds clear: ");
         if (ss.length>1) {
         size = Float.parseFloat(ss[1]);
         if (ss.length>2) {
-          for (j = 2; j < ss.length; j++) {
+          for (int j = 2; j < ss.length; j++) {
           if (ss[j].equals("bold")) bold = 1;
           else if (ss[j].equals("italic")) italic = 1;
           else if (ss[j].equals("underline")) andunderline = 1;

@@ -14,9 +14,9 @@ LOCAL_PATH:=(call my-dir)
 
 TARGET_PLATFORM := android-7
 
-#include jni/openj-core/Android.mk
+include jni/openj-core/Android.mk
 # bill is alternative, termporarily to openj-core
-include jni/bill/Android.mk
+#include jni/bill/Android.mk
 
 # include jni/libm/Android.mk
 #include jni/openj-core/Jconsole.mk
