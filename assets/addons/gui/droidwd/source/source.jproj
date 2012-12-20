@@ -1,0 +1,22 @@
+NB. project: 
+NB.
+NB. defines list of source files.
+NB. path defaults to project directory.
+
+init.ijs
+const.ijs
+child.ijs
+class.ijs
+cmd.ijs
+event.ijs
+font.ijs
+mb.ijs
+menu.ijs
+parent.ijs
+parse.ijs
+parse2.ijs
+sbar.ijs
+tbar.ijs
+util.ijs
+winlib.ijs
+wdbase.ijs

@@ -1,0 +1,2 @@
+coclass 'jaresu'
+coinsert 'jni'

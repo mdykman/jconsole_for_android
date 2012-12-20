@@ -8,7 +8,7 @@ wd (window driver) emulator using android ui
 http://www.jsoftware.com/jwiki/Addons/gui/droidwd
 )
 
-VERSION=: '1.0.0'
+VERSION=: '1.0.1'
 
 DEPENDS=: 0 : 0
 gui/android
