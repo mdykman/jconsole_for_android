@@ -251,6 +251,7 @@ RGBA=: 3 : 'r (23 b.) 8 (33 b.) g (23 b.) 8 (33 b.) b (23 b.) 8 (33 b.) a [ ''r 
 BGRA=: 3 : 'b (23 b.) 8 (33 b.) g (23 b.) 8 (33 b.) r (23 b.) 8 (33 b.) a [ ''r g b a''=. <.y'
 
 3 : 0''
+if. -.IFQT do. libjqt=: '' end.
 if. IFQT do.
   coinsert'jqt'
 elseif. 'Android'-:UNAME do.
@@ -284,15 +285,6 @@ if. #so do.
     LIBGLCMDS=: f
   end.
   LIBGLCMDS=: dquote^:(' 'e.]) LIBGLCMDS
-end.
-EMPTY
-)
-3 : 0''
-select. UNAME
-case. 'Linux' do. libjqt_z_=: BINPATH,'/libjqt.so'
-case. 'Android' do. libjqt_z_=: BINPATH,'/libjqt.so'
-case. 'Darwin' do. libjqt_z_=: BINPATH,'/libjqt.dylib'
-case. 'Win' do. libjqt_z_=: BINPATH,'/jqt.dll'
 end.
 EMPTY
 )
