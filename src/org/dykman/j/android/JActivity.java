@@ -3,14 +3,12 @@ package org.dykman.j.android;
 import java.io.File;
 
 import org.dykman.j.ExecutionListener;
-import org.dykman.j.JInterface;
-import org.dykman.j.android.JConsoleApp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -197,10 +195,7 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		inflater.inflate(R.menu.main, menu);
 		return true;
 	}
-	protected void callBreak() {
-		theApp.getjInterface().callSuperJ(new String[]{"break_z_ ''"});
-	}
-	
+
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		boolean result = true;
@@ -208,7 +203,7 @@ public class JActivity extends AbstractActivity implements ExecutionListener {
 		Log.d(JConsoleApp.LogTag,"selection " + itemId + ", " + getClass().getName());
 		switch(itemId) {
 			case R.id.clear:   console.clear();                break;
-			case R.id.jbreak:  callBreak();                   break;
+			case R.id.jbreak:  theApp.jInterface.callBreak();                   break;
 			case R.id.exit:    testQuit();					  break;
 			default : result = false;
 		}

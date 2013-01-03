@@ -23,6 +23,7 @@ import android.util.Log;
 public class AndroidJInterface extends JInterface {
 
 	JConsoleApp theApp;
+	public static final String INTERFACE_VERSION="1.0";
 	JRunner runner = null;
 	Thread thread = null;
 	LinkedList<String> commandBuffer = new LinkedList<String>(); 
@@ -57,11 +58,12 @@ public class AndroidJInterface extends JInterface {
 	public int launchActivity(String action,String data, String type,int flags) {
 		return theApp.launchActivity(action,data,type,flags);
 	}
+	
 	public String nextLine() {
 		try {
+			thread = Thread.currentThread();
 			while(true) {
 				synchronized(commandBuffer) {
-					thread = Thread.currentThread();
 					if(commandBuffer.size() >0) {
 						return commandBuffer.removeLast();
 					}
@@ -74,16 +76,17 @@ public class AndroidJInterface extends JInterface {
 			} 
 		} catch(Exception e) {
 			Log.e(LOGTAG,"error reading line",e);
-		}
-		
-		synchronized(commandBuffer) {
-			thread = null;
+		} finally {
+			synchronized(commandBuffer) {
+				thread = null;
+			}
 		}
 		return null;
 	}
 	public void quit() {
 		theApp.quit();
 	}
+	
 	int downloadFile(String urlS, String fileS) {
 Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 		int result = -1;
@@ -91,7 +94,7 @@ Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 			URL url = new URL(urlS);
 			
 			HttpGet get = new HttpGet(url.toURI());
-			get.setHeader("User-Agent", "Mozilla/4.0 (compatible;) JConsoleForAndroid");
+			get.setHeader("User-Agent", "Mozilla/4.0 (compatible;) JConsoleForAndroid-v" + INTERFACE_VERSION);
 			DefaultHttpClient client = new DefaultHttpClient();
 			HttpResponse response = client.execute(get);
 			HttpEntity entity = response.getEntity();
@@ -168,6 +171,9 @@ Log.d(LOGTAG,"downloading " + urlS + " to " + fileS);
 			return runtime.exec(cmd);
 	}
 
+	protected void callBreak(){
+		callSuperJ(new String[]{"break_z_ ''"});
+	}
 	public int callSuperJ(String []sentence) {
 		return super.callJ(sentence);
 	}	

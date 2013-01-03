@@ -123,12 +123,14 @@ public class JConsoleApp extends Application {
 		if (!started) {
 			StringBuilder sb = new StringBuilder();
 			started = true;
+			
 			console.setEnabled(false);
 			root = getDir("jconsole", Context.MODE_WORLD_READABLE
 					| Context.MODE_WORLD_WRITEABLE);
 			
 			jInterface = new AndroidJInterface(this);
-			if(new File(SDCARD).exists()) {
+			String state = Environment.getExternalStorageState();
+			if(Environment.MEDIA_MOUNTED.equals(state)) {
 				jInterface.setEnv("HOME", SDCARD);
 				userDir = new File(SDCARD, "j701-user");
 				currentExternDir = userDir;
