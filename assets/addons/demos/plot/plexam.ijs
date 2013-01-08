@@ -1,6 +1,6 @@
 NB. Plot examples
 
-coclass 'jdplotexam'
+coclass 'jdplot'
 
 NB. include definitions from math/misc/trig
 rfd=: *&(1p1%180)

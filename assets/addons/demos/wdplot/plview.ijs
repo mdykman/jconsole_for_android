@@ -27,7 +27,6 @@ SLIDES=: 0
 
 NB. =========================================================
 plotdemo_run=: 3 : 0
-
 Cw=: _1 NB. ensure plot window is sized
 f=. jpath '~system/packages/graphics/'&, @ (,&'.ijs')
 DATHILO=: }. 'm' fread jpath '~addons/demos/wdplot/dm0396.txt'
@@ -49,18 +48,15 @@ PShow=: 0
 
 wd PLOTDEMO
 PForm=: 'plotdemo'
-if. IFQT do.
-  PFormhwnd=: wdqhwndp''
-  PIdhwnd=: wdqhwndc 'ps'
-else.
-  PFormhwnd=: wdqhwndp''
-  PIdhwnd=: wdqhwndc 'ps'
-end.
+PFormhwnd=: wdqhwndp''
+PIdhwnd=: wdqhwndc 'ps'
 PId=: 'ps'
+NB. wd 'pmovex _1 _1 720 520'
 wd 'pshow'
-pd 'reset ',":PForm
+pd 'reset ', PForm
 wd 'set M',PLDEMOSEL,' 1'
 plotruns 'D',PLDEMOSEL
+glpaint''
 )
 
 NB. =========================================================
@@ -181,4 +177,4 @@ end.
 0
 )
 
-plotdemo=: plotdemo_run
+NB. plotdemo=: plotdemo_run

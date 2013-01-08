@@ -85,7 +85,7 @@ NB.    1 prompt to save
 savefile=: 3 : 0
 if. OLDTEXT -: FileText do. 0 return. end.
 if. y do.
-  res=. 3 wdquery`0:@.('Android'-:UNAME) FORMNAME;'Text has changed: ',FILENAME,LF,LF,'OK to save it?'
+  res=. 3 wdquery`0:@.(IFQT+.'Android'-:UNAME) FORMNAME;'Text has changed: ',FILENAME,LF,LF,'OK to save it?'
   if. res=1 do. sminfo FORMNAME;'Not saved: ',FILENAME end.
   if. res e. 1 2 do.
     displayselect''

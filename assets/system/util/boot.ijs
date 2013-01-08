@@ -51,6 +51,9 @@ load '~system/util/configure.ijs'
 load '~system/main/ctag.ijs'
 load '~system/util/jadetag.ijs'
 load^:IFQT '~addons/ide/qt/qt.ijs'
+if. 'Android'-:UNAME do.
+  wddemo_z_=: load bind '~addons/demos/wd/demos.ijs'
+end.
 startupide''
 
 NB. ---------------------------------------------------------

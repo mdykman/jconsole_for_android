@@ -79,3 +79,6 @@ graphics/plot - change history
 
 == 1.0.111 ==
  * cover verb for wd query cmds
+
+== 1.0.112/5 ==
+ * qt

@@ -91,16 +91,23 @@ NB. win
 
 NB. =========================================================
 UNIDEMO=: 0 : 0
-pc unicode;pn "Unicode Demo";
+pc unicode qtwd;pn "Unicode Demo";
+bin v;
 xywh 8 9 258 34;cc notes static rightmove;cn "";
+bin hs;
 xywh 195 46 70 12;cc viewsource button leftmove rightmove;cn "View Source";
+bin z;
 xywh 3 62 265 5;cc sb staticbox ss_etchedhorz rightmove;
+bin hv;
 xywh 9 72 174 14;cc edit0 edit rightmove;
 xywh 9 91 174 86;cc grid isigraph rightmove bottomscale;
-xywh 8 182 258 110;cc plot isigraph ws_border topscale rightmove bottommove;
+bin zv;
 xywh 195 75 70 12;cc ok button leftmove rightmove;cn "";
 xywh 195 90 70 12;cc cancel button leftmove rightmove;cn "";
 xywh 195 105 70 12;cc toggle button leftmove rightmove;cn "";
+bin szz;
+xywh 8 182 258 110;cc plot isigraph ws_border topscale rightmove bottommove;
+bin z;
 pas 0 4;pcenter;
 rem form end;
 )
@@ -161,6 +168,7 @@ wd 'setcaption toggle *',TOGGLE
 NB. =========================================================
 unicode_grid_paint=: 3 : 0
 show__grid GRIDNAMES
+wd'setinvalid plot'
 )
 
 NB. =========================================================

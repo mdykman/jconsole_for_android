@@ -715,7 +715,11 @@ assert. 0~:GRIDHWNDC
 if. #GRIDPID do.
   pid=. GRIDPID
 else.
-  if. 4 e.~ 3!:0 GRIDHWNDC do. pid=. getparentid locP end.
+  if. IFQT do.
+    pid=. wdgetparentid GRIDHWNDC
+  else.
+    if. 4 e.~ 3!:0 GRIDHWNDC do. pid=. getparentid locP end.
+  end.
 end.
 GridPid=: pid
 if. 3=nameclass__locP <GRIDID,'_gridhandler' do.
@@ -1033,7 +1037,7 @@ Twh=: 1 + (Ts - Tx),Tt - Ty
 )
 showit=: 3 : 0
 showitn y
-glpaint`glpaintx@.(IFQT+.'Android'-:UNAME)''
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 showitn=: 3 : 0
 select. Show >. {. y,0
@@ -1086,7 +1090,7 @@ Hc=: Hr=: Hx=: Hy=: Hw=: Hh=: 0
 VSxywh=: HSxywh=: Gxywh=: 0 0 0 0
 Vcx=: Vcy=: 0
 drawinit''
-glpaintx''
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 refresh=: showit bind 5
 initsizes=: 3 : 0

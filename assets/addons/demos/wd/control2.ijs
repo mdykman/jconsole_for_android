@@ -24,7 +24,7 @@ SIZE=: 15
 wd 'set edit *single line edit box'
 c=. wdqhwndc 'richeditm'
 j4r=. '<span font="Arial Black 32" fgcolor="red">J Release 7</span>'
-if. 'Android'-.@-:UNAME do.
+if. -. IFQT+.'Android'-:UNAME do.
   gtk_label_set_markup_jgtk_ c ; j4r
 end.
 wd 'pshow;'
@@ -36,7 +36,7 @@ edits_brich_button=: wdedits bind (0 : 0)
 wd 'cc richeditm richeditm;'
 hc=. wdqhwndc 'richeditm'
 j4r=. '<span font="Arial Black 32" fgcolor="red">J Release 7</span>'
-if. 'Android'-.@-:UNAME do.
+if. -. IFQT+.'Android'-:UNAME do.
   gtk_label_set_markup_jgtk_ hc ; j4r
 end.
 )

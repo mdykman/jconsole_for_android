@@ -119,21 +119,24 @@ ISDEMOSEL=: ISDEMOSEL,(0=#ISDEMOSEL)#'TITLE'
 wd 'pshow'
 wd 'set M',ISDEMOSEL,' 1'
 ISDEMODAT=: fread tolower ISDEMOPATH,ISDEMOSEL,'.ijs'
+glsel 'g'
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 
 NB. =========================================================
 isdemo_run=: 3 : 0
 if. wdisparent 'isdemo' do.
   ISDEMODAT=: fread tolower ISDEMOPATH,ISDEMOSEL,'.ijs'
-  if. IFJ6 +. ('Android'-.@-:UNAME) do.
+  if. IFJ6 +. (-. 'Android'-:UNAME) do.
     isdemo_run1 ISDEMODAT
+    glpaint`glpaintx@.('Android'-:UNAME)''
   else.
     if. ('Android'-:UNAME) *. (<ISDEMOSEL) e. ;:'PAINT SMESSER ' do.
       sminfo 'J Graphics';'This demo is for desktop versions only'
       return.
     end.
     glsel 'g'
-    glpaintx''
+    glpaint`glpaintx@.('Android'-:UNAME)''
   end.
 end.
 )
@@ -147,14 +150,13 @@ end.
 
 NB. =========================================================
 isdemo_run1=: 3 : 0
-try. wd 'psel isdemo'
+try. wd 'psel isdemo;'
 catch. return. end.
 glnodblbuf 0
 glmark''
 gopen''
 0!:100 y
 gshow''
-glpaint''
 )
 
 NB. =========================================================
@@ -228,7 +230,7 @@ isdemo_run''
 
 NB. =========================================================
 isdemo_exit_button=: 3 : 0
-try. wd 'psel paint;pclose;' catch. end.
+try. wd^:('Android'-.@-:UNAME) 'psel paint;pclose;' catch. end.
 try. wd 'psel isdemo;pclose;' catch. end.
 destroy__locVM''
 )
@@ -249,12 +251,12 @@ NB. =========================================================
 NB. gopen
 gopen=: 3 : 0
 try.
-  wd 'psel isdemo;pactive'
+  wd 'psel isdemo'
 catch. return.
 end.
 glsel 'g'
 glclear''
-GSIZE=: wdqchildxywhx 'g'
+GSIZE=: 0 0, glqwh''
 )
 
 NB. =========================================================

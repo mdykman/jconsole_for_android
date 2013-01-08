@@ -5,3 +5,6 @@ gui/droidwd - change history
 
 == 1.0.2 ==
  * cover verb for wd query cmds
+
+== 1.0.3 ==
+ * compatiblity with qt

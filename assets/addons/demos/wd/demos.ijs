@@ -76,8 +76,31 @@ unicode dunicode
 unicode_simple dunisimple
 )
 
+TITLESQT=: maketitle 0 : 0
+cities dcities
+cobrowse dcobrowse
+coins dcoins
+deoptim ddeoptim
+eigenpictures deigenpic
+events devents
+grid dgrid
+isigraph... disigraph
+life dlife
+minesweeper dminesweeper
+nurikabe dnurikabe
+plot dplot
+pousse dpousse
+scriptdoc dscriptdoc
+solitaire dsolitaire
+treemap dtreemap
+unicode dunicode
+unicode_simple dunisimple
+)
+
 TITLES=: 3 : 0''
-if. 'Android'-:UNAME do.
+if. IFQT do.
+  TITLESQT
+elseif. 'Android'-:UNAME do.
   TITLESANDROID
 elseif. do.
   TITLESALL
@@ -86,11 +109,15 @@ end.
 
 NB. =========================================================
 DEMOS=: 0 : 0
-pc demos closeok;pn "Demos Select";
+pc demos closeok qtwd;pn "Demos Select";
+bin v;
+xywh 7 9 150 11;cc static1 static;cn "static1";
+bin h;
+xywh 6 22 100 200;cc listbox listbox ws_border ws_vscroll lbs_nosel rightmove bottommove;
+bin v;
 xywh 114 24 42 12;cc ok button leftmove rightmove;cn "OK";
 xywh 114 41 42 12;cc cancel button leftmove rightmove;cn "Cancel";
-xywh 6 22 100 200;cc listbox listbox ws_border ws_vscroll lbs_nosel rightmove bottommove;
-xywh 7 9 150 11;cc static1 static;cn "static1";
+bin szzz;
 pas 4 2;pcenter;
 rem form end;
 )
@@ -102,6 +129,7 @@ if. wdisparent 'demos' do.
 end.
 wd DEMOS
 wd 'set static1 *Select a demo from the list below:'
+NB. TODO
 wd 'set listbox ',;DEL,each ({."1 TITLES),each DEL
 wd 'setselect listbox 0'
 wd 'setfocus listbox'

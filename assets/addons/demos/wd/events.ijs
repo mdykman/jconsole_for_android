@@ -34,32 +34,40 @@ wceview 'wdq';'';(60 <. {:$txt) {."1 txt
 showme=: IFWINCE pick wdqshow`wceshow
 
 EVENTS=: 0 : 0
-pc events nomax nosize;pn "Events";
+pc events nomax nosize qtwd;pn "Events";
 menupop "File";
 menu new "&New" "" "" "";
 menu open "&Open" "" "" "";
 menusep;
 menu exit "&Exit" "" "" "";
 menupopz;
+bin v;
 xywh 7 6 239 93;cc g0 groupbox;cn "";
 xywh 11 13 231 82;cc s0 static;
 xywh 7 107 133 25;cc g2 groupbox;cn "Edit";
+bin h;
 xywh 10 116 123 12;cc text edit ws_border es_autohscroll;
+bin h;
 xywh 152 107 93 25;cc g1 groupbox;cn "Options";
 xywh 160 117 28 11;cc red radiobutton;cn "Red";
 xywh 192 117 34 11;cc blue radiobutton group;cn "Blue";
+bin zzhv;
 xywh 7 143 75 87;cc g3 groupbox;cn "Listbox";
 xywh 12 154 61 59;cc list listbox ws_vscroll;
 xywh 12 212 57 11;cc showselect checkbox;cn "select";
+bin zv;
 xywh 104 143 141 87;cc g4 groupbox;cn "Isigraph";
 xywh 111 152 42 11;cc showmmove checkbox bs_lefttext;cn "mmove";
 xywh 111 166 42 11;cc showmbldown checkbox bs_lefttext;cn "mbldown";
 xywh 111 180 42 11;cc showmblup checkbox bs_lefttext;cn "mblup";
 xywh 111 194 42 11;cc showmbrdown checkbox bs_lefttext;cn "mbrdown";
 xywh 111 208 42 11;cc showmbrup checkbox bs_lefttext;cn "mbrup";
+bin sz;
 xywh 164 155 74 67;cc g isigraph ws_border rightmove bottommove;
+bin zhs;
 xywh 150 231 40 11;cc cancel button;cn "Cancel";
 xywh 192 231 40 11;cc ok button;cn "OK";
+bin zz;
 pas 4 2;pcenter;
 rem form end;
 )
@@ -98,7 +106,7 @@ EVENTSCE=: ((j+6) {. EVENTSCE),(j+8)}.EVENTSCE
 
 events_run=: 3 : 0
 if. wdisparent 'events' do.
-  wd 'psel events;pactive;pshow' return.
+  wd^:('Android'-.@-:UNAME) 'psel events;pactive;pshow' return.
 end.
 if. IFWINCE do.
   wd EVENTSCE
@@ -127,6 +135,7 @@ evtloop^:(-.IFJ6)''
 NB. =========================================================
 events_isigraph=: 3 : 0
 wh=. 2}.wdqchildxywhx 'g'
+wh=. glqwh''
 glrgb 0 255 255
 glbrush''
 glrect 0 0,wh
@@ -164,7 +173,7 @@ smoutput wdq
 end.
 
 if. (<sysevent) e. 'events_close';'events_cancel_button';'events_exit_button' do.
-  if. 0=2 wdquery`0:@.('Android'-:UNAME) 'Events';'OK to close form?' do.
+  if. 0=2 wdquery`0:@.(IFQT+.'Android'-:UNAME) 'Events';'OK to close form?' do.
     try. wd 'psel events;pclose' catch. end.
   end.
 end.

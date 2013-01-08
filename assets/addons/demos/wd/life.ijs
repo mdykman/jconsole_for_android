@@ -79,6 +79,7 @@ new (<ndx) } board
 life_size=: 3 : 0
 FORMX=: 0 ". sysdata
 GXYWHX=: wdqchildxywhx 'g'
+GXYWHX=: 0 0,glqwh''
 setformsize''
 )
 
@@ -89,9 +90,9 @@ del=. ( SCALE * |. BOARD) - _2 {. GXYWHX
 if. 'Android'-:UNAME do.
   wd 'setxywhx g ',": 0 42 320 256
 else.
-  if. 0 0 -: del do. return. end.
-  wd 'setxywhx g ',": GXYWHX + 0 0,del
-  wd 'pmovex ',": MINFORMX >. FORMX + 0 0,del
+NB.   if. 0 0 -: del do. return. end.
+  wd 'setxywhx g ',": GXYWHX + 0 32,del
+  wd 'pmovex ',": MINFORMX >. FORMX + 0 32,del
 end.
 )
 settimer=: 3 : 0
@@ -829,7 +830,7 @@ whilst. RUN | COUNT do.
   buffer''
   step''
   if. 'Android'-:UNAME do.
-    glpaintx''
+    glpaint`glpaintx@.('Android'-:UNAME)''
   else.
     paint''
     glpaint''
@@ -1015,7 +1016,7 @@ if. (-.Nboard -: BOARD) +. Nscale ~: SCALE do.
   wdfit''
 end.
 glsel canvas
-glpaintx''
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 wcfg_read=: 3 : 0
 board=. 0 ". ' ' (I. ecells e. ',xX') } ecells
@@ -1087,7 +1088,7 @@ wcfg_cancel_button=: wcfg_close
 wcfg_cancel=: wcfg_close
 
 LIFE=: 0 : 0
-pc life nomax nosize;pn "Life";
+pc life nomax nosize qtwd;pn "Life";
 menupop "File";
 menu load "&Load Pattern File..." "" "" "";
 menusep;
@@ -1114,23 +1115,31 @@ menu help "&Help" "" "" "";
 menusep;
 menu about "&About" "" "" "";
 menupopz;
+bin vh;
 xywh 2 1 39 12;cc run button;cn "Run";
 xywh 41 1 39 12;cc pause button;cn "Pause";
 xywh 80 1 39 12;cc stepback button;cn "Back";
 xywh 119 1 39 12;cc step button;cn "Step";
 xywh 161 3 45 11;cc siz static ss_center;cn "";
 xywh 207 3 36 11;cc cnt static ss_center;cn "";
+bin sz;
 xywh 0 14 320 256;cc g isigraph;
+bin z;
 pas 0 0;pcenter;
 rem form end;
 )
 life_run=: 3 : 0
 wd LIFE
 canvas=: wdqhwndc 'g'
-if. HWNDP e. 1 {"1 wdforms'' do. return. end.
+if. IFQT do.
+  if. wdishandle HWNDP do. return. end.
+else.
+  if. HWNDP e. 1 {"1 wdforms'' do. return. end.
+end.
 HWNDP=: wdqhwndp''
 FORMX=: wdqformx''
 GXYWHX=: wdqchildxywhx 'g'
+GXYWHX=: 0 0,glqwh''
 if. IFJAVA do.
   MAXXYWHX=: _10 _100 + 2 {. wdqm''
 else.
@@ -1156,7 +1165,7 @@ life_default=: 3 : 0
 if. (<syschild) e. LIFS do.
   settimer 0
   rundoit buildlif ". toupper syschild
-  if. 'Android'-.@-:UNAME do.
+  if. -. 'Android'-:UNAME do.
     paint''
     glpaint''
   end.
@@ -1195,7 +1204,7 @@ if. HASBUF do.
   HASBUF=: * # _1 pick BUF
   COUNT=: COUNT - 1
   glsel canvas
-  glpaintx''
+  glpaint`glpaintx@.('Android'-:UNAME)''
 else.
   enableback 0
 end.
@@ -1221,7 +1230,7 @@ if. ischar dat do.
 end.
 runinit dat
 rundoit dat
-if. 'Android'-.@-:UNAME do.
+if. -. 'Android'-:UNAME do.
   paint''
   glpaint''
 end.
@@ -1233,7 +1242,7 @@ COUNT=: 0
 bufinit ''
 settimer 0
 glsel canvas
-glpaintx''
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 runinit=: 3 : 0
 BOARD=: $ y

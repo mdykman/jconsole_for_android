@@ -1,0 +1,18 @@
+stats/base - change history
+
+== 1.0.4/6 ==
+ * chg: standardize randomize verb
+
+== 1.0.4/5 ==
+ * fix: base to include combinatorial
+
+== 1.0.3 ==
+ * chg: update to j701
+ 
+== 1.0.2 ==
+ * improve scriptdoc documentation
+ * rename sampledesign to combinatorial
+ * move cile to univariate
+
+== 1.0.0/1 ==
+ * migrate system/packages/stats to JAL

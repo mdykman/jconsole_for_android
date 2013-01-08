@@ -194,7 +194,6 @@ end.
 if. #ANG do. mwh vf_show mat return. end.
 mat=. , mwh fitvm mat
 glpixels (0 0, mwh), mat
-glpaint''
 SHOW=: 1
 EMPTY
 )
@@ -202,6 +201,7 @@ viewmat_close=: 3 : 0
 hremove''
 if. 'Android'-:UNAME do.
 elseif. IFQT do.
+  wd 'pclose'
 elseif. do.
   gtk_widget_destroy window
   if. -.IFGTK do. gtk_main_quit '' end.
@@ -315,6 +315,7 @@ wd 'psel ',(<0 1) pick fms
 (getbmp'') writebmp fl
 )
 setsize=: 3 : 0
+if. IFQT do. return. end.
 fms=. hforms''
 if. 0=#fms
 do. mbinfo 'viewmat';'No viewmat forms.' return.
@@ -377,6 +378,7 @@ hcascade''
 hadd''
 if. IFQT do.
   wd 'pshow'
+  glpaintx''
 end.
 )
 vmwin=: 3 : 0
@@ -384,7 +386,7 @@ if. 'Android'-:UNAME do.
 elseif. IFQT do.
   wd 'pc viewmat;pn *',TITLE
   wd 'cc g isigraph'
-  wd 'pmovex 50 100 ', ":mwh0
+  wd 'pmovex _1 _1 ', ":mwh0
 elseif. do.
   newwindow TITLE
   gtk_window_set_position window,GTK_WIN_POS_CENTER_ALWAYS

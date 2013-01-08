@@ -1,0 +1,29 @@
+games/minesweeper - change history
+
+== 1.0.12/14 ==
+ * chg: qt
+
+== 1.0.11 ==
+ * chg: cover verb for wd query cmds
+
+== 1.0.10 ==
+ * add: support droidwd
+
+== 1.0.5/9 ==
+ * add: support gtkwd
+
+== 1.0.4 ==
+ * add: randomize random link on script load 
+
+== 1.0.3 ==
+ * chg: gtk+3 compatible, uigtkglade not yet work
+
+== 1.0.2 ==
+ * chg: Add autorun section so app runs on load
+ * chg: remove hacks now resolved in gui/gtk addon version 1.0.8
+
+== 1.0.1 ==
+ * fix: TilesG26 not set in uiconsole script.
+
+== 1.0.0 ==
+ * Initial release

@@ -319,7 +319,7 @@ NB. =========================================================
 NB. paint does the draw and then glpaint
 paint=: 3 : 0
 draw''
-glpaintx`glpaint@.IFJ6''
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 
 NB. =========================================================
@@ -341,6 +341,7 @@ NB. drawcenters v calculate vertex centers in display
 drawcenters=: 3 : 0
 max=. >./ LAYOUT
 wh=. _2 {. wdqchildxywhx 'g'
+wh=. glqwh''
 div=. wh % 2 + max
 rad=. -: <./div <. wh % 12
 RAD=: roundint rad
@@ -440,7 +441,7 @@ for_p. HIGH do.
   glbrush glrgb c { CLRHIGH
   glrect x { CRC2
 end.
-glpaintx`glpaint@.IFJ6''
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 
 NB. =========================================================
@@ -479,7 +480,7 @@ end.
 NB. win
 
 COIN=: 0 : 0
-pc coin;pn "Coins";
+pc coin qtwd;pn "Coins";
 menupop "File";
 menu b0 "&Load 8-2-48" "" "" "";
 menu b1 "&Load 8-3-44" "" "" "";
@@ -495,12 +496,15 @@ menu help "&Help" "" "" "";
 menusep;
 menu about "&About" "" "" "";
 menupopz;
+bin vh;
 xywh 2 1 39 12;cc restart button;cn "Restart";
 xywh 41 1 39 12;cc undo button;cn "Undo";
 xywh 80 1 39 12;cc redo button;cn "Redo";
 xywh 120 3 36 11;cc cnt static ss_center;cn "";
 xywh 0 14 250 1;cc s0 staticbox ss_etchedhorz rightmove ;
+bin sz;
 xywh 0 15 250 250;cc g isigraph rightmove bottommove;
+bin z;
 pas 0 0;pcenter;
 rem form end;
 )
@@ -511,7 +515,7 @@ DONE=: 0
 wd COIN
 setparentname''
 wd^:(-.IFJ6) 'pshow;pshow sw_hide'
-NB. paint''
+paint''
 wd 'pshow;'
 evtloop^:(-.IFJ6)''
 )
@@ -551,8 +555,8 @@ paint''
 
 NB. =========================================================
 coin_restart_button=: 3 : 0
-if. 'Android'-:UNAME do. paint@init '' return. end.
-if. 0 = 2 query`0:@.('Android'-:UNAME) 'OK to restart?' do.
+if. IFQT+.'Android'-:UNAME do. paint@init '' return. end.
+if. 0 = 2 query`0:@.(IFQT+.'Android'-:UNAME) 'OK to restart?' do.
   init''
   paint''
 end.

@@ -3119,10 +3119,15 @@ if. (<c) e. <;._2 wdqp'' do.
   glclear_jgl2_''
 else.
   wd 'pc ',c,' closeok;pn *',n
-  wd 'xywh 0 0 150 150;cc g0 isigraph rightmove bottommove'
-  wd 'pas 0 0;pcenter'
-  fx=. wdqformx''
-  wd 'pmove 150 5 ',": 2 }. fx
+  if. IFQT do.
+    wd 'cc g0 isigraph'
+    wd 'pas 0 0;pcenter'
+  else.
+    wd 'xywh 0 0 150 150;cc g0 isigraph rightmove bottommove'
+    wd 'pas 0 0;pcenter'
+    fx=. wdqformx''
+    wd 'pmove 150 5 ',": 2 }. fx
+  end.
   wd 'pshow;'
 end.
 )
@@ -3289,9 +3294,22 @@ xywh 175 23 38 12;cc cancel button leftmove rightmove;cn "Cancel";
 pas 4 5;pcenter;
 rem form end;
 )
+
+AQT=: 0 : 0
+pc a dialog owner;
+bin hv;
+cc prompt static;cn "";
+cc edit edit ws_border es_autohscroll;
+bin zv;
+cc ok button;cn "OK";
+cc cancel button;cn "Cancel";
+bin zz;
+pas 4 5;pcenter;
+rem form end;
+)
 a_run=: 3 : 0
 'p d t'=. 3{. boxopen y
-wd A
+wd IFQT{::A;AQT
 wd 'pn *',t,(0=#t)#'Input'
 wd 'set prompt *',p
 wd 'set edit *',d
@@ -3314,7 +3332,7 @@ if. IFJ6 do.
   script_z_ '~system/main/files.ijs'
   script_z_ '~system/packages/print/print.ijs'
 else.
-  require 'droidwd gtkwd'
+  require 'droidwd gtkwd gl2'
 end.
 ''
 )
@@ -3330,7 +3348,7 @@ ischar=: 2 = 3!:0
 getfontsz=: 13 : '{.1{._1 -.~ _1 ". y'
 3 : 0''
 if. 0 ~: 4!:0 <'VIEWFONT' do.
-  VIEWFONT=: FIXFONT
+  VIEWFONT=: FIXFONT_jgl2_
 end.
 if. 0 ~: 4!:0 <'SMPRINT_j_' do.
   VIEWPRINT=: ''
@@ -3387,27 +3405,46 @@ rem form end;
 jview_form=: 3 : 0
 'print edit'=. 2 {. y
 VIEWMAX=: 0
-ed=. ' ws_border ws_vscroll rightmove bottommove'
-ed=. ed, (edit=0)# '  es_readonly'
-wd 'pc jview'
-wd 'xywh 2 2 132 10;cc h0 static;'
-wd 'xywh 0 13 350 250;cc e0 editm',ed,' ws_hscroll'
-wd 'xywh 0 13 350 250;cc e1 editm',ed
-p=. 269 - 48 * print + edit
-wd 'xywh ',(":p),' 2 34 10;cc Top checkbox leftmove rightmove;'
-p=. p + 37
-wd 'xywh ',(":p),' 2 39 10;cc Wrap checkbox leftmove rightmove;'
-p=. p + 43
-if. print do.
-  wd 'xywh ',(":p),' 1 48 12;cc Print button leftmove rightmove;'
-  p=. p + 48
+if. IFQT do.
+  ed=. ' ws_border ws_vscroll'
+  ed=. ed, (edit=0)# '  es_readonly'
+  wd 'pc jview'
+  wd 'bin vhs;'
+  wd 'cc Top checkbox;'
+  wd 'cc Wrap checkbox;'
+  if. edit do.
+    wd 'cc OK button;'
+  end.
+  wd 'bin z;'
+  wd 'cc h0 static;'
+  wd 'wh 600 400;cc e0 editm',ed,' ws_hscroll'
+  wd 'wh 600 400;cc e1 editm',ed
+  wd 'setfont e0 ',VIEWFONT
+  wd 'setfont e1 ',VIEWFONT
+  wd 'pas 0 0;pcenter;'
+else.
+  ed=. ' ws_border ws_vscroll rightmove bottommove'
+  ed=. ed, (edit=0)# '  es_readonly'
+  wd 'pc jview'
+  wd 'xywh 2 2 132 10;cc h0 static;'
+  wd 'xywh 0 13 350 250;cc e0 editm',ed,' ws_hscroll'
+  wd 'xywh 0 13 350 250;cc e1 editm',ed
+  p=. 269 - 48 * print + edit
+  wd 'xywh ',(":p),' 2 34 10;cc Top checkbox leftmove rightmove;'
+  p=. p + 37
+  wd 'xywh ',(":p),' 2 39 10;cc Wrap checkbox leftmove rightmove;'
+  p=. p + 43
+  if. print do.
+    wd 'xywh ',(":p),' 1 48 12;cc Print button leftmove rightmove;'
+    p=. p + 48
+  end.
+  if. edit do.
+    wd 'xywh ',(":p),' 1 48 12;cc OK button leftmove rightmove;'
+  end.
+  wd 'setfont e0 ',VIEWFONT
+  wd 'setfont e1 ',VIEWFONT
+  wd 'pas 0 0;pcenter;'
 end.
-if. edit do.
-  wd 'xywh ',(":p),' 1 48 12;cc OK button leftmove rightmove;'
-end.
-wd 'setfont e0 ',VIEWFONT
-wd 'setfont e1 ',VIEWFONT
-wd 'pas 0 0;pcenter;'
 formhwnd=: wdqhwndp''
 )
 jview_getargs=: 3 : 0

@@ -1,7 +1,7 @@
 NB. edit graph definition
 
 coclass 'jdplotedit'
-coinsert 'wdbase'
+coinsert 'jdplot wdbase'
 droidwd_run=: plotedit_run
 
 getfontsz=: 13 : '{.1{._1 -.~ _1 ". y'
@@ -16,10 +16,13 @@ nam, ; ,&' ' &.> (<fmt x) ndx } txt
 NB. =========================================================
 PLOTEDIT=: 0 : 0
 pc plotedit;pn "View Definition";
+bin vhs;
 xywh 82 1 42 12;cc redisplay button leftmove rightmove;cn "&Redisplay";
 xywh 124 1 42 12;cc help button leftmove rightmove;cn "&Help";
 xywh 166 1 42 12;cc close button leftmove rightmove;cn "&Close";
+bin z;
 xywh 0 13 208 100;cc graf editm ws_vscroll rightmove bottommove;
+bin z;
 pas 0 0;
 rem form end;
 )

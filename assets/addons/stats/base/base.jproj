@@ -1,0 +1,10 @@
+NB. project: ~Addons/stats/base
+NB.
+NB. defines list of source files.
+NB. path defaults to project directory.
+
+combinatorial.ijs
+distribution.ijs
+multivariate.ijs
+random.ijs
+univariate.ijs

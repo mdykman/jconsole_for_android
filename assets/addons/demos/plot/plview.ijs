@@ -26,7 +26,7 @@ CMDS=: ''
 plotruns=: plotrunsx=: plotrunsa=: 3 : 0
 CMDS=: ". y
 glsel canvas
-glpaintx''
+glpaint`glpaintx@.('Android'-:UNAME)''
 )
 
 PLTIMER=: 3000
@@ -202,7 +202,9 @@ if. newsize__l do.
   end.
   if. 'Android'-:UNAME do.
     android_show''
-  else.
+  elseif. IFQT do.
+    qt_show''
+  elseif. do.
     gtk_show''
   end.
   newsize__l=: 0

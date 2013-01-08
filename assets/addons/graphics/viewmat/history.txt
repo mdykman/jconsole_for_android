@@ -22,3 +22,6 @@ graphics/viewmat - change history
 
 == 1.0.19 ==
  * cover verb for wd query cmds
+
+== 1.0.20/22 ==
+ * qt

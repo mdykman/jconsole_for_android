@@ -8,3 +8,6 @@ graphics/grid - change history
 
 == 1.0.13 ==
  * cover verb for wd query cmds
+
+== 1.0.14/16 ==
+ * qt

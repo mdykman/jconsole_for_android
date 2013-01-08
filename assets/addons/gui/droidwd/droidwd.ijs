@@ -2586,7 +2586,7 @@ wdpc=: 3 : 0
 pcstyle=. ;:'nomenu nomin nomax nosize dialog owner closeok scroll hscroll'
 args=. shiftargs''
 if. 0= #args do. seterr 'bad id : ' return. end.
-styles=. ~. }.args [ id=. >@{.args
+styles=. (<'qtwd') -.~ ~. }.args [ id=. >@{.args
 if. 0 e. styles e. pcstyle do. seterr 'bad style : ' return. end.
 style=. 0
 closeok=. (<'closeok') e. styles
@@ -2870,6 +2870,7 @@ t=. EMPTY
 if. (<'qer') -.@e.~ cmd=. shiftarg'' do. LASTCMD=: y [ WDERRN=: 0 end.
 select. cmd
 case. 'beep' do. wdbeep ''
+case. 'bin' do. ''
 case. 'cc' do. wdcc ''
 case. 'clipcopy' do. wdclipcopy ''
 case. 'clippaste' do. t=. wdclippaste ''
@@ -2932,6 +2933,7 @@ case. 'setinvalid' do. wdsetinvalid ''
 case. 'setlimit' do. wdsetlimit ''
 case. 'setlocale' do. wdsetlocale ''
 case. 'setmodified' do. wdsetmodified ''
+case. 'setp' do. ''
 case. 'setreadonly' do. wdsetreadonly ''
 case. 'setreplace' do. wdsetreplace ''
 case. 'setscroll' do. wdsetscroll ''
@@ -2944,6 +2946,7 @@ case. 'tbarset' do. wdtbarset ''
 case. 'tbarshow' do. wdtbarshow ''
 case. 'timer' do. wdtimer ''
 case. 'xywh' do. wdxywh ''
+case. 'wh' do. ''
 case. ,'q' do. t=. wdq ''
 case. 'rm' do. wdrm ''
 case. 'setwrap' do. wdsetwrap ''

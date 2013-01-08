@@ -11,6 +11,8 @@ SECTION=: ,<'All'
 SYSNAME=: 'Package Manager'
 TIMEOUT=: 60
 WWWREV=: REV=: _1
+Ignore=: 0$<''
+Ignore=: Ignore, (IFQT+.'Android'-:UNAME)#<;._1 ' gui/gtk gui/gtkwd ide/gtk gui/jgtkgrid'
 3 : 0''
 nc=. '--no-cache'
 if. IFUNIX do.
@@ -533,6 +535,7 @@ install_console=: 3 : 0
   pkgs=. getnames y
   if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
   pkgs=. pkgs (e. # [) ~. (<'base library'), ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
+  pkgs=. pkgs -. Ignore
   if. 0 = num=. #pkgs do. '' return. end.
   many=. 1 < num
   msg=. 'Installing ',(":num),' package',many#'s'

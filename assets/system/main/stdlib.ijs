@@ -11,12 +11,14 @@ IF64=: 16={:$3!:3[2
 'IFUNIX IFWIN IFWINCE'=: 5 6 7 = 9!:12''
 IFGTK=: IFJHS=: IFBROADWAY=: 0
 IFJ6=: 0
+IFJ7=: 1
 IFWINE=: IFWIN > 0-:2!:5'_'
 if. notdef 'IFIOS' do.
   IFIOS=: 0
 end.
 if. notdef 'IFQT' do.
   IFQT=: 0
+  libjqt=: 'libjqt'
 end.
 if. notdef 'UNAME' do.
   if. IFUNIX do.
@@ -1128,20 +1130,26 @@ ftostring=: fputs
 fstring=: fgets
 cocurrent 'z'
 install=: 3 : 0
+if. 'Android'-:UNAME do. return. end.
 require 'pacman'
 if. -. checkaccess_jpacman_ '' do. return. end.
 'update' jpkg ''
 select. y
 case. 'gtkide' do.
+  if. IFQT do. return. end.
   getgtkbin 0
   'install' jpkg 'base library ide/gtk gui/gtk'
+case. 'qtide' do.
+  getqtbin 0
+  'install' jpkg 'base library ide/qt'
 case. 'all' do.
   getgtkbin 0
+  getqtbin 0
   'install' jpkg 'all'
 end.
 )
 getgtkbin=: 3 : 0
-if. (<UNAME) -.@e. 'Darwin';'Win' do. return. end.
+if. IFQT +. (<UNAME) -.@e. 'Darwin';'Win' do. return. end.
 if. (0={.y,0) *. 0 < #1!:0 jpath '~install/gtk/lib' do. return. end.
 require 'pacman'
 smoutput 'Installing gtk binaries...'
@@ -1165,6 +1173,65 @@ if. #1!:0 jpath '~install/gtk/lib' do.
 else.
   m=. 'Unable to install gtk binaries.',LF
   m=. m,'check that you have write permission for: ',LF,jpath '~install/gtk'
+end.
+smoutput m
+)
+getqtbin=: 3 : 0
+if. (<UNAME) -.@e. 'Linux';'Darwin';'Win' do. return. end.
+if. (0={.y,0) *. 0 < #1!:0 jpath '~bin/jqt*' do. return. end.
+require 'pacman'
+smoutput 'Installing jqt binaries...'
+if. 'Linux'-:UNAME do.
+  z=. 'jqt-','linux-',(IF64 pick 'x86';'x64'),'.tar.gz'
+  z1=. 'libjqt.so'
+else.
+  z=. 'jqt-',(IFWIN pick 'mac-';'win-'),(IF64 pick 'x86';'x64'),'.zip'
+  z1=. IFWIN pick 'libjqt.dylib';'jqt.dll'
+end.
+z=. 'http://www.jsoftware.com/download/jqt/',z
+'rc p'=. httpget_jpacman_ z
+if. rc do.
+  smoutput 'unable to download: ',z return.
+end.
+d=. jpath '~bin'
+if. IFWIN do.
+  unzip_jpacman_ p;d
+else.
+  if. 'Linux'-:UNAME do.
+    hostcmd_jpacman_ 'cd ',(dquote d),' && tar xzf ',(dquote p)
+  else.
+    hostcmd_jpacman_ 'unzip ',(dquote p),' -d ',dquote d
+  end.
+  f=. 4 : 'if. #1!:0 y do. x dirss y end.'
+  ('INSTALLPATH';jpath '~install') f jpath '~bin'
+end.
+if. #1!:0 jpath '~bin/',z1 do.
+  m=. 'Finished install of jqt binaries.'
+else.
+  m=. 'Unable to install jqt binaries.',LF
+  m=. m,'check that you have write permission for: ',LF,jpath '~bin'
+end.
+smoutput m
+if. 'Linux'-:UNAME do. return. end.
+smoutput 'Installing Qt binaries...'
+z=. 'qt48-',(IFWIN pick 'mac-';'win-'),(IF64 pick 'x86';'x64'),IFWIN pick '.dmg';'.zip'
+z=. 'http://www.jsoftware.com/download/qtlib/',z
+'rc p'=. httpget_jpacman_ z
+if. rc do.
+  smoutput 'unable to download: ',z return.
+end.
+d=. jpath '~install'
+if. IFWIN do.
+  unzip_jpacman_ p;d
+  if. #1!:0 jpath '~install/qt' do.
+    m=. 'Finished install of Qt binaries.'
+  else.
+    m=. 'Unable to install Qt binaries.',LF
+    m=. m,'check that you have write permission for: ',LF,jpath '~install/qt'
+  end.
+else.
+  m=. 'in Finder, open ',p,LF
+  m=. m,' and do a standard install of both packages'
 end.
 smoutput m
 )
@@ -1879,10 +1946,10 @@ if. 0=L.y do.
   end.
 end.
 y=. y -. Ignore, (IFIOS+.IFJHS)#<;._1 '  droidwd gui/droidwd android gui/android jview qtide ide/qt'
-y=. y -. (IFIOS+.IFJHS>IFBROADWAY)#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk wdclass gui/wdclass viewmat gl2 graphics/gl2'
-y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd jview gtkide ide/gtk'
+y=. y -. (IFIOS+.IFJHS>IFBROADWAY)#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gui/jgtkgrid wdclass gui/wdclass viewmat gl2 graphics/gl2'
+y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd jview gtkide ide/gtk gui/jgtkgrid'
 y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd android gui/android jview'
-y=. y -. IFQT#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk droidwd gui/droidwd'
+y=. y -. IFQT#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gui/jgtkgrid droidwd gui/droidwd'
 y=. y -. IFGTK#<;._1 ' qtide ide/qt'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
