@@ -15,7 +15,7 @@ DEFWH=: 360 360
 
 create=: 3 : 0
 if. GUI > IFGTK+.IFQT do.
-  if. 'Android'-:UNAME do.
+  if. ('Android'-:UNAME)>IFQT do.
     require 'gui/android'
   else.
     require 'gui/gtk'

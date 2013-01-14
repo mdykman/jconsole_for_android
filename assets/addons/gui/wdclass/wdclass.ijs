@@ -3594,7 +3594,7 @@ txt=. y
 if. 0=L.txt do. txt=. '';txt end.
 a=. conew 'jview'
 DATA__a=: x;txt
-jview_run__a`start_droidwd__a@.('Android'-:UNAME) a
+jview_run__a`start_droidwd__a@.(('Android'-:UNAME)>IFQT) a
 EMPTY
 )
 coclass 'jijs'

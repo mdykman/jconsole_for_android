@@ -237,7 +237,7 @@ destroy__locVM''
 
 NB. =========================================================
 isdemo_view_button=: 3 : 0
-isedit_run_jigdemoedit_`start_droidwd_jigdemoedit_@.('Android'-:UNAME) 'jigdemoedit'
+isedit_run_jigdemoedit_`start_droidwd_jigdemoedit_@.(('Android'-:UNAME)>IFQT) 'jigdemoedit'
 NB. isedit_run ISDEMODAT
 )
 

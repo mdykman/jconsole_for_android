@@ -1,0 +1,13 @@
+graphics/print - change history
+
+== 1.0.0/1 ==
+ * initial 701 release
+
+== 1.0.2 ==
+ * s/wdinfo/sminfo/
+
+== 1.0.3 ==
+ * cover verb for wd query cmds
+
+== 1.0.4 ==
+ * qt

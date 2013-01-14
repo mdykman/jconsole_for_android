@@ -8,7 +8,7 @@ Note 'Example commands to run'
 MinesweeperWd_z_=: 3 : 0
 a=. conew 'mineswpwd'
 BSIZE__a=: y
-create__a`start_droidwd__a@.('Android'-:UNAME) a
+create__a`start_droidwd__a@.(('Android'-:UNAME)>IFQT) a
 )
 
 3 : 0''
@@ -29,15 +29,15 @@ NB. Tiles=: ,((2 2 $ #) <;._3 ]) readimg AddonPath,'tiles18.png'
     droidwd_run=: create
 
     AddonPath=. jpath '~addons/games/minesweeper/'
-    if. 'Android'-:UNAME do.
+    if. IFQT do.
+
+NB.   Tiles=: ,((2 2 $ #) <;._3 ]) readimg_jqtide_ AddonPath,'tiles18.png'
+      Tiles=: ,((2 2 $ #) <;._3 ]) readimg_jqtide_ AddonPath,'tiles26.png'
+    elseif. 'Android'-:UNAME do.
       mswd_isifld_mbldbl=: mswd_isifld_mbrup  NB. android does not have right click
 
 NB.   Tiles=: ,((2 2 $ #) <;._3 ]) readimg_ja_ AddonPath,'tiles18.png'
       Tiles=: ,((2 2 $ #) <;._3 ]) readimg_ja_ AddonPath,'tiles26.png'
-    elseif. IFQT do.
-
-NB.   Tiles=: ,((2 2 $ #) <;._3 ]) readimg_jqtide_ AddonPath,'tiles18.png'
-      Tiles=: ,((2 2 $ #) <;._3 ]) readimg_jqtide_ AddonPath,'tiles26.png'
     elseif. do.
 NB.   Tiles=: ,((2 2 $ #) <;._3 ]) readimg_jgtk_ AddonPath,'tiles18.png'
       Tiles=: ,((2 2 $ #) <;._3 ]) readimg_jgtk_ AddonPath,'tiles26.png'

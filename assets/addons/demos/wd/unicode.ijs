@@ -197,4 +197,4 @@ unicode_cancel_button=: 3 : 0
 unicode_close''
 )
 
-unicode_run`start_droidwd@.('Android'-:UNAME) coname''
+unicode_run`start_droidwd@.(('Android'-:UNAME)>IFQT) coname''

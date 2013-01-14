@@ -86,4 +86,4 @@ wincontrol_query_button=: 3 : 0
 wd 'sbarset sinfo -1 ',syschild
 )
 
-wincontrol_run`start_droidwd@.('Android'-:UNAME) coname''
+wincontrol_run`start_droidwd@.(('Android'-:UNAME)>IFQT) coname''

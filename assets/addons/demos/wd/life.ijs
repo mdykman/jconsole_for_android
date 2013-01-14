@@ -1255,7 +1255,7 @@ life_run''
 )
 runlife_z_=: 3 : 0
 a=. conew 'jlife'
-run__a`start_droidwd__a@.('Android'-:UNAME) ('Android'-:UNAME){::'';a
+run__a`start_droidwd__a@.(('Android'-:UNAME)>IFQT) ('Android'-:UNAME){::'';a
 )
 
 runlife''

@@ -1,6 +1,6 @@
 games/minesweeper - change history
 
-== 1.0.12/14 ==
+== 1.0.12/15 ==
  * chg: qt
 
 == 1.0.11 ==

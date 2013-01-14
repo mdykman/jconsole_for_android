@@ -59,7 +59,7 @@ wd 'pas 0 0'
 wd^:(-.IFJ6) 'pshow;pshow sw_hide'
 if. #x do. wdcenter x
 else. wd 'pcenter' end.
-if. 'Android'-:UNAME do.
+if. ('Android'-:UNAME)>IFQT do.
   button_enable (4*SIZE)#1
   IFGREENMOVE=: 0
   SEQ=: ''
@@ -143,7 +143,7 @@ if. y=SIZE do.
   ps_new_button''
 else.
   pos=. wdqformx''
-  if. 'Android'-:UNAME do.
+  if. ('Android'-:UNAME)>IFQT do.
     wd 'rm board', , ';rm ',"1 >BUTTONS
   else.
     wd 'pclose'
@@ -210,7 +210,7 @@ wd 'xywh ',(":(OFFX+WID),(OFFY+HITE),2#CELL*SIZE),j
 NB. resize grid for even sized buttons:
 NB. TODO qchildxywhx not work
 NB. 'x y w h'=. wdqchildxywhx 'board'
-'x y w h'=. (2&*)`dpw2px_droidwd_@.('Android'-:UNAME) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
+'x y w h'=. (2&*)`dpw2px_droidwd_@.(('Android'-:UNAME)>IFQT) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
 CELL=: <. SIZE %~ w <. h
 wd 'setxywhx board ',":x,y,2#CELL*SIZE
 where=: (4,~*:SIZE)$, ,&(2#CELL)"1 CELL*>{2#<i.SIZE
@@ -259,7 +259,7 @@ wd 'bin zs'
 NB. resize grid for even sized buttons:
 NB. TODO qchildxywhx not work
 NB. 'x y w h'=. wdqchildxywhx 'board'
-'x y w h'=. (2&*)`dpw2px_droidwd_@.('Android'-:UNAME) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
+'x y w h'=. (2&*)`dpw2px_droidwd_@.(('Android'-:UNAME)>IFQT) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
 CELL=: <. SIZE %~ w <. h
 NB. wd 'setxywhx board ',":x,y,2#CELL*SIZE
 where=: (4,~*:SIZE)$, ,&(2#CELL)"1 CELL*>{2#<i.SIZE

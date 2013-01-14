@@ -21,7 +21,7 @@ if. -.IFJ6 do.
       require 'gtkwd'
     end.
     coinsert 'jgl2'
-  elseif. (UNAME -: 'Android') do.
+  elseif. ((UNAME-:'Android')>IFQT) do.
     if. 0 < #1!:0 jpath '~addons/gui/android/android.ijs' do.
       require 'graphics/gl2 droidwd gui/android'
       coinsert 'jgl2 jni jaresu'

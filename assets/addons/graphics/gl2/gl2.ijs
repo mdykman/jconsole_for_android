@@ -1,4 +1,5 @@
-require 'gui/android gui/gtk graphics/color/rgb'
+require 'gui/gtk graphics/color/rgb'
+require^:(('Android'-:UNAME)>IFQT) 'gui/android'
 require^:(IFWIN>IFQT) 'api/gdi32'
 
 coclass 'jgl2'
@@ -10,11 +11,12 @@ locGL2=: 0$<''
 
 3 : 0''
 if. 0~: 4!:0 <'PROFONT_z_' do. PROFONT=: IFUNIX{::'Tahoma 10'; ('Android'-:UNAME){::'Sans 10';'Sans 10' else. PROFONT=: PROFONT_z_ end.
-if. 0~: 4!:0 <'FIXFONT_z_' do. FIXFONT=: IFUNIX{::'"Lucida Console" 10' ; ('Android'-:UNAME){::'mono 10';'monospace 10' else. FIXFONT=: FIXFONT_z_ end.
+if. 0~: 4!:0 <'FIXFONT_z_' do. FIXFONT=: IFUNIX{::'"Lucida Console" 10' ; ('Android'-:UNAME){::'mono 10';IFQT{::'monospace 10';'Droid Sans Mono 10' else. FIXFONT=: FIXFONT_z_ end.
 if. 0~: 4!:0 <'GL2Backend_j_' do. GL2Backend_j_=: 0 end.
 if. 0~: 4!:0 <'GL2ExtGlcmds_j_' do. GL2ExtGlcmds_j_=: 1 end.
 
 if. IFQT do.
+  RGBSEQ_j_=: 1
   GL2Backend=: 3
   GL2ExtGlcmds=: GL2ExtGlcmds_j_
   locGL2_jgl2_=: <'jglcanvas'
@@ -253,7 +255,7 @@ BGRA=: 3 : 'b (23 b.) 8 (33 b.) g (23 b.) 8 (33 b.) r (23 b.) 8 (33 b.) a [ ''r 
 3 : 0''
 if. -.IFQT do. libjqt=: 'libjqt' end.
 if. IFQT do.
-  coinsert'jqt'
+  coinsert'jqtide'
 elseif. 'Android'-:UNAME do.
   coinsert'jni jaresu'
   if. 0~: 4!:0 <'CANVASIDN' do. CANVASIDN=: 1000 end.
@@ -289,7 +291,7 @@ end.
 EMPTY
 )
 
-jniImport ::0:^:('Android'-:UNAME) (0 : 0)
+jniImport ::0:^:(('Android'-:UNAME)>IFQT) (0 : 0)
 android.content.Context
 android.graphics.Bitmap
 android.graphics.Bitmap$Config

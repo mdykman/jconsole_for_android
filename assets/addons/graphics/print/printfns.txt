@@ -1,0 +1,55 @@
+print.ijs        - print utilities
+	
+These verbs can be used to print text or text files.
+
+main verbs:
+  print                print data
+  printfile            print files
+  print2               print data in 2-up mode
+  printfile2           print files in 2-up mode
+
+form:
+opt print data         print data
+
+  where opt is an optional list separated by semicolons:
+    ascii [1|0]         set ascii box-drawing characters on|off
+    font fontspec       set font
+    fontsize points     set fontsize
+    filename            set filename text
+    fit                 fit text to page width
+    header text         set header text
+    footer text         set footer text
+    land | landscape    set landscape mode (default is printer configuration)
+    port | portrait     set portrait mode
+    printer name        use printer name
+    printfile name      print to file name
+    ruler               add ruler to top of each page
+                        (use with fixed pitch font)
+    tab n               tabsize, default 8
+
+opt printfile files    print files
+                       opt as for print
+                       (filename is set automatically)
+
+opt print2 data        print data in 2-up mode
+opt printfile2 files   print files in 2-up mode
+                       (good for printing scripts)
+
+  opt as for print
+plus:  cols              set columns, default 80
+minus:                  'fit' 'land' 'landscape'
+
+Default fonts and options can be set in menu Edit|Configure|Print.
+
+The font for 2-up printing should be fixed pitch and around 7-7.5 point.
+"Lucida Console" 7.25 bold is good if available - use oem if your
+printer supports it, else ansi.
+
+The ruler option uses the current session box-drawing characters.
+Choose a box-drawing font, or include the 'ascii' option.
+
+Examples:
+  'font arial 12;land;footer just testing' print i.3 4 5
+  'ascii;font "courier new" 14' print ;/i.3 4 5
+  'fontsize 7.5;land;ruler' printfile jpath '~addons/demos/print/orders.prn'
+  printfile2 jpath '~addons/general/misc/pack.ijs'

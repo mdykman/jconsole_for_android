@@ -189,8 +189,8 @@ Note=: 3 : '0 0 $ 0 : 0' : [
 script=: [: 3 : '0!:0 y [ 4!:55<''y''' jpath_z_ &.: >
 scriptd=: [: 3 : '0!:1 y [ 4!:55<''y''' jpath_z_ &.: >
 sminfo=: 3 : 0
-if. ('Android'-:UNAME) *. 3=4!:0<'mbinfo_ja_' do. mbinfo_ja_ y
-elseif. IFQT do. wdinfo_jqtide_ y
+if. IFQT do. wdinfo_jqtide_ y
+elseif. ('Android'-:UNAME) *. 3=4!:0<'mbinfo_ja_' do. mbinfo_ja_ y
 elseif. IFGTK do. mbinfo_jgtk_ y
 elseif. do. smoutput >_1{.boxopen y end.
 )
@@ -1681,12 +1681,12 @@ case. 'Win' do.
   end.
   if. r<33 do. sminfo 'browse error:',browser,' ',cmd,LF2,1{::cderx'' end.
 case. do.
-  if. (UNAME-:'Android') *. 0=isatty 0 do.
+  if. (UNAME-:'Android') > isatty 0 do.
     cmd=. '/' (I. cmd='\') } cmd
     if. -. isURL cmd do.
       cmd=. 'file://',cmd
     end.
-    2!:1 'android.intent.action.VIEW';cmd;'text/html'
+    2!:1`android_exec_host@.IFQT 'android.intent.action.VIEW';cmd;'text/html'
   else.
     if. 0 = #browser do.
       browser=. dfltbrowser''
@@ -1762,12 +1762,12 @@ case. 'Win' do.
   end.
   if. r<33 do. sminfo 'view pdf error:',PDFReader,' ',cmd,LF2,1{::cderx'' end.
 case. do.
-  if. (UNAME-:'Android') *. 0=isatty 0 do.
+  if. (UNAME-:'Android') > isatty 0 do.
     cmd=. '/' (I. cmd='\') } cmd
     if. -. isURL cmd do.
       cmd=. 'file://',cmd
     end.
-    2!:1 'android.intent.action.VIEW';cmd;'application/pdf'
+    2!:1`android_exec_host@.IFQT 'android.intent.action.VIEW';cmd;'application/pdf'
   else.
     if. 0 = #PDFReader do.
       PDFReader=. dfltpdfreader''
@@ -1949,7 +1949,7 @@ y=. y -. Ignore, (IFIOS+.IFJHS)#<;._1 '  droidwd gui/droidwd android gui/android
 y=. y -. (IFIOS+.IFJHS>IFBROADWAY)#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gui/jgtkgrid wdclass gui/wdclass viewmat gl2 graphics/gl2'
 y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd jview gtkide ide/gtk gui/jgtkgrid'
 y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd android gui/android jview'
-y=. y -. IFQT#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gui/jgtkgrid droidwd gui/droidwd'
+y=. y -. IFQT#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gui/jgtkgrid droidwd gui/droidwd android gui/android'
 y=. y -. IFGTK#<;._1 ' qtide ide/qt'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
@@ -1997,12 +1997,12 @@ if. IFJHS do.
   xmr ::0: file
   EMPTY return.
 end.
-if. (UNAME-:'Android') *. 0=isatty 0 do.
+if. (UNAME-:'Android') > isatty 0 do.
   file=. '/' (I. file='\') } file
   if. -. isURL file do.
     file=. 'file://',file
   end.
-  2!:1 'android.intent.action.EDIT';file;'text/plain'
+  2!:1`android_exec_host@.IFQT 'android.intent.action.EDIT';file;'text/plain'
   EMPTY return.
 end.
 editor=. (Editor_j_;Editor_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'

@@ -181,4 +181,4 @@ end.
 syseventlast=: sysevent
 )
 
-events_run`start_droidwd@.('Android'-:UNAME) coname''
+events_run`start_droidwd@.(('Android'-:UNAME)>IFQT) coname''

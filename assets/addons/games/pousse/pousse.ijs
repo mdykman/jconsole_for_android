@@ -315,7 +315,7 @@ wd 'pas 0 0'
 wd^:(-.IFJ6) 'pshow;pshow sw_hide'
 if. #x do. wdcenter x
 else. wd 'pcenter' end.
-if. 'Android'-:UNAME do.
+if. ('Android'-:UNAME)>IFQT do.
   button_enable (4*SIZE)#1
   IFGREENMOVE=: 0
   SEQ=: ''
@@ -375,7 +375,7 @@ if. y=SIZE do.
   ps_new_button''
 else.
   pos=. wdqformx''
-  if. 'Android'-:UNAME do.
+  if. ('Android'-:UNAME)>IFQT do.
     wd 'rm board', , ';rm ',"1 >BUTTONS
   else.
     wd 'pclose'
@@ -427,7 +427,7 @@ wd 'xywh ',"1 x,"1 ' ',"1 y,"1 (' ',":CELL,HITE),"1 j
 defgrid=: 3 : 0
 j=. ';cc board isigraph'
 wd 'xywh ',(":(OFFX+WID),(OFFY+HITE),2#CELL*SIZE),j
-'x y w h'=. (2&*)`dpw2px_droidwd_@.('Android'-:UNAME) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
+'x y w h'=. (2&*)`dpw2px_droidwd_@.(('Android'-:UNAME)>IFQT) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
 CELL=: <. SIZE %~ w <. h
 wd 'setxywhx board ',":x,y,2#CELL*SIZE
 where=: (4,~*:SIZE)$, ,&(2#CELL)"1 CELL*>{2#<i.SIZE
@@ -470,7 +470,7 @@ wd 'wh ',(":WID,CELL), ';cc dummy button;cn "  "'
 wd b
 wd 'wh ',(":WID,CELL), ';cc dummy button;cn "  "'
 wd 'bin zs'
-'x y w h'=. (2&*)`dpw2px_droidwd_@.('Android'-:UNAME) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
+'x y w h'=. (2&*)`dpw2px_droidwd_@.(('Android'-:UNAME)>IFQT) ((OFFX+WID),(OFFY+HITE),2#CELL*SIZE)
 CELL=: <. SIZE %~ w <. h
 where=: (4,~*:SIZE)$, ,&(2#CELL)"1 CELL*>{2#<i.SIZE
 )
@@ -557,4 +557,4 @@ writeenable=: 3 : 0
 button_enable -.| (IFGREENMOVE{PRED,PGREEN) evrepeat allm
 )
 wd^:('Android'-.@-:UNAME) :: ] 'psel ps;pclose'
-pousse`start_droidwd@.('Android'-:UNAME) coname''
+pousse`start_droidwd@.(('Android'-:UNAME)>IFQT) coname''

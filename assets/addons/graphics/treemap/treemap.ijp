@@ -1,0 +1,56 @@
+NB. project file: e:/deb/addons/graphics/treemap/treemap
+
+coclass 'jproject'
+
+PRIMARYFILES=: 0 : 0
+~Addons/graphics/treemap/init
+~Addons/graphics/treemap/util
+~Addons/graphics/treemap/color
+~Addons/graphics/treemap/defs
+~Addons/graphics/treemap/opts
+~Addons/graphics/treemap/draw
+~Addons/graphics/treemap/events
+~Addons/graphics/treemap/hover
+~Addons/graphics/treemap/misc
+~Addons/graphics/treemap/mouse
+~Addons/graphics/treemap/pos
+~Addons/graphics/treemap/show
+~Addons/graphics/treemap/tmap
+)
+
+PRIMARYLIBS=: 0 : 0
+gl2
+pack
+)
+
+DEVFILES=: ''
+
+DEVLIBS=: ''
+
+OTHERFILES=: 0 : 0
+~Addons/graphics/treemap/demo.ijs
+~Addons/graphics/treemap/manifest.ijs
+~Addons/graphics/treemap/test0.ijs
+)
+
+TARGETFILE=: '~Addons/graphics/treemap/treemap.ijs'
+
+TARGETLOCALE=: 'ptreemap'
+
+TARGETHEADER=: ''
+
+TARGETEXTRA=: ''
+
+BUILDOPTS=: 0 1 0 0 0 0 0
+
+PREBUILDFILE=: ''
+
+POSTBUILDFILE=: ''
+
+TESTFILE=: '~Addons/graphics/treemap/test.ijs'
+
+NOTES=: ''
+
+VERSION=: ''
+
+WINDOWS=: ''

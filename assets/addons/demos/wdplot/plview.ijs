@@ -85,7 +85,7 @@ end.
 
 NB. =========================================================
 plotdemo_view_button=: 3 : 0
-plotedit_run_jdplotedit_`start_droidwd_jdplotedit_@.('Android'-:UNAME) 'jdplotedit'
+plotedit_run_jdplotedit_`start_droidwd_jdplotedit_@.(('Android'-:UNAME)>IFQT) 'jdplotedit'
 NB. plotedit_run PLDEMOSEL
 )
 

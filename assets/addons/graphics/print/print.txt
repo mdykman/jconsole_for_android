@@ -1,0 +1,10 @@
+This directory contains various print utilities.
+
+print.ijs
+=========
+these functions support printing via Print Manager.
+
+write.ijs
+=========
+this is an extension to print.ijs that allows you to place
+text and graphics in frames on a page.

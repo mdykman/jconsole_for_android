@@ -594,4 +594,4 @@ init''
 coin_run''
 )
 
-coins_run`start_droidwd@.('Android'-:UNAME) coname''
+coins_run`start_droidwd@.(('Android'-:UNAME)>IFQT) coname''

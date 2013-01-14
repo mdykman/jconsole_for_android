@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 pousse
 )
 
-VERSION=: '1.0.10'
+VERSION=: '1.0.12'
 
 RELEASE=: 'j602 j701'
 

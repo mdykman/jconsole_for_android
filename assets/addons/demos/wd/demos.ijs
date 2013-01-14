@@ -201,4 +201,4 @@ load 'scriptdoc'
 scriptdoc jpath '~system/main/task.ijs'
 )
 
-demos_run`start_droidwd@.('Android'-:UNAME) coname''
+demos_run`start_droidwd@.(('Android'-:UNAME)>IFQT) coname''
