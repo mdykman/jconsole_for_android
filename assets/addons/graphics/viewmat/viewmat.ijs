@@ -2,37 +2,23 @@ require 'graphics/bmp graphics/gl2'
 
 coclass 'jviewmat'
 
-coinsert 'jgtk jgl2 jni jaresu'
-GUI=: -. IFJHS +. IFIOS
-
-jniImport ::0: (0 : 0)
-android.content.Context
-android.view.View
-android.view.Window
-)
+coinsert 'jgtk jgl2'
+GUI=: -. IFJHS +. IFIOS +. UNAME-:'Android'
 MINWH=: 200 200
 DEFWH=: 360 360
 
 create=: 3 : 0
-if. GUI > IFGTK+.IFQT do.
-  if. ('Android'-:UNAME)>IFQT do.
-    require 'gui/android'
-  else.
-    require 'gui/gtk'
-    gtkinit_jgtk_''
-  end.
+if. GUI *. -.IFGTK do.
+  require 'gui/gtk'
+  gtkinit_jgtk_''
 end.
 )
 destroy=: 3 : 0
 if. GUI do.
-  if. 'Android'-:UNAME do.
-  elseif. IFQT do.
-  elseif. do.
-    if. -.IFGTK do.
-      gtk_main_quit''
-    end.
-    cbfree''
+  if. -.IFGTK do.
+    gtk_main_quit''
   end.
+  cbfree''
 end.
 codestroy''
 )
@@ -62,7 +48,7 @@ ext=. sc * max - min
 getbmp=: 3 : 0
 gid=. y, (0=#y) # GID
 glsel gid
-box=. 0 0,glqwh''
+box=. 0 0,gtkwh
 res=. glqpixels box
 (3 2 { box) $ res
 )
@@ -147,11 +133,6 @@ if. GUI *. IFGTK *. 0~:#VMH do.
   (txy,siz) setwinpos window
 end.
 )
-hforms=: 3 : 0
-fms=. <;._2 &> <;._2 wdqpx''
-fms=. fms #~ (1{"1 fms) e. VMH
-fms \: 0 ". &> 4{"1 fms
-)
 hremove=: 3 : 0
 setvmh VMH -. coname''
 )
@@ -174,8 +155,7 @@ ifRGB=: x -: 'rgb'
 'DAT MAT ANG TITLE'=: x getvm mat
 mat=. finite MAT
 'rws cls'=. $mat
-glsel gid
-mwh=. glqwh''
+mwh=. gtkwh
 if. #ANG do. mwh vf_show mat return. end.
 mat=. , mwh fitvm mat
 glpixels (0 0, mwh), mat
@@ -195,17 +175,11 @@ if. #ANG do. mwh vf_show mat return. end.
 mat=. , mwh fitvm mat
 glpixels (0 0, mwh), mat
 SHOW=: 1
-EMPTY
 )
 viewmat_close=: 3 : 0
 hremove''
-if. 'Android'-:UNAME do.
-elseif. IFQT do.
-  wd 'pclose'
-elseif. do.
-  gtk_widget_destroy window
-  if. -.IFGTK do. gtk_main_quit '' end.
-end.
+gtk_widget_destroy window
+if. -.IFGTK do. gtk_main_quit '' end.
 destroy''
 1
 )
@@ -292,7 +266,7 @@ if. 0=#fms
 do. mbinfo 'viewmat';'No viewmat forms.' return.
 end.
 wd 'psel ',(<0 1) pick fms
-_2 {. wdqchildxywh GID
+_2 {. 0 ". wd 'qchildxywhx ',GID
 )
 readmat=: 3 : 0
 fms=. hforms''
@@ -315,15 +289,14 @@ wd 'psel ',(<0 1) pick fms
 (getbmp'') writebmp fl
 )
 setsize=: 3 : 0
-if. IFQT do. return. end.
 fms=. hforms''
 if. 0=#fms
 do. mbinfo 'viewmat';'No viewmat forms.' return.
 end.
 loc=. (<0 2) { fms
 wd 'psel ',(<0 1) pick fms
-form=. wdqformx''
-xywh=. wdqchildxywh GID
+form=. 0 ". wd 'qformx'
+xywh=. 0 ". wd 'qchildxywhx ',GID
 dif=. 0 0, y - _2 {. xywh
 wd 'pmovex ',":form + dif
 )
@@ -338,18 +311,12 @@ viewmat=: 3 : 0
 '' viewmat y
 :
 a=. '' conew 'jviewmat'
-xx__a=: x [ yy__a=: y
+empty x vmrun__a y
 if. GUI do.
-  if. 'Android'-:UNAME do.
-    0 StartActivity_ja_ (>a); 'onDestroy'
-  else.
-    empty vmrun__a ''
-    if. -.IFGTK+.IFQT do. gtk_main '' end.
-  end.
+  if. -.IFGTK do. gtk_main '' end.
 else.
-  empty vmrun__a ''
   (no_gui_bmp__a'') writebmp jpath '~temp/viewmat.bmp'
-  if. (UNAME-:'Android') *. 0=isatty 0 do.
+  if. (UNAME-:'Android') *. 0=isatty 0  do.
     2!:1 'android.intent.action.VIEW';('file://',jpath '~temp/viewmat.bmp');'image/bitmap'
   end.
   destroy__a ''
@@ -360,8 +327,7 @@ viewmatcc=: 3 : 0
 :
 empty x vmcc y
 )
-vmrun=: 3 : 0
-x=. xx [ y=. yy
+vmrun=: 4 : 0
 if. 0 > nc <'VMH' do. setvmh '' end.
 SHOW=: 0
 ifRGB=: x -: 'rgb'
@@ -372,32 +338,20 @@ mwh=. cls,rws
 if. -. ifRGB do.
   mwh=. MINWH >. <. mwh * <./ DEFWH % cls,rws
 end.
-mwh0=: mwh
 vmwin^:GUI mwh
 hcascade''
 hadd''
-if. IFQT do.
-  wd 'pshow'
-  glpaintx''
-end.
 )
 vmwin=: 3 : 0
-if. 'Android'-:UNAME do.
-elseif. IFQT do.
-  wd 'pc viewmat;pn *',TITLE
-  wd 'cc g isigraph'
-  wd 'pmovex _1 _1 ', ":mwh0
-elseif. do.
-  newwindow TITLE
-  gtk_window_set_position window,GTK_WIN_POS_CENTER_ALWAYS
-  consig3 window;'key-press-event';'viewmat_key_press'
-  consig3 window;'focus-in-event';'viewmat_focus_in'
-  canvas=: glcanvas y;coname''
-  gtk_container_add window,canvas
-  windowfinish''
-end.
+newwindow TITLE
+gtk_window_set_position window,GTK_WIN_POS_CENTER_ALWAYS
+consig3 window;'key-press-event';'viewmat_key_press'
+consig3 window;'focus-in-event';'viewmat_focus_in'
+canvas=: glcanvas y;coname''
+gtk_container_add window,canvas
+windowfinish''
 )
-isigraph_event=: 4 : 0
+gtkwidget_event=: 4 : 0
 evt=. >@{.y
 syshandler=. 'viewmat_handler'
 sysevent=. 'viewmat_g_', evt
@@ -405,34 +359,6 @@ sysdefault=. 'viewmat_default'
 wdd=. ;: 'syshandler sysevent sysdefault'
 wdqdata=. (wdd ,. ".&.>wdd)
 evthandler wdqdata
-0
-)
-Activity=: 0
-
-onCreate=: 3 : 0
-jniCheck Activity=: NewGlobalRef <2{y
-jniCheck Activity ('requestWindowFeature (I)Z' jniMethod)~ FEATURE_NO_TITLE
-jniCheck win=. Activity ('getWindow ()LWindow;' jniMethod)~ ''
-jniCheck win ('setFlags (II)V' jniMethod)~ FLAG_FULLSCREEN;FLAG_FULLSCREEN
-jniCheck DeleteLocalRef <win
-option=. 0
-vmrun''
-wh=. mwh0
-idnx=: (0,Activity) glcanvas_jgl2_ wh ; coname''
-l=. glgetloc_jgl2_ idnx
-thisview=. view__l
-jniCheck Activity ('setContentView (LView;)V' jniMethod)~ thisview
-jniCheck thisview ('requestFocus ()Z' jniMethod)~ ''
-jniCheck DeleteLocalRef <thisview
-
-0
-)
-
-onDestroy=: 3 : 0
-if. Activity do.
-  jniCheck DeleteGlobalRef <Activity
-end.
-Activity=: idnx=: 0
 0
 )
 viewmat_z_=: viewmat_jviewmat_

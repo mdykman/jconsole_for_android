@@ -1,12 +1,12 @@
 NB. Plot viewer
 
 3 : 0''
-if. -.IFGTK+IFIOS+.IFQT+.UNAME-:'Android' do. gtkinit_jgtk_'' end.
+if. -.IFGTK+IFIOS+.UNAME-:'Android' do. gtkinit_jgtk_'' end.
 ''
 )
 
 coclass 'jdplotgtk'
-coinsert 'jgtk jzplot jgl2 jni jaresu'
+coinsert 'jgtk jzplot jgl2 jni'
 
 jniImport ::0: (0 : 0)
 android.content.Context
@@ -14,8 +14,6 @@ android.view.View
 android.view.View$OnClickListener
 android.widget.Button
 android.widget.LinearLayout
-android.widget.LinearLayout$LayoutParams
-android.widget.HorizontalScrollView
 android.widget.ScrollView
 )
 
@@ -23,10 +21,10 @@ RUNID1=: 0
 plotedit=: 0
 CMDS=: ''
 
-plotruns=: plotrunsx=: plotrunsa=: 3 : 0
+plotruns=: plotrunsx=: 3 : 0
 CMDS=: ". y
 glsel canvas
-glpaint`glpaintx@.('Android'-:UNAME)''
+glpaintx''
 )
 
 PLTIMER=: 3000
@@ -34,11 +32,17 @@ PLDEMOVER=: 7.01
 SLIDES=: 0
 
 NB. =========================================================
+NB. will start new android plot activity
+plotrunsa=: 3 : 0
+CMDS=: ". y
+0!:100 'pd ''reset''',LF,CMDS,LF,'pd ''show'''
+)
+
+NB. =========================================================
 NB. android button callback
 button_onClick=: 3 : 0
 jniCheck b=. GetObjectArrayElement (3{y);0
 jniCheck id=. b ('getId ()I' jniMethod)~ ''
-jniCheck DeleteLocalRef <b
 PLDEMOSEL=: (id-1){::PLOTNAMES
 plotrunsa 'D',PLDEMOSEL
 1
@@ -47,42 +51,19 @@ plotrunsa 'D',PLDEMOSEL
 NB. =========================================================
 NB. android activity callback
 onCreate=: 3 : 0
-jniCheck PFormhwnd=: Activity=: NewGlobalRef <2{y
-
-NB. hide title and status bar
-jniCheck Activity ('requestWindowFeature (I)Z' jniMethod)~ FEATURE_NO_TITLE
-jniCheck win=. Activity ('getWindow ()LWindow;' jniMethod)~ ''
-jniCheck win ('setFlags (II)V' jniMethod)~ FLAG_FULLSCREEN;FLAG_FULLSCREEN
-jniCheck DeleteLocalRef <win
-
-jniCheck sv=. Activity jniNewObject 'LinearLayout LContext;'
-jniCheck sv ('setOrientation (I)V' jniMethod)~ 1
-wh=. 280 280
-canvas=: idnx=: (0,Activity) glcanvas_jgl2_ wh ; coname''
-PIdhwnd=: ":canvas
-l=. glgetloc_jgl2_ idnx
-vw=. view__l
-jniCheck jniCheck lp=. ('LinearLayout$LayoutParams IIF') jniNewObject~ (<"0 dp2px MATCH_PARENT, 280), <1
-jniCheck vw ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-jniCheck DeleteLocalRef <lp
-jniCheck sv ('addView (LView;)V' jniMethod)~ vw
-
-jniCheck hs=. Activity jniNewObject 'HorizontalScrollView LContext;'
-jniCheck jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ <"0 dp2px MATCH_PARENT, 50
-jniCheck hs ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-jniCheck DeleteLocalRef <lp
-jniCheck sv ('addView (LView;)V' jniMethod)~ hs
-
-jniCheck ll=. Activity jniNewObject 'LinearLayout LContext;'
-jniCheck hs ('addView (LView;)V' jniMethod)~ ll
+this=. 2{y   NB. context
+sv=. this jniNewObject 'ScrollView LContext;'
+ll=. this jniNewObject 'LinearLayout LContext;'
+ll ('setOrientation (I)V' jniMethod)~ LinearLayout_VERTICAL_ja_
+sv ('addView (LView;)V' jniMethod)~ ll
 
 NB. concrete object for abstract interface
-jniCheck listener=. '' jniOverride 'org.dykman.jn.android.view.View$OnClickListener' ; (>18!:5'') ; 'button'
+listener=. '' jniOverride 'org.dykman.jn.android.view.View$OnClickListener' ; (>18!:5'') ; 'button'
 
 NB. one button for each plot example
 list=. ''
 for_n. plotnames do.
-  b=. Activity jniNewObject 'Button LContext;'
+  b=. this jniNewObject 'Button LContext;'
   b ('setText (LCharSequence;)V' jniMethod)~ n
   b ('setId (I)V' jniMethod)~ 1+n_index
   b ('setOnClickListener (LView$OnClickListener;)V' jniMethod)~ listener
@@ -90,19 +71,9 @@ for_n. plotnames do.
   list=. list,b
 end.
 
-jniCheck Activity ('setContentView (LView;)V' jniMethod)~ sv
-jniCheck DeleteLocalRef"0 (sv;hs;vw;ll;listener), <"0 list
-
-plotrunsa 'D',PLDEMOSEL
-
-0
-)
-
-onDestroy=: 3 : 0
-if. Activity do.
-  jniCheck DeleteGlobalRef <Activity
-end.
-Activity=: idnx=: 0
+jniCheck this ('setContentView (LView;)V' jniMethod)~ sv
+jniCheck sv ('requestFocus ()Z' jniMethod)~ ''
+DeleteLocalRef"0 (sv;ll;listener), <"0 list
 0
 )
 
@@ -111,7 +82,7 @@ plotdemo_run=: 3 : 0
 
 Cw=: Ch=: _1 NB. ensure plot window is sized
 f=. jpath '~system/packages/graphics/'&, @ (,&'.ijs')
-DATHILO=: }. 'm' fread jpath '~addons/demos/plot/dm0396.txt'
+DATHILO=: }. 'm' fread jpath '~Demos/plot/dm0396.txt'
 
 MyPlotDefaults=: '' NB. turn off user defaults
 
@@ -128,7 +99,7 @@ PId=: 'ps'
 
 NB. start android activity
 if. 'Android'-:UNAME do.
-  StartActivity_ja_ coname'' return.
+  0 StartActivity_ja_ 0;0;(>18!:5'') return.
 end.
 
 make_main_window''
@@ -137,7 +108,7 @@ gtk_widget_show_all window
 
 plotruns 'D',PLDEMOSEL
 
-if. -.IFGTK+.IFQT do. gtk_main'' end.
+if. -.IFGTK do. gtk_main'' end.
 )
 
 NB. =========================================================
@@ -197,16 +168,10 @@ l=. glgetloc canvas
 if. newsize__l do.
   if. #CMDS do.
     glclear''
-    pd 'reset ',":PForm
+    pd 'reset ',PForm
     0!:100 CMDS
   end.
-  if. 'Android'-:UNAME do.
-    android_show''
-  elseif. IFQT do.
-    qt_show''
-  elseif. do.
-    gtk_show''
-  end.
+  gtk_show''
   newsize__l=: 0
 end.
 0
@@ -251,7 +216,7 @@ plotdemo_destroy=: 3 : 0
 if. 0~:RUNID1 do. RUNID1=: 0 [ g_source_remove RUNID1 end.
 if. plotedit do. gtk_widget_destroy ::0: plotedit end.
 window=: 0
-if. -.IFGTK+.IFQT do. gtk_main_quit'' end.
+if. -.IFGTK do. gtk_main_quit'' end.
 cbfree''
 0
 )

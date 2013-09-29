@@ -5,11 +5,7 @@ coinsert'jhs'
 
 HBS=: 0 : 0
 '<script src="~addons/ide/jhs/js/codemirror/codemirror.js"></script>'
-'<script src="~addons/ide/jhs/js/codemirror/util/search.js"></script>'
-'<script src="~addons/ide/jhs/js/codemirror/util/searchcursor.js"></script>'
-'<script src="~addons/ide/jhs/js/codemirror/util/dialog.js"></script>'
 '<link rel="stylesheet" href="~addons/ide/jhs/js/codemirror/codemirror.css">'
-'<link rel="stylesheet" href="~addons/ide/jhs/js/codemirror/util/dialog.css">'
 '<link rel="stylesheet" href="~addons/ide/jhs/js/codemirror/j/jtheme.css">'
 '<script src="~addons/ide/jhs/js/codemirror/j/j.js"></script>'
 jhma''
@@ -28,7 +24,7 @@ jhmz''
 
 'saveasdlg'    jhdivadlg''
  'saveasdo'    jhb'save as'
- 'saveasx'     jhtext'';40
+ 'saveasx'     jhtext'';10
   'saveasclose'jhb'X'
 '<hr></div>'
 
@@ -49,7 +45,6 @@ create=: 3 : 0
 rep=.''
 try.
  d=. (1!:1<y) rplc '&';'&amp;';'<';'&lt;'
- addrecent_jsp_ jshortname y
 catch.
  d=. ''
  rep=. 'WARNING: file read failed!'
@@ -70,23 +65,29 @@ if. #USERNAME do.
  fu=. jpath'~user'
  'save only allowed to ~user paths' assert fu-:(#fu){.y
 end.
-(toHOST getv'textarea')fwrite y
+new=. toHOST getv'textarea'
+old=. fread y
+if. -._1-:old do. old=. toHOST old end.
+if. new-:old do.
+ smoutput'jijs not saved (unchanged): ',y
+else.
+ smoutput'jijs saved: ',y
+end. 
+new  fwrite y
 )
 
 ev_save_click=: 3 : 0
 f=. jpath getv'filename'
-t=. _8{.timestamp''
 try.
  save f
- jhrajax 'saved ',t
+ jhrajax 'saved without error'
 catch.
- jhrajax 'save ',t,' failed'
+ jhrajax 'save failed'
 end.
 )
 
 ev_runw_click=: 3 : 0
 f=. jpath getv'filename'
-t=. _8{.timestamp''
 try.
  save f
  if. 'runw'-:getv'jmid' do.
@@ -94,9 +95,11 @@ try.
  else.
   loadd__ f
  end.
- jhrajax  'ran ',t
+ smoutput'ran without error'  
+ jhrajax 'ran without error'
 catch.
- jhrajax 'ran ',t,' ',13!:12''
+ smoutput 'ran with error:',LF,13!:12''
+ jhrajax 13!:12''
 end.
 )
 
@@ -151,7 +154,10 @@ function ev_body_load()
  rep= jbyid("rep");
  ta= jbyid("textarea");
  saveasx=jbyid("saveasx");
+
+ //! dresize();
  ce.focus();
+
  cm = CodeMirror.fromTextArea(ce,
   {lineNumbers: true,
    mode:  "j",
@@ -219,8 +225,8 @@ function ev_redo_click(){cm.redo();}
 function ev_saveasdo_click(){click();}
 function ev_saveasx_enter() {click();}
 
-function ev_saveas_click()     {jdlgshow("saveasdlg","saveasx");dresize();}
-function ev_saveasclose_click(){jhide("saveasdlg");dresize();}
+function ev_saveas_click()     {jdlgshow("saveasdlg","saveasx");}
+function ev_saveasclose_click(){jhide("saveasdlg");}
 
 function ev_ro_click(){ro(readonly= !readonly);}
 function ev_numbers_click()
@@ -237,13 +243,8 @@ function ajax(ts)
   jhide("saveasdlg");
   jbyid("filename").value=ts[1];
   setnamed();
-  var t=ts[0].split('/');
-  if(1==t.length)
-   document.title=ts[0].substring(9);
-  else
-   document.title=t[t.length-1];
+  document.title=ts[0].substring(9);
  }
- dresize();
 }
 
 function ev_ijs_enter(){return true;}

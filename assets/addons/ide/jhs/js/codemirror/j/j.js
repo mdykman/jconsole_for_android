@@ -1,6 +1,5 @@
 CodeMirror.defineMode('j', function(config) {
 
-// must clear cache to get changed file downloaded
 // jtheme.css selectors: global local control string comment
 
 var c;
@@ -14,7 +13,7 @@ function define(style, string)
 };
 
   // Keywords
-  define('control','for. goto. label. assert. break. continue. if. do. else. end. elseif. return. select. case. fcase. throw. try. while. whilst. catch. catchd. catcht.');
+  define('control','for. goto. label. assert. break. continue. for. if. do. else. end. elseif. return. select. case. fcase. throw. try. while. whilst. catch. catchd. catcht.');
 
  function tokenBase(stream, state)
  {

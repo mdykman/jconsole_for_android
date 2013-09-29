@@ -12,7 +12,7 @@ end.
 ''
 )
 
-path=. jpath '~addons/demos/plot/'
+path=. jpath '~Demos/plot/'
 files=. path&,@(,&'.ijs') each ;: 'plexam plotdwin pledit plview'
 coclass 'jdplotgtk'
 coinsert 'jgtk jzplot jafm jgl2 ja jni'

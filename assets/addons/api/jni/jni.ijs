@@ -495,7 +495,7 @@ jniCheck=: 3 : 0
 ]`('JNI exception' (13!:8) 3:)@.(0 ~: a. i. x&ExceptionCheck_jni_@(''"_)) y
 )
 jniToJString=: 3 : 0
-if. 0=y do. '' return. end.
+assert. 0~:y
 jniCheck str=. GetStringUTFChars y;<<0
 z=. memr str,0,_1
 jniCheck ReleaseStringUTFChars y;<<str
@@ -518,7 +518,7 @@ clz=. FindClass <'java/lang/String'
 z=. jniCheck NewObjectArray (#y);clz;0
 jniCheck DeleteLocalRef <clz
 for_i. i.#y do.
-  jniCheck SetObjectArrayElement z;i;s=. NewStringUTF utf8@,&.> i{y
+  jniCheck SetObjectArrayElement z;i;s=. NewStringUTF i{y
   jniCheck DeleteLocalRef <s
 end.
 z
@@ -530,13 +530,13 @@ try.
   jniCheck mid=. GetMethodID cls;'getMessage';'()Ljava/lang/String;'
   jniCheck jstr=. 'x x x x' (ID_CallObjectMethod jniVararg) y ; mid
   z=. jniToJString jstr
-  jniCheck DeleteLocalRef <jstr
-  jniCheck DeleteLocalRef <cls
-  jniCheck DeleteLocalRef <y
+  DeleteLocalRef <jstr
+  DeleteLocalRef <cls
+  DeleteLocalRef <y
   ExceptionClear''
   z
 catch.
-  jniCheck DeleteLocalRef <y
+  DeleteLocalRef <y
   ExceptionClear''
   '' return.
 end.
@@ -553,8 +553,8 @@ try.
   jniCheck jstr=. 'x x x x' (ID_CallObjectMethod jniVararg) ecls ; mid
   z=. jniToJString jstr
   if. 0=x do. DeleteLocalRef <ecls end.
-  jniCheck DeleteLocalRef <jstr
-  jniCheck DeleteLocalRef <ccls
+  DeleteLocalRef <jstr
+  DeleteLocalRef <ccls
   ExceptionClear''
   z
 catch.
@@ -664,9 +664,6 @@ rc
 )
 jniMethod=: 1 : 0
 :
-if. (0 4 -.@e.~ 3!:0 y) +. 0-:y do.
-  smoutput 'method signiture: ',m
-end.
 assert. 0 4 e.~ 3!:0 y [ 'jniMethod'
 assert. 0-.@-:y [ 'jniMethod'
 jniCheck cls=. GetObjectClass_jni_ <y
@@ -679,7 +676,7 @@ rt=. }. (}.~ i.&')') proto
 m=. method,' ',proto
 
 rc=. m jniCall_jni_ (boxxopen x),~ 2 0 0;y;cls
-jniCheck DeleteLocalRef_jni_ <cls
+DeleteLocalRef_jni_ <cls
 rc
 )
 jniStaticMethod=: 1 : 0
@@ -701,7 +698,7 @@ rt=. }. (}.~ i.&')') proto
 m=. method,' ',proto
 
 rc=. m jniCall_jni_ (boxxopen x),~ 2 1 0;y;cls
-jniCheck DeleteLocalRef_jni_ <cls
+DeleteLocalRef_jni_ <cls
 rc
 )
 jniCall=: 4 : 0
@@ -711,7 +708,6 @@ rt=. '#'-.~ }. (}.~ i.&')') proto
 'attr obj cls'=. 3{.y
 'member static nonvirtual'=. attr
 y=. 3}.y
-if. -. (+/'#'=sig) = #y do. smoutput 'jniCall : ',x end.
 assert. (+/'#'=sig) = #y [ 'jniCall incorrect number of arguments'
 
 str=. stri=. 0$0
@@ -719,7 +715,7 @@ jniCheck mid=. GetMethodID`GetStaticMethodID@.static cls;method;({.a.),~ proto-.
 if. 1 e. s1=. ((<'Ljava/lang/CharSequence;') = sig1) +. (<'Ljava/lang/String;') = sig1=. <;._1 sig do.
   for_i. I. s1 do.
     if. 2 131072 e.~ 3!:0 y1=. i{::y do.
-      str=. str, <NewStringUTF < 8&u: ,y1
+      str=. str, <NewStringUTF < 8&u: y1
       stri=. stri, i
     end.
   end.
@@ -738,7 +734,7 @@ else.
     case. 'B' do. jniCheck rc=. ('c x x x ', jniSigx15 sig) ((static{ID_CallByteMethod,ID_CallStaticByteMethod) jniVararg) (obj ; mid), sig jniSigarg y
     case. 'Z' do. jniCheck rc=. ('i x x x ', jniSigx15 sig) ((static{ID_CallBooleanMethod,ID_CallStaticBooleanMethod) jniVararg) (obj ; mid), sig jniSigarg y
     case. 'I' do. jniCheck rc=. ('i x x x ', jniSigx15 sig) ((static{ID_CallIntMethod,ID_CallStaticIntMethod) jniVararg) (obj ; mid), sig jniSigarg y
-    case. 'J' do. jniCheck rc=. ('x x x x ', jniSigx15 sig) ((static{ID_CallLongMethod,ID_CallStaticLongMethod) jniVararg) (obj ; mid), sig jniSigarg y
+    case. 'J' do. jniCheck rc=. ('l x x x ', jniSigx15 sig) ((static{ID_CallLongMethod,ID_CallStaticLongMethod) jniVararg) (obj ; mid), sig jniSigarg y
     case. 'S' do. jniCheck rc=. ('s x x x ', jniSigx15 sig) ((static{ID_CallShortMethod,ID_CallStaticShortMethod) jniVararg) (obj ; mid), sig jniSigarg y
     case. 'F' do. jniCheck rc=. ('f x x x ', jniSigx15 sig) ((static{ID_CallFloatMethod,ID_CallStaticFloatMethod) jniVararg) (obj ; mid), sig jniSigarg y
     case. 'D' do. jniCheck rc=. ('d x x x ', jniSigx15 sig) ((static{ID_CallDoubleMethod,ID_CallStaticDoubleMethod) jniVararg) (obj ; mid), sig jniSigarg y
@@ -801,6 +797,7 @@ if. 3=4!:0<'jnhandler_debug' do.
   try. x jnhandler_debug y catch. end.
 end.
 jn_fn=. x
+if. 'Android'-:UNAME do. log_d_ja_ 'JJNI';'jnhandler ',jn_fn end.
 if. 13!:17'' do.
   z=. jn_fn~ y
 else.
@@ -821,6 +818,7 @@ else.
     end.
     jn_err=. LF,,LF,.}.;._2 jn_err
     smoutput 'jnhandler error in: ',jn_fn,jn_err
+    if. 'Android'-:UNAME do. log_d_ja_ 'JJNI';'jnhandler error in: ',,jn_fn,jn_err end.
     0
   end.
 end.

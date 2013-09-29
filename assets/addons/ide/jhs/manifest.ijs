@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 JHS IDE
 )
 
-VERSION=: '1.0.162'
+VERSION=: '1.0.153'
 
 FILES=: 0 : 0
 history.txt
@@ -52,10 +52,6 @@ js/codemirror/codemirror.js
 js/codemirror/codemirror.css
 js/codemirror/j/j.js
 js/codemirror/j/jtheme.css
-js/codemirror/util/dialog.css
-js/codemirror/util/dialog.js
-js/codemirror/util/search.js
-js/codemirror/util/searchcursor.js
 )
 
 FILESWIN=: 0 : 0

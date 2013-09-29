@@ -4,20 +4,20 @@ NB. run plot demos in session
 
 3 : 0''
 if. -.IFJ6 do.
-  require 'numeric trig plot'
+  require 'plot'
 else.
   require 'dates files isigraph numeric plot'
 end.
 ''
 )
 
-load '~addons/demos/plot/plexam.ijs'
+load '~Demos/plot/plexam.ijs'
 
-coinsert_jdplot_ 'jzplot'
+coinsert_jdplotgtk_ 'jzplot'
 
 NB. =========================================================
 plotdemos_z_=: 3 : 0
-cocurrent 'jdplot'
+cocurrent 'jdplotgtk'
 sel=. {.y,0
 sel=. 0 >. sel <. <:#PLOTNAMES
 cmd=. ". 'D',sel pick PLOTNAMES

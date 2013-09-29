@@ -1,48 +1,29 @@
 require 'gui/android gl2'
+require '~addons/gui/droidwd/isigraph.ijs'
 
 3 : 0''
-if. 0~: 4!:0 <'IFJAVA_z_' do. IFJAVA_z_=: 0 end.
-if. 0~: 4!:0 <'IFWINCE_z_' do. IFWINCE_z_=: 0 end.
 if. 0~: 4!:0 <'FIXFONT_z_' do. FIXFONT_z_=: FIXFONT_jgl2_ end.
 if. 0~: 4!:0 <'PROFONT_z_' do. PROFONT_z_=: PROFONT_jgl2_ end.
-if. 0~: 4!:0 <'gtkInitDone_jgtk_' do. gtkInitDone_jgtk_=: 0 end.
 ''
 )
 
 coclass 'droidwd'
 coinsert 'jni jaresu'
 
-wantstatusbar=: 1
-barsheight=: 12
-
 jniImport ::0: (0 : 0)
-android.app.AlertDialog
-android.app.AlertDialog$Builder
 android.content.Context
-android.content.DialogInterface$OnClickListener
 android.graphics.Bitmap
 android.graphics.BitmapFactory
-android.graphics.Bitmap$Config
 android.graphics.Typeface
 android.graphics.drawable.BitmapDrawable
 android.graphics.drawable.Drawable
 android.media.MediaPlayer
 android.media.ToneGenerator
 android.net.Uri
-android.text.method.KeyListener
-android.text.method.MovementMethod
-android.text.method.ScrollingMovementMethod
-android.util.AttributeSet
-android.view.ContextMenu
 android.view.Display
-android.view.Menu
-android.view.MenuItem
-android.view.MenuItem$OnMenuItemClickListener
-android.view.SubMenu
 android.view.View
 android.view.View$OnClickListener
 android.view.ViewGroup
-android.view.ViewParent
 android.view.WindowManager
 android.webkit.WebSettings
 android.webkit.WebView
@@ -51,7 +32,6 @@ android.widget.AbsListView
 android.widget.AbsoluteLayout
 android.widget.AbsoluteLayout$LayoutParams
 android.widget.AdapterView$OnItemClickListener
-android.widget.AdapterView$OnItemLongClickListener
 android.widget.AdapterView$OnItemSelectedListener
 android.widget.AnalogClock
 android.widget.ArrayAdapter
@@ -61,43 +41,30 @@ android.widget.DatePicker
 android.widget.DigitalClock
 android.widget.EditText
 android.widget.FrameLayout
-android.widget.FrameLayout$LayoutParams
 android.widget.Gallery
 android.widget.HorizontalScrollView
 android.widget.ImageButton
 android.widget.ImageView
 android.widget.LinearLayout
-android.widget.LinearLayout$LayoutParams
 android.widget.ListAdapter
 android.widget.ListView
 android.widget.ProgressBar
 android.widget.RadioButton
 android.widget.RadioGroup
 android.widget.RelativeLayout
-android.widget.RelativeLayout$LayoutParams
 android.widget.ScrollView
-android.widget.Scroller
-android.widget.SeekBar
-android.widget.SeekBar$OnSeekBarChangeListener
 android.widget.Spinner
 android.widget.SpinnerAdapter
-android.widget.TabHost
-android.widget.TabHost$OnTabChangeListener
-android.widget.TabHost$TabContentFactory
-android.widget.TabHost$TabSpec
-android.widget.TabWidget
 android.widget.TableLayout
-android.widget.TableLayout$LayoutParams
 android.widget.TableRow
 android.widget.TextView
-android.widget.TextView$OnEditorActionListener
 android.widget.TimePicker
 android.widget.VideoView
 )
 
 wdqdata=: 0 0$0
 
-Debugwd=: 0
+Debugwd=: 1
 TileWM=: 0
 LASTCMD=: ''
 WDERR=: ''
@@ -109,7 +76,6 @@ wdstr=: ''
 sysmodifiers=: ,'0'
 sysdata=: ''
 disable_toggle_event=: 0
-listbox_evtdata=: ''
 
 lasterrcmd=: lastcmd=: ''
 cWindow=: 0
@@ -117,7 +83,7 @@ cChild=: 0
 cRadio=: 0
 cContainer=: 0
 cSubform=: ''
-windowList=: 0 18$<''
+windowList=: 0 16$<''
 WindowListHandle=: 0
 WindowListId=: 1
 WindowListLocale=: 2
@@ -134,8 +100,6 @@ WindowListWh0=: 12
 WindowListDefpushbutton=: 13
 WindowListTbimg=: 14
 WindowListCloseok=: 15
-WindowListMenuPending=: 16
-WindowListMenuCreated=: 17
 
 containerList=: 0 3$<''
 subformList=: 0 4$<''
@@ -147,7 +111,7 @@ ChildListHide=: 9
 ChildListLocalec=: 10
 ChildListUserdata=: 11
 
-menuList=: 0 5$<''
+menuList=: 0 4$<''
 toolbarList=: 0 5$<''
 statusbarList=: 0 3$<''
 activeidx=: 0$0
@@ -172,23 +136,14 @@ Activity=: 0
 
 3 : 0''
 if. 0~: 4!:0 <'wdlistener_droidwd_' do.
-  jniCheck button_click_listener=: NewGlobalRef < a1=. '' jniOverride 'org.dykman.jn.android.view.View$OnClickListener' ; 'droidwd' ; 'button'
-  jniCheck combobox_select_listener=: NewGlobalRef < a2=. '' jniOverride 'org.dykman.jn.android.widget.AdapterView$OnItemSelectedListener' ; 'droidwd' ; 'combobox'
-  jniCheck listbox_click_listener=: NewGlobalRef < a3=. '' jniOverride 'org.dykman.jn.android.widget.AdapterView$OnItemClickListener' ; 'droidwd' ; 'listbox'
-  jniCheck listbox_longclick_listener=: NewGlobalRef < a4=. '' jniOverride 'org.dykman.jn.android.widget.AdapterView$OnItemLongClickListener' ; 'droidwd' ; 'listbox'
-  jniCheck tabcreator=: NewGlobalRef < a5=. '' jniOverride 'org.dykman.jn.android.widget.TabHost$TabContentFactory' ; 'droidwd' ; 'tab'
-  jniCheck tab_changed_listener=: NewGlobalRef < a6=. '' jniOverride 'org.dykman.jn.android.widget.TabHost$OnTabChangeListener' ; 'droidwd' ; 'tab'
-  jniCheck seekbar_changed_listener=: NewGlobalRef < a7=. '' jniOverride 'org.dykman.jn.android.widget.SeekBar$OnSeekBarChangeListener' ; 'droidwd' ; 'seekbar'
-  jniCheck alertdialog0_listener=: NewGlobalRef < a8=. '' jniOverride 'org.dykman.jn.android.content.DialogInterface$OnClickListener' ; 'droidwd' ; 'alertdialog0'
-  jniCheck alertdialog_listener=: NewGlobalRef < a9=. '' jniOverride 'org.dykman.jn.android.content.DialogInterface$OnClickListener' ; 'droidwd' ; 'alertdialog'
-  jniCheck editor_action_listener=: NewGlobalRef < a10=. '' jniOverride 'org.dykman.jn.android.widget.TextView$OnEditorActionListener' ; 'droidwd' ; 'edit'
+  button_click_listener=: NewGlobalRef < a1=. '' jniOverride 'org.dykman.jn.android.view.View$OnClickListener' ; 'droidwd' ; 'button'
+  listbox_select_listener=: NewGlobalRef < a2=. '' jniOverride 'org.dykman.jn.android.widget.AdapterView$OnItemSelectedListener' ; 'droidwd' ; 'listbox'
+  listbox_click_listener=: NewGlobalRef < a3=. '' jniOverride 'org.dykman.jn.android.widget.AdapterView$OnItemClickListener' ; 'droidwd' ; 'listbox'
 
-  jniCheck DeleteLocalRef"0 a1;a2;a3;a4;a5;a6;a7;a8;a9;a10
-  wdlisteners=: button_click_listener, combobox_select_listener, listbox_click_listener, listbox_longclick_listener, tabcreator, tab_changed_listener, seekbar_changed_listener, alertdialog0_listener, alertdialog_listener, editor_action_listener
-  JACT=: getjactivity_ja_ 0
-  assert. 0~:JACT
+  jniCheck DeleteLocalRef"0 a1;a2;a3
+  wdlisteners=: button_click_listener, listbox_select_listener, listbox_click_listener
 else.
-  jniCheck JACT ('setjtimer (IILString;)V' jniMethod)~ 10;0;''
+  wdlisteners=: 0$0
 end.
 )
 
@@ -240,33 +195,24 @@ else.
   stylen=. 0
   styles=. 0$<''
 end.
-styles=. (<'ws_group') (I. styles = <'group') } styles
-styles=. (<'gs_image') (I. styles = <'image') } styles
-styles=. (<'gs_opengl') (I. styles = <'opengl') } styles
-styles=. (<'gs_video') (I. styles = <'video') } styles
-styles=. (<'gs_web') (I. styles = <'web') } styles
-if. 0 e. styles e. (;:'ws_group nopas'), FMSTYLE, ;2 3{ iclass{CONTROLS do. seterr 'bad style : ' return. end.
+if. 0 e. styles e. (;:'group nopas'), FMSTYLE, ;2 3{ iclass{CONTROLS do. seterr 'bad style : ' return. end.
 if. 0= cContainer do.
   fixed1=. getchildwin fixedidn
 else.
   if. 1 e. f=. (cContainer = >1{"1 subformList) *. (<cSubform) = 2{"1 subformList do.
-    fixedid=. 3{:: ({.I.f){subformList
-    fixed1=. getchildwin fixedid
+    fixed1=. 3{:: ({.I.f){subformList
     assert. 0~:fixed1
   else.
     seterr 'todomsg1 : ' return.
   end.
   assert. 0~:fixed1
-  assert. fixedid e. 3{::"1 subformList
+  assert. fixed1 e. 3{::"1 subformList
 end.
 defpushbutton=. 0
 newgroup=. 0
-barsoffset=. 0
 if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
   cParentId=. (handle i. cWindow){ >WindowListId{"1 windowList
   cParentLoc=. (handle i. cWindow){ >WindowListLocale{"1 windowList
-  'tbvisi tbcnt tbpx'=. 1 2 3{ (handle i. cWindow){ >WindowListToolbar{"1 windowList
-  barsoffset=. (0=cContainer) * <. px2dpw tbvisi *. tbpx
 else.
   cParentId=. ''
   cParentLoc=. ''
@@ -289,52 +235,37 @@ fcase. wdcl_combobox do.
 fcase. wdcl_combodrop do.
 case. wdcl_combolist do.
   jniCheck win=. cWindow jniNewObject 'Spinner LContext;'
-  jniCheck win ('setOnItemSelectedListener (LAdapterView$OnItemSelectedListener;)V' jniMethod)~ combobox_select_listener
+  jniCheck win ('setOnItemSelectedListener (LAdapterView$OnItemSelectedListener;)V' jniMethod)~ listbox_select_listener
 fcase. wdcl_richedit do.
   iclass=. wdcl_edit
 case. wdcl_edit do.
   jniCheck win=. cWindow jniNewObject 'EditText LContext;'
-  if. ((<'es_readonly') e. styles) *. (<'es_password') e. styles do.
-    ip=. inputtype_text, inputtype_textPassword
-    jniCheck win ('setInputType (I)V' jniMethod)~ (23 b.)/ ip
-    jniCheck win ('setEnabled (Z)V' jniMethod)~ 0
-  elseif. (<'es_readonly') e. styles do.
-    jniCheck win ('setInputType (I)V' jniMethod)~ 0
-  elseif. do.
-    ip=. inputtype_text
-    if. (<'es_uppercase') e. styles do. ip=. ip, inputtype_textCapCharacters end.
-    if. (<'es_password') e. styles do. ip=. ip, inputtype_textPassword end.
-    jniCheck win ('setInputType (I)V' jniMethod)~ (23 b.)/ ip
-  end.
-  jniCheck win ('setOnEditorActionListener (LTextView$OnEditorActionListener;)V' jniMethod)~ editor_action_listener
+  if. (<'es_readonly') e. styles do. jniCheck win ('setEnabled (Z)V' jniMethod)~ 0 end.
+  password=. 0
+  ip=. inputtype_text
+  if. (<'es_uppercase') e. styles do. ip=. ip, inputtype_textCapCharacters end.
+  if. (<'es_password') e. styles do. ip=. ip, inputtype_textPassword end.
+  jniCheck win ('setInputType (I)V' jniMethod)~ (23 b.)/ ip
 fcase. wdcl_editijs;wdcl_editijx;wdcl_richeditm do.
   iclass=. wdcl_editm
 case. wdcl_editm do.
   jniCheck win=. cWindow jniNewObject 'EditText LContext;'
-  if. 0[ (<'es_readonly') e. styles do.
-    jniCheck win ('setInputType (I)V' jniMethod)~ 0
-  else.
-    ip=. inputtype_textMultiLine
-    if. (<'es_uppercase') e. styles do. ip=. ip, inputtype_textCapCharacters end.
-    if. (<'es_password') e. styles do. ip=. ip, inputtype_textPassword end.
-    jniCheck win ('setInputType (I)V' jniMethod)~ (23 b.)/ ip
-  end.
+  if. (<'es_readonly') e. styles do. jniCheck win ('setEnabled (Z)V' jniMethod)~ 0 end.
+  ip=. inputtype_textMultiLine
+  if. (<'es_uppercase') e. styles do. ip=. ip, inputtype_textCapCharacters end.
+  if. (<'es_password') e. styles do. ip=. ip, inputtype_textPassword end.
+  jniCheck win ('setInputType (I)V' jniMethod)~ (23 b.)/ ip
   jniCheck win ('setGravity (I)V' jniMethod)~ 16b30
   if. (hsc=. (<'ws_hscroll') e. styles) do.
     jniCheck win ('setHorizontallyScrolling (Z)V' jniMethod)~ 1
   end.
-  jniCheck myscroller=. cWindow jniNewObject 'Scroller LContext;'
-  jniCheck mymethod=. '' jniNewObject 'ScrollingMovementMethod'
-  win ('setScroller (LScroller;)V' jniMethod)~ myscroller
-  win ('setVerticalScrollBarEnabled (Z)V' jniMethod)~ 1
-  win ('setMovementMethod (LMovementMethod;)V' jniMethod)~ mymethod
-  jniCheck DeleteLocalRef"0 myscroller;mymethod
-
 case. wdcl_groupbox do.
-  jniCheck win=. cWindow jniNewObject 'View LContext;'
-  jniCheck win ('setVisibility (I)V' jniMethod)~ 8
+  window=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x x')&cd ( gtk_frame_get_type '') ; 'shadow-type' ; GTK_SHADOW_NONE ;< 0
 case. wdcl_isigraph do.
-  if. (<'gs_image') e. styles do.
+  if. (<'gs_opengl') e. styles do.
+    userdata=. 1
+    jniCheck win=. cWindow jniOverride 'org.dykman.jn.android.view.View LContext;' ; 'droidwd' ; 'isigraph' ; 'onDraw'
+  elseif. (<'gs_image') e. styles do.
     userdata=. 2
     jniCheck win=. cWindow jniNewObject 'ImageView LContext;'
   elseif. (<'gs_video') e. styles do.
@@ -351,99 +282,50 @@ case. wdcl_isigraph do.
     jniCheck DeleteLocalRef"0 ct;set
   elseif. do.
     userdata=. 0
-    if. styleOpengl=. (<'gs_opengl') e. styles do. userdata=. 1 end.
-    size=. dpw2px 2}. cxywh
-    idnx=. (userdata,cWindow) glcanvas_jgl2_ size ; coname''
-    l=. glgetloc_jgl2_ idnx
-    assert. *#>l
-    gloption__l=: styleOpengl
-    win=. view__l
+    jniCheck win=. cWindow jniOverride 'org.dykman.jn.android.view.View LContext;' ; 'droidwd' ; 'isigraph' ; 'onDraw'
   end.
 case. wdcl_listbox do.
   jniCheck win=. cWindow jniNewObject 'ListView LContext;'
   jniCheck win ('setOnItemClickListener (LAdapterView$OnItemClickListener;)V' jniMethod)~ listbox_click_listener
   userdata=. (<'lbs_multiplesel') e. styles
-  if. 0=userdata do. userdata=. 2* (<'lbs_nosel') e. styles end.
-  if. 2~:userdata do.
-    jniCheck win ('setOnItemLongClickListener (LAdapterView$OnItemLongClickListener;)V' jniMethod)~ listbox_longclick_listener
-  end.
 case. wdcl_radiobutton do.
-  if. newgroup=. (0=cRadio) +. (<'ws_group') -.@e. styles do.
+  if. newgroup=. (0=cRadio) +. (<'group') e. styles do.
     if. cRadio do. DeleteLocalRef <cRadio end.
     jniCheck cRadio=: cWindow jniNewObject 'RadioGroup LContext;'
     jniCheck cRadio ('setOrientation (I)V' jniMethod)~ (<'bs_lefttext') -.@e. styles
   end.
-  userdata=. newgroup
-  assert. 0~:cRadio
   jniCheck win=. cWindow jniNewObject 'RadioButton LContext;'
   jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <id
   jniCheck cRadio ('addView (LView;)V' jniMethod)~ win
   jniCheck win ('setOnClickListener (LView$OnClickListener;)V' jniMethod)~ button_click_listener
 case. wdcl_scrollbar do.
-  jniCheck win=. cWindow jniNewObject 'View LContext;'
-  jniCheck win ('setVisibility (I)V' jniMethod)~ 8
+  adjust=. gtk_adjustment_new <("0) (0.5-0.5)&+ 0 0 100 1 10 5
+  window=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x x')&cd ( gtk_hscrollbar_get_type '') ; 'adjustment' ; adjust ;< 0
+  consig window ; 'value-changed' ; 'scrollbar_change'
 case. wdcl_scrollbarv do.
-  jniCheck win=. cWindow jniNewObject 'View LContext;'
-  jniCheck win ('setVisibility (I)V' jniMethod)~ 8
+  adjust=. gtk_adjustment_new <("0) (0.5-0.5)&+ 0 0 100 1 10 5
+  window=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x x')&cd ( gtk_vscrollbar_get_type '') ; 'adjustment' ; adjust ;< 0
+  consig window ; 'value-changed' ; 'scrollbar_change'
 case. wdcl_static do.
   jniCheck win=. cWindow jniNewObject 'TextView LContext;'
   jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <id
-case. wdcl_staticbox do.
-  jniCheck win=. cWindow jniNewObject 'View LContext;'
-  jniCheck win ('setVisibility (I)V' jniMethod)~ 8
 case. wdcl_progress do.
-  jniCheck win=. cWindow jniNewObject 'ProgressBar LContext;'
-  jniCheck win ('setMax (I)V' jniMethod)~ 100
-  jniCheck win ('setProgress (I)V' jniMethod)~ 0
+  window=. gtk_progress_bar_new ''
 case. wdcl_spin ; wdcl_spinv do.
-  jniCheck win=. cWindow jniNewObject 'View LContext;'
-  jniCheck win ('setVisibility (I)V' jniMethod)~ 8
+  adjust=. gtk_adjustment_new <("0) (0.5-0.5)&+ 0 0 100 1 10 0
+  window=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x *c d x')&cd ( gtk_spin_button_get_type '') ; 'adjustment' ; adjust ; 'value' ; (0.5-0.5) ;< 0
+  consig window ; 'value-changed' ; 'spin_change'
 case. wdcl_tab do.
-  tableft=. (<'tcs_left') e. styles
-  jniCheck win=. (cWindow;0) jniNewObject 'TabHost LContext;LAttributeSet;'
-  jniCheck win ('setId (I)V' jniMethod)~ R_id_tabhost
-
-  jniCheck l1=. cWindow jniNewObject 'LinearLayout LContext;'
-  jniCheck jniCheck lp=. ('FrameLayout$LayoutParams II') jniNewObject~ MATCH_PARENT;MATCH_PARENT
-  jniCheck l1 ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-  jniCheck l1 ('setOrientation (I)V' jniMethod)~ tableft{VERTICAL, HORIZONTAL
-  jniCheck l1 ('setPadding (IIII)V' jniMethod)~ 4#<dpw2px 5
-  jniCheck DeleteLocalRef <lp
-
-  jniCheck t1=. cWindow jniNewObject 'TabWidget LContext;'
-  jniCheck t1 ('setId (I)V' jniMethod)~ R_id_tabs
-  jniCheck jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ <"0 tableft{:: (MATCH_PARENT, WRAP_CONTENT);(MATCH_PARENT, WRAP_CONTENT)
-  jniCheck t1 ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-  jniCheck t1 ('setOrientation (I)V' jniMethod)~ tableft{HORIZONTAL, VERTICAL
-  jniCheck l1 ('addView (LView;)V' jniMethod)~ t1
-  jniCheck DeleteLocalRef"0 t1;lp
-
-  jniCheck f1=. cWindow jniNewObject 'FrameLayout LContext;'
-  jniCheck f1 ('setId (I)V' jniMethod)~ R_id_tabcontent
-  jniCheck jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ MATCH_PARENT;MATCH_PARENT
-  jniCheck f1 ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-  jniCheck f1 ('setPadding (IIII)V' jniMethod)~ 4#<dpw2px 5
-  jniCheck l1 ('addView (LView;)V' jniMethod)~ f1
-  jniCheck DeleteLocalRef"0 f1;lp
-
-  jniCheck win ('addView (LView;)V' jniMethod)~ l1
-  jniCheck DeleteLocalRef <l1
-
-  jniCheck win ('setup ()V' jniMethod)~ ''
-
-  jniCheck win ('setOnTabChangedListener (LTabHost$OnTabChangeListener;)V' jniMethod)~ tab_changed_listener
+  window=. gtk_notebook_new ''
+  consig4 window ; 'switch-page' ; 'tab_switch_page'
+  consig4 window ; 'page-removed' ; 'tab_page_removed'
   userdata=. 0
 case. wdcl_trackbar do.
-  jniCheck win=. cWindow jniNewObject 'SeekBar LContext;'
-  jniCheck win ('setMax (I)V' jniMethod)~ 100
-  jniCheck win ('setProgress (I)V' jniMethod)~ 0
-  jniCheck win ('setKeyProgressIncrement (I)V' jniMethod)~ 1
-  jniCheck win ('setOnSeekBarChangeListener (LSeekBar$OnSeekBarChangeListener;)V' jniMethod)~ seekbar_changed_listener
-case. wdcl_trackbarv do.
-  jniCheck win=. cWindow jniNewObject 'View LContext;'
-  jniCheck win ('setVisibility (I)V' jniMethod)~ 8
+  adjust=. gtk_adjustment_new <("0) (0.5-0.5)&+ 0 0 100 1 10 0
+  window=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x x')&cd ( gtk_hscale_get_type '') ; 'adjustment' ; adjust ;< 0
+  consig window ; 'value-changed' ; 'trackbar_change'
 case. do.
-  win seterr 'bad class : ' return.
+  seterr 'bad class : ' return.
 end.
 if. '' -.@-: cSetFont do.
   fontdef=. cFontdef
@@ -461,19 +343,9 @@ if. '' -.@-: fontdef do.
   else.
     asize=. 10
   end.
-  f=. getfontspec fontdef
-  if. 0=WDERRN do.
-    'face asize style angle'=. f
-    'Bold Italic Underline Strikeout'=. 4{. |. #: style
-    jniCheck ft=. 'android.graphics.Typeface' ('create (LString;I)LTypeface;' jniStaticMethod)~ face;(Bold + 2*Italic)
-    try.
-      jniCheck win ('setTypeface (LTypeface;)V' jniMethod)~ ft
-      jniCheck win ('setTextSize (F)V' jniMethod)~ pt2sp * asize
-    catch.
-      ExceptionClear''
-    end.
-    jniCheck DeleteLocalRef <ft
-  end.
+  fd=. pango_font_description_from_string <fontdef
+  gtk_widget_modify_font window, fd
+  pango_font_description_free fd
 else.
   asize=. 10
 end.
@@ -482,24 +354,22 @@ if. iclass e. wdcl_combobox, wdcl_combodrop, wdcl_combolist do.
 else.
   cxywh1=. cxywh
 end.
-cxywh1=. cxywh1 + 0, barsoffset, 0 0
-if. newgroup *. iclass = wdcl_radiobutton do.
-  assert. 0~:cRadio
+if. newgroup do.
   lpclass=. 'AbsoluteLayout$LayoutParams'
-  jniCheck lp=. (lpclass, ' IIII') jniNewObject~ <"0 dpw2px (WRAP_CONTENT, WRAP_CONTENT), 2{.cxywh1
+  lp=. (lpclass, ' IIII') jniNewObject~ <"0 dp2px _2 _2, 2{.cxywh1
   jniCheck cRadio ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
   jniCheck DeleteLocalRef <lp
 elseif. iclass ~: wdcl_radiobutton do.
   lpclass=. 'AbsoluteLayout$LayoutParams'
   if. iclass e. wdcl_edit, wdcl_combobox, wdcl_combodrop, wdcl_combolist do.
-    jniCheck lp=. (lpclass, ' IIII') jniNewObject~ <"0 dpw2px 2|. WRAP_CONTENT (3)}cxywh1
+    lp=. (lpclass, ' IIII') jniNewObject~ <"0 dp2px 2|. _2 (3)}cxywh1
   else.
-    jniCheck lp=. (lpclass, ' IIII') jniNewObject~ <"0 dpw2px 2|.cxywh1
+    lp=. (lpclass, ' IIII') jniNewObject~ <"0 dp2px 2|.cxywh1
   end.
   jniCheck win ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
   jniCheck DeleteLocalRef <lp
 end.
-if. newgroup *. iclass = wdcl_radiobutton do.
+if. newgroup do.
   jniCheck fixed1 ('addView (LView;)V' jniMethod)~ cRadio
 elseif. iclass ~: wdcl_radiobutton do.
   jniCheck fixed1 ('addView (LView;)V' jniMethod)~ win
@@ -508,34 +378,30 @@ end.
 jniCheck DeleteLocalRef <fixed1
 idx=. windowlistidx cWindow
 idn=. (<idx,4){::windowList
-if. (iclass=wdcl_isigraph) *. (0-:userdata) do.
-  cChild=: idnx
-elseif. iclass= wdcl_tab do.
-  cChild=: R_id_tabhost
-elseif. do.
-  jniCheck win ('setId (I)V' jniMethod)~ idn=. >:idn
-  cChild=: idn
-end.
-jniCheck DeleteLocalRef <win
+jniCheck win ('setId (I)V' jniMethod)~ idn=. >:idn
+cChild=: idn
 if. 0&= win do. seterr 'cannot create child : ' return. end.
-childList=: childList, cWindow ; cChild ; id ; iclass ; stylen ; 0 ; cContainer ; ((0~:cContainer){::'';cSubform) ; (dpw2px cxywh1) ; 0 ; localec ;< userdata
+childList=: childList, cWindow ; cChild ; id ; iclass ; stylen ; 0 ; cContainer ; ((0~:cContainer){::'';cSubform) ; (dp2px cxywh1) ; 0 ; localec ;< userdata
 if. (<'nopas') -.@e. styles do.
   if. 0= cContainer do.
     idx=. windowlistidx cWindow
     assert. _1~:idx
     wh0=. (<idx, WindowListWh0){::windowList
-    wh0=. wh0 >. dpw2px +/ 2 2$cxywh
+    wh0=. wh0 >. dp2px +/ 2 2$cxywh
     windowList=: (<wh0) (<idx, WindowListWh0)} windowList
   else.
     idx=. (>1{"1 containerList) i. cContainer
     assert. idx < #containerList
     wh0=. (<idx, 2){::containerList
-    wh0=. wh0 >. dpw2px +/ 2 2$cxywh
+    wh0=. wh0 >. dp2px +/ 2 2$cxywh
     containerList=: (<wh0) (<idx, 2)} containerList
   end.
 end.
-idx=. windowlistidx cWindow
 windowList=: (<idn) (<idx, 4) } windowList
+if. (0~:defpushbutton) *. 0= cContainer do.
+  idx=. windowlistidx cWindow
+  windowList=: (<window) (<idx, WindowListDefpushbutton) } windowList
+end.
 )
 
 wdcn=: 3 : 0
@@ -560,19 +426,15 @@ case. wdcl_button do.
       jniCheck DeleteLocalRef"0 ba;bm
     end.
   else.
-    jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <s-.'&'
+    jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <s
   end.
-case. wdcl_static;wdcl_checkbox;wdcl_radiobutton do.
-  jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <s
-case. wdcl_staticbox;wdcl_groupbox do.
-case. do. win seterr 'bad class : ' return.
 end.
 jniCheck DeleteLocalRef <win
 )
 
 wdqchildxywh=: 3 : 0
 if. 2= 3!:0 z=. qchildxywhx '' do. z return. end.
-": px2dpw z
+": px2dp z
 )
 
 wdqchildxywhx=: 3 : 0
@@ -588,14 +450,10 @@ elseif. 1< #args do. z [ seterr 'extra parameter : ' return.
 end.
 if. 0~: checkbadname id=. >@{.args do. z [ seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. z [ seterr 'bad id : ' return. end.
-idx=. windowlistidx cWindow
-'tbvisi tbcnt tbpx'=. 1 2 3{ (<idx, WindowListToolbar){:: windowList
-offset=. <. tbvisi *. tbpx
 win=. getchildwin window
 wh=. getchildwh win
 xy=. getchildxy win
-jniCheck DeleteLocalRef <win
-(xy,wh) - 0,offset,0 0
+xy,wh
 )
 
 wdqhwndc=: 3 : 0
@@ -605,42 +463,26 @@ elseif. 1< #args do. seterr 'extra parameter : ' return.
 end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-":window
-)
-wdrm=: 3 : 0
-if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return. end.
-if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
-if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-if. _1= ix=. getcchildidx window do. 0 return. end.
-win=. getchildwin window
-jniCheck p=. win ('getParent ()LViewParent;' jniMethod)~ ''
-jniCheck p ('removeView (LView;)V' jniMethod)~ win
-jniCheck DeleteLocalRef"0 win;p
-childList=: (<<<ix){childList
+":getchildwin window
 )
 wdset=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return. end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
-menu=. tbar=. 0
 if. 0= window=. cWindow getcchild id do.
   menu=. cWindow getmenu id
   tbar=. cWindow gettoolbar id
-  if. (0=menu) *. 0=tbar do. menu,tbar seterr 'bad id : ' return. end.
+  if. (0=menu) *. 0=tbar do. seterr 'bad id : ' return. end.
   if. 1= #args do. s=. ,'1'
-  elseif. 2< #args do. menu,tbar seterr 'extra parameter : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   elseif. do. s=. 1{::args
   end.
-  if. -.@isnum s do. menu,tbar seterr 'bad number : ' return. end.
-  if. 0 1 -.@e.~ flag=. {.@(0&".) s do. menu,tbar seterr 'bad number : ' return. end.
+  if. -.@isnum s do. seterr 'bad number : ' return. end.
+  if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
   if. 0~: menu do.
-    imx=. cWindow getmenuidx menu
-    menuList=: (<1) (<imx ,3)}menuList
-    if. 1= {. menust=. (<imx,4){::menuList do.
-    else.
-      menuList=: (<flag 1}menust) (<imx ,4)}menuList
-    end.
+    ix=. (>1{"1 menuList) i. menu
+    menuList=: (<1) (<ix ,3)}menuList
+    gtk_check_menu_item_set_active menu, flag
   end.
   if. 0~: tbar do. ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd tbar ; 'active' ; flag ;< 0 end.
   return.
@@ -649,7 +491,7 @@ win=. getchildwin window
 select. iclass=. getcchildclass window
 case. wdcl_isigraph do.
   if. 1= #args do. s=. ''
-  elseif. 2< #args do. menu,tbar,win seterr 'extra parameter : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   elseif. do. s=. 1{::args
   end.
   ix=. getcchildidx window
@@ -680,11 +522,11 @@ case. wdcl_isigraph do.
     else.
       jniCheck win ('loadData (LString;LString;LString;)V' jniMethod)~ s;'text/html';<<0
     end.
-  elseif. do. menu,tbar,win seterr 'bad class : ' return.
+  elseif. do. seterr 'bad class : ' return.
   end.
 case. wdcl_edit ; wdcl_editm ; wdcl_static do.
   if. 1= #args do. s=. ''
-  elseif. 2< #args do. menu,tbar,win seterr 'extra parameter : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   elseif. do. s=. 1{::args
   end.
   select. iclass
@@ -697,11 +539,11 @@ case. wdcl_edit ; wdcl_editm ; wdcl_static do.
   end.
 case. wdcl_checkbox ; wdcl_radiobutton do.
   if. 1= #args do. s=. ,'1'
-  elseif. 2< #args do. menu,tbar,win seterr 'extra parameter : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   elseif. do. s=. 1{::args
   end.
-  if. -.@isnum s do. menu,tbar,win seterr 'bad number : ' return. end.
-  if. 0 1 -.@e.~ flag=. {.@(0&".) s do. menu,tbar,win seterr 'bad number : ' return. end.
+  if. -.@isnum s do. seterr 'bad number : ' return. end.
+  if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
   jniCheck win ('setChecked (Z)V' jniMethod)~ flag
 case. wdcl_combobox ; wdcl_combodrop ; wdcl_combolist ; wdcl_listbox do.
   ix=. getcchildidx window
@@ -719,19 +561,19 @@ case. wdcl_combobox ; wdcl_combodrop ; wdcl_combolist ; wdcl_listbox do.
     pa setadapter cWindow,win,(iclass~:wdcl_listbox),multiselect
   end.
 case. wdcl_progress do.
-  if. 1= #args do. menu,tbar,win seterr 'bad number : ' return.
-  elseif. 2< #args do. menu,tbar,win seterr 'extra parameter : ' return.
+  if. 1= #args do. seterr 'bad number : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   elseif. do. s=. 1{::args
   end.
-  if. -.@isnum s do. menu,tbar,win seterr 'bad number : ' return. end.
+  if. -.@isnum s do. seterr 'bad number : ' return. end.
   item1=. {.@(0&".) s
   gtk_progress_bar_set_fraction window ; (1 <. 0>.item1%100)
 case. wdcl_scrollbar ; wdcl_scrollbarv do.
-  if. 1= #args do. menu,tbar,win seterr 'bad number : ' return.
-  elseif. 3 4 e.~ #args do. menu,tbar,win seterr 'extra parameter : ' return.
-  elseif. 5< #args do. menu,tbar,win seterr 'extra parameter : ' return.
+  if. 1= #args do. seterr 'bad number : ' return.
+  elseif. 3 4 e.~ #args do. seterr 'extra parameter : ' return.
+  elseif. 5< #args do. seterr 'extra parameter : ' return.
   end.
-  if. 0 e. isnum&> }.args do. menu,tbar,win seterr 'bad number : ' return. end.
+  if. 0 e. isnum&> }.args do. seterr 'bad number : ' return. end.
   if. 2= #args do.
     item1=. {.@(0&".) 1{::args
     gtk_range_set_value window ;< (0.5-0.5)&+ item1
@@ -742,43 +584,30 @@ case. wdcl_scrollbar ; wdcl_scrollbarv do.
     gtk_range_set_value window ;< (0.5-0.5)&+ item2
   end.
 case. wdcl_spin ; wdcl_spinv do.
-  if. 1= #args do. menu,tbar,win seterr 'bad number : ' return.
-  elseif. 2< #args do. menu,tbar,win seterr 'extra parameter : ' return.
+  if. 1= #args do. seterr 'bad number : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   end.
-  if. 0 e. isnum&> }.args do. menu,tbar,win seterr 'bad number : ' return. end.
+  if. 0 e. isnum&> }.args do. seterr 'bad number : ' return. end.
   item1=. {.@(0&".) 1{::args
   gtk_spin_button_set_value window ;< (0.5-0.5)&+ item1
 case. wdcl_trackbar ; wdcl_trackbarv do.
-  if. 1= #args do. menu,tbar,win seterr 'bad number : ' return.
-  elseif. 3 4 5 e.~ #args do. menu,tbar,win seterr 'extra parameter : ' return.
-  elseif. 6< #args do. menu,tbar,win seterr 'extra parameter : ' return.
+  if. 1= #args do. seterr 'bad number : ' return.
+  elseif. 3 4 5 e.~ #args do. seterr 'extra parameter : ' return.
+  elseif. 6< #args do. seterr 'extra parameter : ' return.
   end.
-  if. 0 e. isnum&> }.args do. menu,tbar,win seterr 'bad number : ' return. end.
+  if. 0 e. isnum&> }.args do. seterr 'bad number : ' return. end.
   if. 2= #args do.
     item1=. {.@(0&".) 1{::args
-    jniCheck win ('setProgress (I)V' jniMethod)~ item1
+    gtk_range_set_value window ;< (0.5-0.5)&+ item1
   else.
     'item1 item2 item3 item4 item5'=. {.@(0&".)&> 5{. }.args
-    jniCheck win ('setMax (I)V' jniMethod)~ item3
-    jniCheck win ('setProgress (I)V' jniMethod)~ item2
-    jniCheck win ('setKeyProgressIncrement (I)V' jniMethod)~ item4
+    gtk_range_set_range window ; <("0) (0.5-0.5)&+ item1, item3
+    gtk_range_set_increments window ; <("0) (0.5-0.5)&+ 1, item4
+    gtk_range_set_value window ;< (0.5-0.5)&+ item2
   end.
-case. wdcl_tab do.
-  if. 1= #args do. menu,tbar,win seterr 'bad id : ' return. end.
-  disable_toggle_event=: 1
-  idx=. windowlistidx cWindow
-  idn=. (<idx,4){::windowList
-  for_item. }.args do.
-    jniCheck tb=. win ('newTabSpec (LString;)LTabHost$TabSpec;' jniMethod)~ <('tag',":idn=. >:idn)
-    jniCheck tb ('setIndicator (LCharSequence;)LTabHost$TabSpec;' jniMethod)~ <>item
-    jniCheck tb ('setContent (LTabHost$TabContentFactory;)LTabHost$TabSpec;' jniMethod)~ tabcreator
-    jniCheck win ('addTab (LTabHost$TabSpec;)V' jniMethod)~ tb
-  end.
-  windowList=: (<idn) (<idx, 4) } windowList
-  disable_toggle_event=: 0
-case. do. menu,tbar,win seterr 'bad class : ' return.
+case. do. seterr 'bad class : ' return.
 end.
-jniCheck DeleteLocalRef"0 menu;tbar;win
+jniCheck DeleteLocalRef <win
 cChild=: window
 )
 wdsetscroll=: 3 : 0
@@ -786,26 +615,22 @@ if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return. end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-return.
-win=. getchildwin window
 select. iclass=. getcchildclass window
 case. wdcl_editm ; wdcl_richeditm do.
-  if. 1= #args do. win seterr 'bad number : ' return.
-  elseif. 2< #args do. win seterr 'extra parameter : ' return.
+  if. 1= #args do. seterr 'bad number : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   elseif. do. s=. 1{::args
   end.
-  if. -.@isnum s do. win seterr 'bad number : ' return. end.
+  if. -.@isnum s do. seterr 'bad number : ' return. end.
   line=. 0 >. <: {.@(0&".) s
-  return.
   buf=. gtk_text_view_get_buffer window
   gtk_text_buffer_get_iter_at_line buf ; (iter=. i.ITERSIZE) ;< line
   mark=. gtk_text_buffer_create_mark buf;'setscroll';iter;0
   assert. 0~:mark
   gtk_text_view_scroll_to_mark window; mark; 0; 0; 0; 0
   gtk_text_buffer_delete_mark buf;mark
-case. do. win seterr 'bad class : ' return.
+case. do. seterr 'bad class : ' return.
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 
@@ -820,12 +645,9 @@ if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
 if. -.@isnum s do. seterr 'bad number : ' return. end.
 if. 0 > len=. <.@{.@(0&".) s do. seterr 'bad number : ' return. end.
-return.
-win=. getchildwin window
 select. iclass=. getcchildclass window
 case. wdcl_edit do. gtk_entry_set_max_length window, len
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 
@@ -850,28 +672,15 @@ end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
 s=. >{.}.args
-win=. getchildwin window
-select. iclass=. getcchildclass window
-case. wdcl_button do.
-  if. 'android.widget.ImageButton'-:jniClassName win do.
-    if. ''-:s do.
-      jniCheck win ('setImageBitmap (LBitmap;)V' jniMethod)~ 0
-    else.
-      pic=. 1!:1 ::(''"_) <s
-      ba=. jniCheck NewByteArray <#pic
-      jniCheck SetByteArrayRegion ba;0;(#pic);pic
-      bm=. jniCheck 'android.graphics.BitmapFactory' ('decodeByteArray ([BII)LBitmap;' jniStaticMethod)~ ba;0;#pic
-      jniCheck win ('setImageBitmap (LBitmap;)V' jniMethod)~ bm
-      jniCheck DeleteLocalRef"0 ba;bm
-    end.
+if. g_type_check_instance_is_a window, gtk_button_get_type '' do.
+  if. 0= image=. gtk_button_get_image <window do.
+    gtk_button_set_label window ; '&_' charsub s
   else.
-    jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <s-.'&'
+    setbuttonimage window ; image ;< s
   end.
-case. wdcl_static;wdcl_checkbox;wdcl_radiobutton do.
-  jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <s
-case. do. win seterr 'bad class : ' return.
+else.
+  ((>libgobject), ' g_object_set ', gtkcv, 'n x *c *c x')&cd window ; 'label' ; s ;< 0
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 
@@ -885,8 +694,6 @@ if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
 if. -.@isnum ax=. 1{::args do. seterr 'bad number : ' return. end.
 tabn=. {.@(0&".) ax
-return.
-win=. getchildwin window
 if. g_type_check_instance_is_a window, gtk_notebook_get_type '' do.
   if. pg=. gtk_notebook_get_nth_page window, tabn do.
     for_child. > (window = >6{"1 childList) # 1{"1 childList do.
@@ -895,12 +702,8 @@ if. g_type_check_instance_is_a window, gtk_notebook_get_type '' do.
       end.
     end.
   end.
-  jniCheck tw=. win ('getTabWidget ()LTabWidget;' jniMethod)~ ''
-  jniCheck vw=. tw ('getChildTabViewAt (I)LView;' jniMethod)~ tabn
-  jniCheck tw ('removeView (LView;)V' jniMethod)~ vw
-  jniCheck DeleteLocalRef"0 tw;vw
+  gtk_notebook_remove_page window, tabn
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 wdsetedit=: 3 : 0
@@ -908,15 +711,13 @@ if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return. end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-return.
-win=. getchildwin window
 select. getcchildclass window
 case. wdcl_edit ; wdcl_editm do.
-  if. 1= #args do. win seterr 'bad parameter : ' return
+  if. 1= #args do. seterr 'bad parameter : ' return
   elseif. 2< #args do. seterr 'extra parameter : ' return.
   end.
   s=. 1{::args
-  if. (<s) -.@e. ;:'z x c v y' do. win seterr 'bad data : ' return. end.
+  if. (<s) -.@e. ;:'z x c v y' do. seterr 'bad data : ' return. end.
   if. g_type_check_instance_is_a window, gtk_text_view_get_type '' do.
     buf=. gtk_text_view_get_buffer window
     clip=. gtk_clipboard_get GDK_NONE
@@ -939,9 +740,8 @@ case. wdcl_edit ; wdcl_editm do.
     case. 'y' do.
     end.
   end.
-case. do. win seterr 'bad class : ' return.
+case. do. seterr 'bad class : ' return.
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 
@@ -953,29 +753,19 @@ elseif. 2= #args do. s=. 1{::args
 elseif. 2< #args do. seterr 'extra parameter : ' return.
 end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
-menupending=. 'created' -.@-: ((>WindowListHandle{"1 windowList) i. cWindow){:: WindowListDefpushbutton{"1 windowList
 window=. cWindow getcchild id
 menu=. cWindow getmenu id
 tbar=. cWindow gettoolbar id
-win=. 0
-if. -.@isnum s do. menu,tnar seterr 'bad number : ' return. end.
-if. 0 1 -.@e.~ flag=. {.@(0&".) s do. menu,tnar seterr 'bad number : ' return. end.
-if. (0=menu) *. (0=tbar ) *. (0=window) do. menu,tnar seterr 'bad id : ' return. end.
+if. (0=menu) *. (0=tbar ) *. (0=window) do. seterr 'bad id : ' return. end.
+if. -.@isnum s do. seterr 'bad number : ' return. end.
+if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
 if. 0~: window do.
   win=. getchildwin window
   jniCheck win ('setEnabled (Z)V' jniMethod)~ flag
   jniCheck DeleteLocalRef <win
 end.
-if. 0~: menu do.
-  imx=. cWindow getmenuidx menu
-  menuList=: (<1) (<imx ,3)}menuList
-  if. 1= {. menust=. (<imx,4){::menuList do.
-  else.
-    menuList=: (<(-.flag) 2}menust) (<imx ,4)}menuList
-  end.
-end.
+if. 0~: menu do. ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd menu ; 'sensitive' ; flag ;< 0 end.
 if. 0~: tbar do. ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd tbar ; 'sensitive' ; flag ;< 0 end.
-jniCheck DeleteLocalRef"0 menu;tbar;win
 if. 0~: window do. cChild=: window end.
 )
 
@@ -987,7 +777,7 @@ end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
 win=. getchildwin window
-win ('requestFocus ()Z' jniMethod)~ ''
+win ('requestFocus ()V' jniMethod)~ ''
 jniCheck DeleteLocalRef <win
 cChild=: window
 )
@@ -1004,8 +794,6 @@ if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
 if. -.@isnum ax=. 1{::args do. seterr 'bad number : ' return. end.
 tabn=. {.@(0&".) ax
 s=. 2{::args
-return.
-win=. getchildwin window
 if. g_type_check_instance_is_a window, gtk_notebook_get_type '' do.
   lb=. gtk_label_new <s
   fixed1=. gtk_fixed_new ''
@@ -1013,10 +801,9 @@ if. g_type_check_instance_is_a window, gtk_notebook_get_type '' do.
   if. _1&= pg=. gtk_notebook_insert_page window, fixed1, lb, tabn do.
     g_object_unref lb
     g_object_unref fixed1
-    win seterr 'todomsg3 : ' return.
+    seterr 'todomsg3 : ' return.
   end.
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 
@@ -1041,16 +828,17 @@ elseif. 2< #args do. seterr 'extra parameter : ' return.
 end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-win=. getchildwin window
 select. getcchildclass window
 case. wdcl_edit ; wdcl_editm do.
-  if. -.@isnum s do. win seterr 'bad number : ' return. end.
-  if. 0 1 -.@e.~ flag=. {.@(0&".) s do. win seterr 'bad number : ' return. end.
-  jniCheck win ('setEnabled (Z)V' jniMethod)~ flag
-  jniCheck DeleteLocalRef <win
-case. do. win seterr 'bad class : ' return.
+  if. -.@isnum s do. seterr 'bad number : ' return. end.
+  if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
+  if. g_type_check_instance_is_a window, gtk_text_view_get_type '' do.
+    ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd window ; 'editable' ; (-.flag) ;< 0
+  else.
+    gtk_editable_set_editable window, (-.flag)
+  end.
+case. do. seterr 'bad class : ' return.
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 wdsetreplace=: 3 : 0
@@ -1058,11 +846,9 @@ if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return. end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-return.
-win=. getchildwin window
 select. getcchildclass window
 case. wdcl_editm do.
-  if. 2< #args do. win seterr 'extra parameter : ' return. end.
+  if. 2< #args do. seterr 'extra parameter : ' return. end.
   s=. >@{.}.args
   if. g_type_check_instance_is_a window, gtk_text_view_get_type '' do.
     buf=. gtk_text_view_get_buffer window
@@ -1073,26 +859,8 @@ case. wdcl_editm do.
     p=. gtk_editable_get_position window
     gtk_editable_insert_text window ; s ; (#s) ;< ,p
   end.
-case. wdcl_tab do.
-  if. 1= #args do. win seterr 'bad number : ' return.
-  elseif. 2= #args do. s=. ''
-  elseif. 3= #args do. s=. 2{::args
-  elseif. 3< #args do. win seterr 'extra parameter : ' return.
-  end.
-  if. -.@isnum aitem1=. 1{::args do. win seterr 'bad number : ' return. end.
-  item1=. {.@(0&".) aitem1
-  jniCheck tw=. win ('getTabWidget ()LTabWidget;' jniMethod)~ ''
-  jniCheck npage=. tw ('getChildCount ()I' jniMethod)~ ''
-  if. (npage>item ) *. item>:0 do.
-    jniCheck cw=. tw ('getChildAt (I)LView;' jniMethod)~ item
-    jniCheck vw=. cw ('findViewById (I)LView;' jniMethod)~ R_id_title
-    jniCheck vw ('setText (LCharSequence;)V' jniMethod)~ <s
-    jniCheck DeleteLocalRef"0 cw;vw
-  end.
-  jniCheck DeleteLocalRef <tw
-case. do. win seterr 'bad class : ' return.
+case. do. seterr 'bad class : ' return.
 end.
-jniCheck DeleteLocalRef <win
 cChild=: window
 )
 wdsetselect=: 3 : 0
@@ -1103,34 +871,34 @@ if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
 win=. getchildwin window
 select. iclass=. getcchildclass window
 case. wdcl_edit ; wdcl_editm do.
-  if. 4< #args do. win seterr 'extra parameter : ' return.
-  elseif. 1 3 4 -.@e.~ #args do. win seterr 'bad number : ' return.
+  if. 4< #args do. seterr 'extra parameter : ' return.
+  elseif. 1 3 4 -.@e.~ #args do. seterr 'bad number : ' return.
   end.
   if. 1= #args do.
     allsel=. 1 [ noscroll=. 1
   else.
     allsel=. 0
-    if. 0 e. isnum&> }.args do. win seterr 'bad number : ' return. end.
+    if. 0 e. isnum&> }.args do. seterr 'bad number : ' return. end.
     'startsel endsel noscroll'=. 3{. {.@(0&".)&> }.args
     if. 3= #args do. noscroll=. 1 end.
   end.
 case. wdcl_combobox ; wdcl_combodrop ; wdcl_combolist do.
-  if. 2> #args do. win seterr 'bad number : ' return.
-  elseif. 2< #args do. win seterr 'extra parameter : ' return.
+  if. 2> #args do. seterr 'bad number : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   end.
   s=. 1{::args
-  if. -.@isnum s do. win seterr 'bad number : ' return. end.
+  if. -.@isnum s do. seterr 'bad number : ' return. end.
   item=. {.@(0&".) s
   jniCheck cnt=. win ('getCount ()I' jniMethod)~ ''
   if. (item>:0) *. item<cnt do.
     jniCheck win ('setSelection (I)V' jniMethod)~ item
   end.
 case. wdcl_listbox do.
-  if. 2> #args do. win seterr 'bad number : ' return.
-  elseif. 2< #args do. win seterr 'extra parameter : ' return.
+  if. 2> #args do. seterr 'bad number : ' return.
+  elseif. 2< #args do. seterr 'extra parameter : ' return.
   end.
   s=. 1{::args
-  if. -.@isnum s do. win seterr 'bad number : ' return. end.
+  if. -.@isnum s do. seterr 'bad number : ' return. end.
   item=. {.@(0&".) s
   jniCheck cnt=. win ('getCount ()I' jniMethod)~ ''
   if. _1&= item do.
@@ -1142,22 +910,16 @@ case. wdcl_listbox do.
       jniCheck win ('setItemChecked (IZ)V' jniMethod)~ item;1
     end.
   end.
-case. wdcl_tab do.
-  if. 2> #args do. win seterr 'bad number : ' return.
-  elseif. 2< #args do. win seterr 'extra parameter : ' return.
+case. wdcl_trackbar ; wdcl_trackbarv do.
+  allsel=. 0
+  if. 1= #args do. allsel=. 1
+  elseif. 2= #args do. seterr 'bad number : ' return.
+  elseif. 3< #args do. seterr 'extra parameter : ' return.
   end.
-  s=. 1{::args
-  if. -.@isnum s do. win seterr 'bad number : ' return. end.
-  item=. {.@(0&".) s
-  disable_toggle_event=: 1
-  jniCheck tw=. win ('getTabWidget ()LTabWidget;' jniMethod)~ ''
-  jniCheck npage=. tw ('getChildCount ()I' jniMethod)~ ''
-  jniCheck DeleteLocalRef <tw
-  if. item < npage do.
-    jniCheck win ('setCurrentTab (I)V' jniMethod)~ item
-  end.
-  disable_toggle_event=: 0
-case. do. win seterr 'bad class : ' return.
+  if. 0 e. isnum&> }.args do. seterr 'bad number : ' return. end.
+  'startsel endsel'=. {.@(0&".)&> }.args
+  gtk_window_set_select window ; startsel ; endsel
+case. do. seterr 'bad class : ' return.
 end.
 jniCheck DeleteLocalRef <win
 cChild=: window
@@ -1173,12 +935,11 @@ end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. -.@isnum s do. seterr 'bad number : ' return. end.
 if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
-win=. 0
 if. 0= window=. cWindow getcchild id do.
   for_ix. I. ((<id)= ChildListSubform{"1 childList) *. (cWindow = >{."1 childList) do.
     window=. (<ix,1){::childList
     win=. getchildwin window
-    jniCheck win ('setVisibility (I)V' jniMethod)~ flag{8 0
+    jniCheck win ('setVisibility (Z)V' jniMethod)~ flag
     jniCheck DeleteLocalRef <win
   end.
 else.
@@ -1186,7 +947,7 @@ else.
   assert. _1~: ix
   childList=: (<flag) (<ix,5)}childList
   win=. getchildwin window
-  jniCheck win ('setVisibility (I)V' jniMethod)~ flag{8 0
+  jniCheck win ('setVisibility (Z)V' jniMethod)~ flag
   jniCheck DeleteLocalRef <win
   cChild=: window
 end.
@@ -1201,10 +962,7 @@ end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0 e. isnum&> }.args do. seterr 'bad number : ' return. end.
 xywh=. <. {.@(0&".)&> }.args
-idx=. windowlistidx cWindow
-'tbvisi tbcnt tbpx'=. 1 2 3{ (<idx, WindowListToolbar){:: windowList
-offset=. <. tbvisi *. tbpx
-setxywhx id ; (dpw2px xywh) ; offset
+setxywhx id ; dp2px xywh
 )
 
 wdsetxywhx=: 3 : 0
@@ -1216,25 +974,20 @@ end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0 e. isnum&> }.args do. seterr 'bad number : ' return. end.
 xywh=. <. {.@(0&".)&> }.args
-idx=. windowlistidx cWindow
-'tbvisi tbcnt tbpx'=. 1 2 3{ (<idx, WindowListToolbar){:: windowList
-offset=. <. tbvisi *. tbpx
-setxywhx id ; xywh ; offset
+setxywhx id ; xywh
 )
 setxywhx=: 3 : 0
-'id xywh offset'=. y
+'id xywh'=. y
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
 win=. getchildwin window
 lp=. win ('getLayoutParams ()Landroid/view/ViewGroup$LayoutParams;' jniMethod)~ ''
 'x y w h'=. xywh
 lp ('x I' jniField)~ <x
-lp ('y I' jniField)~ <y + offset
+lp ('y I' jniField)~ <y
 lp ('width I' jniField)~ <w
 lp ('height I' jniField)~ <h
 win ('requestLayout ()V' jniMethod)~ ''
 jniCheck DeleteLocalRef"0 win;lp
-
-cChild=: window
 )
 
 wdxywh=: 3 : 0
@@ -1314,7 +1067,7 @@ char copy cut focus focuslost mbldbl mbldown mblup mblmdown mblmdbl mblmup mbrdb
 listbox
 lbs
 group hscroll vscroll
-extendedsel multicolumn multiplesel nosel ownerdrawfixed sort
+extendedsel multicolumn multiplesel ownerdrawfixed sort
 2 2
 0
 button select
@@ -1391,7 +1144,7 @@ blackframe blackrect etchedframe etchedhorz etchedvert grayframe grayrect sunken
 tab
 tcs
 group
-buttons multiline left
+buttons multiline
 2 2
 0
 button
@@ -1456,10 +1209,7 @@ es_readonly
 es_right
 es_sunken
 es_uppercase
-gs_image
 gs_opengl
-gs_video
-gs_web
 lbs_extendedsel
 lbs_multicolumn
 lbs_multiplesel
@@ -1585,7 +1335,7 @@ syslocalep=. >WindowListLocale{pa
 syslocalec=. ''
 syshwndp=. ":cWindow
 syshwndc=. ":cChild
-sysfocus=. ''
+sysfocus=. getcchildid gtk_window_get_focus cWindow
 syslastfocus=. ''
 sysmodifiers=. ''
 wdd=. ;: 'syslocalep syslocalec syshwndp syshwndc sysfocus syslastfocus sysmodifiers'
@@ -1635,8 +1385,11 @@ act=. /:@\: (|.activeidx) i. WindowListHandle{::"1 windowList
 z=. ''
 for_i. i.#windowList do.
   'w id loc grp'=. (WindowListHandle, WindowListId, WindowListLocale, WindowListPgroup){i{windowList
-  jniCheck cap=. jniToJString ts=. '' ('toString ()LString;' jniMethod) cs=. w ('getTitle ()LCharSequence;' jniMethod)~ ''
-  jniCheck DeleteLocalRef"0 ts;cs
+  if. 0~: s=. gtk_window_get_title w do.
+    cap=. memr s,0 _1 2
+  else.
+    cap=. ''
+  end.
   z=. z, id, ({.a.), (":w), ({.a.), loc, ({.a.), grp, ({.a.), (":i{act), ({.a.), (cap), ({.a.), LF
 end.
 z
@@ -1711,17 +1464,14 @@ elseif. 1< #args do. seterr 'extra parameter : ' return.
 end.
 if. -.@isnum ax=. >@{.args do. seterr 'bad number : ' return. end.
 if. 0 > delay=. <. {.@(0&".) ax do.seterr 'bad number : ' return. end.
-if. timerdelay ~: delay do.
-  timerdelay=: delay
-  jniCheck JACT ('setjtimer (IILString;)V' jniMethod)~ 10;timerdelay;''
-end.
+timerdelay=: delay
 )
 
 return0=: 0:
 return1=: 1:
 
 form_evt=: 3 : 0
-'widget event child data'=. y
+'widget event child'=. y
 if. _1= ix=. windowlistidx widget do. return. end.
 if. cWindow~:widget do.
   if. cRadio do. DeleteLocalRef <cRadio end.
@@ -1738,15 +1488,19 @@ syslocalep=. locale
 syslocalec=. ''
 syshwndp=. ":widget
 syshwndc=. ":cChild
-sysfocus=. ''
+if. ''-: sysfocus=. getcchildid ::(''"_) w=. gtk_window_get_focus widget do.
+  if. 0~: w do.
+    sysfocus=. getcchildid ::(''"_) gtk_widget_get_parent w
+  end.
+end.
 syslastfocus=. ''
-sysdata=: data
 wdd=. ;: 'syshandler sysevent sysdefault sysparent syschild systype syslocalep syslocalec syshwndp syshwndc sysfocus syslastfocus sysmodifiers', (0<#sysdata)#' sysdata'
 wddata=. ".&.>wdd
 qdata=. 0 2$<''
 for_ls. (widget = >{."1 childList)#childList do.
   qdata=. qdata, childevtdata 1 2 3{ls
 end.
+sysdata=: ''
 wdqdata=: (wdd ,. wddata) , qdata
 if. #locale do.
   if. (0: <: 18!:0) <locale do.
@@ -1780,20 +1534,18 @@ eventcat=. x
 'view widget'=. 2{.vie
 childdata=. 0 2$0
 if. 0=eventcat do.
-  if. _1= ix=. getcchildidx widget do. return. end.
-  'pawin childid iclass'=. 0 2 3{ ix{childList
+  if. 0&= #ls=. (widget = >1{"1 childList)#childList do. return. end.
+  'pawin childid iclass'=. 0 2 3{ {.ls
+  Activity MakeToast_ja_ 'event for: ', ":childid
   for_ls. (pawin = >{."1 childList)#childList do.
     childdata=. childdata, childevtdata 1 2 3{ls
   end.
 elseif. 1=eventcat do.
-  if. _1= ix=. cWindow getmenuidx widget do. return. end.
-  'pawin childid'=. 0 2{ ix{menuList
-  for_ls. (pawin = >{."1 childList)#childList do.
-    childdata=. childdata, childevtdata 1 2 3{ls
-  end.
+  if. 0&= #ls=. (widget = >1{"1 menuList)#menuList do. return. end.
+  'pawin childid'=. 0 2{ {.ls
 elseif. 2=eventcat do.
-  if. _1= ix=. cWindow gettoolbaridx widget do. return. end.
-  'pawin childid'=. 0 2{ ix{toolbarList
+  if. 0&= #ls=. (widget = >1{"1 toolbarList)#toolbarList do. return. end.
+  'pawin childid'=. 0 2{ {.ls
 elseif. do. assert. 0
 end.
 if. 0&= #pals=. (pawin = >{."1 windowList)#windowList do. return. end.
@@ -1846,9 +1598,7 @@ select. iclass
 case. wdcl_spin ; wdcl_spinv do.
   wdd=. wdd, <id
   wddata=. wddata, < ": gtk_spin_button_get_value_as_int widget
-case. wdcl_trackbar ; wdcl_trackbarv do.
-  wdd=. wdd, <id
-  wddata=. wddata, < ": view ('getProgress ()I' jniMethod)~ ''
+fcase. wdcl_trackbar ; wdcl_trackbarv do.
 case. wdcl_scrollbar ; wdcl_scrollbarv do.
   wdd=. wdd, <id
   wddata=. wddata, < ": <. gtk_range_get_value widget
@@ -1872,8 +1622,7 @@ case. wdcl_checkbox ; wdcl_radiobutton do.
   wddata=. wddata, < ": ck
 case. wdcl_combobox ; wdcl_combodrop ; wdcl_combolist do.
   jniCheck nsel=. view ('getSelectedItemPosition ()I' jniMethod)~ ''
-  jniCheck ncnt=. view ('getCount ()I' jniMethod)~ ''
-  if. (0=ncnt) +. _1=nsel do.
+  if. _1=nsel do.
     wdd=. wdd, <id
     wddata=. wddata, <''
     wdd=. wdd, <id, '_select'
@@ -1888,27 +1637,18 @@ case. wdcl_combobox ; wdcl_combodrop ; wdcl_combolist do.
     wddata=. wddata, < ": nsel
   end.
 case. wdcl_listbox do.
-  if. widget-:>{.listbox_evtdata do.
-    'nsel ssel'=. }.listbox_evtdata
-  else.
-    nsel=. 0$0 [ ssel=. 0$<''
-    jniCheck ncnt=. view ('getCount ()I' jniMethod)~ ''
-    if. ncnt do.
-      jniCheck sp=. view ('getCheckedItemPositions ()Landroid/util/SparseBooleanArray;' jniMethod)~ ''
-      if. sp do.
-        jniCheck ncnt=. sp ('size ()I' jniMethod)~ ''
-        for_i. i.ncnt do.
-          jniCheck pos=. sp ('keyAt (I)I' jniMethod)~ i
-          jniCheck sel=. sp ('valueAt (I)Z' jniMethod)~ i
-          if. sel do.
-            jniCheck ch=. view ('getItemAtPosition (I)LObject;' jniMethod)~ pos
-            jniCheck s=. jniToJString ch
-            jniCheck DeleteLocalRef <ch
-            nsel=. nsel, pos
-            ssel=. ssel, <s
-          end.
-        end.
-      end.
+  nsel=. 0$0 [ ssel=. 0$<''
+  sp=. view ('getCheckedItemPositions ()Landroid/util/SparseBooleanArray;' jniMethod)~ ''
+  jniCheck ncnt=. sp ('size ()I' jniMethod)~ ''
+  for_i. i.ncnt do.
+    jniCheck pos=. sp ('keyAt (I)I' jniMethod)~ i
+    jniCheck sel=. sp ('valueAt (I)Z' jniMethod)~ i
+    if. sel do.
+      jniCheck ch=. view ('getItemAtPosition (I)LObject;' jniMethod)~ pos
+      jniCheck s=. jniToJString ch
+      jniCheck DeleteLocalRef <ch
+      nsel=. nsel, pos
+      ssel=. ssel, <s
     end.
   end.
   if. _0=#nsel do.
@@ -1923,22 +1663,6 @@ case. wdcl_listbox do.
     wddata=. wddata, < ": nsel
   end.
   jniCheck DeleteLocalRef <sp
-case. wdcl_tab do.
-  ix=. getcchildidx widget
-  assert. _1~: ix
-  if. 0<: pagenum=. > (<ix,ChildListUserdata){childList do.
-    jniCheck tw=. view ('getTabWidget ()LTabWidget;' jniMethod)~ ''
-    jniCheck cw=. tw ('getChildAt (I)LView;' jniMethod)~ pagenum
-    jniCheck vw=. cw ('findViewById (I)LView;' jniMethod)~ R_id_title
-    jniCheck pagelabel=. jniToJString cs=. vw ('getText ()LCharSequence;' jniMethod)~ ''
-    jniCheck DeleteLocalRef"0 tw;cw;vw;cs
-  else.
-    pagelabel=. ''
-  end.
-  wdd=. wdd, <id
-  wddata=. wddata, < ": pagelabel
-  wdd=. wdd, <id,'_select'
-  wddata=. wddata, < ": pagenum
 end.
 assert. 1= (2:=(3!:0))&> wdd
 assert. 1= (2:=(3!:0))&> wddata
@@ -1967,6 +1691,9 @@ keyevent=. '' [ child=. ''
 if. (GDK_Return = key) *. 0 = ctrl do.
   if. _1= getcchildidx w=. gtk_window_get_focus widget do.
     if. _1= getcchildidx w=. gtk_widget_get_parent w do.
+      if. 0~: but=. (<ix, WindowListDefpushbutton){::windowList do.
+        1 [ 0 child_evt but ; 'button' return.
+      end.
       keyevent=. 'enter'
     end.
   end.
@@ -1984,7 +1711,7 @@ end.
 if. #keyevent do.
   sysdata=: key
   sysmodifiers=: ,":shift+2*ctrl
-  1 [ form_evt widget ; keyevent ; child ; ''
+  1 [ form_evt widget ; keyevent ; child
 end.
 0
 )
@@ -2000,13 +1727,20 @@ window_delete=: 3 : 0
 if. _1= ix=. windowlistidx widget do. 0 return. end.
 if. 0= gtk_widget_get_sensitive widget do. 1 return. end.
 if. 1= (<ix, WindowListCloseok) {:: windowList do. 0 return. end.
-form_evt widget ; 'close' ; '' ; ''
+form_evt widget ; 'close' ; ''
 1
+)
+
+wdstart=: 3 : 0
+assert. 0~:y
+if. Activity do. DeleteGlobalRef <Activity end.
+jniCheck Activity=: NewGlobalRef <y
 )
 
 wddestroy=: 3 : 0
 widget=. y
 if. _1~: ix=. windowlistidx widget do.
+  if. 0~: tbimg=. (<ix, WindowListTbimg) {:: windowList do. g_object_unref tbimg end.
   windowList=: (<<<ix){windowList
 end.
 if. 1 e. ix=. (widget = (>{."1 containerList)) do. containerList=: (-.ix)#containerList end.
@@ -2069,6 +1803,12 @@ spin_change=: 3 : 0
 0
 )
 
+trackbar_change=: 3 : 0
+'widget data'=. y
+0 child_evt widget ; 'button'
+0
+)
+
 scrollbar_change=: 3 : 0
 'widget data'=. y
 0 child_evt widget ; 'button'
@@ -2076,172 +1816,70 @@ scrollbar_change=: 3 : 0
 )
 
 listbox_onItemClick=: 3 : 0
-if. disable_toggle_event do. 0 return. end.
-jniCheck parent=. GetObjectArrayElement (3{y);0
-jniCheck widget=. parent ('getId ()I' jniMethod)~ ''
-if. 1>widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
-if. _1= ix=. getcchildidx widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
-if. 2= style=. > (<ix,ChildListUserdata){childList do.
-  jniCheck pos=. '' ('intValue ()I' jniMethod) opos=. GetObjectArrayElement (3{y);2
-  jniCheck ch=. parent ('getItemAtPosition (I)LObject;' jniMethod)~ pos
-  jniCheck s=. jniToJString ch
-  jniCheck DeleteLocalRef <ch
-  listbox_evtdata=: widget;pos;<<s
-  listbox_evtdata=: ''
-  jniCheck DeleteLocalRef"0 opos;ch
-end.
-0 child_evt (parent,widget) ; (2=style){::'select';'button'
-listbox_evtdata=: ''
-jniCheck DeleteLocalRef <parent
-1
-)
-
-listbox_onItemLongClick=: 3 : 0
-if. disable_toggle_event do. 0 return. end.
-jniCheck parent=. GetObjectArrayElement (3{y);0
-jniCheck widget=. parent ('getId ()I' jniMethod)~ ''
-if. 1>widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
-if. _1= ix=. getcchildidx widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
-if. 2= style=. > (<ix,ChildListUserdata){childList do.
-  jniCheck pos=. '' ('intValue ()I' jniMethod) opos=. GetObjectArrayElement (3{y);2
-  jniCheck ch=. parent ('getItemAtPosition (I)LObject;' jniMethod)~ pos
-  jniCheck s=. jniToJString ch
-  listbox_evtdata=: widget;pos;<<s
-  listbox_evtdata=: ''
-  jniCheck DeleteLocalRef"0 opos;ch
-end.
-0 child_evt (parent,widget) ; 'button'
-listbox_evtdata=: ''
-jniCheck DeleteLocalRef <parent
-1
-)
-
-combobox_onItemSelected=: 3 : 0
-if. disable_toggle_event do. 0 return. end.
 jniCheck parent=. GetObjectArrayElement (3{y);0
 jniCheck widget=. parent ('getId ()I' jniMethod)~ ''
 if. 1>widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
 if. _1= ix=. getcchildidx widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
 0 child_evt (parent,widget) ; 'select'
 jniCheck DeleteLocalRef <parent
-1
+0
 )
 
-combobox_onNothingSelected=: 3 : 0
-if. disable_toggle_event do. 0 return. end.
+listbox_onItemSelected=: 3 : 0
 jniCheck parent=. GetObjectArrayElement (3{y);0
 jniCheck widget=. parent ('getId ()I' jniMethod)~ ''
 if. 1>widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
 if. _1= ix=. getcchildidx widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
 0 child_evt (parent,widget) ; 'select'
 jniCheck DeleteLocalRef <parent
-1
+0
 )
 
-menu_onItemSelected=: 3 : 0
-'view widget'=. y
-if. _1= ix=. cWindow getmenuidx widget do. 0 return. end.
-1 child_evt (view,widget) ; 'button'
-1
+listbox_onNothingSelected=: 3 : 0
+jniCheck parent=. GetObjectArrayElement (3{y);0
+jniCheck widget=. parent ('getId ()I' jniMethod)~ ''
+if. 1>widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
+if. _1= ix=. getcchildidx widget do. 0 [ jniCheck DeleteLocalRef <parent return. end.
+0 child_evt (parent,widget) ; 'select'
+jniCheck DeleteLocalRef <parent
+0
 )
 
 button_onClick=: 3 : 0
 jniCheck view=. GetObjectArrayElement (3{y);0
 jniCheck widget=. view ('getId ()I' jniMethod)~ ''
 if. 1>widget do. 0 [ jniCheck DeleteLocalRef <view return. end.
-if. _1~: ix=. getcchildidx widget do.
-  0 child_evt (view,widget) ; 'button'
-  1 [ jniCheck DeleteLocalRef <view
-elseif. _1~: ix=. cWindow gettoolbaridx widget do.
-  2 child_evt (view,widget) ; 'button'
-  1 [ jniCheck DeleteLocalRef <view
-elseif. do.
-  0 [ jniCheck DeleteLocalRef <view return.
-end.
-0
-)
-IME_NULL=: 0
-IME_ACTION_DONE=: 6
-IME_ACTION_NEXT=: 5
-ACTION_DOWN=: 0
-edit_onEditorAction=: 3 : 0
-jniCheck action=. '' ('intValue ()I' jniMethod) oaction=. GetObjectArrayElement (3{y);1
-jniCheck DeleteLocalRef <oaction
-jniCheck event=. GetObjectArrayElement (3{y);2
-if. 0=event do.
-  if. action -.@e. IME_ACTION_DONE,IME_ACTION_NEXT do. 0 [ DeleteLocalRef <event return. end.
-elseif. IME_NULL=action do.
-  if. ACTION_DOWN ~: jniCheck event ('getAction ()I' jniMethod)~'' do. 1 [ DeleteLocalRef <event return. end.
-elseif. do.
-  0 [ DeleteLocalRef <event return.
-end.
-jniCheck DeleteLocalRef <event
-jniCheck view=. GetObjectArrayElement (3{y);0
-jniCheck widget=. view ('getId ()I' jniMethod)~ ''
-if. 1>widget do. 0 [ jniCheck DeleteLocalRef <view return. end.
-if. _1~: ix=. getcchildidx widget do.
-  0 child_evt (view,widget) ; 'button'
-  1 [ jniCheck DeleteLocalRef <view
-end.
+if. disable_toggle_event do. 0 [ jniCheck DeleteLocalRef <view return. end.
+if. _1= ix=. getcchildidx widget do. 0 [ jniCheck DeleteLocalRef <view return. end.
+0 child_evt (view,widget) ; 'button'
+jniCheck DeleteLocalRef <view
 0
 )
 fixed1_onLayout=: 3 : 0
 jniCheck changed=. '' ('booleanValue ()Z' jniMethod) ochanged=. GetObjectArrayElement (3{y);0
-jniCheck DeleteLocalRef <ochanged
+DeleteLocalRef <changed
 if. 0=changed do. 0 return. end.
 jniCheck h=. (2{y) ('getHeight ()I' jniMethod)~ ''
 jniCheck w=. (2{y) ('getWidth ()I' jniMethod)~ ''
 wh=. w,h
 assert. 0~:cWindow
-idx=. windowlistidx cWindow
-assert. _1~:idx
+ix=. windowlistidx cWindow
+assert. _1~:ix
 fixed1=. 2{y
-wh0=. (<idx, WindowListWh0) {:: windowList
-'tbvisi tbcnt tbpx'=. 1 2 3{ (<idx, WindowListToolbar){:: windowList
-offset=. <. tbvisi *. tbpx
-windowList=: (<wh) (<idx, WindowListWh1) } windowList
-(wh,wh0) resizechild cWindow, fixed1,offset
-jniCheck DeleteLocalRef <fixed1
-form_evt cWindow ; 'size' ; '' ; ":0 0,w,h
-1
+wh0=. (<ix, WindowListWh0) {:: windowList
+windowList=: (<wh) (<ix, WindowListWh1) } windowList
+(wh,wh0) resizechild cWindow, fixed1
+DeleteLocalRef <fixed1
+0
 )
 
-tab_createTabContent=: 3 : 0
-jniCheck s=. jniToJString cs=. GetObjectArrayElement (3{y);0
-assert. 'tag'-:3{.s
-idn=. 0 ". 3}.s
-assert. 0~:cWindow
-jniCheck fixed1=. cWindow jniNewObject 'AbsoluteLayout LContext;'
-jniCheck fixed1 ('setId (I)V' jniMethod)~ idn
-jniCheck DeleteLocalRef <cs
-<fixed1
-)
-
-tab_onTabChanged=: 3 : 0
-if. disable_toggle_event do. 0 return. end.
-assert. 0~:cWindow
-widget=. R_id_tabhost
-if. _1= ix=. getcchildidx widget do. 0 return. end.
-th=. getchildwin widget
-jniCheck page=. th ('getCurrentTab ()I' jniMethod)~ ''
-jniCheck DeleteLocalRef <th
-childList=: (<page) (<ix,ChildListUserdata)}childList
-0 child_evt widget ; 'button'
-1
-)
-
-tab_switch_page=: 3 : 0
-'widget page page_num data'=. y
-if. disable_toggle_event do. 0 return. end.
-if. _1= ix=. getcchildidx widget do. 0 return. end.
-childList=: (<page) (<ix,ChildListUserdata)}childList
-0 child_evt widget ; 'button'
+isigraph_onDraw=: 3 : 0
 0
 )
 
 edit_key_press=: 3 : 0
 'widget event data'=. y
-if. _1= ix=. getcchildidx widget do. 0 return. end.
+if. widget -.@e. ls=. >1{"1 childList do. 0 return. end.
 'state key'=. gtkeventkey event
 'ctrl j shift'=. 2 2 2 #: state
 if. (GDK_Return = key) *. 0 = ctrl do.
@@ -2253,59 +1891,41 @@ end.
 0
 )
 
+menu_activate_event=: 3 : 0
+'widget data'=. y
+if. widget -.@e. ls=. >1{"1 menuList do. 0 return. end.
+ix=. ls i. widget
+if. 1= revertmenu=. (<ix ,3){::menuList do.
+  menuList=: (<0) (<ix ,3)}menuList
+else.
+  menuList=: (<1) (<ix ,3)}menuList
+  gtk_check_menu_item_set_active widget, -. gtk_check_menu_item_get_active widget
+  1 child_evt widget ; 'button'
+end.
+0
+)
+
 toolbar_clicked_event=: 3 : 0
 'widget data'=. y
-if. _1= ix=. cWindow gettoolbaridx widget do. 0 return. end.
+if. widget -.@e. ls=. >1{"1 toolbarList do. 0 return. end.
 2 child_evt widget ; 'button'
 0
 )
 
-seekbar_onProgressChanged=: 3 : 0
-jniCheck user=. '' ('booleanValue ()Z' jniMethod) ouser=. GetObjectArrayElement (3{y);2
-jniCheck DeleteLocalRef <ouser
-if. 0=user do. 1 return. end.
-jniCheck view=. GetObjectArrayElement (3{y);0
-jniCheck widget=. view ('getId ()I' jniMethod)~ ''
-if. 1>widget do. 0 [ jniCheck DeleteLocalRef <view return. end.
-if. _1= ix=. getcchildidx widget do. 0 [ jniCheck DeleteLocalRef <view return. end.
-0 child_evt (view,widget) ; 'button'
-jniCheck DeleteLocalRef <view
-1
-)
-
-seekbar_onStartTrackingTouch=: 0:
-seekbar_onStopTrackingTouch=: 0:
-alertdialog0_onClick=: 3 : 0
-jniCheck dialog=. GetObjectArrayElement (3{y);0
-jniCheck dialog ('dismiss ()V' jniMethod)~ ''
-jniCheck DeleteLocalRef <dialog
-)
-
-alertdialog_onClick=: 3 : 0
-jniCheck dialog=. GetObjectArrayElement (3{y);0
-jniCheck pos=. '' ('intValue ()I' jniMethod) opos=. GetObjectArrayElement (3{y);1
-jniCheck DeleteLocalRef <opos
-form_evt cWindow ; 'alertdialog' ; '' ; ":pos
-jniCheck dialog ('dismiss ()V' jniMethod)~ ''
-jniCheck DeleteLocalRef <dialog
-1
-)
-
-isigraph_event=: 4 : 0
+gtkwidget_event=: 4 : 0
 assert. 'jglcanvas' -: >@{.x
 l=. 1{x
 widget=. canvas__l
-view=. 0{2{::x
 evt=. >@{.y
 if. 1=#y do.
-  0 child_evt (view,widget) ; evt
+  0 child_evt widget ; evt
 elseif. 2=#y do.
   sysdata=: ": >1{y
-  0 child_evt (view,widget) ; evt
+  0 child_evt widget ; evt
 elseif. 3=#y do.
   sysdata=: ": >1{y
-  sysmodifiers=: ": 0
-  0 child_evt (view,widget) ; evt
+  sysmodifiers=: ": >2{y
+  0 child_evt widget ; evt
 end.
 0
 )
@@ -2315,12 +1935,8 @@ system_evt 'timer';'sys_timer'
 0~:systimerid
 )
 
-invalideview=: 3 : 0
-if. 0= cWindow do. return. end.
-jniCheck view=. cWindow ('findViewById (I)LView;' jniMethod)~ viewidn
-jniCheck view ('invalidate ()V' jniMethod)~ ''
-jniCheck DeleteLocalRef <view
-)
+wdstart_z_=: wdstart_droidwd_
+wddestroy_z_=: wddestroy_droidwd_
 wdfontdef=: 3 : 0
 if. 0= #args=. shiftargs'' do. seterr 'bad font name : ' return. end.
 cFontdef=: '"' -.~ }. ;' ',&.> args
@@ -2330,19 +1946,10 @@ if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return. end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-f=. getfontspec }.args
-if. 0=WDERRN do.
-  win=. getchildwin window
-  'face asize style angle'=. f
-  'Bold Italic Underline Strikeout'=. 4{. |. #: style
-  jniCheck ft=. 'android.graphics.Typeface' ('create (LString;I)LTypeface;' jniStaticMethod)~ face;(Bold + 2*Italic)
-  try.
-    jniCheck win ('setTypeface (LTypeface;)V' jniMethod)~ ft
-    jniCheck win ('setTextSize (F)V' jniMethod)~ pt2sp asize
-  catch.
-    ExceptionClear''
-  end.
-  jniCheck DeleteLocalRef"0 win;ft
+if. 1[ 0=WDERRN do.
+  fd=. pango_font_description_from_string < '"' -.~ }. ;' ',&.> }.args
+  gtk_widget_modify_font window, fd
+  pango_font_description_free fd
 end.
 )
 getfontspec=: 3 : 0
@@ -2361,7 +1968,7 @@ for_s1. 2}.args do.
   elseif. do. seterr 'bad style : ' return.
   end.
 end.
-font ; ({. 0&". asize) ; style ; angle
+font ; (0&". asize) ; style ; angle
 )
 wdmbfont=: 3 : 0
 f=. ''
@@ -2369,7 +1976,6 @@ if. 0< #args=. shiftargs'' do.
   f=. getfontspec args
   if. 0~:WDERRN do. return. end.
 end.
-'' return.
 if. #f do.
   fontdialog ''; (>@{.f),' ', (": >1{f)
 else.
@@ -2377,7 +1983,6 @@ else.
 end.
 )
 wdmb=: 3 : 0
-if. 0= cWindow do. '' [ seterr 'no parent selected : ' return. end.
 args=. shiftargs''
 title=. >@{.args
 txt=. >@{.}.args
@@ -2387,39 +1992,69 @@ else.
   styles=. 0$<''
 end.
 if. (<'mb_yesno') e. styles do.
-  'pos neg neu'=. 'Yes' ; 'No' ; ''
+  dialog=. ((>libgtk), ' gtk_dialog_new_with_buttons ', gtkcv, 'x *c x x *c x *c x x')&cd title ; cWindow ;(GTK_DIALOG_MODAL + GTK_DIALOG_DESTROY_WITH_PARENT) ; GTK_STOCK_YES ; GTK_RESPONSE_YES ; GTK_STOCK_NO ; GTK_RESPONSE_NO ; 0
+  if. (<'mb_defbutton2') e. styles do.
+    gtk_dialog_set_default_response dialog, GTK_RESPONSE_NO
+  end.
 elseif. (<'mb_yesnocancel') e. styles do.
-  'pos neg neu'=. 'Yes' ; 'No' ; 'Cancel'
+  dialog=. ((>libgtk), ' gtk_dialog_new_with_buttons ', gtkcv, 'x *c x x *c x *c x *c x x')&cd title ; cWindow ;(GTK_DIALOG_MODAL + GTK_DIALOG_DESTROY_WITH_PARENT) ; GTK_STOCK_YES ; GTK_RESPONSE_YES ; GTK_STOCK_NO ; GTK_RESPONSE_NO ; GTK_STOCK_CANCEL ; GTK_RESPONSE_CANCEL ; 0
+  if. (<'mb_defbutton2') e. styles do.
+    gtk_dialog_set_default_response dialog, GTK_RESPONSE_NO
+  elseif. (<'mb_defbutton3') e. styles do.
+    gtk_dialog_set_default_response dialog, GTK_RESPONSE_CANCEL
+  end.
 elseif. (<'mb_okcancel') e. styles do.
-  'pos neg neu'=. 'Ok' ; '' ; 'Cancel'
+  dialog=. ((>libgtk), ' gtk_dialog_new_with_buttons ', gtkcv, 'x *c x x *c x *c x x')&cd title ; cWindow ;(GTK_DIALOG_MODAL + GTK_DIALOG_DESTROY_WITH_PARENT) ; GTK_STOCK_OK ; GTK_RESPONSE_OK ; GTK_STOCK_CANCEL ; GTK_RESPONSE_CANCEL ; 0
+  if. (<'mb_defbutton2') e. styles do.
+    gtk_dialog_set_default_response dialog, GTK_RESPONSE_CANCEL
+  end.
+elseif. (<'mb_yesnocancel') e. styles do.
+  dialog=. ((>libgtk), ' gtk_dialog_new_with_buttons ', gtkcv, 'x *c x x *c x *c x *c x x')&cd title ; cWindow ;(GTK_DIALOG_MODAL + GTK_DIALOG_DESTROY_WITH_PARENT) ; GTK_STOCK_YES ; GTK_RESPONSE_YES ; GTK_STOCK_NO ; GTK_RESPONSE_NO ; GTK_STOCK_CANCEL ; GTK_RESPONSE_CANCEL ; 0
+  if. (<'mb_defbutton2') e. styles do.
+    gtk_dialog_set_default_response dialog, GTK_RESPONSE_NO
+  elseif. (<'mb_defbutton3') e. styles do.
+    gtk_dialog_set_default_response dialog, GTK_RESPONSE_CANCEL
+  end.
 elseif. (<'mb_retrycancel') e. styles do.
-  'pos neg neu'=. 'Retry' ; '' ; 'Cancel'
-elseif. (<'mb_abortretryignore') e. styles do.
-  'pos neg neu'=. 'Retry' ; 'Abort' ; 'Ignore'
+  dialog=. ((>libgtk), ' gtk_dialog_new_with_buttons ', gtkcv, 'x *c x x *c x *c x x')&cd title ; cWindow ;(GTK_DIALOG_MODAL + GTK_DIALOG_DESTROY_WITH_PARENT) ; 'Retry' ; 2 ; GTK_STOCK_CANCEL ; GTK_RESPONSE_CANCEL ; 0
+  if. (<'mb_defbutton2') e. styles do.
+    gtk_dialog_set_default_response dialog, GTK_RESPONSE_CANEL
+  end.
+elseif. (<'mb_arbortretryignore') e. styles do.
+  dialog=. ((>libgtk), ' gtk_dialog_new_with_buttons ', gtkcv, 'x *c x x *c x *c x *c x x')&cd title ; cWindow ;(GTK_DIALOG_MODAL + GTK_DIALOG_DESTROY_WITH_PARENT) ; 'Abort' ; 1 ; 'Retry' ; 2 ; 'Ignore' ; 3 ; 0
+  if. (<'mb_defbutton2') e. styles do.
+    gtk_dialog_set_default_response dialog, 2
+  elseif. (<'mb_defbutton3') e. styles do.
+    gtk_dialog_set_default_response dialog, 3
+  end.
 elseif. do.
-  'pos neg neu'=. '' ; '' ; ''
+  dialog=. ((>libgtk), ' gtk_dialog_new_with_buttons ', gtkcv, 'x *c x x *c x x')&cd title ; cWindow ;(GTK_DIALOG_MODAL + GTK_DIALOG_DESTROY_WITH_PARENT) ; GTK_STOCK_OK ; GTK_RESPONSE_OK ; 0
 end.
 
-jniCheck builder=. cWindow jniNewObject 'AlertDialog$Builder LContext;'
-jniCheck builder ('setTitle (LCharSequence;)LAlertDialog$Builder;' jniMethod)~ <title
-jniCheck builder ('setMessage (LCharSequence;)LAlertDialog$Builder;' jniMethod)~ <txt
-if. 0= # pos,neg,neu do.
-  jniCheck builder ('setNeutralButton (LCharSequence;LDialogInterface$OnClickListener;)LAlertDialog$Builder;' jniMethod)~ 'Ok' ; alertdialog0_listener
-else.
-  if. #pos do.
-    jniCheck builder ('setPositiveButton (LCharSequence;LDialogInterface$OnClickListener;)LAlertDialog$Builder;' jniMethod)~ pos ; alertdialog_listener
-  end.
-  if. #neg do.
-    jniCheck builder ('setNegativeButton (LCharSequence;LDialogInterface$OnClickListener;)LAlertDialog$Builder;' jniMethod)~ neg ; alertdialog_listener
-  end.
-  if. #neu do.
-    jniCheck builder ('setNeutralButton (LCharSequence;LDialogInterface$OnClickListener;)LAlertDialog$Builder;' jniMethod)~ neu ; alertdialog_listener
-  end.
+hbox=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x x')&cd ( gtk_hbox_get_type '') ; 'border-width' ; 8 ;< 0
+
+gtk_box_pack_start (gtk_dialog_get_content_area dialog), hbox, 0, 0, 0
+if. +./ (<;._1 ' mb_iconasterisk mb_iconhand mb_iconinformation') e. styles do.
+  stock=. gtk_image_new_from_stock GTK_STOCK_DIALOG_INFO ;< GTK_ICON_SIZE_DIALOG
+  gtk_box_pack_start hbox, stock, 0, 0, 0
+elseif. (<'mb_iconquestion') e. styles do.
+  stock=. gtk_image_new_from_stock GTK_STOCK_DIALOG_QUESTION ;< GTK_ICON_SIZE_DIALOG
+  gtk_box_pack_start hbox, stock, 0, 0, 0
+elseif. (<'mb_iconexclamation') e. styles do.
+  stock=. gtk_image_new_from_stock GTK_STOCK_DIALOG_WARNING ;< GTK_ICON_SIZE_DIALOG
+  gtk_box_pack_start hbox, stock, 0, 0, 0
+elseif. (<'mb_iconstop') e. styles do.
+  stock=. gtk_image_new_from_stock GTK_STOCK_STOP ;< GTK_ICON_SIZE_DIALOG
+  gtk_box_pack_start hbox, stock, 0, 0, 0
 end.
-jniCheck builder ('show ()LAlertDialog;' jniMethod)~ ''
-''
+lb=. gtk_label_new <txt
+gtk_label_set_line_wrap lb, 1
+gtk_box_pack_start hbox, lb, 1, 1, 0
+gtk_widget_show_all hbox
+result=. gtk_dialog_run dialog
+gtk_widget_destroy dialog
+>('CANCEL' ; 'CANCEL' ; 'CANCEL' ; 'OK' ; 'YES' ; 'NO' ; 'ABORT' ; 'RETRY' ; 'IGNORE'){~result i.~ GTK_RESPONSE_DELETE_EVENT, GTK_RESPONSE_NONE, GTK_RESPONSE_CANCEL, GTK_RESPONSE_OK, GTK_RESPONSE_YES, GTK_RESPONSE_NO, 1 2 3
 )
-
 wdmbopen=: mbopensave bind 0
 wdmbsave=: mbopensave bind 2
 mbopensave=: 3 : 0
@@ -2441,7 +2076,6 @@ if. #filter do.
 else.
   pattern=. ''
 end.
-'' return.
 cWindow filechooser_jgtk_ y ; title ; pattern ; path
 )
 wdmenu=: 3 : 0
@@ -2450,43 +2084,42 @@ if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return.
 elseif. 5< #args do. seterr 'extra parameter : ' return.
 end.
 if. 0~: checkbadname id=. 0{::args do. seterr 'bad id : ' return. end.
-if. _1= icx=. windowlistidx cWindow do. seterr 'internal error : ' return. end.
-if. -.ismenucreated cWindow do.
-  s1=. wdstr
-  idn=. (<icx,4){::windowList
-  menuList=: menuList, cWindow ; (idn=. >:idn) ; id ; 0 ; 0 0 0
-  windowList=: (<idn) (<icx, 4) } windowList
-  s=. (<icx, WindowListMenuPending){:: windowList
-  windowList=: (<s,s1,';') (<icx, WindowListMenuPending) } windowList
-  return.
-end.
 txt=. 1{::args,5#<''
 shortcut=. 2{::args,5#<''
 statushelp=. 3{::args,5#<''
 tooltip=. 4{::args,5#<''
-mn=. (<icx, WindowListMenubar){:: windowList
-acl=. (<icx, WindowListAccel){:: windowList
-assert. 0~:#mn
-menu=. cWindow getmenu id
-assert. 0~:menu
-imx=. cWindow getmenuidx menu
-assert. _1~:imx
-menust=. (<imx,4){::menuList
-assert. 0= {.menust
-idn=. (<imx,1){::menuList
-jniCheck e=. ({:mn) ('add (IIILCharSequence;)LMenuItem;' jniMethod)~ 0;(idn);0;txt-.'&'
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  mn=. (handle i. cWindow){ >WindowListMenubar{"1 windowList
+  acl=. (handle i. cWindow){ >WindowListAccel{"1 windowList
+else.
+  assert. 0
+end.
+if. 0= {.mn do. mn=. , createmenubar cWindow end.
+if. '&' e. txt do.
+  window=. gtk_check_menu_item_new_with_mnemonic <'&_'&charsub txt
+else.
+  window=. gtk_check_menu_item_new_with_label <txt
+end.
+if. '' -.@-: tooltip do.
+  gtk_widget_set_tooltip_text window ; tooltip
+end.
 if. '' -.@-: shortcut do.
-  alphabeticShortcutcut=. numericShortcut=. ' '
-  shortcut=. {:shortcut
-  if. shortcut e. '0123456789' do. numericShortcut=. shortcut else. alphabeticShortcutcut=. shortcut end.
-  jniCheck e ('setShortcut (CC)LMenuItem;' jniMethod)~ numericShortcut;alphabeticShortcutcut
+  shortcut=. toupper shortcut
+  if. '+' e. shortcut do.
+    ks=. <;._1 '+', shortcut
+    shortcut=. (_1{::ks) ,~ ; ('<') ,&.> (}:ks) ,&.> ('>')
+  end.
+  gtk_accelerator_parse shortcut ; (key=. ,_1) ;< (modifiers=. ,_1)
+  key=. {.key [ modifiers=. {.modifiers
+  if. gtk_accelerator_valid key ;< modifiers do.
+    gtk_widget_add_accelerator window ; 'activate' ; acl ; key ; modifiers ;< GTK_ACCEL_VISIBLE (23 b.) GTK_ACCEL_LOCKED
+  end.
 end.
-jniCheck DeleteLocalRef <e
-if. 1{menust do.
-end.
-if. 2{menust do.
-end.
-menuList=: (<1 (0)}menust) (<imx ,4)}menuList
+gtk_menu_shell_append ({:mn) ;< window
+gtk_widget_show window
+consig window ; 'activate' ; 'menu_activate_event'
+windowList=: (<mn) (<(handle i. cWindow) ; WindowListMenubar) } windowList
+menuList=: menuList, cWindow ; window ; id ; 0
 )
 
 wdmenupop=: 3 : 0
@@ -2495,49 +2128,56 @@ if. 0= #args=. shiftargs'' do. txt=. ''
 elseif. 1< #args do. seterr 'extra parameter : ' return.
 elseif. do. txt=. >@{.args
 end.
-if. _1= icx=. windowlistidx cWindow do. seterr 'internal error : ' return. end.
-if. -.ismenucreated cWindow do.
-  s1=. wdstr
-  s=. (<icx, WindowListMenuPending){:: windowList
-  windowList=: (<s,s1,';') (<icx, WindowListMenuPending) } windowList
-  return.
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  mn=. (handle i. cWindow){ >WindowListMenubar{"1 windowList
+else.
+  assert. 0
 end.
-mn=. (<icx, WindowListMenubar){:: windowList
-assert. 0~:#mn
-jniCheck e=. ({:mn) ('addSubMenu (IIILCharSequence;)LSubMenu;' jniMethod)~ 0;0;0;txt-.'&'
-windowList=: (<mn, e) (<icx, WindowListMenubar) } windowList
-jniCheck DeleteLocalRef <e
+if. 0= {.mn do. mn=. , createmenubar cWindow end.
+window=. gtk_menu_item_new_with_mnemonic <'&_'&charsub txt
+gtk_menu_shell_append ({:mn) ;< window
+gtk_widget_show window
+submn=. gtk_menu_new ''
+gtk_menu_item_set_submenu window, submn
+mn=. mn , submn
+windowList=: (<mn) (<(handle i. cWindow) ; WindowListMenubar) } windowList
 )
 
 wdmenupopz=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0~: #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
-if. _1= icx=. windowlistidx cWindow do. seterr 'internal error : ' return. end.
-if. -.ismenucreated cWindow do.
-  s1=. wdstr
-  s=. (<icx, WindowListMenuPending){:: windowList
-  windowList=: (<s,s1,';') (<icx, WindowListMenuPending) } windowList
-  return.
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  mn=. (handle i. cWindow){ >WindowListMenubar{"1 windowList
+else.
+  assert. 0
 end.
-mn=. (<icx, WindowListMenubar){:: windowList
-if. 1 < #mn do. jniCheck DeleteLocalRef <{:mn end.
-windowList=: (<}:mn) (<icx, WindowListMenubar) } windowList
+if. 1 < #mn do. mn=. }:mn end.
+windowList=: (<mn) (<(handle i. cWindow) ; WindowListMenubar) } windowList
 )
 
 wdmenusep=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0~: #args=. shiftargs'' do. seterr 'extra parameter : ' return. end.
-if. _1= icx=. windowlistidx cWindow do. seterr 'internal error : ' return. end.
-if. -.ismenucreated cWindow do.
-  s1=. wdstr
-  s=. (<icx, WindowListMenuPending){:: windowList
-  windowList=: (<s,s1,';') (<icx, WindowListMenuPending) } windowList
-  return.
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  mn=. (handle i. cWindow){ >WindowListMenubar{"1 windowList
+else.
+  assert. 0
 end.
-mn=. (<icx, WindowListMenubar){:: windowList
-assert. 0~:#mn
+if. 0= {.mn do. mn=. , createmenubar cWindow end.
+window=. gtk_separator_menu_item_new ''
+gtk_menu_shell_append ({:mn) ;< window
+gtk_widget_show window
+windowList=: (<mn) (<(handle i. cWindow) ; WindowListMenubar) } windowList
 )
-
+createmenubar=: 3 : 0
+cWindow=. y
+vbox1=. gtk_bin_get_child cWindow
+menubar1=. gtk_menu_bar_new ''
+gtk_widget_show menubar1
+gtk_box_pack_start vbox1, menubar1, 0, 0, 0
+gtk_box_reorder_child vbox1, menubar1, 0
+menubar1
+)
 wdcreategroup=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do.
@@ -2546,11 +2186,9 @@ else.
   if. 1< #args do. seterr 'extra parameter : ' return. end.
   id=. 0{::args
   if. 0= window=. cWindow getcchild id do. seterr 'bad id : ' return. end.
-  win=. getchildwin window
-  if. 'android.widget.TabHost'-.@-:jniClassName win do.
-    win seterr 'bad id : ' return.
+  if. 0= g_type_check_instance_is_a window, gtk_notebook_get_type '' do.
+    seterr 'bad id : ' return.
   end.
-  jniCheck DeleteLocalRef <win
   cContaineri=: _1 [ cContainer=: window
   containerList=: containerList, (cWindow ; window ; 0 0)
 end.
@@ -2586,7 +2224,7 @@ wdpc=: 3 : 0
 pcstyle=. ;:'nomenu nomin nomax nosize dialog owner closeok scroll hscroll'
 args=. shiftargs''
 if. 0= #args do. seterr 'bad id : ' return. end.
-styles=. (<'qtwd') -.~ ~. }.args [ id=. >@{.args
+styles=. ~. }.args [ id=. >@{.args
 if. 0 e. styles e. pcstyle do. seterr 'bad style : ' return. end.
 style=. 0
 closeok=. (<'closeok') e. styles
@@ -2602,90 +2240,57 @@ if. 0= cContainer do.
   Activity=: 0 [ activity=. Activity
   jniCheck view=. activity jniNewObject 'LinearLayout LContext;'
   jniCheck view ('setId (I)V' jniMethod)~ viewidn=: idn=. >:idn
-  jniCheck view ('setOrientation (I)V' jniMethod)~ VERTICAL
+  jniCheck view ('setOrientation (I)V' jniMethod)~ LinearLayout_VERTICAL_ja_
+  jniCheck tbar=. activity jniNewObject 'LinearLayout LContext;'
+  jniCheck tbar ('setId (I)V' jniMethod)~ tbaridn=: idn=. >:idn
+  jniCheck tbar ('setOrientation (I)V' jniMethod)~ LinearLayout_HORIZONTAL_ja_
+  jniCheck view ('addView (LView;)V' jniMethod)~ tbar
   if. scroll+.hscroll do.
     jniCheck scrollvw=. activity jniNewObject (hscroll#'Horizontal'),'ScrollView LContext;'
     jniCheck scrollvw ('setId (I)V' jniMethod)~ scrollvwidn=: idn=. >:idn
-    jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ MATCH_PARENT;WRAP_CONTENT
-    jniCheck scrollvw ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-    jniCheck DeleteLocalRef <lp
+    if. hscroll do. jniCheck scrollvw ('setId (I)V' jniMethod)~ end.
     jniCheck view ('addView (LView;)V' jniMethod)~ scrollvw
-    jniCheck tbar=. activity jniNewObject 'LinearLayout LContext;'
-    jniCheck tbar ('setId (I)V' jniMethod)~ tbaridn=: idn=. >:idn
-    jniCheck tbar ('setOrientation (I)V' jniMethod)~ HORIZONTAL
-    jniCheck lp=. ('AbsoluteLayout$LayoutParams IIII') jniNewObject~ <"0 dpw2px (MATCH_PARENT, WRAP_CONTENT), 0 0
-    jniCheck tbar ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-    jniCheck tbar ('setVisibility (I)V' jniMethod)~ 8
-    jniCheck DeleteLocalRef <lp
-    jniCheck view ('addView (LView;)V' jniMethod)~ tbar
     jniCheck fixed1=. activity jniOverride 'org.dykman.jn.android.widget.AbsoluteLayout LContext;' ; 'droidwd' ; 'fixed1' ; 'onLayout'
     jniCheck fixed1 ('setId (I)V' jniMethod)~ fixedidn=: idn=. >:idn
-    jniCheck lp=. ('LinearLayout$LayoutParams IIF') jniNewObject~ MATCH_PARENT;(wantstatusbar{MATCH_PARENT,WRAP_CONTENT);1
-    jniCheck fixed1 ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-    jniCheck DeleteLocalRef <lp
     jniCheck scrollvw ('addView (LView;)V' jniMethod)~ fixed1
   else.
-    jniCheck tbar=. activity jniNewObject 'LinearLayout LContext;'
-    jniCheck tbar ('setId (I)V' jniMethod)~ tbaridn=: idn=. >:idn
-    jniCheck tbar ('setOrientation (I)V' jniMethod)~ HORIZONTAL
-    jniCheck lp=. ('AbsoluteLayout$LayoutParams IIII') jniNewObject~ <"0 dpw2px (MATCH_PARENT, WRAP_CONTENT), 0 0
-    jniCheck tbar ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-    jniCheck tbar ('setVisibility (I)V' jniMethod)~ 8
-    jniCheck DeleteLocalRef <lp
-    jniCheck view ('addView (LView;)V' jniMethod)~ tbar
     jniCheck fixed1=. activity jniOverride 'org.dykman.jn.android.widget.AbsoluteLayout LContext;' ; 'droidwd' ; 'fixed1' ; 'onLayout'
     jniCheck fixed1 ('setId (I)V' jniMethod)~ fixedidn=: idn=. >:idn
-    jniCheck lp=. ('LinearLayout$LayoutParams IIF') jniNewObject~ MATCH_PARENT;(wantstatusbar{MATCH_PARENT,WRAP_CONTENT);1
-    jniCheck fixed1 ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-    jniCheck DeleteLocalRef <lp
     jniCheck view ('addView (LView;)V' jniMethod)~ fixed1
     scrollvw=. 0
   end.
   jniCheck sbar=. activity jniNewObject 'LinearLayout LContext;'
   jniCheck sbar ('setId (I)V' jniMethod)~ sbaridn=: idn=. >:idn
-  jniCheck sbar ('setOrientation (I)V' jniMethod)~ HORIZONTAL
-  jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ MATCH_PARENT;WRAP_CONTENT
-  jniCheck sbar ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-  jniCheck sbar ('setVisibility (I)V' jniMethod)~ 8
-  jniCheck DeleteLocalRef <lp
+  jniCheck sbar ('setOrientation (I)V' jniMethod)~ LinearLayout_HORIZONTAL_ja_
   jniCheck view ('addView (LView;)V' jniMethod)~ sbar
 
   jniCheck activity ('setContentView (LView;)V' jniMethod)~ view
-  jniCheck DeleteLocalRef"0 view;tbar;sbar;fixed1;scrollvw
+  DeleteLocalRef"0 view;tbar;sbar;fixed1;scrollvw
 else.
   if. 0= cWindow do. seterr 'no parent selected : ' return. end.
-  win=. getchildwin cContainer
-  jniCheck tw=. win ('getTabWidget ()LTabWidget;' jniMethod)~ ''
-  jniCheck npage=. tw ('getTabCount ()I' jniMethod)~ ''
-  jniCheck DeleteLocalRef <tw
-  if. npage do.
-    for_i. i.npage do.
-      jniCheck win ('setCurrentTab (I)V' jniMethod)~ i
-      jniCheck vw=. win ('getCurrentView ()LView;' jniMethod)~ ''
-      if. jniCheck vw ('getChildCount ()I' jniMethod)~ '' do.
-        jniCheck DeleteLocalRef <vw
+  assert. g_type_check_instance_is_a cContainer, gtk_notebook_get_type ''
+  npage=. gtk_notebook_get_n_pages cContainer
+  for_i. i.npage do.
+    if. 0~: page=. gtk_notebook_get_nth_page cContainer, i do.
+      if. 0~: g=. gtk_container_get_children page do.
+        g_list_free g
       else.
-        jniCheck fixedid=. vw ('getId ()I' jniMethod)~ ''
-        jniCheck DeleteLocalRef <vw
         cContaineri=: i break.
       end.
     end.
-    jniCheck win ('setCurrentTab (I)V' jniMethod)~ 0
   end.
-  jniCheck DeleteLocalRef <win
   if. _1&= cContaineri do. seterr 'todomsg4 : ' return. end.
-  if. 1> fixedid do.
+  if. 0&= fixed1=. gtk_notebook_get_nth_page cContainer, cContaineri do.
     seterr 'todomsg5 : ' return.
   end.
 end.
 
 if. 0= cContainer do.
-  windowList=: windowList, activity ; id ; (jloc '') ; '' ; idn ; fixed1 ; cFontdef ; (tbaridn,0 0 0) ; (sbaridn,0 0 0) ; (0$0) ; 0 0 ; 0 ; 0 0 ; 0 ; 0 ; closeok ; '' ; 0
+  windowList=: windowList, activity ; id ; (jloc '') ; '' ; idn ; fixed1 ; cFontdef ; 0 ; (,0) ; (,0) ; 0 0 ; 0 ; 0 0 ; 0 ; 0 ; closeok
   cSubform=: '' [ cSetFont=: '' [ cContainer=: cRadio=: cChild=: 0 [ cWindow=: activity
-  activeidx=: ~. activeidx, activity
 else.
   cSubform=: id
-  subformList=: subformList, (cWindow ; cContainer ; id ; fixedid)
+  subformList=: subformList, (cWindow ; cContainer ; id ; fixed1)
 end.
 )
 
@@ -2718,7 +2323,7 @@ if. 0= #args=. shiftargs'' do. seterr'bad number : ' return.
 elseif. 1= #args do. seterr'bad number : ' return.
 elseif. 2< #args do. seterr 'extra parameter : ' return.
 end.
-return.
+EMPTY return.
 s=. 0{::args
 ax=. 1{::args
 if. 0= isnum ax do. seterr 'bad number : ' return. end.
@@ -2759,7 +2364,7 @@ if. 0= #args=. shiftargs'' do. cSubform=: '' [ cSetFont=: '' [ cContainer=: cRad
 elseif. 1<#args do. seterr 'extra parameter : ' return.
 elseif. 1=#args do. id=. 0{::args
 end.
-return.
+EMPTY return.
 if. 0= #windowList do. return. end.
 if. '_0123456789' e.~ {.id do.
   if. (w=. 0&". id) -.@e. (>WindowListHandle{"1 windowList) do. seterr 'bad id : ' return. end.
@@ -2784,20 +2389,26 @@ if. 0=#args=. shiftargs'' do. style=. 'sw_shownormal'
 elseif. 1<#args do. seterr 'extra parameter : ' return.
 elseif. do. style=. 0{::args
 end.
-return.
 select. style
-case. 'sw_hide' do. return.
-case. 'sw_maximize' do.
-case. 'sw_minimize' do.
-case. 'sw_restore' do.
+case. 'sw_hide' do. gtk_widget_hide cWindow return.
+case. 'sw_maximize' do. gtk_window_maximize cWindow
+case. 'sw_minimize' do. gtk_window_iconify cWindow
+case. 'sw_restore' do. gtk_window_present cWindow
 case. 'sw_show' do. ''
-case. 'sw_showmaximized' do.
-case. 'sw_showminimized' do.
-case. 'sw_showminnoactive' do.
+case. 'sw_showmaximized' do. gtk_window_maximize cWindow
+case. 'sw_showminimized' do. gtk_window_iconify cWindow
+case. 'sw_showminnoactive' do. gtk_window_iconify cWindow
 case. 'sw_showna' do. ''
 case. 'sw_shownoactive' do. ''
 case. 'sw_shownormal' do. ''
 case. do. seterr 'bad style : ' return.
+end.
+if. (<style) e. ;:'sw_restore sw_show sw_shownormal sw_showmaximized sw_showminimized' do.
+  if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+    activeidx=: ~. activeidx, cWindow
+  else.
+    assert. 0
+  end.
 end.
 )
 
@@ -2870,7 +2481,6 @@ t=. EMPTY
 if. (<'qer') -.@e.~ cmd=. shiftarg'' do. LASTCMD=: y [ WDERRN=: 0 end.
 select. cmd
 case. 'beep' do. wdbeep ''
-case. 'bin' do. ''
 case. 'cc' do. wdcc ''
 case. 'clipcopy' do. wdclipcopy ''
 case. 'clippaste' do. t=. wdclippaste ''
@@ -2933,7 +2543,6 @@ case. 'setinvalid' do. wdsetinvalid ''
 case. 'setlimit' do. wdsetlimit ''
 case. 'setlocale' do. wdsetlocale ''
 case. 'setmodified' do. wdsetmodified ''
-case. 'setp' do. ''
 case. 'setreadonly' do. wdsetreadonly ''
 case. 'setreplace' do. wdsetreplace ''
 case. 'setscroll' do. wdsetscroll ''
@@ -2946,9 +2555,7 @@ case. 'tbarset' do. wdtbarset ''
 case. 'tbarshow' do. wdtbarshow ''
 case. 'timer' do. wdtimer ''
 case. 'xywh' do. wdxywh ''
-case. 'wh' do. ''
 case. ,'q' do. t=. wdq ''
-case. 'rm' do. wdrm ''
 case. 'setwrap' do. wdsetwrap ''
 case. ;:'setbkgnd' do. ''
 case. ;:'smcolor smkeywords smsetlog' do. ''
@@ -2963,89 +2570,33 @@ end.
 if. ((<'qer') -.@e.~ cmd) *. 0~:WDERRN do. 13!:8[3 end.
 (EMPTY-:t){::t;''
 )
-wd_menu=: 3 : 0
-assert. 0~:cWindow 
-if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
-  mn=. (icx=. handle i. cWindow){ >WindowListMenubar{"1 windowList
-else.
-  assert. 0
-end.
-assert. 0=#mn
-windowList=: (<mn=. ,y) (<icx, WindowListMenubar) } windowList
-windowList=: (<1) (<icx, WindowListMenuCreated) } windowList
-y=. (<icx, WindowListMenuPending) {:: windowList
-
-z=. ''
-wdptr1=: 0
-while. #y do.
-  if. 0<s1=. clws y do.
-    wdptr1=: wdptr1 + s1
-    y=. s1}. y continue.
-  end.
-  s=. y e. ';'
-  a=. y e. '*'
-  q=. 2| +/\ y e. '"'
-  d=. 2| +/\ y e. DEL
-  s=. s *. -.q+.d
-  a=. a *. -.q+.d
-  if. (1 e. a) *. 1 e. s do.
-    s1=. {.I.s [ a1=. {.I.a
-    if. s1<a1 do.
-      z=. wd2 s1{.y
-      wdptr1=: wdptr1 + 1 + s1
-      y=. (1+s1)}. y continue.
-    else.
-      z=. wd2 y break.
-    end.
-  elseif. 1 e. s do.
-    s1=. {.I.s
-    z=. wd2 s1{.y
-    wdptr1=: wdptr1 + 1 + s1
-    y=. (1+s1)}. y continue.
-  elseif. do.
-    z=. wd2 y break.
-  end.
-end.
-mn=. icx{ >WindowListMenubar{"1 windowList
-if. 1<#mn do. jniCheck DeleteLocalRef"0 <"0 }.mn end.
-windowList=: (<,0$0) (<icx, WindowListMenubar) } windowList
-windowList=: (<'') (<icx, WindowListMenuPending) } windowList
-z
-)
-
-wd2=: 3 : 0
-if. 0=#y do. '' return. end.
-smoutput^:(1<Debugwd) y
-wdptr=: 0 [ wdstr=: y
-LASTCMD=: y [ WDERRN=: 0
-select. cmd=. shiftarg''
-case. 'menu' do. wdmenu ''
-case. 'menupop' do. wdmenupop ''
-case. 'menupopz' do. wdmenupopz ''
-case. 'menusep' do. wdmenusep ''
-end.
-if. 0~:WDERRN do. 13!:8[3 end.
-EMPTY
-)
 wdsbar=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
 if. 0= #args=. shiftargs'' do. seterr 'bad number : ' return.
 elseif. 1< #args do. seterr 'extra parameter : ' return.
 end.
-idx=. windowlistidx cWindow
-if. _1=idx do. seterr 'parent deleted : ' return. end.
-idn0=. idn=. (<idx,4){::windowList
-'sbaridn id0 cnt nxt'=. (<idx,WindowListStatusbar){::windowList
-assert. 0~:sbaridn
-if. 0~:cnt do. seterr 'nounce error : ' return. end.
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  if. 0~: {. sb=. (handle i. cWindow){ >WindowListStatusbar{"1 windowList do. seterr 'command failed : ' return. end.
+else.
+  assert. 0
+end.
 if. -.@isnum s=. >@{.args do. seterr 'bad number : ' return. end.
 if. 0>: count=. {.@(0&".) s do. seterr 'bad number : ' return. end.
-sbar=. getchildwin sbaridn
-assert. 0~:sbar
-jniCheck sbar ('setVisibility (I)V' jniMethod)~ 0
-jniCheck DeleteLocalRef <sbar
-windowList=: (<idn0+count) (<idx, 4) } windowList
-windowList=: (<sbaridn, idn0, count, 0) (<idx, WindowListStatusbar) } windowList
+vbox1=. gtk_bin_get_child cWindow
+sbarwin=. ((>libgobject), ' g_object_new ', gtkcv, 'x x *c x *c x x')&cd ( gtk_hbox_get_type '') ; 'spacing' ; 2 ; 'visible' ; 0 ;< 0
+gtk_widget_set_can_focus sbarwin, 0
+gtk_widget_show sbarwin
+for_i. i. count do.
+  st=. gtk_statusbar_new ''
+  gtk_widget_show st
+  gtk_box_pack_start sbarwin, st, ((i=0){0 1), ((i=0){0 1), 0
+end.
+gtk_box_pack_end vbox1, sbarwin, 0, 0, 0
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  windowList=: (<sbarwin, count, 0) (<(handle i. cWindow) ; WindowListStatusbar) } windowList
+else.
+  assert. 0
+end.
 )
 wdsbarset=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
@@ -3053,36 +2604,38 @@ if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return.
 elseif. 1= #args do. seterr 'bad number : ' return.
 elseif. 3< #args do. seterr 'extra parameter : ' return.
 end.
-idx=. windowlistidx cWindow
-if. _1=idx do. seterr 'parent deleted : ' return. end.
-'sbaridn idn0 count next'=. (<idx,WindowListStatusbar){::windowList
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  if. 0= {. sb=. (handle i. cWindow){ >WindowListStatusbar{"1 windowList do. seterr 'command failed : ' return. end.
+else.
+  assert. 0
+end.
 if. 0~: checkbadname id=. >@{.args do. seterr 'bad id : ' return. end.
 if. -.@isnum awidth=. 1{::args do. seterr 'bad number : ' return. end.
 width=. {.@(0&".) awidth
 txt=. >@{.2}.args
-sbar=. getchildwin sbaridn
-assert. 0~:sbar
-if. _1~: ix=. cWindow getstatusbaridx id do.
-  window=. (<ix,1){::statusbarList
-  win=. getchildwin window
+'sbarwin count next'=. 3{.sb
+if. 0> width do.
+  if. 1 e. ls=. (cWindow = >{."1 statusbarList) *. (2{"1 statusbarList) e. <id do.
+    window=. 1{::({.I.ls){statusbarList
+    msgid=. gtk_statusbar_push window ; 0 ;< txt
+  else.
+    seterr 'bad id : ' return.
+  end.
 else.
-  if. count<:next do. sbar seterr 'bad number : ' return. end.
-  jniCheck win=. cWindow jniNewObject 'TextView LContext;'
-  jniCheck win ('setId (I)V' jniMethod)~ window=. idn0+next+1
-  jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ WRAP_CONTENT;WRAP_CONTENT
-  jniCheck win ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-  jniCheck sbar ('addView (LView;)V' jniMethod)~ win
-  jniCheck DeleteLocalRef <lp
-end.
-jniCheck win ('setText (LCharSequence;)V' jniMethod)~ <txt
-if. width>0 do.
-  lp=. win ('getLayoutParams ()Landroid/view/ViewGroup$LayoutParams;' jniMethod)~ ''
-  lp ('width I' jniField)~ dpw2px width
-  jniCheck DeleteLocalRef <lp
-end.
-jniCheck DeleteLocalRef"0 win;sbar
-if. _1=ix do.
-  windowList=: (<sbaridn, idn0, count, >:next) (<idx, WindowListStatusbar) } windowList
+  if. count<:next do. seterr 'bad number : ' return. end.
+  g=. gtk_container_get_children sbarwin
+  window=. g_list_nth_data g, next
+  gtk_statusbar_pop window, 0
+  msgid=. gtk_statusbar_push window ; 0 ;< txt
+  if. 0~:next do.
+    ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd window ; 'width-request' ; (D2P width) ;< 0
+  end.
+  g_list_free g
+  if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+    windowList=: (<sbarwin, count, >:next) (<(handle i. cWindow) ; WindowListStatusbar) } windowList
+  else.
+    assert. 0
+  end.
   statusbarList=: statusbarList, cWindow ; window ; id
 end.
 )
@@ -3092,16 +2645,14 @@ if. 0= #args=. shiftargs'' do. s=. ,'1'
 elseif. 1< #args do. seterr 'extra parameter : ' return.
 elseif. do. s=. >@{.args
 end.
+if. cWindow e. handle=. >WindowListHandle{"1 windowList do.
+  if. 0= sbarwin=. {. sb=. (handle i. cWindow){ >WindowListStatusbar{"1 windowList do. seterr 'command failed : ' return. end.
+else.
+  assert. 0
+end.
 if. -.@isnum s do. seterr 'bad number : ' return. end.
 if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
-idx=. windowlistidx cWindow
-if. _1=idx do. seterr 'parent deleted : ' return. end.
-'sbaridn idn0 cnt nxt'=. (<idx,WindowListStatusbar){::windowList
-assert. 0~:sbaridn
-sbar=. getchildwin sbaridn
-assert. 0~:sbar
-jniCheck sbar ('setVisibility (I)V' jniMethod)~ flag{8 0
-jniCheck DeleteLocalRef <sbar
+((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd sbarwin ; 'visible' ; flag ;< 0
 )
 wdtbar=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
@@ -3120,27 +2671,31 @@ if. 2< #args do.
   style=. 2{::args
   if. 'tbstyle_flat' -.@-: style do. seterr 'bad style : ' return. end.
 end.
-idx=. windowlistidx cWindow
-if. _1=idx do. seterr 'parent deleted : ' return. end.
-idn0=. idn=. (<idx,4){::windowList
-'tbaridn visi cnt height'=. (<idx,WindowListToolbar){::windowList
-assert. 0~:tbaridn
-mn=. WindowListMenubar{:: idx{windowList
+if. _1~: idx=. windowlistidx cWindow do.
+  if. 0~: tbarwin=. WindowListToolbar{::idx{windowList do. seterr 'command failed : ' return. end.
+  mn=. WindowListMenubar{:: idx{windowList
+else.
+  seterr 'no parent selected : ' return.
+end.
 if. 0~: tbimg=. (<idx, WindowListTbimg) {:: windowList do. seterr 'command failed : ' return. end.
-if. #pix=. readimg_ja_ fn do.
-  'h w'=. $pix
-  if. -. (15 144-:$pix) +. 0=h|w do. seterr 'picture width not 16x : ' return. end.
+if. 0~: pix=. gdk_pixbuf_new_from_file fn ;< 0 do.
+  w=. gdk_pixbuf_get_width <pix
+  h=. gdk_pixbuf_get_height <pix
+  if. -. (0=16|w) do. seterr 'picture width not 16x : ' return. end.
   tbimg=. pix
-  assert. 0~:#tbimg
-  cnt=. w%h
-  if. (15 144-:$pix) do. cnt=. 9 end.
+  assert. 0~:tbimg
 else.
   seterr 'wrong file type : ' return.
 end.
-tbar=. getchildwin tbaridn
-jniCheck tbar ('setVisibility (I)V' jniMethod)~ 0
+tbarwin=. gtk_toolbar_new ''
+gtk_widget_set_can_focus tbarwin, 0
+((>libgobject), ' g_object_set ', gtkcv, 'n x *c x *c x x')&cd tbarwin ; 'visible' ; 0 ; 'toolbar-style' ; GTK_TOOLBAR_ICONS ;< 0
+vbox1=. gtk_bin_get_child cWindow
+gtk_box_pack_start vbox1, tbarwin, 0, 0, 0
+gtk_box_reorder_child vbox1, tbarwin, (0={.mn){1 0
+gtk_widget_show tbarwin
 windowList=: (<tbimg) (<idx, WindowListTbimg) } windowList
-windowList=: (<tbaridn,1,cnt,height) (<idx, WindowListToolbar) } windowList
+windowList=: (<tbarwin) (<idx, WindowListToolbar) } windowList
 )
 wdtbarset=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
@@ -3148,66 +2703,42 @@ if. 0= #args=. shiftargs'' do. seterr 'bad id : ' return.
 elseif. 3> #args do. seterr 'bad number : ' return.
 elseif. 5< #args do. seterr 'extra parameter : ' return.
 end.
-idx=. windowlistidx cWindow
 if. _1~: idx=. windowlistidx cWindow do.
-  if. 0= 1{ 'tbaridn visi count height'=. (<idx, WindowListToolbar){::windowList do. seterr 'no control bar : ' return. end.
+  if. 0= tbarwin=. WindowListToolbar{:: idx{windowList do. seterr 'no control bar : ' return. end.
 else.
   seterr 'command3 failed : ' return.
 end.
-idn=. (<idx,4){::windowList
 id=. >@{.args
 if. 0 e. isnum&> 2{. }.args do. seterr 'bad number : ' return. end.
 'index image'=. {.@(0&".)&> 2{. }.args
 'statushelp tooltip'=. 2{. 3}.args
 if. 0=#id do.
-  jniCheck win=. cWindow jniNewObject 'View LContext;'
-  jniCheck win ('setVisibility (I)V' jniMethod)~ 4
-  'w h'=. 1,~ <. dpw2px barsheight%4
+  window=. gtk_separator_tool_item_new ''
 else.
-  if. count<:image do. seterr 'bad number : ' return. end.
-  jniCheck win=. cWindow jniNewObject 'ImageButton LContext;'
-  if. 0~:#tbimg=. (<idx, WindowListTbimg){:: windowList do.
-    'h0 w0'=. $tbimg
-    if. 15 144-:$tbimg do.
-      w=. h=. 16
-    else.
-      w=. h=. h0
-    end.
-    d=. w{."1 (image*w)}."1 tbimg
-    if. 15 144-:$tbimg do.
-      d=. 16{.d
-    end.
-    d=. fliprgb^:(-.RGBSEQ_j_) , d
-    d=. ALPHA_ja_ (23 b.) d
-    jniCheck colors=. NewIntArray <#d
-    jniCheck SetIntArrayRegion colors;0;(#d);d
-    jniCheck bm=. 'android.graphics.Bitmap' ('createBitmap ([IIIIILBitmap$Config;)LBitmap;' jniStaticMethod)~ colors;0;w;w;h;ARGB_8888
-    if. (h1=. <.dpw2px barsheight)>h do.
-      jniCheck bm1=. 'android.graphics.Bitmap' ('createScaledBitmap (LBitmap;IIZ)LBitmap;' jniStaticMethod)~ bm;h1;h1;0
-      jniCheck DeleteLocalRef <bm
-      bm=. bm1
-      w=. h=. h1
-    end.
-    jniCheck win ('setImageBitmap (LBitmap;)V' jniMethod)~ bm
-    jniCheck DeleteLocalRef"0 colors;bm
-  else.
-    win seterr 'command failed : ' return.
+  window=. ((>libgobject), ' g_object_new ', gtkcv, 'x x x')&cd ( gtk_tool_button_get_type '') ;< 0
+  if. '' -.@-: tooltip do.
+    gtk_widget_set_tooltip_text window ; tooltip
   end.
-  jniCheck win ('setId (I)V' jniMethod)~ idn=. >:idn
-  jniCheck win ('setOnClickListener (LView$OnClickListener;)V' jniMethod)~ button_click_listener
+  if. 0~:tbimg=. (<idx, WindowListTbimg){:: windowList do.
+    w=. gdk_pixbuf_get_width <tbimg
+    h=. gdk_pixbuf_get_height <tbimg
+    if. w<16*image do. seterr 'picture too narrow : ' return. end.
+    pix=. gdk_pixbuf_new_subpixbuf tbimg, (16*image), 0, 16, h
+
+    icon=. gtk_image_new_from_pixbuf pix
+    gtk_widget_show icon
+    ((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd window ; 'icon-widget' ; icon ;< 0
+    g_object_unref <pix
+  else.
+    seterr 'command failed : ' return.
+  end.
+  consig window ; 'clicked' ; 'toolbar_clicked_event'
 end.
-jniCheck lp=. ('LinearLayout$LayoutParams II') jniNewObject~ <"0 w,h
-jniCheck win ('setLayoutParams (Landroid/view/ViewGroup$LayoutParams;)V' jniMethod)~ lp
-jniCheck win ('setFocusable (Z)V' jniMethod)~ 0
-tbar=. getchildwin tbaridn
-assert. 0~:tbar
-jniCheck tbar ('addView (LView;)V' jniMethod)~ win
+gtk_toolbar_insert tbarwin, window, _1
+gtk_widget_show window
 if. 0~:#id do.
-  toolbarList=: toolbarList, cWindow ; idn ; id ; index ; image
-  windowList=: (<idn) (<idx, 4) } windowList
-  windowList=: (<tbaridn,visi,count,h>.height) (<idx, WindowListToolbar) } windowList
+  toolbarList=: toolbarList, cWindow ; window ; id ; index ; image
 end.
-jniCheck DeleteLocalRef"0 win;lp;tbar
 )
 wdtbarshow=: 3 : 0
 if. 0= cWindow do. seterr 'no parent selected : ' return. end.
@@ -3215,18 +2746,18 @@ if. 0= #args=. shiftargs'' do. s=. ,'1'
 elseif. 1= #args do. s=. >@{.args
 elseif. 1< #args do. seterr 'extra parameter : ' return.
 end.
+if. _1~: idx=. windowlistidx cWindow do.
+  if. 0= tbarwin=. WindowListToolbar{:: idx{windowList do. seterr 'no control bar : ' return. end.
+else.
+  seterr 'no parent selected : ' return.
+end.
 if. -.@isnum s do. seterr 'bad number : ' return. end.
 if. 0 1 -.@e.~ flag=. {.@(0&".) s do. seterr 'bad number : ' return. end.
-idx=. windowlistidx cWindow
-if. _1=idx do. seterr 'parent deleted : ' return. end.
-'tbaridn visi cnt height'=. (<idx,WindowListToolbar){::windowList
-assert. 0~:tbaridn
-tbar=. getchildwin tbaridn
-assert. 0~:tbar
-jniCheck tbar ('setVisibility (I)V' jniMethod)~ flag{8 0
-jniCheck DeleteLocalRef <tbar
-windowList=: (<tbaridn,flag,cnt,height) (<idx, WindowListToolbar) } windowList
+((>libgobject), ' g_object_set ', gtkcv, 'n x *c x x')&cd tbarwin ; 'visible' ; flag ;< 0
 )
+D2P=: +:
+P2D=: <.@-:
+
 isnum=: 3 : 0
 if. '-_0123456789' e.~ {.y do.
   try.
@@ -3239,11 +2770,6 @@ if. '-_0123456789' e.~ {.y do.
 else.
   0
 end.
-)
-
-ismenucreated=: 3 : 0
-if. _1 = icx=. windowlistidx y do. 0 return. end.
-(<icx, WindowListMenuCreated){::windowList
 )
 windowlistidx=: 3 : 0
 window=. y
@@ -3292,8 +2818,7 @@ while. wdptr < #wdstr do. z=. z, shiftarg'' end.
 z
 )
 
-seterr=: ''&$: : (4 : 0)
-if. *#x do. jniCheck DeleteLocalRef@boxopen"0 x end.
+seterr=: 3 : 0
 WDERR=: y [ WDERRN=: 3
 smoutput^:(0<Debugwd) '**ERROR: ', y
 smoutput^:(0<Debugwd) wdstr
@@ -3320,105 +2845,83 @@ if. 0~: pix=. gdk_pixbuf_new_from_file_at_size s ; w ; h ;< 0 do.
 end.
 )
 
+getAllocation=: 3 : 0
+widget=. y
+_1 _1, w,h [ gtk_widget_get_size_request widget ; (w=. ,_1) ; (h=. ,_1)
+)
+
 delcchild=: 4 : 0
 parent=. x
 widget=. y
 if. 0= #childList do. return. end.
-childList=: ((parent = >0{"1 childList)*:(widget = >1{"1 childList))#childList
+childList=: (widget ~: >1{"1 childList)#childList
 )
 getcchild=: 4 : 0
 parent=. x
-id=. <,> y
+id=. ,y
 z=. 0
 if. 0= #childList do. z return. end.
-if. 1 e. ix=. (parent = >0{"1 childList)*.(id = 2{"1 childList) do. z=. (<({.I.ix),1){::childList end.
+if. #winid=. (parent = >{."1 childList)#(1 2{"1 childList) do.
+  z=. (0,~ >{."1 winid) {~ ((<id),~ {:"1 winid) i. <id
+end.
 z
 )
 getcchildid=: 3 : 0
 widget=. y
 if. _1= ix=. getcchildidx widget do. '' return. end.
-(<ix,2 ){::childList
+2{:: ix{childList
 )
 
 getcchildclass=: 3 : 0
 widget=. y
 if. _1= ix=. getcchildidx widget do. _1 return. end.
-(<ix, 3){::childList
+3{:: ix{childList
 )
 getcchildidx=: 3 : 0
-assert. 0~:cWindow
 widget=. y
 z=. _1
 if. 0= #childList do. z return. end.
-if. 1 e. ix=. (cWindow = >0{"1 childList) *. (widget = >1{"1 childList) do. z=. {.I.ix end.
+if. widget e. ls=. >1{"1 childList do.
+  z=. ls i. widget
+end.
 z
 )
 getcparent=: 3 : 0
 widget=. y
 if. 0= #windowList do. 0 return. end.
 if. _1= ix=. getcchildidx widget do. 0 return. end.
-(<ix, 0){::childList
+0{:: ix{childList
 )
 
 getccontaineridx=: 3 : 0
-assert. 0~:cWindow
 widget=. y
 z=. _1
 if. 0= #containerList do. z return. end.
-if. 1 e. ix=. (cWindow = >0{"1 containerList)*.(widget = >1{"1 containerList) do. z=. I.{.ix end.
+if. widget e. ls=. >1{"1 containerList do. z=. ls i. widget end.
 z
 :
 getccontaineridx x getcchild y
 )
-getmenuidx=: 4 : 0
-parent=. x
-widget=. y
-assert. 0~:parent
-z=. _1
-if. 0= #menuList do. z return. end.
-if. 1 e. ix=. (cWindow = >0{"1 menuList)*.(widget = >1{"1 menuList) do. z=. {.I.ix end.
-z
-)
+
 getmenu=: 4 : 0
 parent=. x
-id=. <,> y
-z=. 0
-if. 1 e. ix=. (parent = >0{"1 menuList)*.(id = 2{"1 menuList) do. z=. (<({.I.ix),1){::menuList end.
-z
+id=. y
+if. 0= #menuList do. 0 return. end.
+rz=. {. (>1{"1 menuList) #~ (parent = >{."1 menuList) *. ((<id) = 2{"1 menuList)
 )
-gettoolbaridx=: 4 : 0
-parent=. x
-widget=. y
-assert. 0-:{.0$y
-assert. 0~:parent
-z=. _1
-if. 0= #toolbarList do. z return. end.
-if. 1 e. ix=. (parent = >0{"1 toolbarList)*.(widget = >1{"1 toolbarList) do. z=. {.I.ix end.
-z
-)
+
 gettoolbar=: 4 : 0
 parent=. x
-assert. ' '-:{.0$>y
-assert. 0~:parent
-id=. <,> y
-if. 1 -.@e. ix=. (parent = >0{"1 toolbarList)*.(id = 2{"1 toolbarList) do. 0 return. end.
-(<({.I.ix), 1){::toolbarList
-)
-getstatusbaridx=: 4 : 0
-parent=. x
-id=. <,> y
-assert. 0~:parent
-z=. _1
-if. 0= #statusbarList do. z return. end.
-if. 1 e. ix=. (parent = >0{"1 statusbarList)*.(id = 2{"1 statusbarList) do. z=. {.I.ix end.
-z
+id=. y
+if. 0= #toolbarList do. 0 return. end.
+rz=. {. (>1{"1 toolbarList) #~ (parent = >{."1 toolbarList) *. ((<id) = 2{"1 toolbarList)
 )
 
 getstatusbar=: 4 : 0
 parent=. x
-id=. <,> y
-if. _1= ix=. parent getstatusbaridx id do. 0 return. end.
-(<ix, 1){::statusbarList
+id=. y
+if. 0= #statusbarList do. 0 return. end.
+rz=. {. (>1{"1 statusbarList) #~ (parent = >{."1 statusbarList) *. ((<id) = 2{"1 statusbarList)
 )
 
 checkbadname=: 3 : 0
@@ -3454,7 +2957,6 @@ xy
 )
 getchildwin=: 3 : 0
 assert. 0~:cWindow
-assert. 0~:y
 jniCheck view=. cWindow ('findViewById (I)LView;' jniMethod)~ y
 assert. 0~:view
 view
@@ -3480,7 +2982,6 @@ WDLOC=: 'base'
 sysmodifiers=: ,'0'
 sysdata=: ''
 disable_toggle_event=: 0
-listbox_evtdata=: ''
 lasterrcmd=: lastcmd=: ''
 cWindow=: 0
 cChild=: 0
@@ -3488,11 +2989,11 @@ cRadio=: 0
 cContainer=: 0
 cContaineri=: _1
 cSubform=: ''
-windowList=: 0 18$<''
+windowList=: 0 16$<''
 containerList=: 0 3$<''
 subformList=: 0 4$<''
 childList=: 0 12$<''
-menuList=: 0 5$<''
+menuList=: 0 4$<''
 toolbarList=: 0 5$<''
 statusbarList=: 0 3$<''
 activeidx=: 0$0
@@ -3500,46 +3001,58 @@ cxywh=: 0 0 100 100
 cFontdef=: ''
 cSetFont=: ''
 tbimg=: 0
+if. 0~:systimerid do. systimerid=: 0 [ g_source_remove systimerid end.
 systimerid=: timerdelay=: 0
-jniCheck JACT ('setjtimer (IILString;)V' jniMethod)~ 10;0;''
 )
 setadapter=: 4 : 0
 'activity view isspin multiselect'=. y
 ar=. jniToStringarr x
-jniCheck adapter=. 'ArrayAdapter LContext;I[LObject;' jniNewObject~ activity ; (isspin{ (multiselect{R_layout_simple_list_item_single_choice,R_layout_simple_list_item_multiple_choice,R_layout_simple_list_item_1), R_layout_simple_spinner_item) ; ar
+jniCheck adapter=. 'ArrayAdapter LContext;I[LObject;' jniNewObject~ activity ; (isspin{ (multiselect{R_layout_simple_list_item_single_choice,R_layout_simple_list_item_multiple_choice), R_layout_simple_spinner_item) ; ar
 if. isspin do.
   jniCheck adapter ('setDropDownViewResource (I)V' jniMethod)~ R_layout_simple_dropdown_item_1line
   jniCheck view ('setAdapter (LSpinnerAdapter;)V' jniMethod)~ adapter
 else.
   jniCheck view ('setAdapter (LListAdapter;)V' jniMethod)~ adapter
-  if. 1=multiselect do.
-    jniCheck view ('setChoiceMode (I)V' jniMethod)~ CHOICE_MODE_MULTIPLE=. 2
-  elseif. 2=multiselect do.
-    jniCheck view ('setChoiceMode (I)V' jniMethod)~ CHOICE_MODE_SINGLE=. 1
-  elseif. do.
-    jniCheck view ('setChoiceMode (I)V' jniMethod)~ CHOICE_MODE_SINGLE=. 1
+  if. multiselect do.
+    view ('setChoiceMode (I)V' jniMethod)~ CHOICE_MODE_MULTIPLE
+  else.
+    view ('setChoiceMode (I)V' jniMethod)~ CHOICE_MODE_SINGLE
   end.
 end.
 jniCheck DeleteLocalRef"0 ar;adapter
 EMPTY
 )
 
+dp2px=: 3 : 0"0
+if. y>0 do.
+  <. 0.5+y*DM_density_ja_*2
+else.
+  y
+end.
+)
+
+px2dp=: 3 : 0"0
+if. y>0 do.
+  <. 0.5+y%DM_density_ja_*2
+else.
+  y
+end.
+)
+
 resizechild=: 4 : 0
 'wh wh0'=. 1 >. 2 2$x
-'w h'=. wh
-if. (w>h) *. 0.3>h%w do. return. end.
-if. (h>w) *. 0.3>w%h do. return. end.
-assert. 0~:2{.y
-'parent fixed1 offset'=. y
+smoutput 'resizechild ', ":x
+assert. 0~:y
+'parent fixed1'=. y
 assert. 0~:fixed1
 'top bot lef rig'=. 4#0
 pad0=. 0
-fixed1wh=. wh=. 1 >. wh - (0,offset) + (0,pad0) + 0>. (lef+rig),(top+bot)
+fixed1wh=. wh=. 0 >. wh - (0,pad0) + 0>. (lef+rig),(top+bot)
 minpad=. 0
 
 chg=. 0
 for_wx. ((0&~: >4{"1 childList) *. (0= >6{"1 childList) *. (parent = >{."1 childList))#childList do.
-  'parent window id iclass stylen hide container subform xywh0 dummy1 localec userdata'=. 12{.wx
+  'parent window id iclass stylen hide container subform xywh0 '=. 9{.wx
   'cx cy cw ch'=. 'cx0 cy0 cw0 ch0'=. xywh0
   ex=. ex0=. cx0 + cw0
   ey=. ey0=. cy0 + ch0
@@ -3556,36 +3069,21 @@ for_wx. ((0&~: >4{"1 childList) *. (0= >6{"1 childList) *. (parent = >{."1 child
   if. bottommove do. ey=. (H-minpad) <. (cy0+ch0) + (H-H0) end.
   if. bottomscale do. ey=. (H-minpad) <. <. H - (H0 - cy0+ch0) * H%H0 end.
 
-  cw=. 1 >. ex - cx
-  ch=. 1 >. ey - cy
+  cw=. 0 >. ex - cx
+  ch=. 0 >. ey - cy
   if. +./ 0 < | xywh0 - cx,cy,cw,ch do.
-    if. iclass=wdcl_radiobutton do.
-      if. 1=userdata do.
-        win=. getchildwin window
-        jniCheck parent=. win ('getParent ()Landroid/view/ViewParent;' jniMethod)~ ''
-        if. parent do.
-          lp=. parent ('getLayoutParams ()Landroid/view/ViewGroup$LayoutParams;' jniMethod)~ ''
-          lp ('x I' jniField)~ <cx
-          lp ('y I' jniField)~ <cy + offset
-          lp ('width I' jniField)~ <WRAP_CONTENT
-          lp ('height I' jniField)~ <WRAP_CONTENT
-        end.
-        jniCheck DeleteLocalRef"0 parent;win;lp
-      end.
-      continue.
-    end.
     win=. getchildwin window
     lp=. win ('getLayoutParams ()Landroid/view/ViewGroup$LayoutParams;' jniMethod)~ ''
     lp ('x I' jniField)~ <cx
-    lp ('y I' jniField)~ <cy + offset
+    lp ('y I' jniField)~ <cy
     lp ('width I' jniField)~ <cw
     lp ('height I' jniField)~ <ch
-    jniCheck DeleteLocalRef"0 win;lp
   end.
 end.
+jniCheck fixed1 ('invalidate ()V' jniMethod)~ ''
 ct=. 0$0
 for_wx. ((0&~: >4{"1 childList) *. (0~: >6{"1 childList) *. (parent = >{."1 childList))#childList do.
-  'parent window id iclass stylen hide container subform xywh0 dummy1 localec userdata'=. 12{.wx
+  'parent window id iclass stylen hide container subform xywh0 '=. 9{.wx
 
   if. _1= ix=. getccontaineridx container do. continue. end.
   if. 1 e. f=. (container = >1{"1 subformList) *. (<subform) = 2{"1 subformList do.
@@ -3593,7 +3091,7 @@ for_wx. ((0&~: >4{"1 childList) *. (0~: >6{"1 childList) *. (parent = >{."1 chil
   else.
     continue.
   end.
-  wh=. 0 >. fixed1wh
+  wh=. 0 >. fixed1wh <. _2{. getGtkWidgetAllocation fixed1
   wh0=. (<ix,2){::containerList
   ct=. ct, container
   (FMSTYLE)=. |. (8#2) #: stylen
@@ -3614,37 +3112,29 @@ for_wx. ((0&~: >4{"1 childList) *. (0~: >6{"1 childList) *. (parent = >{."1 chil
   if. bottommove do. ey=. (H-minpad) <. (cy0+ch0) + (H-H0) end.
   if. bottomscale do. ey=. (H-minpad) <. <. H - (H0 - cy0+ch0) * H%H0 end.
 
-  cw=. 1 >. ex - cx
-  ch=. 1 >. ey - cy
+  cw=. 0 >. ex - cx
+  ch=. 0 >. ey - cy
   if. +./ 0 < | xywh0 - cx,cy,cw,ch do.
-    if. iclass=wdcl_radiobutton do.
-      if. 1=userdata do.
-        win=. getchildwin window
-        jniCheck parent=. win ('getParent ()Landroid/view/ViewParent;' jniMethod)~ ''
-        if. parent do.
-          lp=. parent ('getLayoutParams ()Landroid/view/ViewGroup$LayoutParams;' jniMethod)~ ''
-          lp ('x I' jniField)~ <cx
-          lp ('y I' jniField)~ <cy + offset
-          lp ('width I' jniField)~ <WRAP_CONTENT
-          lp ('height I' jniField)~ <WRAP_CONTENT
-        end.
-        jniCheck DeleteLocalRef"0 parent;win;lp
-      end.
-      continue.
-    end.
     win=. getchildwin window
     lp=. win ('getLayoutParams ()Landroid/view/ViewGroup$LayoutParams;' jniMethod)~ ''
     lp ('x I' jniField)~ <cx
-    lp ('y I' jniField)~ <cy + offset
+    lp ('y I' jniField)~ <cy
     lp ('width I' jniField)~ <cw
     lp ('height I' jniField)~ <ch
-    jniCheck DeleteLocalRef"0 win;lp
   end.
+end.
+for_cti. ~.ct do.
+  jniCheck cti ('invalidate ()V' jniMethod)~ ''
 end.
 )
 18!:4 <'z'
 wd_z_=: 3 : 0"1
 wd_droidwd_ y [ WDLOC_droidwd_=: >coname''
+)
+wdactivity_z_=: 3 : 0
+assert. 0~:y
+if. Acitivity_droidwd_ do. DeleteGlobalRef <Acitivity_droidwd_ end.
+jniCheck Acitivity_droidwd_=: NewGlobalRef <y
 )
 wdreset=: wd bind 'reset'
 wdclipread=: toJ @ wd bind 'clippaste'
@@ -3665,8 +3155,8 @@ a: -.~ dat -. each <del
 )
 wdcenter=: 3 : 0
 'fx fy fw fh'=. 0&". :: ] y
-'sx sy'=. sxy=. 2 {. wdqm''
-'w h'=. sxy <. _2 {. wdqformx''
+'sx sy'=. sxy=. 2 {. 0 ". wd 'qm'
+'w h'=. sxy <. _2 {. 0 ". wd 'qformx'
 x=. 0 >. (sx-w) <. fx + <. -: fw-w
 y=. 0 >. (sy-h) <. fy + <. -: fh-h
 wd 'pmovex ',": x,y,w,h
@@ -3685,7 +3175,7 @@ wd 'clipcopy *',toHOST txt
 wde=: 3 : 0
 try. res=. wd y
 catch.
-  err=. wdqer''
+  err=. wd 'qer'
   ndx=. >: err i. ':'
   msg=. ndx {. err
   pos=. {.". ndx }. err
@@ -3700,8 +3190,8 @@ end.
 wdfit=: 3 : 0
 
 'mx my'=. 2{.y,(#y)}.1 1
-'x y w h'=. wdqformx''
-'fx fy zx zy yc ym sx sy sw sh'=. 6 }. wdqm''
+'x y w h'=. 0 ". wd 'qformx'
+'fx fy zx zy yc ym sx sy sw sh'=. 6 }. 0 ". wd 'qm'
 
 select. mx
 case. 0 do.
@@ -3738,7 +3228,7 @@ end.
 wd 'pmovex ',":x,y,w,h
 )
 wdforms=: 3 : 0
-if. 0=# z=. <;._2;._2 @ wdqpx '' do. z=. 0 6$<'' end.
+if. 0=# z=. <;._2;._2 @ wd 'qpx' do. z=. 0 6$<'' end.
 z
 )
 wdget=: 4 : 0
@@ -3751,7 +3241,7 @@ end.
 
 SYSPPC=: (<'syschild'),.'ppcnext';'ppcprevious'
 wdhandler=: 3 : 0
-wdq=: wdqq''
+wdq=: wd 'q'
 wd_val=. {:"1 wdq
 ({."1 wdq)=: wd_val
 if. 3=4!:0<'wdhandler_debug' do.
@@ -3759,9 +3249,6 @@ if. 3=4!:0<'wdhandler_debug' do.
 end.
 wd_ndx=. 1 i.~ 3 = 4!:0 [ 3 {. wd_val
 if. 3 > wd_ndx do.
-  if. (<sysevent) e. ;:'paint print char mwheel focus focuslost mmove mbldown mbldbl mblup mbmdown mbmdbl mbmup mbrdown mbrdbl mbrup' do.
-    glsel_jgl2_ ::0: syshwndc
-  end.
   wd_fn=. > wd_ndx { wd_val
   if. 13!:17'' do.
     wd_fn~''
@@ -3790,20 +3277,20 @@ if. 2=#$b=. ":b do. b=. }.,LF,.b end.
 f=. 8 u: DEL&, @ (,&DEL) @ -.&(0 127{a.)
 empty wd 'mb ',(f a),' ',(f b),' mb_iconinformation'
 )
-wdisparent=: boxopen e. <;._2 @ wdqp
+wdisparent=: boxopen e. <;._2 @ wd bind 'qp'
 wdishandle=: boxopen e. 1: {"1 wdforms
 wdmove=: 3 : 0
 '' wdmove y
 :
 'px py'=. y
-'sx sy sw sh'=. 12 13 14 15 { wdqm''
-if. (*#x)*.(x-.@-:0) do. wd 'psel ',":x end.
-'x y w h'=. wdqformx''
+'sx sy sw sh'=. 12 13 14 15 { 0 ". wd 'qm'
+if. #x do. wd 'psel ',x end.
+'x y w h'=. 0 ". wd 'qformx'
 if. px < 0 do. px=. sw - w - 1 + px end.
 if. py < 0 do. py=. sh - h - 1 + py end.
 wd 'pmovex ',": (px+sx),(py+sy),w,h
 )
-wdpclose=: [: wd :: empty 'psel ' , ';pclose' ,~ ":
+wdpclose=: [: wd :: empty 'psel ' , ,&';pclose'
 wdqshow=: 3 : 0
 txt=. (>{."1 wdq),.TAB,.>{:"1 wdq
 wdinfo 'wdq';(60 <. {:$txt) {."1 txt
@@ -3819,7 +3306,7 @@ if. 2=#$b=. ":b do. b=. }.,LF,.b end.
 f=. 8 u: DEL&, @ (,&DEL) @ -.&(0 127{a.)
 m=. 'mb ',(f a),' ',(f b),' mb_iconquestion mb_',>t{msg
 if. d e. 1 2 do. m=. m,' mb_defbutton',":>:d end.
-0 [ wd m
+(res {~ >t{ndx) i. <wd m
 )
 wdselect=: 3 : 0
 0 wdselect y
@@ -3841,7 +3328,7 @@ sel=. ;sel ,each LF
 c=. 205 <. 80 >. (4*#hdr) >. c
 r=. 128 <. r
 
-if. (<'wdselect') e. <;._2 wdqp'' do.
+if. (<'wdselect') e. <;._2 wd 'qp' do.
   wd 'psel wdselect;pn '",hdr,'";'
 else.
   wd 'pc wdselect;pn *',hdr
@@ -3888,7 +3375,7 @@ end.
 
 pn=. (*#x)#'pn ',DEL,x,DEL,';'
 
-if. (<'status') e. <;._2 wdqp'' do.
+if. (<'status') e. <;._2 wd 'qp;' do.
   wd 'psel status;',pn
 else.
   size=. |. 0 100 >. 8 4*$];._2 msg,LF
@@ -3907,67 +3394,3 @@ jpathsep wd 8 u: 'mbopen ',y
 mbsave=: 3 : 0
 jpathsep wd 8 u: 'mbsave ',y
 )
-wdclippaste=: (wd bind 'clippaste') :: (''"_)
-wdqq=: (wd bind 'q') :: (''"_)
-wdqchildxywh=: (0 ". [: wd 'qchildxywh ' , ]) :: (0 0 0 0"_)
-wdqchildxywhx=: (0 ". [: wd 'qchildxywhx ' , ] ) :: (0 0 0 0"_)
-wdqcolor=: (0 ". [: wd 'qcolor ' , ":) :: ( 0 0 0"_)
-wdqd=: (wd bind 'qd') :: (''"_)
-wdqer=: (wd bind 'qer') :: (''"_)
-wdqformx=: (0 ". wd bind 'qformx') :: (0 0 800 600"_)
-wdqhinst=: (0 ". wd bind 'qhinst') :: 0:
-wdqhwndc=: (0 ". [: wd 'qhwndc ' , ]) :: 0:
-wdqhwndp=: (0 ". wd bind 'qhwndp') :: 0:
-wdqhwndx=: (0 ". wd bind 'qhwndx') :: 0:
-wdqm=: (0 ". wd bind 'qm') :: (800 600 8 16 1 1 3 3 4 4 19 19 0 0 800 570"_)
-wdqp=: (wd bind 'qp') :: (''"_)
-wdqprinters=: (wd bind 'qprinters') :: (''"_)
-wdqpx=: (wd bind 'qpx') :: (''"_)
-wdqscreen=: (0 ". wd bind 'qscreen') :: (264 211 800 600 96 96 32 1 _1 36 36 51"_)
-wdqwd=: (wd bind 'qwd')
-
-coclass 'wdbase'
-coinsert 'jni jaresu'
-
-Activity=: 0
-onCreate=: 3 : 0
-if. Activity do. DeleteGlobalRef <Activity end.
-jniCheck Activity_droidwd_=: Activity=: NewGlobalRef <2{y
-jniCheck Activity ('requestWindowFeature (I)Z' jniMethod)~ FEATURE_LEFT_ICON
-droidwd_run''
-0
-)
-
-onStart=: 0:
-onRestart=: 0:
-onResume=: 0:
-onPause=: 0:
-onStop=: 0:
-
-onDestroy=: 3 : 0
-DeleteGlobalRef@< 0: wddestroy_droidwd_ Activity
-)
-onCreateOptionsMenu=: 3 : 0
-jniCheck menu=. GetObjectArrayElement (3{y);0
-wd_menu_droidwd_ menu
-jniCheck DeleteLocalRef <menu
-1
-)
-
-onOptionsItemSelected=: 3 : 0
-jniCheck item=. GetObjectArrayElement (3{y);0
-jniCheck widget=. item ('getItemId ()I' jniMethod)~ ''
-z=. 0
-if. widget>0 do. z=. 1 [ menu_onItemSelected_droidwd_ item,widget end.
-jniCheck DeleteLocalRef <item
-z
-)
-start_droidwd=: 0&$: : (4 : 0)
-if. ''-:y do.
-  y=. (>18!:5'');'onStart onRestart onPause onResume onStop onDestroy onCreateOptionsMenu onOptionsItemSelected'
-elseif. 1=# y=. boxopen y do.
-  y=. (>y); 'onStart onRestart onPause onResume onStop onDestroy onCreateOptionsMenu onOptionsItemSelected'
-end.
-x StartActivity_ja_ y
-)
-droidwd_run=: 0:

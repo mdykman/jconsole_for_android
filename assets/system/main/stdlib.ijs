@@ -11,14 +11,9 @@ IF64=: 16={:$3!:3[2
 'IFUNIX IFWIN IFWINCE'=: 5 6 7 = 9!:12''
 IFGTK=: IFJHS=: IFBROADWAY=: 0
 IFJ6=: 0
-IFJ7=: 1
 IFWINE=: IFWIN > 0-:2!:5'_'
 if. notdef 'IFIOS' do.
   IFIOS=: 0
-end.
-if. notdef 'IFQT' do.
-  IFQT=: 0
-  libjqt=: 'libjqt'
 end.
 if. notdef 'UNAME' do.
   if. IFUNIX do.
@@ -82,7 +77,6 @@ each=: &.>
 echo=: 0 0&$ @ (1!:2&2)
 exit=: 2!:55
 every=: &>
-evtloop=: EMPTY"_
 fliprgb=: 3 : 0
 s=. $y
 d=. ((#y),4)$2 (3!:4) y=. <.,y
@@ -189,10 +183,7 @@ Note=: 3 : '0 0 $ 0 : 0' : [
 script=: [: 3 : '0!:0 y [ 4!:55<''y''' jpath_z_ &.: >
 scriptd=: [: 3 : '0!:1 y [ 4!:55<''y''' jpath_z_ &.: >
 sminfo=: 3 : 0
-if. IFQT do. wdinfo_jqtide_ y
-elseif. ('Android'-:UNAME) *. 3=4!:0<'mbinfo_ja_' do. mbinfo_ja_ y
-elseif. IFGTK do. mbinfo_jgtk_ y
-elseif. do. smoutput >_1{.boxopen y end.
+if. IFGTK do. mbinfo_jgtk_ y else. smoutput >_1{.boxopen y end.
 )
 smoutput=: 0 0 $ 1!:2&2
 tmoutput=: 0 0 $ 1!:2&4
@@ -1130,26 +1121,20 @@ ftostring=: fputs
 fstring=: fgets
 cocurrent 'z'
 install=: 3 : 0
-if. 'Android'-:UNAME do. return. end.
 require 'pacman'
 if. -. checkaccess_jpacman_ '' do. return. end.
 'update' jpkg ''
 select. y
 case. 'gtkide' do.
-  if. IFQT do. return. end.
   getgtkbin 0
   'install' jpkg 'base library ide/gtk gui/gtk'
-case. 'qtide' do.
-  getqtbin 0
-  'install' jpkg 'base library ide/qt'
 case. 'all' do.
   getgtkbin 0
-  getqtbin 0
   'install' jpkg 'all'
 end.
 )
 getgtkbin=: 3 : 0
-if. IFQT +. (<UNAME) -.@e. 'Darwin';'Win' do. return. end.
+if. (<UNAME) -.@e. 'Darwin';'Win' do. return. end.
 if. (0={.y,0) *. 0 < #1!:0 jpath '~install/gtk/lib' do. return. end.
 require 'pacman'
 smoutput 'Installing gtk binaries...'
@@ -1164,74 +1149,13 @@ if. IFWIN do.
   unzip_jpacman_ p;d
 else.
   hostcmd_jpacman_ 'unzip ',(dquote p),' -d ',dquote d
-  f=. 4 : 'if. #1!:0 y do. x dirss y end.'
-  ('INSTALLPATH';jpath '~install') f jpath '~install/gtk/etc'
-  ('INSTALLPATH';jpath '~install') f jpath '~install/gtk3/etc'
+  ('INSTALLPATH';jpath '~install/gtk') dirss jpath '~install/gtk/etc'
 end.
 if. #1!:0 jpath '~install/gtk/lib' do.
   m=. 'Finished install of gtk binaries.'
 else.
   m=. 'Unable to install gtk binaries.',LF
   m=. m,'check that you have write permission for: ',LF,jpath '~install/gtk'
-end.
-smoutput m
-)
-getqtbin=: 3 : 0
-if. (<UNAME) -.@e. 'Linux';'Darwin';'Win' do. return. end.
-if. (0={.y,0) *. 0 < #1!:0 jpath '~bin/jqt*' do. return. end.
-require 'pacman'
-smoutput 'Installing jqt binaries...'
-if. 'Linux'-:UNAME do.
-  z=. 'jqt-','linux-',(IF64 pick 'x86';'x64'),'.tar.gz'
-  z1=. 'libjqt.so'
-else.
-  z=. 'jqt-',(IFWIN pick 'mac-';'win-'),(IF64 pick 'x86';'x64'),'.zip'
-  z1=. IFWIN pick 'libjqt.dylib';'jqt.dll'
-end.
-z=. 'http://www.jsoftware.com/download/jqt/',z
-'rc p'=. httpget_jpacman_ z
-if. rc do.
-  smoutput 'unable to download: ',z return.
-end.
-d=. jpath '~bin'
-if. IFWIN do.
-  unzip_jpacman_ p;d
-else.
-  if. 'Linux'-:UNAME do.
-    hostcmd_jpacman_ 'cd ',(dquote d),' && tar xzf ',(dquote p)
-  else.
-    hostcmd_jpacman_ 'unzip ',(dquote p),' -d ',dquote d
-  end.
-  f=. 4 : 'if. #1!:0 y do. x dirss y end.'
-  ('INSTALLPATH';jpath '~install') f jpath '~bin'
-end.
-if. #1!:0 jpath '~bin/',z1 do.
-  m=. 'Finished install of jqt binaries.'
-else.
-  m=. 'Unable to install jqt binaries.',LF
-  m=. m,'check that you have write permission for: ',LF,jpath '~bin'
-end.
-smoutput m
-if. 'Linux'-:UNAME do. return. end.
-smoutput 'Installing Qt binaries...'
-z=. 'qt48-',(IFWIN pick 'mac-';'win-'),(IF64 pick 'x86';'x64'),IFWIN pick '.dmg';'.zip'
-z=. 'http://www.jsoftware.com/download/qtlib/',z
-'rc p'=. httpget_jpacman_ z
-if. rc do.
-  smoutput 'unable to download: ',z return.
-end.
-d=. jpath '~install'
-if. IFWIN do.
-  unzip_jpacman_ p;d
-  if. #1!:0 jpath '~install/qt' do.
-    m=. 'Finished install of Qt binaries.'
-  else.
-    m=. 'Unable to install Qt binaries.',LF
-    m=. m,'check that you have write permission for: ',LF,jpath '~install/qt'
-  end.
-else.
-  m=. 'in Finder, open ',p,LF
-  m=. m,' and do a standard install of both packages'
 end.
 smoutput m
 )
@@ -1681,12 +1605,12 @@ case. 'Win' do.
   end.
   if. r<33 do. sminfo 'browse error:',browser,' ',cmd,LF2,1{::cderx'' end.
 case. do.
-  if. (UNAME-:'Android') > isatty 0 do.
+  if. (UNAME-:'Android') *. 0=isatty 0 do.
     cmd=. '/' (I. cmd='\') } cmd
     if. -. isURL cmd do.
       cmd=. 'file://',cmd
     end.
-    2!:1`android_exec_host@.IFQT 'android.intent.action.VIEW';cmd;'text/html'
+    2!:1 'android.intent.action.VIEW';cmd;'text/html'
   else.
     if. 0 = #browser do.
       browser=. dfltbrowser''
@@ -1702,7 +1626,7 @@ case. do.
     catch.
       msg=. 'Could not run the browser with the command:',LF2
       msg=. msg, cmd,LF2
-      if. IFGTK+.IFQT do.
+      if. IFGTK do.
         msg=. msg, 'You can change the browser definition in Edit|Configure|Base',LF2
       end.
       sminfo 'Run Browser';msg
@@ -1762,12 +1686,12 @@ case. 'Win' do.
   end.
   if. r<33 do. sminfo 'view pdf error:',PDFReader,' ',cmd,LF2,1{::cderx'' end.
 case. do.
-  if. (UNAME-:'Android') > isatty 0 do.
+  if. (UNAME-:'Android') *. 0=isatty 0 do.
     cmd=. '/' (I. cmd='\') } cmd
     if. -. isURL cmd do.
       cmd=. 'file://',cmd
     end.
-    2!:1`android_exec_host@.IFQT 'android.intent.action.VIEW';cmd;'application/pdf'
+    2!:1 'android.intent.action.VIEW';cmd;'application/pdf'
   else.
     if. 0 = #PDFReader do.
       PDFReader=. dfltpdfreader''
@@ -1780,7 +1704,7 @@ case. do.
     catch.
       msg=. 'Could not run the PDFReader with the command:',LF2
       msg=. msg, cmd,LF2
-      if. IFGTK+.IFQT do.
+      if. IFGTK do.
         msg=. msg, 'You can change the PDFReader definition in Edit|Configure|Base',LF2
       end.
       sminfo 'Run PDFReader';msg
@@ -1945,12 +1869,9 @@ if. 0=L.y do.
     y=. cutnames y
   end.
 end.
-y=. y -. Ignore, (IFIOS+.IFJHS)#<;._1 '  droidwd gui/droidwd android gui/android jview qtide ide/qt'
-y=. y -. (IFIOS+.IFJHS>IFBROADWAY)#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gui/jgtkgrid wdclass gui/wdclass viewmat gl2 graphics/gl2'
-y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd jview gtkide ide/gtk gui/jgtkgrid'
-y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd android gui/android jview'
-y=. y -. IFQT#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gui/jgtkgrid droidwd gui/droidwd android gui/android'
-y=. y -. IFGTK#<;._1 ' qtide ide/qt'
+y=. y -. Ignore, IFIOS#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2 viewmat'
+y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk'
+y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public
@@ -1997,12 +1918,12 @@ if. IFJHS do.
   xmr ::0: file
   EMPTY return.
 end.
-if. (UNAME-:'Android') > isatty 0 do.
+if. (UNAME-:'Android') *. 0=isatty 0 do.
   file=. '/' (I. file='\') } file
   if. -. isURL file do.
     file=. 'file://',file
   end.
-  2!:1`android_exec_host@.IFQT 'android.intent.action.EDIT';file;'text/plain'
+  2!:1 'android.intent.action.EDIT';file;'text/plain'
   EMPTY return.
 end.
 editor=. (Editor_j_;Editor_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'
@@ -2067,7 +1988,7 @@ a=. (,&'=: ',sub @ (3 : j)) each y
 )
 xedit=: xedit_j_
 wcsize=: 3 : 0
-if. (-.IFGTK+.IFQT+.IFJHS) *. UNAME-:'Linux' do.
+if. (-.IFGTK+.IFJHS) *. UNAME-:'Linux' do.
   |.@".@(-.&LF)@(2!:0) :: (Cwh_j_"_) '/bin/stty size 2>/dev/null'
 else.
   Cwh_j_

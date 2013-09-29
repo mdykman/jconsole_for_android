@@ -50,12 +50,6 @@ load 'task'
 load '~system/util/configure.ijs'
 load '~system/main/ctag.ijs'
 load '~system/util/jadetag.ijs'
-load^:IFQT '~addons/ide/qt/qt.ijs'
-if. 'Android'-:UNAME do.
-  'rwxrwxrwx'1!:7 ::0:<jpath'~tools/zip/7za'
-  'rwxrwxrwx'1!:7 ::0:<jpath'~tools/ftp/wget'
-  wddemo_z_=: load bind '~addons/demos/wd/demos.ijs'
-end.
 startupide''
 
 NB. ---------------------------------------------------------

@@ -6,11 +6,5 @@ graphics/afm - change history
 == 1.0.1 ==
  * add GTKFONTNAMES
 
-== 1.0.2/3 ==
+== 1.0.2 ==
  * getfont updated for GTKFONTNAMES
-
-== 1.0.4 ==
- * android fonts
-
-== 1.0.5 ==
- * qt fonts

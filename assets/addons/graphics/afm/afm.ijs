@@ -212,38 +212,6 @@ fnt=. IFUNIX {:: fntms ;< fntux
 GTKFONTNAMES=: 2 }. each fnt
 GTKFONTNAMESLC=: tolower each GTKFONTNAMES
 GTKFONTNAMESX=: 0 ". &> 2 {. each fnt
-
-fntand=. <;._2 (0 : 0)
-0 Sans
-0 Sans
-0 Sans
-1 Monospace
-1 Monospace
-1 Monospace
-1 Monospace
-2 Serif
-2 Serif
-2 Serif
-2 Serif
-3 Mono
-)
-
-ANDFONTNAMES=: 2 }. each fntand
-ANDFONTNAMESLC=: tolower each ANDFONTNAMES
-ANDFONTNAMESX=: 0 ". &> 2 {. each fntand
-
-3 : 0''
-if. 'Android'-:UNAME do.
-  QTFONTNAMES=: ANDFONTNAMES
-  QTFONTNAMESLC=: ANDFONTNAMESLC
-  QTFONTNAMESX=: ANDFONTNAMESX
-else.
-  QTFONTNAMES=: GTKFONTNAMES
-  QTFONTNAMESLC=: GTKFONTNAMESLC
-  QTFONTNAMESX=: GTKFONTNAMESX
-end.
-EMPTY
-)
 getbbox=: 3 : 0
 (Chars i. y) { Boxes
 )

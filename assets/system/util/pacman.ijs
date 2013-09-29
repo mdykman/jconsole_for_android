@@ -11,19 +11,12 @@ SECTION=: ,<'All'
 SYSNAME=: 'Package Manager'
 TIMEOUT=: 60
 WWWREV=: REV=: _1
-Ignore=: 0$<''
-Ignore=: Ignore, (IFQT+.'Android'-:UNAME)#<;._1 ' gui/gtk gui/gtkwd ide/gtk gui/jgtkgrid'
 3 : 0''
 nc=. '--no-cache'
 if. IFUNIX do.
-  if. UNAME-:'Android' do.
-    exe=. '"',(jpath '~tools/ftp/wget'),'"'
-    try. nc=. nc #~ 1 e. nc E. shell exe,' --help' catch. nc=. '' end.
-    HTTPCMD=: exe,' ',nc,' -O %O -o %L -t %t %U'
-    UNZIP=: '"',(jpath '~tools/zip/7za'),'" x -y '
-  elseif. UNAME-:'Darwin' do.
+  if. UNAME-:'Darwin' do.
     HTTPCMD=: 'curl -o %O --stderr %L -f -s -S %U'
-  elseif. do.
+  else.
     try. nc=. nc #~ 1 e. nc E. shell 'wget --help' catch. nc=. '' end.
     HTTPCMD=: 'wget ',nc,' -O %O -o %L -t %t %U'
   end.
@@ -306,27 +299,18 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  if. UNAME-:'Android' do.
+  if. IFIOS +. (UNAME-:'Android') *. 0=isatty 0 do.
     if. '.zip"'-:_5{.file do.
-      if. fexist jpath '~tools/zip/7za' do.
-        dir=. (_2&}. , '/' -.~ _2&{.) dir
-        e=. shellcmd UNZIP,' ',file,' -o',dir
-      else.
-        e=. ''
-        'file dir'=. y
-        e1=. dir andunzip file
-        if. -. e1 = 0 do. e=. 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end.
-      end.
+      e=. ''
+      'file dir'=. y
+      e1=. dir andunzip file
+      if. -. e1 = 0 do. e=. 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end.
     else.
       require 'tar'
       'file dir'=. y
       if. (i.0 0) -: tar 'x';file;dir do. e=. '' end.
     end.
-  elseif. IFIOS do.
-    require 'tar'
-    'file dir'=. y
-    if. (i.0 0) -: tar 'x';file;dir do. e=. '' end.
-  elseif. do.
+  else.
     e=. shellcmd 'tar -xzf ',file,' -C ',dir
   end.
 else.
@@ -493,7 +477,7 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  if. (UNAME-:'Android') > fexist jpath '~tools/ftp/wget' do.
+  if. (UNAME-:'Android') *. 0=isatty 0 do.
     rr=. f anddf p
     if. rr >: 0 do.
       r=. 0;p
@@ -549,7 +533,6 @@ install_console=: 3 : 0
   pkgs=. getnames y
   if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
   pkgs=. pkgs (e. # [) ~. (<'base library'), ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
-  pkgs=. pkgs -. Ignore
   if. 0 = num=. #pkgs do. '' return. end.
   many=. 1 < num
   msg=. 'Installing ',(":num),' package',many#'s'

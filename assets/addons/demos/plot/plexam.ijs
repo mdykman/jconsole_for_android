@@ -1,6 +1,6 @@
 NB. Plot examples
 
-coclass 'jdplot'
+coclass 'jdplotgtk'
 
 NB. include definitions from math/misc/trig
 rfd=: *&(1p1%180)
@@ -18,17 +18,8 @@ k=. y-<.y
 (t*k)+b*-.k
 )
 
-NB. from numeric
-steps=: {. + (1&{ - {.) * (i.@>: % ])@{:
-
-range=: 3 : 0
-'x y n'=. 3{.y,1
-s=. _1^y<x
-x+s*n*i.>:<.n%~|y-x
-)
-
-0!:0 <jpath '~addons/demos/plot/pldata.ijs'
-DATHILO=: }. 'm' fread jpath '~addons/demos/plot/dm0396.txt'
+0!:0 <jpath '~Demos/plot/pldata.ijs'
+DATHILO=: }. 'm' fread jpath '~Demos/plot/dm0396.txt'
 
 NB. =========================================================
 'PLOTNAMES plotnames'=: <"1 |: deb&.> (<;._2);._2 (0 : 0)
