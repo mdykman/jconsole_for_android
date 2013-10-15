@@ -1,0 +1,13 @@
+graphics/color - change history
+
+== 1.0.0 ==
+ * initial 701 release
+
+== 1.0.1 ==
+ * add html colortable
+
+== 1.0.2 ==
+ * add BGR verb
+
+== 1.0.3/9 ==
+ * add xterm 256

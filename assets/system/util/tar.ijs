@@ -18,7 +18,7 @@ J tar
 
 for example,
  on computer
-  $> tar -c -f ~/j64-701-user/temp/math.tar -C ~/j64-701/addons finance
+  $> tar -c -f ~/j64-801-user/temp/math.tar -C ~/j64-801/addons finance
   iTunes connect - move math.tar to J app folder
 
  on J
@@ -30,6 +30,7 @@ J gzip
   data gzip '~/temp/f.gz' - write data to f.gz
 )
 
+NB. !!! 801
 NB. for windows, copy zlib1.dll from gtk binary to j.dll folder or windows/system32
 libz=: IFUNIX{::'zlib1.dll';unxlib^:IFUNIX 'z'
 cv=: IFWIN#'+'
@@ -224,7 +225,7 @@ NB. =========================================================
 gzopen=: 3 : 0
 'f m'=. y
 f=. jpath jpathsep^:IFWIN f
-f=. (('/'={.f)*.IFIOS)}.f
+f=. iospath^:IFIOS f
 assert. 0~:h=. (libz,' gzopen >',cv,' x *c *c') cd f;,m
 if. -.no_gzbuffer do.
   try. 0=(libz,' gzbuffer >',cv,' i x i') cd h;128*1024 catch. no_gzbuffer=: 1 end.  NB. not available in older version

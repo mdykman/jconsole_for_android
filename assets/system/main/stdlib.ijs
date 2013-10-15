@@ -9,12 +9,20 @@ PATHJSEP_j_=: '/'
 IFDEF=: 3 : '0=4!:0<''DEF'',y,''_z_'''
 IF64=: 16={:$3!:3[2
 'IFUNIX IFWIN IFWINCE'=: 5 6 7 = 9!:12''
-IFGTK=: IFJHS=: IFBROADWAY=: 0
-IFJ6=: 0
+IFJHS=: 0
 IFWINE=: IFWIN > 0-:2!:5'_'
 if. notdef 'IFIOS' do.
   IFIOS=: 0
 end.
+if. notdef 'IFQT' do.
+  IFQT=: 0
+  libjqt=: 'libjqt'
+end.
+if. notdef 'IFJCDROID' do.
+  IFJCDROID=: 0
+end.
+
+assert. IFQT *: IFJCDROID
 if. notdef 'UNAME' do.
   if. IFUNIX do.
     if. -.IFIOS do.
@@ -26,7 +34,14 @@ if. notdef 'UNAME' do.
     UNAME=: 'Win'
   end.
 end.
-if. IF64 +. IFIOS +. UNAME-:'Android' do.
+if. notdef 'IFRASPI' do.
+  if. UNAME -: 'Linux' do.
+    IFRASPI=: 1 e. 'BCM2708' E. 2!:0 'cat /proc/cpuinfo'
+  else.
+    IFRASPI=: 0
+  end.
+end.
+if. IF64 +. IFIOS +. IFRASPI +. UNAME-:'Android' do.
   IFWOW64=: 0
 else.
   if. IFUNIX do.
@@ -46,6 +61,7 @@ UNXLIB=: ([: <;._1 ' ',]);._2 (0 : 0)
 libc.so.6 libc.so libc.dylib libc.dylib
 libz.so.1 libz.so libz.dylib libz.dylib
 libsqlite3.so.0 libsqlite.so libsqlite3.dylib libsqlite3.dylib
+libxml2.so.2 libxml2.so libxml2.dylib libxml2.dylib
 )
 unxlib=: 3 : 0
 r=. (;: 'c z sqlite3') i. <,y
@@ -77,6 +93,13 @@ each=: &.>
 echo=: 0 0&$ @ (1!:2&2)
 exit=: 2!:55
 every=: &>
+evtloop=: EMPTY"_
+fixdotdot=: 3 : 0
+while. 1 e. r=. '../' E. y do.
+  y=. ((2+p)}.y),~ ({.~ i:&'/') }: (p=. {.I.r){.y
+end.
+y
+)
 fliprgb=: 3 : 0
 s=. $y
 d=. ((#y),4)$2 (3!:4) y=. <.,y
@@ -92,6 +115,10 @@ parm=. 32 = ;(3!:0)&.> argb
 )
 getenv=: 2!:5
 inv=: inverse=: ^:_1
+iospath=: 3 : 0
+if. IFIOS *. ('/j'-:2{.y) do. y=. y,~ '/Documents',~ 2!:5 'HOME' end.
+y
+)
 3 : 0''
 if. IFUNIX do.
   isatty=: ((unxlib 'c'),' isatty > i i') & (15!:0)
@@ -114,6 +141,8 @@ stdin=: 1!:1@3: :. stdout
 sign=: *
 sort=: /:~ : /:
 take=: {.
+alpha27=: (27 b.) & 16bffffff
+alpha17=: (17 b.) & 16bffffff
 assert=: 0 0 $ 13!:8^:((0 e. ])`(12"_))
 bind=: 2 : 'x@(y"_)'
 boxopen=: <^:(L.=0:)
@@ -143,6 +172,7 @@ H=. '0123456789ABCDEF'
 h=. '0123456789abcdef'
 dfh=: 16 #. 16 | (H,h) i. ]
 hfd=: h {~ 16 #.^:_1 ]
+4!:55 'H';'h'
 isutf8=: 1:@(7&u:) :: 0:
 list=: 3 : 0
 w=. {.wcsize''
@@ -183,7 +213,9 @@ Note=: 3 : '0 0 $ 0 : 0' : [
 script=: [: 3 : '0!:0 y [ 4!:55<''y''' jpath_z_ &.: >
 scriptd=: [: 3 : '0!:1 y [ 4!:55<''y''' jpath_z_ &.: >
 sminfo=: 3 : 0
-if. IFGTK do. mbinfo_jgtk_ y else. smoutput >_1{.boxopen y end.
+if. IFQT do. wdinfo_jqtide_ y
+elseif. ('Android'-:UNAME) *. 3=4!:0<'mbinfo_ja_' do. mbinfo_ja_ y
+elseif. do. smoutput >_1{.boxopen y end.
 )
 smoutput=: 0 0 $ 1!:2&2
 tmoutput=: 0 0 $ 1!:2&4
@@ -266,12 +298,7 @@ w
 conl=: 18!:1 @ (, 0 1"_ #~ # = 0:)
 copath=: 18!:2 & boxxopen
 coreset=: 3 : 0
-if. IFGTK do.
-  exc=. gtklocs_jgtkide_''
-else.
-  exc=. ''
-end.
-0 0$coerase (conl 1) -. exc
+0 0$coerase conl 1
 )
 cocurrent 'z'
 cofind=: 3 : 0
@@ -446,8 +473,8 @@ end.
 isotimestamp=: 3 : 0
 r=. }: $y
 t=. _6 [\ , 6 {."1 y
-d=. '--b::' 4 7 10 13 16 }"1 [ 4 3 3 3 3 3 ": <.t
-d=. d ,. }."1 [ 0j3 ": ,. 1 | {:"1 t
+d=. '--b:' 4 7 10 13 }"1 [ 4 3 3 3 3 ": <. 5{."1 <.t
+d=. d ,. ':' 0 }"1 [ 7j3 ": ,. {:"1 t
 c=. {: $d
 d=. ,d
 d=. '0' (I. d=' ')} d
@@ -458,24 +485,39 @@ todate=: 3 : 0
 0 todate y
 :
 s=. $y
-a=. 657377.75 +, y
+y=. s$ 0 (I. (,y) e. _ __)},y
+a=. 657377.75 +, y=. <. p=. y
 d=. <. a - 36524.25 * c=. <. a % 36524.25
 d=. <.1.75 + d - 365.25 * y=. <. (d+0.75) % 365.25
 r=. (1+12|m+2) ,: <. 0.41+d-30.6* m=. <. (d-0.59) % 30.6
-r=. s $ |: ((c*100)+y+m >: 10) ,r
-if. x do. r=. 100 #. r end.
+if. 1<x do.
+  h=. <. t=. 24*(1&|) ,p
+  mm=. <. t=. 60*t-h
+  ss=. 60*t-mm
+  r=. s $ |: ((c*100)+y+m >: 10) ,r , |: h ,. mm,. ss
+else.
+  r=. s $ |: ((c*100)+y+m >: 10) ,r
+end.
+if. 1=x do. r=. 100 #. r end.
 r
 )
 todayno=: 3 : 0
 0 todayno y
 :
 a=. y
-if. x do. a=. 0 100 100 #: a end.
+if. 1=x do. a=. 0 100 100 #: a end.
 a=. ((*/r=. }: $a) , {:$a) $,a
-'y m d'=. <"_1 |: a
+if. 1<x do.
+  'y m d h mm s'=. <"_1 |: a
+else.
+  'y m d'=. <"_1 |: a
+end.
 y=. 0 100 #: y - m <: 2
 n=. +/ |: <. 36524.25 365.25 *"1 y
 n=. n + <. 0.41 + 0 30.6 #. (12 | m-3),"0 d
+if. 1<x do.
+  n=. n + (24 60 60#.h,.mm,.s)%24*3600
+end.
 0 >. r $ n - 657378
 )
 tsdiff=: 4 : 0
@@ -589,7 +631,7 @@ if. def e.~ <,':' do.
   end.
 end.
 min=. 0>.ln-before [ max=. (<:#def)<.ln+after
-ctx=. '[',"1 (":,.range) ,"1 ('] ') ,"1 >def{~range=. min + i. >:max-min
+ctx=. ((,.ln=range){' >'),"1 '[',"1 (":,.range) ,"1 ('] ') ,"1 >def{~range=. min + i. >:max-min
 > (<'@@ ', name, '[', (dyad#':'), (":ln) ,'] *', (nc{' acv'),' @@ ', src), def0, <"1 ctx
 )
 dbg=: 13!:0
@@ -653,9 +695,56 @@ end.
 )
 dbview=: 3 : 0
 if. _1 = 4!:0 <'jdbview_jdbview_' do.
-  'require'~'~system/util/dbview.ijs'
+  'require'~'~addons/ide/qt/dbview.ijs'
 end.
 jdbview_jdbview_ }. 13!:13''
+)
+dbhelp=: 0 : 0
+The call stack (dbstk'') is a 9-column boxed matrix:
+  0  name
+  1  error number, or 0 if this call has no error.
+  2  line number
+  3  name class
+  4  definition
+  5  source script
+  6  argument list
+  7  locals
+  8  suspense
+
+f is the name of a verb
+      dbss 'f 0'   monadic line 0
+      dbss 'f :2'  dyadic line 2
+      dbss 'f *:*' all lines
+
+dbr     reset, set suspension mode (0=disable, 1=enable)
+dbs     display stack
+dbsq    stop query
+dbss    stop set
+dbrun   run again (from current stop)
+dbnxt   run next (skip line and run)
+dbret   exit and return argument
+dbjmp   jump to line number
+dbsig   signal error
+dbrr    re-run with specified arguments
+dbrrx   re-run with specified executed arguments
+dberr   last error number
+dberm   last error message
+dbstk   call stack
+dblxq   latent expression query
+dblxs   latent expression set
+dbtrace trace control
+dbq     queries suspension mode (set by dbr)
+dbst    returns stack text
+
+dbctx       display context
+dbg         turn debug window on/off
+dblocals    display local names on stack
+dbstack     display stack
+dbstop      add stop definitions
+dbstops     set all stop definitions
+dbstopme    stop current definition
+dbstopnext  stop current definition at next line
+dbview      view stack
 )
 cocurrent 'z'
 dir=: 3 : 0
@@ -921,7 +1010,7 @@ end.
 dirused=: [: (# , +/ @ ; @ (2: {"1 ])) 0&dirtree
 cocurrent 'z'
 
-fboxname=: <@jpath_j_@(8 u: >) ::]
+fboxname=: <@(fixdotdot^:IFIOS)@jpath_j_@(8 u: >) ::]
 fexists=: #~ fexist
 f2utf8=: ]
 fappend=: 4 : 0
@@ -1121,26 +1210,78 @@ ftostring=: fputs
 fstring=: fgets
 cocurrent 'z'
 install=: 3 : 0
+if. IFIOS+.'Android'-:UNAME do. return. end.
 require 'pacman'
 if. -. checkaccess_jpacman_ '' do. return. end.
 'update' jpkg ''
 select. y
-case. 'gtkide' do.
-  getgtkbin 0
-  'install' jpkg 'base library ide/gtk gui/gtk'
+case. 'qtide' do.
+  'install' jpkg 'base library ide/qt'
+  getqtbin 0
+  smoutput 'exit and restart J using ',IFWIN pick 'bin/jqt';'jqt.cmd'
 case. 'all' do.
-  getgtkbin 0
   'install' jpkg 'all'
+  getqtbin 0
 end.
 )
-getgtkbin=: 3 : 0
-if. (<UNAME) -.@e. 'Darwin';'Win' do. return. end.
-if. (0={.y,0) *. 0 < #1!:0 jpath '~install/gtk/lib' do. return. end.
+getqtbin=: 3 : 0
+if. IFIOS+.'Android'-:UNAME do. return. end.
+if. (<UNAME) -.@e. 'Linux';'Darwin';'Win' do. return. end.
+
 require 'pacman'
-smoutput 'Installing gtk binaries...'
-z=. (IFWIN pick 'mac';'win'),(IF64 pick '32';'64'),'.zip'
-z=. 'http://www.jsoftware.com/download/gtk',z
-'rc p'=. httpget_jpacman_ z
+IFPPC=. 0
+if. 'Darwin'-:UNAME do. IFPPC=. 1. e. 'powerpc' E. 2!:0 'uname -p' end.
+smoutput 'Installing JQt binaries...'
+if. 'Linux'-:UNAME do.
+  if. IFRASPI do.
+    z=. 'jqt-raspi-32.tar.gz'
+  else.
+    z=. 'jqt-linux-',(IF64 pick 'x86';'x64'),'.tar.gz'
+  end.
+  z1=. 'libjqt.so'
+elseif. IFWIN do.
+  z=. 'jqt-win-',(IF64 pick 'x86';'x64'),'.zip'
+  z1=. 'jqt.dll'
+elseif. do.
+  z=. 'jqt-mac-',(IFPPC pick (IF64 pick 'x86';'x64');'ppc'),'.zip'
+  z1=. 'libjqt.dylib'
+end.
+'rc p'=. httpget_jpacman_ 'http://www.jsoftware.com/download/jqt/',z
+if. rc do.
+  smoutput 'unable to download: ',z return.
+end.
+d=. jpath '~bin'
+if. IFWIN do.
+  unzip_jpacman_ p;d
+else.
+  if. 'Linux'-:UNAME do.
+    hostcmd_jpacman_ 'cd ',(dquote d),' && tar xzf ',(dquote p)
+  else.
+    hostcmd_jpacman_ 'unzip -o ',(dquote p),' -d ',dquote d
+  end.
+  f=. 4 : 'if. #1!:0 y do. x dirss y end.'
+  ('INSTALLPATH';jpath '~install') f jpath '~bin'
+end.
+if. #1!:0 jpath '~bin/',z1 do.
+  m=. 'Finished install of jqt binaries.'
+else.
+  m=. 'Unable to install jqt binaries.',LF
+  m=. m,'check that you have write permission for: ',LF,jpath '~bin'
+end.
+smoutput m
+if. 'Linux'-:UNAME do. return. end.
+if. ('Darwin'-:UNAME) *. 1=#1!:0 jpath '/Library/Frameworks/QtCore.framework' do. return. end.
+
+tgt=. jpath '~install/',(IFWIN{'Qq'),'t'
+if. (0={.y,0) *. 1=#1!:0 tgt do. return. end.
+
+smoutput 'Installing Qt library...'
+if. IFWIN do.
+  z=. 'qt48-win-',(IF64 pick 'x86';'x64'),'.zip'
+else.
+  z=. 'qt48-mac-',(IFPPC pick (IF64 pick 'x86';'x64');'ppc'),'.zip'
+end.
+'rc p'=. httpget_jpacman_ 'http://www.jsoftware.com/download/qtlib/',z
 if. rc do.
   smoutput 'unable to download: ',z return.
 end.
@@ -1148,16 +1289,16 @@ d=. jpath '~install'
 if. IFWIN do.
   unzip_jpacman_ p;d
 else.
-  hostcmd_jpacman_ 'unzip ',(dquote p),' -d ',dquote d
-  ('INSTALLPATH';jpath '~install/gtk') dirss jpath '~install/gtk/etc'
+  hostcmd_jpacman_ 'unzip -o ',(dquote p),' -d ',dquote d
 end.
-if. #1!:0 jpath '~install/gtk/lib' do.
-  m=. 'Finished install of gtk binaries.'
+if. #1!:0 tgt do.
+  m=. 'Finished install of Qt binaries.'
 else.
-  m=. 'Unable to install gtk binaries.',LF
-  m=. m,'check that you have write permission for: ',LF,jpath '~install/gtk'
+  m=. 'Unable to install Qt binaries.',LF
+  m=. m,'check that you have write permission for: ',LF,tgt
 end.
 smoutput m
+
 )
 cocurrent 'z'
 cuts=: 2 : 0
@@ -1498,6 +1639,16 @@ else.
 end.
 (#1!:0 y);''
 )
+runimmx0_j_=: 3 : 0
+IMMX_j_=: utf8 y
+9!:27 '0!:100 IMMX_j_'
+9!:29 [ 1
+)
+runimmx1_j_=: 3 : 0
+IMMX_j_=: utf8 y
+9!:27 '0!:101 IMMX_j_'
+9!:29 [ 1
+)
 scripts=: 3 : 0
 if. 0=#y do.
   list 0{"1 Public
@@ -1574,10 +1725,6 @@ if. '"' = {.y do. y else. '"',y,'"' end.
 browse=: 3 : 0
 cmd=. dlb@dtb y
 isURL=. 1 e. '://'&E.
-if. IFBROADWAY do.
-  sminfo 'browse error: not yet implemented'
-  EMPTY return.
-end.
 if. IFJHS do.
   cmd=. '/' (I. cmd='\') } cmd
   if. -. isURL cmd do.
@@ -1605,12 +1752,12 @@ case. 'Win' do.
   end.
   if. r<33 do. sminfo 'browse error:',browser,' ',cmd,LF2,1{::cderx'' end.
 case. do.
-  if. (UNAME-:'Android') *. 0=isatty 0 do.
+  if. (UNAME-:'Android') > isatty 0 do.
     cmd=. '/' (I. cmd='\') } cmd
     if. -. isURL cmd do.
       cmd=. 'file://',cmd
     end.
-    2!:1 'android.intent.action.VIEW';cmd;'text/html'
+    android_exec_host 'android.intent.action.VIEW';(utf8 cmd);''
   else.
     if. 0 = #browser do.
       browser=. dfltbrowser''
@@ -1626,7 +1773,7 @@ case. do.
     catch.
       msg=. 'Could not run the browser with the command:',LF2
       msg=. msg, cmd,LF2
-      if. IFGTK do.
+      if. IFQT do.
         msg=. msg, 'You can change the browser definition in Edit|Configure|Base',LF2
       end.
       sminfo 'Run Browser';msg
@@ -1661,14 +1808,13 @@ end.
 viewpdf=: 3 : 0
 cmd=. dlb@dtb y
 isURL=. 1 e. '://'&E.
-if. IFBROADWAY do.
-  sminfo 'viewpdf error: not yet implemented'
-  EMPTY return.
-end.
 if. IFJHS do.
   cmd=. '/' (I. cmd='\') } cmd
   if. -.fexist cmd do. EMPTY return. end.
   redirecturl_jijxm_=: (' ';'%20') stringreplace cmd
+  EMPTY return.
+elseif. IFIOS do.
+  jh '<a href="file://',(iospath y),'" >',cmd,'</a>'
   EMPTY return.
 end.
 PDFReader=. PDFReader_j_
@@ -1686,12 +1832,12 @@ case. 'Win' do.
   end.
   if. r<33 do. sminfo 'view pdf error:',PDFReader,' ',cmd,LF2,1{::cderx'' end.
 case. do.
-  if. (UNAME-:'Android') *. 0=isatty 0 do.
+  if. (UNAME-:'Android') > isatty 0 do.
     cmd=. '/' (I. cmd='\') } cmd
     if. -. isURL cmd do.
       cmd=. 'file://',cmd
     end.
-    2!:1 'android.intent.action.VIEW';cmd;'application/pdf'
+    android_exec_host 'android.intent.action.VIEW';(utf8 cmd);'application/pdf'
   else.
     if. 0 = #PDFReader do.
       PDFReader=. dfltpdfreader''
@@ -1704,7 +1850,7 @@ case. do.
     catch.
       msg=. 'Could not run the PDFReader with the command:',LF2
       msg=. msg, cmd,LF2
-      if. IFGTK do.
+      if. IFQT do.
         msg=. msg, 'You can change the PDFReader definition in Edit|Configure|Base',LF2
       end.
       sminfo 'Run PDFReader';msg
@@ -1869,9 +2015,12 @@ if. 0=L.y do.
     y=. cutnames y
   end.
 end.
-y=. y -. Ignore, IFIOS#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk gl2 graphics/gl2 viewmat'
-y=. y -. (UNAME-:'Android')#<;._1 ' gtk gui/gtk gtkwd gui/gtkwd gtkide ide/gtk'
-y=. y -. (UNAME-.@-:'Android')#<;._1 ' droidwd gui/droidwd'
+y=. y -. Ignore, IFIOS#<;._1 ' jview qtide ide/qt viewmat'
+y=. y -. (-.IFIOS)#<;._1 ' ide/ios'
+y=. y -. (-.IFQT)#<;._1 ' qtide ide/qt'
+y=. y -. (((UNAME-:'Android')>IFQT+.IFJCDROID)+.IFIOS+.IFJHS)#<;._1 ' wdclass gui/wdclass gl2 graphics/gl2'
+y=. y -. (UNAME-:'Android')#<;._1 ' jview'
+y=. y -. (-.IFJCDROID)#<;._1 ' droidwd gui/droidwd android gui/android'
 if. 0=#y do. '' return. end.
 ndx=. ({."1 Public) i. y
 ind=. I. ndx < # Public
@@ -1891,39 +2040,19 @@ end.
 fullname each jpath each y
 )
 getpath=: ([: +./\. =&'/') # ]
-recentmax=: 3 : '({.~ RecentMax <. #) ~.y'
-recentfiles_add_j_=: 3 : 0
-RecentFiles_j_=: recentmax (<jpath y),RecentFiles_j_
-recentsave''
-)
-recentproj_add=: 3 : 0
-RecentProjects_j_=: recentmax (<jpath y),RecentProjects_j_
-recentsave''
-)
-recentsave=: 3 : 0
-n=. 'Folder RecentDirmatch RecentFif RecentFiles RecentProjects'
-r=. 'NB. gtkide recent',LF2,nounrep n
-r fwritenew jpath '~config/recent.dat'
-)
 xedit=: 0&$: : (4 : 0)
 'file row'=. 2{.(boxopen y),<0
 isURL=. 1 e. '://'&E.
-if. IFBROADWAY do.
-  msg=. '|Could not run the editor:',cmd,LF
-  msg=. msg,'|Not yet implemented'
-  smoutput msg
-  EMPTY return.
-end.
 if. IFJHS do.
   xmr ::0: file
   EMPTY return.
 end.
-if. (UNAME-:'Android') *. 0=isatty 0 do.
+if. (UNAME-:'Android') > isatty 0 do.
   file=. '/' (I. file='\') } file
   if. -. isURL file do.
     file=. 'file://',file
   end.
-  2!:1 'android.intent.action.EDIT';file;'text/plain'
+  android_exec_host 'android.intent.action.EDIT';(utf8 file);'text/plain'
   EMPTY return.
 end.
 editor=. (Editor_j_;Editor_nox_j_){::~ nox=. IFUNIX *. (0;'') e.~ <2!:5 'DISPLAY'
@@ -1988,7 +2117,7 @@ a=. (,&'=: ',sub @ (3 : j)) each y
 )
 xedit=: xedit_j_
 wcsize=: 3 : 0
-if. (-.IFGTK+.IFJHS) *. UNAME-:'Linux' do.
+if. (-.IFQT+.IFJHS+.IFIOS) *. UNAME-:'Linux' do.
   |.@".@(-.&LF)@(2!:0) :: (Cwh_j_"_) '/bin/stty size 2>/dev/null'
 else.
   Cwh_j_

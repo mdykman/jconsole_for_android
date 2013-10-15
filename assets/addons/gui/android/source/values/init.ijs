@@ -1,3 +1,0 @@
-coclass 'javalues'
-coinsert 'jexpat'
-

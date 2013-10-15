@@ -1,0 +1,33 @@
+NB. project: ~Addons/math/misc
+NB.
+NB. defines list of source files.
+NB. path defaults to project directory.
+
+amoeba.ijs
+bigpi.ijs
+brent.ijs
+contfrac.ijs
+det.ijs
+fermat.ijs
+gamesolver.ijs
+gcd.ijs
+integer.ijs
+integrat.ijs
+jacobi.ijs
+legendre.ijs
+linear.ijs
+makemat.ijs
+matfacto.ijs
+mathutil.ijs
+matutil.ijs
+mean.ijs
+numbers.ijs
+pollard.ijs
+poly.ijs
+primutil.ijs
+quatern.ijs
+rsa.ijs
+simplex.ijs
+simplexnr.ijs
+spline.ijs
+svd.ijs

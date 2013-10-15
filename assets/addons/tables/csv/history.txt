@@ -1,5 +1,8 @@
 tables/csv - change history
 
+== 1.0.9 ==
+ * j801
+
 == 1.0.7 ==
  * fix: extcsv verb so compatible with both J6 and J7
 
@@ -11,7 +14,7 @@ tables/csv - change history
  * chg: docs updated accordingly
 
 == 1.0.3 ==
- * chg: syntax change for custom delimiters 
+ * chg: syntax change for custom delimiters
  * add: When creating csv strings:
         - empty delimiters now allowed
         - field delimiter of length > 1 allowed

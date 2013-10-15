@@ -1,3 +1,0 @@
-coclass 'jamenu'
-coinsert 'jexpat'
-

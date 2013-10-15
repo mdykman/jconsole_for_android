@@ -50,7 +50,7 @@ PShow=: 0
 
 wd PLOTDEMO
 PForm=: 'plotdemo'
-PFormhwnd=: wd 'qhwndp'
+PFormhwnd=: wdqhwndp''
 PId=: 'ps'
 pd 'reset ',PForm
 wd 'set M',PLDEMOSEL,' 1'
@@ -90,13 +90,13 @@ try. wd 'psel plotedit;pclose' catch. end.
 
 NB. =========================================================
 plotdemo_contents_button=: 3 : 0
-wdinfo 'help contents'
+sminfo 'help contents'
 )
 
 NB. =========================================================
 plotdemo_about_button=: 3 : 0
 j=. 'Plot Demo V',(4j2 ": PLDEMOVER)
-wdinfo 'Plot';j
+sminfo 'Plot';j
 )
 
 NB. =========================================================

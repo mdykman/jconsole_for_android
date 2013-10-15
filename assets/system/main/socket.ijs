@@ -49,7 +49,7 @@ getprotobynumberJ=: 'getprotobynumber i i' scdm
 getservbynameJ=: 'getservbyname i i i' scdm
 getservbyportJ=: 'getservbyport i i i' scdm
 getsocknameJ=: 'getsockname i i * *i' scdm
-getsockoptJ=: 'getsockopt i i i i * *i' scdm
+getsockoptJ=: 'getsockopt i i i i *i *i' scdm
 htonlJ=: 'htonl i i' scdm
 htonsJ=: 'htons s s' scdm
 listenJ=: 'listen i i i' scdm
@@ -60,7 +60,7 @@ recvfromJ=: 'recvfrom i i *c i i * *i' scdm
 selectJ=: 'select i i * * * *' ccdm
 sendJ=: 'send i i *c i i' scdm
 sendtoJ=: 'sendto i i *c i i * i' scdm
-setsockoptJ=: 'setsockopt i i i i * i' scdm
+setsockoptJ=: 'setsockopt i i i i *i i' scdm
 shutdownJ=: 'shutdown i i i' scdm
 socketJ=: 'socket i i i i' scdm
 
@@ -196,6 +196,7 @@ r=. getsocknameJ y;(sockaddr_in_sz#{.a.);,sockaddr_in_sz
 (rc0 r);data2string r
 )
 sdsend=: 4 : 0"1
+if. '' -: $x do. x =. ,x end.
 r=. >{.sendJ (>0{y);x;(#x);>1{y
 if. _1=r do. 0;~sdsockerror'' else. 0;r end.
 )
@@ -321,7 +322,7 @@ end.
 )
 sdgetsockopt=: 3 : 0
 's lev name'=. y
-r=. getsockoptJ s;lev;name;(,0);,4
+r=. getsockoptJ s;lev;name;(,_1);,4
 if. 0~:res r do. 0;~sdsockerror'' return. end.
 d=. ''$>4{r
 if. name-:SO_LINGER do. 0;65536 65536#:d else. 0;d end.

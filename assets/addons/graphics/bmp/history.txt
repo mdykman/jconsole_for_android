@@ -3,6 +3,9 @@ graphics/bmp - change history
 == 1.0.0 ==
  * initial 701 release
 
-== 1.0.1 ==
+== 1.0.1/2 ==
  * opengl color RGB byte order with R in the lowest byte
  * simplify projects
+
+== 1.0.3 .. ==
+ * j801

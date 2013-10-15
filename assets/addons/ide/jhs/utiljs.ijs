@@ -3,13 +3,45 @@ coclass'jhs'
 NB. JS could be src= and with cache would load faster
 NB. JS is small and doing it inline (not src=) is easier
 
+0 : 0
+onunload/onbeforeunload events would be nice if they worked 'properly'
+would allow app to clean up client side and (ajax) server side
+there are limitations (ajax, etc.) in the handlers
+and nasty cross browser differences
+problems mostly in the ajax call
+
+chrome requires onbeforeunload with async false
+firefox requires onbeforeunload but doesn't care about async
+who knows about safari and other
+and if the server is hung then there are other problems
+
+the framework set the unload event the same way it set load event
+but it doesn't trigger and something is wrong
+
+the ajax calls with body are suspect - sid "" should probably be null to avoid body*
+
+no current pages really require client/server side cleanup
+the main requirement would be a page that required a locale to hold state
+that needed to be properly released
+
+this could probably be handled by the framework as follows:
+
+window.onbeforeunload= xxxclose;
+function xxxclose(){return dirty?""prefered way to leave this page is menu close or close button ×;null;
+
+a page could manage the dirty flag and do proper shutdown in the close handler
+)
+
 JSCORE=: 0 : 0
-// framework user variables and utilities
 var JASEP= '\1'; // delimit substrings in ajax response
 var jform;       // page form
 var jevev;       // event handler event object
 var jevtarget=null;   // event handler target object
 var jisIE=-1!=navigator.userAgent.search(/MSIE/);
+var LS= location.href; // localStorage key
+var i= LS.indexOf("#");
+if(-1!=i) LS= LS.substring(0,i) // strip off # fragment
+LS+= ".";
 
 function jbyid(id){return document.getElementById(id);}
 function jsubmit(s){jform.jdo.value=jevsentence;jform.submit();}
@@ -245,7 +277,12 @@ function jevload()
  return false
 }
 
-function jevunload(){jscdo("body","","unload");return false;}
+function jevunload()
+{
+ alert("jevunload");
+ jscdo("body","","unload");return false;
+}
+ 
 function jevfocus()
 {
  // return false; // IE onfocus before onload
@@ -275,6 +312,7 @@ function jev(event){
 function jevdo()
 {
  JEV= "ev_"+jform.jmid.value+"_"+jform.jtype.value;
+ // alert(JEV);
  //try{eval(JEV)}
  //catch(ex)
  if('undefined'==eval("typeof "+JEV))
@@ -313,19 +351,20 @@ function newrq()
 // ids is array of form element names (values)
 // data is JASEP delimited data to send 
 // sentence (usually elided to use jevsentence)
-// asynch is true for asynch and false for synch (elided is true)
+// async is true for asynch and false for synch
+// default is synch
 function jdoajax(ids,data,sentence,async)
 {
- if(0!=rqstate){alert("busy - wait for previous request to finish");return;}
- async=async||true;
+ if(0!=rqstate) return; // previously - alert("busy - wait for previous request to finish");
+ async= (!async)?false:async;
  sentence=sentence||jevsentence;
  data=data||"";
  ids=ids||[];
  rq= newrq();
- rq.onreadystatechange= jdor;
+ if(async) rq.onreadystatechange= jdor;
  rq.open("POST",jform.jlocale.value,async); // true for async call
  jform.jdo.value= ('undefined'==typeof sentence)?jevsentence:sentence;
- rq.send(jpostargs(ids)+"&jdata="+jencode(data));
+ rq.send(jpostargs(ids)+"&jdata="+jencode(data)+"&jwid="+jencode(window.name));
  if(!async)jdor();
 }
 
@@ -398,11 +437,12 @@ function jdostdsc(c)
  switch(c)
  {
   case '1': jactivatemenu('1'); break;
-  case 'j': location="jijx";  break;
-  case 'f': location="jfile"; break;
-  case 'h': location="jhelp"; break;
-  case 'J': location="jijs"; break;
-  case 'F': location="jfif"; break;
+  case 'j': window.open("jijx",TARGET);  break;
+  case 'f': window.open("jfile",TARGET); break;
+  case 'k': window.open("jfiles",TARGET); break;
+  case 'h': window.open("jhelp",TARGET); break;
+  case 'J': window.open("jijs",TARGET); break;
+  case 'F': window.open("jfif",TARGET); break;
  }
 }
 
@@ -706,6 +746,7 @@ function jgpdivh(id)
 // debug
 
 // numbers from unicode
+
 function debcodes(t)
 {
  r= "";
@@ -722,21 +763,110 @@ function jseval(ajax,s)
  a= "<!-- j html output a --><!-- j js a --><!-- ";
 
  z= " --><!-- j js z --><!-- j html output z -->";
-while(0!=s.length)
-{
+ while(0!=s.length)
+ {
   i= s.indexOf(a);
   if(-1!=i)
   {
    i+= a.length;
    j= s.indexOf(z);
    q= s.substring(i,j);
-   if(ajax||';'==q.charAt(0))
-    try{eval(q);}catch(e){alert(e+"\n"+q);}
    s= s.substring(j+z.length);
+   
+   if('!'==q.charAt(0))
+   {
+    var cmd= q.split(" ");
+    if(4==cmd.length&&cmd[0]=="!open")
+     window.open(cmd[1]+cmd[3],cmd[2]);
+   }
+   else
+   {
+    if(ajax||';'==q.charAt(0))
+     try{eval(q);}catch(e){alert(e+"\n"+q);}
+   }  
   }
   else
    s= "";
  }
+}
+
+// 784 adsf    das f a sdf  a sdf a sdf asdf asdf asdf a
+
+function getlstf(key)
+{
+// var t= getls(key);
+// return (t==null || t=="true")?1:0;
+ return 1;
+}
+
+function getls(key){return localStorage.getItem(LS+key);}
+
+function setls(key,v){localStorage.setItem(LS+key,v);}
+
+function adrecall(id,a,start)
+{
+ setls(id+".index",start);
+ if(0==a.length) return;
+ var t= getls(id);
+ if(t==null) t= "";
+ var i,blank=0,same=0;
+ for(i=0;i<a.length;++i)
+  blank+= ' '==a.charAt(i);
+ a= a+"\n";
+ for(i=0;i<a.length;++i)
+  same+= a.charAt(i)==t.charAt(i);
+ if(blank!=a.length && same!=a.length)
+ {
+  t= a+t;
+  if('\n'==t.charAt(t.length-1))
+   t= t.substring(0,t.length-1); // drop trailing \n so split works
+  if(1000<t.length)t= t.substring(0,t.lastIndexOf("\n"));
+  setls(id,t);
+ }
+}
+
+function uarrow(a){udarrow(a,1);}
+function darrow(a){udarrow(a,0);}
+
+function udarrow(a,up)
+{
+ var a,id,v,t,n;
+ if(a==null) a= document.activeElement;
+ if(a==null || a.type!="text")
+  id= "document";
+ else 
+  id= a.id; 
+ t= getls(id);
+ n= getls(id+".index");
+ if(t==null || n==null)return;
+ t= t.split("\n");
+ if(up)
+ {
+  if(++n>=t.length) n= t.length-1;
+  if(n==-1)
+   v= t[0];
+  else
+   v= t[n];
+ }
+ else
+ {
+  if(--n<0)
+   {n= 0; v= t[0];}
+  else
+   v= t[n];
+ }
+ setls(id+".index",n);
+ if(id=="document")
+  document_recall(v);
+ else
+  a.value= v; 
+}
+
+function setlast(id)
+{
+  var a= jbyid(id);
+  setls(id+".index","-1");
+  udarrow(a,1);
 }
 )
 

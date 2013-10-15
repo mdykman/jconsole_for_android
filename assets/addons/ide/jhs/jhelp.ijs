@@ -17,7 +17,6 @@ jev_get=: 3 : 0
 
 jumps=: 0 : 0
 <a href="#help">Help</a>&nbsp;
-<a href="#j7">J701</a>&nbsp;
 <a href="#jhs">JHS</a>&nbsp;
 <a href="#ide">IDE</a>&nbsp;
 <a href="#viewmat">viewmat</a>&nbsp;
@@ -29,12 +28,54 @@ jumps=: 0 : 0
 <a href="#jum">JUM</a>&nbsp;
 <a href="#config">Config</a>&nbsp;
 <a href="#console">Console</a>&nbsp;
-<a href="#gtk">GTK</a>&nbsp;
 <a href="#about">About</a>
 )
 
 text=: 0 : 0
 <div>
+
+<h1>Help - recent changes</h1>
+<ul>
+<li>jd3 - plots with D3/jquery! - <a target="_blank" href="http://www.d3js.org">www.d3js.org</a></li>
+<pre class="jcode">
+   jd3'p1';jd3x,jd3line,jd3data ?3 4$100
+   jd3'p2';jd3x,jd3pie, jd3data ?3$100
+   jd3'p3';jd3x,jd3bar, jd3data ?20$100
+   jd3'p3';jd3x,jd3bar, jd3data ?4 20$100 NB. stacked bar
+   jd3x NB. parameters
+</pre>
+Currently only simple line and pie charts are supported.<br>
+Study ~addons/ide/jhs/jd3.ijs to see how it works and how easy it will be to extend.
+<pre></pre>
+<li>jtable - table editor with handsontable/jquery - <a target="_blank" href="http://www.handsontable.com">www.handsontable.com</a> </li>
+<pre class="jcode">
+   jtable 'e1';'n' [ n=: i.3 4
+   jtable 'e2';'s' [ s=: 2 2$'aa';'b';'c';'dd'
+   NB. try cut/paste, cell right-click, undo/redo
+</pre>
+
+Study ~addons/ide/jhs/jtable.ijs to see how it works and how easy it will be to extend.
+<pre></pre>
+<li>jquery javascript library easily integrates with the JHS framework - see jd3 and jtable<li>
+<li>jfiles - list recent files</li>
+<li>ctrl+shift+up/down arrow recall</li>
+ <ul>
+ <li>jijx - recall input lines</li>
+ <li>jfile - recall folders</li>
+ <li>jfif - recall what/where text lines</li>
+ </ul>
+<li>browser local storage carries recalls over J task sessions</li>
+<li>jijx - menu action|clear window</li>
+<li>jijx - menu action|clear refresh (refresh log)</li>
+<li>jijx - menu action|clear LS (local storage recalls)</li>
+<li>browser javascript calls to J are synchronous</li>
+previously if J was busy an event for J got a busy alert and was discarded<br/>
+alert was a nuisance if the delay would have been brief<br/>
+now events are queued and will fire when J call completes<br/>
+avoids alerts, but remember the queue - don't go click crazy when you don't see expected responses<br/>
+<li>jlog utility removed</li>
+<li>minor bug fixes</li>
+</ul>
 
 <a name="help"><h1>Help</h1>
 This document links to lots of information, but is
@@ -45,16 +86,6 @@ For complete documentation see:<br>
 <a href="http://www.jsoftware.com/docs/help701/index.htm">www.jsoftware.com/docs/help701/index.htm</a>
 <br>or if you have installed local help with jal see:<br>
 <a href="~addons/docs/help/index.htm">~addons/docs/help/index.htm</a>
-
-<a name="j7"><h1>J701</h1></a>
-J701 is a release of the J programming language.
-The J701 downloadable install is a minimal install that
-depends on the web to access a wealth of additional material:
-software addons, documentation, examples, wiki,
-and discussion forums.<br><br>
-
-The J701 install includes the J engine, a console interface,
-a browser interface (JHS), and the J library.
 
 <a name="jhs"><h1>JHS (J HTTP Server)</h1></a>
 JHS is a browser interface to J and
@@ -105,7 +136,11 @@ with the JHS framework and have the best of all worlds
 in developing your browser app.
  
 <a name="ide"><h1>IDE (Interactive Development Environment)</h1></a>
-<span class="h">keyboard shortcuts</span><br>
+<span class="h">target</span><br>
+New pages target _blank (new tab but may depend on browser).
+Change TARGET_jhs_ to be _self (and refresh) to have pages open in place.
+
+<br><br><span class="h">keyboard shortcuts</span><br>
 esc key escapes next key to be a shortcut.<br/>
 For example, esc j links to jijx page.<br/>
 Menu items document shortcuts on the right.<br/>
@@ -147,12 +182,8 @@ For more complicated requirements use host facilities such
 as Windows Explorer or Mac Finder.
 
 <br><br><span class="h">jijs</span>
-CodeMirror (www.codemirror.net) editor. In addition to menu
-commands and standard shortcuts, Ctrl shortcuts s r z
-and y also work. <a href="#codemirror">CodeMirror Copyright</a>
-
-
-
+CodeMirror (www.codemirror.net) editor. See menu action|search/ctrl for ctrl/search/replace info.
+<a href="#codemirror">CodeMirror Copyright</a>
 
 <br><br><span class="h">jijsta</span>
 edit file in textarea
@@ -173,7 +204,6 @@ software packages
 <span class="h">utils</span>
 <pre class="jcode">
    jbd 1      NB. boxdraw +|-
-   jlog y     NB. 0 clears and _ restores log
    jfe_jhs_ y NB. toggle console/browser
    jhtml'&lt;font style="color:red;"&gt;A&lt;/font&gt;'
 
@@ -357,10 +387,6 @@ sudo make install
 
 Noun sphelp has information on Simple Project utilities.<br><br>
 
-Using JHS locally, you might prefer desktop tools rather than the apps provided by JHS. For example, your desktop editor (notepad, gedit, emacs,..), OS file mangager (windows explorer, finder, ...), and grep might be better than JHS jijs, jfile, and jfif.<br><br>
-
-SP utilities make it easier to use your desktop tools.
-
 <a name="gui"><h1>GUI</h1>
 
 GUI applications are built with J, JHS framework, html,
@@ -395,20 +421,12 @@ that provides JHS servers to J users. JUM users share
 a single user account on the server and your files are
 accessible to other users.<br><br>
 
-To provide a JUM service you install J701 on a web server
+To provide a JUM service you install J on a web server
 and run the JHS JUM application. Users can access the JUM
 web page and can manage their own JHS server.
 The JUM sevice should be provided in a secure environment.
 In a Linux server this is done with a jail account.
 <br><br>
-Jsoftware currently hosts JUM as a courtesy to
-users who want a taste of the new.
-Jsoftware JUM can be discontinued or 
-disrupted at any time without notice. JUM is a shared
-service and your files are accessbile to other users.
-<br><br>
-&nbsp;&nbsp;&nbsp<a href="http://www.jsoftware.com:50001/jum">www.jsoftware.com:50001/jum</a>
- (jum pass to create account is jumjum)<br><br>
 Study script ~addons/ide/jhs/jum.ijs to learn how to run your own JUM service.
 A rough sketch of the steps are:
 <pre class="jcode">
@@ -431,15 +449,6 @@ It can kill the JHS task in the event of problems.
 In windows you can edit the icon properties to run minimized.
 You can hide the window if you wish:
 <pre class="jcode">   jshowconsole_j_ 0 NB. hide/show 0/1</pre>
-
-<a name="gtk"><h1>GTK</h1>
-A desktop application front end, built with GTK, is also
-available for J. It provides a powerful IDE and allows
-development of state of the art GUI desktop applications.
-
-Run jgtk from jconsole with sentence:
-<pre class="jcode">   load'gtkide'</pre>
-
 
 <a name="codemirror"><h1>CodeMirror Copyright</h1>
 
@@ -465,6 +474,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.<br><br>
 
+
 Please note that some subdirectories of the CodeMirror distribution
 include their own LICENSE files, and are released under different
 licences.
@@ -472,6 +482,7 @@ licences.
 <a name="about"><h1>About</h1></a>
 <pre class="jcode">
    JVERSION
+
 <JVERSION>
 </pre>
 </div>

@@ -50,14 +50,35 @@ load 'task'
 load '~system/util/configure.ijs'
 load '~system/main/ctag.ijs'
 load '~system/util/jadetag.ijs'
+load^:IFQT '~addons/ide/qt/qt.ijs'
+NB. android specific
+if. 'Android'-:UNAME do.
+  'rwxrwxrwx'1!:7 ::0:<jpath'~tools/zip/7za'
+  'rwxrwxrwx'1!:7 ::0:<jpath'~tools/ftp/wget'
+  if. IFQT do.
+    android_exec_host_z_=: android_exec_host_jqtide_
+    load '~addons/gui/android/android.ijs'
+    dver_z_=: 3 : '1!:55 ::0: <jpath ''~install/assets_version.txt'''
+  else.
+    android_exec_host_z_=: 2!:1
+    if. IFJCDROID do.
+      load '~addons/gui/android/android.ijs'
+      load '~addons/gui/droidwd/droidwd.ijs'
+      dver_z_=: 3 : '1!:55 ::0: <jpath ''~install/docs/android-version.txt'''
+    end.
+  end.
+end.
 startupide''
 
 NB. ---------------------------------------------------------
 NB. JVERSION_z_ (used in about box)
 r=. 'Engine: ',9!:14''
 r=. r,LF,'Library: ',LF -.~ 1!:1<jpath '~system/config/version.txt'
+if. IFQT do.
+  r=. r,LF,'Qt IDE: ',wd'version'
+end.
 r=. r,LF,'Platform: ',UNAME,' ',IF64 pick '32';'64'
-r=. r,LF,'Installer: ',1!:1 :: ('unknown'"_) <jpath'~bin/installer.txt'
+r=. r,LF,'Installer: ',LF -.~ 1!:1 :: ('unknown'"_) <jpath'~bin/installer.txt'
 r=. r,LF,'InstallPath: ',jpath '~install'
 JVERSION=: toJ r
 
@@ -74,10 +95,6 @@ load__ >{. p }. jsx {. ARGV
 if. jsx<#ARGV do.
   ARGVVERB_z_=: 3 : ((>:jsx)}.ARGV) NB. define in z
   ARGVVERB__'' NB. run in base
-elseif. ({.ARGV) = <'gtkide',IFWIN#'.exe' do.
-  load__'gtkide'
-elseif. (}.@(}.~ i:&(IFWIN{'/\')) &.> {.ARGV) = <'gtkide',IFWIN#'.exe' do.
-  load__'gtkide'
 end.
 
 EMPTY

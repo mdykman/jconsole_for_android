@@ -78,7 +78,7 @@ else.
  b=. (jhbs HBS)hrplc 'MSG';getmessage''
  t=. hrtemplate rplc (CRLF,CRLF);CRLF,'Cache-Control: no-cache',CRLF,CRLF
  t=. t rplc (LF,LF);LF,'Set-Cookie: ',expires,LF,LF
- htmlresponse Q__=: t hrplc'TITLE CSS JS BODY';GOURL;(css CSS);(js JS);b
+ htmlresponse t hrplc'TITLE CSS JS BODY';GOURL;(css CSS);(js JS);b
 end.
 )
 

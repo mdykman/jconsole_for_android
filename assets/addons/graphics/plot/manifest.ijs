@@ -6,7 +6,7 @@ DESCRIPTION=: 0 : 0
 2D Plot
 )
 
-VERSION=: '1.0.105'
+VERSION=: '1.0.134'
 
 DEPENDS=: 0 : 0
 graphics/afm
@@ -23,4 +23,4 @@ history.txt
 demo/
 )
 
-RELEASE=: 'j701'
+RELEASE=: 'j801'

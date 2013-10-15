@@ -9,9 +9,9 @@ Supports user-defined field and string delimiters.
 Contributed by Ric Sherlock.
 )
 
-VERSION=: '1.0.3'
+VERSION=: '1.0.4'
 
-RELEASE=: 'j701 j602'
+RELEASE=: 'j801 j701 j602'
 
 PLATFORMS=: ''
 

@@ -57,7 +57,7 @@ graphics/plot - change history
  * plot: run gtkwd from jconsole
  * plot: bugfix gtk_show, isi_show
  * plot: glsel
- * plot: gtkwidget_event
+ * plot: isigraph_event
 
 == 1.0.90 ==
  * plot: evtloop
@@ -66,10 +66,22 @@ graphics/plot - change history
  * plot: gl2 api change
 
 == 1.0.92 ==
- * plot: move gtkwidget_event to jzplot locale
+ * plot: move isigraph_event to jzplot locale
 
 == 1.0.93/100 ==
  * plot: android/iOS
 
-== 1.0.101/105 ==
+== 1.0.101/106 ==
  * plot: android jni
+
+== 1.0.107/110 ==
+ * plot: qt
+
+== 1.0.111 ==
+ * cover verb for wd query cmds
+
+== 1.0.112/7 ==
+ * qt
+
+== 1.0.118/.. ==
+ * j801

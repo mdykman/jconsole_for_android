@@ -10,6 +10,7 @@ DirTreeX
 Format
 EPSReader
 PDFReader
+ReadCatalog
 RecentMax
 XDiff
 Tags

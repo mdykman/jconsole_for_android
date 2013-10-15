@@ -1,5 +1,3 @@
-require'~addons/ide/jhs/jfile.ijs' NB. need LASTPATH_jfile_ etc.
-
 coclass'jfif'
 coinsert'jhs'
 
@@ -8,12 +6,12 @@ jhma''
 jhjmlink''
 jhmz''
 'find'   jhb'Find'
-'what'   jhtext FIFWHAT;20
-'where'  jhtext ((jshortname_jfile_ LASTPATH_jfile_),'*.ijs');50
-'context'jhselect(<;._2 FIFCONTEXT);1;FIFCONTEXTNDX
-'matchcase' jhcheckbox'case';FIFCASE
-'subfolders'jhcheckbox'sub';FIFSUBDIR
-'nameonly'  jhcheckbox'lines';FIFNAMEONLY
+'what'   jhtext '';20
+'where'  jhtext '';50
+'context'jhselect(<;._2 FIFCONTEXT);1;0
+'matchcase' jhcheckbox'case';0
+'subfolders'jhcheckbox'sub';0
+'nameonly'  jhcheckbox'lines';0
 jhbr
 jhresize''
 'area'   jhdiv''
@@ -24,7 +22,8 @@ NB. 'type'   jhselect JHSFILTERS;1;JHSFILTERS i. <FIFTYPE
 
 NB. regex option not supported in UI, but could be
 
-create=: 3 : 0
+NB. state init
+crx=: 3 : 0
 TABNDX=: 1
 getfoldernames''
 FIFFOLDERS=: UserFolders_j_,SystemFolders_j_
@@ -32,6 +31,10 @@ fif_rundef''
 FIFINFO=: ''
 NB. JHSFILTERS=: {."1 FIFFILTERS
 NB. JHSFOLDERS=: {."1 FIFFOLDERS
+)
+
+create=: 3 : 0
+crx''
 'jfif'jhr''
 )
 
@@ -40,6 +43,8 @@ jev_get=: create
 ev_find_click=: 3 : 0
 t=. <;._2 getv'jdata'
 'FIFWHAT FIFCONTEXTNDX FIFTYPE FIFDIR FIFCASE FIFSUBDIR FIFREGEX FIFNAMEONLY'=: t
+if. '/'={:FIFDIR do. FIFDIR=: }:FIFDIR end.
+if. -.'*'e.FIFDIR do. FIFDIR=: FIFDIR,'/*.ijs' end. 
 i=. FIFDIR i:'/'
 FIFTYPE=: (>:i)}.FIFDIR
 FIFDIR=: i{.FIFDIR
@@ -47,11 +52,11 @@ FIFCONTEXTNDX=: ".FIFCONTEXTNDX
 FIFCASE=: ".FIFCASE
 FIFSUBDIR=: ".FIFSUBDIR
 FIFREGEX=: ".FIFREGEX
-FIFNAMEONLY=: -.".FIFNAMEONLY
+FIFNAMEONLY=: ".FIFNAMEONLY
 FIFINFO=: ''
 JHSFOUNDFILES=: ''
 fiff_find_button''
-jhrajax FIFINFO,>FIFNAMEONLY{FIFFOUND;JHSFOUNDFILES
+jhrajax FIFINFO,>FIFNAMEONLY{JHSFOUNDFILES;FIFFOUND
 )
 
 CSS=: 0 : 0
@@ -59,13 +64,33 @@ CSS=: 0 : 0
 )
 
 JS=: 0 : 0
-function ev_body_load(){jbyid("what").focus();jresize();}
+function ev_body_load()
+{
+ setlast("what");
+ setlast("where");
+ 
+ jform.context.selectedIndex= getls("context");
+ jform.matchcase.checked=  getlstf("matchcase");
+ jform.subfolders.checked= getlstf("subfolders");
+ jform.nameonly.checked=   getlstf("nameonly");
+ 
+ jbyid("what").focus();
+ jresize();
+}
+
 function ev_what_enter(){jscdo("find");}
 function ev_where_enter(){jscdo("find");}
 function ev_find_click_ajax(ts){jbyid("area").innerHTML=ts[0];}
 
+
 function ev_find_click()
 {
+ adrecall("what",jform.what.value,"0");
+ adrecall("where",jform.where.value,"0");
+ setls("context",   jform.context.selectedIndex);
+ setls("matchcase", jform.matchcase.checked);
+ setls("subfolders",jform.subfolders.checked);
+ setls("nameonly",  jform.nameonly.checked);
  var t=jform.what.value+JASEP;
  t+=jform.context.selectedIndex+JASEP;
  t+=0+JASEP; // type is part of where - jform.type.value+JASEP;
@@ -319,7 +344,7 @@ else.
 end.
 0
 )
-finfo=: 3 : 'wdinfo FIFTITLE;y'
+finfo=: 3 : 'sminfo FIFTITLE;y'
 fquery=: 4 : 'x wdquery FIFTITLE;y'
 groupndx=: [: <: I. + e.~
 isempty=: 0: e. $
@@ -340,7 +365,7 @@ fifplain=: ;@(,~&.> e.&'[](){}$^.*+?|\' #&.> (<PATHSEP_j_)"_)
 fullname=: fullname_j_ f.
 termdelLF=: }.~ [: - 0: i.~ LF&= @ |.
 
-wdifopen=: boxopen e. <;._2 @ (wd bind 'qp')
+wdifopen=: boxopen e. <;._2 @ wdqp
 3 : 0''
 if. IFUNIX do.
   filecase=: [
@@ -406,7 +431,7 @@ truncate=: {. , '...'"_
 FIFCASE=: 1
 FIFCONTEXTNDX=: 0
 FIFFILES=: ''
-FIFDIR=: ''
+FIFDIR=: '~temp'
 FIFFOUND=: ''
 FIFFRET=: LF
 FIFHELP=: 'Dictionary'
@@ -415,7 +440,7 @@ FIFNAMEONLY=: 1
 FIFREGEX=: 0
 FIFSHOW=: 0           
 FIFSUBDIR=: 1
-FIFTYPE=: ''          
+FIFTYPE=: '*.ijs'          
 FIFFILTERS=: 0 2$''
 FIFWHAT=: ''
 
@@ -1012,7 +1037,7 @@ FIFFOLDERS=: 2 {."1 USERFOLDERS
 if. wdifopen 'fif' do.
   wd 'psel fif'
   id=. TABNDX pick 'pwhat';'what';'hwhat'
-  FIFWHAT=: id wdget wd 'qd'
+  FIFWHAT=: id wdget wdqd''
   wd 'pshow;pactive'
   fifselwhat''
   return.
@@ -1535,7 +1560,7 @@ htmlref=: 3 : 0
 jump=. (<: jump i. '(') {. jump
 jump=. '/' (I. jump=PATHSEP_j_) } jump
 jump=. 'file://',jump
-'<a href="' , jump , '">' , name , '</a><br>'
+'<a href="' , jump , '" target="',TARGET,'">' , name , '</a><br>'
 )
 htmlstriptags=: 3 : 0
 dat=. y
@@ -1631,9 +1656,45 @@ name
 )
 
 jhsfixfl=: 3 : 0
-'<br><a href="jijs?mid=open&path=',(jurlencode y),'">',y,'</a>'
+'<br><a href="jijs?mid=open&path=',(jurlencode y),'" target="',TARGET,'">',y,'</a>'
 )
 
 jhsfixtxt=: 3 : 0
 '<br>',jhfroma y
+)
+
+findhelp=: 0 : 0
+   find 'what' ; 'where/*.ijs'
+   find 'what' ; 'where/*.ijs' ; 'name cs'
+options: name assign =: =. cs(case sensitive) nr(no recursion) nl(no lines)
+)
+
+find=: 3 : 0
+if. 0=L.y do. findhelp return. end.
+crx''
+'FIFWHAT FIFDIR'=: 2{.y
+'FIFCASE FIFSUBDIR FIFNAMEONLY FIFREGX'=: 0 1 1 0
+p=. deb >2{y,<''
+c=. 0
+if. 0~:#p do.
+ for_n. <;._1 ' ',p do.
+  select. >n
+  case. 'name'   do. c=. 1
+  case. 'assign' do. c=. 2
+  case. '=:'     do. c=. 3
+  case. '=.'     do. c=. 4
+  case. 'case'   do. FIFCASE=: 1
+  case. 'nr'     do. FIFSUBDIR=: 0
+  case. 'nl'     do. FIFNAMEONLY=: 0
+  case.          do. assert 0['bad option'
+  end.
+ end.
+end. 
+FIFCONTEXTNDX=: c
+i=. FIFDIR i:'/'
+FIFTYPE=: (>:i)}.FIFDIR
+FIFDIR=: i{.FIFDIR
+JHSFOUNDFILES=: ''
+fiff_find_button''
+jhtml  '<div contenteditable="false">',(>FIFNAMEONLY{JHSFOUNDFILES;FIFFOUND),'</div'
 )

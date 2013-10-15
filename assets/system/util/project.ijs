@@ -5,6 +5,8 @@ index=: #@[ (| - =) i.
 intersect=: e. # [
 matchhead=: [ -: #@[ {. ]
 towords=: ;:^:(_1 * 1 = L.)
+
+termLF=: , (0 < #) # LF -. {:
 decomment=: 3 : 0
 dat=. <;._2 termLF toJ y
 if. 2 > #dat do. y return. end.
@@ -360,7 +362,6 @@ end.
 p
 )
 snappath=: 3 : 0
-jpath '~snap/.snp/',getsha1_jgtk_ y
 )
 snapshot=: 3 : 0
 if. Snapshots=0 do. return. end.
@@ -580,3 +581,35 @@ readsource=: 0&readsource1
 readsourcex=: 1&readsource1
 writesource=: 0&writesource1
 writesourcex=: 1&writesource1
+coclass <'jp'
+
+STANDALONE=: 0 : 0
+load_z_=: require_z_=: script_z_=: ]
+jsystemdefs_z_=: 3 : '0!:100 toHOST (y,''_'',tolower UNAME,(IF64#''_64''),''_j_'')~'
+)
+
+getstdenv=: 3 : 0
+r=. freads jpath'~system/main/stdlib.ijs'
+r=. r,freads jpath'~system/main/task.ijs'
+r=. r,STANDALONE
+hd=. 1 dir'~system/defs/hostdefs*.ijs'
+for_h. hd do.
+  hn=. '.ijs' taketo >{: fpathname >h
+  r=. r,hn,'_j_=: 0 : 0',LF
+  r=. r,freads h
+  r=. r,')',LF
+end.
+qt=. freads jpath'~addons/ide/qt/qt.ijs'
+r=. r, 'coclass ''jbaselibtag''' taketo qt
+)
+
+getlibs=: 3 : 0
+libs=. jpath each getscripts_j_ cutnames y
+r=. ''
+if. 0=#libs do. return. end.
+for_i. libs do.
+  r=. r,freads i
+end.
+r
+)
+

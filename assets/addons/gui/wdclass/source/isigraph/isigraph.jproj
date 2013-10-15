@@ -1,9 +1,0 @@
-NB. project: ~Public/gui/wdclass/source/isigraph
-NB.
-NB. defines list of source files.
-NB. path defaults to project directory.
-
-init.ijs
-isigmain.ijs
-isigutil.ijs
-vkeys.ijs

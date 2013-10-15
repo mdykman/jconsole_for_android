@@ -79,6 +79,13 @@ LASTPATH=: f
 jhrajax (jshortname f),JASEP,buttons 'files';(2#<folderinfo remlev f),<'<br>'
 )
 
+ev_recall_click=: 3 : 0
+sid=. getv'jsid'
+f=. jpath sid
+LASTPATH=: f
+jhrajax (jshortname f),JASEP,buttons 'files';(2#<folderinfo remlev f),<'<br>'
+)
+
 NB. folder clicked (file click handled in js)
 ev_files_click=: 3 : 0
 sid=. getv'jsid'
@@ -203,7 +210,7 @@ create '&nbsp;';jpath'~temp\'
 
 NB. folder dblclick??? not a problem, but is puzzling
 
-ev_files_dblclick=: ev_edit_click
+NB. ev_files_dblclick=: ev_edit_click
 
 ev_edit_click=: 3 : 0
 f=. jgetfile F=. jpath getv'path'
@@ -346,11 +353,17 @@ CSS=: 0 : 0
 )
 
 JS=: 0 : 0
+var recall=1
+
 function ev_body_load(){jresize();}
 
 function repclr(){jbyid("report").innerHTML = "&nbsp;";}
 function setpath(t){jform.path.value= t;jbyid("pathd").innerHTML= t;}
 function ev_paths_click(){repclr();jdoajax(["path"]);}
+function ev_paths_dblclick(){;}
+function ev_recall_click(){repclr();jdoajax(["path"]);}
+
+function document_recall(v){recall=0;jform.path.value= v;jbyid("pathd").innerHTML= v;jscdo("recall",v);}
 
 function ev_x_shortcut(){jscdo("cut");}
 function ev_c_shortcut(){jscdo("copy");}
@@ -367,8 +380,16 @@ function ev_files_click() // file select
   setpath(t.substring(0,++i)+jform.jsid.value);
  }
  else
+ {
   jdoajax(["path"]);
+ }
 }
+
+function ev_files_dblclick()
+{
+ if('/'!=jform.jsid.value.charAt(jform.jsid.value.length-1))
+  window.open('jijs?mid=open&path='+jform.path.value,TARGET);
+} 
 
 function ev_rename_click()     {jdlgshow("renamedlg","renamex");}
 function ev_renameclose_click(){jhide("renamedlg");}
@@ -385,6 +406,11 @@ function ajax(ts)
 {
  if(2!=ts.length) alert("wrong number of ajax results");
  setpath(ts[0]);
+ if(recall)
+ {
+  adrecall("document",ts[0],"0");
+ }
+ recall=1;
  jbyid("sel").innerHTML= ts[1];
 }
 

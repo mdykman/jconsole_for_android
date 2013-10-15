@@ -43,7 +43,7 @@ t=. (CSSCORE,y) hrplc t;PC_FONTSIZE;PC_FM_COLOR;PC_ER_COLOR;PC_LOG_COLOR;PC_SYS_
 
 NB. core plus page js
 js=: 3 : 0
-'<script type="text/javascript">',JSCORE,y,'</script>'
+'<script type="text/javascript">',LF,'var TARGET="',TARGET,'"',LF,JSCORE,y,'</script>'
 )
 
 seebox=: 3 : 0
@@ -108,6 +108,7 @@ y rplc '<';'&lt;';'>';'&gt;';'&';'&amp;';'"';'&quot;';CRLF;'<br>';LF;'<br>';CR;'
 
 NB. app did not send response - send one now
 jbad=: 3 : 0
+echo NV
 smoutput'*** response not sent for ',URL
 if. METHOD-:'get' do.
  htmlresponse html409 NB. conflict - not working properly - reload
@@ -226,7 +227,7 @@ HTTP/1.1 200 OK
 Content-Type: text/html; charset=utf-8
 Connection: close
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -270,6 +271,29 @@ response code 409<br>
 application did not produce result<br>
 try browsing to url again<br>
 additional info in jijx
+)
+
+gsrchead=: toCRLF 0 : 0
+HTTP/1.1 200 OK
+Server: JHS
+Last-Modified: Mon, 01 Mar 2010 00:23:24 GMT
+Accept-Ranges: bytes
+Content-Length: <LENGTH>
+Keep-Alive: timeout=15, max=100
+Connection: Keep-Alive
+Content-Type: <TYPE>
+
+)
+
+gsrcf=: 4 : 0
+htmlresponse y,~gsrchead rplc '<TYPE>';x;'<LENGTH>';":#y
+)
+
+fsrchead=: toCRLF 0 : 0
+HTTP/1.1 200 OK
+Server: JHS
+Content-Type: <TYPE>
+
 )
 
 NB. html for jajax response
@@ -458,7 +482,7 @@ value=. t
 text=. ((0>.JMWIDTH-#value)#' '),s
 value=. value rplc ' ';'&nbsp;'
 text=. text rplc ' ';'&nbsp;'
-t=.   '<li><a href="<REF>" class="jhml" onclick="return jmenuhide();"'
+t=.   '<li><a href="<REF>" target="',TARGET,'" class="jhml" onclick="return jmenuhide();"'
 t=. t,jmon''
 t=. t,'><VALUE></a><TEXT></li>'
 t hrplc 'REF VALUE TEXT';x;value;text
@@ -484,7 +508,7 @@ t hrplc 'ID VALUE SET CHECKED';x;value;set;checked
 NB.* jhref*id jhref text - <a href="id">text</a>
 jhref=: 4 : 0
 y=. boxopen y
-t=. '<a href="<REF>" class="jhref" ><VALUE></a>'
+t=. '<a href="<REF>" target="',TARGET,'" class="jhref" ><VALUE></a>'
 t hrplc 'REF VALUE';x;y
 )
 
@@ -555,13 +579,14 @@ jhh1=: 3 : 0
 
 NB.* jhjmlink*jhjmlink'' - ide link menu
 jhjmlink=: 3 : 0
-t=.   'jmlink'jhmg'link';1;8
-t=. t,'jijx'  jhml'jijx     j^'
-t=. t,'jfile' jhml'jfile    f^'
-t=. t,JIJSAPP jhml'jijs     J^'
-t=. t,'jfif'  jhml'jfif     F^'
-t=. t,'jal'   jhml'jal'
-t=. t,'jhelp' jhml'jhelp'
+t=.   'jmlink' jhmg'link';1;8
+t=. t,'jijx'   jhml'jijx     j^'
+t=. t,'jfile'  jhml'jfile    f^'
+t=. t,'jfiles' jhml'jfiles   k^'
+t=. t,JIJSAPP  jhml'jijs     J^'
+t=. t,'jfif'   jhml'jfif     F^'
+t=. t,'jal'    jhml'jal'
+t=. t,'jhelp'  jhml'jhelp    h^'
 )
 
 NB.* jhma*jhma'' - menu start

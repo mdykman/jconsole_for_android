@@ -30,6 +30,10 @@ JS=: 0 : 0
 // send t1 and t2 name/value pairs to J
 function ev_flip_click(){jdoajax(["t1","t2"],"");}
 
+// firefox enter in textarea does not trigger default button event
+function ev_t1_enter(){jscdo("flip");}
+function ev_t2_enter(){jscdo("flip");}
+
 // ts is list of JASEP delimited strings
 function ajax(ts)
 {

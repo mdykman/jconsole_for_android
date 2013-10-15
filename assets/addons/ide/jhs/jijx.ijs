@@ -23,10 +23,7 @@ jhmz''
  'labsclose'jhb'X'
 '</div>'
 jhresize''
-
 'log' jhec'<LOG>'
-
-'recalls'jhhidden'<RECALLS>'
 )
 
 jev_get=: create
@@ -62,7 +59,7 @@ end.
 NB. refresh response - not jajax
 create=: 3 : 0
 uplog''
-'jijx' jhr 'LOG RECALLS';LOG;recalls''
+'jijx' jhr 'LOG';LOG
 )
 
 getlabs=: 3 : 0
@@ -99,12 +96,6 @@ updn=: 3 : 0
 if. IP do. hmga y else. ' ' end.
 )
 
-recalls=: 3 : 0
-t=.INPUT
-t=.(0~:;#each t-.each' ')#t
-(;t,each LF)rplc '&';'&amp;';'"';'&quot;';'<';'&lt;';'>';'&gt;'
-)
-
 labopen=: 3 : 0
 ev_dot_ctrl_jijx_=: ev_advance_click
 require__'~addons/labs/labs/lab.ijs'
@@ -126,10 +117,15 @@ ev_scratchr_click=: 3 : 0
 try. jloadnoun__ getv'scratcharea' catch. 13!:12'' end.
 )
 
+ev_clearrefresh_click=: 3 : 'LOG_jhs_=: '''''
+
 actionmenu=: 3 : 0
-a=. 'action'   jhmg'action';1;10
+a=. 'action'   jhmg'action';1;13
 a=. a,'scratch' jhmab'scratch...'
 a=. a,'scratchr'jhmab'scratch r^'
+a=. a,'clearwindow'jhmab'clear window'
+a=. a,'clearrefresh'jhmab'clear refresh'
+a=. a,'clearLS'jhmab'clear LS'
 t=. a
 if. fexist'~user/projects/ja/ja.ijs' do.
  try.
@@ -219,8 +215,6 @@ NB. *#log:focus{border:1px solid red;}
 NB. *#log:focus{outline: none;} /* no focus mark in chrome */
 
 JS=: 0 : 0
-var recs;
-var reci= -1;
 var phead= '<div id="prompt" class="log">';
 var ptail= '</div>';
 
@@ -228,11 +222,6 @@ function ev_body_focus(){setTimeout(ev_2_shortcut,100);}
 
 function ev_body_load()
 {
- var t=jbyid("recalls").value;
- if(0==t.length)
-  recs=[];
- else
-  recs=t.split("\n");
  jbyid("scratcharea").style.width="100%";
  jbyid("scratcharea").setAttribute("rows","8");
  jseval(false,jbyid("log").innerHTML); // redraw canvas elements
@@ -263,23 +252,10 @@ function updatelog(t)
 }
 
 // ajax update window with new output
-function ajax(ts){updatelog(ts[0]);jseval(true,ts[0]);}
-
-// add sentence to log unless blank or same as last
-function addrecall(a)
+function ajax(ts)
 {
- var i,blank=0,same=0;
- for(i=0;i<a.length;++i)
-  blank+= ' '==a.charAt(i);
-
- if(0!=recs.length && a.length==recs[0].length)
- {
-  for(i=0;i<a.length;++i)
-   same+= a.charAt(i)==recs[0].charAt(i);
- }
-
- if(blank!=a.length && same!=a.length)
-  recs.unshift(a); reci=-1; // recalls
+ updatelog(ts[0]);
+ jseval(true,ts[0]);
 }
 
 function scrollz(){jbyid("prompt").scrollIntoView(false);}
@@ -301,25 +277,6 @@ function newpline(t)
  t= t.replace(/-/g,"&#45;");
  t= t.replace(/\"/g,"&quot;");
  updatelog(phead+t+ptail);
-}
-
-function uarrow()
-{
- if(++reci>=recs.length) reci= recs.length-1;
- if(reci==-1)
-  newpline("   ");
- else
-  newpline(recs[reci]);
-}
-
-function darrow()
-{
- var t;
- if(--reci<0)
-  {reci= -1; t= "   ";}
- else
-  t= recs[reci]
- newpline(t);
 }
 
 function keyp(){jbyid("kbsp").style.display= "block";scrollz();return true;} // space for screen kb
@@ -394,10 +351,12 @@ function ev_log_enter()
  }
  else
  {
-  addrecall(t);
+  adrecall("document",t,"-1");
   jdoajax([],"",t);
  }
 }
+
+function document_recall(v){newpline(v);}
 
 function ev_advance_click(){jdoajax([]);}
 
@@ -415,6 +374,10 @@ function ev_scratch_click(){jdlgshow("scratchdlg","scratcharea");}
 function ev_scratchclose_click(){jhide("scratchdlg");}
 
 function ev_scratchr_click(){jdoajax(["scratcharea"]);}
+
+function ev_clearwindow_click(){jbyid("log").innerHTML= "";newpline("   ");}
+function ev_clearrefresh_click(){jdoajax([]);}
+function ev_clearLS_click(){localStorage.clear();};
 
 function ev_r_shortcut(){jscdo("scratchr");}
 

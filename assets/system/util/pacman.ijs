@@ -11,12 +11,20 @@ SECTION=: ,<'All'
 SYSNAME=: 'Package Manager'
 TIMEOUT=: 60
 WWWREV=: REV=: _1
+Ignore=: 0$<''
+Ignore=: Ignore, IFIOS#<;._1 ' demos/gldemo demos/glsimple demos/grid demos/isigraph demos/plot demos/wd demos/wdplot'
+Ignore=: Ignore, (-.IFIOS)#<;._1 ' ide/ios'
 3 : 0''
 nc=. '--no-cache'
 if. IFUNIX do.
-  if. UNAME-:'Darwin' do.
+  if. UNAME-:'Android' do.
+    exe=. '"',(jpath '~tools/ftp/wget'),'"'
+    try. nc=. nc #~ 1 e. nc E. shell exe,' --help' catch. nc=. '' end.
+    HTTPCMD=: exe,' ',nc,' -O %O -o %L -t %t %U'
+    UNZIP=: '"',(jpath '~tools/zip/7za'),'" x -y '
+  elseif. UNAME-:'Darwin' do.
     HTTPCMD=: 'curl -o %O --stderr %L -f -s -S %U'
-  else.
+  elseif. do.
     try. nc=. nc #~ 1 e. nc E. shell 'wget --help' catch. nc=. '' end.
     HTTPCMD=: 'wget ',nc,' -O %O -o %L -t %t %U'
   end.
@@ -32,8 +40,13 @@ ADDCFG=: jpath '~addons/config/'
 makedir ADDCFG
 ADDCFGIJS=: ADDCFG,'config.ijs'
 JRELEASE=: ({.~i.&'/') 9!:14''
+JRELEASE=: 'j801'
 LIBTREE=: readtree''
-WWW=: 'http://www.jsoftware.com/jal/',JRELEASE,'/'
+if. IFIOS do.
+  WWW=: '/jal/',JRELEASE,'/'
+else.
+  WWW=: 'http://www.jsoftware.com/jal/',JRELEASE,'/'
+end.
 LIBVER=: jpath '~system/config/version.txt'
 )
 destroy=: codestroy
@@ -281,11 +294,10 @@ a=. a #~ '-d' -:"1 [ 1 4 {"1 > 4 {"1 a
 (<y) ,each ({."1 a) ,each '/'
 )
 testaccess=: 3 : 0
-f=. <jpath'~bin/installer.txt'
-d=. 1!:1 f
+f=. <jpath'~install/testaccess.txt'
 try.
+  '' 1!:2 f
   1!:55 f
-  d 1!:2 f
   1
 catch.
   0
@@ -299,18 +311,27 @@ unzip=: 3 : 0
 'file dir'=. dquote each y
 e=. 'Unexpected error'
 if. IFUNIX do.
-  if. IFIOS +. (UNAME-:'Android') *. 0=isatty 0 do.
+  if. UNAME-:'Android' do.
     if. '.zip"'-:_5{.file do.
-      e=. ''
-      'file dir'=. y
-      e1=. dir andunzip file
-      if. -. e1 = 0 do. e=. 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end.
+      if. fexist jpath '~tools/zip/7za' do.
+        dir=. (_2&}. , '/' -.~ _2&{.) dir
+        e=. shellcmd UNZIP,' ',file,' -o',dir
+      else.
+        e=. ''
+        'file dir'=. y
+        e1=. dir andunzip file
+        if. -. e1 = 0 do. e=. 'failed to unzip ',file,' to ',dir, ' - ',(":e) ,LF end.
+      end.
     else.
       require 'tar'
       'file dir'=. y
       if. (i.0 0) -: tar 'x';file;dir do. e=. '' end.
     end.
-  else.
+  elseif. IFIOS do.
+    require '~system/util/tar.ijs'
+    'file dir'=. y
+    if. (i.0 0) -: tar 'x';file;dir do. e=. '' end.
+  elseif. do.
     e=. shellcmd 'tar -xzf ',file,' -C ',dir
   end.
 else.
@@ -385,7 +406,7 @@ if. WWWREV = REV do. 1 return. end.
 refreshweb''
 )
 checkonline=: 3 : 0
-select. ReadCatalog
+select. ReadCatalog_j_
 case. 0 do.
   if. REV >: 0 do.
     ONLINE=: 0
@@ -461,12 +482,6 @@ else.
 end.
 'Local JAL information ',res
 )
-PACMANCFG=: jpath '~config/pacman.cfg'
-
-readconfig=: 3 : 0
-ReadCatalog=: 2
-0!:0 :: ] <PACMANCFG
-)
 httpget=: 3 : 0
 'f t'=. 2 {. (boxxopen y),a:
 n=. f #~ -. +./\. f e. '=/'
@@ -477,7 +492,33 @@ ferase p;q
 fail=. 0
 cmd=. HTTPCMD rplc '%O';(dquote p);'%L';(dquote q);'%t';t;'%T';(":TIMEOUT);'%U';f
 try.
-  if. (UNAME-:'Android') *. 0=isatty 0 do.
+  if. IFIOS do.
+    require 'socket'
+    1!:55 ::0: <p
+    rc=. 0 [ e=. pp=. ''
+    whilst. 0 do.
+      'rc sk'=. sdsocket_jsocket_''
+      if. 0~:rc do. break. end.
+      rc=. sdconnect_jsocket_ sk;PF_INET_jsocket_;'23.21.67.48';80
+      if. 0~:rc do. break. end.
+      'rc sent'=. ('GET ',f,' HTTP/1.0',LF2) sdsend_jsocket_ sk;0
+      if. 0~:rc do. break. end.
+      while. ((0=rc)*.(*#m)) [[ 'rc m'=. sdrecv_jsocket_ sk,1024 do.
+        pp=. pp,m
+      end.
+    end.
+    if. 0~:rc do. fail=. 1
+    elseif. 1 -.@e. '200 OK' E. (20{.pp) do. fail=. 1 [ e=. ({.~ i.&LF) pp
+    elseif. #p1=. I. (CRLF,CRLF) E. 500{.pp do. p2=. 4
+    elseif. #p1=. I. LF2 E. 500{.pp do. p2=. 2
+    elseif. do. fail=. 1
+    end.
+    if. 0=fail do.
+      ((p2+{.p1)}.pp) 1!:2 <p
+    else.
+      if. 0~:rc do. e=. sderror_jsocket_ rc end.
+    end.
+  elseif. (UNAME-:'Android') > IFQT +. fexist jpath '~tools/ftp/wget' do.
     rr=. f anddf p
     if. rr >: 0 do.
       r=. 0;p
@@ -490,7 +531,7 @@ try.
     ferase q
     r
     return.
-  else.
+  elseif. do.
     e=. shellcmd cmd
   end.
 catch. fail=. 1 end.
@@ -533,6 +574,7 @@ install_console=: 3 : 0
   pkgs=. getnames y
   if. pkgs -: ,<'all' do. pkgs=. 1 {"1 PKGDATA end.
   pkgs=. pkgs (e. # [) ~. (<'base library'), ((pkgnew +. pkgups) # 1&{"1@]) PKGDATA
+  pkgs=. pkgs -. Ignore
   if. 0 = num=. #pkgs do. '' return. end.
   many=. 1 < num
   msg=. 'Installing ',(":num),' package',many#'s'
@@ -843,7 +885,6 @@ if. 0=#dat do. $0 return. end.
 0 = # &> (2-s) {"1 dat
 )
 pkgups=: pkgnew < pkglater
-
 pkgsearch=: 3 : 0
   +./"1 +./ y E."1&>"(0 _) 1{"1 PKGDATA
 )
@@ -895,7 +936,6 @@ init_console=: 3 : 0
   fcase. 'edit';'server' do.
     if. -. checkaccess'' do. 0 return. end.
   case. 'read' do.
-    readconfig''
     if. -. checkaddonsdir'' do. 0 return. end.
     setfiles''
     readlocal''

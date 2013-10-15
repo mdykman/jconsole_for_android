@@ -56,7 +56,6 @@ NULLPTR=: <0
 if. IFUNIX do.
   lib=. ' ',~ unxlib 'c'
   api=. 1 : ('(''',lib,''',x) & cd')
-  c_isatty=: ' isatty i i' api
   c_open=: 'open i *c i i' api
   c_close=: 'close i i' api
   c_read=: 'read x i * x' api
@@ -87,10 +86,10 @@ else.
   PAGE_READONLY=: 2
   PAGE_READWRITE=: 4
   TRUNCATE_EXISTING=: 5
-  
+
   j=. (GENERIC_READ+GENERIC_WRITE),PAGE_READWRITE,FILE_MAP_WRITE
   RW=: j,:GENERIC_READ,PAGE_READONLY,FILE_MAP_READ
-  
+
   CloseHandleR=: 'kernel32 CloseHandle > i x'&(15!:0)
   CreateFileMappingR=: 'kernel32 CreateFileMappingW > x x * i i i *w'&(15!:0)
   CreateFileR=: 'kernel32 CreateFileW > x *w i i * i i x'&(15!:0)
@@ -335,31 +334,25 @@ if. IFUNIX do.
   fh=. >0 { c_open fn;(ro{O_RDWR,O_RDONLY);0
   'bad file name/access' assert fh~:_1
   mh=. ts
-  if. 0=ts do.
-    fad=. 0
-  else.
-    fad=. >0{ c_mmap (<0);ts;(OR ro}. PROT_WRITE, PROT_READ);MAP_SHARED;fh;0
-    if. _1=fad do. 'bad view' assert 0[free fh,mh,0 end.
+  fad=. >0{ c_mmap (<0);ts;(OR ro}. PROT_WRITE, PROT_READ);MAP_SHARED;fh;0
+  if. fad e. 0 _1 do.
+    'bad view' assert 0[free fh,mh,0
   end.
 else.
   'fa ma va'=. ro{RW
   fh=. CreateFileR (uucp fn,{.a.);fa;(FILE_SHARE_READ+FILE_SHARE_WRITE);NULLPTR;OPEN_EXISTING;0;0
   'bad file name/access'assert fh~:_1
   ts=. GetFileSizeR fh
-  if. 0=ts do.
-    fad=. mh=. 0
-  else.
-    mh=: CreateFileMappingR fh;NULLPTR;ma;0;0;(0=#sn){(uucp sn,{.a.);<NULLPTR
-    if. mh=0 do. 'bad mapping'assert 0[free fh,0,0 end.
-    fad=. MapViewOfFileR mh;va;0;0;0
-    if. fad=0 do.
-      errno=. GetLastError''
-      free fh,mh,0
-      if. ERROR_NOT_ENOUGH_MEMORY-:errno do.
-        'not enough memory' assert 0
-      else.
-        'bad view' assert 0
-      end.
+  mh=: CreateFileMappingR fh;NULLPTR;ma;0;0;(0=#sn){(uucp sn,{.a.);<NULLPTR
+  if. mh=0 do. 'bad mapping'assert 0[free fh,0,0 end.
+  fad=. MapViewOfFileR mh;va;0;0;0
+  if. fad=0 do.
+    errno=. GetLastError''
+    free fh,mh,0
+    if. ERROR_NOT_ENOUGH_MEMORY-:errno do.
+      'not enough memory' assert 0
+    else.
+      'bad view' assert 0
     end.
   end.
 end.

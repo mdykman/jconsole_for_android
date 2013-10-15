@@ -165,28 +165,14 @@ all=. all, IFWIN pick unx;w32
 
 NB. =========================================================
 PlotDefaults=: 3 : 0 all
-if. -.IFJ6 do.
-  if. IFTESTPLOTJHS +. IFJHS do.
-    r=. 'OUTPUT=: JHSOUTPUT'
-  elseif. IFGTK do.
-    if. 0[ 'isi' -: GTKOUTPUT do.
-      r=. 'OUTPUT=: ''isi'''
-    else.
-      r=. 'OUTPUT=: ''gtk'''
-    end.
-  elseif. do.  NB. jconsole
-    r=. 'OUTPUT=: CONSOLEOUTPUT'
-  end.
-else.
-  if. IFCONSOLE do.
-    if. UNAME -: 'Linux' do.
-      r=. 'OUTPUT=: ''gtk'''
-    else.
-      r=. 'OUTPUT=: ''pdf'''
-    end.
-  else.
-    r=. 'OUTPUT=: ''isi'''
-  end.
+if. IFTESTPLOTJHS +. IFJHS do.
+  r=. 'OUTPUT=: JHSOUTPUT'
+elseif. IFQT do.
+  r=. 'OUTPUT=: ''qt'''
+elseif. 'Android'-:UNAME do.
+  r=. 'OUTPUT=: ''android'''
+elseif. do.  NB. jconsole
+  r=. 'OUTPUT=: CONSOLEOUTPUT'
 end.
 y,r,LF
 )

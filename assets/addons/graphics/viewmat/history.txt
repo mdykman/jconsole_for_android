@@ -13,3 +13,18 @@ graphics/viewmat - change history
 
 == 1.0.6/13 ==
  * android/iOS
+
+== 1.0.14 ==
+ * android
+
+== 1.0.15/18 ==
+ * qt
+
+== 1.0.19 ==
+ * cover verb for wd query cmds
+
+== 1.0.20/25 ==
+ * qt
+
+== 1.0.26/.. ==
+ * j801

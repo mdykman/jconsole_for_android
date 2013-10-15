@@ -13,8 +13,11 @@ addons=. install,'/addons'
 system=. install,'/system'
 tools=. install,'/tools'
 home=. >(systype-5){(2!:5'HOME');2!:5'USERPROFILE'
-userx=. '\j',('64-'#~16={:$3!:3[2),'701-user'
+home=. >(0-:home){home;,'/'
+userx=. '/j',('64-'#~16={:$3!:3[2),'801-user'
 user=. home,userx
+user=. >((<home) e. '/root';'';,'/'){user;install,'/user'
+home=. >((<home) e. '/root';'';,'/'){home;install
 break=. user,'/break'
 config=. user,'/config'
 snap=. user,'/snap'
@@ -22,11 +25,13 @@ temp=. user,'/temp'
 ids=. ;:'addons bin break config home install snap system tools temp user'
 
 0!:0 :: ] <jpathsep bin,'/profilex.ijs' NB. override
+0!:0 :: ] <home,>(systype-5){'/.jprofile.ijs';'/_jprofile.ijs' NB. override per user
 
 SystemFolders_j_=: ids,.jpathsep@".&.>ids
 
 md=. 3 : 0 NB. recursive makedir
 a=. jpathsep y,'/'
+if. ('//'-:2{.a)+.('/root/'-:6{.a) do. return. end. NB. installed under / or /root
 if. -.#1!:0 }:a do.
   for_n. I. a='/' do. 1!:5 :: [ <n{.a end.
 end.
