@@ -3,19 +3,16 @@ require 'graphics/afm graphics/color/colortab graphics/bmp'
 
 3 : 0''
 if. 0 ~: 4!:0 <'JHSOUTPUT' do. JHSOUTPUT=: 'canvas' end.
-if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: (UNAME-:'Android'){::'pdf';'android' end.
+if. 0 ~: 4!:0 <'CONSOLEOUTPUT' do. CONSOLEOUTPUT=: 'pdf' end.
 if. 0 ~: 4!:0 <'IFTESTPLOTJHS' do. IFTESTPLOTJHS_z_=: 0 end.
 if. IFTESTPLOTJHS +. IFJHS do.
 elseif. IFQT do.
   require 'graphics/gl2'
   coinsert 'jgl2'
 elseif. IFJCDROID do.
-  if. 0 < #1!:0 jpath '~addons/gui/android/android.ijs' do.
-    require 'graphics/gl2 droidwd gui/android'
-    coinsert 'jgl2 jni jaresu'
-  else.
-    if. CONSOLEOUTPUT-:'android' do. CONSOLEOUTPUT=: 'pdf' end.
-  end.
+  require 'graphics/gl2 droidwd gui/android'
+  coinsert 'jgl2 jni jaresu'
+  CONSOLEOUTPUT=: 'android'
 elseif. do.
   if. (UNAME -: 'Linux') *: (0 -: 2!:5 'DISPLAY') do.
     if. 0 < #1!:0 jpath '~addons/graphics/gl2/gl2.ijs' do.
